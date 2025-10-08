@@ -3,12 +3,16 @@
 ## 1.2.0-beta.6 (Unreleased)
 
 ### Features Added
+- Added support for Computer usage.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+### Sample updates
+- Added sample for Computer usage.
 
 ## 1.2.0-beta.5 (2025-09-18)
 

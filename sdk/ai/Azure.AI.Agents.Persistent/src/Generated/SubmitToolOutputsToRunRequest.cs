@@ -48,16 +48,20 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsToRunRequest"/>. </summary>
         internal SubmitToolOutputsToRunRequest()
         {
-            ToolOutputs = new ChangeTrackingList<ToolOutput>();
+            ToolOutputs = new ChangeTrackingList<StructuredToolOutput>();
             ToolApprovals = new ChangeTrackingList<ToolApproval>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsToRunRequest"/>. </summary>
-        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+        /// <param name="toolOutputs">
+        /// A list of tools for which the outputs are being submitted
+        /// Please note <see cref="StructuredToolOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ComputerToolOutput"/> and <see cref="ToolOutput"/>.
+        /// </param>
         /// <param name="toolApprovals"> A list of tool approvals allowing data to be sent to tools. </param>
         /// <param name="stream"> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubmitToolOutputsToRunRequest(IReadOnlyList<ToolOutput> toolOutputs, IReadOnlyList<ToolApproval> toolApprovals, bool? stream, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubmitToolOutputsToRunRequest(IReadOnlyList<StructuredToolOutput> toolOutputs, IReadOnlyList<ToolApproval> toolApprovals, bool? stream, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ToolOutputs = toolOutputs;
             ToolApprovals = toolApprovals;
@@ -65,8 +69,12 @@ namespace Azure.AI.Agents.Persistent
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of tools for which the outputs are being submitted. </summary>
-        public IReadOnlyList<ToolOutput> ToolOutputs { get; }
+        /// <summary>
+        /// A list of tools for which the outputs are being submitted
+        /// Please note <see cref="StructuredToolOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ComputerToolOutput"/> and <see cref="ToolOutput"/>.
+        /// </summary>
+        public IReadOnlyList<StructuredToolOutput> ToolOutputs { get; }
         /// <summary> A list of tool approvals allowing data to be sent to tools. </summary>
         public IReadOnlyList<ToolApproval> ToolApprovals { get; }
         /// <summary> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </summary>

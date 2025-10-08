@@ -401,7 +401,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                         toolOutputs.Add(new ToolOutput(toolCall.Id, "{\"weather\": \"Sunny\"}"));
                     }
                 }
-                run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs);
+                run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs, toolApprovals: null);
             }
         }
         Assert.AreEqual(RunStatus.Completed, run.Status, run.LastError?.Message);
@@ -800,7 +800,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                         toolOutputs.Add(new ToolOutput(toolCall.Id, "{\"weather\": \"Sunny\"}"));
                     }
                 }
-                run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs);
+                run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs, toolApprovals: null);
             }
         }
 

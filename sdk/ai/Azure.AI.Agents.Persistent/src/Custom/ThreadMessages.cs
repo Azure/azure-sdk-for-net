@@ -249,7 +249,7 @@ namespace Azure.AI.Agents.Persistent
             }
 
             // Now serialize the array of JsonElements into a single BinaryData for the request:
-            var jsonString = JsonSerializer.Serialize(contentBlocks, JsonElementSerializer.Default.ListJsonElement);
+            var jsonString = JsonSerializer.Serialize(jsonElements, JsonElementSerializer.Default.ListJsonElement);
             BinaryData serializedBlocks = BinaryData.FromString(jsonString);
 
             return await CreateMessageAsync(
