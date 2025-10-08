@@ -87,34 +87,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             DateTime hourCursor = DateTime.UtcNow;
             BlobContainerClient containerClient = _blobClient.GetBlobContainerClient(LogContainer);
 
-            int processedCount = 0;
-
             for (int hourIndex = 0; hourIndex < hoursWindow; hourIndex++)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
                 string prefix = GetSearchPrefix("blob", hourCursor, hourCursor);
 
-                await foreach (var page in containerClient
+                await foreach (BlobItem blob in containerClient
                     .GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, states: BlobStates.None, cancellationToken: cancellationToken)
-                    .AsPages(pageSizeHint: 200)
                     .ConfigureAwait(false))
                 {
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    foreach (BlobItem blob in page.Values)
+                    if (blob.Metadata is not null &&
+                        blob.Metadata.TryGetValue(LogType, out string logType) &&
+                        !string.IsNullOrEmpty(logType) &&
+                        logType.IndexOf("write", StringComparison.OrdinalIgnoreCase) >= 0)
                     {
-                        // Increment only when we actually look at a blob item.
-                        processedCount++;
-
-                        // Examine metadata only if present.
-                        if (blob.Metadata is not null &&
-                            blob.Metadata.TryGetValue(LogType, out string logType) &&
-                            !string.IsNullOrEmpty(logType) &&
-                            logType.IndexOf("write", StringComparison.OrdinalIgnoreCase) >= 0)
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
 
