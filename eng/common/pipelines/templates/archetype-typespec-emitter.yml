@@ -264,33 +264,33 @@ extends:
             workingDirectory: $(Build.SourcesDirectory)/eng/common/tsp-client
 
           - pwsh: |
-              Write-Host "Overrides location: $(buildArtifactsPath)/packages/overrides.json"
-
               # Resolve EmitterPackageJsonOutputPath to absolute path if it's relative
               $emitterPath = '${{ parameters.EmitterPackageJsonOutputPath }}'
               if (-not [System.IO.Path]::IsPathRooted($emitterPath)) {
                 $emitterPath = Join-Path '$(Build.SourcesDirectory)' $emitterPath
               }
-              Write-Host "Resolved emitter package path: $emitterPath"
+              Write-Host "##vso[task.setvariable variable=ResolvedEmitterPath]$emitterPath"
+            displayName: Resolve emitter package path
+            workingDirectory: $(Build.SourcesDirectory)
+
+          - pwsh: |
+              Write-Host "Overrides location: $(buildArtifactsPath)/packages/overrides.json"
+              Write-Host "Resolved emitter package path: $(ResolvedEmitterPath)"
 
               if (Test-Path -Path '$(buildArtifactsPath)/packages/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
-                Push-Location $(Build.SourcesDirectory)/eng/common/tsp-client
                 npm exec --no -- tsp-client generate-config-files `
                   --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                  --emitter-package-json-path "$emitterPath" `
+                  --emitter-package-json-path '$(ResolvedEmitterPath)' `
                   --overrides '$(buildArtifactsPath)/packages/overrides.json'
-                Pop-Location
               } else {
                 Write-Host "No overrides.json found. Running tsp-client without overrides."
-                Push-Location $(Build.SourcesDirectory)/eng/common/tsp-client
                 npm exec --no -- tsp-client generate-config-files `
                   --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                  --emitter-package-json-path "$emitterPath"
-                Pop-Location
+                  --emitter-package-json-path '$(ResolvedEmitterPath)'
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
-            workingDirectory: $(Build.SourcesDirectory)
+            workingDirectory: $(Build.SourcesDirectory)/eng/common/tsp-client
 
           - ${{ parameters.InitializationSteps }}
 
