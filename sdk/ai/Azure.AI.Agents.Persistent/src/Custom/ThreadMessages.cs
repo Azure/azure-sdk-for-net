@@ -231,26 +231,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(contentBlocks, nameof(contentBlocks));
 
             // Convert blocks to a JSON array stored as BinaryData
-            var jsonElements = new List<JsonElement>();
-            foreach (MessageInputContentBlock block in contentBlocks)
-            {
-                // Write the content into a MemoryStream.
-                using var memStream = new MemoryStream();
-
-                // Write the RequestContent into the MemoryStream
-                block.ToRequestContent().WriteTo(memStream, default);
-
-                // Reset stream position to the beginning
-                memStream.Position = 0;
-
-                // Parse to a JsonDocument, then clone the root element so we can reuse it
-                using var tempDoc = JsonDocument.Parse(memStream);
-                jsonElements.Add(tempDoc.RootElement.Clone());
-            }
-
-            // Now serialize the array of JsonElements into a single BinaryData for the request:
-            var jsonString = JsonSerializer.Serialize(contentBlocks, JsonElementSerializer.Default.ListJsonElement);
-            BinaryData serializedBlocks = BinaryData.FromString(jsonString);
+            BinaryData serializedBlocks = ConvertMessageInputContentBlocksToJson(contentBlocks);
 
             return await CreateMessageAsync(
                 threadId,
@@ -296,6 +277,21 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(contentBlocks, nameof(contentBlocks));
 
             // Convert blocks to a JSON array stored as BinaryData
+            BinaryData serializedBlocks = ConvertMessageInputContentBlocksToJson(contentBlocks);
+
+            return CreateMessage(
+                threadId,
+                role,
+                serializedBlocks,
+                attachments,
+                metadata,
+                cancellationToken
+            );
+        }
+
+        private static BinaryData ConvertMessageInputContentBlocksToJson(IEnumerable<MessageInputContentBlock> contentBlocks)
+        {
+            // Convert blocks to a JSON array stored as BinaryData
             var jsonElements = new List<JsonElement>();
             foreach (MessageInputContentBlock block in contentBlocks)
             {
@@ -315,16 +311,7 @@ namespace Azure.AI.Agents.Persistent
 
             // Now serialize the array of JsonElements into a single BinaryData for the request:
             var jsonString = JsonSerializer.Serialize(jsonElements, JsonElementSerializer.Default.ListJsonElement);
-            BinaryData serializedBlocks = BinaryData.FromString(jsonString);
-
-            return CreateMessage(
-                threadId,
-                role,
-                serializedBlocks,
-                attachments,
-                metadata,
-                cancellationToken
-            );
+            return BinaryData.FromString(jsonString);
         }
 
         /// <summary> Gets a list of messages that exist on a thread. </summary>
