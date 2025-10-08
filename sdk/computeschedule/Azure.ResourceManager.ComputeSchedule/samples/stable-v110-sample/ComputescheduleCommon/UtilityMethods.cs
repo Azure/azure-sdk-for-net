@@ -37,6 +37,19 @@ namespace UtilityMethods
                         }
                       }
                     ],
+                    ""osProfile"": {
+                        ""computerName"": ""TVP"",
+                        ""adminUsername"": ""username"",
+                        ""adminPassword"": ""YourStr0ngP@ssword123@@@@"",
+                        ""windowsConfiguration"": {
+                          ""provisionVmAgent"": true,
+                          ""enableAutomaticUpdates"": true,
+                          ""patchSettings"": {
+                            ""patchMode"": ""AutomaticByPlatform"",
+                            ""assessmentMode"": ""ImageDefault""
+                          }
+                        }
+                      },
                     ""hardwareProfile"": {
                       ""vmSize"": ""Standard_D2ads_v5""
                     },
