@@ -63,6 +63,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 _logger = loggerFactory.CreateLogger<ZeroToOneScaleMonitor>();
             }
 
+            #pragma warning disable 0649
+            // For tests, in PROD the value is always null
+            private BlobWithContainer<BlobBaseClient> _recentWrite;
+            #pragma warning restore 0649
+
             public ScaleMonitorDescriptor Descriptor => _scaleMonitorDescriptor;
 
             public async Task<ScaleMetrics> GetMetricsAsync()
@@ -72,15 +77,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     // if new blob were detected we want to GetScaleStatus return scale out vote at least once
                     if (Interlocked.Equals(_threadSafeWritesDetectedValue, 1))
                     {
-                        _logger.LogInformation($"Recent writes were detected but GetScaleStatus was not called. Waiting GetScaleStatus to call.");
+                        _logger.LogInformation($"New writes were detectd but GetScaleStatus was not called. Waiting GetScaleStatus to call.");
                         return new ScaleMetrics();
                     }
 
                     var blobLogListener = await _blobLogListener.Value.ConfigureAwait(false);
-                    bool hasBlobWrites = await blobLogListener.HasBlobWritesAsync(CancellationToken.None).ConfigureAwait(false);
-                    if (hasBlobWrites)
+                    BlobWithContainer<BlobBaseClient>[] recentWrites = _recentWrite == null ? (await blobLogListener.GetRecentBlobWritesAsync(CancellationToken.None).ConfigureAwait(false)).ToArray()
+                        : new BlobWithContainer<BlobBaseClient>[] { _recentWrite };
+                    if (recentWrites.Length > 0)
                     {
-                        _logger.LogInformation($"Recent writes were detected for '{_scaleMonitorDescriptor.FunctionId}'");
+                        StringBuilder stringBuilder = new StringBuilder();
+                        foreach (var write in recentWrites)
+                        {
+                            stringBuilder.Append($"'{write.BlobClient.Name}', ");
+                            if (stringBuilder.Length > 1000)
+                            {
+                                stringBuilder.Append("[truncated]");
+                                break;
+                            }
+                        }
+                        _logger.LogInformation($"'{recentWrites.Length}' recent writes were detected for '{_scaleMonitorDescriptor.FunctionId}': {stringBuilder}");
                         Interlocked.CompareExchange(ref _threadSafeWritesDetectedValue, 1, 0);
                     }
                     else
