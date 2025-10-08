@@ -32,14 +32,7 @@
   <Target 
     Name="ExportApiInner"
     DependsOnTargets="Build;RemoveExistingListings;GenerateReferenceAssemblySource"
-    Condition="'$(IsInnerBuild)' == 'true'">
-    
-    <!-- Normalize line endings to LF -->
-    <ItemGroup>
-      <_ApiListingFiles Include="$(GenAPITargetPath)" Condition="Exists('$(GenAPITargetPath)')" />
-    </ItemGroup>
-    <Exec Command="pwsh -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)scripts/Normalize-LineEndings.ps1&quot; -FilePath &quot;%(_ApiListingFiles.Identity)&quot;" Condition="'@(_ApiListingFiles)' != ''" />
-  </Target>
+    Condition="'$(IsInnerBuild)' == 'true'" />
 
   <Target Name="ExportApi" DependsOnTargets="ExportApiCrossTarget;ExportApiInner" Condition="'$(GenerateAPIListing)' == 'true'" />
 
