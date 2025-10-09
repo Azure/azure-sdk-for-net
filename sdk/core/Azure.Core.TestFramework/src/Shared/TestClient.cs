@@ -89,6 +89,11 @@ namespace Azure.Core.TestFramework
 
         public virtual TestClientOperations CachedSubClient => _cachedSubClient;
 
+        public virtual TestSubclient GetSubclientWithoutSuffix()
+        {
+            return new TestSubclient();
+        }
+
         public virtual string MethodA()
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodA)}");

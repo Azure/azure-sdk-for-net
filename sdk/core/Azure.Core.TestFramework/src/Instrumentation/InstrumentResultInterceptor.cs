@@ -34,7 +34,10 @@ namespace Azure.Core.TestFramework
             if ((type.Name.EndsWith("Client") && !type.Name.EndsWith("RestClient") && !type.Name.EndsWith("ExtensionClient")) ||
                 // Generated ARM clients will have a property containing the sub-client that ends with Operations.
                 //TODO: remove after all track2 .net mgmt libraries are updated to the new generation
-                (invocation.Method.Name.StartsWith("get_") && type.Name.EndsWith("Operations")))
+                (invocation.Method.Name.StartsWith("get_") && type.Name.EndsWith("Operations")) ||
+                // Instrument subclients returned from Get* methods or properties, even without "Client" or "Operations" suffix
+                // This handles Azure SDK subclients like Collections, Accounts, ResourceSetRules, etc.
+                (IsSubclientMethod(invocation.Method) && IsLikelyClientType(type)))
             {
                 if (IsNullResult(invocation))
                     return;
@@ -109,6 +112,31 @@ namespace Azure.Core.TestFramework
         {
             invocation.Proceed();
             return invocation.ReturnValue == null;
+        }
+
+        private static bool IsSubclientMethod(MethodInfo method)
+        {
+            // Check if it's a method that looks like it returns a subclient:
+            // - Get* methods (e.g., GetCollectionClient, GetSubclient)
+            // - Property getters
+            return method.Name.StartsWith("Get") || method.Name.StartsWith("get_");
+        }
+
+        private static bool IsLikelyClientType(Type type)
+        {
+            // A type is likely a client if it:
+            // - Is a class (not primitive, interface, etc.)
+            // - Has public virtual methods (indicating it's meant to be instrumented/mocked)
+            // - Is not from System namespace
+            if (!type.IsClass || type.IsPrimitive || type.Namespace?.StartsWith("System") == true)
+            {
+                return false;
+            }
+
+            // Check if the type has any public virtual methods
+            // This helps identify client types that are meant to be instrumented
+            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance);
+            return methods.Any(m => m.IsVirtual && !m.IsFinal && m.DeclaringType == type);
         }
     }
 }

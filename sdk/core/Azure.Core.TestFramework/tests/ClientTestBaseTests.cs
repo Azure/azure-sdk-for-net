@@ -179,6 +179,19 @@ namespace Azure.Core.TestFramework.Tests
         }
 
         [Test]
+        public async Task SubclientWithoutSuffixIsAutoInstrumented()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+
+            TestSubclient subClient = client.GetSubclientWithoutSuffix();
+
+            // Even though this subclient doesn't end with "Client" or "Operations",
+            // it should still be auto-instrumented because it's returned from a Get* method
+            var result = await subClient.MethodAsync(123);
+            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+        }
+
+        [Test]
         public void CanGetUninstrumentedClient()
         {
             var testClient = new TestClient();
