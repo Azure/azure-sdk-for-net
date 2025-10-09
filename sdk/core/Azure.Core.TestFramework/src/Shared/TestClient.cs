@@ -85,6 +85,10 @@ namespace Azure.Core.TestFramework
         }
         public virtual TestClientOperations SubProperty => new TestClientOperations();
 
+        public virtual AnotherType SubClientProperty => new AnotherType();
+
+        public virtual AnotherType GetAnotherType() => new AnotherType();
+
         public virtual string MethodA()
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodA)}");
@@ -117,6 +121,23 @@ namespace Azure.Core.TestFramework
 
             await Task.Yield();
             return nameof(MethodAAsync);
+        }
+    }
+
+#pragma warning disable SA1402
+    internal class AnotherType
+#pragma warning restore SA1402
+    {
+        public virtual HttpPipeline Pipeline { get; }
+
+        public virtual Task<string> MethodAsync(int i, CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult("Async " + i + " " + cancellationToken.CanBeCanceled);
+        }
+
+        public virtual string Method(int i, CancellationToken cancellationToken = default)
+        {
+            return "Sync " + i + " " + cancellationToken.CanBeCanceled;
         }
     }
 }
