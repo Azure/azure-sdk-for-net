@@ -582,7 +582,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 for (int i = ids.Count; i < agentLimit; i++)
                 {
-                    PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+                    PersistentAgent thread = await client.Administration.CreateAgentAsync();
                     ids.Add((await GetAgent(client)).Id);
                 }
             }
