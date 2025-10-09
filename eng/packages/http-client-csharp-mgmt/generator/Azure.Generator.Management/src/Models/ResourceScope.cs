@@ -9,5 +9,6 @@ namespace Azure.Generator.Management.Models
         Subscription,
         ResourceGroup,
         ManagementGroup,
+        Extension,
     }
 }

@@ -21,9 +21,10 @@ try
     }
     else
     {
-        global::Samples.Models.ResponseTypeData current = (await this.GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-        current.Tags.ReplaceWith(tags);
-        global::Azure.Response<global::Samples.ResponseTypeResource> result = await this.UpdateAsync(current, cancellationToken).ConfigureAwait(false);
+        global::Samples.Models.ResponseTypeData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+        global::Samples.Models.ResponseTypeData patch = new global::Samples.Models.ResponseTypeData();
+        patch.Tags.ReplaceWith(tags);
+        global::Azure.Response<global::Samples.ResponseTypeResource> result = await this.UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
         return global::Azure.Response.FromValue(result.Value, result.GetRawResponse());
     }
 }

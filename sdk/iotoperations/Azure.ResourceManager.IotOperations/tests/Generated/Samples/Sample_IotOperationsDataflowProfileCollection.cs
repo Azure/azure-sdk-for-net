@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DataflowProfileCreateOrUpdate()
         {
-            // Generated from example definition: 2024-11-01/DataflowProfile_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/DataflowProfile_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "DataflowProfileResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
 
             // invoke the operation
             string dataflowProfileName = "resource-name123";
-            IotOperationsDataflowProfileData data = new IotOperationsDataflowProfileData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsDataflowProfileData data = new IotOperationsDataflowProfileData
             {
                 Properties = new IotOperationsDataflowProfileProperties
                 {
@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
                     },
                     InstanceCount = 14,
                 },
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsDataflowProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataflowProfileName, data);
             IotOperationsDataflowProfileResource result = lro.Value;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DataflowProfileCreateOrUpdateMinimal()
         {
-            // Generated from example definition: 2024-11-01/DataflowProfile_CreateOrUpdate_Minimal.json
+            // Generated from example definition: 2025-07-01-preview/DataflowProfile_CreateOrUpdate_Minimal.json
             // this example is just showing the usage of "DataflowProfileResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,12 +89,13 @@ namespace Azure.ResourceManager.IotOperations.Samples
 
             // invoke the operation
             string dataflowProfileName = "aio-dataflowprofile";
-            IotOperationsDataflowProfileData data = new IotOperationsDataflowProfileData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsDataflowProfileData data = new IotOperationsDataflowProfileData
             {
                 Properties = new IotOperationsDataflowProfileProperties
                 {
                     InstanceCount = 1,
                 },
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsDataflowProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataflowProfileName, data);
             IotOperationsDataflowProfileResource result = lro.Value;
@@ -109,7 +111,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DataflowProfileCreateOrUpdateMulti()
         {
-            // Generated from example definition: 2024-11-01/DataflowProfile_CreateOrUpdate_Multi.json
+            // Generated from example definition: 2025-07-01-preview/DataflowProfile_CreateOrUpdate_Multi.json
             // this example is just showing the usage of "DataflowProfileResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,12 +132,13 @@ namespace Azure.ResourceManager.IotOperations.Samples
 
             // invoke the operation
             string dataflowProfileName = "aio-dataflowprofile";
-            IotOperationsDataflowProfileData data = new IotOperationsDataflowProfileData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsDataflowProfileData data = new IotOperationsDataflowProfileData
             {
                 Properties = new IotOperationsDataflowProfileProperties
                 {
                     InstanceCount = 3,
                 },
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsDataflowProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataflowProfileName, data);
             IotOperationsDataflowProfileResource result = lro.Value;
@@ -151,7 +154,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DataflowProfileGet()
         {
-            // Generated from example definition: 2024-11-01/DataflowProfile_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/DataflowProfile_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "DataflowProfileResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +188,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DataflowProfileListByResourceGroup()
         {
-            // Generated from example definition: 2024-11-01/DataflowProfile_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/DataflowProfile_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "DataflowProfileResource_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -221,7 +224,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_DataflowProfileGet()
         {
-            // Generated from example definition: 2024-11-01/DataflowProfile_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/DataflowProfile_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "DataflowProfileResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -251,7 +254,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DataflowProfileGet()
         {
-            // Generated from example definition: 2024-11-01/DataflowProfile_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/DataflowProfile_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "DataflowProfileResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

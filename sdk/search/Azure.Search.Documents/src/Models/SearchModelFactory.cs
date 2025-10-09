@@ -199,7 +199,7 @@ namespace Azure.Search.Documents.Models
             IndexerExecutionResult lastResult,
             IReadOnlyList<IndexerExecutionResult> executionHistory,
             SearchIndexerLimits limits) =>
-            new SearchIndexerStatus(status, lastResult, executionHistory, limits, default, serializedAdditionalRawData: null);
+            new SearchIndexerStatus(default, status, lastResult, executionHistory, limits, default, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
         /// <param name="status"> Overall indexer status. </param>
@@ -212,7 +212,7 @@ namespace Azure.Search.Documents.Models
         {
             executionHistory ??= new List<IndexerExecutionResult>();
 
-            return new SearchIndexerStatus(status, lastResult, executionHistory?.ToList(), limits, default, serializedAdditionalRawData: null);
+            return new SearchIndexerStatus(default, status, lastResult, executionHistory?.ToList(), limits, default, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of SearchIndexerWarning. </summary>

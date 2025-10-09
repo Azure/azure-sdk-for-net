@@ -47,16 +47,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Initializes a new instance of <see cref="ScheduledOperationsTypeUpdate"/>. </summary>
         /// <param name="dayOfWeek"> Day of week. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dayOfWeek"/> is null. </exception>
-        public ScheduledOperationsTypeUpdate(OracleDatabaseDayOfWeekUpdate dayOfWeek)
-        {
-            Argument.AssertNotNull(dayOfWeek, nameof(dayOfWeek));
-
-            DayOfWeek = dayOfWeek;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ScheduledOperationsTypeUpdate"/>. </summary>
-        /// <param name="dayOfWeek"> Day of week. </param>
         /// <param name="autoStartOn"> auto start time. value must be of ISO-8601 format HH:mm. </param>
         /// <param name="autoStopOn"> auto stop time. value must be of ISO-8601 format HH:mm. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -67,16 +57,22 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             AutoStopOn = autoStopOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Day of week. </summary>
-        internal OracleDatabaseDayOfWeekUpdate DayOfWeek { get; set; }
         /// <summary> Name of the day of the week. </summary>
         public OracleDatabaseDayOfWeekName? DayOfWeekName
         {
             get => DayOfWeek is null ? default(OracleDatabaseDayOfWeekName?) : DayOfWeek.Name;
             set
             {
-                DayOfWeek = value.HasValue ? new OracleDatabaseDayOfWeekUpdate(value.Value) : null;
+                if (value.HasValue)
+                {
+                    if (DayOfWeek is null)
+                        DayOfWeek = new OracleDatabaseDayOfWeekUpdate();
+                    DayOfWeek.Name = value.Value;
+                }
+                else
+                {
+                    DayOfWeek = null;
+                }
             }
         }
 

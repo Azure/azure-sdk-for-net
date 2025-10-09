@@ -1,6 +1,6 @@
 # Azure Identity client library for .NET
 
-The Azure Identity library provides [Microsoft Entra ID](https://learn.microsoft.com/entra/fundamentals/whatis) ([formerly Azure Active Directory](https://learn.microsoft.com/entra/fundamentals/new-name)) token authentication support across the Azure SDK. It provides a set of [`TokenCredential`](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) implementations that can be used to construct Azure SDK clients that support Microsoft Entra token authentication.
+The Azure Identity library provides [Microsoft Entra ID](https://learn.microsoft.com/entra/fundamentals/whatis) token-based authentication support across the Azure SDK. It provides a set of [`TokenCredential`](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) implementations that can be used to construct Azure SDK clients that support Microsoft Entra token authentication.
 
 [Source code][source] | [Package (NuGet)][package] | [API reference documentation][identity_api_docs] | [Microsoft Entra ID documentation][entraid_doc]
 
@@ -21,39 +21,7 @@ dotnet add package Azure.Identity
 
 ### Authenticate the client
 
-When debugging and executing code locally, it's typical for a developer to use their own account for authenticating calls to Azure services. There are several developer tools that can be used to perform this authentication in your development environment.
-
-#### Authenticate via Visual Studio
-
-Developers using Visual Studio 2017 or later can authenticate a Microsoft Entra account through the IDE. Apps using `DefaultAzureCredential` or `VisualStudioCredential` can then use this account to authenticate calls in their app when running locally.
-
-To authenticate in Visual Studio, select the **Tools** > **Options** menu to launch the **Options** dialog. Then navigate to the **Azure Service Authentication** options to sign in with your Microsoft Entra account.
-
-![Visual Studio Account Selection][vs_login_image]
-
-#### Authenticate via the Azure CLI
-
-Developers coding outside of an IDE can also use the [Azure CLI][azure_cli] to authenticate. Apps using `DefaultAzureCredential` or `AzureCliCredential` can then use this account to authenticate calls in their app when running locally.
-
-To authenticate with the Azure CLI, run the command `az login`. For users running on a system with a default web browser, the Azure CLI launches the browser to authenticate the user.
-
-![Azure CLI Account Sign In][azure_cli_login_image]
-
-For systems without a default web browser, the `az login` command uses the device code authentication flow. The user can also force the Azure CLI to use the device code flow rather than launching a browser by specifying the `--use-device-code` argument.
-
-![Azure CLI Account Device Code Sign In][azure_cli_login_device_code_image]
-
-#### Authenticate via the Azure Developer CLI
-
-Developers coding outside of an IDE can also use the [Azure Developer CLI][azure_developer_cli] to authenticate. Apps using `DefaultAzureCredential` or `AzureDeveloperCliCredential` can then use this account to authenticate calls in their app when running locally.
-
-To authenticate with the Azure Developer CLI, run the command `azd auth login`. For users running on a system with a default web browser, the Azure Developer CLI launches the browser to authenticate the user. For systems without a default web browser, the `azd auth login --use-device-code` command uses the device code authentication flow.
-
-#### Authenticate via Azure PowerShell
-
-Developers coding outside of an IDE can also use [Azure PowerShell][azure_powerShell] to authenticate. Apps using `DefaultAzureCredential` or `AzurePowerShellCredential` can then use this account to authenticate calls in their app when running locally.
-
-To authenticate with Azure PowerShell, run the command `Connect-AzAccount`. For users running on a system with a default web browser and version 5.0.0 or later of Azure PowerShell, it launches the browser to authenticate the user. For systems without a default web browser, the `Connect-AzAccount` command uses the device code authentication flow. The user can also force Azure PowerShell to use the device code flow rather than launching a browser by specifying the `UseDeviceAuthentication` argument.
+When debugging and executing code locally, it's typical for a developer to use their own account for authenticating calls to Azure services. There are several developer tools that can be used to perform this authentication in your development environment. For more information, see [Authentication during local development](https://learn.microsoft.com/dotnet/azure/sdk/authentication/#authentication-during-local-development).
 
 ## Key concepts
 
@@ -202,6 +170,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 |[`AzureDeveloperCliCredential`][ref_AzureDeveloperCliCredential]|Authenticates in a development environment with the Azure Developer CLI. | [Azure Developer CLI Reference](https://learn.microsoft.com/azure/developer/azure-developer-cli/reference)|
 |[`AzurePowerShellCredential`][ref_AzurePowerShellCredential]|Authenticates in a development environment with the Azure PowerShell. | [Azure PowerShell authentication](https://learn.microsoft.com/powershell/azure/authenticate-azureps)|
 |[`VisualStudioCredential`][ref_VisualStudioCredential]|Authenticates in a development environment with Visual Studio. | [Visual Studio configuration](https://learn.microsoft.com/dotnet/azure/configure-visual-studio)|
+|[`VisualStudioCodeCredential`][ref_VisualStudioCodeCredential]|Authenticates in a development environment with Visual Studio Code. | [Visual Studio Code configuration](https://learn.microsoft.com/dotnet/azure/configure-vs-code)|
 
 > __Note:__ All credential implementations in the Azure Identity library are threadsafe, and a single credential instance can be used by multiple service clients.
 
@@ -255,7 +224,7 @@ The Azure Identity library offers both in-memory and persistent disk caching. Fo
 
 ## Brokered authentication
 
-An authentication broker is an app that runs on a user's machine and manages the authentication handshakes and token maintenance for connected accounts. Currently, only Windows is supported via Web Account Manager (WAM). To enable support, use the [Azure.Identity.Broker](https://www.nuget.org/packages/Azure.Identity.Broker) package.
+An authentication broker is an app that runs on a user's machine and manages the authentication handshakes and token maintenance for connected accounts. To enable support, use the [Azure.Identity.Broker](https://www.nuget.org/packages/Azure.Identity.Broker) package.
 
 ## Troubleshooting
 
@@ -322,8 +291,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [azure_cli]: https://learn.microsoft.com/cli/azure
-[azure_developer_cli]:https://aka.ms/azure-dev
-[azure_powerShell]: https://learn.microsoft.com/powershell/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/src
 [package]: https://www.nuget.org/packages/Azure.Identity
@@ -334,9 +301,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [blobs_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core
 [identity_api_docs]: https://learn.microsoft.com/dotnet/api/azure.identity?view=azure-dotnet
-[vs_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/VsLoginDialog.png
-[azure_cli_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/AzureCliLogin.png
-[azure_cli_login_device_code_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/AzureCliLoginDeviceCode.png
 [ctc_overview]: https://aka.ms/azsdk/net/identity/credential-chains#chainedtokencredential-overview
 [dac_overview]: https://aka.ms/azsdk/net/identity/credential-chains#defaultazurecredential-overview
 [ref_AuthorizationCodeCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.authorizationcodecredential?view=azure-dotnet
@@ -355,6 +319,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [ref_ManagedIdentityCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.managedidentitycredential?view=azure-dotnet
 [ref_OnBehalfOfCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.onbehalfofcredential?view=azure-dotnet
 [ref_VisualStudioCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocredential?view=azure-dotnet
+[ref_VisualStudioCodeCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocodecredential?view=azure-dotnet
 [ref_WorkloadIdentityCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.workloadidentitycredential?view=azure-dotnet
 [cae]: https://learn.microsoft.com/entra/identity/conditional-access/concept-continuous-access-evaluation
 [sami_doc]: https://learn.microsoft.com/dotnet/azure/sdk/authentication/system-assigned-managed-identity

@@ -39,6 +39,11 @@ namespace Azure.Search.Documents.Agents.Models
             writer.WriteNumberValue(Id);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
+            if (Optional.IsDefined(ElapsedMs))
+            {
+                writer.WritePropertyName("elapsedMs"u8);
+                writer.WriteNumberValue(ElapsedMs.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,9 +85,12 @@ namespace Azure.Search.Documents.Agents.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureSearchQuery": return KnowledgeAgentSearchActivityRecord.DeserializeKnowledgeAgentSearchActivityRecord(element, options);
-                    case "AzureSearchSemanticRanker": return KnowledgeAgentSemanticRankerActivityRecord.DeserializeKnowledgeAgentSemanticRankerActivityRecord(element, options);
-                    case "ModelQueryPlanning": return KnowledgeAgentModelQueryPlanningActivityRecord.DeserializeKnowledgeAgentModelQueryPlanningActivityRecord(element, options);
+                    case "azureBlob": return KnowledgeAgentAzureBlobActivityRecord.DeserializeKnowledgeAgentAzureBlobActivityRecord(element, options);
+                    case "KnowledgeAgentRetrievalActivityRecord": return KnowledgeAgentRetrievalActivityRecord.DeserializeKnowledgeAgentRetrievalActivityRecord(element, options);
+                    case "modelAnswerSynthesis": return KnowledgeAgentModelAnswerSynthesisActivityRecord.DeserializeKnowledgeAgentModelAnswerSynthesisActivityRecord(element, options);
+                    case "modelQueryPlanning": return KnowledgeAgentModelQueryPlanningActivityRecord.DeserializeKnowledgeAgentModelQueryPlanningActivityRecord(element, options);
+                    case "searchIndex": return KnowledgeAgentSearchIndexActivityRecord.DeserializeKnowledgeAgentSearchIndexActivityRecord(element, options);
+                    case "semanticReranker": return KnowledgeAgentSemanticRerankerActivityRecord.DeserializeKnowledgeAgentSemanticRerankerActivityRecord(element, options);
                 }
             }
             return UnknownKnowledgeAgentActivityRecord.DeserializeUnknownKnowledgeAgentActivityRecord(element, options);

@@ -21,9 +21,14 @@ try
     }
     else
     {
-        global::Samples.Models.ResponseTypeData current = (this.Get(cancellationToken)).Value.Data;
-        current.Tags[key] = value;
-        global::Azure.Response<global::Samples.ResponseTypeResource> result = this.Update(current, cancellationToken);
+        global::Samples.Models.ResponseTypeData current = (this.Get(cancellationToken: cancellationToken)).Value.Data;
+        global::Samples.Models.ResponseTypeData patch = new global::Samples.Models.ResponseTypeData();
+        foreach (global::System.Collections.Generic.KeyValuePair<string, string> tag in current.Tags)
+        {
+            patch.Tags.Add(tag);
+        }
+        patch.Tags[key] = value;
+        global::Azure.Response<global::Samples.ResponseTypeResource> result = this.Update(patch, cancellationToken);
         return global::Azure.Response.FromValue(result.Value, result.GetRawResponse());
     }
 }
