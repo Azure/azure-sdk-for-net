@@ -11,6 +11,7 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.AgriculturePlatform;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="dataConnectorCredentials"> Data connector credentials of AgriService instance. </param>
         /// <param name="installedSolutions"> AgriService installed solutions. </param>
         /// <returns> A new <see cref="Models.AgricultureServiceProperties"/> instance for mocking. </returns>
-        public static AgricultureServiceProperties AgricultureServiceProperties(AgriculturePlatformProvisioningState? provisioningState = default, AgricultureServiceConfig config = default, IReadOnlyList<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default, IEnumerable<DataConnectorCredentialMap> dataConnectorCredentials = default, IEnumerable<InstalledSolutionMap> installedSolutions = default)
+        public static AgricultureServiceProperties AgricultureServiceProperties(AgriculturePlatformProvisioningState? provisioningState = default, AgricultureServiceConfig config = default, IReadOnlyList<SubResource> managedOnBehalfOfMoboBrokerResources = default, IEnumerable<DataConnectorCredentialMap> dataConnectorCredentials = default, IEnumerable<InstalledSolutionMap> installedSolutions = default)
         {
             dataConnectorCredentials ??= new ChangeTrackingList<DataConnectorCredentialMap>();
             installedSolutions ??= new ChangeTrackingList<InstalledSolutionMap>();
@@ -86,17 +87,6 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 keyVaultResourceId,
                 redisCacheResourceId,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> MoboBroker resource. </summary>
-        /// <param name="id">
-        /// The fully qualified resource ID of the MoboBroker resource.
-        /// Example: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}`
-        /// </param>
-        /// <returns> A new <see cref="Models.MoboBrokerResource"/> instance for mocking. </returns>
-        public static MoboBrokerResource MoboBrokerResource(ResourceIdentifier id = default)
-        {
-            return new MoboBrokerResource(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The type used for update operations of the AgriServiceResource. </summary>

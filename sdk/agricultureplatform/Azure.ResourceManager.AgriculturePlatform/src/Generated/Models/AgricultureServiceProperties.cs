@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.AgriculturePlatform;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public IList<InstalledSolutionMap> InstalledSolutions { get; }
 
         /// <summary> Associated MoboBrokerResources. </summary>
-        public IReadOnlyList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
+        public IReadOnlyList<SubResource> ManagedOnBehalfOfMoboBrokerResources
         {
             get
             {
