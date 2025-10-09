@@ -35,6 +35,10 @@ namespace Azure.Generator.Management.Providers
         private readonly ResourceMethod? _create;
         private readonly ResourceMethod? _get;
 
+        // Cached Get method providers
+        private MethodProvider? _getAsyncMethodProvider;
+        private MethodProvider? _getSyncMethodProvider;
+
         // Support for multiple rest clients
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
@@ -117,6 +121,30 @@ namespace Azure.Generator.Management.Providers
         public IReadOnlyList<FieldProvider> PathParameterFields => _pathParameterMap.Values.ToList();
         public IReadOnlyList<ParameterProvider> PathParameters => _pathParameterMap.Keys.ToList();
         public RequestPathPattern ContextualPath => _contextualPath;
+
+        // Cached Get method providers for reuse in other places
+        public MethodProvider? GetAsyncMethodProvider
+        {
+            get
+            {
+                if (_get is not null && _getAsyncMethodProvider is null)
+                {
+                    _getAsyncMethodProvider = BuildGetMethod(isAsync: true);
+                }
+                return _getAsyncMethodProvider;
+            }
+        }
+        public MethodProvider? GetSyncMethodProvider
+        {
+            get
+            {
+                if (_get is not null && _getSyncMethodProvider is null)
+                {
+                    _getSyncMethodProvider = BuildGetMethod(isAsync: false);
+                }
+                return _getSyncMethodProvider;
+            }
+        }
 
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
@@ -337,6 +365,17 @@ namespace Azure.Generator.Management.Providers
             };
         }
 
+        private MethodProvider? BuildGetMethod(bool isAsync)
+        {
+            if (_get is null)
+            {
+                return null;
+            }
+
+            var restClientInfo = _clientInfos[_get.InputClient];
+            return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
+        }
+
         private List<MethodProvider> BuildGetMethods()
         {
             if (_get is null)
@@ -344,14 +383,19 @@ namespace Azure.Generator.Management.Providers
                 return [];
             }
 
-            var result = new List<MethodProvider>();
-            var restClientInfo = _clientInfos[_get.InputClient];
-            foreach (var isAsync in new List<bool> { true, false })
+            // Check if async method provider is null and build it if needed
+            if (_getAsyncMethodProvider is null)
             {
-                result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync));
+                _getAsyncMethodProvider = BuildGetMethod(isAsync: true);
             }
 
-            return result;
+            // Check if sync method provider is null and build it if needed
+            if (_getSyncMethodProvider is null)
+            {
+                _getSyncMethodProvider = BuildGetMethod(isAsync: false);
+            }
+
+            return [_getAsyncMethodProvider, _getSyncMethodProvider];
         }
 
         private List<MethodProvider> BuildExistsMethods()

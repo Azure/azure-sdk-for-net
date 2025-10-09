@@ -470,10 +470,7 @@ namespace Azure.Generator.Management.Providers
             }
 
             // add method to get the child resource collection from the current resource.
-            foreach (var childResource in ChildResources)
-            {
-                methods.Add(BuildGetChildResourceMethod(childResource));
-            }
+            methods.AddRange(BuildGetChildResourceMethods());
 
             return [.. methods];
         }
@@ -495,23 +492,62 @@ namespace Azure.Generator.Management.Providers
             return (false, putClient);
         }
 
-        private MethodProvider BuildGetChildResourceMethod(ResourceClientProvider childResource)
+        private List<MethodProvider> BuildGetChildResourceMethods()
         {
-            var thisResource = This.As<ArmResource>();
-            if (childResource.IsSingleton)
+            var methods = new List<MethodProvider>();
+
+            foreach (var childResource in ChildResources)
             {
-                var signature = childResource.FactoryMethodSignature;
-                var lastSegment = childResource.ResourceTypeValue.Split('/')[^1];
-                var bodyStatement = Return(New.Instance(childResource.Type, thisResource.Client(), thisResource.Id().AppendChildResource(Literal(lastSegment), Literal(childResource.SingletonResourceName!))));
-                return new MethodProvider(signature, bodyStatement, this);
+                var thisResource = This.As<ArmResource>();
+                if (childResource.IsSingleton)
+                {
+                    var signature = childResource.FactoryMethodSignature;
+                    var lastSegment = childResource.ResourceTypeValue.Split('/')[^1];
+                    var bodyStatement = Return(New.Instance(childResource.Type, thisResource.Client(), thisResource.Id().AppendChildResource(Literal(lastSegment), Literal(childResource.SingletonResourceName!))));
+                    methods.Add(new MethodProvider(signature, bodyStatement, this));
+                }
+                else
+                {
+                    Debug.Assert(childResource.ResourceCollection is not null, "Child resource collection should not be null for non-singleton resources.");
+                    var signature = childResource.FactoryMethodSignature;
+                    var bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(childResource.ResourceCollection.Type, client, thisResource.Id())));
+                    methods.Add(new MethodProvider(signature, bodyStatement, this));
+                    // Add Get methods backed by collection's Get and GetAsync methods
+                    if (childResource.ResourceCollection.GetAsyncMethodProvider is not null && childResource.ResourceCollection.GetSyncMethodProvider is not null)
+                    {
+                        // Create both async and sync Get methods
+                        var methodProviders = new[]
+                        {
+                            (childResource.ResourceCollection.GetAsyncMethodProvider, true, "Async"),
+                            (childResource.ResourceCollection.GetSyncMethodProvider, false, "")
+                        };
+
+                        foreach (var (collectionMethodProvider, isAsync, suffix) in methodProviders)
+                        {
+                            var collectionSignature = collectionMethodProvider.Signature;
+                            var getMethodName = $"Get{childResource.ResourceName}{suffix}";
+
+                            var getSignature = new MethodSignature(
+                                getMethodName,
+                                collectionSignature.Description,
+                                collectionSignature.Modifiers,
+                                collectionSignature.ReturnType,
+                                collectionSignature.ReturnDescription,
+                                collectionSignature.Parameters,
+                                [new AttributeStatement(typeof(ForwardsClientCallsAttribute))],
+                                collectionSignature.GenericArguments);
+
+                            var getBodyStatement = Return(
+                                thisResource.Invoke(signature.Name)
+                                    .Invoke(collectionSignature.Name, collectionSignature.Parameters.Select(p => p.AsArgument()).ToArray(), null, isAsync));
+
+                            methods.Add(new MethodProvider(getSignature, getBodyStatement, this));
+                        }
+                    }
+                }
             }
-            else
-            {
-                Debug.Assert(childResource.ResourceCollection is not null, "Child resource collection should not be null for non-singleton resources.");
-                var signature = childResource.FactoryMethodSignature;
-                var bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(childResource.ResourceCollection.Type, client, thisResource.Id())));
-                return new MethodProvider(signature, bodyStatement, this);
-            }
+
+            return methods;
         }
 
         private bool HasTags()
