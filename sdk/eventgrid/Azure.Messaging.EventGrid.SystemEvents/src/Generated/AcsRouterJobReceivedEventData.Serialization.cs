@@ -41,11 +41,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AcsRouterJobReceivedEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("jobStatus"u8);
-                writer.WriteStringValue(Status.Value.ToString());
-            }
+            writer.WritePropertyName("jobStatus"u8);
+            writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(ClassificationPolicyId))
             {
                 writer.WritePropertyName("classificationPolicyId"u8);
@@ -107,7 +104,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string queueId = default;
             IReadOnlyDictionary<string, string> labels = default;
             IReadOnlyDictionary<string, string> tags = default;
-            AcsRouterJobStatus? status = default;
+            AcsRouterJobStatus status = default;
             string classificationPolicyId = default;
             int? priority = default;
             IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors = default;
