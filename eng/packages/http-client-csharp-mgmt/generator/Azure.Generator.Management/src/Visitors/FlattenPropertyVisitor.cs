@@ -181,6 +181,12 @@ namespace Azure.Generator.Management.Visitors
                 {
                     // If the additionalProperties parameter exists, we need to pass a new instance for it.
                     parameters.Add(New.Instance(new CSharpType(typeof(Dictionary<string, BinaryData>))));
+
+                    // If the additionalProperties parameter is the last parameter, we can break the loop.
+                    if (additionalPropertyIndex == fullConstructorParameters.Count - 1)
+                    {
+                        break;
+                    }
                     fullConstructorParameterIndex++;
                 }
                 var (isOverriddenValueType, flattenedProperty) = flattenedProperties[i];
