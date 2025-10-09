@@ -161,7 +161,7 @@ namespace Azure.Core.TestFramework.Tests
         {
             TestClient client = InstrumentClient(new TestClient());
 
-            TestClient subClient = client.SubClientProperty;
+            AnotherType subClient = client.SubClientProperty;
             var result = await subClient.MethodAsync(123);
 
             Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
