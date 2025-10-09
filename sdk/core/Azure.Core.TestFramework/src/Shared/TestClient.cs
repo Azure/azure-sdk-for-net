@@ -13,6 +13,7 @@ namespace Azure.Core.TestFramework
     internal class TestClient
     {
         private readonly ClientDiagnostics _diagnostics;
+        private readonly TestClientOperations _cachedSubClient;
 
         public TestClient() : this(null)
         {
@@ -22,6 +23,7 @@ namespace Azure.Core.TestFramework
         {
             options ??= new TestClientOptions();
             _diagnostics = new ClientDiagnostics(options);
+            _cachedSubClient = new TestClientOperations();
         }
 
         public virtual Task<string> MethodAsync(int i, CancellationToken cancellationToken = default)
@@ -84,6 +86,8 @@ namespace Azure.Core.TestFramework
             return new TestClient();
         }
         public virtual TestClientOperations SubProperty => new TestClientOperations();
+
+        public virtual TestClientOperations CachedSubClient => _cachedSubClient;
 
         public virtual string MethodA()
         {
