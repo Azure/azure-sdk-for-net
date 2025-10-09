@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="SessionResponseItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="object"></param>
+        /// <param name="object"> Gets the Object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SessionResponseItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -44,8 +44,5 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the Id. </summary>
         public string Id { get; }
-
-        /// <summary> Gets the Object. </summary>
-        public string Object { get; }
     }
 }

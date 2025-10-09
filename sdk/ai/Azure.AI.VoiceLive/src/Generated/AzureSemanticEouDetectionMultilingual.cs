@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     public partial class AzureSemanticEouDetectionMultilingual : EouDetection
     {
         /// <summary> Initializes a new instance of <see cref="AzureSemanticEouDetectionMultilingual"/>. </summary>
-        public AzureSemanticEouDetectionMultilingual() : base(EOUDetectionModel.SemanticDetectionV1Multilingual)
+        public AzureSemanticEouDetectionMultilingual() : base(EouDetectionModel.SemanticDetectionV1Multilingual)
         {
         }
 
@@ -23,7 +23,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="thresholdLevel"> Threshold level setting. Recommended instead of `threshold`. One of `low`, `medium`, `high`, or `default`. </param>
         /// <param name="timeoutMs"> Gets or sets the Timeout. </param>
-        internal AzureSemanticEouDetectionMultilingual(EOUDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties, EouThresholdLevel? thresholdLevel, float? timeoutMs) : base(model, additionalBinaryDataProperties)
+        internal AzureSemanticEouDetectionMultilingual(EouDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties, EouThresholdLevel? thresholdLevel, float? timeoutMs) : base(model, additionalBinaryDataProperties)
         {
             ThresholdLevel = thresholdLevel;
             TimeoutMs = timeoutMs;
