@@ -58,6 +58,7 @@ namespace Azure.Storage.Blobs.Models
                 signedExpiresOn,
                 signedService,
                 signedVersion,
+                default,
                 value);
         }
 
@@ -2036,6 +2037,7 @@ namespace Azure.Storage.Blobs.Models
                 signedExpiresOn,
                 signedService,
                 signedVersion,
+                default,
                 value);
         }
         #endregion

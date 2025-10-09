@@ -21,6 +21,7 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset signedExpiresOn = default;
             string signedService = default;
             string signedVersion = default;
+            string signedDelegatedUserTid = default;
             string value = default;
             if (element.Element("SignedOid") is XElement signedOidElement)
             {
@@ -46,6 +47,10 @@ namespace Azure.Storage.Blobs.Models
             {
                 signedVersion = (string)signedVersionElement;
             }
+            if (element.Element("SignedDelegatedUserTid") is XElement signedDelegatedUserTidElement)
+            {
+                signedDelegatedUserTid = (string)signedDelegatedUserTidElement;
+            }
             if (element.Element("Value") is XElement valueElement)
             {
                 value = (string)valueElement;
@@ -57,6 +62,7 @@ namespace Azure.Storage.Blobs.Models
                 signedExpiresOn,
                 signedService,
                 signedVersion,
+                signedDelegatedUserTid,
                 value);
         }
     }

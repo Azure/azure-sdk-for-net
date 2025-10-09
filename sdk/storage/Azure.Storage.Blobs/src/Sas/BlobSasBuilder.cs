@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -188,6 +189,13 @@ namespace Azure.Storage.Sas
         /// issued to the user specified in this value.
         /// </summary>
         public string DelegatedUserObjectId { get; set; }
+
+        /// <summary>
+        /// Optional. This value  specifies the Entra ID of the tenant that is authorized to
+        /// use the resulting SAS URL.  The resulting SAS URL must be used in conjunction with an Entra ID token that has been
+        /// issued to the user specified in this value.
+        /// </summary>
+        public string DelegatedUserTenantId { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
@@ -428,7 +436,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, BlobGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
@@ -445,7 +453,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync(DateTimeOffset, BlobGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
@@ -491,7 +499,8 @@ namespace Azure.Storage.Sas
                 authorizedAadObjectId: PreauthorizedAgentObjectId,
                 correlationId: CorrelationId,
                 encryptionScope: EncryptionScope,
-                delegatedUserObjectId: DelegatedUserObjectId);
+                delegatedUserObjectId: DelegatedUserObjectId,
+                delegatedUserTenantId: DelegatedUserTenantId);
             return p;
         }
 
@@ -517,7 +526,7 @@ namespace Azure.Storage.Sas
                     PreauthorizedAgentObjectId,
                     null, // AgentObjectId - enabled only in HNS accounts
                     CorrelationId,
-                    null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
+                    DelegatedUserTenantId,
                     DelegatedUserObjectId,
                     IPRange.ToString(),
                     SasExtensions.ToProtocolString(Protocol),

@@ -543,6 +543,8 @@ namespace Azure.Storage
         {
             public const string ObjectId = "oid";
 
+            public const string TenantId = "tid";
+
             internal static class Permissions
             {
                 public const char Read = 'r';
@@ -622,6 +624,8 @@ namespace Azure.Storage
                 public const string EncryptionScopeUpper = "SES";
                 public const string DelegatedUserObjectId = "sduoid";
                 public const string DelegatedUserObjectIdUpper = "SDUOID";
+                public const string DelegatedUserTenantId = "skdutid";
+                public const string DelegatedUserTenantIdUpper = "SKDUTID";
             }
 
             internal static class Resource
