@@ -175,15 +175,15 @@ namespace Azure.Generator.Management.Visitors
 
             var parameters = new List<ValueExpression>();
             var additionalPropertyIndex = GetAdditionalPropertyIndex();
-            for (int i = 0, fullConstructorParameterIndex = 0; i < flattenedProperties.Count; i++, fullConstructorParameterIndex++)
+            for (int i = 0, fullConstructorParameterIndex = 0; i < flattenedProperties.Count && fullConstructorParameterIndex < fullConstructorParameters.Count; fullConstructorParameterIndex++)
             {
-                if (i == additionalPropertyIndex)
+                if (fullConstructorParameterIndex == additionalPropertyIndex)
                 {
                     // If the additionalProperties parameter exists, we need to pass a new instance for it.
                     parameters.Add(New.Instance(new CSharpType(typeof(Dictionary<string, BinaryData>))));
 
                     // If the additionalProperties parameter is the last parameter, we can break the loop.
-                    if (additionalPropertyIndex == fullConstructorParameters.Count - 1)
+                    if (fullConstructorParameterIndex == fullConstructorParameters.Count - 1)
                     {
                         break;
                     }
@@ -204,6 +204,7 @@ namespace Azure.Generator.Management.Visitors
                     {
                         parameters.Add(isOverriddenValueType ? propertyParameter.Property("Value") : propertyParameter);
                     }
+                    i++;
                 }
                 else
                 {
@@ -220,7 +221,7 @@ namespace Azure.Generator.Management.Visitors
             }
 
             // If the additionalProperties parameter exists at the end, we need to pass a new instance for it.
-            if (additionalPropertyIndex == propertyModelType!.FullConstructor.Signature.Parameters.Count - 1)
+            if (parameters.Count < fullConstructorParameters.Count && additionalPropertyIndex == propertyModelType!.FullConstructor.Signature.Parameters.Count - 1)
             {
                 parameters.Add(New.Instance(new CSharpType(typeof(Dictionary<string, BinaryData>))));
             }
