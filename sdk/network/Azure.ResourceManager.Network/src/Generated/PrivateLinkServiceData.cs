@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancerFrontendIPConfigurations"> An array of references to the load balancer IP configurations. </param>
         /// <param name="ipConfigurations"> An array of private link service IP configurations. </param>
         /// <param name="destinationIPAddress"> The destination IP address of the private link service. </param>
+        /// <param name="accessMode"> The access mode of the private link service. </param>
         /// <param name="networkInterfaces"> An array of references to the network interfaces created for this private link service. </param>
         /// <param name="provisioningState"> The provisioning state of the private link service resource. </param>
         /// <param name="privateEndpointConnections"> An array of list about connections to the private endpoint. </param>
@@ -49,13 +50,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="fqdns"> The list of Fqdn. </param>
         /// <param name="alias"> The alias of the private link service. </param>
         /// <param name="enableProxyProtocol"> Whether the private link service is enabled for proxy protocol or not. </param>
-        internal PrivateLinkServiceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations, IList<PrivateLinkServiceIPConfiguration> ipConfigurations, string destinationIPAddress, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal PrivateLinkServiceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations, IList<PrivateLinkServiceIPConfiguration> ipConfigurations, string destinationIPAddress, AccessMode? accessMode, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;
             LoadBalancerFrontendIPConfigurations = loadBalancerFrontendIPConfigurations;
             IPConfigurations = ipConfigurations;
             DestinationIPAddress = destinationIPAddress;
+            AccessMode = accessMode;
             NetworkInterfaces = networkInterfaces;
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -81,6 +83,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> The destination IP address of the private link service. </summary>
         [WirePath("properties.destinationIPAddress")]
         public string DestinationIPAddress { get; set; }
+        /// <summary> The access mode of the private link service. </summary>
+        [WirePath("properties.accessMode")]
+        public AccessMode? AccessMode { get; set; }
         /// <summary> An array of references to the network interfaces created for this private link service. </summary>
         [WirePath("properties.networkInterfaces")]
         public IReadOnlyList<NetworkInterfaceData> NetworkInterfaces { get; }

@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("pickHostNameFromBackendAddress"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendAddress.Value);
             }
+            if (Optional.IsDefined(EnableL4ClientIPPreservation))
+            {
+                writer.WritePropertyName("enableL4ClientIpPreservation"u8);
+                writer.WriteBooleanValue(EnableL4ClientIPPreservation.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -124,6 +129,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<WritableSubResource> trustedRootCertificates = default;
             string hostName = default;
             bool? pickHostNameFromBackendAddress = default;
+            bool? enableL4ClientIPPreservation = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -234,6 +240,15 @@ namespace Azure.ResourceManager.Network.Models
                             pickHostNameFromBackendAddress = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("enableL4ClientIpPreservation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableL4ClientIPPreservation = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -265,6 +280,7 @@ namespace Azure.ResourceManager.Network.Models
                 trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(),
                 hostName,
                 pickHostNameFromBackendAddress,
+                enableL4ClientIPPreservation,
                 provisioningState);
         }
 
@@ -457,6 +473,22 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     builder.Append("    pickHostNameFromBackendAddress: ");
                     var boolValue = PickHostNameFromBackendAddress.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableL4ClientIPPreservation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableL4ClientIpPreservation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableL4ClientIPPreservation))
+                {
+                    builder.Append("    enableL4ClientIpPreservation: ");
+                    var boolValue = EnableL4ClientIPPreservation.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
