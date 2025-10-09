@@ -36,7 +36,7 @@ namespace Azure.Core.TestFramework
                 //TODO: remove after all track2 .net mgmt libraries are updated to the new generation
                 (invocation.Method.Name.StartsWith("get_") && type.Name.EndsWith("Operations")) ||
                 // some libraries have subclient properties
-                (invocation.Method.Name.StartsWith("get_") && type.GetProperties().Any(p => p.Name == "Pipeline")))
+                (invocation.Method.Name.StartsWith("get_") && type.GetProperty("Pipeline") != null))
             {
                 if (IsNullResult(invocation))
                     return;
