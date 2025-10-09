@@ -11,39 +11,10 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> The parameters of a managed disk. </summary>
-    internal partial class VirtualMachineInstanceManagedDiskParameters
+    public partial class VirtualMachineInstanceManagedDiskParameters
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceManagedDiskParameters"/>. </summary>
         public VirtualMachineInstanceManagedDiskParameters()
@@ -52,23 +23,29 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceManagedDiskParameters"/>. </summary>
         /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstanceManagedDiskParameters(VmDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineInstanceManagedDiskParameters(VMDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityProfile = securityProfile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the security profile for the managed disk. </summary>
-        internal VmDiskSecurityProfile SecurityProfile { get; set; }
+        internal VMDiskSecurityProfile SecurityProfile { get; set; }
+
         /// <summary> Specifies the EncryptionType of the managed disk. It is set to NonPersistedTPM for not persisting firmware state in the VMGuestState blob. NOTE: It can be set for only Confidential VMs. </summary>
         public HciVmSecurityEncryptionType? SecurityEncryptionType
         {
-            get => SecurityProfile is null ? default : SecurityProfile.SecurityEncryptionType;
+            get
+            {
+                return SecurityProfile is null ? default : SecurityProfile.SecurityEncryptionType;
+            }
             set
             {
                 if (SecurityProfile is null)
-                    SecurityProfile = new VmDiskSecurityProfile();
+                {
+                    SecurityProfile = new VMDiskSecurityProfile();
+                }
                 SecurityProfile.SecurityEncryptionType = value;
             }
         }

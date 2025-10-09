@@ -7,44 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Defines the resource properties. </summary>
     public partial class HciVmHybridIdentityMetadataProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmHybridIdentityMetadataProperties"/>. </summary>
         internal HciVmHybridIdentityMetadataProperties()
@@ -54,24 +24,27 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="HciVmHybridIdentityMetadataProperties"/>. </summary>
         /// <param name="resourceUid"> The unique identifier for the resource. </param>
         /// <param name="publicKey"> The Public Key. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the virtual machine instance. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmHybridIdentityMetadataProperties(string resourceUid, string publicKey, ManagedServiceIdentity identity, HciVmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmHybridIdentityMetadataProperties(string resourceUid, string publicKey, HciVmIdentity identity, HciVmProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceUid = resourceUid;
             PublicKey = publicKey;
             Identity = identity;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique identifier for the resource. </summary>
         public string ResourceUid { get; }
+
         /// <summary> The Public Key. </summary>
         public string PublicKey { get; }
-        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
-        public ManagedServiceIdentity Identity { get; }
+
+        /// <summary> Identity for the resource. </summary>
+        public HciVmIdentity Identity { get; }
+
         /// <summary> Provisioning state of the virtual machine instance. </summary>
         public HciVmProvisioningState? ProvisioningState { get; }
     }

@@ -5,482 +5,241 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Hci.Vm;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci.Vm.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableHciVmSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _hciVmGalleryImageGalleryImagesClientDiagnostics;
-        private GalleryImagesRestOperations _hciVmGalleryImageGalleryImagesRestClient;
-        private ClientDiagnostics _hciVmLogicalNetworkLogicalNetworksClientDiagnostics;
-        private LogicalNetworksRestOperations _hciVmLogicalNetworkLogicalNetworksRestClient;
-        private ClientDiagnostics _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics;
-        private MarketplaceGalleryImagesRestOperations _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient;
-        private ClientDiagnostics _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics;
-        private NetworkInterfacesRestOperations _hciVmNetworkInterfaceNetworkInterfacesRestClient;
-        private ClientDiagnostics _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics;
-        private NetworkSecurityGroupsRestOperations _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient;
-        private ClientDiagnostics _hciVmStorageContainerStorageContainersClientDiagnostics;
-        private StorageContainersRestOperations _hciVmStorageContainerStorageContainersRestClient;
-        private ClientDiagnostics _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics;
-        private VirtualHardDisksRestOperations _hciVmVirtualHardDiskVirtualHardDisksRestClient;
+        private ClientDiagnostics _galleryImagesClientDiagnostics;
+        private GalleryImages _galleryImagesRestClient;
+        private ClientDiagnostics _logicalNetworksClientDiagnostics;
+        private LogicalNetworks _logicalNetworksRestClient;
+        private ClientDiagnostics _marketplaceGalleryImagesClientDiagnostics;
+        private MarketplaceGalleryImages _marketplaceGalleryImagesRestClient;
+        private ClientDiagnostics _networkInterfacesClientDiagnostics;
+        private NetworkInterfaces _networkInterfacesRestClient;
+        private ClientDiagnostics _networkSecurityGroupsClientDiagnostics;
+        private NetworkSecurityGroups _networkSecurityGroupsRestClient;
+        private ClientDiagnostics _storageContainersClientDiagnostics;
+        private StorageContainers _storageContainersRestClient;
+        private ClientDiagnostics _virtualHardDisksClientDiagnostics;
+        private VirtualHardDisks _virtualHardDisksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHciVmSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHciVmSubscriptionResource for mocking. </summary>
         protected MockableHciVmSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHciVmSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHciVmSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHciVmSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics HciVmGalleryImageGalleryImagesClientDiagnostics => _hciVmGalleryImageGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmGalleryImageResource.ResourceType.Namespace, Diagnostics);
-        private GalleryImagesRestOperations HciVmGalleryImageGalleryImagesRestClient => _hciVmGalleryImageGalleryImagesRestClient ??= new GalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmGalleryImageResource.ResourceType));
-        private ClientDiagnostics HciVmLogicalNetworkLogicalNetworksClientDiagnostics => _hciVmLogicalNetworkLogicalNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmLogicalNetworkResource.ResourceType.Namespace, Diagnostics);
-        private LogicalNetworksRestOperations HciVmLogicalNetworkLogicalNetworksRestClient => _hciVmLogicalNetworkLogicalNetworksRestClient ??= new LogicalNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmLogicalNetworkResource.ResourceType));
-        private ClientDiagnostics HciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics => _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmMarketplaceGalleryImageResource.ResourceType.Namespace, Diagnostics);
-        private MarketplaceGalleryImagesRestOperations HciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient => _hciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient ??= new MarketplaceGalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmMarketplaceGalleryImageResource.ResourceType));
-        private ClientDiagnostics HciVmNetworkInterfaceNetworkInterfacesClientDiagnostics => _hciVmNetworkInterfaceNetworkInterfacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmNetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
-        private NetworkInterfacesRestOperations HciVmNetworkInterfaceNetworkInterfacesRestClient => _hciVmNetworkInterfaceNetworkInterfacesRestClient ??= new NetworkInterfacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmNetworkInterfaceResource.ResourceType));
-        private ClientDiagnostics HciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics => _hciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmNetworkSecurityGroupResource.ResourceType.Namespace, Diagnostics);
-        private NetworkSecurityGroupsRestOperations HciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient => _hciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient ??= new NetworkSecurityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmNetworkSecurityGroupResource.ResourceType));
-        private ClientDiagnostics HciVmStorageContainerStorageContainersClientDiagnostics => _hciVmStorageContainerStorageContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmStorageContainerResource.ResourceType.Namespace, Diagnostics);
-        private StorageContainersRestOperations HciVmStorageContainerStorageContainersRestClient => _hciVmStorageContainerStorageContainersRestClient ??= new StorageContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmStorageContainerResource.ResourceType));
-        private ClientDiagnostics HciVmVirtualHardDiskVirtualHardDisksClientDiagnostics => _hciVmVirtualHardDiskVirtualHardDisksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmVirtualHardDiskResource.ResourceType.Namespace, Diagnostics);
-        private VirtualHardDisksRestOperations HciVmVirtualHardDiskVirtualHardDisksRestClient => _hciVmVirtualHardDiskVirtualHardDisksRestClient ??= new VirtualHardDisksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciVmVirtualHardDiskResource.ResourceType));
+        private ClientDiagnostics GalleryImagesClientDiagnostics => _galleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private GalleryImages GalleryImagesRestClient => _galleryImagesRestClient ??= new GalleryImages(GalleryImagesClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
 
-        /// <summary>
-        /// Lists all of the gallery images in the specified subscription. Use the nextLink property in the response to get the next page of gallery images.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/galleryImages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImage_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmGalleryImageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        private ClientDiagnostics LogicalNetworksClientDiagnostics => _logicalNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private LogicalNetworks LogicalNetworksRestClient => _logicalNetworksRestClient ??= new LogicalNetworks(LogicalNetworksClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+
+        private ClientDiagnostics MarketplaceGalleryImagesClientDiagnostics => _marketplaceGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private MarketplaceGalleryImages MarketplaceGalleryImagesRestClient => _marketplaceGalleryImagesRestClient ??= new MarketplaceGalleryImages(MarketplaceGalleryImagesClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+
+        private ClientDiagnostics NetworkInterfacesClientDiagnostics => _networkInterfacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+
+        private ClientDiagnostics NetworkSecurityGroupsClientDiagnostics => _networkSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+
+        private ClientDiagnostics StorageContainersClientDiagnostics => _storageContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private StorageContainers StorageContainersRestClient => _storageContainersRestClient ??= new StorageContainers(StorageContainersClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+
+        private ClientDiagnostics VirtualHardDisksClientDiagnostics => _virtualHardDisksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Vm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VirtualHardDisks VirtualHardDisksRestClient => _virtualHardDisksRestClient ??= new VirtualHardDisks(VirtualHardDisksClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+
+        /// <summary> Lists all of the gallery images in the specified subscription. Use the nextLink property in the response to get the next page of gallery images. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciVmGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciVmGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciVmGalleryImageResource> GetHciVmGalleryImagesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmGalleryImageGalleryImagesRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmGalleryImageGalleryImagesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmGalleryImageResource(Client, HciVmGalleryImageData.DeserializeHciVmGalleryImageData(e)), HciVmGalleryImageGalleryImagesClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmGalleryImages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciVmGalleryImageData, HciVmGalleryImageResource>(new GalleryImagesGetAllAsyncCollectionResultOfT(GalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmGalleryImageResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all of the gallery images in the specified subscription. Use the nextLink property in the response to get the next page of gallery images.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/galleryImages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImage_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmGalleryImageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all of the gallery images in the specified subscription. Use the nextLink property in the response to get the next page of gallery images. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciVmGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciVmGalleryImageResource> GetHciVmGalleryImages(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmGalleryImageGalleryImagesRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmGalleryImageGalleryImagesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmGalleryImageResource(Client, HciVmGalleryImageData.DeserializeHciVmGalleryImageData(e)), HciVmGalleryImageGalleryImagesClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmGalleryImages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciVmGalleryImageData, HciVmGalleryImageResource>(new GalleryImagesGetAllCollectionResultOfT(GalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmGalleryImageResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all of the logical networks in the specified subscription. Use the nextLink property in the response to get the next page of logical networks.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/logicalNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogicalNetwork_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmLogicalNetworkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all of the logical networks in the specified subscription. Use the nextLink property in the response to get the next page of logical networks. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciVmLogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciVmLogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciVmLogicalNetworkResource> GetHciVmLogicalNetworksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmLogicalNetworkLogicalNetworksRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmLogicalNetworkLogicalNetworksRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmLogicalNetworkResource(Client, HciVmLogicalNetworkData.DeserializeHciVmLogicalNetworkData(e)), HciVmLogicalNetworkLogicalNetworksClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmLogicalNetworks", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciVmLogicalNetworkData, HciVmLogicalNetworkResource>(new LogicalNetworksGetAllAsyncCollectionResultOfT(LogicalNetworksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmLogicalNetworkResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all of the logical networks in the specified subscription. Use the nextLink property in the response to get the next page of logical networks.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/logicalNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogicalNetwork_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmLogicalNetworkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all of the logical networks in the specified subscription. Use the nextLink property in the response to get the next page of logical networks. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciVmLogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciVmLogicalNetworkResource> GetHciVmLogicalNetworks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmLogicalNetworkLogicalNetworksRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmLogicalNetworkLogicalNetworksRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmLogicalNetworkResource(Client, HciVmLogicalNetworkData.DeserializeHciVmLogicalNetworkData(e)), HciVmLogicalNetworkLogicalNetworksClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmLogicalNetworks", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciVmLogicalNetworkData, HciVmLogicalNetworkResource>(new LogicalNetworksGetAllCollectionResultOfT(LogicalNetworksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmLogicalNetworkResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all of the marketplace gallery images in the specified subscription. Use the nextLink property in the response to get the next page of marketplace gallery images.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceGalleryImage_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all of the marketplace gallery images in the specified subscription. Use the nextLink property in the response to get the next page of marketplace gallery images. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciVmMarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciVmMarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciVmMarketplaceGalleryImageResource> GetHciVmMarketplaceGalleryImagesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmMarketplaceGalleryImageResource(Client, HciVmMarketplaceGalleryImageData.DeserializeHciVmMarketplaceGalleryImageData(e)), HciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciVmMarketplaceGalleryImageData, HciVmMarketplaceGalleryImageResource>(new MarketplaceGalleryImagesGetAllAsyncCollectionResultOfT(MarketplaceGalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmMarketplaceGalleryImageResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all of the marketplace gallery images in the specified subscription. Use the nextLink property in the response to get the next page of marketplace gallery images.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MarketplaceGalleryImage_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmMarketplaceGalleryImageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all of the marketplace gallery images in the specified subscription. Use the nextLink property in the response to get the next page of marketplace gallery images. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciVmMarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciVmMarketplaceGalleryImageResource> GetHciVmMarketplaceGalleryImages(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmMarketplaceGalleryImageMarketplaceGalleryImagesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmMarketplaceGalleryImageResource(Client, HciVmMarketplaceGalleryImageData.DeserializeHciVmMarketplaceGalleryImageData(e)), HciVmMarketplaceGalleryImageMarketplaceGalleryImagesClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmMarketplaceGalleryImages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciVmMarketplaceGalleryImageData, HciVmMarketplaceGalleryImageResource>(new MarketplaceGalleryImagesGetAllCollectionResultOfT(MarketplaceGalleryImagesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmMarketplaceGalleryImageResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all of the network interfaces in the specified subscription. Use the nextLink property in the response to get the next page of network interfaces.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/networkInterfaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterface_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all of the network interfaces in the specified subscription. Use the nextLink property in the response to get the next page of network interfaces. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciVmNetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciVmNetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciVmNetworkInterfaceResource> GetHciVmNetworkInterfacesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmNetworkInterfaceNetworkInterfacesRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmNetworkInterfaceNetworkInterfacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmNetworkInterfaceResource(Client, HciVmNetworkInterfaceData.DeserializeHciVmNetworkInterfaceData(e)), HciVmNetworkInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmNetworkInterfaces", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciVmNetworkInterfaceData, HciVmNetworkInterfaceResource>(new NetworkInterfacesGetAllAsyncCollectionResultOfT(NetworkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmNetworkInterfaceResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all of the network interfaces in the specified subscription. Use the nextLink property in the response to get the next page of network interfaces.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/networkInterfaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterface_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkInterfaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all of the network interfaces in the specified subscription. Use the nextLink property in the response to get the next page of network interfaces. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciVmNetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciVmNetworkInterfaceResource> GetHciVmNetworkInterfaces(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmNetworkInterfaceNetworkInterfacesRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmNetworkInterfaceNetworkInterfacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmNetworkInterfaceResource(Client, HciVmNetworkInterfaceData.DeserializeHciVmNetworkInterfaceData(e)), HciVmNetworkInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmNetworkInterfaces", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciVmNetworkInterfaceData, HciVmNetworkInterfaceResource>(new NetworkInterfacesGetAllCollectionResultOfT(NetworkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmNetworkInterfaceResource(Client, data));
         }
 
-        /// <summary>
-        /// Gets all network security groups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/networkSecurityGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroup_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets all network security groups in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciVmNetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciVmNetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciVmNetworkSecurityGroupResource> GetHciVmNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmNetworkSecurityGroupResource(Client, HciVmNetworkSecurityGroupData.DeserializeHciVmNetworkSecurityGroupData(e)), HciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmNetworkSecurityGroups", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciVmNetworkSecurityGroupData, HciVmNetworkSecurityGroupResource>(new NetworkSecurityGroupsGetAllAsyncCollectionResultOfT(NetworkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmNetworkSecurityGroupResource(Client, data));
         }
 
-        /// <summary>
-        /// Gets all network security groups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/networkSecurityGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroup_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmNetworkSecurityGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets all network security groups in a subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciVmNetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciVmNetworkSecurityGroupResource> GetHciVmNetworkSecurityGroups(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmNetworkSecurityGroupNetworkSecurityGroupsRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmNetworkSecurityGroupResource(Client, HciVmNetworkSecurityGroupData.DeserializeHciVmNetworkSecurityGroupData(e)), HciVmNetworkSecurityGroupNetworkSecurityGroupsClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmNetworkSecurityGroups", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciVmNetworkSecurityGroupData, HciVmNetworkSecurityGroupResource>(new NetworkSecurityGroupsGetAllCollectionResultOfT(NetworkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmNetworkSecurityGroupResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all of the storage containers in the specified subscription. Use the nextLink property in the response to get the next page of storage containers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/storageContainers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageContainer_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmStorageContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all of the storage containers in the specified subscription. Use the nextLink property in the response to get the next page of storage containers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciVmStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciVmStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciVmStorageContainerResource> GetHciVmStorageContainersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmStorageContainerStorageContainersRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmStorageContainerStorageContainersRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmStorageContainerResource(Client, HciVmStorageContainerData.DeserializeHciVmStorageContainerData(e)), HciVmStorageContainerStorageContainersClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmStorageContainers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetAllAsyncCollectionResultOfT(StorageContainersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmStorageContainerResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all of the storage containers in the specified subscription. Use the nextLink property in the response to get the next page of storage containers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/storageContainers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageContainer_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmStorageContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all of the storage containers in the specified subscription. Use the nextLink property in the response to get the next page of storage containers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciVmStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciVmStorageContainerResource> GetHciVmStorageContainers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmStorageContainerStorageContainersRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmStorageContainerStorageContainersRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmStorageContainerResource(Client, HciVmStorageContainerData.DeserializeHciVmStorageContainerData(e)), HciVmStorageContainerStorageContainersClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmStorageContainers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciVmStorageContainerData, HciVmStorageContainerResource>(new StorageContainersGetAllCollectionResultOfT(StorageContainersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmStorageContainerResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all of the virtual hard disks in the specified subscription. Use the nextLink property in the response to get the next page of virtual hard disks.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/virtualHardDisks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHardDisk_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all of the virtual hard disks in the specified subscription. Use the nextLink property in the response to get the next page of virtual hard disks. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciVmVirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciVmVirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciVmVirtualHardDiskResource> GetHciVmVirtualHardDisksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmVirtualHardDiskVirtualHardDisksRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmVirtualHardDiskVirtualHardDisksRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciVmVirtualHardDiskResource(Client, HciVmVirtualHardDiskData.DeserializeHciVmVirtualHardDiskData(e)), HciVmVirtualHardDiskVirtualHardDisksClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmVirtualHardDisks", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetAllAsyncCollectionResultOfT(VirtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmVirtualHardDiskResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all of the virtual hard disks in the specified subscription. Use the nextLink property in the response to get the next page of virtual hard disks.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/virtualHardDisks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHardDisk_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmVirtualHardDiskResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all of the virtual hard disks in the specified subscription. Use the nextLink property in the response to get the next page of virtual hard disks. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciVmVirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciVmVirtualHardDiskResource> GetHciVmVirtualHardDisks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciVmVirtualHardDiskVirtualHardDisksRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciVmVirtualHardDiskVirtualHardDisksRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciVmVirtualHardDiskResource(Client, HciVmVirtualHardDiskData.DeserializeHciVmVirtualHardDiskData(e)), HciVmVirtualHardDiskVirtualHardDisksClientDiagnostics, Pipeline, "MockableHciVmSubscriptionResource.GetHciVmVirtualHardDisks", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetAllCollectionResultOfT(VirtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HciVmVirtualHardDiskResource(Client, data));
         }
     }
 }

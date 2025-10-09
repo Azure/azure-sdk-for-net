@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> Describes IPPool. </summary>
     public partial class HciVmNetworkingIPPool
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmNetworkingIPPool"/>. </summary>
         public HciVmNetworkingIPPool()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="start"> Start of the IP address pool. </param>
         /// <param name="end"> End of the IP address pool. </param>
         /// <param name="info"> IPPool info. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmNetworkingIPPool(string name, HciVmIPPoolType? ipPoolType, string start, string end, HciVmIPPoolInfo info, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmNetworkingIPPool(string name, HciVmIPPoolType? ipPoolType, string start, string end, HciVmIPPoolInfo info, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            IPPoolType = ipPoolType;
+            IpPoolType = ipPoolType;
             Start = start;
             End = end;
             Info = info;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the IP-Pool. </summary>
         public string Name { get; set; }
+
         /// <summary> Type of the IP Pool [vm, vippool]. </summary>
-        public HciVmIPPoolType? IPPoolType { get; set; }
+        public HciVmIPPoolType? IpPoolType { get; set; }
+
         /// <summary> Start of the IP address pool. </summary>
         public string Start { get; set; }
+
         /// <summary> End of the IP address pool. </summary>
         public string End { get; set; }
+
         /// <summary> IPPool info. </summary>
         public HciVmIPPoolInfo Info { get; set; }
     }

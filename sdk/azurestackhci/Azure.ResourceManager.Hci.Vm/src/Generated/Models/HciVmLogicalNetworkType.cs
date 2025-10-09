@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct HciVmLogicalNetworkType : IEquatable<HciVmLogicalNetworkType>
     {
         private readonly string _value;
+        /// <summary> Logical Network of type Workload. </summary>
+        private const string WorkloadValue = "Workload";
+        /// <summary> Logical Network of type Infrastructure. </summary>
+        private const string InfrastructureValue = "Infrastructure";
 
         /// <summary> Initializes a new instance of <see cref="HciVmLogicalNetworkType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciVmLogicalNetworkType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WorkloadValue = "Workload";
-        private const string InfrastructureValue = "Infrastructure";
+            _value = value;
+        }
 
         /// <summary> Logical Network of type Workload. </summary>
         public static HciVmLogicalNetworkType Workload { get; } = new HciVmLogicalNetworkType(WorkloadValue);
+
         /// <summary> Logical Network of type Infrastructure. </summary>
         public static HciVmLogicalNetworkType Infrastructure { get; } = new HciVmLogicalNetworkType(InfrastructureValue);
+
         /// <summary> Determines if two <see cref="HciVmLogicalNetworkType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciVmLogicalNetworkType left, HciVmLogicalNetworkType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciVmLogicalNetworkType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciVmLogicalNetworkType left, HciVmLogicalNetworkType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciVmLogicalNetworkType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciVmLogicalNetworkType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciVmLogicalNetworkType(string value) => new HciVmLogicalNetworkType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciVmLogicalNetworkType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciVmLogicalNetworkType?(string value) => value == null ? null : new HciVmLogicalNetworkType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciVmLogicalNetworkType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciVmLogicalNetworkType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

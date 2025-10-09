@@ -14,43 +14,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> Properties under the marketplace gallery image resource. </summary>
     public partial class HciVmMarketplaceGalleryImageProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmMarketplaceGalleryImageProperties"/>. </summary>
         /// <param name="osType"> Operating system type that the gallery image uses [Windows, Linux]. </param>
         public HciVmMarketplaceGalleryImageProperties(HciVmOSType osType)
         {
-            OSType = osType;
+            OsType = osType;
         }
 
         /// <summary> Initializes a new instance of <see cref="HciVmMarketplaceGalleryImageProperties"/>. </summary>
@@ -62,39 +33,41 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="version"> Specifies information about the gallery image version that you want to create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the marketplace gallery image. </param>
         /// <param name="status"> The observed state of marketplace gallery images. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmMarketplaceGalleryImageProperties(ResourceIdentifier containerId, HciVmOSType osType, CloudInitDataSource? cloudInitDataSource, HciVmHyperVGeneration? hyperVGeneration, HciVmGalleryImageIdentifier identifier, HciVmGalleryImageVersion version, HciVmProvisioningState? provisioningState, HciVmMarketplaceGalleryImageStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmMarketplaceGalleryImageProperties(ResourceIdentifier containerId, HciVmOSType osType, CloudInitDataSource? cloudInitDataSource, HciVmHyperVGeneration? hyperVGeneration, HciVmGalleryImageIdentifier identifier, HciVmGalleryImageVersion version, HciVmProvisioningState? provisioningState, HciVmMarketplaceGalleryImageStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContainerId = containerId;
-            OSType = osType;
+            OsType = osType;
             CloudInitDataSource = cloudInitDataSource;
             HyperVGeneration = hyperVGeneration;
             Identifier = identifier;
             Version = version;
             ProvisioningState = provisioningState;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HciVmMarketplaceGalleryImageProperties"/> for deserialization. </summary>
-        internal HciVmMarketplaceGalleryImageProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Storage ContainerID of the storage container to be used for marketplace gallery image. </summary>
         public ResourceIdentifier ContainerId { get; set; }
+
         /// <summary> Operating system type that the gallery image uses [Windows, Linux]. </summary>
-        public HciVmOSType OSType { get; set; }
+        public HciVmOSType OsType { get; set; }
+
         /// <summary> Datasource for the gallery image when provisioning with cloud-init [NoCloud, Azure]. </summary>
         public CloudInitDataSource? CloudInitDataSource { get; set; }
+
         /// <summary> The hypervisor generation of the Virtual Machine [V1, V2]. </summary>
         public HciVmHyperVGeneration? HyperVGeneration { get; set; }
+
         /// <summary> This is the gallery image definition identifier. </summary>
         public HciVmGalleryImageIdentifier Identifier { get; set; }
+
         /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
         public HciVmGalleryImageVersion Version { get; set; }
+
         /// <summary> Provisioning state of the marketplace gallery image. </summary>
         public HciVmProvisioningState? ProvisioningState { get; }
+
         /// <summary> The observed state of marketplace gallery images. </summary>
         public HciVmMarketplaceGalleryImageStatus Status { get; }
     }

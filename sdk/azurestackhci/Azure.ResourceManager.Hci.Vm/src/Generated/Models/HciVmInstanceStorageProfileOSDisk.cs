@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> VHD to attach as OS disk. </summary>
     public partial class HciVmInstanceStorageProfileOSDisk
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmInstanceStorageProfileOSDisk"/>. </summary>
         public HciVmInstanceStorageProfileOSDisk()
@@ -55,31 +26,22 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="id"> The ARM ID for a Virtual Hard Disk. </param>
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceStorageProfileOSDisk(ResourceIdentifier id, HciVmOSType? osType, VirtualMachineInstanceManagedDiskParameters managedDisk, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmInstanceStorageProfileOSDisk(ResourceIdentifier id, HciVmOSType? osType, VirtualMachineInstanceManagedDiskParameters managedDisk, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            OSType = osType;
+            OsType = osType;
             ManagedDisk = managedDisk;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ARM ID for a Virtual Hard Disk. </summary>
         public ResourceIdentifier Id { get; set; }
+
         /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </summary>
-        public HciVmOSType? OSType { get; set; }
+        public HciVmOSType? OsType { get; set; }
+
         /// <summary> The managed disk parameters. </summary>
-        internal VirtualMachineInstanceManagedDiskParameters ManagedDisk { get; set; }
-        /// <summary> Specifies the EncryptionType of the managed disk. It is set to NonPersistedTPM for not persisting firmware state in the VMGuestState blob. NOTE: It can be set for only Confidential VMs. </summary>
-        public HciVmSecurityEncryptionType? SecurityEncryptionType
-        {
-            get => ManagedDisk is null ? default : ManagedDisk.SecurityEncryptionType;
-            set
-            {
-                if (ManagedDisk is null)
-                    ManagedDisk = new VirtualMachineInstanceManagedDiskParameters();
-                ManagedDisk.SecurityEncryptionType = value;
-            }
-        }
+        public VirtualMachineInstanceManagedDiskParameters ManagedDisk { get; set; }
     }
 }

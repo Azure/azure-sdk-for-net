@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    public partial class HciVmInstanceProperties : IUtf8JsonSerializable, IJsonModel<HciVmInstanceProperties>
+    /// <summary> Properties under the virtual machine instance resource. </summary>
+    public partial class HciVmInstanceProperties : IJsonModel<HciVmInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciVmInstanceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciVmInstanceProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile, options);
             }
-            if (Optional.IsDefined(OSProfile))
+            if (Optional.IsDefined(OsProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
+                writer.WriteObjectValue(OsProfile, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
@@ -114,20 +114,20 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("hostNodeName"u8);
                 writer.WriteStringValue(HostNodeName);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostNodeIPAddress))
+            if (options.Format != "W" && Optional.IsDefined(HostNodeIpAddress))
             {
                 writer.WritePropertyName("hostNodeIpAddress"u8);
-                writer.WriteStringValue(HostNodeIPAddress);
+                writer.WriteStringValue(HostNodeIpAddress);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -136,22 +136,27 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
-        HciVmInstanceProperties IJsonModel<HciVmInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmInstanceProperties IJsonModel<HciVmInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmInstanceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciVmInstanceProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciVmInstanceProperties(document.RootElement, options);
         }
 
-        internal static HciVmInstanceProperties DeserializeHciVmInstanceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HciVmInstanceProperties DeserializeHciVmInstanceProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -163,7 +168,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             HciVmInstanceSecurityProfile securityProfile = default;
             HciVmInstanceStorageProfile storageProfile = default;
             HciVmHttpProxyConfiguration httpProxyConfig = default;
-            bool? createFromLocal = default;
+            bool? isCreatingFromLocal = default;
             HciVmProvisioningState? provisioningState = default;
             VirtualMachineInstanceView instanceView = default;
             HciVmInstanceStatus status = default;
@@ -172,150 +177,148 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             string resourceUid = default;
             string hyperVVmId = default;
             string hostNodeName = default;
-            string hostNodeIPAddress = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string hostNodeIpAddress = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("hardwareProfile"u8))
+                if (prop.NameEquals("hardwareProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hardwareProfile = HciVmInstanceHardwareProfile.DeserializeHciVmInstanceHardwareProfile(property.Value, options);
+                    hardwareProfile = HciVmInstanceHardwareProfile.DeserializeHciVmInstanceHardwareProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("placementProfile"u8))
+                if (prop.NameEquals("placementProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    placementProfile = HciVmInstancePlacementProfile.DeserializeHciVmInstancePlacementProfile(property.Value, options);
+                    placementProfile = HciVmInstancePlacementProfile.DeserializeHciVmInstancePlacementProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("networkProfile"u8))
+                if (prop.NameEquals("networkProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkProfile = VirtualMachineInstancePropertiesNetworkProfile.DeserializeVirtualMachineInstancePropertiesNetworkProfile(property.Value, options);
+                    networkProfile = VirtualMachineInstancePropertiesNetworkProfile.DeserializeVirtualMachineInstancePropertiesNetworkProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("osProfile"u8))
+                if (prop.NameEquals("osProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osProfile = HciVmInstanceOSProfile.DeserializeHciVmInstanceOSProfile(property.Value, options);
+                    osProfile = HciVmInstanceOSProfile.DeserializeHciVmInstanceOSProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("securityProfile"u8))
+                if (prop.NameEquals("securityProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    securityProfile = HciVmInstanceSecurityProfile.DeserializeHciVmInstanceSecurityProfile(property.Value, options);
+                    securityProfile = HciVmInstanceSecurityProfile.DeserializeHciVmInstanceSecurityProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storageProfile"u8))
+                if (prop.NameEquals("storageProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageProfile = HciVmInstanceStorageProfile.DeserializeHciVmInstanceStorageProfile(property.Value, options);
+                    storageProfile = HciVmInstanceStorageProfile.DeserializeHciVmInstanceStorageProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("httpProxyConfig"u8))
+                if (prop.NameEquals("httpProxyConfig"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    httpProxyConfig = HciVmHttpProxyConfiguration.DeserializeHciVmHttpProxyConfiguration(property.Value, options);
+                    httpProxyConfig = HciVmHttpProxyConfiguration.DeserializeHciVmHttpProxyConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("createFromLocal"u8))
+                if (prop.NameEquals("createFromLocal"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createFromLocal = property.Value.GetBoolean();
+                    isCreatingFromLocal = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new HciVmProvisioningState(property.Value.GetString());
+                    provisioningState = new HciVmProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("instanceView"u8))
+                if (prop.NameEquals("instanceView"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    instanceView = VirtualMachineInstanceView.DeserializeVirtualMachineInstanceView(property.Value, options);
+                    instanceView = VirtualMachineInstanceView.DeserializeVirtualMachineInstanceView(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = HciVmInstanceStatus.DeserializeHciVmInstanceStatus(property.Value, options);
+                    status = HciVmInstanceStatus.DeserializeHciVmInstanceStatus(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("guestAgentInstallStatus"u8))
+                if (prop.NameEquals("guestAgentInstallStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    guestAgentInstallStatus = GuestAgentInstallStatus.DeserializeGuestAgentInstallStatus(property.Value, options);
+                    guestAgentInstallStatus = GuestAgentInstallStatus.DeserializeGuestAgentInstallStatus(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("vmId"u8))
+                if (prop.NameEquals("vmId"u8))
                 {
-                    vmId = property.Value.GetString();
+                    vmId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceUid"u8))
+                if (prop.NameEquals("resourceUid"u8))
                 {
-                    resourceUid = property.Value.GetString();
+                    resourceUid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hyperVVmId"u8))
+                if (prop.NameEquals("hyperVVmId"u8))
                 {
-                    hyperVVmId = property.Value.GetString();
+                    hyperVVmId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostNodeName"u8))
+                if (prop.NameEquals("hostNodeName"u8))
                 {
-                    hostNodeName = property.Value.GetString();
+                    hostNodeName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostNodeIpAddress"u8))
+                if (prop.NameEquals("hostNodeIpAddress"u8))
                 {
-                    hostNodeIPAddress = property.Value.GetString();
+                    hostNodeIpAddress = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HciVmInstanceProperties(
                 hardwareProfile,
                 placementProfile,
@@ -324,7 +327,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 securityProfile,
                 storageProfile,
                 httpProxyConfig,
-                createFromLocal,
+                isCreatingFromLocal,
                 provisioningState,
                 instanceView,
                 status,
@@ -333,14 +336,17 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 resourceUid,
                 hyperVVmId,
                 hostNodeName,
-                hostNodeIPAddress,
-                serializedAdditionalRawData);
+                hostNodeIpAddress,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<HciVmInstanceProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HciVmInstanceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -350,15 +356,20 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
-        HciVmInstanceProperties IPersistableModel<HciVmInstanceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmInstanceProperties IPersistableModel<HciVmInstanceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmInstanceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHciVmInstanceProperties(document.RootElement, options);
                     }
                 default:
@@ -366,6 +377,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmInstanceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,20 +8,21 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Hci.Vm.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ErrorAdditionalInfo))]
+    [ModelReaderWriterBuildable(typeof(ErrorDetail))]
     [ModelReaderWriterBuildable(typeof(GalleryImageListResult))]
     [ModelReaderWriterBuildable(typeof(GalleryImageStatusDownloadStatus))]
+    [ModelReaderWriterBuildable(typeof(GalleryImageVersionProperties))]
     [ModelReaderWriterBuildable(typeof(GalleryImageVersionStorageProfile))]
     [ModelReaderWriterBuildable(typeof(GalleryOSDiskImage))]
     [ModelReaderWriterBuildable(typeof(GuestAgentInstallStatus))]
-    [ModelReaderWriterBuildable(typeof(GuestAgentListResult))]
     [ModelReaderWriterBuildable(typeof(HciVmAttestationStatusData))]
     [ModelReaderWriterBuildable(typeof(HciVmAttestationStatusProperties))]
     [ModelReaderWriterBuildable(typeof(HciVmAttestationStatusResource))]
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.Hci.Vm
     [ModelReaderWriterBuildable(typeof(HciVmHybridIdentityMetadataData))]
     [ModelReaderWriterBuildable(typeof(HciVmHybridIdentityMetadataProperties))]
     [ModelReaderWriterBuildable(typeof(HciVmHybridIdentityMetadataResource))]
+    [ModelReaderWriterBuildable(typeof(HciVmIdentity))]
     [ModelReaderWriterBuildable(typeof(HciVmImageRepositoryCredentials))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceData))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceHardwareProfile))]
@@ -119,31 +121,36 @@ namespace Azure.ResourceManager.Hci.Vm
     [ModelReaderWriterBuildable(typeof(HciVmVirtualHardDiskResource))]
     [ModelReaderWriterBuildable(typeof(HciVmVirtualHardDiskStatus))]
     [ModelReaderWriterBuildable(typeof(HciVmVirtualHardDiskUploadContent))]
-    [ModelReaderWriterBuildable(typeof(HciVmVirtualHardDiskUploadResult))]
     [ModelReaderWriterBuildable(typeof(HciVmVirtualHardDiskUploadStatus))]
-    [ModelReaderWriterBuildable(typeof(HybridIdentityMetadataListResult))]
-    [ModelReaderWriterBuildable(typeof(InterfaceDnsSettings))]
+    [ModelReaderWriterBuildable(typeof(ImageArmReference))]
+    [ModelReaderWriterBuildable(typeof(InterfaceDNSSettings))]
+    [ModelReaderWriterBuildable(typeof(LogicalNetworkArmReference))]
     [ModelReaderWriterBuildable(typeof(LogicalNetworkListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceGalleryImageListResult))]
     [ModelReaderWriterBuildable(typeof(MarketplaceGalleryImageStatusDownloadStatus))]
+    [ModelReaderWriterBuildable(typeof(NetworkInterfaceArmReference))]
     [ModelReaderWriterBuildable(typeof(NetworkInterfaceListResult))]
     [ModelReaderWriterBuildable(typeof(NetworkProfileUpdate))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityGroupArmReference))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityGroupListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(RouteProperties))]
+    [ModelReaderWriterBuildable(typeof(RouteTableProperties))]
     [ModelReaderWriterBuildable(typeof(SecurityRuleListResult))]
     [ModelReaderWriterBuildable(typeof(StorageContainerListResult))]
     [ModelReaderWriterBuildable(typeof(StorageProfileUpdate))]
+    [ModelReaderWriterBuildable(typeof(SubnetIpConfigurationReference))]
+    [ModelReaderWriterBuildable(typeof(SubnetProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(VirtualHardDiskArmReference))]
     [ModelReaderWriterBuildable(typeof(VirtualHardDiskListResult))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineInstanceListResult))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineInstanceManagedDiskParameters))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineInstancePropertiesNetworkProfile))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineInstancePropertiesSecurityProfileUefiSettings))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineInstanceView))]
-    [ModelReaderWriterBuildable(typeof(VmDiskSecurityProfile))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
+    [ModelReaderWriterBuildable(typeof(VMDiskSecurityProfile))]
     public partial class AzureResourceManagerHciVmContext : ModelReaderWriterContext
     {
     }
