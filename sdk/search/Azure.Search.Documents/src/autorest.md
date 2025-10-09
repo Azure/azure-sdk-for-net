@@ -15,8 +15,8 @@ use-model-reader-writer: true
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/fb2bf7ec6635f4dca9ebe505af5eda0534c377d9/specification/search/data-plane/Azure.Search/stable/2025-09-01/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/fb2bf7ec6635f4dca9ebe505af5eda0534c377d9/specification/search/data-plane/Azure.Search/stable/2025-09-01/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/5fda13cee42cecc2e7da20bb4fd82bec5be9d0c7/specification/search/data-plane/Azure.Search/stable/2025-09-01/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/5fda13cee42cecc2e7da20bb4fd82bec5be9d0c7/specification/search/data-plane/Azure.Search/stable/2025-09-01/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Enables a debugging tool that can be used to further explore your search results. You can enable multiple debug modes simultaneously by separating them with a | character, for example: semantic|queryRewrites. </summary>
+    /// <summary> Enables a debugging tool that can be used to further explore your search results. </summary>
     public readonly partial struct QueryDebugMode : IEquatable<QueryDebugMode>
     {
         private readonly string _value;
