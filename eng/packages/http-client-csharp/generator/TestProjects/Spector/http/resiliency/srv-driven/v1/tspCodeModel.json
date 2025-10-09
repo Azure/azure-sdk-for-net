@@ -26,47 +26,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$id": "4",
-            "kind": "enum",
-            "decorators": [],
-            "name": "Versions",
-            "isGeneratedName": false,
-            "namespace": "Resiliency.ServiceDriven",
-            "doc": "Service versions.",
-            "valueType": {
-              "$id": "5",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "6",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "v1",
-                "value": "v1",
-                "doc": "Version 1",
-                "enumType": {
-                  "$ref": "4"
-                },
-                "valueType": {
-                  "$ref": "5"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "ApiVersionEnum",
-            "access": "public",
-            "crossLanguageDefinitionId": "Resiliency.ServiceDriven.Versions",
-            "apiVersions": [
-              "v1"
-            ],
-            "isUnionAsEnum": false,
-            "__accessSet": true
+            "$ref": "1"
           },
           "doc": "Version 1",
           "decorators": []
@@ -84,14 +44,14 @@
   "models": [],
   "clients": [
     {
-      "$id": "7",
+      "$id": "4",
       "kind": "client",
       "name": "ResiliencyServiceDrivenClient",
       "namespace": "Resiliency.ServiceDriven",
       "doc": "Test that we can grow up a service spec and service deployment into a multi-versioned service with full client support.",
       "methods": [
         {
-          "$id": "8",
+          "$id": "5",
           "kind": "basic",
           "name": "fromNone",
           "accessibility": "public",
@@ -100,7 +60,7 @@
           ],
           "doc": "Test that currently accepts no parameters, will be updated in next spec to accept a new optional parameter as well",
           "operation": {
-            "$id": "9",
+            "$id": "6",
             "name": "fromNone",
             "resourceName": "AddOptionalParam",
             "doc": "Test that currently accepts no parameters, will be updated in next spec to accept a new optional parameter as well",
@@ -132,7 +92,7 @@
           "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromNone"
         },
         {
-          "$id": "10",
+          "$id": "7",
           "kind": "basic",
           "name": "fromOneRequired",
           "accessibility": "public",
@@ -141,20 +101,20 @@
           ],
           "doc": "Test that currently accepts one required parameter, will be updated in next spec to accept a new optional parameter as well",
           "operation": {
-            "$id": "11",
+            "$id": "8",
             "name": "fromOneRequired",
             "resourceName": "AddOptionalParam",
             "doc": "Test that currently accepts one required parameter, will be updated in next spec to accept a new optional parameter as well",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "12",
+                "$id": "9",
                 "kind": "query",
                 "name": "parameter",
                 "serializedName": "parameter",
                 "doc": "I am a required parameter",
                 "type": {
-                  "$id": "13",
+                  "$id": "10",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -189,13 +149,13 @@
           },
           "parameters": [
             {
-              "$id": "14",
+              "$id": "11",
               "kind": "method",
               "name": "parameter",
               "serializedName": "parameter",
               "doc": "I am a required parameter",
               "type": {
-                "$id": "15",
+                "$id": "12",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -218,7 +178,7 @@
           "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired"
         },
         {
-          "$id": "16",
+          "$id": "13",
           "kind": "basic",
           "name": "fromOneOptional",
           "accessibility": "public",
@@ -227,20 +187,20 @@
           ],
           "doc": "Test that currently accepts one optional parameter, will be updated in next spec to accept a new optional parameter as well",
           "operation": {
-            "$id": "17",
+            "$id": "14",
             "name": "fromOneOptional",
             "resourceName": "AddOptionalParam",
             "doc": "Test that currently accepts one optional parameter, will be updated in next spec to accept a new optional parameter as well",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "18",
+                "$id": "15",
                 "kind": "query",
                 "name": "parameter",
                 "serializedName": "parameter",
                 "doc": "I am an optional parameter",
                 "type": {
-                  "$id": "19",
+                  "$id": "16",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -275,13 +235,13 @@
           },
           "parameters": [
             {
-              "$id": "20",
+              "$id": "17",
               "kind": "method",
               "name": "parameter",
               "serializedName": "parameter",
               "doc": "I am an optional parameter",
               "type": {
-                "$id": "21",
+                "$id": "18",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -306,13 +266,13 @@
       ],
       "parameters": [
         {
-          "$id": "22",
+          "$id": "19",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Need to be set as 'http://localhost:3000' in client.",
           "type": {
-            "$id": "23",
+            "$id": "20",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -327,13 +287,13 @@
           "crossLanguageDefinitionId": "Resiliency.ServiceDriven.endpoint"
         },
         {
-          "$id": "24",
+          "$id": "21",
           "kind": "endpoint",
           "name": "serviceDeploymentVersion",
           "serializedName": "serviceDeploymentVersion",
           "doc": "Pass in either 'v1' or 'v2'. This represents a version of the service deployment in history. 'v1' is for the deployment when the service had only one api version. 'v2' is for the deployment when the service had api-versions 'v1' and 'v2'.",
           "type": {
-            "$id": "25",
+            "$id": "22",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -349,13 +309,13 @@
           "crossLanguageDefinitionId": "Resiliency.ServiceDriven.serviceDeploymentVersion"
         },
         {
-          "$id": "26",
+          "$id": "23",
           "kind": "endpoint",
           "name": "apiVersion",
           "serializedName": "apiVersion",
           "doc": "Pass in 'v1'. This represents the API version of the service. Will grow up in the next deployment to be both 'v1' and 'v2'",
           "type": {
-            "$id": "27",
+            "$id": "24",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -367,7 +327,7 @@
           "isEndpoint": false,
           "defaultValue": {
             "type": {
-              "$id": "28",
+              "$id": "25",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
