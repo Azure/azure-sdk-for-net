@@ -83,13 +83,13 @@ directive:
   transform: >
     $.properties.rerankWithOriginalVectors = {
       "type": "boolean",
-      "description": "If set to true, once the ordered set of results calculated using compressed vectors are obtained, they will be reranked again by recalculating the full-precision similarity scores. This will improve recall at the expense of latency.",
+      "description": "If set to true, once the ordered set of results calculated using compressed vectors are obtained, they will be reranked again by recalculating the full-precision similarity scores. This will improve recall at the expense of latency.\nFor use with only service version 2024-07-01. If using 2025-09-01 or later, use RescoringOptions.rescoringEnabled.",
       "x-nullable": true
     };
     $.properties.defaultOversampling = {
       "type": "number",
       "format": "double",
-      "description": "Default oversampling factor. Oversampling will internally request more documents (specified by this multiplier) in the initial search. This increases the set of results that will be reranked using recomputed similarity scores from full-precision vectors. Minimum value is 1, meaning no oversampling (1x). This parameter can only be set when rerankWithOriginalVectors is true. Higher values improve recall at the expense of latency.",
+      "description": "Default oversampling factor. Oversampling will internally request more documents (specified by this multiplier) in the initial search. This increases the set of results that will be reranked using recomputed similarity scores from full-precision vectors. Minimum value is 1, meaning no oversampling (1x). This parameter can only be set when rerankWithOriginalVectors is true. Higher values improve recall at the expense of latency.\nFor use with only service version 2024-07-01. If using 2025-09-01 or later, use RescoringOptions.defaultOversampling.",
       "x-nullable": true
     };
 ```
