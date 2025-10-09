@@ -124,9 +124,9 @@ namespace Azure.Core.TestFramework
                 return true;
             }
 
-            // Some libraries have subclients that do not end with Client. Instrument any type that has a Pipeline property.
+            // Some libraries have subclients that do not end with Client. Instrument any public type that has a Pipeline property.
             // This is the most expensive check so we do it last.
-            return type.GetProperty("Pipeline") != null;
+            return type.IsPublic && type.GetProperty("Pipeline") != null;
         }
 
         internal async ValueTask<T> InstrumentOperationInterceptor<T>(IInvocation invocation, Func<ValueTask<T>> innerTask)
