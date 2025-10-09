@@ -157,6 +157,17 @@ namespace Azure.Core.TestFramework.Tests
         }
 
         [Test]
+        public async Task SubClientPropertyIsAutoInstrumented()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+
+            TestClient subClient = client.SubClientProperty;
+            var result = await subClient.MethodAsync(123);
+
+            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+        }
+
+        [Test]
         public async Task SubClientPropertyCallsAreAutoInstrumented()
         {
             TestClient client = InstrumentClient(new TestClient());

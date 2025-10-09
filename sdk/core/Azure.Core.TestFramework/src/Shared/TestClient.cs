@@ -85,6 +85,8 @@ namespace Azure.Core.TestFramework
         }
         public virtual TestClientOperations SubProperty => new TestClientOperations();
 
+        public virtual TestClient SubClientProperty => new TestClient();
+
         public virtual string MethodA()
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodA)}");
