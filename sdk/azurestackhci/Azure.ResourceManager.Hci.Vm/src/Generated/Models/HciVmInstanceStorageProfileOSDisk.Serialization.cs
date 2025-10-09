@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
             ResourceIdentifier id = default;
             HciVmOSType? osType = default;
-            VirtualMachineInstanceManagedDiskParameters managedDisk = default;
+            VirtualMachineInstanceManagedDiskContent managedDisk = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    managedDisk = VirtualMachineInstanceManagedDiskParameters.DeserializeVirtualMachineInstanceManagedDiskParameters(prop.Value, options);
+                    managedDisk = VirtualMachineInstanceManagedDiskContent.DeserializeVirtualMachineInstanceManagedDiskContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

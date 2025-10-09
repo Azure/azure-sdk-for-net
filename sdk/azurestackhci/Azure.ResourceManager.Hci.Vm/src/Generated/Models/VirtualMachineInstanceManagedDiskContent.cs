@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> The parameters of a managed disk. </summary>
-    public partial class VirtualMachineInstanceManagedDiskParameters
+    public partial class VirtualMachineInstanceManagedDiskContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceManagedDiskParameters"/>. </summary>
-        public VirtualMachineInstanceManagedDiskParameters()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceManagedDiskContent"/>. </summary>
+        public VirtualMachineInstanceManagedDiskContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceManagedDiskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceManagedDiskContent"/>. </summary>
         /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstanceManagedDiskParameters(VMDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineInstanceManagedDiskContent(VMDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityProfile = securityProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

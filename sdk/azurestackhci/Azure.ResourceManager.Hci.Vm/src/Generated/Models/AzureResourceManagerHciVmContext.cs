@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Hci.Vm
     [ModelReaderWriterBuildable(typeof(VirtualHardDiskArmReference))]
     [ModelReaderWriterBuildable(typeof(VirtualHardDiskListResult))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineInstanceListResult))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineInstanceManagedDiskParameters))]
+    [ModelReaderWriterBuildable(typeof(VirtualMachineInstanceManagedDiskContent))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineInstancePropertiesNetworkProfile))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineInstancePropertiesSecurityProfileUefiSettings))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineInstanceView))]

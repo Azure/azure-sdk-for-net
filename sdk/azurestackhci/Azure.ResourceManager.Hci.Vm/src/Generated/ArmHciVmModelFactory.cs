@@ -211,6 +211,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 ipAllocationMethod,
                 ipConfigurationReferences,
                 new NetworkSecurityGroupArmReference(networkSecurityGroupId, new Dictionary<string, BinaryData>()),
+                routeTable,
+                ipPools,
+                vlan,
                 new Dictionary<string, BinaryData>()), name, additionalBinaryDataProperties: null);
         }
 
