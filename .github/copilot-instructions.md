@@ -2,7 +2,7 @@
 
 This repo contains Azure SDKs for various Azure services and tools that generate them.
 
-> **Note**: For comprehensive AI agent guidelines including supported workflows, safety boundaries, and development patterns, see [AGENTS.md](../AGENTS.md) in the repository root.
+> **Note**: For comprehensive AI agent guidelines including supported workflows, safety boundaries, and development patterns, see [AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/AGENTS.md) in the repository root.
 
 ## Prerequisites
 - To use MCP tool calls, PowerShell must be installed. Provide [PowerShell installation instructions](https://learn.microsoft.com/powershell/scripting/install/installing-powershell) if not installed, and recommend restarting the IDE to use the MCP server.
