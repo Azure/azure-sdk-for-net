@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 - Fix the issue on calculating hash of `FunctionToolDefinition`. See [issue](https://github.com/Azure/azure-sdk-for-net/issues/53043).
+- Expose the `ServerLabel` on `SubmitToolApprovalUpdate` See [issue](https://github.com/Azure/azure-sdk-for-net/issues/53001).
 
 ### Other Changes
 
