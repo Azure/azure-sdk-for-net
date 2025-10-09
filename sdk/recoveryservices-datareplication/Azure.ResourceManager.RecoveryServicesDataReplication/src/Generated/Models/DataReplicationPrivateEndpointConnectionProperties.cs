@@ -7,45 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Represents Private endpoint connection response properties. </summary>
     public partial class DataReplicationPrivateEndpointConnectionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationPrivateEndpointConnectionProperties"/>. </summary>
         public DataReplicationPrivateEndpointConnectionProperties()
@@ -56,32 +25,39 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="provisioningState"> Gets or sets provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> Represent private Endpoint network resource that is linked to the Private Endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Represents Private link service connection state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationPrivateEndpointConnectionProperties(DataReplicationProvisioningState? provisioningState, WritableSubResource privateEndpoint, DataReplicationPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationPrivateEndpointConnectionProperties(DataReplicationProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, DataReplicationPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets provisioning state of the private endpoint connection. </summary>
         public DataReplicationProvisioningState? ProvisioningState { get; }
+
         /// <summary> Represent private Endpoint network resource that is linked to the Private Endpoint connection. </summary>
-        internal WritableSubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier PrivateEndpointId
-        {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
-            set
-            {
-                if (PrivateEndpoint is null)
-                    PrivateEndpoint = new WritableSubResource();
-                PrivateEndpoint.Id = value;
-            }
-        }
+        internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> Represents Private link service connection state. </summary>
         public DataReplicationPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+
+        /// <summary> Gets or sets the id. </summary>
+        public string PrivateEndpointId
+        {
+            get
+            {
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            }
+            set
+            {
+                if (PrivateEndpoint is null)
+                {
+                    PrivateEndpoint = new PrivateEndpoint();
+                }
+                PrivateEndpoint.Id = value;
+            }
+        }
     }
 }

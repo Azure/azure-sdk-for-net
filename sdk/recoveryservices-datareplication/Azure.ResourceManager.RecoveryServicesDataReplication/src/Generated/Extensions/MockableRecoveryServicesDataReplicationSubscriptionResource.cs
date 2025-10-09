@@ -8,195 +8,119 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableRecoveryServicesDataReplicationSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _dataReplicationVaultVaultClientDiagnostics;
-        private VaultRestOperations _dataReplicationVaultVaultRestClient;
-        private ClientDiagnostics _dataReplicationFabricFabricClientDiagnostics;
-        private FabricRestOperations _dataReplicationFabricFabricRestClient;
+        private ClientDiagnostics _vaultClientDiagnostics;
+        private Vault _vaultRestClient;
+        private ClientDiagnostics _fabricClientDiagnostics;
+        private Fabric _fabricRestClient;
         private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
-        private CheckNameAvailabilityRestOperations _checkNameAvailabilityRestClient;
+        private CheckNameAvailability _checkNameAvailabilityRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesDataReplicationSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableRecoveryServicesDataReplicationSubscriptionResource for mocking. </summary>
         protected MockableRecoveryServicesDataReplicationSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesDataReplicationSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableRecoveryServicesDataReplicationSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableRecoveryServicesDataReplicationSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DataReplicationVaultVaultClientDiagnostics => _dataReplicationVaultVaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationVaultResource.ResourceType.Namespace, Diagnostics);
-        private VaultRestOperations DataReplicationVaultVaultRestClient => _dataReplicationVaultVaultRestClient ??= new VaultRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataReplicationVaultResource.ResourceType));
-        private ClientDiagnostics DataReplicationFabricFabricClientDiagnostics => _dataReplicationFabricFabricClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationFabricResource.ResourceType.Namespace, Diagnostics);
-        private FabricRestOperations DataReplicationFabricFabricRestClient => _dataReplicationFabricFabricRestClient ??= new FabricRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataReplicationFabricResource.ResourceType));
-        private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private CheckNameAvailabilityRestOperations CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics VaultClientDiagnostics => _vaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Vault VaultRestClient => _vaultRestClient ??= new Vault(VaultClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
 
-        /// <summary>
-        /// Gets the list of vaults in the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataReplication/replicationVaults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VaultModel_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        private ClientDiagnostics FabricClientDiagnostics => _fabricClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Fabric FabricRestClient => _fabricRestClient ??= new Fabric(FabricClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
+
+        private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CheckNameAvailability CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailability(CheckNameAvailabilityClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
+
+        /// <summary> Gets the list of vaults in the given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataReplicationVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataReplicationVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataReplicationVaultResource> GetDataReplicationVaultsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationVaultResource(Client, DataReplicationVaultData.DeserializeDataReplicationVaultData(e)), DataReplicationVaultVaultClientDiagnostics, Pipeline, "MockableRecoveryServicesDataReplicationSubscriptionResource.GetDataReplicationVaults", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataReplicationVaultData, DataReplicationVaultResource>(new VaultGetBySubscriptionAsyncCollectionResultOfT(VaultRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataReplicationVaultResource(Client, data));
         }
 
-        /// <summary>
-        /// Gets the list of vaults in the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataReplication/replicationVaults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VaultModel_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the list of vaults in the given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataReplicationVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataReplicationVaultResource> GetDataReplicationVaults(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataReplicationVaultVaultRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationVaultResource(Client, DataReplicationVaultData.DeserializeDataReplicationVaultData(e)), DataReplicationVaultVaultClientDiagnostics, Pipeline, "MockableRecoveryServicesDataReplicationSubscriptionResource.GetDataReplicationVaults", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataReplicationVaultData, DataReplicationVaultResource>(new VaultGetBySubscriptionCollectionResultOfT(VaultRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataReplicationVaultResource(Client, data));
         }
 
-        /// <summary>
-        /// Gets the list of fabrics in the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataReplication/replicationFabrics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricModel_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationFabricResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the list of fabrics in the given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataReplicationFabricResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataReplicationFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataReplicationFabricResource> GetDataReplicationFabricsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationFabricResource(Client, DataReplicationFabricData.DeserializeDataReplicationFabricData(e)), DataReplicationFabricFabricClientDiagnostics, Pipeline, "MockableRecoveryServicesDataReplicationSubscriptionResource.GetDataReplicationFabrics", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetBySubscriptionAsyncCollectionResultOfT(FabricRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataReplicationFabricResource(Client, data));
         }
 
-        /// <summary>
-        /// Gets the list of fabrics in the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataReplication/replicationFabrics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricModel_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationFabricResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the list of fabrics in the given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataReplicationFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataReplicationFabricResource> GetDataReplicationFabrics(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataReplicationFabricFabricRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationFabricResource(Client, DataReplicationFabricData.DeserializeDataReplicationFabricData(e)), DataReplicationFabricFabricClientDiagnostics, Pipeline, "MockableRecoveryServicesDataReplicationSubscriptionResource.GetDataReplicationFabrics", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetBySubscriptionCollectionResultOfT(FabricRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DataReplicationFabricResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks the resource name availability.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataReplication/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_Post</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks the resource name availability. </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Resource details. </param>
+        /// <param name="body"> Resource details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataReplicationNameAvailabilityResult>> PostCheckNameAvailabilityAsync(AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataReplicationNameAvailabilityResult>> PostAsync(AzureLocation location, DataReplicationNameAvailabilityContent body = default, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationSubscriptionResource.PostCheckNameAvailability");
+            using DiagnosticScope scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationSubscriptionResource.Post");
             scope.Start();
             try
             {
-                var response = await CheckNameAvailabilityRestClient.PostAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CheckNameAvailabilityRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), location, DataReplicationNameAvailabilityContent.ToRequestContent(body), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataReplicationNameAvailabilityResult> response = Response.FromValue(DataReplicationNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -206,33 +130,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
             }
         }
 
-        /// <summary>
-        /// Checks the resource name availability.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataReplication/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_Post</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks the resource name availability. </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> Resource details. </param>
+        /// <param name="body"> Resource details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataReplicationNameAvailabilityResult> PostCheckNameAvailability(AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataReplicationNameAvailabilityResult> Post(AzureLocation location, DataReplicationNameAvailabilityContent body = default, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationSubscriptionResource.PostCheckNameAvailability");
+            using DiagnosticScope scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationSubscriptionResource.Post");
             scope.Start();
             try
             {
-                var response = CheckNameAvailabilityRestClient.Post(Id.SubscriptionId, location, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CheckNameAvailabilityRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), location, DataReplicationNameAvailabilityContent.ToRequestContent(body), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataReplicationNameAvailabilityResult> response = Response.FromValue(DataReplicationNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

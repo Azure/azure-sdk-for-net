@@ -11,39 +11,10 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Protected item model properties update. </summary>
-    internal partial class DataReplicationProtectedItemPropertiesUpdate
+    public partial class DataReplicationProtectedItemPropertiesUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemPropertiesUpdate"/>. </summary>
         public DataReplicationProtectedItemPropertiesUpdate()
@@ -51,23 +22,28 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemPropertiesUpdate"/>. </summary>
-        /// <param name="customProperties">
-        /// Protected item model custom properties update.
-        /// Please note <see cref="DataReplicationProtectedItemCustomPropertiesUpdate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemCustomPropertiesUpdate"/> and <see cref="VMwareToAzStackHciProtectedItemCustomPropertiesUpdate"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationProtectedItemPropertiesUpdate(DataReplicationProtectedItemCustomPropertiesUpdate customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="customProperties"> Protected item model custom properties update. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationProtectedItemPropertiesUpdate(DataReplicationProtectedItemCustomPropertiesUpdate customProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomProperties = customProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Protected item model custom properties update.
-        /// Please note <see cref="DataReplicationProtectedItemCustomPropertiesUpdate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciProtectedItemCustomPropertiesUpdate"/> and <see cref="VMwareToAzStackHciProtectedItemCustomPropertiesUpdate"/>.
-        /// </summary>
-        public DataReplicationProtectedItemCustomPropertiesUpdate CustomProperties { get; set; }
+        /// <summary> Protected item model custom properties update. </summary>
+        internal DataReplicationProtectedItemCustomPropertiesUpdate CustomProperties { get; set; }
+
+        /// <summary> Discriminator property for DataReplicationProtectedItemCustomPropertiesUpdate. </summary>
+        internal string CustomInstanceType
+        {
+            get
+            {
+                return CustomProperties is null ? default : CustomProperties.InstanceType;
+            }
+            set
+            {
+                CustomProperties = new Models.DataReplicationProtectedItemCustomPropertiesUpdate(value);
+            }
+        }
     }
 }

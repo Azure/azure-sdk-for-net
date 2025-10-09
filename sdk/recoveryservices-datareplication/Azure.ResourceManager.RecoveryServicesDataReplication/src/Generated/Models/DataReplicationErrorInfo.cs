@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Error model. </summary>
     public partial class DataReplicationErrorInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationErrorInfo"/>. </summary>
         internal DataReplicationErrorInfo()
@@ -54,35 +25,41 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="code"> Gets or sets the error code. </param>
         /// <param name="type"> Gets or sets the error type. </param>
         /// <param name="severity"> Gets or sets the error severity. </param>
-        /// <param name="createdOn"> Gets or sets the creation time of error. </param>
+        /// <param name="creationTime"> Gets or sets the creation time of error. </param>
         /// <param name="message"> Gets or sets the error message. </param>
         /// <param name="causes"> Gets or sets the possible causes of error. </param>
         /// <param name="recommendation"> Gets or sets the recommended action to resolve error. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationErrorInfo(string code, string type, string severity, DateTimeOffset? createdOn, string message, string causes, string recommendation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationErrorInfo(string code, string @type, string severity, DateTimeOffset? creationTime, string message, string causes, string recommendation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
-            Type = type;
+            Type = @type;
             Severity = severity;
-            CreatedOn = createdOn;
+            CreationTime = creationTime;
             Message = message;
             Causes = causes;
             Recommendation = recommendation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the error code. </summary>
         public string Code { get; }
+
         /// <summary> Gets or sets the error type. </summary>
         public string Type { get; }
+
         /// <summary> Gets or sets the error severity. </summary>
         public string Severity { get; }
+
         /// <summary> Gets or sets the creation time of error. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreationTime { get; }
+
         /// <summary> Gets or sets the error message. </summary>
         public string Message { get; }
+
         /// <summary> Gets or sets the possible causes of error. </summary>
         public string Causes { get; }
+
         /// <summary> Gets or sets the recommended action to resolve error. </summary>
         public string Recommendation { get; }
     }

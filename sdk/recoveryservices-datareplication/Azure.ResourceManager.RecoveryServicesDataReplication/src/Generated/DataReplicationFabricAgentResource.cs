@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
-    /// A Class representing a DataReplicationFabricAgent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationFabricAgentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDataReplicationFabricAgentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataReplicationFabricResource"/> using the GetDataReplicationFabricAgent method.
+    /// A class representing a DataReplicationFabricAgent along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationFabricAgentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataReplicationFabricResource"/> using the GetDataReplicationFabricAgents method.
     /// </summary>
     public partial class DataReplicationFabricAgentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataReplicationFabricAgentResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="fabricName"> The fabricName. </param>
-        /// <param name="fabricAgentName"> The fabricAgentName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _dataReplicationFabricAgentFabricAgentClientDiagnostics;
-        private readonly FabricAgentRestOperations _dataReplicationFabricAgentFabricAgentRestClient;
+        private readonly ClientDiagnostics _fabricAgentClientDiagnostics;
+        private readonly FabricAgent _fabricAgentRestClient;
         private readonly DataReplicationFabricAgentData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationFabrics/fabricAgents";
 
-        /// <summary> Initializes a new instance of the <see cref="DataReplicationFabricAgentResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataReplicationFabricAgentResource for mocking. </summary>
         protected DataReplicationFabricAgentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataReplicationFabricAgentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationFabricAgentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataReplicationFabricAgentResource(ArmClient client, DataReplicationFabricAgentData data) : this(client, data.Id)
@@ -54,71 +43,73 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataReplicationFabricAgentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationFabricAgentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataReplicationFabricAgentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataReplicationFabricAgentFabricAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataReplicationFabricAgentFabricAgentApiVersion);
-            _dataReplicationFabricAgentFabricAgentRestClient = new FabricAgentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationFabricAgentFabricAgentApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string dataReplicationFabricAgentApiVersion);
+            _fabricAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
+            _fabricAgentRestClient = new FabricAgent(_fabricAgentClientDiagnostics, Pipeline, Endpoint, dataReplicationFabricAgentApiVersion ?? "2024-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DataReplicationFabricAgentData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="fabricAgentName"> The fabricAgentName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Gets the details of the fabric agent.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricAgentModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationFabricAgentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the details of the fabric agent. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataReplicationFabricAgentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataReplicationFabricAgentFabricAgentClientDiagnostics.CreateScope("DataReplicationFabricAgentResource.Get");
+            using DiagnosticScope scope = _fabricAgentClientDiagnostics.CreateScope("DataReplicationFabricAgentResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataReplicationFabricAgentFabricAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fabricAgentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataReplicationFabricAgentData> response = Response.FromValue(DataReplicationFabricAgentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationFabricAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,37 +119,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Gets the details of the fabric agent.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricAgentModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationFabricAgentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the details of the fabric agent. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataReplicationFabricAgentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataReplicationFabricAgentFabricAgentClientDiagnostics.CreateScope("DataReplicationFabricAgentResource.Get");
+            using DiagnosticScope scope = _fabricAgentClientDiagnostics.CreateScope("DataReplicationFabricAgentResource.Get");
             scope.Start();
             try
             {
-                var response = _dataReplicationFabricAgentFabricAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fabricAgentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataReplicationFabricAgentData> response = Response.FromValue(DataReplicationFabricAgentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationFabricAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -168,39 +147,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Deletes fabric agent.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricAgentModel_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationFabricAgentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Deletes fabric agent. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataReplicationFabricAgentFabricAgentClientDiagnostics.CreateScope("DataReplicationFabricAgentResource.Delete");
+            using DiagnosticScope scope = _fabricAgentClientDiagnostics.CreateScope("DataReplicationFabricAgentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _dataReplicationFabricAgentFabricAgentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesDataReplicationArmOperation(_dataReplicationFabricAgentFabricAgentClientDiagnostics, Pipeline, _dataReplicationFabricAgentFabricAgentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fabricAgentRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesDataReplicationArmOperation operation = new RecoveryServicesDataReplicationArmOperation(_fabricAgentClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -210,131 +176,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Deletes fabric agent.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricAgentModel_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationFabricAgentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Deletes fabric agent. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataReplicationFabricAgentFabricAgentClientDiagnostics.CreateScope("DataReplicationFabricAgentResource.Delete");
+            using DiagnosticScope scope = _fabricAgentClientDiagnostics.CreateScope("DataReplicationFabricAgentResource.Delete");
             scope.Start();
             try
             {
-                var response = _dataReplicationFabricAgentFabricAgentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesDataReplicationArmOperation(_dataReplicationFabricAgentFabricAgentClientDiagnostics, Pipeline, _dataReplicationFabricAgentFabricAgentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fabricAgentRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesDataReplicationArmOperation operation = new RecoveryServicesDataReplicationArmOperation(_fabricAgentClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates the fabric agent.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricAgentModel_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationFabricAgentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Fabric agent model. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataReplicationFabricAgentResource>> UpdateAsync(WaitUntil waitUntil, DataReplicationFabricAgentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _dataReplicationFabricAgentFabricAgentClientDiagnostics.CreateScope("DataReplicationFabricAgentResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _dataReplicationFabricAgentFabricAgentRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource>(new DataReplicationFabricAgentOperationSource(Client), _dataReplicationFabricAgentFabricAgentClientDiagnostics, Pipeline, _dataReplicationFabricAgentFabricAgentRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates the fabric agent.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricAgentModel_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationFabricAgentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Fabric agent model. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataReplicationFabricAgentResource> Update(WaitUntil waitUntil, DataReplicationFabricAgentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _dataReplicationFabricAgentFabricAgentClientDiagnostics.CreateScope("DataReplicationFabricAgentResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _dataReplicationFabricAgentFabricAgentRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource>(new DataReplicationFabricAgentOperationSource(Client), _dataReplicationFabricAgentFabricAgentClientDiagnostics, Pipeline, _dataReplicationFabricAgentFabricAgentRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

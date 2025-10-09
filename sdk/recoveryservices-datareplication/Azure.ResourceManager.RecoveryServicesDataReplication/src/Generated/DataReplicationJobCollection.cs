@@ -8,85 +8,77 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
     /// A class representing a collection of <see cref="DataReplicationJobResource"/> and their operations.
-    /// Each <see cref="DataReplicationJobResource"/> in the collection will belong to the same instance of <see cref="DataReplicationVaultResource"/>.
-    /// To get a <see cref="DataReplicationJobCollection"/> instance call the GetDataReplicationJobs method from an instance of <see cref="DataReplicationVaultResource"/>.
+    /// Each <see cref="DataReplicationJobResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="DataReplicationJobCollection"/> instance call the GetDataReplicationJobs method from an instance of the parent resource.
     /// </summary>
     public partial class DataReplicationJobCollection : ArmCollection, IEnumerable<DataReplicationJobResource>, IAsyncEnumerable<DataReplicationJobResource>
     {
-        private readonly ClientDiagnostics _dataReplicationJobJobClientDiagnostics;
-        private readonly JobRestOperations _dataReplicationJobJobRestClient;
+        private readonly ClientDiagnostics _jobClientDiagnostics;
+        private readonly Job _jobRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataReplicationJobCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataReplicationJobCollection for mocking. </summary>
         protected DataReplicationJobCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataReplicationJobCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationJobCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataReplicationJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataReplicationJobJobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationJobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataReplicationJobResource.ResourceType, out string dataReplicationJobJobApiVersion);
-            _dataReplicationJobJobRestClient = new JobRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationJobJobApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DataReplicationJobResource.ResourceType, out string dataReplicationJobApiVersion);
+            _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationJobResource.ResourceType.Namespace, Diagnostics);
+            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Endpoint, dataReplicationJobApiVersion ?? "2024-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DataReplicationVaultResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Gets the details of the job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the details of the job. </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DataReplicationJobResource>> GetAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _dataReplicationJobJobClientDiagnostics.CreateScope("DataReplicationJobCollection.Get");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataReplicationJobJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataReplicationJobData> response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -96,42 +88,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Gets the details of the job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the details of the job. </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DataReplicationJobResource> Get(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _dataReplicationJobJobClientDiagnostics.CreateScope("DataReplicationJobCollection.Get");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataReplicationJobJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataReplicationJobData> response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -141,106 +121,72 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Gets the list of jobs in the given vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobModel_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="odataOptions"> OData options. </param>
-        /// <param name="continuationToken"> Continuation token. </param>
-        /// <param name="pageSize"> Page size. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataReplicationJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataReplicationJobResource> GetAllAsync(string odataOptions = null, string continuationToken = null, int? pageSize = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationJobJobRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, odataOptions, continuationToken, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationJobJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, odataOptions, continuationToken, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationJobResource(Client, DataReplicationJobData.DeserializeDataReplicationJobData(e)), _dataReplicationJobJobClientDiagnostics, Pipeline, "DataReplicationJobCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of jobs in the given vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobModel_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the list of jobs in the given vault. </summary>
         /// <param name="odataOptions"> OData options. </param>
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="pageSize"> Page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataReplicationJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataReplicationJobResource> GetAll(string odataOptions = null, string continuationToken = null, int? pageSize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataReplicationJobResource> GetAllAsync(string odataOptions = default, string continuationToken = default, int? pageSize = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationJobJobRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, odataOptions, continuationToken, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationJobJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, odataOptions, continuationToken, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationJobResource(Client, DataReplicationJobData.DeserializeDataReplicationJobData(e)), _dataReplicationJobJobClientDiagnostics, Pipeline, "DataReplicationJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataReplicationJobData, DataReplicationJobResource>(new JobGetAllAsyncCollectionResultOfT(
+                _jobRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                odataOptions,
+                continuationToken,
+                pageSize,
+                context), data => new DataReplicationJobResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the list of jobs in the given vault. </summary>
+        /// <param name="odataOptions"> OData options. </param>
+        /// <param name="continuationToken"> Continuation token. </param>
+        /// <param name="pageSize"> Page size. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DataReplicationJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataReplicationJobResource> GetAll(string odataOptions = default, string continuationToken = default, int? pageSize = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataReplicationJobData, DataReplicationJobResource>(new JobGetAllCollectionResultOfT(
+                _jobRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                odataOptions,
+                continuationToken,
+                pageSize,
+                context), data => new DataReplicationJobResource(Client, data));
+        }
+
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _dataReplicationJobJobClientDiagnostics.CreateScope("DataReplicationJobCollection.Exists");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataReplicationJobJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataReplicationJobData> response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -250,40 +196,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _dataReplicationJobJobClientDiagnostics.CreateScope("DataReplicationJobCollection.Exists");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataReplicationJobJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataReplicationJobData> response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -293,42 +225,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DataReplicationJobResource>> GetIfExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _dataReplicationJobJobClientDiagnostics.CreateScope("DataReplicationJobCollection.GetIfExists");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataReplicationJobJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataReplicationJobData> response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataReplicationJobResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -338,42 +258,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DataReplicationJobResource> GetIfExists(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _dataReplicationJobJobClientDiagnostics.CreateScope("DataReplicationJobCollection.GetIfExists");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataReplicationJobJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataReplicationJobData> response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataReplicationJobResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataReplicationJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,6 +301,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataReplicationJobResource> IAsyncEnumerable<DataReplicationJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

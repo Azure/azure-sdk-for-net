@@ -11,40 +11,42 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> VMware to  AzStackHCI event model custom properties. This class provides provider specific details for events of type DataContract.HealthEvents.HealthEventType.ProtectedItemHealth and DataContract.HealthEvents.HealthEventType.AgentHealth. </summary>
-    public partial class VMwareToAzStackHciEventCustomProperties : DataReplicationEventCustomProperties
+    internal partial class VMwareToAzStackHciEventCustomProperties : DataReplicationEventCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciEventCustomProperties"/>. </summary>
-        internal VMwareToAzStackHciEventCustomProperties()
+        internal VMwareToAzStackHciEventCustomProperties() : base("VMwareToAzStackHCI")
         {
-            InstanceType = "VMwareToAzStackHCI";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciEventCustomProperties"/>. </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationEventCustomProperties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="eventSourceFriendlyName"> Gets or sets the friendly name of the source which has raised this health event. </param>
         /// <param name="protectedItemFriendlyName"> Gets or sets the protected item friendly name. </param>
         /// <param name="sourceApplianceName"> Gets or sets the source appliance name. </param>
         /// <param name="targetApplianceName"> Gets or sets the source target name. </param>
         /// <param name="serverType"> Gets or sets the server type. </param>
-        internal VMwareToAzStackHciEventCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string eventSourceFriendlyName, string protectedItemFriendlyName, string sourceApplianceName, string targetApplianceName, string serverType) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareToAzStackHciEventCustomProperties(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventSourceFriendlyName, string protectedItemFriendlyName, string sourceApplianceName, string targetApplianceName, string serverType) : base(instanceType, additionalBinaryDataProperties)
         {
             EventSourceFriendlyName = eventSourceFriendlyName;
             ProtectedItemFriendlyName = protectedItemFriendlyName;
             SourceApplianceName = sourceApplianceName;
             TargetApplianceName = targetApplianceName;
             ServerType = serverType;
-            InstanceType = instanceType ?? "VMwareToAzStackHCI";
         }
 
         /// <summary> Gets or sets the friendly name of the source which has raised this health event. </summary>
         public string EventSourceFriendlyName { get; }
+
         /// <summary> Gets or sets the protected item friendly name. </summary>
         public string ProtectedItemFriendlyName { get; }
+
         /// <summary> Gets or sets the source appliance name. </summary>
         public string SourceApplianceName { get; }
+
         /// <summary> Gets or sets the source target name. </summary>
         public string TargetApplianceName { get; }
+
         /// <summary> Gets or sets the server type. </summary>
         public string ServerType { get; }
     }

@@ -10,13 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class HyperVMigrateFabricCustomProperties : IUtf8JsonSerializable, IJsonModel<HyperVMigrateFabricCustomProperties>
+    /// <summary> HyperV migrate fabric model custom properties. </summary>
+    public partial class HyperVMigrateFabricCustomProperties : IJsonModel<HyperVMigrateFabricCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVMigrateFabricCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="HyperVMigrateFabricCustomProperties"/> for deserialization. </summary>
+        internal HyperVMigrateFabricCustomProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVMigrateFabricCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVMigrateFabricCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVMigrateFabricCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVMigrateFabricCustomProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("hyperVSiteId"u8);
             writer.WriteStringValue(HyperVSiteId);
@@ -56,87 +62,90 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        HyperVMigrateFabricCustomProperties IJsonModel<HyperVMigrateFabricCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVMigrateFabricCustomProperties IJsonModel<HyperVMigrateFabricCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HyperVMigrateFabricCustomProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataReplicationFabricCustomProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVMigrateFabricCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVMigrateFabricCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVMigrateFabricCustomProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHyperVMigrateFabricCustomProperties(document.RootElement, options);
         }
 
-        internal static HyperVMigrateFabricCustomProperties DeserializeHyperVMigrateFabricCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HyperVMigrateFabricCustomProperties DeserializeHyperVMigrateFabricCustomProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "HyperVMigrate";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier hyperVSiteId = default;
             ResourceIdentifier fabricResourceId = default;
             ResourceIdentifier fabricContainerId = default;
             ResourceIdentifier migrationSolutionId = default;
             Uri migrationHubUri = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("hyperVSiteId"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    hyperVSiteId = new ResourceIdentifier(property.Value.GetString());
+                    instanceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricResourceId"u8))
+                if (prop.NameEquals("hyperVSiteId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    hyperVSiteId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("fabricResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fabricResourceId = new ResourceIdentifier(property.Value.GetString());
+                    fabricResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fabricContainerId"u8))
+                if (prop.NameEquals("fabricContainerId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fabricContainerId = new ResourceIdentifier(property.Value.GetString());
+                    fabricContainerId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("migrationSolutionId"u8))
+                if (prop.NameEquals("migrationSolutionId"u8))
                 {
-                    migrationSolutionId = new ResourceIdentifier(property.Value.GetString());
+                    migrationSolutionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("migrationHubUri"u8))
+                if (prop.NameEquals("migrationHubUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    migrationHubUri = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
+                    migrationHubUri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVMigrateFabricCustomProperties(
                 instanceType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 hyperVSiteId,
                 fabricResourceId,
                 fabricContainerId,
@@ -144,10 +153,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 migrationHubUri);
         }
 
-        BinaryData IPersistableModel<HyperVMigrateFabricCustomProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVMigrateFabricCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HyperVMigrateFabricCustomProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVMigrateFabricCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -157,15 +169,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        HyperVMigrateFabricCustomProperties IPersistableModel<HyperVMigrateFabricCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVMigrateFabricCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVMigrateFabricCustomProperties IPersistableModel<HyperVMigrateFabricCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (HyperVMigrateFabricCustomProperties)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataReplicationFabricCustomProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVMigrateFabricCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHyperVMigrateFabricCustomProperties(document.RootElement, options);
                     }
                 default:
@@ -173,6 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HyperVMigrateFabricCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

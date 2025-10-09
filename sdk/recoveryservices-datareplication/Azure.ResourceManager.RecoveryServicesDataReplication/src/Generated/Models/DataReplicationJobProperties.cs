@@ -7,55 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Job model properties. </summary>
     public partial class DataReplicationJobProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationJobProperties"/>. </summary>
-        /// <param name="customProperties">
-        /// Job model custom properties.
-        /// Please note <see cref="DataReplicationJobCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FailoverJobCustomProperties"/>, <see cref="TestFailoverCleanupJobCustomProperties"/> and <see cref="TestFailoverJobCustomProperties"/>.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
+        /// <param name="customProperties"> Job model custom properties. </param>
         internal DataReplicationJobProperties(DataReplicationJobCustomProperties customProperties)
         {
-            Argument.AssertNotNull(customProperties, nameof(customProperties));
-
             AllowedActions = new ChangeTrackingList<string>();
             Tasks = new ChangeTrackingList<DataReplicationTask>();
             Errors = new ChangeTrackingList<DataReplicationErrorInfo>();
@@ -65,8 +30,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of <see cref="DataReplicationJobProperties"/>. </summary>
         /// <param name="displayName"> Gets or sets the friendly display name. </param>
         /// <param name="state"> Gets or sets the job state. </param>
-        /// <param name="startOn"> Gets or sets the start time. </param>
-        /// <param name="endOn"> Gets or sets the end time. </param>
+        /// <param name="startTime"> Gets or sets the start time. </param>
+        /// <param name="endTime"> Gets or sets the end time. </param>
         /// <param name="objectId"> Gets or sets the affected object Id. </param>
         /// <param name="objectName"> Gets or sets the affected object name. </param>
         /// <param name="objectInternalId"> Gets or sets the affected object internal Id. </param>
@@ -79,19 +44,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="activityId"> Gets or sets the job activity id. </param>
         /// <param name="tasks"> Gets or sets the list of tasks. </param>
         /// <param name="errors"> Gets or sets the list of errors. </param>
-        /// <param name="customProperties">
-        /// Job model custom properties.
-        /// Please note <see cref="DataReplicationJobCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FailoverJobCustomProperties"/>, <see cref="TestFailoverCleanupJobCustomProperties"/> and <see cref="TestFailoverJobCustomProperties"/>.
-        /// </param>
+        /// <param name="customProperties"> Job model custom properties. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the job. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationJobProperties(string displayName, DataReplicationJobState? state, DateTimeOffset? startOn, DateTimeOffset? endOn, string objectId, string objectName, string objectInternalId, string objectInternalName, DataReplicationJobObjectType? objectType, string replicationProviderId, string sourceFabricProviderId, string targetFabricProviderId, IReadOnlyList<string> allowedActions, string activityId, IReadOnlyList<DataReplicationTask> tasks, IReadOnlyList<DataReplicationErrorInfo> errors, DataReplicationJobCustomProperties customProperties, DataReplicationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationJobProperties(string displayName, DataReplicationJobState? state, DateTimeOffset? startTime, DateTimeOffset? endTime, string objectId, string objectName, string objectInternalId, string objectInternalName, DataReplicationJobObjectType? objectType, string replicationProviderId, string sourceFabricProviderId, string targetFabricProviderId, IReadOnlyList<string> allowedActions, string activityId, IReadOnlyList<DataReplicationTask> tasks, IReadOnlyList<DataReplicationErrorInfo> errors, DataReplicationJobCustomProperties customProperties, DataReplicationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             State = state;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartTime = startTime;
+            EndTime = endTime;
             ObjectId = objectId;
             ObjectName = objectName;
             ObjectInternalId = objectInternalId;
@@ -106,52 +67,60 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Errors = errors;
             CustomProperties = customProperties;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataReplicationJobProperties"/> for deserialization. </summary>
-        internal DataReplicationJobProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the friendly display name. </summary>
         public string DisplayName { get; }
+
         /// <summary> Gets or sets the job state. </summary>
         public DataReplicationJobState? State { get; }
+
         /// <summary> Gets or sets the start time. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartTime { get; }
+
         /// <summary> Gets or sets the end time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndTime { get; }
+
         /// <summary> Gets or sets the affected object Id. </summary>
         public string ObjectId { get; }
+
         /// <summary> Gets or sets the affected object name. </summary>
         public string ObjectName { get; }
+
         /// <summary> Gets or sets the affected object internal Id. </summary>
         public string ObjectInternalId { get; }
+
         /// <summary> Gets or sets the affected object internal name. </summary>
         public string ObjectInternalName { get; }
+
         /// <summary> Gets or sets the object type. </summary>
         public DataReplicationJobObjectType? ObjectType { get; }
+
         /// <summary> Gets or sets the replication provider. </summary>
         public string ReplicationProviderId { get; }
+
         /// <summary> Gets or sets the source fabric provider. </summary>
         public string SourceFabricProviderId { get; }
+
         /// <summary> Gets or sets the target fabric provider. </summary>
         public string TargetFabricProviderId { get; }
+
         /// <summary> Gets or sets the list of allowed actions on the job. </summary>
         public IReadOnlyList<string> AllowedActions { get; }
+
         /// <summary> Gets or sets the job activity id. </summary>
         public string ActivityId { get; }
+
         /// <summary> Gets or sets the list of tasks. </summary>
         public IReadOnlyList<DataReplicationTask> Tasks { get; }
+
         /// <summary> Gets or sets the list of errors. </summary>
         public IReadOnlyList<DataReplicationErrorInfo> Errors { get; }
-        /// <summary>
-        /// Job model custom properties.
-        /// Please note <see cref="DataReplicationJobCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FailoverJobCustomProperties"/>, <see cref="TestFailoverCleanupJobCustomProperties"/> and <see cref="TestFailoverJobCustomProperties"/>.
-        /// </summary>
+
+        /// <summary> Job model custom properties. </summary>
         public DataReplicationJobCustomProperties CustomProperties { get; }
+
         /// <summary> Gets or sets the provisioning state of the job. </summary>
         public DataReplicationProvisioningState? ProvisioningState { get; }
     }

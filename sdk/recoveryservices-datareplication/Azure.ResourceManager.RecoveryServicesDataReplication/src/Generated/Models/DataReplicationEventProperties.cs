@@ -8,55 +8,20 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Event model properties. </summary>
     public partial class DataReplicationEventProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationEventProperties"/>. </summary>
-        /// <param name="customProperties">
-        /// Event model custom properties.
-        /// Please note <see cref="DataReplicationEventCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciEventCustomProperties"/> and <see cref="VMwareToAzStackHciEventCustomProperties"/>.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
+        /// <param name="customProperties"> Event model custom properties. </param>
         internal DataReplicationEventProperties(DataReplicationEventCustomProperties customProperties)
         {
-            Argument.AssertNotNull(customProperties, nameof(customProperties));
-
             HealthErrors = new ChangeTrackingList<DataReplicationHealthErrorInfo>();
             CustomProperties = customProperties;
         }
@@ -71,14 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="description"> Gets or sets the event description. </param>
         /// <param name="correlationId"> Gets or sets the event correlation Id. </param>
         /// <param name="healthErrors"> Gets or sets the errors associated with this event. </param>
-        /// <param name="customProperties">
-        /// Event model custom properties.
-        /// Please note <see cref="DataReplicationEventCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciEventCustomProperties"/> and <see cref="VMwareToAzStackHciEventCustomProperties"/>.
-        /// </param>
+        /// <param name="customProperties"> Event model custom properties. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the event. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationEventProperties(ResourceType? resourceType, string resourceName, string eventType, string eventName, DateTimeOffset? occurredOn, string severity, string description, string correlationId, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, DataReplicationEventCustomProperties customProperties, DataReplicationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationEventProperties(ResourceType? resourceType, string resourceName, string eventType, string eventName, DateTimeOffset? occurredOn, string severity, string description, string correlationId, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, DataReplicationEventCustomProperties customProperties, DataReplicationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             ResourceName = resourceName;
@@ -91,39 +52,49 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             HealthErrors = healthErrors;
             CustomProperties = customProperties;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataReplicationEventProperties"/> for deserialization. </summary>
-        internal DataReplicationEventProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the resource type. </summary>
         public ResourceType? ResourceType { get; }
+
         /// <summary> Gets or sets the resource name. </summary>
         public string ResourceName { get; }
+
         /// <summary> Gets or sets the event type. </summary>
         public string EventType { get; }
+
         /// <summary> Gets or sets the event name. </summary>
         public string EventName { get; }
+
         /// <summary> Gets or sets the time at which the event occurred at source. </summary>
         public DateTimeOffset? OccurredOn { get; }
+
         /// <summary> Gets or sets the event severity. </summary>
         public string Severity { get; }
+
         /// <summary> Gets or sets the event description. </summary>
         public string Description { get; }
+
         /// <summary> Gets or sets the event correlation Id. </summary>
         public string CorrelationId { get; }
+
         /// <summary> Gets or sets the errors associated with this event. </summary>
         public IReadOnlyList<DataReplicationHealthErrorInfo> HealthErrors { get; }
-        /// <summary>
-        /// Event model custom properties.
-        /// Please note <see cref="DataReplicationEventCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciEventCustomProperties"/> and <see cref="VMwareToAzStackHciEventCustomProperties"/>.
-        /// </summary>
-        public DataReplicationEventCustomProperties CustomProperties { get; }
+
+        /// <summary> Event model custom properties. </summary>
+        internal DataReplicationEventCustomProperties CustomProperties { get; }
+
         /// <summary> Gets or sets the provisioning state of the event. </summary>
         public DataReplicationProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Discriminator property for DataReplicationEventCustomProperties. </summary>
+        internal string CustomInstanceType
+        {
+            get
+            {
+                return CustomProperties.InstanceType;
+            }
+        }
     }
 }
