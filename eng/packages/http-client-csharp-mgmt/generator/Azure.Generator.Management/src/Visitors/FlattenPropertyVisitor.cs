@@ -175,8 +175,14 @@ namespace Azure.Generator.Management.Visitors
 
             var parameters = new List<ValueExpression>();
             var additionalPropertyIndex = GetAdditionalPropertyIndex();
-            for (int flattenedPropertyIndex = 0, fullConstructorParameterIndex = 0; flattenedPropertyIndex < flattenedProperties.Count && fullConstructorParameterIndex < fullConstructorParameters.Count; fullConstructorParameterIndex++)
+            for (int flattenedPropertyIndex = 0, fullConstructorParameterIndex = 0; ; fullConstructorParameterIndex++)
             {
+                // If we have processed all the flattened properties or all the constructor parameters, we can break the loop.
+                if (flattenedPropertyIndex >= flattenedProperties.Count || fullConstructorParameterIndex >= fullConstructorParameters.Count)
+                {
+                    break;
+                }
+
                 if (fullConstructorParameterIndex == additionalPropertyIndex)
                 {
                     // If the additionalProperties parameter exists, we need to pass a new instance for it.
