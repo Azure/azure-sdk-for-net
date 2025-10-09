@@ -190,6 +190,17 @@ namespace Azure.Core.TestFramework.Tests
         }
 
         [Test]
+        public void NonPublicSubClientPropertyCallsAreNotAutoInstrumented()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+
+            InternalType subClient = client.GetInternalType();
+            // should not throw
+            var result = subClient.Method(123);
+            Assert.AreEqual("Sync 123 False", result);
+        }
+
+        [Test]
         public void CanGetUninstrumentedClient()
         {
             var testClient = new TestClient();
