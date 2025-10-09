@@ -4,7 +4,7 @@
 
 ### Other Changes
 
-- Support the [case](https://github.com/Azure/azure-sdk-for-net/issues/53089) where the delegatedManagedIdentityResourceId of RoleAssignment may be ab empty string rather than null.
+- Support the [case](https://github.com/Azure/azure-sdk-for-net/issues/53089) where the delegatedManagedIdentityResourceId of RoleAssignment may be an empty string rather than null.
 
 ## 1.1.5 (2025-07-28)
 
