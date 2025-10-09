@@ -8,7 +8,7 @@ azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
 require: https://github.com/Azure/azure-rest-api-specs/blob/cbfe154470792d8aea255885a4a96609603982cc/specification/network/resource-manager/readme.md
-#tag: package-2024-10-01
+#tag: package-2025-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
