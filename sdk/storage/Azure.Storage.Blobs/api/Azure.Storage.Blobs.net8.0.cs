@@ -225,7 +225,11 @@ namespace Azure.Storage.Blobs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics> GetStatistics(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics>> GetStatisticsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey> GetUserDelegationKey(System.DateTimeOffset expiresOn, Azure.Storage.Blobs.Models.BlobGetUserDelegationKeyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey> GetUserDelegationKey(System.DateTimeOffset? startsOn, System.DateTimeOffset expiresOn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>> GetUserDelegationKeyAsync(System.DateTimeOffset expiresOn, Azure.Storage.Blobs.Models.BlobGetUserDelegationKeyOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey>> GetUserDelegationKeyAsync(System.DateTimeOffset? startsOn, System.DateTimeOffset expiresOn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SetProperties(Azure.Storage.Blobs.Models.BlobServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(Azure.Storage.Blobs.Models.BlobServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -764,6 +768,12 @@ namespace Azure.Storage.Blobs.Models
         Bootstrap = 1,
         Unavailable = 2,
     }
+    public partial class BlobGetUserDelegationKeyOptions
+    {
+        public BlobGetUserDelegationKeyOptions() { }
+        public string DelegatedUserTid { get { throw null; } set { } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
+    }
     public partial class BlobHierarchyItem
     {
         internal BlobHierarchyItem() { }
@@ -1150,8 +1160,12 @@ namespace Azure.Storage.Blobs.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.TaggedBlobItem TaggedBlobItem(string blobName = null, string blobContainerName = null) { throw null; }
         public static Azure.Storage.Blobs.Models.TaggedBlobItem TaggedBlobItem(string blobName = null, string blobContainerName = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.Storage.Blobs.Models.UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, System.DateTimeOffset signedStartsOn = default(System.DateTimeOffset), System.DateTimeOffset signedExpiresOn = default(System.DateTimeOffset), string signedService = null, string signedVersion = null, string value = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Storage.Blobs.Models.UserDelegationKey UserDelegationKey(string signedObjectId, string signedTenantId, System.DateTimeOffset signedStartsOn, System.DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value) { throw null; }
+        public static Azure.Storage.Blobs.Models.UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, System.DateTimeOffset signedStartsOn = default(System.DateTimeOffset), System.DateTimeOffset signedExpiresOn = default(System.DateTimeOffset), string signedService = null, string signedVersion = null, string delegatedUserObjectId = null, string value = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.UserDelegationKey UserDelegationKey(string signedObjectId, string signedTenantId, string signedService, string signedVersion, string value, System.DateTimeOffset signedExpiresOn, System.DateTimeOffset signedStartsOn) { throw null; }
+        public static Azure.Storage.Blobs.Models.UserDelegationKey UserDelegationKey(string signedObjectId, string signedTenantId, string signedService, string signedVersion, string value, System.DateTimeOffset signedExpiresOn, System.DateTimeOffset signedStartsOn, string DelegatedUserObjectId) { throw null; }
     }
     public partial class BlobSnapshotInfo
     {
@@ -1585,6 +1599,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class UserDelegationKey
     {
         internal UserDelegationKey() { }
+        public string SignedDelegatedUserTid { get { throw null; } }
         public System.DateTimeOffset SignedExpiresOn { get { throw null; } }
         public string SignedObjectId { get { throw null; } }
         public string SignedService { get { throw null; } }
@@ -1994,6 +2009,7 @@ namespace Azure.Storage.Sas
         public string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
         public string DelegatedUserObjectId { get { throw null; } set { } }
+        public string DelegatedUserTenantId { get { throw null; } set { } }
         public string EncryptionScope { get { throw null; } set { } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
