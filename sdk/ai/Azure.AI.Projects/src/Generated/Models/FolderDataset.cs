@@ -11,7 +11,7 @@ namespace Azure.AI.Projects
     public partial class FolderDataset : AIProjectDataset
     {
         /// <summary> Initializes a new instance of <see cref="FolderDataset"/>. </summary>
-        /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
+        /// <param name="dataUri"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public FolderDataset(Uri dataUri) : base(dataUri, DatasetType.UriFolder)
         {
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="FolderDataset"/>. </summary>
-        /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
+        /// <param name="dataUri"></param>
         /// <param name="type"> Dataset type. </param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
         /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
