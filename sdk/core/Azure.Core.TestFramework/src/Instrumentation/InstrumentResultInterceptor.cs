@@ -35,7 +35,7 @@ namespace Azure.Core.TestFramework
                 // Generated ARM clients will have a property containing the sub-client that ends with Operations.
                 //TODO: remove after all track2 .net mgmt libraries are updated to the new generation
                 (invocation.Method.Name.StartsWith("get_") && type.Name.EndsWith("Operations")) ||
-                // some libraries have subclient properties
+                // Some libraries have subclients that do not end with Client. Instrument any type that has a Pipeline property.
                 type.GetProperty("Pipeline") != null)
             {
                 if (IsNullResult(invocation))
