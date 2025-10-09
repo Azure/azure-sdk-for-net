@@ -36,6 +36,10 @@ namespace Azure.Search.Documents.Indexes.Models
         [CodeGenMember("Tokenizer")]
         public LexicalTokenizerName? TokenizerName { get; }
 
+        /// <summary> The name of the normalizer to use to normalize the given text. </summary>
+        [CodeGenMember("Normalizer")]
+        public LexicalNormalizerName? NormalizerName { get; set; }
+
         /// <summary> An optional list of token filters to use when breaking the given text. </summary>
         public IList<TokenFilterName> TokenFilters { get; }
 

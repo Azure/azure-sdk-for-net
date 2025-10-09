@@ -102,6 +102,7 @@ SearchIndex index = new SearchIndex("movies")
 SearchableField genreField = new SearchableField("genre")
 {
     AnalyzerName = LexicalAnalyzerName.Values.EnLucene,
+    NormalizerName = LexicalNormalizerName.Lowercase,
     IsFacetable = true,
     IsFilterable = true
 };

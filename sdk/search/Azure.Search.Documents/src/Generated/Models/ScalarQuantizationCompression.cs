@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -25,13 +26,27 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="ScalarQuantizationCompression"/>. </summary>
         /// <param name="compressionName"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> The name of the kind of compression method being configured for use with vector search. </param>
-        /// <param name="rerankWithOriginalVectors"> If set to true, once the ordered set of results calculated using compressed vectors are obtained, they will be reranked again by recalculating the full-precision similarity scores. This will improve recall at the expense of latency. </param>
-        /// <param name="defaultOversampling"> Default oversampling factor. Oversampling will internally request more documents (specified by this multiplier) in the initial search. This increases the set of results that will be reranked using recomputed similarity scores from full-precision vectors. Minimum value is 1, meaning no oversampling (1x). This parameter can only be set when rerankWithOriginalVectors is true. Higher values improve recall at the expense of latency. </param>
+        /// <param name="rescoringOptions"> Contains the options for rescoring. </param>
+        /// <param name="truncationDimension"> The number of dimensions to truncate the vectors to. Truncating the vectors reduces the size of the vectors and the amount of data that needs to be transferred during search. This can save storage cost and improve search performance at the expense of recall. It should be only used for embeddings trained with Matryoshka Representation Learning (MRL) such as OpenAI text-embedding-3-large (small). The default value is null, which means no truncation. </param>
+        /// <param name="rerankWithOriginalVectors">
+        /// If set to true, once the ordered set of results calculated using compressed vectors are obtained, they will be reranked again by recalculating the full-precision similarity scores. This will improve recall at the expense of latency.
+        /// For use with only service version 2024-07-01. If using 2025-09-01 or later, use RescoringOptions.rescoringEnabled.
+        /// </param>
+        /// <param name="defaultOversampling">
+        /// Default oversampling factor. Oversampling will internally request more documents (specified by this multiplier) in the initial search. This increases the set of results that will be reranked using recomputed similarity scores from full-precision vectors. Minimum value is 1, meaning no oversampling (1x). This parameter can only be set when rerankWithOriginalVectors is true. Higher values improve recall at the expense of latency.
+        /// For use with only service version 2024-07-01. If using 2025-09-01 or later, use RescoringOptions.defaultOversampling.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Contains the parameters specific to Scalar Quantization. </param>
-        internal ScalarQuantizationCompression(string compressionName, VectorSearchCompressionKind kind, bool? rerankWithOriginalVectors, double? defaultOversampling, ScalarQuantizationParameters parameters) : base(compressionName, kind, rerankWithOriginalVectors, defaultOversampling)
+        internal ScalarQuantizationCompression(string compressionName, VectorSearchCompressionKind kind, RescoringOptions rescoringOptions, int? truncationDimension, bool? rerankWithOriginalVectors, double? defaultOversampling, IDictionary<string, BinaryData> serializedAdditionalRawData, ScalarQuantizationParameters parameters) : base(compressionName, kind, rescoringOptions, truncationDimension, rerankWithOriginalVectors, defaultOversampling, serializedAdditionalRawData)
         {
             Parameters = parameters;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScalarQuantizationCompression"/> for deserialization. </summary>
+        internal ScalarQuantizationCompression()
+        {
         }
 
         /// <summary> Contains the parameters specific to Scalar Quantization. </summary>

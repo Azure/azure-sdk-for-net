@@ -639,7 +639,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndexerSkill CreateSkill(Type t, string[] inputNames, string[] outputNames)
             {
                 var inputs = inputNames.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
-                var outputs = outputNames.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+                var outputs = outputNames.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
 
                 return t switch
                 {
@@ -658,7 +658,7 @@ namespace Azure.Search.Documents.Tests
             EntityRecognitionSkill CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion skillVersion)
             {
                 var inputs = new[] { "languageCode", "text" }.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
-                var outputs = new[] { "persons" }.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+                var outputs = new[] { "persons" }.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
 
                 if (skillVersion == EntityRecognitionSkill.SkillVersion.V1)
                 {
@@ -679,13 +679,13 @@ namespace Azure.Search.Documents.Tests
                 if (skillVersion == SentimentSkill.SkillVersion.V1)
                 {
                     var outputs = new[] { "score" }.
-                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
                     return new SentimentSkill(inputs, outputs);
                 }
                 if (skillVersion == SentimentSkill.SkillVersion.V3)
                 {
                     var outputs = new[] { "sentiment", "confidenceScores", "sentences" }.
-                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
                     return new SentimentSkill(inputs, outputs, skillVersion);
                 }
 
@@ -713,6 +713,7 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(TextTranslationSkill) => CreateSkill(t, new[] { "text", "toLanguageCode", "fromLanguageCode" }, new[] { "translatedText", "translatedToLanguageCode", "translatedFromLanguageCode" }),
                     Type _ when t == typeof(WebApiSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
                     Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => CreateSkill(t, new[] { "text" }, new[] { "embedding" }),
+                    Type _ when t == typeof(DocumentIntelligenceLayoutSkill) => CreateSkill(t, new[] { "file_data" }, new[] { "content", "normalized_images" }),
                     _ => throw new NotSupportedException($"{t.FullName}"),
                 })
                 .Where(skill => skill != null)

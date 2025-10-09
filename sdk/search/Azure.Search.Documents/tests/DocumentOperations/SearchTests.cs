@@ -238,6 +238,23 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task TestNormalizer()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            Response<SearchResults<Hotel>> response =
+                await resources.GetQueryClient().SearchAsync<Hotel>(
+                    null,
+                    new SearchOptions
+                    {
+                        Filter = "address/city eq 'New york'"
+                    });
+            await AssertKeysEqual(
+                response,
+                h => h.Document.HotelId,
+                "5", "9");
+        }
+
+        [Test]
         public async Task HitHighlighting()
         {
             const string Description = "description";
@@ -1021,6 +1038,7 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(source.SessionId, clonedSearchOptions.SessionId); // A string value
             Assert.AreEqual(source.Size, clonedSearchOptions.Size); // An int? value
             Assert.IsNull(clonedSearchOptions.Skip); // An int? value set as `null`
+            Assert.AreEqual(source.Debug, clonedSearchOptions.Debug);
             Assert.AreEqual(source.SemanticSearch.SemanticConfigurationName, clonedSearchOptions.SemanticSearch.SemanticConfigurationName);
             Assert.AreEqual(source.SemanticSearch.QueryAnswer.AnswerType, clonedSearchOptions.SemanticSearch.QueryAnswer.AnswerType);
             Assert.AreEqual(source.SemanticSearch.QueryAnswer.Count, clonedSearchOptions.SemanticSearch.QueryAnswer.Count);

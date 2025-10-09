@@ -5,51 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownVectorSearchCompression : IUtf8JsonSerializable
+    internal partial class UnknownVectorSearchCompression : IUtf8JsonSerializable, IJsonModel<VectorSearchCompression>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VectorSearchCompression>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VectorSearchCompression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(CompressionName);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(RerankWithOriginalVectors))
-            {
-                writer.WritePropertyName("rerankWithOriginalVectors"u8);
-                writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
-            }
-            if (Optional.IsDefined(DefaultOversampling))
-            {
-                if (DefaultOversampling != null)
-                {
-                    writer.WritePropertyName("defaultOversampling"u8);
-                    writer.WriteNumberValue(DefaultOversampling.Value);
-                }
-                else
-                {
-                    writer.WriteNull("defaultOversampling");
-                }
-            }
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        internal static UnknownVectorSearchCompression DeserializeUnknownVectorSearchCompression(JsonElement element)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearchCompression>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VectorSearchCompression)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+        }
+
+        VectorSearchCompression IJsonModel<VectorSearchCompression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearchCompression>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VectorSearchCompression)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVectorSearchCompression(document.RootElement, options);
+        }
+
+        internal static UnknownVectorSearchCompression DeserializeUnknownVectorSearchCompression(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             VectorSearchCompressionKind kind = "Unknown";
+            RescoringOptions rescoringOptions = default;
+            int? truncationDimension = default;
             bool? rerankWithOriginalVectors = default;
             double? defaultOversampling = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -62,10 +78,31 @@ namespace Azure.Search.Documents.Models
                     kind = new VectorSearchCompressionKind(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("rescoringOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        rescoringOptions = null;
+                        continue;
+                    }
+                    rescoringOptions = RescoringOptions.DeserializeRescoringOptions(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("truncationDimension"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        truncationDimension = null;
+                        continue;
+                    }
+                    truncationDimension = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("rerankWithOriginalVectors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        rerankWithOriginalVectors = null;
                         continue;
                     }
                     rerankWithOriginalVectors = property.Value.GetBoolean();
@@ -81,9 +118,52 @@ namespace Azure.Search.Documents.Models
                     defaultOversampling = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownVectorSearchCompression(name, kind, rerankWithOriginalVectors, defaultOversampling);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownVectorSearchCompression(
+                name,
+                kind,
+                rescoringOptions,
+                truncationDimension,
+                rerankWithOriginalVectors,
+                defaultOversampling,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VectorSearchCompression>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearchCompression>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VectorSearchCompression)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VectorSearchCompression IPersistableModel<VectorSearchCompression>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearchCompression>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeVectorSearchCompression(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VectorSearchCompression)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VectorSearchCompression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -97,7 +177,7 @@ namespace Azure.Search.Documents.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<VectorSearchCompression>(this);
+            content.JsonWriter.WriteObjectValue<VectorSearchCompression>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using Azure.Core;
 using Azure.Search.Documents.Models;
@@ -33,6 +32,7 @@ namespace Azure.Search.Documents
         /// <param name="sessionId"> A value to be used to create a sticky session, which can help getting more consistent results. As long as the same sessionId is used, a best-effort attempt will be made to target the same replica set. Be wary that reusing the same sessionID values repeatedly can interfere with the load balancing of the requests across replicas and adversely affect the performance of the search service. The value used as sessionId cannot start with a '_' character. </param>
         /// <param name="scoringParameters"> The list of parameter values to be used in scoring functions (for example, referencePointParameter) using the format name-values. For example, if the scoring profile defines a function with a parameter called 'mylocation' the parameter string would be "mylocation--122.2,44.8" (without the quotes). </param>
         /// <param name="scoringProfile"> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </param>
+        /// <param name="debug"> Enables a debugging tool that can be used to further explore your reranked results. </param>
         /// <param name="searchText"> A full-text search query expression; Use "*" or omit this parameter to match all documents. </param>
         /// <param name="searchFieldsRaw"> The comma-separated list of field names to which to scope the full-text search. When using fielded search (fieldName:searchExpression) in a full Lucene query, the field names of each fielded search expression take precedence over any field names listed in this parameter. </param>
         /// <param name="searchMode"> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </param>
@@ -51,8 +51,18 @@ namespace Azure.Search.Documents
         /// The available derived classes include <see cref="VectorizableTextQuery"/> and <see cref="VectorizedQuery"/>.
         /// </param>
         /// <param name="filterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string searchText, string searchFieldsRaw, SearchMode? searchMode, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string semanticQuery, string queryAnswerRaw, string queryCaptionRaw, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string semanticQuery, string queryAnswerRaw, string queryCaptionRaw, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            SemanticSearch = (semanticConfigurationName != null || semanticErrorMode != null || semanticMaxWaitInMilliseconds != null || queryAnswerRaw != null || queryCaptionRaw != null || semanticQuery != null) ? new SemanticSearchOptions() : null;
+            if (SemanticSearch != null)
+            {
+                SemanticSearch.QueryAnswer = queryAnswerRaw != null ? new QueryAnswer() : null;
+                SemanticSearch.QueryCaption = queryCaptionRaw != null ? new QueryCaption() : null;
+            }
+
+            VectorSearch = (vectorQueries != null || filterMode != null) ? new VectorSearchOptions() : null;
+
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
             Filter = filter;
@@ -66,29 +76,22 @@ namespace Azure.Search.Documents
             SessionId = sessionId;
             ScoringParameters = scoringParameters;
             ScoringProfile = scoringProfile;
+            Debug = debug;
             SearchText = searchText;
             SearchFieldsRaw = searchFieldsRaw;
             SearchMode = searchMode;
             SelectRaw = selectRaw;
             Skip = skip;
             Size = size;
-
-            SemanticSearch = (semanticConfigurationName != null || semanticErrorMode != null || semanticMaxWaitInMilliseconds != null || queryAnswerRaw != null || queryCaptionRaw != null || semanticQuery != null) ? new SemanticSearchOptions() : null;
-            if (SemanticSearch != null)
-            {
-                SemanticSearch.QueryAnswer = queryAnswerRaw != null ? new QueryAnswer() : null;
-                SemanticSearch.QueryCaption = queryCaptionRaw != null ? new QueryCaption() : null;
-            }
             SemanticConfigurationName = semanticConfigurationName;
             SemanticErrorMode = semanticErrorMode;
             SemanticMaxWaitInMilliseconds = semanticMaxWaitInMilliseconds;
+            SemanticQuery = semanticQuery;
             QueryAnswerRaw = queryAnswerRaw;
             QueryCaptionRaw = queryCaptionRaw;
-            SemanticQuery = semanticQuery;
-
-            VectorSearch = (vectorQueries != null || filterMode != null) ? new VectorSearchOptions() : null;
             VectorQueries = vectorQueries;
             FilterMode = filterMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
@@ -131,7 +134,7 @@ namespace Azure.Search.Documents
         internal string HighlightFieldsRaw
         {
             get => HighlightFields.CommaJoin();
-            set => HighlightFields = SearchExtensions.CommaSplit(value);
+            set => HighlightFields = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary>
@@ -149,7 +152,7 @@ namespace Azure.Search.Documents
         internal string SearchFieldsRaw
         {
             get => SearchFields.CommaJoin();
-            set => SearchFields = SearchExtensions.CommaSplit(value);
+            set => SearchFields = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary>
@@ -165,7 +168,7 @@ namespace Azure.Search.Documents
         internal string SelectRaw
         {
             get => Select.CommaJoin();
-            set => Select = SearchExtensions.CommaSplit(value);
+            set => Select = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary>
@@ -198,7 +201,7 @@ namespace Azure.Search.Documents
         internal string OrderByRaw
         {
             get => OrderBy.CommaJoin();
-            set => OrderBy = SearchExtensions.CommaSplit(value);
+            set => OrderBy = InternalSearchExtensions.CommaSplit(value);
         }
 
         /// <summary>
@@ -378,6 +381,7 @@ namespace Azure.Search.Documents
             destination.SessionId = source.SessionId;
             destination.Size = source.Size;
             destination.Skip = source.Skip;
+            destination.Debug = source.Debug;
             destination.SemanticSearch = source.SemanticSearch;
             destination.VectorSearch = source.VectorSearch;
         }

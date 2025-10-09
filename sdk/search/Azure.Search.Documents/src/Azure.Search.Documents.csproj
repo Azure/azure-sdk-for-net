@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Search.Documents client library</AssemblyTitle>
-    <Version>11.6.1</Version>
+    <Version>11.7.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>11.6.0</ApiCompatVersion>
+    <ApiCompatVersion>11.6.1</ApiCompatVersion>
     <Description>
       This is the Azure Cognitive Search client library for developing .NET
       applications with rich search experiences.  It enables you to query your
@@ -13,9 +13,11 @@
     <PackageTags>Azure Cognitive Search;Azure Search Documents;Azure Search;Search;Cognitive;Search Engine;Azure</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <!-- These are still firing but not valid -->
-    <NoWarn>$(NoWarn);AZC0004</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>
+     $(NoWarn);
+     AZC0004;
+    </NoWarn>
   </PropertyGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->
@@ -28,7 +30,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Channels" />
   </ItemGroup>
+
 </Project>
