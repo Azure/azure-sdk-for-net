@@ -87,6 +87,8 @@ namespace Azure.Core.TestFramework
 
         public virtual AnotherType SubClientProperty => new AnotherType();
 
+        public virtual AnotherType GetAnotherType() => new AnotherType();
+
         public virtual string MethodA()
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TestClient)}.{nameof(MethodA)}");
