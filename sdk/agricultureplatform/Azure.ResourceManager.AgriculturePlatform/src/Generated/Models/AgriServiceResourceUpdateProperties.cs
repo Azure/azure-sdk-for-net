@@ -8,62 +8,42 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.AgriculturePlatform;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
-    /// <summary> Details of the Agriculture AgriDataManager. </summary>
-    public partial class AgricultureServiceProperties
+    /// <summary> The updatable properties of the AgriServiceResource. </summary>
+    public partial class AgriServiceResourceUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgricultureServiceProperties"/>. </summary>
-        public AgricultureServiceProperties()
+        /// <summary> Initializes a new instance of <see cref="AgriServiceResourceUpdateProperties"/>. </summary>
+        public AgriServiceResourceUpdateProperties()
         {
             DataConnectorCredentials = new ChangeTrackingList<DataConnectorCredentialMap>();
             InstalledSolutions = new ChangeTrackingList<InstalledSolutionMap>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgricultureServiceProperties"/>. </summary>
-        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <summary> Initializes a new instance of <see cref="AgriServiceResourceUpdateProperties"/>. </summary>
         /// <param name="config"> Config of the AgriService instance. </param>
-        /// <param name="managedOnBehalfOfConfiguration"> Managed On Behalf Of Configuration. </param>
         /// <param name="dataConnectorCredentials"> Data connector credentials of AgriService instance. </param>
         /// <param name="installedSolutions"> AgriService installed solutions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgricultureServiceProperties(AgriculturePlatformProvisioningState? provisioningState, AgricultureServiceConfig config, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, IList<DataConnectorCredentialMap> dataConnectorCredentials, IList<InstalledSolutionMap> installedSolutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgriServiceResourceUpdateProperties(AgricultureServiceConfig config, IList<DataConnectorCredentialMap> dataConnectorCredentials, IList<InstalledSolutionMap> installedSolutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ProvisioningState = provisioningState;
             Config = config;
-            ManagedOnBehalfOfConfiguration = managedOnBehalfOfConfiguration;
             DataConnectorCredentials = dataConnectorCredentials;
             InstalledSolutions = installedSolutions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The status of the last operation. </summary>
-        public AgriculturePlatformProvisioningState? ProvisioningState { get; }
-
         /// <summary> Config of the AgriService instance. </summary>
         public AgricultureServiceConfig Config { get; set; }
-
-        /// <summary> Managed On Behalf Of Configuration. </summary>
-        internal ManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration { get; }
 
         /// <summary> Data connector credentials of AgriService instance. </summary>
         public IList<DataConnectorCredentialMap> DataConnectorCredentials { get; }
 
         /// <summary> AgriService installed solutions. </summary>
         public IList<InstalledSolutionMap> InstalledSolutions { get; }
-
-        /// <summary> Associated MoboBrokerResources. </summary>
-        public IReadOnlyList<SubResource> ManagedOnBehalfOfMoboBrokerResources
-        {
-            get
-            {
-                return ManagedOnBehalfOfConfiguration.MoboBrokerResources;
-            }
-        }
     }
 }
