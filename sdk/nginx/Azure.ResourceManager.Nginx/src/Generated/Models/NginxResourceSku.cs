@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxResourceSku. </summary>
+    /// <summary> Resource Sku. </summary>
     internal partial class NginxResourceSku
     {
         /// <summary>

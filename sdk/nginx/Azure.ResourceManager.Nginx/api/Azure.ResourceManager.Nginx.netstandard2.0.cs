@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Nginx
     public partial class NginxCertificateData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxCertificateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.NginxCertificateData>
     {
         public NginxCertificateData() { }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxCertificateProperties Properties { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Nginx.NginxCertificateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxCertificateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -193,6 +193,8 @@ namespace Azure.ResourceManager.Nginx
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Nginx.Models.NginxDeploymentDefaultWafPolicyProperties> GetDefaultWafPolicies(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Nginx.Models.NginxDeploymentDefaultWafPolicyProperties> GetDefaultWafPoliciesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxCertificateResource> GetNginxCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxCertificateResource>> GetNginxCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Nginx.NginxCertificateCollection GetNginxCertificates() { throw null; }
@@ -202,6 +204,11 @@ namespace Azure.ResourceManager.Nginx
         public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentApiKeyResource> GetNginxDeploymentApiKey(string apiKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentApiKeyResource>> GetNginxDeploymentApiKeyAsync(string apiKeyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Nginx.NginxDeploymentApiKeyCollection GetNginxDeploymentApiKeys() { throw null; }
+        public virtual Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyCollection GetNginxDeploymentWafPolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource> GetNginxDeploymentWafPolicy(string wafPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource>> GetNginxDeploymentWafPolicyAsync(string wafPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadata> GetWafPolicies(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadata> GetWafPoliciesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -214,6 +221,48 @@ namespace Azure.ResourceManager.Nginx
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Nginx.NginxDeploymentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Nginx.Models.NginxDeploymentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Nginx.NginxDeploymentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Nginx.Models.NginxDeploymentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class NginxDeploymentWafPolicyCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected NginxDeploymentWafPolicyCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string wafPolicyName, Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string wafPolicyName, Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string wafPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string wafPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource> Get(string wafPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource>> GetAsync(string wafPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource> GetIfExists(string wafPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource>> GetIfExistsAsync(string wafPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NginxDeploymentWafPolicyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>
+    {
+        public NginxDeploymentWafPolicyData() { }
+        public Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NginxDeploymentWafPolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected NginxDeploymentWafPolicyResource() { }
+        public virtual Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deploymentName, string wafPolicyName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public static partial class NginxExtensions
     {
         public static Azure.ResourceManager.Nginx.NginxCertificateResource GetNginxCertificateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -225,6 +274,7 @@ namespace Azure.ResourceManager.Nginx
         public static Azure.ResourceManager.Nginx.NginxDeploymentCollection GetNginxDeployments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeployments(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeploymentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource GetNginxDeploymentWafPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Nginx.Mocking
@@ -236,6 +286,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         public virtual Azure.ResourceManager.Nginx.NginxConfigurationResource GetNginxConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Nginx.NginxDeploymentApiKeyResource GetNginxDeploymentApiKeyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Nginx.NginxDeploymentResource GetNginxDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyResource GetNginxDeploymentWafPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableNginxResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -258,7 +309,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public static Azure.ResourceManager.Nginx.Models.NginxAnalysisDiagnostic NginxAnalysisDiagnostic(string id = null, string directive = null, string description = null, string file = null, float line = 0f, string message = null, string rule = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxAnalysisResult NginxAnalysisResult(string status = null, Azure.ResourceManager.Nginx.Models.NginxAnalysisResultDetails data = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxAnalysisResultDetails NginxAnalysisResultDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxAnalysisDiagnostic> errors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem> diagnostics = null) { throw null; }
-        public static Azure.ResourceManager.Nginx.NginxCertificateData NginxCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxCertificateProperties properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.Nginx.NginxCertificateData NginxCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxCertificateProperties properties = null, string location = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxCertificateProperties NginxCertificateProperties(Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), string keyVirtualPath = null, string certificateVirtualPath = null, string keyVaultSecretId = null, string sha1Thumbprint = null, string keyVaultSecretVersion = null, System.DateTimeOffset? keyVaultSecretCreated = default(System.DateTimeOffset?), Azure.ResourceManager.Nginx.Models.NginxCertificateError certificateError = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateContent NginxConfigurationCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties NginxConfigurationCreateOrUpdateProperties(Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> files = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationProtectedFileContent> protectedFiles = null, Azure.ResourceManager.Nginx.Models.NginxConfigurationPackage package = null, string rootFile = null) { throw null; }
@@ -268,13 +319,20 @@ namespace Azure.ResourceManager.Nginx.Models
         public static Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyCreateOrUpdateContent NginxDeploymentApiKeyCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyRequestProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Nginx.NginxDeploymentApiKeyData NginxDeploymentApiKeyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties NginxDeploymentApiKeyProperties(string hint = null, System.DateTimeOffset? endOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Nginx.NginxDeploymentData NginxDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentProperties properties = null, string skuName = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.NginxDeploymentData NginxDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Nginx.Models.NginxDeploymentProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string skuName = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentDefaultWafPolicyProperties NginxDeploymentDefaultWafPolicyProperties(byte[] content = null, string filepath = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxDeploymentProperties NginxDeploymentProperties(Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), string nginxVersion = null, Azure.ResourceManager.Nginx.Models.NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = default(bool?), Azure.ResourceManager.Nginx.Models.NginxStorageAccount loggingStorageAccount = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentScalingProperties scalingProperties = null, string upgradeChannel = null, string userPreferredEmail = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentPropertiesNginxAppProtect nginxAppProtect = null, string dataplaneApiEndpoint = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxDeploymentPropertiesNginxAppProtect NginxDeploymentPropertiesNginxAppProtect(Azure.ResourceManager.Nginx.Models.WebApplicationFirewallActivationState? webApplicationFirewallActivationState = default(Azure.ResourceManager.Nginx.Models.WebApplicationFirewallActivationState?), Azure.ResourceManager.Nginx.Models.WebApplicationFirewallStatus webApplicationFirewallStatus = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus NginxDeploymentWafPolicyApplyingStatus(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode? code = default(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode?), string displayStatus = null, string time = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus NginxDeploymentWafPolicyCompilingStatus(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode? code = default(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode?), string displayStatus = null, string time = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.NginxDeploymentWafPolicyData NginxDeploymentWafPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadata NginxDeploymentWafPolicyMetadata(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadataProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadataProperties NginxDeploymentWafPolicyMetadataProperties(string filepath = null, Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus compilingState = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus applyingState = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyProperties NginxDeploymentWafPolicyProperties(Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), byte[] content = null, string filepath = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus compilingState = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus applyingState = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem NginxDiagnosticItem(string id = null, string directive = null, string description = null, string file = null, float line = 0f, string message = null, string rule = null, Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel level = default(Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel), string category = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.WebApplicationFirewallComponentVersions WebApplicationFirewallComponentVersions(string wafEngineVersion = null, string wafNginxVersion = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage WebApplicationFirewallPackage(string version = null, System.DateTimeOffset revisionDatetime = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.ResourceManager.Nginx.Models.WebApplicationFirewallStatus WebApplicationFirewallStatus(Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage attackSignaturesPackage = null, Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage botSignaturesPackage = null, Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage threatCampaignsPackage = null, Azure.ResourceManager.Nginx.Models.WebApplicationFirewallComponentVersions componentVersions = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.WebApplicationFirewallStatus WebApplicationFirewallStatus(string wafRelease = null, Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage attackSignaturesPackage = null, Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage botSignaturesPackage = null, Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage threatCampaignsPackage = null, Azure.ResourceManager.Nginx.Models.WebApplicationFirewallComponentVersions componentVersions = null) { throw null; }
     }
     public partial class NginxAnalysisConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxAnalysisConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxAnalysisConfig>
     {
@@ -497,6 +555,18 @@ namespace Azure.ResourceManager.Nginx.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyRequestProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyRequestProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class NginxDeploymentDefaultWafPolicyProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentDefaultWafPolicyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentDefaultWafPolicyProperties>
+    {
+        internal NginxDeploymentDefaultWafPolicyProperties() { }
+        public byte[] Content { get { throw null; } }
+        public string Filepath { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentDefaultWafPolicyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentDefaultWafPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentDefaultWafPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentDefaultWafPolicyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentDefaultWafPolicyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentDefaultWafPolicyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentDefaultWafPolicyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class NginxDeploymentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentPatch>
     {
         public NginxDeploymentPatch() { }
@@ -573,6 +643,113 @@ namespace Azure.ResourceManager.Nginx.Models
         Azure.ResourceManager.Nginx.Models.NginxDeploymentUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NginxDeploymentWafPolicyApplyingStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus>
+    {
+        internal NginxDeploymentWafPolicyApplyingStatus() { }
+        public Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode? Code { get { throw null; } }
+        public string DisplayStatus { get { throw null; } }
+        public string Time { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NginxDeploymentWafPolicyApplyingStatusCode : System.IEquatable<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NginxDeploymentWafPolicyApplyingStatusCode(string value) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode Applying { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode Failed { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode NotApplied { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode Removing { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode left, Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode left, Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatusCode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NginxDeploymentWafPolicyCompilingStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus>
+    {
+        internal NginxDeploymentWafPolicyCompilingStatus() { }
+        public Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode? Code { get { throw null; } }
+        public string DisplayStatus { get { throw null; } }
+        public string Time { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NginxDeploymentWafPolicyCompilingStatusCode : System.IEquatable<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NginxDeploymentWafPolicyCompilingStatusCode(string value) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode Failed { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode InProgress { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode NotStarted { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode left, Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode left, Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatusCode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NginxDeploymentWafPolicyMetadata : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadata>
+    {
+        internal NginxDeploymentWafPolicyMetadata() { }
+        public Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadataProperties Properties { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NginxDeploymentWafPolicyMetadataProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadataProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadataProperties>
+    {
+        internal NginxDeploymentWafPolicyMetadataProperties() { }
+        public Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus ApplyingState { get { throw null; } }
+        public Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus CompilingState { get { throw null; } }
+        public string Filepath { get { throw null; } }
+        public Azure.ResourceManager.Nginx.Models.NginxProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadataProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadataProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadataProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadataProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadataProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadataProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyMetadataProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NginxDeploymentWafPolicyProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyProperties>
+    {
+        public NginxDeploymentWafPolicyProperties() { }
+        public Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyApplyingStatus ApplyingState { get { throw null; } }
+        public Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyCompilingStatus CompilingState { get { throw null; } }
+        public byte[] Content { get { throw null; } set { } }
+        public string Filepath { get { throw null; } set { } }
+        public Azure.ResourceManager.Nginx.Models.NginxProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentWafPolicyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NginxDiagnosticItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem>
     {
@@ -787,6 +964,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage BotSignaturesPackage { get { throw null; } }
         public Azure.ResourceManager.Nginx.Models.WebApplicationFirewallComponentVersions ComponentVersions { get { throw null; } }
         public Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage ThreatCampaignsPackage { get { throw null; } }
+        public string WafRelease { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Nginx.Models.WebApplicationFirewallStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.WebApplicationFirewallStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

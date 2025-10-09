@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxDeploymentUserProfile. </summary>
+    /// <summary> Nginx Deployment User Profile. </summary>
     internal partial class NginxDeploymentUserProfile
     {
         /// <summary>

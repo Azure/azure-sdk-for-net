@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxStorageAccount. </summary>
+    /// <summary> Nginx Storage Account. </summary>
     public partial class NginxStorageAccount
     {
         /// <summary>

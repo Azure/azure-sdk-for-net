@@ -47,6 +47,18 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="NginxDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NginxDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="NginxDeploymentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NginxDeploymentResource"/> object. </returns>
+        public virtual NginxDeploymentResource GetNginxDeploymentResource(ResourceIdentifier id)
+        {
+            NginxDeploymentResource.ValidateResourceId(id);
+            return new NginxDeploymentResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="NginxCertificateResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NginxCertificateResource.CreateResourceIdentifier" /> to create a <see cref="NginxCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -71,15 +83,15 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NginxDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NginxDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="NginxDeploymentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NginxDeploymentWafPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NginxDeploymentWafPolicyResource.CreateResourceIdentifier" /> to create a <see cref="NginxDeploymentWafPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NginxDeploymentResource"/> object. </returns>
-        public virtual NginxDeploymentResource GetNginxDeploymentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NginxDeploymentWafPolicyResource"/> object. </returns>
+        public virtual NginxDeploymentWafPolicyResource GetNginxDeploymentWafPolicyResource(ResourceIdentifier id)
         {
-            NginxDeploymentResource.ValidateResourceId(id);
-            return new NginxDeploymentResource(Client, id);
+            NginxDeploymentWafPolicyResource.ValidateResourceId(id);
+            return new NginxDeploymentWafPolicyResource(Client, id);
         }
     }
 }

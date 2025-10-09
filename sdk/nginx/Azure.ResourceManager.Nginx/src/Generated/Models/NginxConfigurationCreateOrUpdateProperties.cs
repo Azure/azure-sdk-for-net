@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxConfigurationCreateOrUpdateProperties. </summary>
+    /// <summary> Nginx Configuration Request Properties. </summary>
     public partial class NginxConfigurationCreateOrUpdateProperties
     {
         /// <summary>
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxConfigurationCreateOrUpdateProperties"/>. </summary>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="files"></param>
         /// <param name="protectedFiles"></param>
-        /// <param name="package"></param>
+        /// <param name="package"> Nginx Configuration Package. </param>
         /// <param name="rootFile"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NginxConfigurationCreateOrUpdateProperties(NginxProvisioningState? provisioningState, IList<NginxConfigurationFile> files, IList<NginxConfigurationProtectedFileContent> protectedFiles, NginxConfigurationPackage package, string rootFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -69,13 +69,13 @@ namespace Azure.ResourceManager.Nginx.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the provisioning state. </summary>
+        /// <summary> Provisioning State. </summary>
         public NginxProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the files. </summary>
         public IList<NginxConfigurationFile> Files { get; }
         /// <summary> Gets the protected files. </summary>
         public IList<NginxConfigurationProtectedFileContent> ProtectedFiles { get; }
-        /// <summary> Gets or sets the package. </summary>
+        /// <summary> Nginx Configuration Package. </summary>
         public NginxConfigurationPackage Package { get; set; }
         /// <summary> Gets or sets the root file. </summary>
         public string RootFile { get; set; }

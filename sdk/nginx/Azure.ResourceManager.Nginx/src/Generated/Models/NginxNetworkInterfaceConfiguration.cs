@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxNetworkInterfaceConfiguration. </summary>
+    /// <summary> Nginx Network Interface Configuration. </summary>
     internal partial class NginxNetworkInterfaceConfiguration
     {
         /// <summary>

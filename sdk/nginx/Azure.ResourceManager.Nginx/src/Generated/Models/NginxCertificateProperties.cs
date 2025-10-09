@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxCertificateProperties. </summary>
+    /// <summary> Nginx Certificate Properties. </summary>
     public partial class NginxCertificateProperties
     {
         /// <summary>
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxCertificateProperties"/>. </summary>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="keyVirtualPath"></param>
         /// <param name="certificateVirtualPath"></param>
         /// <param name="keyVaultSecretId"></param>
         /// <param name="sha1Thumbprint"></param>
         /// <param name="keyVaultSecretVersion"></param>
         /// <param name="keyVaultSecretCreated"></param>
-        /// <param name="certificateError"></param>
+        /// <param name="certificateError"> Nginx Certificate Error Response Body. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NginxCertificateProperties(NginxProvisioningState? provisioningState, string keyVirtualPath, string certificateVirtualPath, string keyVaultSecretId, string sha1Thumbprint, string keyVaultSecretVersion, DateTimeOffset? keyVaultSecretCreated, NginxCertificateError certificateError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Nginx.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the provisioning state. </summary>
+        /// <summary> Provisioning State. </summary>
         public NginxProvisioningState? ProvisioningState { get; }
         /// <summary> Gets or sets the key virtual path. </summary>
         public string KeyVirtualPath { get; set; }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public string KeyVaultSecretVersion { get; }
         /// <summary> Gets the key vault secret created. </summary>
         public DateTimeOffset? KeyVaultSecretCreated { get; }
-        /// <summary> Gets or sets the certificate error. </summary>
+        /// <summary> Nginx Certificate Error Response Body. </summary>
         public NginxCertificateError CertificateError { get; set; }
     }
 }

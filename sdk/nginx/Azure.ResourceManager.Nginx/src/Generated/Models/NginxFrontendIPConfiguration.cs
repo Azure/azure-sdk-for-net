@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxFrontendIPConfiguration. </summary>
+    /// <summary> Nginx Frontend IP Configuration. </summary>
     public partial class NginxFrontendIPConfiguration
     {
         /// <summary>

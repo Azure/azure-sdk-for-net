@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxConfigurationPackage. </summary>
+    /// <summary> Nginx Configuration Package. </summary>
     public partial class NginxConfigurationPackage
     {
         /// <summary>

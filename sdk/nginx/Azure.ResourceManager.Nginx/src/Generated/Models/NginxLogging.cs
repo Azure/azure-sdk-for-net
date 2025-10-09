@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxLogging. </summary>
+    /// <summary> Nginx Logging. </summary>
     internal partial class NginxLogging
     {
         /// <summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxLogging"/>. </summary>
-        /// <param name="storageAccount"></param>
+        /// <param name="storageAccount"> Nginx Storage Account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NginxLogging(NginxStorageAccount storageAccount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Nginx.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the storage account. </summary>
+        /// <summary> Nginx Storage Account. </summary>
         public NginxStorageAccount StorageAccount { get; set; }
     }
 }
