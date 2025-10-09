@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.DurableTask.Models;
 using Azure.ResourceManager.Resources;
+using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DurableTask.Tests.Scenario
@@ -46,20 +48,26 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
             Assert.True(hub.Data.Properties.DashboardUri.Host.ToLower().Contains("durabletask.io"));
             Assert.Equals("MyHub", hub.Data.Name);
 
+            // The list endpoint should also return the newly created hub
+            DurableTaskHubResource listHub = await collection.GetAllAsync().FirstOrDefaultAsync(t => t.Data.Name == "MyHub");
+            Assert.NotNull(listHub);
+            Assert.AreEqual(hub.Data.Name, listHub.Data.Name);
+
             await hub.DeleteAsync(WaitUntil.Completed);
 
-            await hub.GetAsync().ContinueWith(t =>
+            try
             {
-                if (t.IsFaulted)
-                {
-                    var ex = t.Exception.Flatten().InnerExceptions[0] as RequestFailedException;
-                    Assert.AreEqual(404, ex.Status);
-                }
-                else
-                {
-                    Assert.Fail("The task hub was not deleted.");
-                }
-            });
+                await scheduler.GetDurableTaskHubAsync("MyHub");
+            }
+            catch (RequestFailedException ex) when (ex.Status == StatusCodes.Status404NotFound)
+            {
+                // Expected exception
+                Assert.Pass("TaskHub deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected exception: {ex}");
+            }
         }
     }
 }

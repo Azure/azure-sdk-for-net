@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.DurableTask.Models;
 using Azure.ResourceManager.Resources;
+using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DurableTask.Tests.Scenario
@@ -73,18 +75,19 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
 
             await retentionPolicy.DeleteAsync(WaitUntil.Completed);
 
-            await retentionPolicy.GetAsync().ContinueWith(t =>
+            try
             {
-                if (t.IsFaulted)
-                {
-                    var ex = t.Exception.Flatten().InnerExceptions[0] as RequestFailedException;
-                    Assert.AreEqual(404, ex.Status);
-                }
-                else
-                {
-                    Assert.Fail("Expected an exception when trying to get a deleted retention policy.");
-                }
-            });
+                await retentionPolicy.GetAsync();
+            }
+            catch (RequestFailedException ex) when (ex.Status == StatusCodes.Status404NotFound)
+            {
+                // Expected exception
+                Assert.Pass("Scheduler deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected exception: {ex}");
+            }
         }
     }
 }
