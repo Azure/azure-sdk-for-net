@@ -46,6 +46,9 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
+#mgmt-debug:
+#  show-serialized-names: true
+
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default
   - /subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default
@@ -223,6 +226,8 @@ rename-mapping:
   OperationStatus: ConsumptionOperationStatus
   ModernReservationRecommendationProperties.resourceType: -|resource-type
   ReservationDetail: ConsumptionReservationDetail
+  LegacyUsageDetail.properties.subscriptionId: -|uuid
+  ModernChargeSummary.properties.subscriptionId: -|uuid
 
 directive:
   - from: openapi.json
@@ -299,5 +304,5 @@ directive:
         }
       });
     reason: Flatten the 'properties' property in both LegacyReservationRecommendation and ModernReservationRecommendation models.
-
+    
 ````

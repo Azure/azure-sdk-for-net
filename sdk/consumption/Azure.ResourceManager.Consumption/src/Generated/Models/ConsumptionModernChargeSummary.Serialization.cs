@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionId);
+                writer.WriteStringValue(SubscriptionId.Value);
             }
             writer.WriteEndObject();
         }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string invoiceSectionId = default;
             string customerId = default;
             bool? isInvoiced = default;
-            string subscriptionId = default;
+            Guid? subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,7 +264,11 @@ namespace Azure.ResourceManager.Consumption.Models
                         }
                         if (property0.NameEquals("subscriptionId"u8))
                         {
-                            subscriptionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            subscriptionId = property0.Value.GetGuid();
                             continue;
                         }
                     }

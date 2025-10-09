@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="customerId"> Customer Id. </param>
         /// <param name="isInvoiced"> Is charge Invoiced. </param>
         /// <param name="subscriptionId"> Subscription guid. </param>
-        internal ConsumptionModernChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingPeriodId, string usageStart, string usageEnd, ConsumptionAmount azureCharges, ConsumptionAmount chargesBilledSeparately, ConsumptionAmount marketplaceCharges, string billingAccountId, string billingProfileId, string invoiceSectionId, string customerId, bool? isInvoiced, string subscriptionId) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        internal ConsumptionModernChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingPeriodId, string usageStart, string usageEnd, ConsumptionAmount azureCharges, ConsumptionAmount chargesBilledSeparately, ConsumptionAmount marketplaceCharges, string billingAccountId, string billingProfileId, string invoiceSectionId, string customerId, bool? isInvoiced, Guid? subscriptionId) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             BillingPeriodId = billingPeriodId;
             UsageStart = usageStart;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Is charge Invoiced. </summary>
         public bool? IsInvoiced { get; }
         /// <summary> Subscription guid. </summary>
-        public string SubscriptionId { get; }
+        public Guid? SubscriptionId { get; }
     }
 }
