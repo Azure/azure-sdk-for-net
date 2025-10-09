@@ -24,61 +24,12 @@
             "$ref": "2"
           },
           "enumType": {
-            "$id": "4",
-            "kind": "enum",
-            "decorators": [],
-            "name": "ImmediateSuccessResponseRepeatabilityResult",
-            "isGeneratedName": true,
-            "namespace": "SpecialHeaders.Repeatability",
-            "valueType": {
-              "$id": "5",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "6",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "accepted",
-                "value": "accepted",
-                "valueType": {
-                  "$ref": "5"
-                },
-                "enumType": {
-                  "$ref": "4"
-                }
-              },
-              {
-                "$id": "7",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "rejected",
-                "value": "rejected",
-                "valueType": {
-                  "$ref": "5"
-                },
-                "enumType": {
-                  "$ref": "4"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "Output",
-            "access": "public",
-            "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.ResponseRepeatabilityResult.anonymous",
-            "apiVersions": [],
-            "isUnionAsEnum": true,
-            "__accessSet": true
+            "$ref": "1"
           },
           "decorators": []
         },
         {
-          "$id": "8",
+          "$id": "4",
           "kind": "enumvalue",
           "name": "rejected",
           "value": "rejected",
@@ -86,7 +37,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$ref": "4"
+            "$ref": "1"
           },
           "decorators": []
         }
@@ -102,33 +53,33 @@
   "models": [],
   "clients": [
     {
-      "$id": "9",
+      "$id": "5",
       "kind": "client",
       "name": "RepeatabilityClient",
       "namespace": "SpecialHeaders.Repeatability",
       "doc": "Illustrates OASIS repeatability headers",
       "methods": [
         {
-          "$id": "10",
+          "$id": "6",
           "kind": "basic",
           "name": "immediateSuccess",
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check we recognize Repeatability-Request-ID and Repeatability-First-Sent.",
           "operation": {
-            "$id": "11",
+            "$id": "7",
             "name": "immediateSuccess",
             "resourceName": "Repeatability",
             "doc": "Check we recognize Repeatability-Request-ID and Repeatability-First-Sent.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "12",
+                "$id": "8",
                 "kind": "header",
                 "name": "repeatabilityRequestID",
                 "serializedName": "Repeatability-Request-ID",
                 "type": {
-                  "$id": "13",
+                  "$id": "9",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -143,17 +94,17 @@
                 "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.repeatabilityRequestID"
               },
               {
-                "$id": "14",
+                "$id": "10",
                 "kind": "header",
                 "name": "repeatabilityFirstSent",
                 "serializedName": "Repeatability-First-Sent",
                 "type": {
-                  "$id": "15",
+                  "$id": "11",
                   "kind": "utcDateTime",
                   "name": "utcDateTime",
                   "encode": "rfc7231",
                   "wireType": {
-                    "$id": "16",
+                    "$id": "12",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -200,12 +151,12 @@
           },
           "parameters": [
             {
-              "$id": "17",
+              "$id": "13",
               "kind": "method",
               "name": "repeatabilityRequestID",
               "serializedName": "Repeatability-Request-ID",
               "type": {
-                "$id": "18",
+                "$id": "14",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -221,17 +172,17 @@
               "decorators": []
             },
             {
-              "$id": "19",
+              "$id": "15",
               "kind": "method",
               "name": "repeatabilityFirstSent",
               "serializedName": "Repeatability-First-Sent",
               "type": {
-                "$id": "20",
+                "$id": "16",
                 "kind": "utcDateTime",
                 "name": "utcDateTime",
                 "encode": "rfc7231",
                 "wireType": {
-                  "$id": "21",
+                  "$id": "17",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -259,13 +210,13 @@
       ],
       "parameters": [
         {
-          "$id": "22",
+          "$id": "18",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "23",
+            "$id": "19",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -276,7 +227,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "24",
+              "$id": "20",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
