@@ -115,7 +115,8 @@ namespace Azure.Identity
         public BrowserCustomizationOptions() { }
         public string ErrorMessage { get { throw null; } set { } }
         public string SuccessMessage { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This option requires additional dependencies on Microsoft.Identity.Client.Desktop and is no longer supported. Consider using brokered authentication instead")]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This option requires additional dependencies on Microsoft.Identity.Client.Desktop and is no longer supported. Consider using brokered authentication instead.")]
         public bool? UseEmbeddedWebView { get { throw null; } set { } }
     }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
