@@ -721,7 +721,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Assert.AreEqual(ids[idNum], run.Id, $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
-            client.Threads.DeleteThread(threadId: thread.Id);
+            await client.Threads.DeleteThreadAsync(threadId: thread.Id);
         }
 
         [RecordedTest]
@@ -761,7 +761,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 "What is the stock price of Microsoft and the weather in Seattle?");
 
             // Run the agent
-            ThreadRun run = client.Runs.CreateRun(thread, agent);
+            ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
             run = await WaitForRun(client, run);
 
             // Check run steps
@@ -807,7 +807,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.Greater(messages.Count, 0);
 
             // NOTE: Comment out these four lines if you plan to reuse the agent later.
-            client.Threads.DeleteThread(threadId: thread.Id);
+            await client.Threads.DeleteThreadAsync(threadId: thread.Id);
         }
 
         [RecordedTest]
@@ -2174,6 +2174,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestMcpToolStreaming()
         {
+            if (!IsAsync && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             PersistentAgentsClient client = GetClient();
             MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
             string searchApiCode = "search_azure_rest_api_code";
@@ -2253,6 +2255,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         // AzureAISearch is tested separately in TestAzureAiSearchStreaming.
         public async Task TestStreamDelta(ToolTypes toolToTest)
         {
+            if (!IsAsync && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             // Commenting DeepResearch as it is not compatible with unit test framework iterations
             // and connection breaks after timeout during streaming test.
             // The error says that the thread already contains the active run.
@@ -2335,24 +2339,12 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
 
             // TODO: Leave only async method when the 4734953(VSTS) will be resolved.
-            PersistentThreadMessage imageMessage;
-            if (IsAsync)
-            {
-                imageMessage = await client.Messages.CreateMessageAsync(
-                    threadId: thread.Id,
-                    role: MessageRole.User,
-                    contentBlocks: contentBlocks
-                );
-            }
-            else
-            {
-                imageMessage = client.Messages.CreateMessage(
-                    threadId: thread.Id,
-                    role: MessageRole.User,
-                    contentBlocks: contentBlocks
-                );
-            }
-            ThreadRun run = client.Runs.CreateRun(
+            PersistentThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
+                threadId: thread.Id,
+                role: MessageRole.User,
+                contentBlocks: contentBlocks
+            );
+            ThreadRun run = await client.Runs.CreateRunAsync(
                 threadId: thread.Id,
                 assistantId: agent.Id
             );
