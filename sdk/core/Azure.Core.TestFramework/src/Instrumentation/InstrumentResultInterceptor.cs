@@ -100,6 +100,13 @@ namespace Azure.Core.TestFramework
         private static bool IsInstrumentableClientType(IInvocation invocation)
         {
             var type = invocation.Method.ReturnType;
+
+            // Skip system types
+            if (type.Namespace?.StartsWith("System.") == true)
+            {
+                return false;
+            }
+
             // We don't want to instrument generated rest clients or extension clients
             if (type.Name.EndsWith("RestClient") || type.Name.EndsWith("ExtensionClient"))
             {
@@ -109,12 +116,6 @@ namespace Azure.Core.TestFramework
             if (type.Name.EndsWith("Client"))
             {
                 return true;
-            }
-
-            // Skip system types
-            if (type.Name.StartsWith("System."))
-            {
-                return false;
             }
 
             //TODO: remove after all track2 .net mgmt libraries are updated to the new generation
