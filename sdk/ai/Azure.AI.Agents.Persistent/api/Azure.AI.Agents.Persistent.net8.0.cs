@@ -669,8 +669,8 @@ namespace Azure.AI.Agents.Persistent
     {
         public MCPApproval(Azure.AI.Agents.Persistent.MCPApprovalPerTool perToolApproval) { }
         public MCPApproval(string trust) { }
-        public bool AlwaysApprove { get { throw null; } }
-        public bool NeverApprove { get { throw null; } }
+        public bool AlwaysRequireApproval { get { throw null; } }
+        public bool NeverRequireApproval { get { throw null; } }
         public Azure.AI.Agents.Persistent.MCPApprovalPerTool PerToolApproval { get { throw null; } }
     }
     public partial class MCPApprovalPerTool : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>
