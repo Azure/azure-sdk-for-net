@@ -7,6 +7,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fix naming of MCPApproval see [issue](https://github.com/Azure/azure-sdk-for-net/issues/53000)
+- Fix issue with image block serialization in async scenarios [issue](https://github.com/Azure/azure-sdk-for-net/issues/52671)
 
 ### Other Changes
 
