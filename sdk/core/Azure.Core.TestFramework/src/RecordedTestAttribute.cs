@@ -140,9 +140,9 @@ namespace Azure.Core.TestFramework
             {
                 var attemptDetails = string.Join(Environment.NewLine,
                     results.Select((r, i) =>
-                        $"Attempt {i + 1}: {r.Message}"));
+                        $"Attempt {i + 1}: {r.Message ?? "Passed"}"));
 
-                return header + ":" + Environment.NewLine + attemptDetails;
+                return header + ":" + Environment.NewLine + attemptDetails + Environment.NewLine;
             }
 
             private void CheckForIgnoredServiceErrors(TestExecutionContext context)
