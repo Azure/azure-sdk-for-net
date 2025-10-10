@@ -59,11 +59,11 @@ namespace Azure.AI.Agents.Persistent
             _forAllToolsApproval = trust;
         }
         /// <summary>
-        /// Return true if we do not trust all tool and always need to ask for approval before sending data to server.
+        /// Return true if we do not trust all tools and always need to ask for approval before sending data to server.
         /// </summary>
         public bool AlwaysRequireApproval{get => string.Equals(_forAllToolsApproval, ALWAYS);}
         /// <summary>
-        /// Return true if we trust all tools and do not need to ask for approval before before sending data to server.
+        /// Return true if we trust all tools and do not need to ask for approval before sending data to server.
         /// </summary>
         public bool NeverRequireApproval { get => string.Equals(_forAllToolsApproval, NEVER); }
 
