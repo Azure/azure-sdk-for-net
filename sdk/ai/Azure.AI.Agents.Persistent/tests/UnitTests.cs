@@ -133,6 +133,20 @@ namespace Azure.AI.Agents.Persistent.Tests
             AssertMcpListsEqual(["foo", "bar"], ["baz"], returned.PerToolApproval);
         }
 
+        [Test]
+        [TestCase("foo", "foo", "desc1", "desc2")]
+        [TestCase("foo", "foo", "desc1", "desc1")]
+        [TestCase("foo", "bar", "desc1", "desc2")]
+        [TestCase("foo", "bar", "desc1", "desc1")]
+        public void FunctionDefinitionEquality(string name1, string name2, string description1, string description2)
+        {
+            FunctionToolDefinition func1 = new(name: name1, description: description1);
+            FunctionToolDefinition func2 = new(name: name2, description: description2);
+            bool shouldBeEqual = string.Equals(name1, name2);
+            Assert.AreEqual(shouldBeEqual, func1.Equals(func2));
+            Assert.AreEqual(shouldBeEqual, func1.GetHashCode() == func2.GetHashCode());
+        }
+
         #region helpers
         private static void AssertMcpListsEqual(IEnumerable<string> expectedAlways, IEnumerable<string> expectedNever, MCPApprovalPerTool observedApproval)
         {

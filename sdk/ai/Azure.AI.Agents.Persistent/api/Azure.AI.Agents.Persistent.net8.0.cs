@@ -2886,6 +2886,7 @@ namespace Azure.AI.Agents.Persistent
         public SubmitToolApprovalUpdate(Azure.AI.Agents.Persistent.ThreadRun run, Azure.AI.Agents.Persistent.RequiredMcpToolCall mcpToolCall) { }
         public string Arguments { get { throw null; } }
         public string Name { get { throw null; } }
+        public string ServerLabel { get { throw null; } }
         public string ToolCallId { get { throw null; } }
     }
     public partial class SubmitToolOutputsAction : Azure.AI.Agents.Persistent.RequiredAction, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.SubmitToolOutputsAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.SubmitToolOutputsAction>
