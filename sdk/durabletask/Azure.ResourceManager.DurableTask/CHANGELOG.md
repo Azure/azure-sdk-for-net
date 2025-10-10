@@ -4,6 +4,11 @@
 
 First GA release of the Durable Task Scheduler management SDK
 
+### Other Changes
+
+- Now uses API version `2025-11-01` for all resource manager calls.
+- `SchedulerSkuName` now provides constants for the possible Sku values.
+
 ## 1.0.0-beta.1 (2025-04-24)
 
 Initial release of the Durable Task Scheduler management SDK
