@@ -4,6 +4,5 @@
     <PackageId>Azure.ResourceManager.OnlineExperimentation</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider OnlineExperimentation.</Description>
     <PackageTags>azure;management;arm;resource manager;onlineexperimentation</PackageTags>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

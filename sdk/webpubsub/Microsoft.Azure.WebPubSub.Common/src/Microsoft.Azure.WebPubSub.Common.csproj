@@ -11,7 +11,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);CA1822</NoWarn>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

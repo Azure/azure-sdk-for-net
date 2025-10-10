@@ -9,7 +9,6 @@
     <ApiCompatVersion>1.5.1</ApiCompatVersion>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <NoWarn>$(NoWarn);AZC0102;AZC0035</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

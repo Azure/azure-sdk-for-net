@@ -7,7 +7,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0012;AZC0030;AZC0034</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

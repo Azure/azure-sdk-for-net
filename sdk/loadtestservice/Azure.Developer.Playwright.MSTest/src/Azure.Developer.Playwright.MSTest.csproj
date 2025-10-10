@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageTags>Azure, Cloud, Playwright, Playwright Workspaces, Playwright Testing</PackageTags>
     <Description>
@@ -8,7 +8,6 @@
     <IsClientLibrary>true</IsClientLibrary>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Developer.Playwright\src\Azure.Developer.Playwright.csproj" />

@@ -11,13 +11,11 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <SignAssembly>true</SignAssembly>
     <NoWarn>$(NoWarn);1591;NU5105;CA1308;CA1825;CA2237</NoWarn>  <!-- Remove CA1825 supression here when we deprecate net452 -->
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-dataplane-changelog </PackageReleaseNotes>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
@@ -50,6 +48,5 @@
   </ItemGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>AzureBatch.ruleset</CodeAnalysisRuleSet>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

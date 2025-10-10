@@ -10,17 +10,14 @@
         This is SDK for QnAMaker v4 API with custom clients for V5-preview.1.	
     ]]>
     </PackageReleaseNotes>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>
     <AzureApiTag />
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

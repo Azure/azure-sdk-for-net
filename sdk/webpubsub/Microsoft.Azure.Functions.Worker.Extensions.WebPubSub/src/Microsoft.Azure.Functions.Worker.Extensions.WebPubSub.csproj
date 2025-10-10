@@ -10,7 +10,6 @@
     <ApiCompatVersion>1.7.0</ApiCompatVersion>
     <NoWarn>$(NoWarn);CA2227</NoWarn>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Internal\BinaryDataJsonConverter.cs" Link="Converters\BinaryDataJsonConverter.cs" />

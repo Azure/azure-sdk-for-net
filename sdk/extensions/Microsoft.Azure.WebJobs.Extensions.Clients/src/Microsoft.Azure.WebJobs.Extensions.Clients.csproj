@@ -7,7 +7,6 @@
     <Version>1.0.0-beta.1</Version>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <NoWarn>$(NoWarn);CA1812</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

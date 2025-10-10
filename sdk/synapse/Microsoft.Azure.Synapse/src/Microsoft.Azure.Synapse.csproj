@@ -12,6 +12,5 @@
 Initial Release
       ]]>
 		</PackageReleaseNotes>
-		<IncludeAutorestDependency>true</IncludeAutorestDependency>
 	</PropertyGroup>
 </Project>

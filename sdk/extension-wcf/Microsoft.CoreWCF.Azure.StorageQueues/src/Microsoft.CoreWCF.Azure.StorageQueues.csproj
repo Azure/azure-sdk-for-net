@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <PackageIcon>Icon.png</PackageIcon>
@@ -8,7 +8,6 @@
     <RootNamespace />
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <Version>1.0.0-beta.1</Version>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

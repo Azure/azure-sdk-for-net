@@ -10,7 +10,6 @@
     <ApiCompatVersion>1.9.0</ApiCompatVersion>
     <NoWarn>$(NoWarn);CS8632;CA1056;CA2227</NoWarn>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

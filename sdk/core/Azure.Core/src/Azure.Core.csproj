@@ -12,7 +12,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

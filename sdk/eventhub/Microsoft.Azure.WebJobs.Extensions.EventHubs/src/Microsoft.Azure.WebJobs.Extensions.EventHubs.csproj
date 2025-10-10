@@ -9,7 +9,6 @@
     <NoWarn>$(NoWarn);CS1591;SA1636</NoWarn>
     <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

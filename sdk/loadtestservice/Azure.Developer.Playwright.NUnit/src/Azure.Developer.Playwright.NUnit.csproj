@@ -10,7 +10,6 @@
     <IsClientLibrary>true</IsClientLibrary>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Developer.Playwright\src\Azure.Developer.Playwright.csproj" />

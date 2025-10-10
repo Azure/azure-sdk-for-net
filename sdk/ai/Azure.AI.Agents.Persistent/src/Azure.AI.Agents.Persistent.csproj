@@ -13,7 +13,6 @@
     <LangVersion>latest</LangVersion>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,12 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <PropertyGroup>
     <Version>5.0.0-beta.3</Version>
     <Description>This extension adds bindings for Storage</Description>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

@@ -3,7 +3,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Files.Shares client library</AssemblyTitle>
@@ -20,7 +19,6 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <RootNamespace>Azure.Storage.DataMovement.Files.Shares</RootNamespace>
     <PackageId />
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />

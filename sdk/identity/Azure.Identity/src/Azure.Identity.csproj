@@ -9,15 +9,13 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021;AZC0011</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <!--Conditionally define the PREVIEW_FEATURE_FLAG constant if the version is pre-release-->
   <Choose>
     <When Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(Version)', '-beta'))">
       <PropertyGroup>
         <DefineConstants>PREVIEW_FEATURE_FLAG</DefineConstants>
-        <IncludeAutorestDependency>true</IncludeAutorestDependency>
-  </PropertyGroup>
+      </PropertyGroup>
     </When>
   </Choose>
   <ItemGroup>

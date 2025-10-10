@@ -13,8 +13,7 @@
             SA1402; <!-- Webjobs sources package has files with multiple types -->
         </NoWarn>
         <InheritDocTrimLevel>internal</InheritDocTrimLevel>
-      <IncludeAutorestDependency>true</IncludeAutorestDependency>
-  </PropertyGroup>
+    </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Azure.WebJobs" />

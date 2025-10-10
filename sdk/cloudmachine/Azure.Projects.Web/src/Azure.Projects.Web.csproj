@@ -7,7 +7,6 @@
     <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

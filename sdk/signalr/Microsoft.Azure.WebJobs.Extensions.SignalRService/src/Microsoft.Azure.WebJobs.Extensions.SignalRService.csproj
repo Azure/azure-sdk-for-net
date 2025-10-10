@@ -9,7 +9,6 @@
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <NoWarn>$(NoWarn);CS1591;AZC0107;</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

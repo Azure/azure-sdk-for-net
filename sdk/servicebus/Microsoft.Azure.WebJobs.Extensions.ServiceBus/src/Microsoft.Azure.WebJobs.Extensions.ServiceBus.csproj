@@ -10,7 +10,6 @@
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <InheritDocTrimLevel>internal</InheritDocTrimLevel>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

@@ -9,6 +9,5 @@
       AZC0032;
       AZC0030;
     </NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

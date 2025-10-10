@@ -8,7 +8,6 @@
     <ApiCompatVersion>1.6.1</ApiCompatVersion>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <NoWarn>$(NoWarn);AZC0102</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

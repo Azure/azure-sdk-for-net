@@ -15,7 +15,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
  </PropertyGroup>
 
   <ItemGroup>

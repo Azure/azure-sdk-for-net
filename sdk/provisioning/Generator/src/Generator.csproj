@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0</TargetFrameworks>
     <Version>1.0.0-beta.1</Version>
@@ -6,7 +6,6 @@
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
     <NoWarn>IDE0130;$(NoWarn)</NoWarn> <!-- Ignore namespace not matching folder structure -->
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
@@ -55,7 +54,6 @@
   <PropertyGroup>
     <!-- We're not a client library, but I want the same versions used by client libraries -->
     <IsClientLibrary>true</IsClientLibrary>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <Import Project="$([MSBuild]::GetPathOfFileAbove(.gitignore))\..\eng\Packages.Data.props" />
 

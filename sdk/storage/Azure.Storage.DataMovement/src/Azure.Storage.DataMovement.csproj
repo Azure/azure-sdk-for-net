@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement client library</AssemblyTitle>
@@ -18,7 +17,6 @@
     </Description>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <RootNamespace>Azure.Storage.DataMovement</RootNamespace>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Threading.Channels" />

@@ -4,6 +4,5 @@
     <PackageId>Azure.ResourceManager.AgriculturePlatform</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider AgriculturePlatform.</Description>
     <PackageTags>azure;management;arm;resource manager;agricultureplatform</PackageTags>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

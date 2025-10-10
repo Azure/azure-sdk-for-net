@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Blobs client library</AssemblyTitle>
@@ -19,7 +18,6 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <RootNamespace>Azure.Storage.DataMovement.Blobs</RootNamespace>
     <PackageId />
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
