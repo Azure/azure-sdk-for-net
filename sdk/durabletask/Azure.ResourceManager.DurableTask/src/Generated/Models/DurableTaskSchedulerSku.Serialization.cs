@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             }
 
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            writer.WriteStringValue(Name.ToString());
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             {
                 return null;
             }
-            string name = default;
+            SchedulerSkuName name = default;
             int? capacity = default;
             DurableTaskResourceRedundancyState? redundancyState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             {
                 if (property.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = new SchedulerSkuName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
