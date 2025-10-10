@@ -2,7 +2,7 @@
 
 ## Summary
 
-- Total libraries: 414
+- Total libraries: 416
 - Management Plane (Swagger): 165
 - Management Plane (TSP-Old): 46
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
@@ -11,16 +11,16 @@
 - Management Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 0
 - Data Plane (Swagger): 115
 - Data Plane (TSP-Old): 26
-- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 8
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 9
 - Data Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 0
 - Data Plane (TypeSpec - @typespec/http-client-csharp): 2
 - Data Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 1
-- No generator: 38
+- No generator: 39
 
 
 ## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 8
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 9
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -31,6 +31,7 @@ TypeSpec with @azure-typespec/http-client-csharp generator is detected by the pr
 | healthdataaiservices | Azure.Health.Deidentification | sdk/healthdataaiservices/Azure.Health.Deidentification |
 | keyvault | Azure.Security.KeyVault.Administration | sdk/keyvault/Azure.Security.KeyVault.Administration |
 | monitor | Azure.Monitor.Ingestion | sdk/monitor/Azure.Monitor.Ingestion |
+| monitor | Azure.Monitor.Query.Logs | sdk/monitor/Azure.Monitor.Query.Logs |
 | schemaregistry | Azure.Data.SchemaRegistry | sdk/schemaregistry/Azure.Data.SchemaRegistry |
 
 
@@ -460,7 +461,7 @@ Total: 165
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 38
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 39
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -492,6 +493,7 @@ Libraries with no generator have neither autorest.md nor tsp-location.yaml files
 | loadtestservice | Azure.Developer.Playwright.NUnit | sdk/loadtestservice/Azure.Developer.Playwright.NUnit |
 | modelsrepository | Azure.IoT.ModelsRepository | sdk/modelsrepository/Azure.IoT.ModelsRepository |
 | monitor | Azure.Monitor.OpenTelemetry.AspNetCore | sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore |
+| monitor | Azure.Monitor.Query.Metrics | sdk/monitor/Azure.Monitor.Query.Metrics |
 | provisioning | Azure.Provisioning.Deployment | sdk/provisioning/Azure.Provisioning.Deployment |
 | provisioning | Generator | sdk/provisioning/Generator |
 | servicebus | Azure.Messaging.ServiceBus | sdk/servicebus/Azure.Messaging.ServiceBus |
