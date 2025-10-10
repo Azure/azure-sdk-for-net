@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeTargetTargetsRestClient.ReviewSolutionVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateReviewSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateReviewSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true, apiVersionOverrideValue: "2023-07-01-preview");
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeTargetTargetsRestClient.ReviewSolutionVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateReviewSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateReviewSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true, apiVersionOverrideValue: "2023-07-01-preview");
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeTargetTargetsRestClient.PublishSolutionVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreatePublishSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreatePublishSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true, apiVersionOverrideValue: "2023-07-01-preview");
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeTargetTargetsRestClient.PublishSolutionVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreatePublishSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreatePublishSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true, apiVersionOverrideValue: "2023-07-01-preview");
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
