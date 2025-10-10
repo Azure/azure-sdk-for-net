@@ -11,13 +11,16 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <NoWarn>
       $(NoWarn);
-      AZC0034; <!-- Cannot reuse type names; expected due to system event type forwarding. --></NoWarn>
+      AZC0034; <!-- Cannot reuse type names; expected due to system event type forwarding. -->
+    </NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Messaging.EventGrid.SystemEvents" />
   </ItemGroup>
+
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />

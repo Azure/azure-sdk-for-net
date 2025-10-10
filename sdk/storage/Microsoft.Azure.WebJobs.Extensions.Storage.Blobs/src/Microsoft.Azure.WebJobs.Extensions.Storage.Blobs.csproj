@@ -1,29 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
   <PropertyGroup>
     <Version>5.4.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>5.3.6</ApiCompatVersion>
-    <Description>This extension adds bindings for Storage</Description>
+		<Description>This extension adds bindings for Storage</Description>
     <!-- https://github.com/Azure/azure-sdk-for-net/issues/19222 -->
     <NoWarn>$(NoWarn);IDT002;IDT003</NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
-		<ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
-		<!-- The PackageReference is commented out because Azure.Storage.Blobs is now included via ProjectReference above. -->
-		<!-- It is retained here until after the next release, and the dependency will be switched back to a PackageReference in the future. -->
-		<!-- <PackageReference Include="Azure.Storage.Blobs" /> -->
+    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Azure.Storage.Queues" />
   </ItemGroup>
+
   <ItemGroup>
     <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\**\*.cs" LinkBase="Shared" />
     <Compile Include="$(MicrosoftAzureWebJobsExtensionsClientsSources)\**\*.cs" LinkBase="Shared" />
   </ItemGroup>
+
   <ItemGroup>
     <Compile Include="..\..\..\eventgrid\Microsoft.Azure.WebJobs.Extensions.EventGrid\src\TriggerBinding\HttpRequestProcessor.cs" Link="EventGrid\HttpRequestProcessor.cs" />
     <Compile Include="..\..\..\eventgrid\Microsoft.Azure.WebJobs.Extensions.EventGrid\src\TriggerBinding\BindingType.cs" Link="EventGrid\BindingType.cs" />

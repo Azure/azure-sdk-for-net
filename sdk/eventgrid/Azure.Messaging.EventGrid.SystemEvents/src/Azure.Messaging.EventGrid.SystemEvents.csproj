@@ -12,13 +12,17 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <NoWarn>
       $(NoWarn);
-      AZC0034; <!-- Cannot reuse type names; expected due to system event type forwarding. --></NoWarn>
+      AZC0034; <!-- Cannot reuse type names; expected due to system event type forwarding. -->
+    </NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Messaging.EventGrid\EventGridSourceGenerator\src\Azure.Messaging.EventGrid.SourceGeneration.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
+
 </Project>

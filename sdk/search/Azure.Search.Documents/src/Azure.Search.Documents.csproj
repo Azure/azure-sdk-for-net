@@ -17,9 +17,11 @@
     <NoWarn>
      $(NoWarn);
      AZC0004;
-     AZC0035; <!-- Missing model factory methods.  #51224--></NoWarn>
+     AZC0035; <!-- Missing model factory methods.  #51224-->
+    </NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
+
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared" />
@@ -27,9 +29,11 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Threading.Channels" />
   </ItemGroup>
+
 </Project>

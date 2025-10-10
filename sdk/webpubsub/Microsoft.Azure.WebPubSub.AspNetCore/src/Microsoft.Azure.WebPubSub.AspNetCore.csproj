@@ -10,19 +10,22 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);419</NoWarn>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net8.0'">net8.0</ApiCompatBaselineTargetFramework>
+    <ApiCompatBaselineTargetFramework>net8.0</ApiCompatBaselineTargetFramework>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
+
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
+
   <ItemGroup>
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\ConnectionStatesConverter.cs" LinkBase="Shared" />
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttDisconnectedEventRequestContent.cs" LinkBase="Shared" />
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttConnectEventRequestContent.cs" LinkBase="Shared" />
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\WebPubSubErrorCodeExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebPubSub.Common" />
     <!--
@@ -31,4 +34,5 @@
     <!--<ProjectReference Include="..\..\Azure.Messaging.WebPubSub\src\Azure.Messaging.WebPubSub.csproj" />-->
     <PackageReference Include="Azure.Messaging.WebPubSub" />
   </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <Description>Translator is a cloud-based machine translation service and is part of the Azure Cognitive Services family of cognitive APIs used to build intelligent apps. Translator is easy to integrate in your applications, websites, tools, and solutions. It allows you to add multi-language user experiences in 90 languages and dialects. And it can be used on any hardware platform with any operating system for text translation.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Translation.Document client library</AssemblyTitle>
@@ -11,9 +12,11 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
+
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
@@ -23,4 +26,5 @@
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartFormDataContent.cs" LinkBase="Shared" />
   </ItemGroup>
+
 </Project>

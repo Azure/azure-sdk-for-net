@@ -9,18 +9,22 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
-    <AotCompatOptOut>true</AotCompatOptOut>
     <IncludeAutorestDependency>false</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
-  <ItemGroup>
+
+    <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
   </ItemGroup>
+
   <ItemGroup>
     <Compile Include="$(AzureEventGridSharedSources)CloudEventRequestContent.cs" LinkBase="Shared/EventGrid" />
     <Compile Include="$(AzureEventGridSharedSources)CloudEventsRequestContent.cs" LinkBase="Shared/EventGrid" />
   </ItemGroup>
-  <ItemGroup>
+
+    <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
+
 </Project>

@@ -16,9 +16,11 @@
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Internal\BinaryDataJsonConverter.cs" Link="Converters\BinaryDataJsonConverter.cs" />
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\ConnectionStatesConverter.cs" Link="Converters\ConnectionStatesConverter.cs" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
+
 </Project>

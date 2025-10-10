@@ -11,6 +11,7 @@
     <NoWarn>$(NoWarn);AZC0034</NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
+
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
@@ -20,4 +21,5 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
+
 </Project>

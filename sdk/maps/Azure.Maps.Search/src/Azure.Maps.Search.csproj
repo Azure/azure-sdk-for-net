@@ -12,21 +12,26 @@
       $(NoWarn);
       AZC0012;
       CA1835;
-      AZC0035; <!-- Missing model factory methods.  #51230--></NoWarn>
+      AZC0035; <!-- Missing model factory methods.  #51230-->
+    </NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
+
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared%(RecursiveDir)%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
+
   <!-- Shared source from Azure.Maps -->
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Maps.Common\src\Azure.Maps.Common.csproj" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Maps.Common\src\MapsSasCredentialPolicy.cs" LinkBase="Shared" />
   </ItemGroup>
+
 </Project>

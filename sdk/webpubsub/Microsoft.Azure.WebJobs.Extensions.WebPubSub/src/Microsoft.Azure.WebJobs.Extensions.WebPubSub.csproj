@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.WebPubSub</PackageId>
@@ -11,6 +12,7 @@
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\ConnectionStatesConverter.cs" LinkBase="Bindings\Shared" />
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\WebPubSubStatusCode.cs" LinkBase="Bindings\Shared" />
@@ -19,15 +21,18 @@
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttConnectEventErrorResponseContent.cs" LinkBase="Bindings\Shared" />
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\WebPubSubErrorCodeExtensions.cs" LinkBase="Bindings\Shared" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
   </ItemGroup>
+
   <ItemGroup>
     <!--
 	TODO: Changing to a PackageReference since we only want to depend on the already GA'ed version of WebPubSub.  Change back after release.	-->
-    <!--<ProjectReference Include="..\..\Azure.Messaging.WebPubSub\src\Azure.Messaging.WebPubSub.csproj" />-->
+	  <!--<ProjectReference Include="..\..\Azure.Messaging.WebPubSub\src\Azure.Messaging.WebPubSub.csproj" />-->
     <!--<ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />-->
+
     <PackageReference Include="Azure.Messaging.WebPubSub" />
     <PackageReference Include="Microsoft.Azure.WebPubSub.Common" />
   </ItemGroup>
