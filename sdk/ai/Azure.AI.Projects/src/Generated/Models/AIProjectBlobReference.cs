@@ -14,7 +14,7 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AIProjectBlobReference"/>. </summary>
-        /// <param name="blobUri"></param>
+        /// <param name="blobUri"> Blob URI path for client to upload data. Example: https://blob.windows.core.net/Container/Path. </param>
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
         internal AIProjectBlobReference(Uri blobUri, string storageAccountArmId, BlobReferenceSasCredential credential)
@@ -25,7 +25,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="AIProjectBlobReference"/>. </summary>
-        /// <param name="blobUri"></param>
+        /// <param name="blobUri"> Blob URI path for client to upload data. Example: https://blob.windows.core.net/Container/Path. </param>
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
