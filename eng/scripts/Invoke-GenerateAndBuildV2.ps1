@@ -134,13 +134,11 @@ if ($relatedTypeSpecProjectFolder) {
         $tspClientDir = Resolve-Path (Join-Path $PSScriptRoot "../common/tsp-client")
         Push-Location $tspClientDir
         try {
-            if (!(Test-Path "node_modules")) {
-                Write-Host "Installing tsp-client dependencies from $tspClientDir"
-                npm ci
-                if ($LASTEXITCODE) {
-                    Write-Error "Failed to install tsp-client dependencies"
-                    exit $LASTEXITCODE
-                }
+            Write-Host "Installing tsp-client dependencies from $tspClientDir"
+            npm ci
+            if ($LASTEXITCODE) {
+                Write-Error "Failed to install tsp-client dependencies"
+                exit $LASTEXITCODE
             }
             
             # Use tsp-client from pinned version by running from tsp-client directory
