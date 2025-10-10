@@ -4,14 +4,6 @@
 
 First GA release of the Durable Task Scheduler management SDK
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.1 (2025-04-24)
 
 Initial release of the Durable Task Scheduler management SDK
