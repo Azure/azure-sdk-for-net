@@ -32,24 +32,24 @@ After installation, you can run tsp-client using `npm exec --prefix` from the ro
 _TspClientDir=eng/common/tsp-client
 
 # Get help
-npm exec --prefix $(_TspClientDir) --no -- tsp-client --help
+npm exec --prefix ${_TspClientDir} --no -- tsp-client --help
 
 # Check version
-npm exec --prefix $(_TspClientDir) --no -- tsp-client version
+npm exec --prefix ${_TspClientDir} --no -- tsp-client version
 
 # Generate client code
-npm exec --prefix $(_TspClientDir) --no -- tsp-client generate --output-dir ./generated
+npm exec --prefix ${_TspClientDir} --no -- tsp-client generate --output-dir ./generated
 
 # Initialize a new project
-npm exec --prefix $(_TspClientDir) --no -- tsp-client init --tsp-config ./tspconfig.yaml
+npm exec --prefix ${_TspClientDir} --no -- tsp-client init --tsp-config ./tspconfig.yaml
 ```
 
 ## CI/CD Best Practices
 
 ```bash
 _TspClientDir=eng/common/tsp-client
-npm ci --prefix $(_TspClientDir)
-npm exec --prefix $(_TspClientDir) --no -- tsp-client init --update-if-exists --tsp-config https://github.com/Azure/azure-rest-api-specs/blob/dee71463cbde1d416c47cf544e34f7966a94ddcb/specification/contosowidgetmanager/Contoso.WidgetManager/tspconfig.yaml
+npm ci --prefix ${_TspClientDir}
+npm exec --prefix ${_TspClientDir} --no -- tsp-client init --update-if-exists --tsp-config https://github.com/Azure/azure-rest-api-specs/blob/dee71463cbde1d416c47cf544e34f7966a94ddcb/specification/contosowidgetmanager/Contoso.WidgetManager/tspconfig.yaml
 ```
 
 ## Package Management
