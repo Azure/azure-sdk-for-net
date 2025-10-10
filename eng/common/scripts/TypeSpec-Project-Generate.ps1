@@ -81,20 +81,6 @@ $tempFolder = "$ProjectDirectory/TempTypeSpecFiles"
 $npmWorkingDir = Resolve-Path $tempFolder/$innerFolder
 $mainTypeSpecFile = If (Test-Path "$npmWorkingDir/client.*") { Resolve-Path "$npmWorkingDir/client.*" } Else { Resolve-Path "$npmWorkingDir/main.*"}
 
-# Install tsp-client dependencies from eng/common/tsp-client
-$tspClientDir = Resolve-Path (Join-Path $PSScriptRoot "../tsp-client")
-Push-Location $tspClientDir
-try {
-    if (!(Test-Path "node_modules")) {
-        Write-Host "Installing tsp-client dependencies from $tspClientDir"
-        Invoke-LoggedCommand "npm ci"
-        if ($LASTEXITCODE) { exit $LASTEXITCODE }
-    }
-}
-finally {
-    Pop-Location
-}
-
 try {
     Push-Location $npmWorkingDir
     NpmInstallForProject $npmWorkingDir
@@ -107,30 +93,22 @@ try {
             $emitterAdditionalOptions = " $emitterAdditionalOptions"
         }
     }
-    
-    # Use tsp from pinned version in eng/common/tsp-client by changing to that directory
-    Push-Location $tspClientDir
-    try {
-        $typespecCompileCommand = "npx tsp compile '$mainTypeSpecFile' --emit $emitterName$emitterAdditionalOptions"
-        if ($TypespecAdditionalOptions) {
-            $options = $TypespecAdditionalOptions.Split(";");
-            foreach ($option in $options) {
-                $typespecCompileCommand += " --option $emitterName.$option"
-            }
+    $typespecCompileCommand = "npx tsp compile $mainTypeSpecFile --emit $emitterName$emitterAdditionalOptions"
+    if ($TypespecAdditionalOptions) {
+        $options = $TypespecAdditionalOptions.Split(";");
+        foreach ($option in $options) {
+            $typespecCompileCommand += " --option $emitterName.$option"
         }
-
-        if ($SaveInputs) {
-            $typespecCompileCommand += " --option $emitterName.save-inputs=true"
-        }
-
-        Write-Host($typespecCompileCommand)
-        Invoke-Expression $typespecCompileCommand
-        
-        if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
-    finally {
-        Pop-Location
+
+    if ($SaveInputs) {
+        $typespecCompileCommand += " --option $emitterName.save-inputs=true"
     }
+
+    Write-Host($typespecCompileCommand)
+    Invoke-Expression $typespecCompileCommand
+
+    if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
 finally {
     Pop-Location
