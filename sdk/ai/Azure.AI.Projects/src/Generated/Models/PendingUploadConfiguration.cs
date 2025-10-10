@@ -36,8 +36,5 @@ namespace Azure.AI.Projects
 
         /// <summary> Azure Storage Account connection name to use for generating temporary SAS token. </summary>
         public string ConnectionName { get; set; }
-
-        /// <summary> BlobReference is the only supported type. </summary>
-        public PendingUploadType PendingUploadType { get; } = "BlobReference";
     }
 }

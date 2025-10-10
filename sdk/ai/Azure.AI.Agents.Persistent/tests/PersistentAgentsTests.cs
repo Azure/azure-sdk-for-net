@@ -721,7 +721,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Assert.AreEqual(ids[idNum], run.Id, $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
-            client.Threads.DeleteThread(threadId: thread.Id);
+            await client.Threads.DeleteThreadAsync(threadId: thread.Id);
         }
 
         [RecordedTest]
@@ -761,7 +761,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 "What is the stock price of Microsoft and the weather in Seattle?");
 
             // Run the agent
-            ThreadRun run = client.Runs.CreateRun(thread, agent);
+            ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
             run = await WaitForRun(client, run);
 
             // Check run steps
@@ -807,7 +807,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.Greater(messages.Count, 0);
 
             // NOTE: Comment out these four lines if you plan to reuse the agent later.
-            client.Threads.DeleteThread(threadId: thread.Id);
+            await client.Threads.DeleteThreadAsync(threadId: thread.Id);
         }
 
         [RecordedTest]
@@ -2318,7 +2318,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 model: "gpt-4o",
                 instruction: "Analyze images from internally uploaded files."
             );
-            PersistentAgentThread thread = client.Threads.CreateThread();
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
             var contentBlocks = new List<MessageInputContentBlock>
             {
                 new MessageInputTextBlock("Here is an uploaded file. Please describe it:"),
@@ -2334,12 +2334,12 @@ namespace Azure.AI.Agents.Persistent.Tests
                 contentBlocks.Add(new MessageInputImageUriBlock(new MessageImageUriParam(uri)));
             }
 
-            PersistentThreadMessage imageMessage = client.Messages.CreateMessage(
+            PersistentThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
                 threadId: thread.Id,
                 role: MessageRole.User,
                 contentBlocks: contentBlocks
             );
-            ThreadRun run = client.Runs.CreateRun(
+            ThreadRun run = await client.Runs.CreateRunAsync(
                 threadId: thread.Id,
                 assistantId: agent.Id
             );
