@@ -54,17 +54,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-<!-- TODO >
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/samples).
-
-### <scenario>
-
-You can create a client and call the client's `<operation>` method.
-
-```C# Snippet:Azure_Analytics_PlanetaryComputer_Scenario
-Console.WriteLine("Hello, world!");
-```
--->
+TODO
 
 ## Troubleshooting
 
