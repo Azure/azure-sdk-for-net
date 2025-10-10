@@ -7,44 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Properties under the virtual machine instance resource. </summary>
     public partial class HciVmInstanceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmInstanceProperties"/>. </summary>
         public HciVmInstanceProperties()
@@ -69,8 +39,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="hyperVVmId"> Unique identifier for the Hyper-V VM resource. </param>
         /// <param name="hostNodeName"> Name of the host node that the VM is on. </param>
         /// <param name="hostNodeIPAddress"> Name of the host node that the VM is on. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceProperties(HciVmInstanceHardwareProfile hardwareProfile, HciVmInstancePlacementProfile placementProfile, VirtualMachineInstancePropertiesNetworkProfile networkProfile, HciVmInstanceOSProfile osProfile, HciVmInstanceSecurityProfile securityProfile, HciVmInstanceStorageProfile storageProfile, HciVmHttpProxyConfiguration httpProxyConfig, bool? isCreatingFromLocal, HciVmProvisioningState? provisioningState, VirtualMachineInstanceView instanceView, HciVmInstanceStatus status, GuestAgentInstallStatus guestAgentInstallStatus, string vmId, string resourceUid, string hyperVVmId, string hostNodeName, string hostNodeIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmInstanceProperties(HciVmInstanceHardwareProfile hardwareProfile, HciVmInstancePlacementProfile placementProfile, VirtualMachineInstancePropertiesNetworkProfile networkProfile, HciVmInstanceOSProfile osProfile, HciVmInstanceSecurityProfile securityProfile, HciVmInstanceStorageProfile storageProfile, HciVmHttpProxyConfiguration httpProxyConfig, bool? isCreatingFromLocal, HciVmProvisioningState? provisioningState, VirtualMachineInstanceView instanceView, HciVmInstanceStatus status, GuestAgentInstallStatus guestAgentInstallStatus, string vmId, string resourceUid, string hyperVVmId, string hostNodeName, string hostNodeIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             PlacementProfile = placementProfile;
@@ -89,59 +59,80 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             HyperVVmId = hyperVVmId;
             HostNodeName = hostNodeName;
             HostNodeIPAddress = hostNodeIPAddress;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </summary>
         public HciVmInstanceHardwareProfile HardwareProfile { get; set; }
+
         /// <summary> PlacementProfile - Specifies the placement related settings for the virtual machine. </summary>
         public HciVmInstancePlacementProfile PlacementProfile { get; set; }
+
         /// <summary> NetworkProfile - describes the network configuration the virtual machine instance. </summary>
         internal VirtualMachineInstancePropertiesNetworkProfile NetworkProfile { get; set; }
+
+        /// <summary> OsProfile - describes the configuration of the operating system and sets login data. </summary>
+        public HciVmInstanceOSProfile OSProfile { get; set; }
+
+        /// <summary> SecurityProfile - Specifies the security settings for the virtual machine instance. </summary>
+        public HciVmInstanceSecurityProfile SecurityProfile { get; set; }
+
+        /// <summary> StorageProfile - contains information about the disks and storage information for the virtual machine instance. </summary>
+        public HciVmInstanceStorageProfile StorageProfile { get; set; }
+
+        /// <summary> HTTP Proxy configuration for the VM. </summary>
+        public HciVmHttpProxyConfiguration HttpProxyConfig { get; set; }
+
+        /// <summary> Boolean indicating whether this is an existing local virtual machine or if one should be created. </summary>
+        public bool? IsCreatingFromLocal { get; set; }
+
+        /// <summary> Provisioning state of the virtual machine instance. </summary>
+        public HciVmProvisioningState? ProvisioningState { get; }
+
+        /// <summary> The virtual machine instance view. </summary>
+        internal VirtualMachineInstanceView InstanceView { get; }
+
+        /// <summary> The observed state of virtual machine instances. </summary>
+        public HciVmInstanceStatus Status { get; }
+
+        /// <summary> Guest agent install status. </summary>
+        public GuestAgentInstallStatus GuestAgentInstallStatus { get; set; }
+
+        /// <summary> Unique identifier for the vm resource. </summary>
+        public string VmId { get; }
+
+        /// <summary> Unique identifier defined by ARC to identify the guest of the VM. </summary>
+        public string ResourceUid { get; set; }
+
+        /// <summary> Unique identifier for the Hyper-V VM resource. </summary>
+        public string HyperVVmId { get; }
+
+        /// <summary> Name of the host node that the VM is on. </summary>
+        public string HostNodeName { get; }
+
+        /// <summary> Name of the host node that the VM is on. </summary>
+        public string HostNodeIPAddress { get; }
+
         /// <summary> NetworkInterfaces - list of network interfaces to be attached to the virtual machine instance. </summary>
-        public IList<WritableSubResource> NetworkInterfaces
+        public IList<NetworkInterfaceArmReference> NetworkInterfaces
         {
             get
             {
                 if (NetworkProfile is null)
+                {
                     NetworkProfile = new VirtualMachineInstancePropertiesNetworkProfile();
+                }
                 return NetworkProfile.NetworkInterfaces;
             }
         }
 
-        /// <summary> OsProfile - describes the configuration of the operating system and sets login data. </summary>
-        public HciVmInstanceOSProfile OSProfile { get; set; }
-        /// <summary> SecurityProfile - Specifies the security settings for the virtual machine instance. </summary>
-        public HciVmInstanceSecurityProfile SecurityProfile { get; set; }
-        /// <summary> StorageProfile - contains information about the disks and storage information for the virtual machine instance. </summary>
-        public HciVmInstanceStorageProfile StorageProfile { get; set; }
-        /// <summary> HTTP Proxy configuration for the VM. </summary>
-        public HciVmHttpProxyConfiguration HttpProxyConfig { get; set; }
-        /// <summary> Boolean indicating whether this is an existing local virtual machine or if one should be created. </summary>
-        public bool? IsCreatingFromLocal { get; set; }
-        /// <summary> Provisioning state of the virtual machine instance. </summary>
-        public HciVmProvisioningState? ProvisioningState { get; }
-        /// <summary> The virtual machine instance view. </summary>
-        internal VirtualMachineInstanceView InstanceView { get; }
         /// <summary> The VM Config Agent running on the virtual machine. </summary>
         public HciVmConfigAgentInstanceView InstanceViewVmAgent
         {
-            get => InstanceView?.VmAgent;
+            get
+            {
+                return InstanceView.VmAgent;
+            }
         }
-
-        /// <summary> The observed state of virtual machine instances. </summary>
-        public HciVmInstanceStatus Status { get; }
-        /// <summary> Guest agent install status. </summary>
-        public GuestAgentInstallStatus GuestAgentInstallStatus { get; set; }
-        /// <summary> Unique identifier for the vm resource. </summary>
-        public string VmId { get; }
-        /// <summary> Unique identifier defined by ARC to identify the guest of the VM. </summary>
-        public string ResourceUid { get; set; }
-        /// <summary> Unique identifier for the Hyper-V VM resource. </summary>
-        public string HyperVVmId { get; }
-        /// <summary> Name of the host node that the VM is on. </summary>
-        public string HostNodeName { get; }
-        /// <summary> Name of the host node that the VM is on. </summary>
-        public string HostNodeIPAddress { get; }
     }
 }

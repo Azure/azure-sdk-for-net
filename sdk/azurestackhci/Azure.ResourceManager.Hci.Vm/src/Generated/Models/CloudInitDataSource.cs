@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct CloudInitDataSource : IEquatable<CloudInitDataSource>
     {
         private readonly string _value;
+        /// <summary> NoCloud is used as the datasource. </summary>
+        private const string NoCloudValue = "NoCloud";
+        /// <summary> Azure is used as the datasource. </summary>
+        private const string AzureValue = "Azure";
 
         /// <summary> Initializes a new instance of <see cref="CloudInitDataSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CloudInitDataSource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoCloudValue = "NoCloud";
-        private const string AzureValue = "Azure";
+            _value = value;
+        }
 
         /// <summary> NoCloud is used as the datasource. </summary>
         public static CloudInitDataSource NoCloud { get; } = new CloudInitDataSource(NoCloudValue);
+
         /// <summary> Azure is used as the datasource. </summary>
         public static CloudInitDataSource Azure { get; } = new CloudInitDataSource(AzureValue);
+
         /// <summary> Determines if two <see cref="CloudInitDataSource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CloudInitDataSource left, CloudInitDataSource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CloudInitDataSource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CloudInitDataSource left, CloudInitDataSource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudInitDataSource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CloudInitDataSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CloudInitDataSource(string value) => new CloudInitDataSource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CloudInitDataSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CloudInitDataSource?(string value) => value == null ? null : new CloudInitDataSource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CloudInitDataSource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CloudInitDataSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
