@@ -1,6 +1,6 @@
-emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
 additionalDirectories: []
-directory: specification/orbital/Microsoft.PlanetaryComputer
-commit: b83d71ef555f870de48952d18f9be80045e3d565
+emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
 repo: Azure/azure-rest-api-specs
+directory: specification/orbital/Microsoft.PlanetaryComputer
+commit: a54a7e670d46ee43beaea13a1e4393df95e1a144
 

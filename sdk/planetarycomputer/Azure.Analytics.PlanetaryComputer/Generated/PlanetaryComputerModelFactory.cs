@@ -1244,6 +1244,50 @@ namespace Azure.Analytics.PlanetaryComputer
             return new StacItemBounds(bounds.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for cropping GeoJSON. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.CropGeoJsonOptions"/> instance for mocking. </returns>
+        public static CropGeoJsonOptions CropGeoJsonOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new CropGeoJsonOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                algorithm,
+                algorithmParams,
+                colorFormula,
+                coordinateReferenceSystem,
+                resampling,
+                maxSize,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/itemcollection-spec.mdCollection of STAC items with statistical information. </summary>
         /// <param name="type"> GeoJSON type identifier for StacItemCollection. </param>
         /// <param name="features"> Array of STAC items with statistics. </param>
@@ -1395,6 +1439,52 @@ namespace Azure.Analytics.PlanetaryComputer
             return new InfoOperationResult(data, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for getting parts (cropped to bounding box). </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
+        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetPartOptions"/> instance for mocking. </returns>
+        public static GetPartOptions GetPartOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new GetPartOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                algorithm,
+                algorithmParams,
+                colorFormula,
+                coordinateReferenceSystem,
+                dstCrs,
+                resampling,
+                maxSize,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary>
         /// Point model.
         /// 
@@ -1505,6 +1595,60 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for getting WMTS capabilities. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="tileFormat"> Output image type. Default is png. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="minZoom"> Overwrite default minzoom. </param>
+        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetWmtsCapabilitiesOptions"/> instance for mocking. </returns>
+        public static GetWmtsCapabilitiesOptions GetWmtsCapabilitiesOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new GetWmtsCapabilitiesOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                algorithm,
+                algorithmParams,
+                tileFormat,
+                tileScale,
+                minZoom,
+                maxZoom,
+                buffer,
+                colorFormula,
+                resampling,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Information about a registered STAC search query. </summary>
         /// <param name="search">
         /// Details of the saved search query
@@ -1583,6 +1727,60 @@ namespace Azure.Analytics.PlanetaryComputer
             links ??= new ChangeTrackingList<StacLink>();
 
             return new TilerMosaicSearchRegistrationResult(searchId, links.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for mosaic WMTS capabilities. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="tileFormat"> Output image type. Default is png. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="minZoom"> Overwrite default minzoom. </param>
+        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetMosaicWmtsCapabilitiesOptions"/> instance for mocking. </returns>
+        public static GetMosaicWmtsCapabilitiesOptions GetMosaicWmtsCapabilitiesOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new GetMosaicWmtsCapabilitiesOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                algorithm,
+                algorithmParams,
+                tileFormat,
+                tileScale,
+                minZoom,
+                maxZoom,
+                buffer,
+                colorFormula,
+                resampling,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> UnsignedLink. </summary>

@@ -15,12 +15,16 @@ namespace Azure.Analytics.PlanetaryComputer
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BandStatistics))]
+    [ModelReaderWriterBuildable(typeof(CropGeoJsonOptions))]
     [ModelReaderWriterBuildable(typeof(DefaultLocation))]
     [ModelReaderWriterBuildable(typeof(GeoJsonGeometry))]
     [ModelReaderWriterBuildable(typeof(GeoJsonPoint))]
     [ModelReaderWriterBuildable(typeof(GeoJsonPolygon))]
     [ModelReaderWriterBuildable(typeof(GeoJsonStatisticsForStacItemCollection))]
     [ModelReaderWriterBuildable(typeof(GeoJsonStatisticsItemResult))]
+    [ModelReaderWriterBuildable(typeof(GetMosaicWmtsCapabilitiesOptions))]
+    [ModelReaderWriterBuildable(typeof(GetPartOptions))]
+    [ModelReaderWriterBuildable(typeof(GetWmtsCapabilitiesOptions))]
     [ModelReaderWriterBuildable(typeof(ImageContent))]
     [ModelReaderWriterBuildable(typeof(ImageResponse))]
     [ModelReaderWriterBuildable(typeof(InfoOperationResult))]
