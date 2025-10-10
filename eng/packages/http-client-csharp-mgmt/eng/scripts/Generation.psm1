@@ -1,5 +1,4 @@
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
-$tspClientDir = Resolve-Path (Join-Path $PSScriptRoot '../../../../common/tsp-client')
 
 function Invoke($command, $executePath=$repoRoot)
 {
@@ -21,22 +20,6 @@ function Invoke($command, $executePath=$repoRoot)
     }
 }
 
-function Install-TspClient {
-    Push-Location $tspClientDir
-    try {
-        if (!(Test-Path "node_modules")) {
-            Write-Host "Installing tsp-client dependencies from $tspClientDir"
-            npm ci
-            if($LastExitCode -ne 0) {
-                Write-Error "Failed to install tsp-client dependencies"
-            }
-        }
-    }
-    finally {
-        Pop-Location
-    }
-}
-
 function Get-Mgmt-TspCommand {
     param (
         [string]$specFile,
@@ -45,21 +28,14 @@ function Get-Mgmt-TspCommand {
         [string]$apiVersion = $null,
         [bool]$debug = $false
     )
-    Install-TspClient
-    
-    # Change to tsp-client directory to use pinned version, then run tsp compile
-    if ($IsLinux -or $IsMacOs) {
-        $command = "cd '$tspClientDir' && npx tsp compile '$specFile'"
-    } else {
-        $command = "pushd `"$tspClientDir`" && npx tsp compile `"$specFile`" && popd"
-    }
+    $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp-mgmt"
-    $command += " --emit `"$repoRoot/..`""
+    $command += " --emit $repoRoot/.."
     $configFile = Join-Path $generationDir "tspconfig.yaml"
     if (Test-Path $configFile) {
-        $command += " --config=`"$configFile`""
+        $command += " --config=$configFile"
     }
-    $command += " --option @azure-typespec/http-client-csharp-mgmt.emitter-output-dir=`"$generationDir`""
+    $command += " --option @azure-typespec/http-client-csharp-mgmt.emitter-output-dir=$generationDir"
     $command += " --option @azure-typespec/http-client-csharp-mgmt.save-inputs=true"
     if ($generateStub) {
         $command += " --option @azure-typespec/http-client-csharp-mgmt.plugin-name=AzureStubPlugin"
