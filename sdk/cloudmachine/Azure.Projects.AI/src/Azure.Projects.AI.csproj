@@ -1,15 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <Description>AI extensions for Azure.Projects</Description>
     <Version>1.0.0-beta.2</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>12</LangVersion>
     <Nullable>enable</Nullable>
+
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
     <NoWarn>CS1591</NoWarn>
     <NoWarn>OPENAI001</NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
+ 
   <ItemGroup>
     <PackageReference Include="Azure.AI.OpenAI" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
@@ -17,8 +20,10 @@
     <PackageReference Include="Microsoft.Bcl.Numerics" />
     <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Projects\src\Azure.Projects.csproj" />
     <ProjectReference Include="..\..\Azure.Projects.Provisioning\src\Azure.Projects.Provisioning.csproj" />
   </ItemGroup>
+
 </Project>

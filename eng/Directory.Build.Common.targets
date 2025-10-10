@@ -21,13 +21,8 @@
   <PropertyGroup>
     <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
   </PropertyGroup>
-
-  <!-- AOT Compatibility Properties -->
-  <PropertyGroup>
-    <IsAotCompatibleClientLibrary>false</IsAotCompatibleClientLibrary>
-  </PropertyGroup>
   
-  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' != 'true'">
+  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' == 'false'">
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
