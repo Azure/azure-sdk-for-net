@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
             catch (RequestFailedException ex) when (ex.Status == StatusCodes.Status404NotFound)
             {
                 // Expected exception
-                Assert.Pass("Scheduler deleted successfully");
+                Assert.Pass("Retention policy deleted successfully");
             }
             catch (Exception ex)
             {
