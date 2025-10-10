@@ -25,7 +25,8 @@ npm ci
 
 ## Usage
 
-After installation, you can run tsp-client using `npm exec --prefix` from the root directory of your SDK repository.
+After installation, you can run `tsp-client` using `npm exec --prefix {path_to_the_eng/common/tsp-client}`. 
+Note that you should *not* navigate into the `eng/common/tsp-client` folder, since several `tsp-client` commands require the current working directory to be the client library's root.
 
 ```bash
 # Set the tsp-client directory path relative to your current working directory
