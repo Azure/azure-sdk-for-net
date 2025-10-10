@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Microsoft.PlanetaryComputer client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Microsoft.PlanetaryComputer</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Microsoft.PlanetaryComputer</PackageTags>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ClientModel" Version="1.7.0" />
+  </ItemGroup>
+</Project>
