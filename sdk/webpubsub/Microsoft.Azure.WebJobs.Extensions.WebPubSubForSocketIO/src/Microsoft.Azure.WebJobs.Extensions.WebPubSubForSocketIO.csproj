@@ -9,6 +9,7 @@
 		<NoWarn>$(NoWarn);AZC0001;CS8632;CA1056;CA2227</NoWarn>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+		<IncludeAutorestDependency>true</IncludeAutorestDependency>
 	</PropertyGroup>
 
 	<ItemGroup>

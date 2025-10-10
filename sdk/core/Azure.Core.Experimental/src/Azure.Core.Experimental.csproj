@@ -8,6 +8,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks);net462</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0012</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

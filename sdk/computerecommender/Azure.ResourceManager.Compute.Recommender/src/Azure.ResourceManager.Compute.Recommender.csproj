@@ -4,5 +4,6 @@
     <Version>1.0.0-beta.2</Version>
     <PackageTags>azure;management;arm;resource manager;computerecommender</PackageTags>
     <PackageId>Azure.ResourceManager.Compute.Recommender</PackageId>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

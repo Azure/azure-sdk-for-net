@@ -10,6 +10,7 @@
     <NoWarn>CS1591</NoWarn>
     <NoWarn>OPENAI001</NoWarn>
     <NoWarn>AZC0007</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

@@ -19,6 +19,7 @@
      AZC0004;
      AZC0035; <!-- Missing model factory methods.  #51224-->
     </NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->

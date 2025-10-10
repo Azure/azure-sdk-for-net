@@ -18,6 +18,7 @@
     <Nullable>disable</Nullable>
     <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,13 +37,15 @@
         <DefineConstants>AZURE_OPENAI_GA</DefineConstants>
         <VersionPrefix>2.1.0</VersionPrefix>
         <VersionSuffix />
-      </PropertyGroup>
+        <IncludeAutorestDependency>true</IncludeAutorestDependency>
+  </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
         <VersionPrefix>2.5.0</VersionPrefix>
         <VersionSuffix>beta.1</VersionSuffix>
-      </PropertyGroup>
+        <IncludeAutorestDependency>true</IncludeAutorestDependency>
+  </PropertyGroup>
     </Otherwise>
   </Choose>
 
@@ -73,13 +76,15 @@
       </ItemGroup>
       <PropertyGroup>
         <NoWarn>$(NoWarn);NU5104</NoWarn>
-      </PropertyGroup>
+        <IncludeAutorestDependency>true</IncludeAutorestDependency>
+  </PropertyGroup>
     </When>
     <When Condition="'$(UseExternalOpenAILibrary)' != ''">
       <PropertyGroup>
           <ExternalSourceFramework>netstandard2.0</ExternalSourceFramework>
           <ExternalSourceFramework Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">net8.0</ExternalSourceFramework>
-      </PropertyGroup>
+        <IncludeAutorestDependency>true</IncludeAutorestDependency>
+  </PropertyGroup>
       <ItemGroup>
         <Reference Include="$([System.IO.Path]::GetFileName('../../external/$(ExternalSourceFramework)/OpenAI.dll'))" HintPath="../../external/$(ExternalSourceFramework)/OpenAI.dll" />
       </ItemGroup>

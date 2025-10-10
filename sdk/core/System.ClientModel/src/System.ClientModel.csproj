@@ -11,6 +11,7 @@
     <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net9.0'">net8.0</ApiCompatBaselineTargetFramework>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

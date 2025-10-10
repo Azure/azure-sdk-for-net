@@ -17,9 +17,11 @@
     <PackageReleaseNotes>
       Updated Microsoft.Azure.Batch dependency to 11.0.
     </PackageReleaseNotes>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.7.2" />

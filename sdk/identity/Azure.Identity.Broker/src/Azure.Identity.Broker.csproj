@@ -11,6 +11,7 @@
     <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('Linux'))">$(RequiredTargetFrameworks);net8.0</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />

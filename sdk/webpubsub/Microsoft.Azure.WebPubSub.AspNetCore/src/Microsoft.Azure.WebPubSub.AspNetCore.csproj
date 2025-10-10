@@ -11,6 +11,7 @@
     <NoWarn>$(NoWarn);419</NoWarn>
     <GenerateAPIListing>true</GenerateAPIListing>
     <ApiCompatBaselineTargetFramework>net8.0</ApiCompatBaselineTargetFramework>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

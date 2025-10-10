@@ -9,6 +9,7 @@
     <NoWarn>$(NoWarn);0067</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
