@@ -65,21 +65,21 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="sku"> SKU details. </param>
+        /// <param name="identity"> Managed service identity. </param>
         /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        /// <param name="sku"> SKU details. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState, ManagedHsmSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmSku sku, ManagedServiceIdentity identity, ETag? etag, SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Sku = sku;
+            Identity = identity;
             ETag = etag;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
-            Sku = sku;
-            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,6 +88,12 @@ namespace Azure.ResourceManager.KeyVault
         {
         }
 
+        /// <summary> SKU details. </summary>
+        [WirePath("sku")]
+        public ManagedHsmSku Sku { get; set; }
+        /// <summary> Managed service identity. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; set; }
@@ -106,11 +112,5 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Provisioning state of the private endpoint connection. </summary>
         [WirePath("properties.provisioningState")]
         public ManagedHsmPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
-        /// <summary> SKU details. </summary>
-        [WirePath("sku")]
-        public ManagedHsmSku Sku { get; set; }
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
     }
 }
