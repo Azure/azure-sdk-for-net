@@ -19,7 +19,7 @@ parameters:
   default: ''
 
 steps:
-- ${{ if eq(parameters.TestPipeline, 'true') }}:
+- ${{ if eq(parameters.TestPipeline, true) }}:
     - task: PowerShell@2
       displayName: Prep template pipeline for release
       condition: and(succeeded(), ne(variables['Skip.SetTestPipelineVersion'], 'true'))

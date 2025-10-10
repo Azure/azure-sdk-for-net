@@ -48,7 +48,7 @@ if ($artifacts) {
   # When using ArtifactsJson, process each artifact with its name and groupId (if applicable)
   try {
     foreach ($artifact in $artifacts) {
-      $packageName = $artifact.name      
+      $packageName = $artifact.name
       $newVersion = [AzureEngSemanticVersion]::new("1.0.0")
       $prefix = "$packageName$TagSeparator"
 
