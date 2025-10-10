@@ -44,23 +44,33 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
             // This is a singleton resource, but it does not yet exist until we create it
             DurableTaskRetentionPolicyResource singletonRetentionPolicy = scheduler.GetDurableTaskRetentionPolicy();
 
-            singletonRetentionPolicy.Data.Properties.RetentionPolicies.Add(new DurableTaskRetentionPolicyDetails()
-            {
-              RetentionPeriodInDays = 3,
-              OrchestrationState = DurableTaskPurgeableOrchestrationState.Completed
-            });
-            singletonRetentionPolicy.Data.Properties.RetentionPolicies.Add(new DurableTaskRetentionPolicyDetails()
-            {
-                RetentionPeriodInDays = 30,
-                OrchestrationState = DurableTaskPurgeableOrchestrationState.Failed
-            });
-            singletonRetentionPolicy.Data.Properties.RetentionPolicies.Add(new DurableTaskRetentionPolicyDetails()
-            {
-                RetentionPeriodInDays = 30,
-                // without OrchestrationState, this policy applies to all states not explicitly mentioned in other policies
-            });
+            // Construct the retention policy with multiple rules
+            DurableTaskRetentionPolicyProperties retentionPolicyProperties = new DurableTaskRetentionPolicyProperties();
+            retentionPolicyProperties.RetentionPolicies.Add(
+                new DurableTaskRetentionPolicyDetails()
+                {
+                    RetentionPeriodInDays = 3,
+                    OrchestrationState = DurableTaskPurgeableOrchestrationState.Completed
+                });
+            retentionPolicyProperties.RetentionPolicies.Add(
+                new DurableTaskRetentionPolicyDetails()
+                {
+                    RetentionPeriodInDays = 30,
+                    OrchestrationState = DurableTaskPurgeableOrchestrationState.Failed
+                });
+            retentionPolicyProperties.RetentionPolicies.Add(
+                new DurableTaskRetentionPolicyDetails()
+                {
+                     RetentionPeriodInDays = 30,
+                    // without OrchestrationState, this policy applies to all states not explicitly mentioned in other policies
+                });
 
-            await singletonRetentionPolicy.CreateOrUpdateAsync(WaitUntil.Completed, singletonRetentionPolicy.Data);
+            DurableTaskRetentionPolicyData payload = new DurableTaskRetentionPolicyData()
+            {
+                Properties = retentionPolicyProperties
+            };
+
+            await singletonRetentionPolicy.CreateOrUpdateAsync(WaitUntil.Completed, payload);
 
             await singletonRetentionPolicy.GetAsync();
             Assert.AreEqual(3, singletonRetentionPolicy.Data.Properties.RetentionPolicies.Count);
