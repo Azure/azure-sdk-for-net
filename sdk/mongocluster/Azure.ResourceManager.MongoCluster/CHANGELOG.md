@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (2025-09-30)
+## 1.0.0-beta.2 (2025-09-30)
 
 ### Features Added
 - Upgraded api-version tag to 'package-2025-08-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/mongocluster/resource-manager/Microsoft.DocumentDB/MongoCluster/readme.md#tag-package-2025-08-01-preview.
@@ -28,16 +28,6 @@
   - Added User operations on MongoClusterResource
   - Added model UserProperties
   - Added model UserRole
-  
-## 1.0.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2024-08-30)
 
