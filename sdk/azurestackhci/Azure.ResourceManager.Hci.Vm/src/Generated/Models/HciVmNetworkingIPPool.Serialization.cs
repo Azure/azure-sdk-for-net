@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IpPoolType))
+            if (Optional.IsDefined(IPPoolType))
             {
                 writer.WritePropertyName("ipPoolType"u8);
-                writer.WriteStringValue(IpPoolType.Value.ToString());
+                writer.WriteStringValue(IPPoolType.Value.ToString());
             }
             if (Optional.IsDefined(Start))
             {

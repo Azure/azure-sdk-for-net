@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciVmOSProfileWindowsConfiguration"/>. </summary>
-        /// <param name="provisionVMAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
-        /// <param name="provisionVMConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
+        /// <param name="provisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
+        /// <param name="provisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmOSProfileWindowsConfiguration(bool? provisionVMAgent, bool? provisionVMConfigAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmOSProfileWindowsConfiguration(bool? provisionVmAgent, bool? provisionVmConfigAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ProvisionVMAgent = provisionVMAgent;
-            ProvisionVMConfigAgent = provisionVMConfigAgent;
+            ProvisionVmAgent = provisionVmAgent;
+            ProvisionVmConfigAgent = provisionVmConfigAgent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </summary>
-        public bool? ProvisionVMAgent { get; set; }
+        public bool? ProvisionVmAgent { get; set; }
 
         /// <summary> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </summary>
-        public bool? ProvisionVMConfigAgent { get; set; }
+        public bool? ProvisionVmConfigAgent { get; set; }
     }
 }

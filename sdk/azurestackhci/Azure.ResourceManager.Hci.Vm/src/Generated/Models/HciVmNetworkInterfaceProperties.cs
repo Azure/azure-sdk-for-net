@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="HciVmNetworkInterfaceProperties"/>. </summary>
         public HciVmNetworkInterfaceProperties()
         {
-            IpConfigurations = new ChangeTrackingList<HciVmIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<HciVmIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciVmNetworkInterfaceProperties"/>. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HciVmNetworkInterfaceProperties(IList<HciVmIPConfiguration> ipConfigurations, string macAddress, InterfaceDNSSettings dnsSettings, bool? createFromLocal, HciVmProvisioningState? provisioningState, HciVmNetworkInterfaceStatus status, NetworkSecurityGroupArmReference networkSecurityGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             MacAddress = macAddress;
             DnsSettings = dnsSettings;
             CreateFromLocal = createFromLocal;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> IPConfigurations - A list of IPConfigurations of the network interface. </summary>
-        public IList<HciVmIPConfiguration> IpConfigurations { get; }
+        public IList<HciVmIPConfiguration> IPConfigurations { get; }
 
         /// <summary> MacAddress - The MAC address of the network interface. </summary>
         public string MacAddress { get; set; }

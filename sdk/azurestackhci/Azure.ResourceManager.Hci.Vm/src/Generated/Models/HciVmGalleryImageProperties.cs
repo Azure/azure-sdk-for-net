@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="osType"> Operating system type that the gallery image uses [Windows, Linux]. </param>
         public HciVmGalleryImageProperties(HciVmOSType osType)
         {
-            OsType = osType;
+            OSType = osType;
         }
 
         /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageProperties"/>. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         {
             ContainerId = containerId;
             ImagePath = imagePath;
-            OsType = osType;
+            OSType = osType;
             CloudInitDataSource = cloudInitDataSource;
             HyperVGeneration = hyperVGeneration;
             VmImageRepositoryCredentials = vmImageRepositoryCredentials;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string ImagePath { get; set; }
 
         /// <summary> Operating system type that the gallery image uses [Windows, Linux]. </summary>
-        public HciVmOSType OsType { get; set; }
+        public HciVmOSType OSType { get; set; }
 
         /// <summary> Datasource for the gallery image when provisioning with cloud-init [NoCloud, Azure]. </summary>
         public CloudInitDataSource? CloudInitDataSource { get; set; }

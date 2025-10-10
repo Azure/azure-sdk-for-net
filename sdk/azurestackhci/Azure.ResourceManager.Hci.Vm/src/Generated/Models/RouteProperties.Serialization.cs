@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Optional.IsDefined(NextHopIpAddress))
+            if (Optional.IsDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
-                writer.WriteStringValue(NextHopIpAddress);
+                writer.WriteStringValue(NextHopIPAddress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 return null;
             }
             string addressPrefix = default;
-            string nextHopIpAddress = default;
+            string nextHopIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
                 if (prop.NameEquals("nextHopIpAddress"u8))
                 {
-                    nextHopIpAddress = prop.Value.GetString();
+                    nextHopIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RouteProperties(addressPrefix, nextHopIpAddress, additionalBinaryDataProperties);
+            return new RouteProperties(addressPrefix, nextHopIPAddress, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

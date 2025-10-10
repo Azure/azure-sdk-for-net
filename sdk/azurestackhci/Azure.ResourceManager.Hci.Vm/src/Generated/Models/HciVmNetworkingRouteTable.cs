@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HciVmNetworkingRouteTable"/>. </summary>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the route table. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmNetworkingRouteTable(string etag, string name, string @type, RouteTableProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmNetworkingRouteTable(string eTag, string name, string @type, RouteTableProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Etag = etag;
+            ETag = eTag;
             Name = name;
             Type = @type;
             Properties = properties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public string ETag { get; }
 
         /// <summary> Resource name. </summary>
         public string Name { get; }

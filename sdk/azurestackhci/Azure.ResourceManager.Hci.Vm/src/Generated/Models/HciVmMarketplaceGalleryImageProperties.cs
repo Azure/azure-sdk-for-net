@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="osType"> Operating system type that the gallery image uses [Windows, Linux]. </param>
         public HciVmMarketplaceGalleryImageProperties(HciVmOSType osType)
         {
-            OsType = osType;
+            OSType = osType;
         }
 
         /// <summary> Initializes a new instance of <see cref="HciVmMarketplaceGalleryImageProperties"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal HciVmMarketplaceGalleryImageProperties(ResourceIdentifier containerId, HciVmOSType osType, CloudInitDataSource? cloudInitDataSource, HciVmHyperVGeneration? hyperVGeneration, HciVmGalleryImageIdentifier identifier, HciVmGalleryImageVersion version, HciVmProvisioningState? provisioningState, HciVmMarketplaceGalleryImageStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContainerId = containerId;
-            OsType = osType;
+            OSType = osType;
             CloudInitDataSource = cloudInitDataSource;
             HyperVGeneration = hyperVGeneration;
             Identifier = identifier;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public ResourceIdentifier ContainerId { get; set; }
 
         /// <summary> Operating system type that the gallery image uses [Windows, Linux]. </summary>
-        public HciVmOSType OsType { get; set; }
+        public HciVmOSType OSType { get; set; }
 
         /// <summary> Datasource for the gallery image when provisioning with cloud-init [NoCloud, Azure]. </summary>
         public CloudInitDataSource? CloudInitDataSource { get; set; }

@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 throw new FormatException($"The model {nameof(HciVmOSProfileWindowsConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ProvisionVMAgent))
+            if (Optional.IsDefined(ProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
-                writer.WriteBooleanValue(ProvisionVMAgent.Value);
+                writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
-            if (Optional.IsDefined(ProvisionVMConfigAgent))
+            if (Optional.IsDefined(ProvisionVmConfigAgent))
             {
                 writer.WritePropertyName("provisionVMConfigAgent"u8);
-                writer.WriteBooleanValue(ProvisionVMConfigAgent.Value);
+                writer.WriteBooleanValue(ProvisionVmConfigAgent.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            bool? provisionVMAgent = default;
-            bool? provisionVMConfigAgent = default;
+            bool? provisionVmAgent = default;
+            bool? provisionVmConfigAgent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    provisionVMAgent = prop.Value.GetBoolean();
+                    provisionVmAgent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisionVMConfigAgent"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    provisionVMConfigAgent = prop.Value.GetBoolean();
+                    provisionVmConfigAgent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciVmOSProfileWindowsConfiguration(provisionVMAgent, provisionVMConfigAgent, additionalBinaryDataProperties);
+            return new HciVmOSProfileWindowsConfiguration(provisionVmAgent, provisionVmConfigAgent, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

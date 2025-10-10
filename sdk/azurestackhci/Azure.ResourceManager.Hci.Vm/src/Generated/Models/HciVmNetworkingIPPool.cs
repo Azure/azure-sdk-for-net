@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal HciVmNetworkingIPPool(string name, HciVmIPPoolType? ipPoolType, string start, string end, HciVmIPPoolInfo info, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            IpPoolType = ipPoolType;
+            IPPoolType = ipPoolType;
             Start = start;
             End = end;
             Info = info;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string Name { get; set; }
 
         /// <summary> Type of the IP Pool [vm, vippool]. </summary>
-        public HciVmIPPoolType? IpPoolType { get; set; }
+        public HciVmIPPoolType? IPPoolType { get; set; }
 
         /// <summary> Start of the IP address pool. </summary>
         public string Start { get; set; }

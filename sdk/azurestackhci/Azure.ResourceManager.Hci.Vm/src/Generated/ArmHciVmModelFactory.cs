@@ -217,14 +217,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 new Dictionary<string, BinaryData>()), name, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="routes"> Collection of routes contained within a route table. </param>
         /// <returns> A new <see cref="Models.HciVmNetworkingRouteTable"/> instance for mocking. </returns>
-        public static HciVmNetworkingRouteTable HciVmNetworkingRouteTable(string etag = default, string name = default, string @type = default, IList<HciVmNetworkingRoute> routes = default)
+        public static HciVmNetworkingRouteTable HciVmNetworkingRouteTable(string eTag = default, string name = default, string @type = default, IList<HciVmNetworkingRoute> routes = default)
         {
-            return new HciVmNetworkingRouteTable(etag, name, @type, routes is null ? default : new RouteTableProperties(routes, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new HciVmNetworkingRouteTable(eTag, name, @type, routes is null ? default : new RouteTableProperties(routes, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> IP Pool info. </summary>

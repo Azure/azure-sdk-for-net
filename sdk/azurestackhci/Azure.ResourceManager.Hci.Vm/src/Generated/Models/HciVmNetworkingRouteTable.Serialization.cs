@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 throw new FormatException($"The model {nameof(HciVmNetworkingRouteTable)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Etag))
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(Etag);
+                writer.WriteStringValue(ETag);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            string etag = default;
+            string eTag = default;
             string name = default;
             string @type = default;
             RouteTableProperties properties = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 if (prop.NameEquals("etag"u8))
                 {
-                    etag = prop.Value.GetString();
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciVmNetworkingRouteTable(etag, name, @type, properties, additionalBinaryDataProperties);
+            return new HciVmNetworkingRouteTable(eTag, name, @type, properties, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

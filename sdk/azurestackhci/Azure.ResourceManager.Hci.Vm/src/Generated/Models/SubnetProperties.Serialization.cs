@@ -54,16 +54,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IpAllocationMethod))
+            if (Optional.IsDefined(IPAllocationMethod))
             {
                 writer.WritePropertyName("ipAllocationMethod"u8);
-                writer.WriteStringValue(IpAllocationMethod.Value.ToString());
+                writer.WriteStringValue(IPAllocationMethod.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IpConfigurationReferences))
+            if (Optional.IsCollectionDefined(IPConfigurationReferences))
             {
                 writer.WritePropertyName("ipConfigurationReferences"u8);
                 writer.WriteStartArray();
-                foreach (SubnetIpConfigurationReference item in IpConfigurationReferences)
+                foreach (SubnetIpConfigurationReference item in IPConfigurationReferences)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("routeTable"u8);
                 writer.WriteObjectValue(RouteTable, options);
             }
-            if (Optional.IsCollectionDefined(IpPools))
+            if (Optional.IsCollectionDefined(IPPools))
             {
                 writer.WritePropertyName("ipPools"u8);
                 writer.WriteStartArray();
-                foreach (HciVmNetworkingIPPool item in IpPools)
+                foreach (HciVmNetworkingIPPool item in IPPools)
                 {
                     writer.WriteObjectValue(item, options);
                 }

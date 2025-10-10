@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> IPAllocationMethod - The IP address allocation method. Possible values include: 'Static', 'Dynamic'. </summary>
-        public HciVmIPAllocationMethod? IpAllocationMethod
+        public HciVmIPAllocationMethod? IPAllocationMethod
         {
             get
             {
-                return Properties is null ? default : Properties.IpAllocationMethod;
+                return Properties is null ? default : Properties.IPAllocationMethod;
             }
             set
             {
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 {
                     Properties = new SubnetProperties();
                 }
-                Properties.IpAllocationMethod = value.Value;
+                Properties.IPAllocationMethod = value.Value;
             }
         }
 
         /// <summary> IPConfigurationReferences - list of IPConfigurationReferences. </summary>
-        public IList<SubnetIpConfigurationReference> IpConfigurationReferences
+        public IList<SubnetIpConfigurationReference> IPConfigurationReferences
         {
             get
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 {
                     Properties = new SubnetProperties();
                 }
-                return Properties.IpConfigurationReferences;
+                return Properties.IPConfigurationReferences;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> network associated pool of IP Addresses. </summary>
-        public IList<HciVmNetworkingIPPool> IpPools
+        public IList<HciVmNetworkingIPPool> IPPools
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 {
                     Properties = new SubnetProperties();
                 }
-                return Properties.IpPools;
+                return Properties.IPPools;
             }
         }
 

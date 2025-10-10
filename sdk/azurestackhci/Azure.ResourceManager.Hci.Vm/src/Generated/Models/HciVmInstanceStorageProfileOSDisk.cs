@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal HciVmInstanceStorageProfileOSDisk(ResourceIdentifier id, HciVmOSType? osType, VirtualMachineInstanceManagedDiskContent managedDisk, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            OsType = osType;
+            OSType = osType;
             ManagedDisk = managedDisk;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public ResourceIdentifier Id { get; set; }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </summary>
-        public HciVmOSType? OsType { get; set; }
+        public HciVmOSType? OSType { get; set; }
 
         /// <summary> The managed disk parameters. </summary>
         public VirtualMachineInstanceManagedDiskContent ManagedDisk { get; set; }

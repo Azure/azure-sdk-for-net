@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WriteStringValue(ImagePath);
             }
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OsType.ToString());
+            writer.WriteStringValue(OSType.ToString());
             if (Optional.IsDefined(CloudInitDataSource))
             {
                 writer.WritePropertyName("cloudInitDataSource"u8);

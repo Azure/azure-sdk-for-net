@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Trusted Launch security type. </summary>
         private const string TrustedLaunchValue = "TrustedLaunch";
         /// <summary> Confidential VM security type. </summary>
-        private const string ConfidentialVMValue = "ConfidentialVM";
+        private const string ConfidentialVmValue = "ConfidentialVM";
 
         /// <summary> Initializes a new instance of <see cref="HciVmSecurityType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static HciVmSecurityType TrustedLaunch { get; } = new HciVmSecurityType(TrustedLaunchValue);
 
         /// <summary> Confidential VM security type. </summary>
-        public static HciVmSecurityType ConfidentialVM { get; } = new HciVmSecurityType(ConfidentialVMValue);
+        public static HciVmSecurityType ConfidentialVm { get; } = new HciVmSecurityType(ConfidentialVmValue);
 
         /// <summary> Determines if two <see cref="HciVmSecurityType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

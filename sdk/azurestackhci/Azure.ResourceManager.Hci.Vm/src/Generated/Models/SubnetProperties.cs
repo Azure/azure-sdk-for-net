@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public SubnetProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
-            IpConfigurationReferences = new ChangeTrackingList<SubnetIpConfigurationReference>();
-            IpPools = new ChangeTrackingList<HciVmNetworkingIPPool>();
+            IPConfigurationReferences = new ChangeTrackingList<SubnetIpConfigurationReference>();
+            IPPools = new ChangeTrackingList<HciVmNetworkingIPPool>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SubnetProperties"/>. </summary>
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         {
             AddressPrefix = addressPrefix;
             AddressPrefixes = addressPrefixes;
-            IpAllocationMethod = ipAllocationMethod;
-            IpConfigurationReferences = ipConfigurationReferences;
+            IPAllocationMethod = ipAllocationMethod;
+            IPConfigurationReferences = ipConfigurationReferences;
             NetworkSecurityGroup = networkSecurityGroup;
             RouteTable = routeTable;
-            IpPools = ipPools;
+            IPPools = ipPools;
             Vlan = vlan;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public IList<string> AddressPrefixes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> IPAllocationMethod - The IP address allocation method. Possible values include: 'Static', 'Dynamic'. </summary>
-        public HciVmIPAllocationMethod? IpAllocationMethod { get; set; }
+        public HciVmIPAllocationMethod? IPAllocationMethod { get; set; }
 
         /// <summary> IPConfigurationReferences - list of IPConfigurationReferences. </summary>
-        public IList<SubnetIpConfigurationReference> IpConfigurationReferences { get; } = new ChangeTrackingList<SubnetIpConfigurationReference>();
+        public IList<SubnetIpConfigurationReference> IPConfigurationReferences { get; } = new ChangeTrackingList<SubnetIpConfigurationReference>();
 
         /// <summary> NetworkSecurityGroup - Network Security Group attached to the logical network. </summary>
         internal NetworkSecurityGroupArmReference NetworkSecurityGroup { get; set; }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmNetworkingRouteTable RouteTable { get; set; }
 
         /// <summary> network associated pool of IP Addresses. </summary>
-        public IList<HciVmNetworkingIPPool> IpPools { get; } = new ChangeTrackingList<HciVmNetworkingIPPool>();
+        public IList<HciVmNetworkingIPPool> IPPools { get; } = new ChangeTrackingList<HciVmNetworkingIPPool>();
 
         /// <summary> Vlan to use for the subnet. </summary>
         public int? Vlan { get; set; }
