@@ -24,7 +24,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Type = @type;
             Features = features.ToList();
-            BoundingBox = new ChangeTrackingList<double>();
+            BoundingBox = new ChangeTrackingList<float>();
             StacExtensions = new ChangeTrackingList<Uri>();
             Links = new ChangeTrackingList<StacLink>();
         }
@@ -45,7 +45,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// See the [STAC Context Extension](https://github.com/radiantearth/stac-api-spec/tree/master/extensions/context#context-extension-specification)
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GeoJsonStatisticsForStacItemCollection(StacItemCollectionType @type, IList<GeoJsonStatisticsItemResult> features, IList<double> boundingBox, string stacVersion, string createdOn, string updatedOn, string shortDescription, IList<Uri> stacExtensions, IList<StacLink> links, StacContextExtension context, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GeoJsonStatisticsForStacItemCollection(StacItemCollectionType @type, IList<GeoJsonStatisticsItemResult> features, IList<float> boundingBox, string stacVersion, string createdOn, string updatedOn, string shortDescription, IList<Uri> stacExtensions, IList<StacLink> links, StacContextExtension context, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Features = features;
@@ -67,7 +67,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<GeoJsonStatisticsItemResult> Features { get; }
 
         /// <summary> Bounding box coordinates [west, south, east, north]. </summary>
-        public IList<double> BoundingBox { get; }
+        public IList<float> BoundingBox { get; }
 
         /// <summary> Stac Version. </summary>
         public string StacVersion { get; }

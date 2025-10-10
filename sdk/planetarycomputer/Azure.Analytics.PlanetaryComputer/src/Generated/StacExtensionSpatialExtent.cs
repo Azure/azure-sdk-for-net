@@ -23,19 +23,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacExtensionSpatialExtent"/>. </summary>
         public StacExtensionSpatialExtent()
         {
-            BoundingBox = new ChangeTrackingList<IList<double>>();
+            BoundingBox = new ChangeTrackingList<IList<float>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StacExtensionSpatialExtent"/>. </summary>
         /// <param name="boundingBox"> Array of bounding boxes defining the spatial extent, in format [[west, south, east, north]]. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacExtensionSpatialExtent(IList<IList<double>> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacExtensionSpatialExtent(IList<IList<float>> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BoundingBox = boundingBox;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of bounding boxes defining the spatial extent, in format [[west, south, east, north]]. </summary>
-        public IList<IList<double>> BoundingBox { get; }
+        public IList<IList<float>> BoundingBox { get; }
     }
 }

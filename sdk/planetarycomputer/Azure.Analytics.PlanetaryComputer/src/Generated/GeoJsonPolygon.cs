@@ -17,7 +17,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="GeoJsonPolygon"/>. </summary>
         /// <param name="coordinates"> The coordinates of the polygon. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public GeoJsonPolygon(IEnumerable<IList<IList<double>>> coordinates) : base(GeometryType.Polygon)
+        public GeoJsonPolygon(IEnumerable<IList<IList<float>>> coordinates) : base(GeometryType.Polygon)
         {
             Argument.AssertNotNull(coordinates, nameof(coordinates));
 
@@ -29,12 +29,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the polygon. </param>
-        internal GeoJsonPolygon(GeometryType @type, IList<double> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<IList<double>>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
+        internal GeoJsonPolygon(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<IList<float>>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
         }
 
         /// <summary> The coordinates of the polygon. </summary>
-        public IList<IList<IList<double>>> Coordinates { get; }
+        public IList<IList<IList<float>>> Coordinates { get; }
     }
 }

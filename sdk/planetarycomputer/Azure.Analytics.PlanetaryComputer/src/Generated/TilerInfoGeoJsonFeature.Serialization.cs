@@ -107,7 +107,7 @@ namespace Azure.Analytics.PlanetaryComputer
             GeoJsonGeometry geometry = default;
             IDictionary<string, TilerInfo> properties = default;
             string id = default;
-            double? boundingBox = default;
+            float? boundingBox = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    boundingBox = prop.Value.GetDouble();
+                    boundingBox = prop.Value.GetSingle();
                     continue;
                 }
                 if (options.Format != "W")

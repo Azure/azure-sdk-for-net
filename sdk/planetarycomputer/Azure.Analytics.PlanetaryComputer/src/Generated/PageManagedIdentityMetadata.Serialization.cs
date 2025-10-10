@@ -14,7 +14,7 @@ using Azure;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Generic paged response model. </summary>
-    public partial class PageManagedIdentityMetadata : IJsonModel<PageManagedIdentityMetadata>
+    internal partial class PageManagedIdentityMetadata : IJsonModel<PageManagedIdentityMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="PageManagedIdentityMetadata"/> for deserialization. </summary>
         internal PageManagedIdentityMetadata()

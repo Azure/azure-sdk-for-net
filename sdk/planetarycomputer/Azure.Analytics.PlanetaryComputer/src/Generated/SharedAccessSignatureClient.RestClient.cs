@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure;
 using Azure.Core;
 
@@ -17,13 +18,16 @@ namespace Azure.Analytics.PlanetaryComputer
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        internal HttpMessage CreateGetSignRequest(string href, long? durationInMinutes, RequestContext context)
+        internal HttpMessage CreateGetSignRequest(Uri href, int? durationInMinutes, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/sas/sign", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("href", href, true);
+            if (href != null)
+            {
+                uri.AppendQuery("href", TypeFormatters.ConvertToString(href, null), true);
+            }
             if (durationInMinutes != null)
             {
                 uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes, null), true);
@@ -36,7 +40,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetTokenRequest(string collectionId, long? durationInMinutes, RequestContext context)
+        internal HttpMessage CreateGetTokenRequest(string collectionId, int? durationInMinutes, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -55,7 +59,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateRevokeTokenRequest(long? durationInMinutes, RequestContext context)
+        internal HttpMessage CreateRevokeTokenRequest(int? durationInMinutes, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

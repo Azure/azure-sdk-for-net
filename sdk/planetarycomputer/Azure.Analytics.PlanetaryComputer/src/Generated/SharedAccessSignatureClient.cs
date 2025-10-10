@@ -57,16 +57,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="durationInMinutes"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="href"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSign(string href, long? durationInMinutes, RequestContext context)
+        public virtual Response GetSign(Uri href, int? durationInMinutes, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.GetSign");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(href, nameof(href));
+                Argument.AssertNotNull(href, nameof(href));
 
                 using HttpMessage message = CreateGetSignRequest(href, durationInMinutes, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -91,16 +90,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="durationInMinutes"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="href"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSignAsync(string href, long? durationInMinutes, RequestContext context)
+        public virtual async Task<Response> GetSignAsync(Uri href, int? durationInMinutes, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.GetSign");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(href, nameof(href));
+                Argument.AssertNotNull(href, nameof(href));
 
                 using HttpMessage message = CreateGetSignRequest(href, durationInMinutes, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
@@ -120,11 +118,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="durationInMinutes"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="href"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SignedLink> GetSign(string href, long? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual Response<SignedLink> GetSign(Uri href, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(href, nameof(href));
+            Argument.AssertNotNull(href, nameof(href));
 
             Response result = GetSign(href, durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((SignedLink)result, result);
@@ -138,11 +135,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="durationInMinutes"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="href"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SignedLink>> GetSignAsync(string href, long? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SignedLink>> GetSignAsync(Uri href, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(href, nameof(href));
+            Argument.AssertNotNull(href, nameof(href));
 
             Response result = await GetSignAsync(href, durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((SignedLink)result, result);
@@ -165,7 +161,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetToken(string collectionId, long? durationInMinutes, RequestContext context)
+        public virtual Response GetToken(string collectionId, int? durationInMinutes, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.GetToken");
             scope.Start();
@@ -200,7 +196,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTokenAsync(string collectionId, long? durationInMinutes, RequestContext context)
+        public virtual async Task<Response> GetTokenAsync(string collectionId, int? durationInMinutes, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.GetToken");
             scope.Start();
@@ -229,7 +225,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SharedAccessSignatureToken> GetToken(string collectionId, long? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual Response<SharedAccessSignatureToken> GetToken(string collectionId, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
@@ -248,7 +244,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SharedAccessSignatureToken>> GetTokenAsync(string collectionId, long? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedAccessSignatureToken>> GetTokenAsync(string collectionId, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
@@ -269,7 +265,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response RevokeToken(long? durationInMinutes, RequestContext context)
+        public virtual Response RevokeToken(int? durationInMinutes, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.RevokeToken");
             scope.Start();
@@ -298,7 +294,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RevokeTokenAsync(long? durationInMinutes, RequestContext context)
+        public virtual async Task<Response> RevokeTokenAsync(int? durationInMinutes, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.RevokeToken");
             scope.Start();
@@ -321,7 +317,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="durationInMinutes"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response RevokeToken(long? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual Response RevokeToken(int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             return RevokeToken(durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
@@ -333,7 +329,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="durationInMinutes"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RevokeTokenAsync(long? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RevokeTokenAsync(int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             return await RevokeTokenAsync(durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }

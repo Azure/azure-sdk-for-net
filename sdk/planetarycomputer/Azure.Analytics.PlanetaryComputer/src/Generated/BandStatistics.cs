@@ -18,8 +18,8 @@ namespace Azure.Analytics.PlanetaryComputer
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BandStatistics"/>. </summary>
-        /// <param name="min"> Minimum value in the band. </param>
-        /// <param name="max"> Maximum value in the band. </param>
+        /// <param name="minimum"> Minimum value in the band. </param>
+        /// <param name="maximum"> Maximum value in the band. </param>
         /// <param name="mean"> Mean value of the band. </param>
         /// <param name="count"> Count of pixels in the band. </param>
         /// <param name="sum"> Sum of all pixel values in the band. </param>
@@ -40,10 +40,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Percentile 98
         /// The 98th percentile value.
         /// </param>
-        internal BandStatistics(float min, float max, float mean, float count, float sum, float std, float median, float majority, float minority, float unique, IEnumerable<IList<float>> histogram, float validPercent, float maskedPixels, float validPixels, float percentile2, float percentile98)
+        internal BandStatistics(float minimum, float maximum, float mean, float count, float sum, float std, float median, float majority, float minority, float unique, IEnumerable<IList<float>> histogram, float validPercent, float maskedPixels, float validPixels, float percentile2, float percentile98)
         {
-            Min = min;
-            Max = max;
+            Minimum = minimum;
+            Maximum = maximum;
             Mean = mean;
             Count = count;
             Sum = sum;
@@ -61,8 +61,8 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Initializes a new instance of <see cref="BandStatistics"/>. </summary>
-        /// <param name="min"> Minimum value in the band. </param>
-        /// <param name="max"> Maximum value in the band. </param>
+        /// <param name="minimum"> Minimum value in the band. </param>
+        /// <param name="maximum"> Maximum value in the band. </param>
         /// <param name="mean"> Mean value of the band. </param>
         /// <param name="count"> Count of pixels in the band. </param>
         /// <param name="sum"> Sum of all pixel values in the band. </param>
@@ -84,10 +84,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// The 98th percentile value.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BandStatistics(float min, float max, float mean, float count, float sum, float std, float median, float majority, float minority, float unique, IList<IList<float>> histogram, float validPercent, float maskedPixels, float validPixels, float percentile2, float percentile98, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BandStatistics(float minimum, float maximum, float mean, float count, float sum, float std, float median, float majority, float minority, float unique, IList<IList<float>> histogram, float validPercent, float maskedPixels, float validPixels, float percentile2, float percentile98, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Min = min;
-            Max = max;
+            Minimum = minimum;
+            Maximum = maximum;
             Mean = mean;
             Count = count;
             Sum = sum;
@@ -106,10 +106,10 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Minimum value in the band. </summary>
-        public float Min { get; }
+        public float Minimum { get; }
 
         /// <summary> Maximum value in the band. </summary>
-        public float Max { get; }
+        public float Maximum { get; }
 
         /// <summary> Mean value of the band. </summary>
         public float Mean { get; }

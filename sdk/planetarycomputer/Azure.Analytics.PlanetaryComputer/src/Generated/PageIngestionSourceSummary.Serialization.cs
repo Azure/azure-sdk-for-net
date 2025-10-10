@@ -14,7 +14,7 @@ using Azure;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Generic paged response model. </summary>
-    public partial class PageIngestionSourceSummary : IJsonModel<PageIngestionSourceSummary>
+    internal partial class PageIngestionSourceSummary : IJsonModel<PageIngestionSourceSummary>
     {
         /// <summary> Initializes a new instance of <see cref="PageIngestionSourceSummary"/> for deserialization. </summary>
         internal PageIngestionSourceSummary()

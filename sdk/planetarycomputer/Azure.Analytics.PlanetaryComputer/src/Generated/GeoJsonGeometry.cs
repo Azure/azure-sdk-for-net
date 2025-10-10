@@ -34,14 +34,14 @@ namespace Azure.Analytics.PlanetaryComputer
         private protected GeoJsonGeometry(GeometryType @type)
         {
             Type = @type;
-            BoundingBox = new ChangeTrackingList<double>();
+            BoundingBox = new ChangeTrackingList<float>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonGeometry"/>. </summary>
         /// <param name="type"> Discriminator property for GeoJsonGeometry. </param>
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GeoJsonGeometry(GeometryType @type, IList<double> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GeoJsonGeometry(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             BoundingBox = boundingBox;
@@ -52,6 +52,6 @@ namespace Azure.Analytics.PlanetaryComputer
         internal GeometryType Type { get; set; }
 
         /// <summary> Optional bounding box of the geometry. </summary>
-        public IList<double> BoundingBox { get; }
+        public IList<float> BoundingBox { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="MultiPoint"/>. </summary>
         /// <param name="coordinates"> The coordinates of the multipoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public MultiPoint(IEnumerable<double> coordinates) : base(GeometryType.MultiPoint)
+        public MultiPoint(IEnumerable<float> coordinates) : base(GeometryType.MultiPoint)
         {
             Argument.AssertNotNull(coordinates, nameof(coordinates));
 
@@ -29,12 +29,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the multipoint. </param>
-        internal MultiPoint(GeometryType @type, IList<double> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<double> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
+        internal MultiPoint(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<float> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
         }
 
         /// <summary> The coordinates of the multipoint. </summary>
-        public IList<double> Coordinates { get; }
+        public IList<float> Coordinates { get; }
     }
 }

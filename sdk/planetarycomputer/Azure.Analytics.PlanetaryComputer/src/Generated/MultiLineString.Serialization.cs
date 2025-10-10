@@ -41,7 +41,7 @@ namespace Azure.Analytics.PlanetaryComputer
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("coordinates"u8);
             writer.WriteStartArray();
-            foreach (IList<double> item in Coordinates)
+            foreach (IList<float> item in Coordinates)
             {
                 if (item == null)
                 {
@@ -49,7 +49,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     continue;
                 }
                 writer.WriteStartArray();
-                foreach (double item0 in item)
+                foreach (float item0 in item)
                 {
                     writer.WriteNumberValue(item0);
                 }
@@ -84,9 +84,9 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             GeometryType @type = default;
-            IList<double> boundingBox = default;
+            IList<float> boundingBox = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<IList<double>> coordinates = default;
+            IList<IList<float>> coordinates = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -100,17 +100,17 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    List<double> array = new List<double>();
+                    List<float> array = new List<float>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetDouble());
+                        array.Add(item.GetSingle());
                     }
                     boundingBox = array;
                     continue;
                 }
                 if (prop.NameEquals("coordinates"u8))
                 {
-                    List<IList<double>> array = new List<IList<double>>();
+                    List<IList<float>> array = new List<IList<float>>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -119,10 +119,10 @@ namespace Azure.Analytics.PlanetaryComputer
                         }
                         else
                         {
-                            List<double> array0 = new List<double>();
+                            List<float> array0 = new List<float>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(item0.GetDouble());
+                                array0.Add(item0.GetSingle());
                             }
                             array.Add(array0);
                         }
@@ -135,7 +135,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MultiLineString(@type, boundingBox ?? new ChangeTrackingList<double>(), additionalBinaryDataProperties, coordinates);
+            return new MultiLineString(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

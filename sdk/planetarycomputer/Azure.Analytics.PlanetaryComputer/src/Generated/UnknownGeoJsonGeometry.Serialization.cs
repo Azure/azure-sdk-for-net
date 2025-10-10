@@ -66,7 +66,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             GeometryType @type = default;
-            IList<double> boundingBox = default;
+            IList<float> boundingBox = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -81,10 +81,10 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    List<double> array = new List<double>();
+                    List<float> array = new List<float>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetDouble());
+                        array.Add(item.GetSingle());
                     }
                     boundingBox = array;
                     continue;
@@ -94,7 +94,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownGeoJsonGeometry(@type, boundingBox ?? new ChangeTrackingList<double>(), additionalBinaryDataProperties);
+            return new UnknownGeoJsonGeometry(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

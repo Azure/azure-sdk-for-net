@@ -39,9 +39,9 @@ namespace Azure.Analytics.PlanetaryComputer
                 throw new FormatException($"The model {nameof(BandStatistics)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("min"u8);
-            writer.WriteNumberValue(Min);
+            writer.WriteNumberValue(Minimum);
             writer.WritePropertyName("max"u8);
-            writer.WriteNumberValue(Max);
+            writer.WriteNumberValue(Maximum);
             writer.WritePropertyName("mean"u8);
             writer.WriteNumberValue(Mean);
             writer.WritePropertyName("count"u8);
@@ -127,8 +127,8 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            float min = default;
-            float max = default;
+            float minimum = default;
+            float maximum = default;
             float mean = default;
             float count = default;
             float sum = default;
@@ -148,12 +148,12 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 if (prop.NameEquals("min"u8))
                 {
-                    min = prop.Value.GetSingle();
+                    minimum = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("max"u8))
                 {
-                    max = prop.Value.GetSingle();
+                    maximum = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("mean"u8))
@@ -249,8 +249,8 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
             }
             return new BandStatistics(
-                min,
-                max,
+                minimum,
+                maximum,
                 mean,
                 count,
                 sum,

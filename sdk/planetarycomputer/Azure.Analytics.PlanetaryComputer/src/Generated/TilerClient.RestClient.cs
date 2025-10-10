@@ -33,7 +33,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetTileMatrixListRequest(RequestContext context)
+        internal HttpMessage CreateGetTileMatricesRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -693,7 +693,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetPointRequest(string collectionId, string itemId, double longitude, float latitude, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
+        internal HttpMessage CreateGetPointRequest(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1407,7 +1407,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetLegendRequest(string colorMapName, double? height, double? width, int? trimStart, int? trimEnd, RequestContext context)
+        internal HttpMessage CreateGetLegendRequest(string colorMapName, float? height, float? width, int? trimStart, int? trimEnd, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

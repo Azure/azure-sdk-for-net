@@ -23,7 +23,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="type"> GeoJSON type identifier for Feature. </param>
         /// <param name="properties"> Properties. </param>
-        internal GeoJsonStatisticsItemResult(GeoJsonGeometry geometry, IEnumerable<double> boundingBox, string id, FeatureType @type, StacItemProperties properties)
+        internal GeoJsonStatisticsItemResult(GeoJsonGeometry geometry, IEnumerable<float> boundingBox, string id, FeatureType @type, StacItemProperties properties)
         {
             Geometry = geometry;
             BoundingBox = boundingBox.ToList();
@@ -48,7 +48,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="eTag"> MSFT ETag. </param>
         /// <param name="stacExtensions"> List of STAC extension URLs used by this item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GeoJsonStatisticsItemResult(GeoJsonGeometry geometry, IList<double> boundingBox, string id, FeatureType @type, string createdOn, string updatedOn, string shortDescription, string stacVersion, string collection, StacItemProperties properties, string timestamp, string eTag, IList<Uri> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GeoJsonStatisticsItemResult(GeoJsonGeometry geometry, IList<float> boundingBox, string id, FeatureType @type, string createdOn, string updatedOn, string shortDescription, string stacVersion, string collection, StacItemProperties properties, string timestamp, string eTag, IList<Uri> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Geometry = geometry;
             BoundingBox = boundingBox;
@@ -70,7 +70,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public GeoJsonGeometry Geometry { get; }
 
         /// <summary> Bounding box coordinates for the feature. </summary>
-        public IList<double> BoundingBox { get; }
+        public IList<float> BoundingBox { get; }
 
         /// <summary> Unique identifier for the feature. </summary>
         public string Id { get; }

@@ -41,7 +41,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="tileHeight"> Pixel height of each tile at this level. </param>
         /// <param name="matrixWidth"> Number of tiles horizontally at this matrix level. </param>
         /// <param name="matrixHeight"> Number of tiles vertically at this matrix level. </param>
-        internal TileMatrix(string id, float scaleDenominator, float cellSize, IEnumerable<double> pointOfOrigin, int tileWidth, int tileHeight, int matrixWidth, int matrixHeight)
+        internal TileMatrix(string id, float scaleDenominator, float cellSize, IEnumerable<float> pointOfOrigin, int tileWidth, int tileHeight, int matrixWidth, int matrixHeight)
         {
             Keywords = new ChangeTrackingList<string>();
             Id = id;
@@ -86,7 +86,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// ref: https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/variableMatrixWidth.json
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TileMatrix(string title, string description, IList<string> keywords, string id, float scaleDenominator, float cellSize, TileMatrixCornerOfOrigin? cornerOfOrigin, IList<double> pointOfOrigin, int tileWidth, int tileHeight, int matrixWidth, int matrixHeight, IList<VariableMatrixWidth> variableMatrixWidths, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TileMatrix(string title, string description, IList<string> keywords, string id, float scaleDenominator, float cellSize, TileMatrixCornerOfOrigin? cornerOfOrigin, IList<float> pointOfOrigin, int tileWidth, int tileHeight, int matrixWidth, int matrixHeight, IList<VariableMatrixWidth> variableMatrixWidths, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
@@ -138,7 +138,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// tile. In previous version, this was 'topLeftCorner' and 'cornerOfOrigin' did
         /// not exist.
         /// </summary>
-        public IList<double> PointOfOrigin { get; }
+        public IList<float> PointOfOrigin { get; }
 
         /// <summary> Pixel width of each tile at this level. </summary>
         public int TileWidth { get; }

@@ -86,7 +86,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             writer.WritePropertyName("pointOfOrigin"u8);
             writer.WriteStartArray();
-            foreach (double item in PointOfOrigin)
+            foreach (float item in PointOfOrigin)
             {
                 writer.WriteNumberValue(item);
             }
@@ -158,7 +158,7 @@ namespace Azure.Analytics.PlanetaryComputer
             float scaleDenominator = default;
             float cellSize = default;
             TileMatrixCornerOfOrigin? cornerOfOrigin = default;
-            IList<double> pointOfOrigin = default;
+            IList<float> pointOfOrigin = default;
             int tileWidth = default;
             int tileHeight = default;
             int matrixWidth = default;
@@ -224,10 +224,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("pointOfOrigin"u8))
                 {
-                    List<double> array = new List<double>();
+                    List<float> array = new List<float>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetDouble());
+                        array.Add(item.GetSingle());
                     }
                     pointOfOrigin = array;
                     continue;

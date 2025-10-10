@@ -29,11 +29,11 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Calculate median of available pixels. </summary>
         private const string MedianValue = "median";
         /// <summary> Calculate standard deviation of available pixels. </summary>
-        private const string StdevValue = "stdev";
+        private const string StandardDeviationValue = "stdev";
         /// <summary> Select image with lowest value in the last band. </summary>
-        private const string LastbandlowValue = "lastbandlow";
+        private const string LastBandLowValue = "lastbandlow";
         /// <summary> Select image with highest value in the last band. </summary>
-        private const string LastbandhightValue = "lastbandhight";
+        private const string LastBandHighValue = "lastbandhigh";
 
         /// <summary> Initializes a new instance of <see cref="PixelSelection"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -61,13 +61,13 @@ namespace Azure.Analytics.PlanetaryComputer
         public static PixelSelection Median { get; } = new PixelSelection(MedianValue);
 
         /// <summary> Calculate standard deviation of available pixels. </summary>
-        public static PixelSelection Stdev { get; } = new PixelSelection(StdevValue);
+        public static PixelSelection StandardDeviation { get; } = new PixelSelection(StandardDeviationValue);
 
         /// <summary> Select image with lowest value in the last band. </summary>
-        public static PixelSelection Lastbandlow { get; } = new PixelSelection(LastbandlowValue);
+        public static PixelSelection LastBandLow { get; } = new PixelSelection(LastBandLowValue);
 
         /// <summary> Select image with highest value in the last band. </summary>
-        public static PixelSelection Lastbandhight { get; } = new PixelSelection(LastbandhightValue);
+        public static PixelSelection LastBandHigh { get; } = new PixelSelection(LastBandHighValue);
 
         /// <summary> Determines if two <see cref="PixelSelection"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

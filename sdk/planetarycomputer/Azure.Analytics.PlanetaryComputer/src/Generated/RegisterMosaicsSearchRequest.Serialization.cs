@@ -171,7 +171,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             IList<string> collections = default;
             IList<string> ids = default;
-            double? boundingBox = default;
+            float? boundingBox = default;
             GeoJsonGeometry intersects = default;
             IDictionary<string, BinaryData> query = default;
             string filter = default;
@@ -230,7 +230,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    boundingBox = prop.Value.GetDouble();
+                    boundingBox = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("intersects"u8))

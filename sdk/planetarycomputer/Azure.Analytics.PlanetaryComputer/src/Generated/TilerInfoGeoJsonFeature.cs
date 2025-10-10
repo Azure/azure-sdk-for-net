@@ -34,7 +34,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TilerInfoGeoJsonFeature(FeatureType @type, GeoJsonGeometry geometry, IDictionary<string, TilerInfo> properties, string id, double? boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TilerInfoGeoJsonFeature(FeatureType @type, GeoJsonGeometry geometry, IDictionary<string, TilerInfo> properties, string id, float? boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Geometry = geometry;
@@ -57,6 +57,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Id { get; }
 
         /// <summary> Bounding box coordinates for the feature. </summary>
-        public double? BoundingBox { get; }
+        public float? BoundingBox { get; }
     }
 }

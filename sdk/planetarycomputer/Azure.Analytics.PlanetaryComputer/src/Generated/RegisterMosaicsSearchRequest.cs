@@ -38,7 +38,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="filterLanguage"> Query language format used in the filter parameter. </param>
         /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegisterMosaicsSearchRequest(IList<string> collections, IList<string> ids, double? boundingBox, GeoJsonGeometry intersects, IDictionary<string, BinaryData> query, string filter, string datetime, IList<StacSortExtension> sortBy, FilterLanguage? filterLanguage, MosaicMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegisterMosaicsSearchRequest(IList<string> collections, IList<string> ids, float? boundingBox, GeoJsonGeometry intersects, IDictionary<string, BinaryData> query, string filter, string datetime, IList<StacSortExtension> sortBy, FilterLanguage? filterLanguage, MosaicMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collections = collections;
             Ids = ids;
@@ -60,7 +60,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<string> Ids { get; }
 
         /// <summary> Geographic bounding box to filter items [west, south, east, north]. </summary>
-        public double? BoundingBox { get; }
+        public float? BoundingBox { get; }
 
         /// <summary> GeoJSON geometry to spatially filter items by intersection. </summary>
         public GeoJsonGeometry Intersects { get; }

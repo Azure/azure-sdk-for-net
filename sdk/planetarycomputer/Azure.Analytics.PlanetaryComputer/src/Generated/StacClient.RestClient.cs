@@ -529,7 +529,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetItemsRequest(string collectionId, long? limit, IEnumerable<string> boundingBox, string datetime, RequestContext context)
+        internal HttpMessage CreateGetItemsRequest(string collectionId, int? limit, IEnumerable<string> boundingBox, string datetime, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -657,7 +657,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetQueryablesByCollectionRequest(string collectionId, RequestContext context)
+        internal HttpMessage CreateGetCollectionQueryablesRequest(string collectionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

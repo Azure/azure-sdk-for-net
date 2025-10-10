@@ -49,16 +49,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary>
         /// [Protocol Method] Create a new asset in the Collection metadata and write the associated
         /// file to managed storage.
-        /// 
-        /// Args:
-        /// request: The incoming request.
-        /// asset: The Asset object to write, without a valid href to the asset.
-        /// file: The file to write.
-        /// collection_id: The ID of the collection to write the asset to.
-        /// content_type: The content type of the request.
-        /// 
-        /// Returns:
-        /// A Response object containing the newly created asset.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -95,16 +85,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary>
         /// [Protocol Method] Create a new asset in the Collection metadata and write the associated
         /// file to managed storage.
-        /// 
-        /// Args:
-        /// request: The incoming request.
-        /// asset: The Asset object to write, without a valid href to the asset.
-        /// file: The file to write.
-        /// collection_id: The ID of the collection to write the asset to.
-        /// content_type: The content type of the request.
-        /// 
-        /// Returns:
-        /// A Response object containing the newly created asset.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -140,17 +120,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Update an existing asset in a given collection.
-        /// 
-        /// Args:
-        /// request: The incoming request.
-        /// asset: The Asset object to update.
-        /// file: The file to update (optional).
-        /// collection_id: The ID of the collection to update the asset in.
-        /// asset_id: The ID of the asset to update.
-        /// content_type: The content type of the request.
-        /// 
-        /// Returns:
-        /// A Response object containing the updated asset.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -188,17 +157,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Update an existing asset in a given collection.
-        /// 
-        /// Args:
-        /// request: The incoming request.
-        /// asset: The Asset object to update.
-        /// file: The file to update (optional).
-        /// collection_id: The ID of the collection to update the asset in.
-        /// asset_id: The ID of the asset to update.
-        /// content_type: The content type of the request.
-        /// 
-        /// Returns:
-        /// A Response object containing the updated asset.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -236,14 +194,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Delete an asset from a given collection.
-        /// 
-        /// Args:
-        /// request: The incoming request.
-        /// collection_id: The ID of the collection to delete the asset from.
-        /// asset_id: The ID of the asset to delete.
-        /// 
-        /// Returns:
-        /// A Response object indicating the success of the deletion.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -278,14 +228,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Delete an asset from a given collection.
-        /// 
-        /// Args:
-        /// request: The incoming request.
-        /// collection_id: The ID of the collection to delete the asset from.
-        /// asset_id: The ID of the asset to delete.
-        /// 
-        /// Returns:
-        /// A Response object indicating the success of the deletion.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -318,17 +260,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary>
-        /// Delete an asset from a given collection.
-        /// 
-        /// Args:
-        /// request: The incoming request.
-        /// collection_id: The ID of the collection to delete the asset from.
-        /// asset_id: The ID of the asset to delete.
-        /// 
-        /// Returns:
-        /// A Response object indicating the success of the deletion.
-        /// </summary>
+        /// <summary> Delete an asset from a given collection. </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="assetId"> STAC Asset ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -343,17 +275,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return DeleteCollectionAsset(collectionId, assetId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary>
-        /// Delete an asset from a given collection.
-        /// 
-        /// Args:
-        /// request: The incoming request.
-        /// collection_id: The ID of the collection to delete the asset from.
-        /// asset_id: The ID of the asset to delete.
-        /// 
-        /// Returns:
-        /// A Response object indicating the success of the deletion.
-        /// </summary>
+        /// <summary> Delete an asset from a given collection. </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="assetId"> STAC Asset ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -1305,7 +1227,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Endpoint.
+        /// [Protocol Method] List all collections in the GeoCatalog instance
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1334,7 +1256,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Endpoint.
+        /// [Protocol Method] List all collections in the GeoCatalog instance
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1362,7 +1284,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Endpoint. </summary>
+        /// <summary> List all collections in the GeoCatalog instance. </summary>
         /// <param name="sign"> Whether to sign asset URLs in the response. </param>
         /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -1373,7 +1295,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return Response.FromValue((StacCatalogCollections)result, result);
         }
 
-        /// <summary> Endpoint. </summary>
+        /// <summary> List all collections in the GeoCatalog instance. </summary>
         /// <param name="sign"> Whether to sign asset URLs in the response. </param>
         /// <param name="durationInMinutes"> URL signature duration in minutes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -1386,12 +1308,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Get the partitiontype for a GeoCatalog Collection.
-        /// 
-        /// Args:
-        /// collection_id: the collection id to get the partitiontype for.
-        /// 
-        /// Returns:
-        /// The partitiontype for the collection.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1424,12 +1340,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Get the partitiontype for a GeoCatalog Collection.
-        /// 
-        /// Args:
-        /// collection_id: the collection id to get the partitiontype for.
-        /// 
-        /// Returns:
-        /// The partitiontype for the collection.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1460,15 +1370,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary>
-        /// Get the partitiontype for a GeoCatalog Collection.
-        /// 
-        /// Args:
-        /// collection_id: the collection id to get the partitiontype for.
-        /// 
-        /// Returns:
-        /// The partitiontype for the collection.
-        /// </summary>
+        /// <summary> Get the partitiontype for a GeoCatalog Collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
@@ -1482,15 +1384,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return Response.FromValue((PartitionType)result, result);
         }
 
-        /// <summary>
-        /// Get the partitiontype for a GeoCatalog Collection.
-        /// 
-        /// Args:
-        /// collection_id: the collection id to get the partitiontype for.
-        /// 
-        /// Returns:
-        /// The partitiontype for the collection.
-        /// </summary>
+        /// <summary> Get the partitiontype for a GeoCatalog Collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
@@ -1512,13 +1406,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Ideal partitioning schemes result in partitions of roughly 100k items each.
         /// 
         /// The default partitioning scheme is "none" which does not partition items.
-        /// 
-        /// Args:
-        /// collection_id: the collection id to add the partitiontype to.
-        /// partitiontype: the partitiontype to add.
-        /// 
-        /// Returns:
-        /// None
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1559,13 +1446,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Ideal partitioning schemes result in partitions of roughly 100k items each.
         /// 
         /// The default partitioning scheme is "none" which does not partition items.
-        /// 
-        /// Args:
-        /// collection_id: the collection id to add the partitiontype to.
-        /// partitiontype: the partitiontype to add.
-        /// 
-        /// Returns:
-        /// None
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1606,13 +1486,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Ideal partitioning schemes result in partitions of roughly 100k items each.
         /// 
         /// The default partitioning scheme is "none" which does not partition items.
-        /// 
-        /// Args:
-        /// collection_id: the collection id to add the partitiontype to.
-        /// partitiontype: the partitiontype to add.
-        /// 
-        /// Returns:
-        /// None
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="body"> Partition type configuration determining how items are partitioned in storage. </param>
@@ -1636,13 +1509,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Ideal partitioning schemes result in partitions of roughly 100k items each.
         /// 
         /// The default partitioning scheme is "none" which does not partition items.
-        /// 
-        /// Args:
-        /// collection_id: the collection id to add the partitiontype to.
-        /// partitiontype: the partitiontype to add.
-        /// 
-        /// Returns:
-        /// None
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="body"> Partition type configuration determining how items are partitioned in storage. </param>
@@ -2172,13 +2038,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Get thumbnail for given collection.
-        /// 
-        /// Args:
-        /// request: The incoming request.
-        /// collection_id: The ID of the collection to retrieve assets for.
-        /// 
-        /// Returns:
-        /// thumbnail image
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -2211,13 +2070,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Get thumbnail for given collection.
-        /// 
-        /// Args:
-        /// request: The incoming request.
-        /// collection_id: The ID of the collection to retrieve assets for.
-        /// 
-        /// Returns:
-        /// thumbnail image
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -2248,16 +2100,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary>
-        /// Get thumbnail for given collection.
-        /// 
-        /// Args:
-        /// request: The incoming request.
-        /// collection_id: The ID of the collection to retrieve assets for.
-        /// 
-        /// Returns:
-        /// thumbnail image
-        /// </summary>
+        /// <summary> Get thumbnail for given collection. </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
@@ -2271,16 +2114,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return Response.FromValue(result.Content, result);
         }
 
-        /// <summary>
-        /// Get thumbnail for given collection.
-        /// 
-        /// Args:
-        /// request: The incoming request.
-        /// collection_id: The ID of the collection to retrieve assets for.
-        /// 
-        /// Returns:
-        /// thumbnail image
-        /// </summary>
+        /// <summary> Get thumbnail for given collection. </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
@@ -2487,7 +2321,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Endpoint.
+        /// [Protocol Method] Returns the STAC conformance classes.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -2514,7 +2348,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Endpoint.
+        /// [Protocol Method] Returns the STAC conformance classes.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -2540,7 +2374,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Endpoint. </summary>
+        /// <summary> Returns the STAC conformance classes. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<StacConformanceClasses> GetConformanceClass(CancellationToken cancellationToken = default)
@@ -2549,7 +2383,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return Response.FromValue((StacConformanceClasses)result, result);
         }
 
-        /// <summary> Endpoint. </summary>
+        /// <summary> Returns the STAC conformance classes. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<StacConformanceClasses>> GetConformanceClassAsync(CancellationToken cancellationToken = default)
@@ -2949,7 +2783,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// 
         /// Every feature in a dataset belongs to a collection. A dataset may
         /// consist of multiple feature collections. A feature collection is often a
-        /// collection of features of a similar type, based on a common schema.")
+        /// collection of features of a similar type, based on a common schema.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3017,7 +2851,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetItems(string collectionId, long? limit, IEnumerable<string> boundingBox, string datetime, RequestContext context)
+        public virtual Response GetItems(string collectionId, int? limit, IEnumerable<string> boundingBox, string datetime, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetItems");
             scope.Start();
@@ -3040,7 +2874,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// 
         /// Every feature in a dataset belongs to a collection. A dataset may
         /// consist of multiple feature collections. A feature collection is often a
-        /// collection of features of a similar type, based on a common schema.")
+        /// collection of features of a similar type, based on a common schema.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3108,7 +2942,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemsAsync(string collectionId, long? limit, IEnumerable<string> boundingBox, string datetime, RequestContext context)
+        public virtual async Task<Response> GetItemsAsync(string collectionId, int? limit, IEnumerable<string> boundingBox, string datetime, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetItems");
             scope.Start();
@@ -3131,7 +2965,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// 
         /// Every feature in a dataset belongs to a collection. A dataset may
         /// consist of multiple feature collections. A feature collection is often a
-        /// collection of features of a similar type, based on a common schema.")
+        /// collection of features of a similar type, based on a common schema.
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="limit">
@@ -3193,7 +3027,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacItemCollectionModel> GetItems(string collectionId, long? limit = default, IEnumerable<string> boundingBox = default, string datetime = default, CancellationToken cancellationToken = default)
+        public virtual Response<StacItemCollectionModel> GetItems(string collectionId, int? limit = default, IEnumerable<string> boundingBox = default, string datetime = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
@@ -3206,7 +3040,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// 
         /// Every feature in a dataset belongs to a collection. A dataset may
         /// consist of multiple feature collections. A feature collection is often a
-        /// collection of features of a similar type, based on a common schema.")
+        /// collection of features of a similar type, based on a common schema.
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="limit">
@@ -3268,7 +3102,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacItemCollectionModel>> GetItemsAsync(string collectionId, long? limit = default, IEnumerable<string> boundingBox = default, string datetime = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacItemCollectionModel>> GetItemsAsync(string collectionId, int? limit = default, IEnumerable<string> boundingBox = default, string datetime = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
@@ -3335,7 +3169,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Endpoint.
+        /// [Protocol Method] Return the STAC landing page.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3362,7 +3196,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Endpoint.
+        /// [Protocol Method] Return the STAC landing page.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3388,7 +3222,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Endpoint. </summary>
+        /// <summary> Return the STAC landing page. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<StacLandingPage> GetStacLandingPage(CancellationToken cancellationToken = default)
@@ -3397,7 +3231,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return Response.FromValue((StacLandingPage)result, result);
         }
 
-        /// <summary> Endpoint. </summary>
+        /// <summary> Return the STAC landing page. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<StacLandingPage>> GetStacLandingPageAsync(CancellationToken cancellationToken = default)
@@ -3737,7 +3571,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Endpoint.
+        /// [Protocol Method] List all queryables in the GeoCatalog instance
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3764,7 +3598,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Endpoint.
+        /// [Protocol Method] List all queryables in the GeoCatalog instance
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3790,7 +3624,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Endpoint. </summary>
+        /// <summary> List all queryables in the GeoCatalog instance. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<IReadOnlyDictionary<string, BinaryData>> GetQueryables(CancellationToken cancellationToken = default)
@@ -3813,7 +3647,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
         }
 
-        /// <summary> Endpoint. </summary>
+        /// <summary> List all queryables in the GeoCatalog instance. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> GetQueryablesAsync(CancellationToken cancellationToken = default)
@@ -3837,7 +3671,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Endpoint.
+        /// [Protocol Method] List all queryables in a given collection
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3850,15 +3684,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetQueryablesByCollection(string collectionId, RequestContext context)
+        public virtual Response GetCollectionQueryables(string collectionId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetQueryablesByCollection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetCollectionQueryables");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-                using HttpMessage message = CreateGetQueryablesByCollectionRequest(collectionId, context);
+                using HttpMessage message = CreateGetCollectionQueryablesRequest(collectionId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3869,7 +3703,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Endpoint.
+        /// [Protocol Method] List all queryables in a given collection
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3882,15 +3716,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetQueryablesByCollectionAsync(string collectionId, RequestContext context)
+        public virtual async Task<Response> GetCollectionQueryablesAsync(string collectionId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetQueryablesByCollection");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacClient.GetCollectionQueryables");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-                using HttpMessage message = CreateGetQueryablesByCollectionRequest(collectionId, context);
+                using HttpMessage message = CreateGetCollectionQueryablesRequest(collectionId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3900,17 +3734,17 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Endpoint. </summary>
+        /// <summary> List all queryables in a given collection. </summary>
         /// <param name="collectionId"> Collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyDictionary<string, BinaryData>> GetQueryablesByCollection(string collectionId, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyDictionary<string, BinaryData>> GetCollectionQueryables(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetQueryablesByCollection(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetCollectionQueryables(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -3928,17 +3762,17 @@ namespace Azure.Analytics.PlanetaryComputer
             return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
         }
 
-        /// <summary> Endpoint. </summary>
+        /// <summary> List all queryables in a given collection. </summary>
         /// <param name="collectionId"> Collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> GetQueryablesByCollectionAsync(string collectionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> GetCollectionQueryablesAsync(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetQueryablesByCollectionAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetCollectionQueryablesAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -3957,7 +3791,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Endpoint.
+        /// [Protocol Method] STAC search operation.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3988,7 +3822,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Endpoint.
+        /// [Protocol Method] STAC search operation.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -4018,7 +3852,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Endpoint. </summary>
+        /// <summary> STAC search operation. </summary>
         /// <param name="body"> Request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
@@ -4031,7 +3865,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return Response.FromValue((StacItemCollectionModel)result, result);
         }
 
-        /// <summary> Endpoint. </summary>
+        /// <summary> STAC search operation. </summary>
         /// <param name="body"> Request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>

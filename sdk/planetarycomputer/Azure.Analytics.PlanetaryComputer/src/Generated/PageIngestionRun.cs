@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Generic paged response model. </summary>
-    public partial class PageIngestionRun
+    internal partial class PageIngestionRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

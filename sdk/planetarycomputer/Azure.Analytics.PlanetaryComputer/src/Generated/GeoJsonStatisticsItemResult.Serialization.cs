@@ -42,7 +42,7 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WriteObjectValue(Geometry, options);
             writer.WritePropertyName("bbox"u8);
             writer.WriteStartArray();
-            foreach (double item in BoundingBox)
+            foreach (float item in BoundingBox)
             {
                 writer.WriteNumberValue(item);
             }
@@ -146,7 +146,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             GeoJsonGeometry geometry = default;
-            IList<double> boundingBox = default;
+            IList<float> boundingBox = default;
             string id = default;
             FeatureType @type = default;
             string createdOn = default;
@@ -168,10 +168,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("bbox"u8))
                 {
-                    List<double> array = new List<double>();
+                    List<float> array = new List<float>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetDouble());
+                        array.Add(item.GetSingle());
                     }
                     boundingBox = array;
                     continue;

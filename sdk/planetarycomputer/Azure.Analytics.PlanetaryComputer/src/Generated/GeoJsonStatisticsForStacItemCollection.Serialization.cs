@@ -52,7 +52,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 writer.WritePropertyName("bbox"u8);
                 writer.WriteStartArray();
-                foreach (double item in BoundingBox)
+                foreach (float item in BoundingBox)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -152,7 +152,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             StacItemCollectionType @type = default;
             IList<GeoJsonStatisticsItemResult> features = default;
-            IList<double> boundingBox = default;
+            IList<float> boundingBox = default;
             string stacVersion = default;
             string createdOn = default;
             string updatedOn = default;
@@ -184,10 +184,10 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    List<double> array = new List<double>();
+                    List<float> array = new List<float>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetDouble());
+                        array.Add(item.GetSingle());
                     }
                     boundingBox = array;
                     continue;
@@ -264,7 +264,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return new GeoJsonStatisticsForStacItemCollection(
                 @type,
                 features,
-                boundingBox ?? new ChangeTrackingList<double>(),
+                boundingBox ?? new ChangeTrackingList<float>(),
                 stacVersion,
                 createdOn,
                 updatedOn,

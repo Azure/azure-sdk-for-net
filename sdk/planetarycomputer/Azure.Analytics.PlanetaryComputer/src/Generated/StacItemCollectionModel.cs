@@ -26,7 +26,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNull(features, nameof(features));
 
             Features = features.ToList();
-            BoundingBox = new ChangeTrackingList<double>();
+            BoundingBox = new ChangeTrackingList<float>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StacItemCollectionModel"/>. </summary>
@@ -41,7 +41,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="features"> Array of STAC Items in the collection. </param>
         /// <param name="boundingBox"> Bounding box of all items in format [west, south, east, north]. </param>
         /// <param name="context"> Context information for the search response. </param>
-        internal StacItemCollectionModel(StacModelType @type, string stacVersion, IList<StacLink> links, string createdOn, string updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<StacItemModel> features, IList<double> boundingBox, StacContextExtension context) : base(@type, stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
+        internal StacItemCollectionModel(StacModelType @type, string stacVersion, IList<StacLink> links, string createdOn, string updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<StacItemModel> features, IList<float> boundingBox, StacContextExtension context) : base(@type, stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
         {
             Features = features;
             BoundingBox = boundingBox;
@@ -52,7 +52,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<StacItemModel> Features { get; }
 
         /// <summary> Bounding box of all items in format [west, south, east, north]. </summary>
-        public IList<double> BoundingBox { get; }
+        public IList<float> BoundingBox { get; }
 
         /// <summary> Context information for the search response. </summary>
         public StacContextExtension Context { get; set; }

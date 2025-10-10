@@ -57,7 +57,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 writer.WritePropertyName("bbox"u8);
                 writer.WriteStartArray();
-                foreach (double item in BoundingBox)
+                foreach (float item in BoundingBox)
                 {
                     writer.WriteNumberValue(item);
                 }

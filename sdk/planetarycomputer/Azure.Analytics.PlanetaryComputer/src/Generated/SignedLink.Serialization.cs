@@ -45,7 +45,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             writer.WritePropertyName("href"u8);
-            writer.WriteStringValue(Href);
+            writer.WriteStringValue(Href.AbsoluteUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -89,7 +89,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             DateTimeOffset? expiresOn = default;
-            string href = default;
+            Uri href = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -104,7 +104,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("href"u8))
                 {
-                    href = prop.Value.GetString();
+                    href = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

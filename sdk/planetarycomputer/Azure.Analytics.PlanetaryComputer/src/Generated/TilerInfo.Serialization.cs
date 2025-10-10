@@ -40,7 +40,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             writer.WritePropertyName("bounds"u8);
             writer.WriteStartArray();
-            foreach (double item in Bounds)
+            foreach (float item in Bounds)
             {
                 writer.WriteNumberValue(item);
             }
@@ -163,7 +163,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 writer.WritePropertyName("scales"u8);
                 writer.WriteStartArray();
-                foreach (long item in Scales)
+                foreach (int item in Scales)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -173,7 +173,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 writer.WritePropertyName("offsets"u8);
                 writer.WriteStartArray();
-                foreach (long item in Offsets)
+                foreach (int item in Offsets)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -257,7 +257,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            IList<double> bounds = default;
+            IList<float> bounds = default;
             IList<IList<BinaryData>> bandMetadata = default;
             IList<IList<string>> bandDescriptions = default;
             string dtype = default;
@@ -268,20 +268,20 @@ namespace Azure.Analytics.PlanetaryComputer
             int? width = default;
             int? height = default;
             IList<string> overviews = default;
-            IList<long> scales = default;
-            IList<long> offsets = default;
+            IList<int> scales = default;
+            IList<int> offsets = default;
             IDictionary<string, IList<string>> colormap = default;
-            long? minZoom = default;
-            long? maxZoom = default;
+            int? minZoom = default;
+            int? maxZoom = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("bounds"u8))
                 {
-                    List<double> array = new List<double>();
+                    List<float> array = new List<float>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetDouble());
+                        array.Add(item.GetSingle());
                     }
                     bounds = array;
                     continue;
@@ -446,10 +446,10 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    List<long> array = new List<long>();
+                    List<int> array = new List<int>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetInt64());
+                        array.Add(item.GetInt32());
                     }
                     scales = array;
                     continue;
@@ -460,10 +460,10 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    List<long> array = new List<long>();
+                    List<int> array = new List<int>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetInt64());
+                        array.Add(item.GetInt32());
                     }
                     offsets = array;
                     continue;
@@ -507,7 +507,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    minZoom = prop.Value.GetInt64();
+                    minZoom = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("maxzoom"u8))
@@ -516,7 +516,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    maxZoom = prop.Value.GetInt64();
+                    maxZoom = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -536,8 +536,8 @@ namespace Azure.Analytics.PlanetaryComputer
                 width,
                 height,
                 overviews ?? new ChangeTrackingList<string>(),
-                scales ?? new ChangeTrackingList<long>(),
-                offsets ?? new ChangeTrackingList<long>(),
+                scales ?? new ChangeTrackingList<int>(),
+                offsets ?? new ChangeTrackingList<int>(),
                 colormap ?? new ChangeTrackingDictionary<string, IList<string>>(),
                 minZoom,
                 maxZoom,

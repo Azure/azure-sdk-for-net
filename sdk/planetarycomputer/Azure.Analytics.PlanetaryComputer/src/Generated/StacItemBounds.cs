@@ -19,7 +19,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Initializes a new instance of <see cref="StacItemBounds"/>. </summary>
         /// <param name="bounds"> Array of coordinates defining the bounding box [west, south, east, north]. </param>
-        internal StacItemBounds(IEnumerable<double> bounds)
+        internal StacItemBounds(IEnumerable<float> bounds)
         {
             Bounds = bounds.ToList();
         }
@@ -27,13 +27,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacItemBounds"/>. </summary>
         /// <param name="bounds"> Array of coordinates defining the bounding box [west, south, east, north]. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacItemBounds(IList<double> bounds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacItemBounds(IList<float> bounds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Bounds = bounds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of coordinates defining the bounding box [west, south, east, north]. </summary>
-        public IList<double> Bounds { get; }
+        public IList<float> Bounds { get; }
     }
 }

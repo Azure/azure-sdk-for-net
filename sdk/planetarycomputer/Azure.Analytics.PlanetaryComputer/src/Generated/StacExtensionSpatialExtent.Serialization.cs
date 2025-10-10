@@ -41,7 +41,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 writer.WritePropertyName("bbox"u8);
                 writer.WriteStartArray();
-                foreach (IList<double> item in BoundingBox)
+                foreach (IList<float> item in BoundingBox)
                 {
                     if (item == null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.Analytics.PlanetaryComputer
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (double item0 in item)
+                    foreach (float item0 in item)
                     {
                         writer.WriteNumberValue(item0);
                     }
@@ -99,7 +99,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            IList<IList<double>> boundingBox = default;
+            IList<IList<float>> boundingBox = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -109,7 +109,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    List<IList<double>> array = new List<IList<double>>();
+                    List<IList<float>> array = new List<IList<float>>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -118,10 +118,10 @@ namespace Azure.Analytics.PlanetaryComputer
                         }
                         else
                         {
-                            List<double> array0 = new List<double>();
+                            List<float> array0 = new List<float>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(item0.GetDouble());
+                                array0.Add(item0.GetSingle());
                             }
                             array.Add(array0);
                         }
@@ -134,7 +134,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StacExtensionSpatialExtent(boundingBox ?? new ChangeTrackingList<IList<double>>(), additionalBinaryDataProperties);
+            return new StacExtensionSpatialExtent(boundingBox ?? new ChangeTrackingList<IList<float>>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

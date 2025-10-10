@@ -30,7 +30,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateCancelIngestionOperationRequest(Guid operationId, RequestContext context)
+        internal HttpMessage CreateCancelOperationRequest(Guid operationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -44,7 +44,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCancelAllIngestionOperationsRequest(RequestContext context)
+        internal HttpMessage CreateCancelAllOperationsRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -57,7 +57,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetIngestionOperationRequest(Guid operationId, RequestContext context)
+        internal HttpMessage CreateGetOperationRequest(Guid operationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -72,7 +72,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetIngestionOperationsRequest(long? top, long? skip, string collectionId, string status, RequestContext context)
+        internal HttpMessage CreateGetOperationsRequest(int? top, int? skip, string collectionId, string status, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -102,7 +102,19 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCreateIngestionRunRequest(string collectionId, string ingestionId, RequestContext context)
+        internal HttpMessage CreateNextGetOperationsRequest(Uri nextPage, int? top, int? skip, string collectionId, string status, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateRunRequest(string collectionId, string ingestionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -120,7 +132,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetIngestionRunRequest(string collectionId, string ingestionId, Guid runId, RequestContext context)
+        internal HttpMessage CreateGetRunRequest(string collectionId, string ingestionId, Guid runId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -139,7 +151,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetIngestionRunsRequest(string collectionId, string ingestionId, long? top, long? skip, RequestContext context)
+        internal HttpMessage CreateGetRunsRequest(string collectionId, string ingestionId, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -165,7 +177,19 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCreateIngestionRequest(string collectionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateNextGetRunsRequest(Uri nextPage, string collectionId, string ingestionId, int? top, int? skip, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateRequest(string collectionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -183,7 +207,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateDeleteIngestionRequest(string collectionId, string ingestionId, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string collectionId, string ingestionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -200,7 +224,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetIngestionRequest(string collectionId, string ingestionId, RequestContext context)
+        internal HttpMessage CreateGetRequest(string collectionId, string ingestionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -217,7 +241,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetIngestionsRequest(string collectionId, long? top, long? skip, RequestContext context)
+        internal HttpMessage CreateListsRequest(string collectionId, int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -241,7 +265,19 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateUpdateIngestionRequest(string collectionId, string ingestionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateNextListsRequest(Uri nextPage, string collectionId, int? top, int? skip, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateRequest(string collectionId, string ingestionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -260,7 +296,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCreateIngestionSourceRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateSourceRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -276,7 +312,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCreateOrReplaceIngestionSourceRequest(string id, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrReplaceSourceRequest(string id, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -293,7 +329,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateDeleteIngestionSourceRequest(string id, RequestContext context)
+        internal HttpMessage CreateDeleteSourceRequest(string id, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -307,7 +343,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetIngestionSourceRequest(Guid id, RequestContext context)
+        internal HttpMessage CreateGetSourceRequest(Guid id, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -322,7 +358,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetIngestionSourcesRequest(long? top, long? skip, RequestContext context)
+        internal HttpMessage CreateGetSourcesRequest(int? top, int? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -344,12 +380,36 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
+        internal HttpMessage CreateNextGetSourcesRequest(Uri nextPage, int? top, int? skip, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateGetManagedIdentitiesRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/inma/ingestion-sources/managed-identities", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetManagedIdentitiesRequest(Uri nextPage, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

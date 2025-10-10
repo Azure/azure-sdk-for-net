@@ -59,17 +59,6 @@ namespace Azure.Analytics.PlanetaryComputer
             return new OperationStatusHistoryItem(timestamp, status, errorCode, errorMessage, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Generic paged response model. </summary>
-        /// <param name="value"> The items on the page. </param>
-        /// <param name="nextLink"> Link to the next page of results. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.PageOperation"/> instance for mocking. </returns>
-        public static PageOperation PageOperation(IEnumerable<LongRunningOperation> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<LongRunningOperation>();
-
-            return new PageOperation(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Microsoft Planetary Computer Pro geo-catalog ingestion run. </summary>
         /// <param name="id"> Run id. </param>
         /// <param name="parentRunId"> Run id which this run is associated to because it has been retried or rerun. </param>
@@ -122,17 +111,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Generic paged response model. </summary>
-        /// <param name="value"> The items on the page. </param>
-        /// <param name="nextLink"> Link to the next page of results. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.PageIngestionRun"/> instance for mocking. </returns>
-        public static PageIngestionRun PageIngestionRun(IEnumerable<IngestionRun> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<IngestionRun>();
-
-            return new PageIngestionRun(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Microsoft Planetary Computer Pro geo-catalog ingestion creation model. </summary>
         /// <param name="id"> Ingestion id. </param>
         /// <param name="importType"> Ingestion type. </param>
@@ -155,17 +133,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 creationTime,
                 status,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Generic paged response model. </summary>
-        /// <param name="value"> The items on the page. </param>
-        /// <param name="nextLink"> Link to the next page of results. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.PageIngestion"/> instance for mocking. </returns>
-        public static PageIngestion PageIngestion(IEnumerable<IngestionConfiguration> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<IngestionConfiguration>();
-
-            return new PageIngestion(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -220,17 +187,6 @@ namespace Azure.Analytics.PlanetaryComputer
             return new ManagedIdentityConnection(containerUri, objectId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Generic paged response model. </summary>
-        /// <param name="value"> The items on the page. </param>
-        /// <param name="nextLink"> Link to the next page of results. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.PageIngestionSourceSummary"/> instance for mocking. </returns>
-        public static PageIngestionSourceSummary PageIngestionSourceSummary(IEnumerable<IngestionSourceSummary> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<IngestionSourceSummary>();
-
-            return new PageIngestionSourceSummary(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Ingestion source summary. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="kind"> Ingestion source type. </param>
@@ -239,17 +195,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public static IngestionSourceSummary IngestionSourceSummary(Guid id = default, IngestionSourceType kind = default, DateTimeOffset created = default)
         {
             return new IngestionSourceSummary(id, kind, created, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Generic paged response model. </summary>
-        /// <param name="value"> The items on the page. </param>
-        /// <param name="nextLink"> Link to the next page of results. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.PageManagedIdentityMetadata"/> instance for mocking. </returns>
-        public static PageManagedIdentityMetadata PageManagedIdentityMetadata(IEnumerable<ManagedIdentityMetadata> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<ManagedIdentityMetadata>();
-
-            return new PageManagedIdentityMetadata(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Managed Identity metadata. </summary>
@@ -453,9 +398,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="boundingBox"> Array of bounding boxes defining the spatial extent, in format [[west, south, east, north]]. </param>
         /// <returns> A new <see cref="PlanetaryComputer.StacExtensionSpatialExtent"/> instance for mocking. </returns>
-        public static StacExtensionSpatialExtent StacExtensionSpatialExtent(IEnumerable<IList<double>> boundingBox = default)
+        public static StacExtensionSpatialExtent StacExtensionSpatialExtent(IEnumerable<IList<float>> boundingBox = default)
         {
-            boundingBox ??= new ChangeTrackingList<IList<double>>();
+            boundingBox ??= new ChangeTrackingList<IList<float>>();
 
             return new StacExtensionSpatialExtent(boundingBox.ToList(), additionalBinaryDataProperties: null);
         }
@@ -684,7 +629,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Base type for STAC items and collections with discriminator.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StacItemCollectionModel"/> and <see cref="StacItemModel"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StacItemModel"/> and <see cref="StacItemCollectionModel"/>.
         /// </summary>
         /// <param name="type"> Discriminator property for StacItemOrStacItemCollection. </param>
         /// <param name="stacVersion"> Stac Version. </param>
@@ -710,42 +655,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/itemcollection-spec.md
-        /// 
-        /// Represents a collection of STAC Items as a GeoJSON FeatureCollection.
-        /// </summary>
-        /// <param name="stacVersion"> Stac Version. </param>
-        /// <param name="links"> Links to related resources and endpoints. </param>
-        /// <param name="createdOn"> MSFT Created. </param>
-        /// <param name="updatedOn"> MSFT Updated. </param>
-        /// <param name="shortDescription"> MSFT Short Description. </param>
-        /// <param name="stacExtensions"> URLs to STAC extensions implemented by this STAC resource. </param>
-        /// <param name="features"> Array of STAC Items in the collection. </param>
-        /// <param name="boundingBox"> Bounding box of all items in format [west, south, east, north]. </param>
-        /// <param name="context"> Context information for the search response. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.StacItemCollectionModel"/> instance for mocking. </returns>
-        public static StacItemCollectionModel StacItemCollectionModel(string stacVersion = default, IEnumerable<StacLink> links = default, string createdOn = default, string updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default, IEnumerable<StacItemModel> features = default, IEnumerable<double> boundingBox = default, StacContextExtension context = default)
-        {
-            links ??= new ChangeTrackingList<StacLink>();
-            stacExtensions ??= new ChangeTrackingList<string>();
-            features ??= new ChangeTrackingList<StacItemModel>();
-            boundingBox ??= new ChangeTrackingList<double>();
-
-            return new StacItemCollectionModel(
-                StacModelType.FeatureCollection,
-                stacVersion,
-                links.ToList(),
-                createdOn,
-                updatedOn,
-                shortDescription,
-                stacExtensions.ToList(),
-                additionalBinaryDataProperties: null,
-                features.ToList(),
-                boundingBox.ToList(),
-                context);
-        }
-
         /// <summary> Represents a STAC Item, which is a GeoJSON Feature with additional metadata. </summary>
         /// <param name="stacVersion"> Stac Version. </param>
         /// <param name="links"> Links to related resources and endpoints. </param>
@@ -762,11 +671,11 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="timestamp"> MSFT Timestamp. </param>
         /// <param name="eTag"> MSFT ETag. </param>
         /// <returns> A new <see cref="PlanetaryComputer.StacItemModel"/> instance for mocking. </returns>
-        public static StacItemModel StacItemModel(string stacVersion = default, IEnumerable<StacLink> links = default, string createdOn = default, string updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default, GeoJsonGeometry geometry = default, IEnumerable<double> boundingBox = default, string id = default, string collection = default, StacItemProperties properties = default, IDictionary<string, StacAsset> assets = default, string timestamp = default, string eTag = default)
+        public static StacItemModel StacItemModel(string stacVersion = default, IEnumerable<StacLink> links = default, string createdOn = default, string updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default, GeoJsonGeometry geometry = default, IEnumerable<float> boundingBox = default, string id = default, string collection = default, StacItemProperties properties = default, IDictionary<string, StacAsset> assets = default, string timestamp = default, string eTag = default)
         {
             links ??= new ChangeTrackingList<StacLink>();
             stacExtensions ??= new ChangeTrackingList<string>();
-            boundingBox ??= new ChangeTrackingList<double>();
+            boundingBox ??= new ChangeTrackingList<float>();
             assets ??= new ChangeTrackingDictionary<string, StacAsset>();
 
             return new StacItemModel(
@@ -805,9 +714,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="type"> Discriminator property for GeoJsonGeometry. </param>
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <returns> A new <see cref="PlanetaryComputer.GeoJsonGeometry"/> instance for mocking. </returns>
-        public static GeoJsonGeometry GeoJsonGeometry(string @type = default, IEnumerable<double> boundingBox = default)
+        public static GeoJsonGeometry GeoJsonGeometry(string @type = default, IEnumerable<float> boundingBox = default)
         {
-            boundingBox ??= new ChangeTrackingList<double>();
+            boundingBox ??= new ChangeTrackingList<float>();
 
             return new UnknownGeoJsonGeometry(new GeometryType(@type), boundingBox.ToList(), additionalBinaryDataProperties: null);
         }
@@ -816,9 +725,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="coordinates"> The coordinates of the point as [longitude, latitude]. </param>
         /// <returns> A new <see cref="PlanetaryComputer.GeoJsonPoint"/> instance for mocking. </returns>
-        public static GeoJsonPoint GeoJsonPoint(IEnumerable<double> boundingBox = default, string coordinates = default)
+        public static GeoJsonPoint GeoJsonPoint(IEnumerable<float> boundingBox = default, string coordinates = default)
         {
-            boundingBox ??= new ChangeTrackingList<double>();
+            boundingBox ??= new ChangeTrackingList<float>();
 
             return new GeoJsonPoint(GeometryType.Point, boundingBox.ToList(), additionalBinaryDataProperties: null, coordinates);
         }
@@ -827,10 +736,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="coordinates"> The coordinates of the polygon. </param>
         /// <returns> A new <see cref="PlanetaryComputer.GeoJsonPolygon"/> instance for mocking. </returns>
-        public static GeoJsonPolygon GeoJsonPolygon(IEnumerable<double> boundingBox = default, IEnumerable<IList<IList<double>>> coordinates = default)
+        public static GeoJsonPolygon GeoJsonPolygon(IEnumerable<float> boundingBox = default, IEnumerable<IList<IList<float>>> coordinates = default)
         {
-            boundingBox ??= new ChangeTrackingList<double>();
-            coordinates ??= new ChangeTrackingList<IList<IList<double>>>();
+            boundingBox ??= new ChangeTrackingList<float>();
+            coordinates ??= new ChangeTrackingList<IList<IList<float>>>();
 
             return new GeoJsonPolygon(GeometryType.Polygon, boundingBox.ToList(), additionalBinaryDataProperties: null, coordinates.ToList());
         }
@@ -839,10 +748,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="coordinates"> The coordinates of the multipolygon. </param>
         /// <returns> A new <see cref="PlanetaryComputer.MultiPolygon"/> instance for mocking. </returns>
-        public static MultiPolygon MultiPolygon(IEnumerable<double> boundingBox = default, IEnumerable<IList<IList<double>>> coordinates = default)
+        public static MultiPolygon MultiPolygon(IEnumerable<float> boundingBox = default, IEnumerable<IList<IList<float>>> coordinates = default)
         {
-            boundingBox ??= new ChangeTrackingList<double>();
-            coordinates ??= new ChangeTrackingList<IList<IList<double>>>();
+            boundingBox ??= new ChangeTrackingList<float>();
+            coordinates ??= new ChangeTrackingList<IList<IList<float>>>();
 
             return new MultiPolygon(GeometryType.MultiPolygon, boundingBox.ToList(), additionalBinaryDataProperties: null, coordinates.ToList());
         }
@@ -851,10 +760,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="coordinates"> The coordinates of the multilinestring. </param>
         /// <returns> A new <see cref="PlanetaryComputer.MultiLineString"/> instance for mocking. </returns>
-        public static MultiLineString MultiLineString(IEnumerable<double> boundingBox = default, IEnumerable<IList<double>> coordinates = default)
+        public static MultiLineString MultiLineString(IEnumerable<float> boundingBox = default, IEnumerable<IList<float>> coordinates = default)
         {
-            boundingBox ??= new ChangeTrackingList<double>();
-            coordinates ??= new ChangeTrackingList<IList<double>>();
+            boundingBox ??= new ChangeTrackingList<float>();
+            coordinates ??= new ChangeTrackingList<IList<float>>();
 
             return new MultiLineString(GeometryType.MultiLineString, boundingBox.ToList(), additionalBinaryDataProperties: null, coordinates.ToList());
         }
@@ -863,10 +772,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="coordinates"> The coordinates of the linestring. </param>
         /// <returns> A new <see cref="PlanetaryComputer.LineString"/> instance for mocking. </returns>
-        public static LineString LineString(IEnumerable<double> boundingBox = default, IEnumerable<double> coordinates = default)
+        public static LineString LineString(IEnumerable<float> boundingBox = default, IEnumerable<float> coordinates = default)
         {
-            boundingBox ??= new ChangeTrackingList<double>();
-            coordinates ??= new ChangeTrackingList<double>();
+            boundingBox ??= new ChangeTrackingList<float>();
+            coordinates ??= new ChangeTrackingList<float>();
 
             return new LineString(GeometryType.LineString, boundingBox.ToList(), additionalBinaryDataProperties: null, coordinates.ToList());
         }
@@ -875,10 +784,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="coordinates"> The coordinates of the multipoint. </param>
         /// <returns> A new <see cref="PlanetaryComputer.MultiPoint"/> instance for mocking. </returns>
-        public static MultiPoint MultiPoint(IEnumerable<double> boundingBox = default, IEnumerable<double> coordinates = default)
+        public static MultiPoint MultiPoint(IEnumerable<float> boundingBox = default, IEnumerable<float> coordinates = default)
         {
-            boundingBox ??= new ChangeTrackingList<double>();
-            coordinates ??= new ChangeTrackingList<double>();
+            boundingBox ??= new ChangeTrackingList<float>();
+            coordinates ??= new ChangeTrackingList<float>();
 
             return new MultiPoint(GeometryType.MultiPoint, boundingBox.ToList(), additionalBinaryDataProperties: null, coordinates.ToList());
         }
@@ -924,6 +833,42 @@ namespace Azure.Analytics.PlanetaryComputer
                 startDatetime,
                 endDatetime,
                 additionalProperties);
+        }
+
+        /// <summary>
+        /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/itemcollection-spec.md
+        /// 
+        /// Represents a collection of STAC Items as a GeoJSON FeatureCollection.
+        /// </summary>
+        /// <param name="stacVersion"> Stac Version. </param>
+        /// <param name="links"> Links to related resources and endpoints. </param>
+        /// <param name="createdOn"> MSFT Created. </param>
+        /// <param name="updatedOn"> MSFT Updated. </param>
+        /// <param name="shortDescription"> MSFT Short Description. </param>
+        /// <param name="stacExtensions"> URLs to STAC extensions implemented by this STAC resource. </param>
+        /// <param name="features"> Array of STAC Items in the collection. </param>
+        /// <param name="boundingBox"> Bounding box of all items in format [west, south, east, north]. </param>
+        /// <param name="context"> Context information for the search response. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.StacItemCollectionModel"/> instance for mocking. </returns>
+        public static StacItemCollectionModel StacItemCollectionModel(string stacVersion = default, IEnumerable<StacLink> links = default, string createdOn = default, string updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default, IEnumerable<StacItemModel> features = default, IEnumerable<float> boundingBox = default, StacContextExtension context = default)
+        {
+            links ??= new ChangeTrackingList<StacLink>();
+            stacExtensions ??= new ChangeTrackingList<string>();
+            features ??= new ChangeTrackingList<StacItemModel>();
+            boundingBox ??= new ChangeTrackingList<float>();
+
+            return new StacItemCollectionModel(
+                StacModelType.FeatureCollection,
+                stacVersion,
+                links.ToList(),
+                createdOn,
+                updatedOn,
+                shortDescription,
+                stacExtensions.ToList(),
+                additionalBinaryDataProperties: null,
+                features.ToList(),
+                boundingBox.ToList(),
+                context);
         }
 
         /// <summary>
@@ -1033,11 +978,11 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="filterLang"> Filter language to use for the filter expression. </param>
         /// <param name="token"> Pagination token for fetching the next set of results. </param>
         /// <returns> A new <see cref="PlanetaryComputer.SearchPostContent"/> instance for mocking. </returns>
-        public static SearchPostContent SearchPostContent(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<double> boundingBox = default, GeoJsonGeometry intersects = default, string datetime = default, int? limit = default, IDictionary<string, BinaryData> conformanceClass = default, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, IDictionary<string, BinaryData> query = default, IEnumerable<StacSortExtension> sortBy = default, IEnumerable<SearchOptionsFields> fields = default, string filter = default, string filterCoordinateReferenceSystem = default, FilterLanguage? filterLang = default, string token = default)
+        public static SearchPostContent SearchPostContent(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<float> boundingBox = default, GeoJsonGeometry intersects = default, string datetime = default, int? limit = default, IDictionary<string, BinaryData> conformanceClass = default, StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, IDictionary<string, BinaryData> query = default, IEnumerable<StacSortExtension> sortBy = default, IEnumerable<SearchOptionsFields> fields = default, string filter = default, string filterCoordinateReferenceSystem = default, FilterLanguage? filterLang = default, string token = default)
         {
             collections ??= new ChangeTrackingList<string>();
             ids ??= new ChangeTrackingList<string>();
-            boundingBox ??= new ChangeTrackingList<double>();
+            boundingBox ??= new ChangeTrackingList<float>();
             conformanceClass ??= new ChangeTrackingDictionary<string, BinaryData>();
             query ??= new ChangeTrackingDictionary<string, BinaryData>();
             sortBy ??= new ChangeTrackingList<StacSortExtension>();
@@ -1198,10 +1143,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// ref: https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/variableMatrixWidth.json
         /// </param>
         /// <returns> A new <see cref="PlanetaryComputer.TileMatrix"/> instance for mocking. </returns>
-        public static TileMatrix TileMatrix(string title = default, string description = default, IEnumerable<string> keywords = default, string id = default, float scaleDenominator = default, float cellSize = default, TileMatrixCornerOfOrigin? cornerOfOrigin = default, IEnumerable<double> pointOfOrigin = default, int tileWidth = default, int tileHeight = default, int matrixWidth = default, int matrixHeight = default, IEnumerable<VariableMatrixWidth> variableMatrixWidths = default)
+        public static TileMatrix TileMatrix(string title = default, string description = default, IEnumerable<string> keywords = default, string id = default, float scaleDenominator = default, float cellSize = default, TileMatrixCornerOfOrigin? cornerOfOrigin = default, IEnumerable<float> pointOfOrigin = default, int tileWidth = default, int tileHeight = default, int matrixWidth = default, int matrixHeight = default, IEnumerable<VariableMatrixWidth> variableMatrixWidths = default)
         {
             keywords ??= new ChangeTrackingList<string>();
-            pointOfOrigin ??= new ChangeTrackingList<double>();
+            pointOfOrigin ??= new ChangeTrackingList<float>();
             variableMatrixWidths ??= new ChangeTrackingList<VariableMatrixWidth>();
 
             return new TileMatrix(
@@ -1231,6 +1176,64 @@ namespace Azure.Analytics.PlanetaryComputer
             return new VariableMatrixWidth(coalesce, minTileRow, maxTileRow, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for getting asset statistics. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
+        /// <param name="categorical"> Return statistics for categorical dataset. </param>
+        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
+        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
+        /// <param name="histogramBins">
+        /// Defines the number of equal-width bins in the given range (10, by default).
+        /// 
+        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
+        /// increasing array of bin edges, including the rightmost edge, allowing for
+        /// non-uniform bin widths.
+        /// 
+        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
+        /// </param>
+        /// <param name="histogramRange">
+        /// Comma `,` delimited range of the bins.
+        /// 
+        /// The lower and upper range of the bins. If not provided, range is simply
+        /// (a.min(), a.max()).
+        /// 
+        /// Values outside the range are ignored. The first element of the range must be
+        /// less than or equal to the second.
+        /// range affects the automatic bin computation as well.
+        /// 
+        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
+        /// </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetAssetStatisticsOptions"/> instance for mocking. </returns>
+        public static GetAssetStatisticsOptions GetAssetStatisticsOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            categoriesPixels ??= new ChangeTrackingList<string>();
+            percentiles ??= new ChangeTrackingList<int>();
+
+            return new GetAssetStatisticsOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                resampling,
+                maxSize,
+                categorical,
+                categoriesPixels.ToList(),
+                percentiles.ToList(),
+                histogramBins,
+                histogramRange,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Return dataset's statistics. </summary>
         /// <param name="data"> Response Asset Statistics Api Collections  Collection Id  Items  Item Id  Asset Statistics Get. </param>
         /// <returns> A new <see cref="PlanetaryComputer.AssetStatisticsResult"/> instance for mocking. </returns>
@@ -1242,8 +1245,8 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Statistical information about a data band. </summary>
-        /// <param name="min"> Minimum value in the band. </param>
-        /// <param name="max"> Maximum value in the band. </param>
+        /// <param name="minimum"> Minimum value in the band. </param>
+        /// <param name="maximum"> Maximum value in the band. </param>
         /// <param name="mean"> Mean value of the band. </param>
         /// <param name="count"> Count of pixels in the band. </param>
         /// <param name="sum"> Sum of all pixel values in the band. </param>
@@ -1265,13 +1268,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// The 98th percentile value.
         /// </param>
         /// <returns> A new <see cref="PlanetaryComputer.BandStatistics"/> instance for mocking. </returns>
-        public static BandStatistics BandStatistics(float min = default, float max = default, float mean = default, float count = default, float sum = default, float std = default, float median = default, float majority = default, float minority = default, float unique = default, IEnumerable<IList<float>> histogram = default, float validPercent = default, float maskedPixels = default, float validPixels = default, float percentile2 = default, float percentile98 = default)
+        public static BandStatistics BandStatistics(float minimum = default, float maximum = default, float mean = default, float count = default, float sum = default, float std = default, float median = default, float majority = default, float minority = default, float unique = default, IEnumerable<IList<float>> histogram = default, float validPercent = default, float maskedPixels = default, float validPixels = default, float percentile2 = default, float percentile98 = default)
         {
             histogram ??= new ChangeTrackingList<IList<float>>();
 
             return new BandStatistics(
-                min,
-                max,
+                minimum,
+                maximum,
                 mean,
                 count,
                 sum,
@@ -1292,11 +1295,113 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Geographic extent of a dataset expressed as a bounding box. </summary>
         /// <param name="bounds"> Array of coordinates defining the bounding box [west, south, east, north]. </param>
         /// <returns> A new <see cref="PlanetaryComputer.StacItemBounds"/> instance for mocking. </returns>
-        public static StacItemBounds StacItemBounds(IEnumerable<double> bounds = default)
+        public static StacItemBounds StacItemBounds(IEnumerable<float> bounds = default)
         {
-            bounds ??= new ChangeTrackingList<double>();
+            bounds ??= new ChangeTrackingList<float>();
 
             return new StacItemBounds(bounds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for cropping GeoJSON. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.CropGeoJsonOptions"/> instance for mocking. </returns>
+        public static CropGeoJsonOptions CropGeoJsonOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new CropGeoJsonOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                algorithm,
+                algorithmParams,
+                colorFormula,
+                coordinateReferenceSystem,
+                resampling,
+                maxSize,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for getting GeoJSON statistics. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
+        /// <param name="categorical"> Return statistics for categorical dataset. </param>
+        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
+        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
+        /// <param name="histogramBins">
+        /// Defines the number of equal-width bins in the given range (10, by default).
+        /// 
+        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
+        /// increasing array of bin edges, including the rightmost edge, allowing for
+        /// non-uniform bin widths.
+        /// 
+        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
+        /// </param>
+        /// <param name="histogramRange">
+        /// Comma `,` delimited range of the bins.
+        /// 
+        /// The lower and upper range of the bins. If not provided, range is simply
+        /// (a.min(), a.max()).
+        /// 
+        /// Values outside the range are ignored. The first element of the range must be
+        /// less than or equal to the second.
+        /// range affects the automatic bin computation as well.
+        /// 
+        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
+        /// </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetGeoJsonStatisticsOptions"/> instance for mocking. </returns>
+        public static GetGeoJsonStatisticsOptions GetGeoJsonStatisticsOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            categoriesPixels ??= new ChangeTrackingList<string>();
+            percentiles ??= new ChangeTrackingList<int>();
+
+            return new GetGeoJsonStatisticsOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                resampling,
+                maxSize,
+                categorical,
+                categoriesPixels.ToList(),
+                percentiles.ToList(),
+                histogramBins,
+                histogramRange,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/itemcollection-spec.mdCollection of STAC items with statistical information. </summary>
@@ -1315,10 +1420,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// See the [STAC Context Extension](https://github.com/radiantearth/stac-api-spec/tree/master/extensions/context#context-extension-specification)
         /// </param>
         /// <returns> A new <see cref="PlanetaryComputer.GeoJsonStatisticsForStacItemCollection"/> instance for mocking. </returns>
-        public static GeoJsonStatisticsForStacItemCollection GeoJsonStatisticsForStacItemCollection(StacItemCollectionType @type = default, IEnumerable<GeoJsonStatisticsItemResult> features = default, IEnumerable<double> boundingBox = default, string stacVersion = default, string createdOn = default, string updatedOn = default, string shortDescription = default, IEnumerable<Uri> stacExtensions = default, IEnumerable<StacLink> links = default, StacContextExtension context = default)
+        public static GeoJsonStatisticsForStacItemCollection GeoJsonStatisticsForStacItemCollection(StacItemCollectionType @type = default, IEnumerable<GeoJsonStatisticsItemResult> features = default, IEnumerable<float> boundingBox = default, string stacVersion = default, string createdOn = default, string updatedOn = default, string shortDescription = default, IEnumerable<Uri> stacExtensions = default, IEnumerable<StacLink> links = default, StacContextExtension context = default)
         {
             features ??= new ChangeTrackingList<GeoJsonStatisticsItemResult>();
-            boundingBox ??= new ChangeTrackingList<double>();
+            boundingBox ??= new ChangeTrackingList<float>();
             stacExtensions ??= new ChangeTrackingList<Uri>();
             links ??= new ChangeTrackingList<StacLink>();
 
@@ -1351,9 +1456,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="eTag"> MSFT ETag. </param>
         /// <param name="stacExtensions"> List of STAC extension URLs used by this item. </param>
         /// <returns> A new <see cref="PlanetaryComputer.GeoJsonStatisticsItemResult"/> instance for mocking. </returns>
-        public static GeoJsonStatisticsItemResult GeoJsonStatisticsItemResult(GeoJsonGeometry geometry = default, IEnumerable<double> boundingBox = default, string id = default, FeatureType @type = default, string createdOn = default, string updatedOn = default, string shortDescription = default, string stacVersion = default, string collection = default, StacItemProperties properties = default, string timestamp = default, string eTag = default, IEnumerable<Uri> stacExtensions = default)
+        public static GeoJsonStatisticsItemResult GeoJsonStatisticsItemResult(GeoJsonGeometry geometry = default, IEnumerable<float> boundingBox = default, string id = default, FeatureType @type = default, string createdOn = default, string updatedOn = default, string shortDescription = default, string stacVersion = default, string collection = default, StacItemProperties properties = default, string timestamp = default, string eTag = default, IEnumerable<Uri> stacExtensions = default)
         {
-            boundingBox ??= new ChangeTrackingList<double>();
+            boundingBox ??= new ChangeTrackingList<float>();
             stacExtensions ??= new ChangeTrackingList<Uri>();
 
             return new GeoJsonStatisticsItemResult(
@@ -1380,7 +1485,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
         /// <returns> A new <see cref="PlanetaryComputer.TilerInfoGeoJsonFeature"/> instance for mocking. </returns>
-        public static TilerInfoGeoJsonFeature TilerInfoGeoJsonFeature(FeatureType @type = default, GeoJsonGeometry geometry = default, IDictionary<string, TilerInfo> properties = default, string id = default, double? boundingBox = default)
+        public static TilerInfoGeoJsonFeature TilerInfoGeoJsonFeature(FeatureType @type = default, GeoJsonGeometry geometry = default, IDictionary<string, TilerInfo> properties = default, string id = default, float? boundingBox = default)
         {
             properties ??= new ChangeTrackingDictionary<string, TilerInfo>();
 
@@ -1411,15 +1516,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="minZoom"> Minzoom. </param>
         /// <param name="maxZoom"> Maxzoom. </param>
         /// <returns> A new <see cref="PlanetaryComputer.TilerInfo"/> instance for mocking. </returns>
-        public static TilerInfo TilerInfo(IEnumerable<double> bounds = default, IEnumerable<IList<BinaryData>> bandMetadata = default, IEnumerable<IList<string>> bandDescriptions = default, string dtype = default, NoDataType? noDataType = default, IEnumerable<string> colorinterp = default, string driver = default, int? count = default, int? width = default, int? height = default, IEnumerable<string> overviews = default, IEnumerable<long> scales = default, IEnumerable<long> offsets = default, IDictionary<string, IList<string>> colormap = default, long? minZoom = default, long? maxZoom = default)
+        public static TilerInfo TilerInfo(IEnumerable<float> bounds = default, IEnumerable<IList<BinaryData>> bandMetadata = default, IEnumerable<IList<string>> bandDescriptions = default, string dtype = default, NoDataType? noDataType = default, IEnumerable<string> colorinterp = default, string driver = default, int? count = default, int? width = default, int? height = default, IEnumerable<string> overviews = default, IEnumerable<int> scales = default, IEnumerable<int> offsets = default, IDictionary<string, IList<string>> colormap = default, int? minZoom = default, int? maxZoom = default)
         {
-            bounds ??= new ChangeTrackingList<double>();
+            bounds ??= new ChangeTrackingList<float>();
             bandMetadata ??= new ChangeTrackingList<IList<BinaryData>>();
             bandDescriptions ??= new ChangeTrackingList<IList<string>>();
             colorinterp ??= new ChangeTrackingList<string>();
             overviews ??= new ChangeTrackingList<string>();
-            scales ??= new ChangeTrackingList<long>();
-            offsets ??= new ChangeTrackingList<long>();
+            scales ??= new ChangeTrackingList<int>();
+            offsets ??= new ChangeTrackingList<int>();
             colormap ??= new ChangeTrackingDictionary<string, IList<string>>();
 
             return new TilerInfo(
@@ -1450,6 +1555,52 @@ namespace Azure.Analytics.PlanetaryComputer
             return new InfoOperationResult(data, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for getting parts (cropped to bounding box). </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
+        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetPartOptions"/> instance for mocking. </returns>
+        public static GetPartOptions GetPartOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new GetPartOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                algorithm,
+                algorithmParams,
+                colorFormula,
+                coordinateReferenceSystem,
+                dstCrs,
+                resampling,
+                maxSize,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary>
         /// Point model.
         /// 
@@ -1466,6 +1617,59 @@ namespace Azure.Analytics.PlanetaryComputer
             bandNames ??= new ChangeTrackingList<string>();
 
             return new TilerCoreModelsResponsesPoint(coordinates.ToList(), values.ToList(), bandNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for getting previews. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
+        /// <param name="height"> Height in pixels for the output image. </param>
+        /// <param name="width"> Width in pixels for the output image. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetPreviewOptions"/> instance for mocking. </returns>
+        public static GetPreviewOptions GetPreviewOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+            subdatasetBands ??= new ChangeTrackingList<string>();
+
+            return new GetPreviewOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                algorithm,
+                algorithmParams,
+                colorFormula,
+                dstCrs,
+                resampling,
+                maxSize,
+                height,
+                width,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Parameters for requesting a rendered image from a collection. </summary>
@@ -1502,6 +1706,64 @@ namespace Azure.Analytics.PlanetaryComputer
             return new ImageResponse(url, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for getting statistics. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
+        /// <param name="categorical"> Return statistics for categorical dataset. </param>
+        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
+        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
+        /// <param name="histogramBins">
+        /// Defines the number of equal-width bins in the given range (10, by default).
+        /// 
+        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
+        /// increasing array of bin edges, including the rightmost edge, allowing for
+        /// non-uniform bin widths.
+        /// 
+        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
+        /// </param>
+        /// <param name="histogramRange">
+        /// Comma `,` delimited range of the bins.
+        /// 
+        /// The lower and upper range of the bins. If not provided, range is simply
+        /// (a.min(), a.max()).
+        /// 
+        /// Values outside the range are ignored. The first element of the range must be
+        /// less than or equal to the second.
+        /// range affects the automatic bin computation as well.
+        /// 
+        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
+        /// </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetStatisticsOptions"/> instance for mocking. </returns>
+        public static GetStatisticsOptions GetStatisticsOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            categoriesPixels ??= new ChangeTrackingList<string>();
+            percentiles ??= new ChangeTrackingList<int>();
+
+            return new GetStatisticsOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                resampling,
+                maxSize,
+                categorical,
+                categoriesPixels.ToList(),
+                percentiles.ToList(),
+                histogramBins,
+                histogramRange,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Return dataset's statistics. </summary>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="PlanetaryComputer.StatisticsResult"/> instance for mocking. </returns>
@@ -1510,6 +1772,60 @@ namespace Azure.Analytics.PlanetaryComputer
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new StatisticsResult(additionalProperties);
+        }
+
+        /// <summary> Options for getting TileJSON. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="tileFormat"> Default will be automatically defined if the output image needs a mask (png) or not (jpeg). </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="minZoom"> Overwrite default minzoom. </param>
+        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetTileJsonOptions"/> instance for mocking. </returns>
+        public static GetTileJsonOptions GetTileJsonOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new GetTileJsonOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                algorithm,
+                algorithmParams,
+                tileFormat,
+                tileScale,
+                minZoom,
+                maxZoom,
+                buffer,
+                colorFormula,
+                resampling,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1557,6 +1873,111 @@ namespace Azure.Analytics.PlanetaryComputer
                 maxZoom,
                 bounds.ToList(),
                 center.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for getting a tile from a dataset. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetTileOptions"/> instance for mocking. </returns>
+        public static GetTileOptions GetTileOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+            subdatasetBands ??= new ChangeTrackingList<string>();
+
+            return new GetTileOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                algorithm,
+                algorithmParams,
+                buffer,
+                colorFormula,
+                resampling,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for getting WMTS capabilities. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="tileFormat"> Output image type. Default is png. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="minZoom"> Overwrite default minzoom. </param>
+        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetWmtsCapabilitiesOptions"/> instance for mocking. </returns>
+        public static GetWmtsCapabilitiesOptions GetWmtsCapabilitiesOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new GetWmtsCapabilitiesOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                algorithm,
+                algorithmParams,
+                tileFormat,
+                tileScale,
+                minZoom,
+                maxZoom,
+                buffer,
+                colorFormula,
+                resampling,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1640,11 +2061,199 @@ namespace Azure.Analytics.PlanetaryComputer
             return new TilerMosaicSearchRegistrationResult(searchId, links.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for mosaic TileJSON. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipCovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="minZoom"> Overwrite default minzoom. </param>
+        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
+        /// <param name="tileFormat"> Default will be automatically defined if the output image needs a mask (png) or not (jpeg). </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="collection"> STAC Collection ID. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetMosaicTileJsonOptions"/> instance for mocking. </returns>
+        public static GetMosaicTileJsonOptions GetMosaicTileJsonOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new GetMosaicTileJsonOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                scanLimit,
+                itemsLimit,
+                timeLimit,
+                exitWhenFull,
+                skipCovered,
+                algorithm,
+                algorithmParams,
+                minZoom,
+                maxZoom,
+                tileFormat,
+                tileScale,
+                buffer,
+                colorFormula,
+                collection,
+                resampling,
+                pixelSelection,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for mosaic tiles. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipCovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="collection"> STAC Collection ID. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetMosaicTileOptions"/> instance for mocking. </returns>
+        public static GetMosaicTileOptions GetMosaicTileOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new GetMosaicTileOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                scanLimit,
+                itemsLimit,
+                timeLimit,
+                exitWhenFull,
+                skipCovered,
+                algorithm,
+                algorithmParams,
+                buffer,
+                colorFormula,
+                collection,
+                resampling,
+                pixelSelection,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for mosaic WMTS capabilities. </summary>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="tileFormat"> Output image type. Default is png. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="minZoom"> Overwrite default minzoom. </param>
+        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetMosaicWmtsCapabilitiesOptions"/> instance for mocking. </returns>
+        public static GetMosaicWmtsCapabilitiesOptions GetMosaicWmtsCapabilitiesOptions(IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new GetMosaicWmtsCapabilitiesOptions(
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                algorithm,
+                algorithmParams,
+                tileFormat,
+                tileScale,
+                minZoom,
+                maxZoom,
+                buffer,
+                colorFormula,
+                resampling,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> UnsignedLink. </summary>
         /// <param name="expiresOn"> The expiry date of the signed link. This indicates when the link will no longer be valid. </param>
         /// <param name="href"> The URL of the unsigned link. </param>
         /// <returns> A new <see cref="PlanetaryComputer.SignedLink"/> instance for mocking. </returns>
-        public static SignedLink SignedLink(DateTimeOffset? expiresOn = default, string href = default)
+        public static SignedLink SignedLink(DateTimeOffset? expiresOn = default, Uri href = default)
         {
             return new SignedLink(expiresOn, href, additionalBinaryDataProperties: null);
         }

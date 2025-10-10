@@ -21,7 +21,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="TilerInfo"/>. </summary>
         /// <param name="bounds"> Bounds. </param>
         /// <param name="dtype"> Data type. </param>
-        internal TilerInfo(IEnumerable<double> bounds, string dtype)
+        internal TilerInfo(IEnumerable<float> bounds, string dtype)
         {
             Bounds = bounds.ToList();
             BandMetadata = new ChangeTrackingList<IList<BinaryData>>();
@@ -29,8 +29,8 @@ namespace Azure.Analytics.PlanetaryComputer
             Dtype = dtype;
             Colorinterp = new ChangeTrackingList<string>();
             Overviews = new ChangeTrackingList<string>();
-            Scales = new ChangeTrackingList<long>();
-            Offsets = new ChangeTrackingList<long>();
+            Scales = new ChangeTrackingList<int>();
+            Offsets = new ChangeTrackingList<int>();
             Colormap = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
@@ -52,7 +52,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="minZoom"> Minzoom. </param>
         /// <param name="maxZoom"> Maxzoom. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TilerInfo(IList<double> bounds, IList<IList<BinaryData>> bandMetadata, IList<IList<string>> bandDescriptions, string dtype, NoDataType? noDataType, IList<string> colorinterp, string driver, int? count, int? width, int? height, IList<string> overviews, IList<long> scales, IList<long> offsets, IDictionary<string, IList<string>> colormap, long? minZoom, long? maxZoom, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TilerInfo(IList<float> bounds, IList<IList<BinaryData>> bandMetadata, IList<IList<string>> bandDescriptions, string dtype, NoDataType? noDataType, IList<string> colorinterp, string driver, int? count, int? width, int? height, IList<string> overviews, IList<int> scales, IList<int> offsets, IDictionary<string, IList<string>> colormap, int? minZoom, int? maxZoom, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Bounds = bounds;
             BandMetadata = bandMetadata;
@@ -74,7 +74,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Bounds. </summary>
-        public IList<double> Bounds { get; }
+        public IList<float> Bounds { get; }
 
         /// <summary>
         /// Band Metadata
@@ -145,18 +145,18 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<string> Overviews { get; }
 
         /// <summary> Scales. </summary>
-        public IList<long> Scales { get; }
+        public IList<int> Scales { get; }
 
         /// <summary> Offsets. </summary>
-        public IList<long> Offsets { get; }
+        public IList<int> Offsets { get; }
 
         /// <summary> Colormap. </summary>
         public IDictionary<string, IList<string>> Colormap { get; }
 
         /// <summary> Minzoom. </summary>
-        public long? MinZoom { get; }
+        public int? MinZoom { get; }
 
         /// <summary> Maxzoom. </summary>
-        public long? MaxZoom { get; }
+        public int? MaxZoom { get; }
     }
 }

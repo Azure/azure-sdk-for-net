@@ -150,13 +150,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetTileMatrixList(RequestContext context)
+        public virtual Response GetTileMatrices(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileMatrixList");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileMatrices");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTileMatrixListRequest(context);
+                using HttpMessage message = CreateGetTileMatricesRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -177,13 +177,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTileMatrixListAsync(RequestContext context)
+        public virtual async Task<Response> GetTileMatricesAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileMatrixList");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileMatrices");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTileMatrixListRequest(context);
+                using HttpMessage message = CreateGetTileMatricesRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -196,18 +196,18 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Return Matrix List. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<string>> GetTileMatrixList(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<string>> GetTileMatrices(CancellationToken cancellationToken = default)
         {
-            Response result = GetTileMatrixList(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetTileMatrices(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<string>>(), result);
         }
 
         /// <summary> Return Matrix List. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<string>>> GetTileMatrixListAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<string>>> GetTileMatricesAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetTileMatrixListAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetTileMatricesAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<string>>(), result);
         }
 
@@ -258,7 +258,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
+        public virtual Response GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetAssetStatistics");
             scope.Start();
@@ -324,7 +324,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
+        public virtual async Task<Response> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetAssetStatistics");
             scope.Start();
@@ -346,96 +346,36 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Per Asset statistics. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// 
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// 
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// 
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// 
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
+        /// <param name="options"> Options for asset statistics including asset selection and statistical calculation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AssetStatisticsResult> GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual Response<AssetStatisticsResult> GetAssetStatistics(string collectionId, string itemId, GetAssetStatisticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetAssetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.GetAssetStatistics(collectionId, itemId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((AssetStatisticsResult)result, result);
         }
 
         /// <summary> Per Asset statistics. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// 
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// 
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// 
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// 
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
+        /// <param name="options"> Options for asset statistics including asset selection and statistical calculation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AssetStatisticsResult>> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AssetStatisticsResult>> GetAssetStatisticsAsync(string collectionId, string itemId, GetAssetStatisticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetAssetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.GetAssetStatisticsAsync(collectionId, itemId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((AssetStatisticsResult)result, result);
         }
 
@@ -754,76 +694,44 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Create image from a geojson feature. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for GeoJSON cropping including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/>, <paramref name="body"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CropGeoJson(string collectionId, string itemId, string format, StacItemModel body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> CropGeoJson(string collectionId, string itemId, string format, StacItemModel body, CropGeoJsonOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
             Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = CropGeoJson(collectionId, itemId, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.CropGeoJson(collectionId, itemId, format, body, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue(result.Content, result);
         }
 
         /// <summary> Create image from a geojson feature. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for GeoJSON cropping including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/>, <paramref name="body"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CropGeoJsonAsync(string collectionId, string itemId, string format, StacItemModel body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> CropGeoJsonAsync(string collectionId, string itemId, string format, StacItemModel body, CropGeoJsonOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
             Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await CropGeoJsonAsync(collectionId, itemId, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.CropGeoJsonAsync(collectionId, itemId, format, body, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -946,34 +854,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="height"> Height in pixels for the output image. </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for GeoJSON cropping including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/>, <paramref name="body"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CropGeoJsonWithDimensions(string collectionId, string itemId, float width, float height, string format, StacItemModel body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> CropGeoJsonWithDimensions(string collectionId, string itemId, float width, float height, string format, StacItemModel body, CropGeoJsonOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
             Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = CropGeoJsonWithDimensions(collectionId, itemId, width, height, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.CropGeoJsonWithDimensions(collectionId, itemId, width, height, format, body, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue(result.Content, result);
         }
 
@@ -984,34 +878,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="height"> Height in pixels for the output image. </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for GeoJSON cropping including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/>, <paramref name="body"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, float width, float height, string format, StacItemModel body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, float width, float height, string format, StacItemModel body, CropGeoJsonOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
             Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await CropGeoJsonWithDimensionsAsync(collectionId, itemId, width, height, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.CropGeoJsonWithDimensionsAsync(collectionId, itemId, width, height, format, body, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -1157,50 +1037,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// 
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// 
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// 
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// 
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
+        /// <param name="options"> Options for GeoJSON statistics including asset selection and statistical calculation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="body"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<GeoJsonStatisticsForStacItemCollection> GetGeoJsonStatistics(string collectionId, string itemId, StacItemCollectionModel body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual Response<GeoJsonStatisticsForStacItemCollection> GetGeoJsonStatistics(string collectionId, string itemId, StacItemCollectionModel body, GetGeoJsonStatisticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetGeoJsonStatistics(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.GetGeoJsonStatistics(collectionId, itemId, body, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((GeoJsonStatisticsForStacItemCollection)result, result);
         }
 
@@ -1208,50 +1057,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// 
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// 
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// 
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// 
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
+        /// <param name="options"> Options for GeoJSON statistics including asset selection and statistical calculation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="body"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<GeoJsonStatisticsForStacItemCollection>> GetGeoJsonStatisticsAsync(string collectionId, string itemId, StacItemCollectionModel body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GeoJsonStatisticsForStacItemCollection>> GetGeoJsonStatisticsAsync(string collectionId, string itemId, StacItemCollectionModel body, GetGeoJsonStatisticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetGeoJsonStatisticsAsync(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.GetGeoJsonStatisticsAsync(collectionId, itemId, body, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((GeoJsonStatisticsForStacItemCollection)result, result);
         }
 
@@ -1502,7 +1320,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPart");
             scope.Start();
@@ -1561,7 +1379,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPart");
             scope.Start();
@@ -1584,82 +1402,48 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Create image from part of a dataset. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="minx"> Bounding box min X. </param>
-        /// <param name="miny"> Bounding box min Y. </param>
-        /// <param name="maxx"> Bounding box max X. </param>
-        /// <param name="maxy"> Bounding box max Y. </param>
+        /// <param name="minx"> Bounding box minimum X coordinate. </param>
+        /// <param name="miny"> Bounding box minimum Y coordinate. </param>
+        /// <param name="maxx"> Bounding box maximum X coordinate. </param>
+        /// <param name="maxy"> Bounding box maximum Y coordinate. </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for part generation including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, GetPartOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetPart(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.GetPart(collectionId, itemId, minx, miny, maxx, maxy, format, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue(result.Content, result);
         }
 
         /// <summary> Create image from part of a dataset. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="minx"> Bounding box min X. </param>
-        /// <param name="miny"> Bounding box min Y. </param>
-        /// <param name="maxx"> Bounding box max X. </param>
-        /// <param name="maxy"> Bounding box max Y. </param>
+        /// <param name="minx"> Bounding box minimum X coordinate. </param>
+        /// <param name="miny"> Bounding box minimum Y coordinate. </param>
+        /// <param name="maxx"> Bounding box maximum X coordinate. </param>
+        /// <param name="maxy"> Bounding box maximum Y coordinate. </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for part generation including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, GetPartOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetPartAsync(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.GetPartAsync(collectionId, itemId, minx, miny, maxx, maxy, format, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -1702,7 +1486,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, float width, float height, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, float width, float height, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPartWithDimensions");
             scope.Start();
@@ -1761,7 +1545,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, float width, float height, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, float width, float height, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPartWithDimensions");
             scope.Start();
@@ -1784,82 +1568,52 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Create image from part of a dataset. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="minx"> Bounding box min X. </param>
-        /// <param name="miny"> Bounding box min Y. </param>
-        /// <param name="maxx"> Bounding box max X. </param>
-        /// <param name="maxy"> Bounding box max Y. </param>
+        /// <param name="minx"> Bounding box minimum X coordinate. </param>
+        /// <param name="miny"> Bounding box minimum Y coordinate. </param>
+        /// <param name="maxx"> Bounding box maximum X coordinate. </param>
+        /// <param name="maxy"> Bounding box maximum Y coordinate. </param>
         /// <param name="width"> Width in pixels for the output image. </param>
         /// <param name="height"> Height in pixels for the output image. </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for part generation including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, float width, float height, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, float width, float height, string format, GetPartOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetPartWithDimensions(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.GetPartWithDimensions(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue(result.Content, result);
         }
 
         /// <summary> Create image from part of a dataset. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="minx"> Bounding box min X. </param>
-        /// <param name="miny"> Bounding box min Y. </param>
-        /// <param name="maxx"> Bounding box max X. </param>
-        /// <param name="maxy"> Bounding box max Y. </param>
+        /// <param name="minx"> Bounding box minimum X coordinate. </param>
+        /// <param name="miny"> Bounding box minimum Y coordinate. </param>
+        /// <param name="maxx"> Bounding box maximum X coordinate. </param>
+        /// <param name="maxy"> Bounding box maximum Y coordinate. </param>
         /// <param name="width"> Width in pixels for the output image. </param>
         /// <param name="height"> Height in pixels for the output image. </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for part generation including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, float width, float height, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, float width, float height, string format, GetPartOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetPartWithDimensionsAsync(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.GetPartWithDimensionsAsync(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -1888,7 +1642,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPoint(string collectionId, string itemId, double longitude, float latitude, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
+        public virtual Response GetPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPoint");
             scope.Start();
@@ -1932,7 +1686,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPointAsync(string collectionId, string itemId, double longitude, float latitude, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
+        public virtual async Task<Response> GetPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPoint");
             scope.Start();
@@ -1968,7 +1722,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerCoreModelsResponsesPoint> GetPoint(string collectionId, string itemId, double longitude, float latitude, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
+        public virtual Response<TilerCoreModelsResponsesPoint> GetPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -1994,7 +1748,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetPointAsync(string collectionId, string itemId, double longitude, float latitude, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -2037,7 +1791,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPreview(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetPreview(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string format = default, string colorFormula = default, string dstCrs = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPreview");
             scope.Start();
@@ -2090,7 +1844,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string format = default, string colorFormula = default, string dstCrs = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPreview");
             scope.Start();
@@ -2112,70 +1866,36 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Create preview of a dataset. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for preview generation including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPreview(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? format = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetPreview(string collectionId, string itemId, GetPreviewOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetPreview(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, format?.ToString(), colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.GetPreview(collectionId, itemId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue(result.Content, result);
         }
 
         /// <summary> Create preview of a dataset. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for preview generation including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? format = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetPreviewAsync(string collectionId, string itemId, GetPreviewOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetPreviewAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, format?.ToString(), colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.GetPreviewAsync(collectionId, itemId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -2213,7 +1933,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPreviewWithFormat(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetPreviewWithFormat(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPreviewWithFormat");
             scope.Start();
@@ -2267,7 +1987,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetPreviewWithFormat");
             scope.Start();
@@ -2291,35 +2011,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for preview generation including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPreviewWithFormat(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetPreviewWithFormat(string collectionId, string itemId, string format, GetPreviewOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetPreviewWithFormat(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.GetPreviewWithFormat(collectionId, itemId, format, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue(result.Content, result);
         }
 
@@ -2327,35 +2031,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for preview generation including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, GetPreviewOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetPreviewWithFormatAsync(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.GetPreviewWithFormatAsync(collectionId, itemId, format, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -2606,7 +2294,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetStatistics(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
+        public virtual Response GetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetStatistics");
             scope.Start();
@@ -2672,7 +2360,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
+        public virtual async Task<Response> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetStatistics");
             scope.Start();
@@ -2694,96 +2382,36 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Merged assets statistics. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// 
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// 
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// 
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// 
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
+        /// <param name="options"> Options for statistics including asset selection and statistical calculation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StatisticsResult> GetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual Response<StatisticsResult> GetStatistics(string collectionId, string itemId, GetStatisticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.GetStatistics(collectionId, itemId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((StatisticsResult)result, result);
         }
 
         /// <summary> Merged assets statistics. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// 
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// 
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// 
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// 
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// 
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
+        /// <param name="options"> Options for statistics including asset selection and statistical calculation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StatisticsResult>> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StatisticsResult>> GetStatisticsAsync(string collectionId, string itemId, GetStatisticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.GetStatisticsAsync(collectionId, itemId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((StatisticsResult)result, result);
         }
 
@@ -2829,7 +2457,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetTileJson(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetTileJson(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, string resampling = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileJson");
             scope.Start();
@@ -2891,7 +2519,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, string resampling = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTileJson");
             scope.Start();
@@ -2915,43 +2543,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for TileJSON generation including asset selection, terrain algorithms, and tile formatting. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetaData> GetTileJson(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileJsonMetaData> GetTileJson(string collectionId, string itemId, string tileMatrixSetId, GetTileJsonOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetTileJson(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.GetTileJson(collectionId, itemId, tileMatrixSetId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((TileJsonMetaData)result, result);
         }
 
@@ -2959,43 +2563,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for TileJSON generation including asset selection, terrain algorithms, and tile formatting. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetaData>> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileJsonMetaData>> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, GetTileJsonOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetTileJsonAsync(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.GetTileJsonAsync(collectionId, itemId, tileMatrixSetId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((TileJsonMetaData)result, result);
         }
 
@@ -3050,7 +2630,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
+        public virtual Response GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string resampling = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTile");
             scope.Start();
@@ -3122,7 +2702,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
+        public virtual async Task<Response> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string resampling = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetTile");
             scope.Start();
@@ -3147,53 +2727,25 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="z"> Identifier (Z) selecting one of the scales defined in the TileMatrixSet. </param>
+        /// <param name="x"> Column (X) index of the tile on the selected TileMatrix. </param>
+        /// <param name="y"> Row (Y) index of the tile on the selected TileMatrix. </param>
+        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
+        /// <param name="options"> Options for tile generation including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/>, <paramref name="format"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, GetTileOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetTile(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, subdatasetName, subdatasetBands, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.GetTile(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue(result.Content, result);
         }
 
@@ -3201,53 +2753,25 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="z"> Identifier (Z) selecting one of the scales defined in the TileMatrixSet. </param>
+        /// <param name="x"> Column (X) index of the tile on the selected TileMatrix. </param>
+        /// <param name="y"> Row (Y) index of the tile on the selected TileMatrix. </param>
+        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
+        /// <param name="options"> Options for tile generation including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/>, <paramref name="format"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, GetTileOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetTileAsync(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, subdatasetName, subdatasetBands, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.GetTileAsync(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -3290,7 +2814,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, string resampling = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetWmtsCapabilities");
             scope.Start();
@@ -3349,7 +2873,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, string resampling = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetWmtsCapabilities");
             scope.Start();
@@ -3373,40 +2897,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for WMTS capabilities including asset selection, terrain algorithms, and tile formatting. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, GetWmtsCapabilitiesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetWmtsCapabilities(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.GetWmtsCapabilities(collectionId, itemId, tileMatrixSetId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue(result.Content, result);
         }
 
@@ -3414,50 +2917,24 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for WMTS capabilities including asset selection, terrain algorithms, and tile formatting. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, GetWmtsCapabilitiesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetWmtsCapabilitiesAsync(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.GetWmtsCapabilitiesAsync(collectionId, itemId, tileMatrixSetId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
         /// <summary>
         /// [Protocol Method] Generate values and color swatches mapping for a given classmap.
-        /// 
-        /// Args:
-        /// trim_start (int, optional): Number of items to trim
-        /// from the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3492,11 +2969,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Generate values and color swatches mapping for a given classmap.
-        /// 
-        /// Args:
-        /// trim_start (int, optional): Number of items to trim
-        /// from the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3529,14 +3001,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary>
-        /// Generate values and color swatches mapping for a given classmap.
-        /// 
-        /// Args:
-        /// trim_start (int, optional): Number of items to trim
-        /// from the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        /// </summary>
+        /// <summary> Generate values and color swatches mapping for a given classmap. </summary>
         /// <param name="classmapName"> classmap name. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
@@ -3566,14 +3031,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
         }
 
-        /// <summary>
-        /// Generate values and color swatches mapping for a given classmap.
-        /// 
-        /// Args:
-        /// trim_start (int, optional): Number of items to trim
-        /// from the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        /// </summary>
+        /// <summary> Generate values and color swatches mapping for a given classmap. </summary>
         /// <param name="classmapName"> classmap name. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
@@ -3605,11 +3063,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Generate values and color swatches mapping for a given interval classmap.
-        /// 
-        /// Args:
-        /// trim_start (int, optional): Number of items to trim from
-        /// the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3644,11 +3097,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Generate values and color swatches mapping for a given interval classmap.
-        /// 
-        /// Args:
-        /// trim_start (int, optional): Number of items to trim from
-        /// the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3681,14 +3129,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary>
-        /// Generate values and color swatches mapping for a given interval classmap.
-        /// 
-        /// Args:
-        /// trim_start (int, optional): Number of items to trim from
-        /// the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        /// </summary>
+        /// <summary> Generate values and color swatches mapping for a given interval classmap. </summary>
         /// <param name="classmapName"> classmap name. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
@@ -3704,14 +3145,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<IList<BinaryData>>>(), result);
         }
 
-        /// <summary>
-        /// Generate values and color swatches mapping for a given interval classmap.
-        /// 
-        /// Args:
-        /// trim_start (int, optional): Number of items to trim from
-        /// the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        /// </summary>
+        /// <summary> Generate values and color swatches mapping for a given interval classmap. </summary>
         /// <param name="classmapName"> classmap name. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
@@ -3733,18 +3167,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// If the colormap has non-contiguous values at the beginning or end,
         /// which aren't desired in the output image, they can be trimmed by specifying
         /// the number of values to trim.
-        /// 
-        /// Args:
-        /// cmap_name (string): The name of the registered colormap to generate
-        /// a legend for
-        /// height (float, optional): The output height of the legend image
-        /// width (float, optional): The output width of the legend image
-        /// trim_start (int, optional): Number of items to trim from
-        /// the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        /// 
-        /// Returns:
-        /// HTTP response with jpeg encoded image data
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3761,7 +3183,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetLegend(string colorMapName, double? height, double? width, int? trimStart, int? trimEnd, RequestContext context)
+        public virtual Response GetLegend(string colorMapName, float? height, float? width, int? trimStart, int? trimEnd, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetLegend");
             scope.Start();
@@ -3785,18 +3207,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// If the colormap has non-contiguous values at the beginning or end,
         /// which aren't desired in the output image, they can be trimmed by specifying
         /// the number of values to trim.
-        /// 
-        /// Args:
-        /// cmap_name (string): The name of the registered colormap to generate
-        /// a legend for
-        /// height (float, optional): The output height of the legend image
-        /// width (float, optional): The output width of the legend image
-        /// trim_start (int, optional): Number of items to trim from
-        /// the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        /// 
-        /// Returns:
-        /// HTTP response with jpeg encoded image data
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3813,7 +3223,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetLegendAsync(string colorMapName, double? height, double? width, int? trimStart, int? trimEnd, RequestContext context)
+        public virtual async Task<Response> GetLegendAsync(string colorMapName, float? height, float? width, int? trimStart, int? trimEnd, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetLegend");
             scope.Start();
@@ -3837,18 +3247,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// If the colormap has non-contiguous values at the beginning or end,
         /// which aren't desired in the output image, they can be trimmed by specifying
         /// the number of values to trim.
-        /// 
-        /// Args:
-        /// cmap_name (string): The name of the registered colormap to generate
-        /// a legend for
-        /// height (float, optional): The output height of the legend image
-        /// width (float, optional): The output width of the legend image
-        /// trim_start (int, optional): Number of items to trim from
-        /// the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        /// 
-        /// Returns:
-        /// HTTP response with jpeg encoded image data
         /// </summary>
         /// <param name="colorMapName"> The name of the registered colormap to generate a legend for. </param>
         /// <param name="height"> The output height of the legend image. </param>
@@ -3859,7 +3257,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetLegend(string colorMapName, double? height = default, double? width = default, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetLegend(string colorMapName, float? height = default, float? width = default, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
 
@@ -3873,18 +3271,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// If the colormap has non-contiguous values at the beginning or end,
         /// which aren't desired in the output image, they can be trimmed by specifying
         /// the number of values to trim.
-        /// 
-        /// Args:
-        /// cmap_name (string): The name of the registered colormap to generate
-        /// a legend for
-        /// height (float, optional): The output height of the legend image
-        /// width (float, optional): The output width of the legend image
-        /// trim_start (int, optional): Number of items to trim from
-        /// the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        /// 
-        /// Returns:
-        /// HTTP response with jpeg encoded image data
         /// </summary>
         /// <param name="colorMapName"> The name of the registered colormap to generate a legend for. </param>
         /// <param name="height"> The output height of the legend image. </param>
@@ -3895,7 +3281,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetLegendAsync(string colorMapName, double? height = default, double? width = default, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetLegendAsync(string colorMapName, float? height = default, float? width = default, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
 
@@ -4428,7 +3814,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerMosaicSearchRegistrationResult> RegisterMosaicsSearch(IEnumerable<string> collections = default, IEnumerable<string> ids = default, double? boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, string filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
+        public virtual Response<TilerMosaicSearchRegistrationResult> RegisterMosaicsSearch(IEnumerable<string> collections = default, IEnumerable<string> ids = default, float? boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, string filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
         {
             RegisterMosaicsSearchRequest spreadModel = new RegisterMosaicsSearchRequest(
                 collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
@@ -4459,7 +3845,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerMosaicSearchRegistrationResult>> RegisterMosaicsSearchAsync(IEnumerable<string> collections = default, IEnumerable<string> ids = default, double? boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, string filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TilerMosaicSearchRegistrationResult>> RegisterMosaicsSearchAsync(IEnumerable<string> collections = default, IEnumerable<string> ids = default, float? boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, string filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
         {
             RegisterMosaicsSearchRequest spreadModel = new RegisterMosaicsSearchRequest(
                 collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
@@ -4528,7 +3914,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMosaicsTileJson(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetMosaicsTileJson(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, string tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, string resampling = default, string pixelSelection = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsTileJson");
             scope.Start();
@@ -4598,7 +3984,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, string tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, string resampling = default, string pixelSelection = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsTileJson");
             scope.Start();
@@ -4620,104 +4006,36 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Return TileJSON document for a searchId. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for mosaic TileJSON generation including asset selection, terrain algorithms, and tile formatting. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetaData> GetMosaicsTileJson(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileJsonMetaData> GetMosaicsTileJson(string searchId, string tileMatrixSetId, GetMosaicTileJsonOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetMosaicsTileJson(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.GetMosaicsTileJson(searchId, tileMatrixSetId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((TileJsonMetaData)result, result);
         }
 
         /// <summary> Return TileJSON document for a searchId. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for mosaic TileJSON generation including asset selection, terrain algorithms, and tile formatting. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetaData>> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileJsonMetaData>> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, GetMosaicTileJsonOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetMosaicsTileJsonAsync(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.GetMosaicsTileJsonAsync(searchId, tileMatrixSetId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((TileJsonMetaData)result, result);
         }
 
@@ -4779,7 +4097,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, string resampling = default, string pixelSelection = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsTile");
             scope.Start();
@@ -4857,7 +4175,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, string resampling = default, string pixelSelection = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsTile");
             scope.Start();
@@ -4880,120 +4198,48 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Create map tile. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="z"> Identifier (Z) selecting one of the scales defined in the TileMatrixSet. </param>
+        /// <param name="x"> Column (X) index of the tile on the selected TileMatrix. </param>
+        /// <param name="y"> Row (Y) index of the tile on the selected TileMatrix. </param>
+        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
+        /// <param name="options"> Options for mosaic tile generation including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/>, <paramref name="format"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, GetMosaicTileOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetMosaicsTile(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.GetMosaicsTile(searchId, tileMatrixSetId, z, x, y, scale, format, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue(result.Content, result);
         }
 
         /// <summary> Create map tile. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="z"> Identifier (Z) selecting one of the scales defined in the TileMatrixSet. </param>
+        /// <param name="x"> Column (X) index of the tile on the selected TileMatrix. </param>
+        /// <param name="y"> Row (Y) index of the tile on the selected TileMatrix. </param>
+        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
+        /// <param name="options"> Options for mosaic tile generation including asset selection, terrain algorithms, and visual rendering. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/>, <paramref name="format"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, GetMosaicTileOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetMosaicsTileAsync(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.GetMosaicsTileAsync(searchId, tileMatrixSetId, z, x, y, scale, format, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -5035,7 +4281,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, string resampling = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsWmtsCapabilities");
             scope.Start();
@@ -5092,7 +4338,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, string resampling = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsWmtsCapabilities");
             scope.Start();
@@ -5114,78 +4360,36 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> OGC WMTS endpoint. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for mosaic WMTS capabilities including asset selection, terrain algorithms, and tile formatting. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, GetMosaicWmtsCapabilitiesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetMosaicsWmtsCapabilities(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.GetMosaicsWmtsCapabilities(searchId, tileMatrixSetId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue(result.Content, result);
         }
 
         /// <summary> OGC WMTS endpoint. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> Options for mosaic WMTS capabilities including asset selection, terrain algorithms, and tile formatting. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, GetMosaicWmtsCapabilitiesOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetMosaicsWmtsCapabilitiesAsync(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.GetMosaicsWmtsCapabilitiesAsync(searchId, tileMatrixSetId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
     }

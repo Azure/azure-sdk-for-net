@@ -26,7 +26,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Collections = new ChangeTrackingList<string>();
             Ids = new ChangeTrackingList<string>();
-            BoundingBox = new ChangeTrackingList<double>();
+            BoundingBox = new ChangeTrackingList<float>();
             ConformanceClass = new ChangeTrackingDictionary<string, BinaryData>();
             Query = new ChangeTrackingDictionary<string, BinaryData>();
             SortBy = new ChangeTrackingList<StacSortExtension>();
@@ -71,7 +71,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="filterLang"> Filter language to use for the filter expression. </param>
         /// <param name="token"> Pagination token for fetching the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchPostContent(IList<string> collections, IList<string> ids, IList<double> boundingBox, GeoJsonGeometry intersects, string datetime, int? limit, IDictionary<string, BinaryData> conformanceClass, StacAssetUrlSigningMode? sign, int? durationInMinutes, IDictionary<string, BinaryData> query, IList<StacSortExtension> sortBy, IList<SearchOptionsFields> fields, string filter, string filterCoordinateReferenceSystem, FilterLanguage? filterLang, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchPostContent(IList<string> collections, IList<string> ids, IList<float> boundingBox, GeoJsonGeometry intersects, string datetime, int? limit, IDictionary<string, BinaryData> conformanceClass, StacAssetUrlSigningMode? sign, int? durationInMinutes, IDictionary<string, BinaryData> query, IList<StacSortExtension> sortBy, IList<SearchOptionsFields> fields, string filter, string filterCoordinateReferenceSystem, FilterLanguage? filterLang, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collections = collections;
             Ids = ids;
@@ -99,7 +99,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<string> Ids { get; }
 
         /// <summary> Bounding box for spatial filtering in format [west, south, east, north]. </summary>
-        public IList<double> BoundingBox { get; }
+        public IList<float> BoundingBox { get; }
 
         /// <summary> GeoJSON geometry for spatial filtering. </summary>
         public GeoJsonGeometry Intersects { get; set; }

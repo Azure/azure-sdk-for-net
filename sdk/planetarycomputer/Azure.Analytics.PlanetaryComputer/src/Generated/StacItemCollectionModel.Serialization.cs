@@ -56,7 +56,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 writer.WritePropertyName("bbox"u8);
                 writer.WriteStartArray();
-                foreach (double item in BoundingBox)
+                foreach (float item in BoundingBox)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -103,7 +103,7 @@ namespace Azure.Analytics.PlanetaryComputer
             IList<string> stacExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<StacItemModel> features = default;
-            IList<double> boundingBox = default;
+            IList<float> boundingBox = default;
             StacContextExtension context = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,10 +183,10 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    List<double> array = new List<double>();
+                    List<float> array = new List<float>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetDouble());
+                        array.Add(item.GetSingle());
                     }
                     boundingBox = array;
                     continue;
@@ -215,7 +215,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 stacExtensions ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties,
                 features,
-                boundingBox ?? new ChangeTrackingList<double>(),
+                boundingBox ?? new ChangeTrackingList<float>(),
                 context);
         }
 

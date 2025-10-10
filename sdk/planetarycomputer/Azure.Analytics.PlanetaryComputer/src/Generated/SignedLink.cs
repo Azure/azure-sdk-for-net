@@ -18,7 +18,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Initializes a new instance of <see cref="SignedLink"/>. </summary>
         /// <param name="href"> The URL of the unsigned link. </param>
-        internal SignedLink(string href)
+        internal SignedLink(Uri href)
         {
             Href = href;
         }
@@ -27,7 +27,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="expiresOn"> The expiry date of the signed link. This indicates when the link will no longer be valid. </param>
         /// <param name="href"> The URL of the unsigned link. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignedLink(DateTimeOffset? expiresOn, string href, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SignedLink(DateTimeOffset? expiresOn, Uri href, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExpiresOn = expiresOn;
             Href = href;
@@ -38,6 +38,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> The URL of the unsigned link. </summary>
-        public string Href { get; }
+        public Uri Href { get; }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the point as [longitude, latitude]. </param>
-        internal GeoJsonPoint(GeometryType @type, IList<double> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, string coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
+        internal GeoJsonPoint(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, string coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
         }

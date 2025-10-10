@@ -72,7 +72,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 writer.WritePropertyName("bbox"u8);
                 writer.WriteStartArray();
-                foreach (double item in BoundingBox)
+                foreach (float item in BoundingBox)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -233,7 +233,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             IList<string> collections = default;
             IList<string> ids = default;
-            IList<double> boundingBox = default;
+            IList<float> boundingBox = default;
             GeoJsonGeometry intersects = default;
             string datetime = default;
             int? limit = default;
@@ -298,10 +298,10 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    List<double> array = new List<double>();
+                    List<float> array = new List<float>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetDouble());
+                        array.Add(item.GetSingle());
                     }
                     boundingBox = array;
                     continue;
@@ -449,7 +449,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return new SearchPostContent(
                 collections ?? new ChangeTrackingList<string>(),
                 ids ?? new ChangeTrackingList<string>(),
-                boundingBox ?? new ChangeTrackingList<double>(),
+                boundingBox ?? new ChangeTrackingList<float>(),
                 intersects,
                 datetime,
                 limit,
