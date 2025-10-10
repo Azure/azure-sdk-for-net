@@ -1,7 +1,7 @@
 {
   "main": "dist/src/index.js",
   "dependencies": {
-    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20251008.1"
+    "@azure-typespec/http-client-csharp-mgmt": "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/@azure-typespec/http-client-csharp-mgmt/-/http-client-csharp-mgmt-1.0.0-alpha.20251010.1.tgz"
   },
   "devDependencies": {
     "@azure-tools/typespec-azure-core": "0.60.0",
