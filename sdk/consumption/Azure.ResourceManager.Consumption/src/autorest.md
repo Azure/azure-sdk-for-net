@@ -233,29 +233,10 @@ directive:
   - from: openapi.json
     where: $.definitions
     transform: >
-      const propertiesToClean = [
-        'CreditSummaryProperties', 'EventProperties', 'LotProperties'
-      ];
-      propertiesToClean.forEach(propName => {
-        if ($[propName] && $[propName].properties && $[propName].properties.eTag) {
-          delete $[propName].properties.eTag;
-        }
-      });
-      const modelsToClean = [
-        'Budget', 'CreditSummary', 'Balance', 
-        'EventSummary', 'LotSummary', 'ReservationSummary', 'TagsResult',
-        'ReservationDetail', 'Marketplace', 'ManagementGroupAggregatedCostResult'
-      ];
-      modelsToClean.forEach(modelName => {
-        if ($[modelName] && $[modelName].properties) {
-          if ($[modelName].properties.eTag) {
-            delete $[modelName].properties.eTag;
-          }
-          if ($[modelName].properties.etag) {
-            delete $[modelName].properties.etag;
-          }
-        }
-      });
+      delete $.CreditSummaryProperties.properties.eTag;
+      delete $.EventProperties.properties.eTag;
+      delete $.LotProperties.properties.eTag;
+      delete $.Budget.properties.eTag;
     reason: delete the eTag property in Properties model as the original model already has got an eTag property from allOf keyword.
   - from: openapi.json
     where: $.definitions
@@ -266,8 +247,8 @@ directive:
   - from: openapi.json
     where: $.paths
     transform: >
-      $['/{scope}/providers/Microsoft.Consumption/usageDetails'].get.parameters[3]['x-ms-client-name'] = 'skipToken';
-      $['/{scope}/providers/Microsoft.Consumption/marketplaces'].get.parameters[2]['x-ms-client-name'] = 'skipToken';
+      $['/{scope}/providers/Microsoft.Consumption/usageDetails'].get.parameters[4]['x-ms-client-name'] = 'skipToken';
+      $['/{scope}/providers/Microsoft.Consumption/marketplaces'].get.parameters[4]['x-ms-client-name'] = 'skipToken';
       $['/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default'].get.parameters[3]['x-ms-client-name'] = 'skipToken';
       $['/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default'].get.parameters[4]['x-ms-client-name'] = 'skipToken';
     reason: change the query parameter name from skiptoken to skipToken.
@@ -277,11 +258,8 @@ directive:
   - from: openapi.json
     where: $.definitions
     transform: >
-      ['Budget','CreditSummary'].forEach(n => {
-        if ($[n] && Array.isArray($[n].allOf) && $[n].allOf.length > 0 && $[n].allOf[0]['$ref'] !== '#/definitions/ProxyResource') {
-          $[n].allOf[0]['$ref'] = '#/definitions/ProxyResource';
-        }
-      });
+      $.Budget.allOf[0]['$ref'] = '#/definitions/ProxyResource';
+      $.CreditSummary.allOf[0]['$ref'] = '#/definitions/ProxyResource';
     reason: Force Budget, CreditSummary to inherit from current definition ProxyResource.
   - from: openapi.json
     where: $.paths['/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download'].post.responses.default.schema
@@ -298,11 +276,8 @@ directive:
   - from: openapi.json
     where: $.definitions
     transform: >
-      ['LegacyReservationRecommendation', 'ModernReservationRecommendation'].forEach(model => {
-        if ($[model] && $[model].properties && $[model].properties.properties) {
-          $[model].properties.properties['x-ms-client-flatten'] = true;
-        }
-      });
+      $.LegacyReservationRecommendation.properties.properties['x-ms-client-flatten'] = true;
+      $.ModernReservationRecommendation.properties.properties['x-ms-client-flatten'] = true;
     reason: Flatten the 'properties' property in both LegacyReservationRecommendation and ModernReservationRecommendation models.
     
 ````

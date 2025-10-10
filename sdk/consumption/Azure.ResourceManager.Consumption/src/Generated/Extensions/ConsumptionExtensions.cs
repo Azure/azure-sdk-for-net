@@ -230,16 +230,16 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="skipToken"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
+        /// <param name="filter"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static AsyncPageable<ConsumptionMarketplace> GetConsumptionMarketPlacesAsync(this ArmClient client, ResourceIdentifier scope, string skipToken = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ConsumptionMarketplace> GetConsumptionMarketPlacesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableConsumptionArmClient(client).GetConsumptionMarketPlacesAsync(scope, skipToken, top, skiptoken, cancellationToken);
+            return GetMockableConsumptionArmClient(client).GetConsumptionMarketPlacesAsync(scope, filter, top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -265,16 +265,16 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="skipToken"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
+        /// <param name="filter"> May be used to filter marketplaces by properties/usageEnd (Utc time), properties/usageStart (Utc time), properties/resourceGroup, properties/instanceName or properties/instanceId. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Pageable<ConsumptionMarketplace> GetConsumptionMarketPlaces(this ArmClient client, ResourceIdentifier scope, string skipToken = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public static Pageable<ConsumptionMarketplace> GetConsumptionMarketPlaces(this ArmClient client, ResourceIdentifier scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableConsumptionArmClient(client).GetConsumptionMarketPlaces(scope, skipToken, top, skiptoken, cancellationToken);
+            return GetMockableConsumptionArmClient(client).GetConsumptionMarketPlaces(scope, filter, top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -367,17 +367,17 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="expand"> May be used to expand the properties/additionalInfo or properties/meterDetails within a list of usage details. By default, these fields are not included when listing usage details. </param>
-        /// <param name="skipToken"> May be used to filter usageDetails by properties/resourceGroup, properties/resourceName, properties/resourceId, properties/chargeType, properties/reservationId, properties/publisherType or tags. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). PublisherType Filter accepts two values azure and marketplace and it is currently supported for Web Direct Offer Type. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="filter"> May be used to filter usageDetails by properties/resourceGroup, properties/resourceName, properties/resourceId, properties/chargeType, properties/reservationId, properties/publisherType or tags. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). PublisherType Filter accepts two values azure and marketplace and it is currently supported for Web Direct Offer Type. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static AsyncPageable<ConsumptionUsageDetail> GetConsumptionUsageDetailsAsync(this ArmClient client, ResourceIdentifier scope, string expand = null, string skipToken = null, string skiptoken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ConsumptionUsageDetail> GetConsumptionUsageDetailsAsync(this ArmClient client, ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableConsumptionArmClient(client).GetConsumptionUsageDetailsAsync(scope, expand, skipToken, skiptoken, top, metric, cancellationToken);
+            return GetMockableConsumptionArmClient(client).GetConsumptionUsageDetailsAsync(scope, expand, filter, skipToken, top, metric, cancellationToken);
         }
 
         /// <summary>
@@ -406,17 +406,17 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="expand"> May be used to expand the properties/additionalInfo or properties/meterDetails within a list of usage details. By default, these fields are not included when listing usage details. </param>
-        /// <param name="skipToken"> May be used to filter usageDetails by properties/resourceGroup, properties/resourceName, properties/resourceId, properties/chargeType, properties/reservationId, properties/publisherType or tags. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). PublisherType Filter accepts two values azure and marketplace and it is currently supported for Web Direct Offer Type. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="filter"> May be used to filter usageDetails by properties/resourceGroup, properties/resourceName, properties/resourceId, properties/chargeType, properties/reservationId, properties/publisherType or tags. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). PublisherType Filter accepts two values azure and marketplace and it is currently supported for Web Direct Offer Type. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Pageable<ConsumptionUsageDetail> GetConsumptionUsageDetails(this ArmClient client, ResourceIdentifier scope, string expand = null, string skipToken = null, string skiptoken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
+        public static Pageable<ConsumptionUsageDetail> GetConsumptionUsageDetails(this ArmClient client, ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableConsumptionArmClient(client).GetConsumptionUsageDetails(scope, expand, skipToken, skiptoken, top, metric, cancellationToken);
+            return GetMockableConsumptionArmClient(client).GetConsumptionUsageDetails(scope, expand, filter, skipToken, top, metric, cancellationToken);
         }
 
         /// <summary>
