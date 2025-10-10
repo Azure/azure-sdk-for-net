@@ -10,7 +10,10 @@ namespace Azure.ResourceManager.Hci.Vm
     {
         internal HciVmAttestationStatusData() { }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmAttestationStatusProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.HciVmAttestationStatusData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmAttestationStatusData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmAttestationStatusData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.HciVmAttestationStatusData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmAttestationStatusData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -34,6 +37,7 @@ namespace Azure.ResourceManager.Hci.Vm
     }
     public static partial class HciVmExtensions
     {
+        public static Azure.ResourceManager.Hci.Vm.HciVmAttestationStatusResource GetHciVmAttestationStatus(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmAttestationStatusResource GetHciVmAttestationStatusResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Hci.Vm.HciVmGalleryImageResource> GetHciVmGalleryImage(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Hci.Vm.HciVmGalleryImageResource>> GetHciVmGalleryImageAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string galleryImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -41,10 +45,14 @@ namespace Azure.ResourceManager.Hci.Vm
         public static Azure.ResourceManager.Hci.Vm.HciVmGalleryImageCollection GetHciVmGalleryImages(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Hci.Vm.HciVmGalleryImageResource> GetHciVmGalleryImages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Hci.Vm.HciVmGalleryImageResource> GetHciVmGalleryImagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.HciVmGuestAgentResource GetHciVmGuestAgent(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmGuestAgentResource GetHciVmGuestAgentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.HciVmHybridIdentityMetadataResource GetHciVmHybridIdentityMetadata(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmHybridIdentityMetadataResource GetHciVmHybridIdentityMetadataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmInstanceResource GetHciVmInstance(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmInstanceResource GetHciVmInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Hci.Vm.HciVmInstanceResource> GetHciVmInstances(this Azure.ResourceManager.Resources.TenantResource tenantResource, string resourceUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Hci.Vm.HciVmInstanceResource> GetHciVmInstancesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string resourceUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Hci.Vm.HciVmLogicalNetworkResource> GetHciVmLogicalNetwork(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string logicalNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Hci.Vm.HciVmLogicalNetworkResource>> GetHciVmLogicalNetworkAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string logicalNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmLogicalNetworkResource GetHciVmLogicalNetworkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -105,7 +113,10 @@ namespace Azure.ResourceManager.Hci.Vm
         public HciVmGalleryImageData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.HciVmGalleryImageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmGalleryImageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmGalleryImageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.HciVmGalleryImageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmGalleryImageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -141,7 +152,10 @@ namespace Azure.ResourceManager.Hci.Vm
     {
         public HciVmGuestAgentData() { }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmGuestAgentProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.HciVmGuestAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmGuestAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmGuestAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.HciVmGuestAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmGuestAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -171,7 +185,10 @@ namespace Azure.ResourceManager.Hci.Vm
     {
         internal HciVmHybridIdentityMetadataData() { }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmHybridIdentityMetadataProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.HciVmHybridIdentityMetadataData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmHybridIdentityMetadataData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmHybridIdentityMetadataData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.HciVmHybridIdentityMetadataData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmHybridIdentityMetadataData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -199,7 +216,10 @@ namespace Azure.ResourceManager.Hci.Vm
         public Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.HciVmInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.HciVmInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -262,7 +282,10 @@ namespace Azure.ResourceManager.Hci.Vm
         public HciVmLogicalNetworkData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.HciVmLogicalNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmLogicalNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmLogicalNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.HciVmLogicalNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmLogicalNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -316,7 +339,10 @@ namespace Azure.ResourceManager.Hci.Vm
         public HciVmMarketplaceGalleryImageData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.HciVmMarketplaceGalleryImageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmMarketplaceGalleryImageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmMarketplaceGalleryImageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.HciVmMarketplaceGalleryImageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmMarketplaceGalleryImageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -370,7 +396,10 @@ namespace Azure.ResourceManager.Hci.Vm
         public HciVmNetworkInterfaceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.HciVmNetworkInterfaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmNetworkInterfaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmNetworkInterfaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.HciVmNetworkInterfaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmNetworkInterfaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -425,7 +454,10 @@ namespace Azure.ResourceManager.Hci.Vm
         public string ETag { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.HciVmNetworkSecurityGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmNetworkSecurityGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmNetworkSecurityGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.HciVmNetworkSecurityGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmNetworkSecurityGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -445,8 +477,6 @@ namespace Azure.ResourceManager.Hci.Vm
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Hci.Vm.HciVmNetworkSecurityGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Hci.Vm.HciVmNetworkSecurityGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleResource> GetHciVmSecurityRule(string securityRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleResource>> GetHciVmSecurityRuleAsync(string securityRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleCollection GetHciVmSecurityRules() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Hci.Vm.HciVmNetworkSecurityGroupResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Hci.Vm.HciVmNetworkSecurityGroupResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -482,7 +512,10 @@ namespace Azure.ResourceManager.Hci.Vm
         public HciVmSecurityRuleData() { }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -505,8 +538,6 @@ namespace Azure.ResourceManager.Hci.Vm
         Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HciVmStorageContainerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Hci.Vm.HciVmStorageContainerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.HciVmStorageContainerResource>, System.Collections.IEnumerable
     {
@@ -530,7 +561,10 @@ namespace Azure.ResourceManager.Hci.Vm
         public HciVmStorageContainerData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.HciVmStorageContainerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmStorageContainerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmStorageContainerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.HciVmStorageContainerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmStorageContainerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -584,7 +618,10 @@ namespace Azure.ResourceManager.Hci.Vm
         public HciVmVirtualHardDiskData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.HciVmVirtualHardDiskData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmVirtualHardDiskData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.HciVmVirtualHardDiskData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.HciVmVirtualHardDiskData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmVirtualHardDiskData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -615,8 +652,8 @@ namespace Azure.ResourceManager.Hci.Vm
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.HciVmVirtualHardDiskData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Hci.Vm.HciVmVirtualHardDiskResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Hci.Vm.HciVmVirtualHardDiskResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadResult> Upload(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadResult>> UploadAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Upload(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UploadAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Hci.Vm.Mocking
@@ -624,9 +661,12 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
     public partial class MockableHciVmArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableHciVmArmClient() { }
+        public virtual Azure.ResourceManager.Hci.Vm.HciVmAttestationStatusResource GetHciVmAttestationStatus(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.Hci.Vm.HciVmAttestationStatusResource GetHciVmAttestationStatusResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Hci.Vm.HciVmGalleryImageResource GetHciVmGalleryImageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Hci.Vm.HciVmGuestAgentResource GetHciVmGuestAgent(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.Hci.Vm.HciVmGuestAgentResource GetHciVmGuestAgentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Hci.Vm.HciVmHybridIdentityMetadataResource GetHciVmHybridIdentityMetadata(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.Hci.Vm.HciVmHybridIdentityMetadataResource GetHciVmHybridIdentityMetadataResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Hci.Vm.HciVmInstanceResource GetHciVmInstance(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.Hci.Vm.HciVmInstanceResource GetHciVmInstanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -681,59 +721,85 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         public virtual Azure.Pageable<Azure.ResourceManager.Hci.Vm.HciVmVirtualHardDiskResource> GetHciVmVirtualHardDisks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Hci.Vm.HciVmVirtualHardDiskResource> GetHciVmVirtualHardDisksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class MockableHciVmTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableHciVmTenantResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Hci.Vm.HciVmInstanceResource> GetHciVmInstances(string resourceUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Hci.Vm.HciVmInstanceResource> GetHciVmInstancesAsync(string resourceUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     public static partial class ArmHciVmModelFactory
     {
-        public static Azure.ResourceManager.Hci.Vm.Models.GuestAgentInstallStatus GuestAgentInstallStatus(string vmUuid = null, Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType? status = default(Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType?), System.DateTimeOffset? lastStatusChangedOn = default(System.DateTimeOffset?), string agentVersion = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errorDetails = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo ErrorAdditionalInfo(string type = null, System.BinaryData info = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.ErrorDetail> details = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo> additionalInfo = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.GalleryImageVersionStorageProfile GalleryImageVersionStorageProfile(long? osDiskImageSizeInMB = default(long?)) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.GuestAgentInstallStatus GuestAgentInstallStatus(string vmUuid = null, Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType? status = default(Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType?), System.DateTimeOffset? lastStatusChangedOn = default(System.DateTimeOffset?), string agentVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.ErrorDetail> errorDetails = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmAttestationStatusData HciVmAttestationStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Hci.Vm.Models.HciVmAttestationStatusProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmAttestationStatusProperties HciVmAttestationStatusProperties(Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus? attestSecureBootEnabled = default(Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus?), Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus? attestationCertValidated = default(Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus?), Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus? bootIntegrityValidated = default(Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus?), string linuxKernelVersion = null, Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus? healthStatus = default(Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus?), string timestamp = null, string errorMessage = null, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType? attestHardwarePlatform = default(Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType?), Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType? attestDiskSecurityEncryptionType = default(Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmConfigAgentInstanceView HciVmConfigAgentInstanceView(string vmConfigAgentVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceViewStatus> statuses = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmGalleryImageData HciVmGalleryImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProperties properties = null, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImagePatch HciVmGalleryImagePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProperties HciVmGalleryImageProperties(Azure.Core.ResourceIdentifier containerId = null, string imagePath = null, Azure.ResourceManager.Hci.Vm.Models.HciVmOSType osType = default(Azure.ResourceManager.Hci.Vm.Models.HciVmOSType), Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource? cloudInitDataSource = default(Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource?), Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration? hyperVGeneration = default(Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration?), Azure.ResourceManager.Hci.Vm.Models.HciVmImageRepositoryCredentials vmImageRepositoryCredentials = null, Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageIdentifier identifier = null, Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion version = null, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageStatus status = null, Azure.Core.ResourceIdentifier sourceVirtualMachineId = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProvisioningStatus HciVmGalleryImageProvisioningStatus(string operationId = null, Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? status = default(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageStatus HciVmGalleryImageStatus(string errorCode = null, string errorMessage = null, Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProvisioningStatus provisioningStatus = null, long? downloadSizeInMB = default(long?), long? progressPercentage = default(long?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmGuestAgentData HciVmGuestAgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Hci.Vm.Models.HciVmGuestAgentProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmGuestAgentProperties HciVmGuestAgentProperties(Azure.ResourceManager.Hci.Vm.Models.HciVmGuestCredential credentials = null, Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction? provisioningAction = default(Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction?), string status = null, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmHttpProxyConfiguration HciVmHttpProxyConfiguration(string httpProxy = null, string httpsProxy = null, System.Collections.Generic.IEnumerable<string> noProxy = null, string trustedCa = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmHybridIdentityMetadataData HciVmHybridIdentityMetadataData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Hci.Vm.Models.HciVmHybridIdentityMetadataProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Hci.Vm.Models.HciVmHybridIdentityMetadataProperties HciVmHybridIdentityMetadataProperties(string resourceUid = null, string publicKey = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmHybridIdentityMetadataProperties HciVmHybridIdentityMetadataProperties(string resourceUid = null, string publicKey = null, Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity identity = null, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity HciVmIdentity(string principalId = null, string tenantId = null, string type = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmInstanceData HciVmInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProperties properties = null, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation extendedLocation = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProperties HciVmInstanceProperties(Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfile hardwareProfile = null, Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePlacementProfile placementProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> networkInterfaces = null, Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfile osProfile = null, Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceSecurityProfile securityProfile = null, Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfile storageProfile = null, Azure.ResourceManager.Hci.Vm.Models.HciVmHttpProxyConfiguration httpProxyConfig = null, bool? isCreatingFromLocal = default(bool?), Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), Azure.ResourceManager.Hci.Vm.Models.HciVmConfigAgentInstanceView instanceViewVmAgent = null, Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStatus status = null, Azure.ResourceManager.Hci.Vm.Models.GuestAgentInstallStatus guestAgentInstallStatus = null, string vmId = null, string resourceUid = null, string hyperVVmId = null, string hostNodeName = null, string hostNodeIPAddress = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfile HciVmInstanceHardwareProfile(Azure.ResourceManager.Hci.Vm.Models.HciVmSize? vmSize = default(Azure.ResourceManager.Hci.Vm.Models.HciVmSize?), int? processors = default(int?), long? memoryInMB = default(long?), Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileDynamicMemoryConfiguration dynamicMemoryConfig = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileUpdate HciVmInstanceHardwareProfileUpdate(Azure.ResourceManager.Hci.Vm.Models.HciVmSize? vmSize = default(Azure.ResourceManager.Hci.Vm.Models.HciVmSize?), int? processors = default(int?), long? memoryInMB = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileLinuxConfiguration HciVmInstanceOSProfileLinuxConfiguration(bool? disablePasswordAuthentication = default(bool?), System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileSshPublicKey> sshPublicKeys = null, bool? provisionVMAgent = default(bool?), bool? provisionVMConfigAgent = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileWindowsConfiguration HciVmInstanceOSProfileWindowsConfiguration(bool? enableAutomaticUpdates = default(bool?), System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileSshPublicKey> sshPublicKeys = null, string timeZone = null, bool? provisionVMAgent = default(bool?), bool? provisionVMConfigAgent = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatchProperties HciVmInstancePatchProperties(Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileUpdate hardwareProfile = null, System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference> storageDataDisks = null, System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference> networkInterfaces = null, Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfile osProfile = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProperties HciVmInstanceProperties(Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfile hardwareProfile = null, Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePlacementProfile placementProfile = null, System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference> networkInterfaces = null, Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfile osProfile = null, Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceSecurityProfile securityProfile = null, Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfile storageProfile = null, Azure.ResourceManager.Hci.Vm.Models.HciVmHttpProxyConfiguration httpProxyConfig = null, bool? isCreatingFromLocal = default(bool?), Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), Azure.ResourceManager.Hci.Vm.Models.HciVmConfigAgentInstanceView instanceViewVmAgent = null, Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStatus status = null, Azure.ResourceManager.Hci.Vm.Models.GuestAgentInstallStatus guestAgentInstallStatus = null, string vmId = null, string resourceUid = null, string hyperVVmId = null, string hostNodeName = null, string hostNodeIpAddress = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProvisioningStatus HciVmInstanceProvisioningStatus(string operationId = null, Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? status = default(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStatus HciVmInstanceStatus(string errorCode = null, string errorMessage = null, Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState? powerState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState?), Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProvisioningStatus provisioningStatus = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfile HciVmInstanceStorageProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference> dataDisks = null, Azure.Core.ResourceIdentifier imageReferenceId = null, Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfileOSDisk osDisk = null, Azure.Core.ResourceIdentifier vmConfigStoragePathId = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceViewStatus HciVmInstanceViewStatus(string code = null, Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType? level = default(Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType?), string displayStatus = null, string message = null, System.DateTimeOffset? time = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationProperties HciVmIPConfigurationProperties(string gateway = null, string prefixLength = null, string privateIPAddress = null, Azure.Core.ResourceIdentifier subnetId = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolInfo HciVmIPPoolInfo(string used = null, string available = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmLogicalNetworkData HciVmLogicalNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProperties properties = null, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation extendedLocation = null) { throw null; }
-        public static Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProperties HciVmLogicalNetworkProperties(System.Collections.Generic.IEnumerable<string> dhcpOptionsDnsServers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingSubnet> subnets = null, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), string vmSwitchName = null, Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkStatus status = null, Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType? networkType = default(Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType?)) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkPatch HciVmLogicalNetworkPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProperties HciVmLogicalNetworkProperties(System.Collections.Generic.IList<string> dhcpOptionsDnsServers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingSubnet> subnets = null, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), string vmSwitchName = null, Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkStatus status = null, Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType? networkType = default(Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProvisioningStatus HciVmLogicalNetworkProvisioningStatus(string operationId = null, Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? status = default(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkStatus HciVmLogicalNetworkStatus(string errorCode = null, string errorMessage = null, Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProvisioningStatus provisioningStatus = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmMarketplaceGalleryImageData HciVmMarketplaceGalleryImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProperties properties = null, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImagePatch HciVmMarketplaceGalleryImagePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProperties HciVmMarketplaceGalleryImageProperties(Azure.Core.ResourceIdentifier containerId = null, Azure.ResourceManager.Hci.Vm.Models.HciVmOSType osType = default(Azure.ResourceManager.Hci.Vm.Models.HciVmOSType), Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource? cloudInitDataSource = default(Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource?), Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration? hyperVGeneration = default(Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration?), Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageIdentifier identifier = null, Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion version = null, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageStatus status = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProvisioningStatus HciVmMarketplaceGalleryImageProvisioningStatus(string operationId = null, Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? status = default(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageStatus HciVmMarketplaceGalleryImageStatus(string errorCode = null, string errorMessage = null, Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProvisioningStatus provisioningStatus = null, long? downloadSizeInMB = default(long?), long? progressPercentage = default(long?)) { throw null; }
-        public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRouteTable HciVmNetworkingRouteTable(string etag = null, string name = null, string type = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRoute> routes = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRouteTable HciVmNetworkingRouteTable(string etag = null, string name = null, string type = null, System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRoute> routes = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingSubnet HciVmNetworkingSubnet(string addressPrefix = null, System.Collections.Generic.IList<string> addressPrefixes = null, Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod? ipAllocationMethod = default(Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod?), System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.SubnetIpConfigurationReference> ipConfigurationReferences = null, Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRouteTable routeTable = null, System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingIPPool> ipPools = null, int? vlan = default(int?), Azure.Core.ResourceIdentifier networkSecurityGroupId = null, string name = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmNetworkInterfaceData HciVmNetworkInterfaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProperties properties = null, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation extendedLocation = null) { throw null; }
-        public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProperties HciVmNetworkInterfaceProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfiguration> ipConfigurations = null, string macAddress = null, System.Collections.Generic.IEnumerable<string> dnsServers = null, bool? createFromLocal = default(bool?), Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceStatus status = null, Azure.Core.ResourceIdentifier networkSecurityGroupId = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatch HciVmNetworkInterfacePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatchProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatchProperties HciVmNetworkInterfacePatchProperties(Azure.Core.ResourceIdentifier networkSecurityGroupId = null, System.Collections.Generic.IList<string> dnsServers = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProperties HciVmNetworkInterfaceProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfiguration> ipConfigurations = null, string macAddress = null, System.Collections.Generic.IList<string> dnsServers = null, bool? createFromLocal = default(bool?), Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceStatus status = null, Azure.Core.ResourceIdentifier networkSecurityGroupId = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProvisioningStatus HciVmNetworkInterfaceProvisioningStatus(string operationId = null, Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? status = default(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceStatus HciVmNetworkInterfaceStatus(string errorCode = null, string errorMessage = null, Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProvisioningStatus provisioningStatus = null) { throw null; }
-        public static Azure.ResourceManager.Hci.Vm.HciVmNetworkSecurityGroupData HciVmNetworkSecurityGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties properties = null, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation extendedLocation = null, string etag = null) { throw null; }
-        public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties HciVmNetworkSecurityGroupProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> networkInterfaces = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> subnets = null, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupStatus status = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.HciVmNetworkSecurityGroupData HciVmNetworkSecurityGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties properties = null, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation extendedLocation = null, string eTag = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupPatch HciVmNetworkSecurityGroupPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties HciVmNetworkSecurityGroupProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference> networkInterfaces = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.Vm.Models.LogicalNetworkArmReference> subnets = null, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupStatus status = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProvisioningStatus HciVmNetworkSecurityGroupProvisioningStatus(string operationId = null, Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? status = default(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupStatus HciVmNetworkSecurityGroupStatus(string errorCode = null, string errorMessage = null, Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProvisioningStatus provisioningStatus = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmSecurityRuleData HciVmSecurityRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProperties properties = null, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProperties HciVmSecurityRuleProperties(string description = null, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol protocol = default(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol), System.Collections.Generic.IEnumerable<string> sourceAddressPrefixes = null, System.Collections.Generic.IEnumerable<string> destinationAddressPrefixes = null, System.Collections.Generic.IEnumerable<string> sourcePortRanges = null, System.Collections.Generic.IEnumerable<string> destinationPortRanges = null, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess access = default(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess), int priority = 0, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection direction = default(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection), Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmStorageContainerData HciVmStorageContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProperties properties = null, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerPatch HciVmStorageContainerPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProperties HciVmStorageContainerProperties(string path = null, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerStatus status = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProvisioningStatus HciVmStorageContainerProvisioningStatus(string operationId = null, Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? status = default(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerStatus HciVmStorageContainerStatus(string errorCode = null, string errorMessage = null, long? availableSizeInMB = default(long?), long? containerSizeInMB = default(long?), Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProvisioningStatus provisioningStatus = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.HciVmVirtualHardDiskData HciVmVirtualHardDiskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProperties properties = null, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskDownloadStatus HciVmVirtualHardDiskDownloadStatus(long? downloadedSizeInMB = default(long?), Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? status = default(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus?), long? progressPercentage = default(long?)) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskPatch HciVmVirtualHardDiskPatch(System.Collections.Generic.IDictionary<string, string> tags = null, long? diskSizeGB = default(long?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProperties HciVmVirtualHardDiskProperties(int? blockSizeInBytes = default(int?), long? diskSizeInGB = default(long?), bool? dynamic = default(bool?), int? logicalSectorInBytes = default(int?), int? physicalSectorInBytes = default(int?), System.Uri downloadUri = null, Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration? hyperVGeneration = default(Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration?), Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat? diskFileFormat = default(Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat?), bool? isCreatingFromLocal = default(bool?), Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? provisioningState = default(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState?), Azure.Core.ResourceIdentifier containerId = null, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskStatus status = null, long? maxShares = default(long?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProvisioningStatus HciVmVirtualHardDiskProvisioningStatus(string operationId = null, Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? status = default(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus?)) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskStatus HciVmVirtualHardDiskStatus(string errorCode = null, string errorMessage = null, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProvisioningStatus provisioningStatus = null, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskDownloadStatus downloadStatus = null, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus uploadStatus = null, System.Collections.Generic.IEnumerable<string> managedBy = null, string uniqueId = null) { throw null; }
-        public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadResult HciVmVirtualHardDiskUploadResult(Azure.Core.ResourceIdentifier virtualHardDiskId = null, Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus uploadStatus = null) { throw null; }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent HciVmVirtualHardDiskUploadContent(System.Uri managedDiskUploadUri = null) { throw null; }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus HciVmVirtualHardDiskUploadStatus(long? uploadedSizeInMB = default(long?), Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? status = default(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus?), long? progressPercentage = default(long?), string errorCode = null, string errorMessage = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -752,6 +818,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus left, Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus left, Azure.ResourceManager.Hci.Vm.Models.AttestBootIntegrityStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -771,6 +838,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus left, Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus left, Azure.ResourceManager.Hci.Vm.Models.AttestCertValidationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -789,6 +857,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType left, Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType left, Azure.ResourceManager.Hci.Vm.Models.AttestDiskSecurityEncryptionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -807,6 +876,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType left, Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType left, Azure.ResourceManager.Hci.Vm.Models.AttestHardwarePlatformType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -827,6 +897,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus left, Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus left, Azure.ResourceManager.Hci.Vm.Models.AttestHealthStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -846,6 +917,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus left, Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus left, Azure.ResourceManager.Hci.Vm.Models.AttestSecureBootStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -864,8 +936,56 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource left, Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource left, Azure.ResourceManager.Hci.Vm.Models.CloudInitDataSource right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ErrorAdditionalInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo>
+    {
+        internal ErrorAdditionalInfo() { }
+        public System.BinaryData Info { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ErrorDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.ErrorDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.ErrorDetail>
+    {
+        internal ErrorDetail() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Vm.Models.ErrorAdditionalInfo> AdditionalInfo { get { throw null; } }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Vm.Models.ErrorDetail> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Target { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.ErrorDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.ErrorDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Hci.Vm.Models.ErrorDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.ErrorDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.ErrorDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Hci.Vm.Models.ErrorDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.ErrorDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.ErrorDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.ErrorDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class GalleryImageVersionStorageProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.GalleryImageVersionStorageProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.GalleryImageVersionStorageProfile>
+    {
+        public GalleryImageVersionStorageProfile() { }
+        public long? OsDiskImageSizeInMB { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.GalleryImageVersionStorageProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.GalleryImageVersionStorageProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Hci.Vm.Models.GalleryImageVersionStorageProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.GalleryImageVersionStorageProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.GalleryImageVersionStorageProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Hci.Vm.Models.GalleryImageVersionStorageProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.GalleryImageVersionStorageProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.GalleryImageVersionStorageProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.GalleryImageVersionStorageProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GpuAssignmentType : System.IEquatable<Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType>
@@ -882,6 +1002,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType left, Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType left, Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -889,11 +1010,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public GuestAgentInstallStatus() { }
         public string AgentVersion { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> ErrorDetails { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Vm.Models.ErrorDetail> ErrorDetails { get { throw null; } }
         public System.DateTimeOffset? LastStatusChangedOn { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType? Status { get { throw null; } }
         public string VmUuid { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.GuestAgentInstallStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.GuestAgentInstallStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.GuestAgentInstallStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.GuestAgentInstallStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.GuestAgentInstallStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.GuestAgentInstallStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.GuestAgentInstallStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -916,6 +1040,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction left, Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction left, Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -932,7 +1057,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string LinuxKernelVersion { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? ProvisioningState { get { throw null; } }
         public string Timestamp { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmAttestationStatusProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmAttestationStatusProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmAttestationStatusProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmAttestationStatusProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmAttestationStatusProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmAttestationStatusProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmAttestationStatusProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -942,9 +1070,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public partial class HciVmConfigAgentInstanceView : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmConfigAgentInstanceView>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmConfigAgentInstanceView>
     {
         internal HciVmConfigAgentInstanceView() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceViewStatus> Statuses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceViewStatus> Statuses { get { throw null; } }
         public string VmConfigAgentVersion { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmConfigAgentInstanceView JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmConfigAgentInstanceView PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmConfigAgentInstanceView System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmConfigAgentInstanceView>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmConfigAgentInstanceView>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmConfigAgentInstanceView System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmConfigAgentInstanceView>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -966,6 +1097,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat left, Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat left, Azure.ResourceManager.Hci.Vm.Models.HciVmDiskFileFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -974,7 +1106,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmExtendedLocation() { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocationType? Type { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -995,6 +1130,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocationType left, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocationType left, Azure.ResourceManager.Hci.Vm.Models.HciVmExtendedLocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1004,7 +1140,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string Offer { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageIdentifier JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageIdentifier PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageIdentifier System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageIdentifier>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageIdentifier>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageIdentifier System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageIdentifier>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1015,7 +1154,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public HciVmGalleryImagePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImagePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImagePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImagePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImagePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImagePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImagePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImagePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1030,13 +1172,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageIdentifier Identifier { get { throw null; } set { } }
         public string ImagePath { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Vm.Models.HciVmOSType OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Vm.Models.HciVmOSType OsType { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SourceVirtualMachineId { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageStatus Status { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion Version { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmImageRepositoryCredentials VmImageRepositoryCredentials { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1048,7 +1193,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal HciVmGalleryImageProvisioningStatus() { }
         public string OperationId { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProvisioningStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProvisioningStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProvisioningStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProvisioningStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProvisioningStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProvisioningStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProvisioningStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1063,7 +1211,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string ErrorMessage { get { throw null; } }
         public long? ProgressPercentage { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageProvisioningStatus ProvisioningStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1074,8 +1225,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public HciVmGalleryImageVersion() { }
         public string Name { get { throw null; } set { } }
-        public long? OSDiskImageSizeInMB { get { throw null; } }
+        public Azure.ResourceManager.Hci.Vm.Models.GalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1089,7 +1243,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public Azure.ResourceManager.Hci.Vm.Models.GuestAgentProvisioningAction? ProvisioningAction { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? ProvisioningState { get { throw null; } }
         public string Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGuestAgentProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGuestAgentProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGuestAgentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGuestAgentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGuestAgentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGuestAgentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGuestAgentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1101,7 +1258,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmGuestCredential() { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGuestCredential JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmGuestCredential PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGuestCredential System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGuestCredential>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGuestCredential>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmGuestCredential System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmGuestCredential>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1115,7 +1275,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string HttpsProxy { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> NoProxy { get { throw null; } }
         public string TrustedCa { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmHttpProxyConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmHttpProxyConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmHttpProxyConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmHttpProxyConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmHttpProxyConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmHttpProxyConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmHttpProxyConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1125,11 +1288,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public partial class HciVmHybridIdentityMetadataProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmHybridIdentityMetadataProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmHybridIdentityMetadataProperties>
     {
         internal HciVmHybridIdentityMetadataProperties() { }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } }
+        public Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity Identity { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? ProvisioningState { get { throw null; } }
         public string PublicKey { get { throw null; } }
         public string ResourceUid { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmHybridIdentityMetadataProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmHybridIdentityMetadataProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmHybridIdentityMetadataProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmHybridIdentityMetadataProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmHybridIdentityMetadataProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmHybridIdentityMetadataProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmHybridIdentityMetadataProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1151,15 +1317,35 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration left, Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration left, Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class HciVmIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity>
+    {
+        public HciVmIdentity() { }
+        public string PrincipalId { get { throw null; } }
+        public string TenantId { get { throw null; } }
+        public string Type { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HciVmImageRepositoryCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmImageRepositoryCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmImageRepositoryCredentials>
     {
         public HciVmImageRepositoryCredentials(string username, string password) { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmImageRepositoryCredentials JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmImageRepositoryCredentials PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmImageRepositoryCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmImageRepositoryCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmImageRepositoryCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmImageRepositoryCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmImageRepositoryCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1174,7 +1360,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public int? Processors { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileGpuConfiguration> VirtualMachineGPUs { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmSize? VmSize { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1187,7 +1376,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public long? MaximumMemoryInMB { get { throw null; } set { } }
         public long? MinimumMemoryInMB { get { throw null; } set { } }
         public int? TargetMemoryBuffer { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileDynamicMemoryConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileDynamicMemoryConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileDynamicMemoryConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileDynamicMemoryConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileDynamicMemoryConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileDynamicMemoryConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileDynamicMemoryConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1200,7 +1392,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public Azure.ResourceManager.Hci.Vm.Models.GpuAssignmentType AssignmentType { get { throw null; } set { } }
         public string GpuName { get { throw null; } set { } }
         public long? PartitionSizeInMB { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileGpuConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileGpuConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileGpuConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileGpuConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileGpuConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileGpuConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileGpuConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1214,7 +1409,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public int? Processors { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileGpuConfiguration> VirtualMachineGPUs { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmSize? VmSize { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1229,7 +1427,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string ComputerName { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileLinuxConfiguration LinuxConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileWindowsConfiguration WindowsConfiguration { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1240,10 +1441,13 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public HciVmInstanceOSProfileLinuxConfiguration() { }
         public bool? DisablePasswordAuthentication { get { throw null; } set { } }
-        public bool? ProvisionVmAgent { get { throw null; } set { } }
-        public bool? ProvisionVmConfigAgent { get { throw null; } set { } }
+        public bool? ProvisionVMAgent { get { throw null; } set { } }
+        public bool? ProvisionVMConfigAgent { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileSshPublicKey> SshPublicKeys { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileLinuxConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileLinuxConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileLinuxConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileLinuxConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileLinuxConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileLinuxConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileLinuxConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1254,11 +1458,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public HciVmInstanceOSProfileWindowsConfiguration() { }
         public bool? EnableAutomaticUpdates { get { throw null; } set { } }
-        public bool? ProvisionVmAgent { get { throw null; } set { } }
-        public bool? ProvisionVmConfigAgent { get { throw null; } set { } }
+        public bool? ProvisionVMAgent { get { throw null; } set { } }
+        public bool? ProvisionVMConfigAgent { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileSshPublicKey> SshPublicKeys { get { throw null; } }
         public string TimeZone { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileWindowsConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileWindowsConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileWindowsConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileWindowsConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileWindowsConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileWindowsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfileWindowsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1268,9 +1475,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public partial class HciVmInstancePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatch>
     {
         public HciVmInstancePatch() { }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Vm.Models.HciVmIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatchProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1281,10 +1491,13 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public HciVmInstancePatchProperties() { }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfileUpdate HardwareProfile { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> NetworkInterfaces { get { throw null; } }
-        public Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfile OSProfile { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> StorageDataDisks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference> NetworkInterfaces { get { throw null; } }
+        public Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfile OsProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference> StorageDataDisks { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1296,7 +1509,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmInstancePlacementProfile() { }
         public bool? StrictPlacementPolicy { get { throw null; } set { } }
         public string Zone { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePlacementProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePlacementProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePlacementProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePlacementProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePlacementProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePlacementProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePlacementProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1308,14 +1524,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmInstanceProperties() { }
         public Azure.ResourceManager.Hci.Vm.Models.GuestAgentInstallStatus GuestAgentInstallStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceHardwareProfile HardwareProfile { get { throw null; } set { } }
-        public string HostNodeIPAddress { get { throw null; } }
+        public string HostNodeIpAddress { get { throw null; } }
         public string HostNodeName { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmHttpProxyConfiguration HttpProxyConfig { get { throw null; } set { } }
         public string HyperVVmId { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmConfigAgentInstanceView InstanceViewVmAgent { get { throw null; } }
         public bool? IsCreatingFromLocal { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> NetworkInterfaces { get { throw null; } }
-        public Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfile OSProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference> NetworkInterfaces { get { throw null; } }
+        public Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceOSProfile OsProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmInstancePlacementProfile PlacementProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceUid { get { throw null; } set { } }
@@ -1323,7 +1539,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStatus Status { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfile StorageProfile { get { throw null; } set { } }
         public string VmId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1335,7 +1554,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal HciVmInstanceProvisioningStatus() { }
         public string OperationId { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProvisioningStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProvisioningStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProvisioningStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProvisioningStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProvisioningStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProvisioningStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProvisioningStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1348,7 +1570,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public bool? IsTpmEnabled { get { throw null; } set { } }
         public bool? SecureBootEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType? SecurityType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceSecurityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1362,7 +1587,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string ErrorMessage { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState? PowerState { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceProvisioningStatus ProvisioningStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1372,11 +1600,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public partial class HciVmInstanceStorageProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfile>
     {
         public HciVmInstanceStorageProfile() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> DataDisks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference> DataDisks { get { throw null; } }
         public Azure.Core.ResourceIdentifier ImageReferenceId { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfileOSDisk OSDisk { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfileOSDisk OsDisk { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VmConfigStoragePathId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1387,9 +1618,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public HciVmInstanceStorageProfileOSDisk() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Vm.Models.HciVmOSType? OSType { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType? SecurityEncryptionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent ManagedDisk { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Vm.Models.HciVmOSType? OsType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfileOSDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfileOSDisk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfileOSDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfileOSDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfileOSDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfileOSDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceStorageProfileOSDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1404,7 +1638,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType? Level { get { throw null; } }
         public string Message { get { throw null; } }
         public System.DateTimeOffset? Time { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceViewStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceViewStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceViewStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceViewStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceViewStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceViewStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmInstanceViewStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1426,6 +1663,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod left, Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod left, Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1434,7 +1672,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmIPConfiguration() { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1448,7 +1689,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string PrefixLength { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1460,7 +1704,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmIPPoolInfo() { }
         public string Available { get { throw null; } }
         public string Used { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1482,6 +1729,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType left, Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType left, Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1489,7 +1737,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public HciVmLogicalNetworkPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1505,7 +1756,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkStatus Status { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingSubnet> Subnets { get { throw null; } }
         public string VmSwitchName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1517,7 +1771,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal HciVmLogicalNetworkProvisioningStatus() { }
         public string OperationId { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProvisioningStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProvisioningStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProvisioningStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProvisioningStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProvisioningStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProvisioningStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProvisioningStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1530,7 +1787,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkProvisioningStatus ProvisioningStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1552,6 +1812,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType left, Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType left, Azure.ResourceManager.Hci.Vm.Models.HciVmLogicalNetworkType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1559,7 +1820,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public HciVmMarketplaceGalleryImagePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImagePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImagePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImagePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImagePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImagePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImagePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImagePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1573,11 +1837,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public Azure.Core.ResourceIdentifier ContainerId { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmHyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageIdentifier Identifier { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Vm.Models.HciVmOSType OSType { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Vm.Models.HciVmOSType OsType { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageStatus Status { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmGalleryImageVersion Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1589,7 +1856,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal HciVmMarketplaceGalleryImageProvisioningStatus() { }
         public string OperationId { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProvisioningStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProvisioningStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProvisioningStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProvisioningStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProvisioningStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProvisioningStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProvisioningStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1604,7 +1874,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string ErrorMessage { get { throw null; } }
         public long? ProgressPercentage { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageProvisioningStatus ProvisioningStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmMarketplaceGalleryImageStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1616,10 +1889,13 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmNetworkingIPPool() { }
         public string End { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolInfo Info { get { throw null; } set { } }
-        public Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType? IPPoolType { get { throw null; } set { } }
+        public Azure.ResourceManager.Hci.Vm.Models.HciVmIPPoolType? IpPoolType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Start { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingIPPool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingIPPool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingIPPool System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingIPPool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingIPPool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingIPPool System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingIPPool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1631,8 +1907,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmNetworkingRoute() { }
         public string AddressPrefix { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string NextHopIPAddress { get { throw null; } set { } }
+        public string NextHopIpAddress { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRoute JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRoute PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRoute System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRoute>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRoute>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRoute System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRoute>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1642,11 +1921,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public partial class HciVmNetworkingRouteTable : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRouteTable>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRouteTable>
     {
         public HciVmNetworkingRouteTable() { }
-        public string ETag { get { throw null; } }
+        public string Etag { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRoute> Routes { get { throw null; } }
         public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRouteTable JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRouteTable PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRouteTable System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRouteTable>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRouteTable>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRouteTable System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRouteTable>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1658,14 +1940,17 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmNetworkingSubnet() { }
         public string AddressPrefix { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
-        public Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod? IPAllocationMethod { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> IPConfigurationReferences { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingIPPool> IPPools { get { throw null; } }
+        public Azure.ResourceManager.Hci.Vm.Models.HciVmIPAllocationMethod? IpAllocationMethod { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.SubnetIpConfigurationReference> IpConfigurationReferences { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingIPPool> IpPools { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingRouteTable RouteTable { get { throw null; } set { } }
         public int? Vlan { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingSubnet JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingSubnet PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingSubnet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingSubnet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingSubnet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingSubnet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkingSubnet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1677,7 +1962,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmNetworkInterfacePatch() { }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1689,7 +1977,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmNetworkInterfacePatchProperties() { }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfacePatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1701,12 +1992,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmNetworkInterfaceProperties() { }
         public bool? CreateFromLocal { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfiguration> IPConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Hci.Vm.Models.HciVmIPConfiguration> IpConfigurations { get { throw null; } }
         public string MacAddress { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceStatus Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1718,7 +2012,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal HciVmNetworkInterfaceProvisioningStatus() { }
         public string OperationId { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProvisioningStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProvisioningStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProvisioningStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProvisioningStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProvisioningStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProvisioningStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProvisioningStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1731,7 +2028,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceProvisioningStatus ProvisioningStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkInterfaceStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1742,7 +2042,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public HciVmNetworkSecurityGroupPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1752,11 +2055,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public partial class HciVmNetworkSecurityGroupProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties>
     {
         public HciVmNetworkSecurityGroupProperties() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> NetworkInterfaces { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference> NetworkInterfaces { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> Subnets { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Vm.Models.LogicalNetworkArmReference> Subnets { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1768,7 +2074,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal HciVmNetworkSecurityGroupProvisioningStatus() { }
         public string OperationId { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProvisioningStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProvisioningStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProvisioningStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProvisioningStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProvisioningStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProvisioningStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProvisioningStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1781,7 +2090,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupProvisioningStatus ProvisioningStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmNetworkSecurityGroupStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1804,6 +2116,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus left, Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus left, Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1813,7 +2126,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string ComputerName { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileLinuxConfiguration LinuxConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileWindowsConfiguration WindowsConfiguration { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1823,9 +2139,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public partial class HciVmOSProfileLinuxConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileLinuxConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileLinuxConfiguration>
     {
         public HciVmOSProfileLinuxConfiguration() { }
-        public bool? ProvisionVmAgent { get { throw null; } set { } }
-        public bool? ProvisionVmConfigAgent { get { throw null; } set { } }
+        public bool? ProvisionVMAgent { get { throw null; } set { } }
+        public bool? ProvisionVMConfigAgent { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileLinuxConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileLinuxConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileLinuxConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileLinuxConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileLinuxConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileLinuxConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileLinuxConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1837,7 +2156,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmOSProfileSshPublicKey() { }
         public string KeyData { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileSshPublicKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileSshPublicKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileSshPublicKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileSshPublicKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileSshPublicKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileSshPublicKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileSshPublicKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1847,9 +2169,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public partial class HciVmOSProfileWindowsConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileWindowsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileWindowsConfiguration>
     {
         public HciVmOSProfileWindowsConfiguration() { }
-        public bool? ProvisionVmAgent { get { throw null; } set { } }
-        public bool? ProvisionVmConfigAgent { get { throw null; } set { } }
+        public bool? ProvisionVMAgent { get { throw null; } set { } }
+        public bool? ProvisionVMConfigAgent { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileWindowsConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileWindowsConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileWindowsConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileWindowsConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileWindowsConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileWindowsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmOSProfileWindowsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1871,6 +2196,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmOSType left, Azure.ResourceManager.Hci.Vm.Models.HciVmOSType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmOSType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmOSType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmOSType left, Azure.ResourceManager.Hci.Vm.Models.HciVmOSType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1896,6 +2222,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState left, Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState left, Azure.ResourceManager.Hci.Vm.Models.HciVmPowerState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1918,6 +2245,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState left, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState left, Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1935,6 +2263,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1953,6 +2282,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1971,6 +2301,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleDirection right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1987,7 +2318,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<string> SourceAddressPrefixes { get { throw null; } }
         public System.Collections.Generic.IList<string> SourcePortRanges { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2011,6 +2345,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityRuleProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2020,7 +2355,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public HciVmSecurityType(string value) { throw null; }
-        public static Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType ConfidentialVm { get { throw null; } }
+        public static Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType ConfidentialVM { get { throw null; } }
         public static Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType TrustedLaunch { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -2029,6 +2364,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType left, Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2068,6 +2404,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmSize left, Azure.ResourceManager.Hci.Vm.Models.HciVmSize right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSize (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmSize? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmSize left, Azure.ResourceManager.Hci.Vm.Models.HciVmSize right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2087,6 +2424,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType left, Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType left, Azure.ResourceManager.Hci.Vm.Models.HciVmStatusLevelType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2094,7 +2432,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public HciVmStorageContainerPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2107,7 +2448,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string Path { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerStatus Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2119,7 +2463,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal HciVmStorageContainerProvisioningStatus() { }
         public string OperationId { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProvisioningStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProvisioningStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProvisioningStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProvisioningStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProvisioningStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProvisioningStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProvisioningStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2134,7 +2481,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerProvisioningStatus ProvisioningStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmStorageContainerStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2147,7 +2497,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public long? DownloadedSizeInMB { get { throw null; } }
         public long? ProgressPercentage { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskDownloadStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskDownloadStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskDownloadStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskDownloadStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskDownloadStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskDownloadStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskDownloadStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2159,7 +2512,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public HciVmVirtualHardDiskPatch() { }
         public long? DiskSizeGB { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2182,7 +2538,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public int? PhysicalSectorInBytes { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskStatus Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2194,7 +2553,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal HciVmVirtualHardDiskProvisioningStatus() { }
         public string OperationId { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProvisioningStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProvisioningStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProvisioningStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProvisioningStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProvisioningStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProvisioningStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProvisioningStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2207,11 +2569,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskDownloadStatus DownloadStatus { get { throw null; } }
         public string ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> ManagedBy { get { throw null; } }
+        public System.Collections.Generic.IList<string> ManagedBy { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskProvisioningStatus ProvisioningStatus { get { throw null; } }
         public string UniqueId { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus UploadStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2222,24 +2587,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     {
         public HciVmVirtualHardDiskUploadContent(System.Uri managedDiskUploadUri) { }
         public System.Uri ManagedDiskUploadUri { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class HciVmVirtualHardDiskUploadResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadResult>
-    {
-        internal HciVmVirtualHardDiskUploadResult() { }
-        public Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus UploadStatus { get { throw null; } }
-        public Azure.Core.ResourceIdentifier VirtualHardDiskId { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HciVmVirtualHardDiskUploadStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus>
     {
@@ -2249,7 +2605,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public long? ProgressPercentage { get { throw null; } }
         public Azure.ResourceManager.Hci.Vm.Models.HciVmOperationStatus? Status { get { throw null; } }
         public long? UploadedSizeInMB { get { throw null; } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.HciVmVirtualHardDiskUploadStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2272,7 +2631,78 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType left, Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType left, Azure.ResourceManager.Hci.Vm.Models.HybridMachineAgentInstallationStatusType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class LogicalNetworkArmReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.LogicalNetworkArmReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.LogicalNetworkArmReference>
+    {
+        public LogicalNetworkArmReference() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.LogicalNetworkArmReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.LogicalNetworkArmReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Hci.Vm.Models.LogicalNetworkArmReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.LogicalNetworkArmReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.LogicalNetworkArmReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Hci.Vm.Models.LogicalNetworkArmReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.LogicalNetworkArmReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.LogicalNetworkArmReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.LogicalNetworkArmReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetworkInterfaceArmReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference>
+    {
+        public NetworkInterfaceArmReference() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.NetworkInterfaceArmReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SubnetIpConfigurationReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.SubnetIpConfigurationReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.SubnetIpConfigurationReference>
+    {
+        public SubnetIpConfigurationReference() { }
+        public Azure.Core.ResourceIdentifier ID { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.SubnetIpConfigurationReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.SubnetIpConfigurationReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Hci.Vm.Models.SubnetIpConfigurationReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.SubnetIpConfigurationReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.SubnetIpConfigurationReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Hci.Vm.Models.SubnetIpConfigurationReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.SubnetIpConfigurationReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.SubnetIpConfigurationReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.SubnetIpConfigurationReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VirtualHardDiskArmReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference>
+    {
+        public VirtualHardDiskArmReference() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.VirtualHardDiskArmReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VirtualMachineInstanceManagedDiskContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>
+    {
+        public VirtualMachineInstanceManagedDiskContent() { }
+        public Azure.ResourceManager.Hci.Vm.Models.HciVmSecurityEncryptionType? SecurityEncryptionType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Vm.Models.VirtualMachineInstanceManagedDiskContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
