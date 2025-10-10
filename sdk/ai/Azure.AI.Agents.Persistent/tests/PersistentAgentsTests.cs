@@ -582,8 +582,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 for (int i = ids.Count; i < agentLimit; i++)
                 {
-                    PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
-                    ids.Add((await GetAgent(client)).Id);
+                    PersistentAgent agent = await client.Administration.CreateAgentAsync(
+                        model: "gpt-4o",
+                        name: AGENT_NAME,
+                        instructions: "You are helpful agent.");
+                    ids.Add(agent.Id);
                 }
             }
             // Test calling before.
@@ -2174,6 +2177,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestMcpToolStreaming()
         {
+            if (!IsAsync && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             PersistentAgentsClient client = GetClient();
             MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
             string searchApiCode = "search_azure_rest_api_code";
@@ -2253,6 +2258,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         // AzureAISearch is tested separately in TestAzureAiSearchStreaming.
         public async Task TestStreamDelta(ToolTypes toolToTest)
         {
+            if (!IsAsync && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             // Commenting DeepResearch as it is not compatible with unit test framework iterations
             // and connection breaks after timeout during streaming test.
             // The error says that the thread already contains the active run.
