@@ -72,7 +72,8 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
 
             await singletonRetentionPolicy.CreateOrUpdateAsync(WaitUntil.Completed, payload);
 
-            await singletonRetentionPolicy.GetAsync();
+            // Now fetch the resource details from the service
+            singletonRetentionPolicy = await singletonRetentionPolicy.GetAsync();
             Assert.AreEqual(3, singletonRetentionPolicy.Data.Properties.RetentionPolicies.Count);
 
             // Assert the specific policy for Completed orchestrations has the expected retention period
