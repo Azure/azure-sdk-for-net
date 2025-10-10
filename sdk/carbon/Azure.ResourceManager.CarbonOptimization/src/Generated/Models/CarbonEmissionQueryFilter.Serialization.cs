@@ -9,14 +9,24 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CarbonOptimization;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
+    /// <summary>
+    /// Shared query filter parameter to configure carbon emissions data queries for all different report type defined in ReportTypeEnum.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OverallSummaryReportQueryFilter"/>, <see cref="MonthlySummaryReportQueryFilter"/>, <see cref="TopItemsSummaryReportQueryFilter"/>, <see cref="TopItemsMonthlySummaryReportQueryFilter"/>, and <see cref="ItemDetailsQueryFilter"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownCarbonEmissionQueryFilter))]
-    public partial class CarbonEmissionQueryFilter : IUtf8JsonSerializable, IJsonModel<CarbonEmissionQueryFilter>
+    public abstract partial class CarbonEmissionQueryFilter : IJsonModel<CarbonEmissionQueryFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CarbonEmissionQueryFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionQueryFilter"/> for deserialization. </summary>
+        internal CarbonEmissionQueryFilter()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CarbonEmissionQueryFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,20 +38,24 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CarbonEmissionQueryFilter)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("reportType"u8);
             writer.WriteStringValue(ReportType.ToString());
             writer.WritePropertyName("dateRange"u8);
             writer.WriteObjectValue(DateRange, options);
             writer.WritePropertyName("subscriptionList"u8);
             writer.WriteStartArray();
-            foreach (var item in SubscriptionList)
+            foreach (string item in SubscriptionList)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -49,8 +63,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 writer.WritePropertyName("resourceGroupUrlList"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResourceGroupUrlList)
+                foreach (string item in ResourceGroupUrlList)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -59,7 +78,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 writer.WritePropertyName("resourceTypeList"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResourceTypeList)
+                foreach (ResourceType item in ResourceTypeList)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -69,7 +88,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 writer.WritePropertyName("locationList"u8);
                 writer.WriteStartArray();
-                foreach (var item in LocationList)
+                foreach (AzureLocation item in LocationList)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -77,20 +96,20 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             }
             writer.WritePropertyName("carbonScopeList"u8);
             writer.WriteStartArray();
-            foreach (var item in CarbonScopeList)
+            foreach (CarbonEmissionScope item in CarbonScopeList)
             {
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -99,44 +118,57 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             }
         }
 
-        CarbonEmissionQueryFilter IJsonModel<CarbonEmissionQueryFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CarbonEmissionQueryFilter IJsonModel<CarbonEmissionQueryFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CarbonEmissionQueryFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CarbonEmissionQueryFilter)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCarbonEmissionQueryFilter(document.RootElement, options);
         }
 
-        internal static CarbonEmissionQueryFilter DeserializeCarbonEmissionQueryFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CarbonEmissionQueryFilter DeserializeCarbonEmissionQueryFilter(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("reportType", out JsonElement discriminator))
+            if (element.TryGetProperty("reportType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "ItemDetailsReport": return ItemDetailsQueryFilter.DeserializeItemDetailsQueryFilter(element, options);
-                    case "MonthlySummaryReport": return MonthlySummaryReportQueryFilter.DeserializeMonthlySummaryReportQueryFilter(element, options);
-                    case "OverallSummaryReport": return OverallSummaryReportQueryFilter.DeserializeOverallSummaryReportQueryFilter(element, options);
-                    case "TopItemsMonthlySummaryReport": return TopItemsMonthlySummaryReportQueryFilter.DeserializeTopItemsMonthlySummaryReportQueryFilter(element, options);
-                    case "TopItemsSummaryReport": return TopItemsSummaryReportQueryFilter.DeserializeTopItemsSummaryReportQueryFilter(element, options);
+                    case "OverallSummaryReport":
+                        return OverallSummaryReportQueryFilter.DeserializeOverallSummaryReportQueryFilter(element, options);
+                    case "MonthlySummaryReport":
+                        return MonthlySummaryReportQueryFilter.DeserializeMonthlySummaryReportQueryFilter(element, options);
+                    case "TopItemsSummaryReport":
+                        return TopItemsSummaryReportQueryFilter.DeserializeTopItemsSummaryReportQueryFilter(element, options);
+                    case "TopItemsMonthlySummaryReport":
+                        return TopItemsMonthlySummaryReportQueryFilter.DeserializeTopItemsMonthlySummaryReportQueryFilter(element, options);
+                    case "ItemDetailsReport":
+                        return ItemDetailsQueryFilter.DeserializeItemDetailsQueryFilter(element, options);
                 }
             }
             return UnknownCarbonEmissionQueryFilter.DeserializeUnknownCarbonEmissionQueryFilter(element, options);
         }
 
-        BinaryData IPersistableModel<CarbonEmissionQueryFilter>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CarbonEmissionQueryFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -146,15 +178,20 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             }
         }
 
-        CarbonEmissionQueryFilter IPersistableModel<CarbonEmissionQueryFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CarbonEmissionQueryFilter IPersistableModel<CarbonEmissionQueryFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CarbonEmissionQueryFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCarbonEmissionQueryFilter(document.RootElement, options);
                     }
                 default:
@@ -162,6 +199,19 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CarbonEmissionQueryFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="carbonEmissionQueryFilter"> The <see cref="CarbonEmissionQueryFilter"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CarbonEmissionQueryFilter carbonEmissionQueryFilter)
+        {
+            if (carbonEmissionQueryFilter == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(carbonEmissionQueryFilter, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

@@ -9,13 +9,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.CarbonOptimization;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmCarbonOptimizationModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionQueryFilter"/>. </summary>
+
+        /// <summary>
+        /// Shared query filter parameter to configure carbon emissions data queries for all different report type defined in ReportTypeEnum.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OverallSummaryReportQueryFilter"/>, <see cref="MonthlySummaryReportQueryFilter"/>, <see cref="TopItemsSummaryReportQueryFilter"/>, <see cref="TopItemsMonthlySummaryReportQueryFilter"/>, and <see cref="ItemDetailsQueryFilter"/>.
+        /// </summary>
         /// <param name="reportType"> The ReportType requested for carbon emissions data. Required. Specifies how data is aggregated and displayed in the output, as explained in the ReportTypeEnum. </param>
         /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
         /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Required. Each subscription ID should be in lowercase format. The max length of list is 100. </param>
@@ -24,26 +29,35 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
         /// <returns> A new <see cref="Models.CarbonEmissionQueryFilter"/> instance for mocking. </returns>
-        public static CarbonEmissionQueryFilter CarbonEmissionQueryFilter(string reportType = null, CarbonEmissionQueryDateRange dateRange = null, IEnumerable<string> subscriptionList = null, IEnumerable<string> resourceGroupUrlList = null, IEnumerable<ResourceType> resourceTypeList = null, IEnumerable<AzureLocation> locationList = null, IEnumerable<CarbonEmissionScope> carbonScopeList = null)
+        public static CarbonEmissionQueryFilter CarbonEmissionQueryFilter(string reportType = default, CarbonEmissionQueryDateRange dateRange = default, IEnumerable<string> subscriptionList = default, IEnumerable<string> resourceGroupUrlList = default, IEnumerable<ResourceType> resourceTypeList = default, IEnumerable<AzureLocation> locationList = default, IEnumerable<CarbonEmissionScope> carbonScopeList = default)
         {
-            subscriptionList ??= new List<string>();
-            resourceGroupUrlList ??= new List<string>();
-            resourceTypeList ??= new List<ResourceType>();
-            locationList ??= new List<AzureLocation>();
-            carbonScopeList ??= new List<CarbonEmissionScope>();
+            subscriptionList ??= new ChangeTrackingList<string>();
+            resourceGroupUrlList ??= new ChangeTrackingList<string>();
+            resourceTypeList ??= new ChangeTrackingList<ResourceType>();
+            locationList ??= new ChangeTrackingList<AzureLocation>();
+            carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
 
             return new UnknownCarbonEmissionQueryFilter(
-                reportType == null ? default : new CarbonEmissionQueryReportType(reportType),
+                new CarbonEmissionQueryReportType(reportType),
                 dateRange,
-                subscriptionList?.ToList(),
-                resourceGroupUrlList?.ToList(),
-                resourceTypeList?.ToList(),
-                locationList?.ToList(),
-                carbonScopeList?.ToList(),
-                serializedAdditionalRawData: null);
+                subscriptionList.ToList(),
+                resourceGroupUrlList.ToList(),
+                resourceTypeList.ToList(),
+                locationList.ToList(),
+                carbonScopeList.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OverallSummaryReportQueryFilter"/>. </summary>
+        /// <summary> Date range to be used with QueryParameter, it should be within 12 months between start and end date. In certain cases, start and end dates must be the same date. </summary>
+        /// <param name="startOn"> Start date parameter in yyyy-MM-01 format. Only the first day of each month is accepted. </param>
+        /// <param name="endOn"> End date parameter in yyyy-MM-01 format. Only the first day of each month is accepted. </param>
+        /// <returns> A new <see cref="Models.CarbonEmissionQueryDateRange"/> instance for mocking. </returns>
+        public static CarbonEmissionQueryDateRange CarbonEmissionQueryDateRange(DateTimeOffset startOn = default, DateTimeOffset endOn = default)
+        {
+            return new CarbonEmissionQueryDateRange(startOn, endOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Query filter parameter to configure OverallSummaryReport queries. </summary>
         /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
         /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Required. Each subscription ID should be in lowercase format. The max length of list is 100. </param>
         /// <param name="resourceGroupUrlList"> List of resource group URLs for carbon emissions data. Optional. Each URL must follow the format '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}', and should be in all lowercase. </param>
@@ -51,26 +65,26 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
         /// <returns> A new <see cref="Models.OverallSummaryReportQueryFilter"/> instance for mocking. </returns>
-        public static OverallSummaryReportQueryFilter OverallSummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange = null, IEnumerable<string> subscriptionList = null, IEnumerable<string> resourceGroupUrlList = null, IEnumerable<ResourceType> resourceTypeList = null, IEnumerable<AzureLocation> locationList = null, IEnumerable<CarbonEmissionScope> carbonScopeList = null)
+        public static OverallSummaryReportQueryFilter OverallSummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange = default, IEnumerable<string> subscriptionList = default, IEnumerable<string> resourceGroupUrlList = default, IEnumerable<ResourceType> resourceTypeList = default, IEnumerable<AzureLocation> locationList = default, IEnumerable<CarbonEmissionScope> carbonScopeList = default)
         {
-            subscriptionList ??= new List<string>();
-            resourceGroupUrlList ??= new List<string>();
-            resourceTypeList ??= new List<ResourceType>();
-            locationList ??= new List<AzureLocation>();
-            carbonScopeList ??= new List<CarbonEmissionScope>();
+            subscriptionList ??= new ChangeTrackingList<string>();
+            resourceGroupUrlList ??= new ChangeTrackingList<string>();
+            resourceTypeList ??= new ChangeTrackingList<ResourceType>();
+            locationList ??= new ChangeTrackingList<AzureLocation>();
+            carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
 
             return new OverallSummaryReportQueryFilter(
                 CarbonEmissionQueryReportType.OverallSummaryReport,
                 dateRange,
-                subscriptionList?.ToList(),
-                resourceGroupUrlList?.ToList(),
-                resourceTypeList?.ToList(),
-                locationList?.ToList(),
-                carbonScopeList?.ToList(),
-                serializedAdditionalRawData: null);
+                subscriptionList.ToList(),
+                resourceGroupUrlList.ToList(),
+                resourceTypeList.ToList(),
+                locationList.ToList(),
+                carbonScopeList.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MonthlySummaryReportQueryFilter"/>. </summary>
+        /// <summary> Query filter parameter to configure MonthlySummaryReport queries. </summary>
         /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
         /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Required. Each subscription ID should be in lowercase format. The max length of list is 100. </param>
         /// <param name="resourceGroupUrlList"> List of resource group URLs for carbon emissions data. Optional. Each URL must follow the format '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}', and should be in all lowercase. </param>
@@ -78,26 +92,26 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
         /// <returns> A new <see cref="Models.MonthlySummaryReportQueryFilter"/> instance for mocking. </returns>
-        public static MonthlySummaryReportQueryFilter MonthlySummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange = null, IEnumerable<string> subscriptionList = null, IEnumerable<string> resourceGroupUrlList = null, IEnumerable<ResourceType> resourceTypeList = null, IEnumerable<AzureLocation> locationList = null, IEnumerable<CarbonEmissionScope> carbonScopeList = null)
+        public static MonthlySummaryReportQueryFilter MonthlySummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange = default, IEnumerable<string> subscriptionList = default, IEnumerable<string> resourceGroupUrlList = default, IEnumerable<ResourceType> resourceTypeList = default, IEnumerable<AzureLocation> locationList = default, IEnumerable<CarbonEmissionScope> carbonScopeList = default)
         {
-            subscriptionList ??= new List<string>();
-            resourceGroupUrlList ??= new List<string>();
-            resourceTypeList ??= new List<ResourceType>();
-            locationList ??= new List<AzureLocation>();
-            carbonScopeList ??= new List<CarbonEmissionScope>();
+            subscriptionList ??= new ChangeTrackingList<string>();
+            resourceGroupUrlList ??= new ChangeTrackingList<string>();
+            resourceTypeList ??= new ChangeTrackingList<ResourceType>();
+            locationList ??= new ChangeTrackingList<AzureLocation>();
+            carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
 
             return new MonthlySummaryReportQueryFilter(
                 CarbonEmissionQueryReportType.MonthlySummaryReport,
                 dateRange,
-                subscriptionList?.ToList(),
-                resourceGroupUrlList?.ToList(),
-                resourceTypeList?.ToList(),
-                locationList?.ToList(),
-                carbonScopeList?.ToList(),
-                serializedAdditionalRawData: null);
+                subscriptionList.ToList(),
+                resourceGroupUrlList.ToList(),
+                resourceTypeList.ToList(),
+                locationList.ToList(),
+                carbonScopeList.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TopItemsSummaryReportQueryFilter"/>. </summary>
+        /// <summary> Query filter parameter to configure TopItemsSummaryReport queries. </summary>
         /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
         /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Required. Each subscription ID should be in lowercase format. The max length of list is 100. </param>
         /// <param name="resourceGroupUrlList"> List of resource group URLs for carbon emissions data. Optional. Each URL must follow the format '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}', and should be in all lowercase. </param>
@@ -107,28 +121,28 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="categoryType"> Specifies the category type for which to retrieve top-emitting items. See supported values defined in CategoryTypeEnum. </param>
         /// <param name="topItems"> The number of top items to return, based on emissions. This value must be between 1 and 10. </param>
         /// <returns> A new <see cref="Models.TopItemsSummaryReportQueryFilter"/> instance for mocking. </returns>
-        public static TopItemsSummaryReportQueryFilter TopItemsSummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange = null, IEnumerable<string> subscriptionList = null, IEnumerable<string> resourceGroupUrlList = null, IEnumerable<ResourceType> resourceTypeList = null, IEnumerable<AzureLocation> locationList = null, IEnumerable<CarbonEmissionScope> carbonScopeList = null, CarbonEmissionCategoryType categoryType = default, int topItems = default)
+        public static TopItemsSummaryReportQueryFilter TopItemsSummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange = default, IEnumerable<string> subscriptionList = default, IEnumerable<string> resourceGroupUrlList = default, IEnumerable<ResourceType> resourceTypeList = default, IEnumerable<AzureLocation> locationList = default, IEnumerable<CarbonEmissionScope> carbonScopeList = default, CarbonEmissionCategoryType categoryType = default, int topItems = default)
         {
-            subscriptionList ??= new List<string>();
-            resourceGroupUrlList ??= new List<string>();
-            resourceTypeList ??= new List<ResourceType>();
-            locationList ??= new List<AzureLocation>();
-            carbonScopeList ??= new List<CarbonEmissionScope>();
+            subscriptionList ??= new ChangeTrackingList<string>();
+            resourceGroupUrlList ??= new ChangeTrackingList<string>();
+            resourceTypeList ??= new ChangeTrackingList<ResourceType>();
+            locationList ??= new ChangeTrackingList<AzureLocation>();
+            carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
 
             return new TopItemsSummaryReportQueryFilter(
                 CarbonEmissionQueryReportType.TopItemsSummaryReport,
                 dateRange,
-                subscriptionList?.ToList(),
-                resourceGroupUrlList?.ToList(),
-                resourceTypeList?.ToList(),
-                locationList?.ToList(),
-                carbonScopeList?.ToList(),
-                serializedAdditionalRawData: null,
+                subscriptionList.ToList(),
+                resourceGroupUrlList.ToList(),
+                resourceTypeList.ToList(),
+                locationList.ToList(),
+                carbonScopeList.ToList(),
+                additionalBinaryDataProperties: null,
                 categoryType,
                 topItems);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TopItemsMonthlySummaryReportQueryFilter"/>. </summary>
+        /// <summary> Query filter parameter to configure TopItemsMonthlySummaryReport queries. </summary>
         /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
         /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Required. Each subscription ID should be in lowercase format. The max length of list is 100. </param>
         /// <param name="resourceGroupUrlList"> List of resource group URLs for carbon emissions data. Optional. Each URL must follow the format '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}', and should be in all lowercase. </param>
@@ -138,28 +152,28 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="categoryType"> Specifies the category type to retrieve top-emitting items, aggregated by month. See supported types in CategoryTypeEnum. </param>
         /// <param name="topItems"> The number of top items to return, based on emissions. Must be between 1 and 10. </param>
         /// <returns> A new <see cref="Models.TopItemsMonthlySummaryReportQueryFilter"/> instance for mocking. </returns>
-        public static TopItemsMonthlySummaryReportQueryFilter TopItemsMonthlySummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange = null, IEnumerable<string> subscriptionList = null, IEnumerable<string> resourceGroupUrlList = null, IEnumerable<ResourceType> resourceTypeList = null, IEnumerable<AzureLocation> locationList = null, IEnumerable<CarbonEmissionScope> carbonScopeList = null, CarbonEmissionCategoryType categoryType = default, int topItems = default)
+        public static TopItemsMonthlySummaryReportQueryFilter TopItemsMonthlySummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange = default, IEnumerable<string> subscriptionList = default, IEnumerable<string> resourceGroupUrlList = default, IEnumerable<ResourceType> resourceTypeList = default, IEnumerable<AzureLocation> locationList = default, IEnumerable<CarbonEmissionScope> carbonScopeList = default, CarbonEmissionCategoryType categoryType = default, int topItems = default)
         {
-            subscriptionList ??= new List<string>();
-            resourceGroupUrlList ??= new List<string>();
-            resourceTypeList ??= new List<ResourceType>();
-            locationList ??= new List<AzureLocation>();
-            carbonScopeList ??= new List<CarbonEmissionScope>();
+            subscriptionList ??= new ChangeTrackingList<string>();
+            resourceGroupUrlList ??= new ChangeTrackingList<string>();
+            resourceTypeList ??= new ChangeTrackingList<ResourceType>();
+            locationList ??= new ChangeTrackingList<AzureLocation>();
+            carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
 
             return new TopItemsMonthlySummaryReportQueryFilter(
                 CarbonEmissionQueryReportType.TopItemsMonthlySummaryReport,
                 dateRange,
-                subscriptionList?.ToList(),
-                resourceGroupUrlList?.ToList(),
-                resourceTypeList?.ToList(),
-                locationList?.ToList(),
-                carbonScopeList?.ToList(),
-                serializedAdditionalRawData: null,
+                subscriptionList.ToList(),
+                resourceGroupUrlList.ToList(),
+                resourceTypeList.ToList(),
+                locationList.ToList(),
+                carbonScopeList.ToList(),
+                additionalBinaryDataProperties: null,
                 categoryType,
                 topItems);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ItemDetailsQueryFilter"/>. </summary>
+        /// <summary> Query Parameters for ItemDetailsReport. </summary>
         /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
         /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Required. Each subscription ID should be in lowercase format. The max length of list is 100. </param>
         /// <param name="resourceGroupUrlList"> List of resource group URLs for carbon emissions data. Optional. Each URL must follow the format '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}', and should be in all lowercase. </param>
@@ -172,23 +186,23 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="pageSize"> Number of items to return in one request, max value is 5000. </param>
         /// <param name="skipToken"> Pagination token for fetching the next page of data. This token is nullable and will be returned in the previous response if additional data pages are available. </param>
         /// <returns> A new <see cref="Models.ItemDetailsQueryFilter"/> instance for mocking. </returns>
-        public static ItemDetailsQueryFilter ItemDetailsQueryFilter(CarbonEmissionQueryDateRange dateRange = null, IEnumerable<string> subscriptionList = null, IEnumerable<string> resourceGroupUrlList = null, IEnumerable<ResourceType> resourceTypeList = null, IEnumerable<AzureLocation> locationList = null, IEnumerable<CarbonEmissionScope> carbonScopeList = null, CarbonEmissionCategoryType categoryType = default, CarbonEmissionQueryOrderByColumn orderBy = default, CarbonEmissionQuerySortDirection sortDirection = default, int pageSize = default, string skipToken = null)
+        public static ItemDetailsQueryFilter ItemDetailsQueryFilter(CarbonEmissionQueryDateRange dateRange = default, IEnumerable<string> subscriptionList = default, IEnumerable<string> resourceGroupUrlList = default, IEnumerable<ResourceType> resourceTypeList = default, IEnumerable<AzureLocation> locationList = default, IEnumerable<CarbonEmissionScope> carbonScopeList = default, CarbonEmissionCategoryType categoryType = default, CarbonEmissionQueryOrderByColumn orderBy = default, CarbonEmissionQuerySortDirection sortDirection = default, int pageSize = default, string skipToken = default)
         {
-            subscriptionList ??= new List<string>();
-            resourceGroupUrlList ??= new List<string>();
-            resourceTypeList ??= new List<ResourceType>();
-            locationList ??= new List<AzureLocation>();
-            carbonScopeList ??= new List<CarbonEmissionScope>();
+            subscriptionList ??= new ChangeTrackingList<string>();
+            resourceGroupUrlList ??= new ChangeTrackingList<string>();
+            resourceTypeList ??= new ChangeTrackingList<ResourceType>();
+            locationList ??= new ChangeTrackingList<AzureLocation>();
+            carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
 
             return new ItemDetailsQueryFilter(
                 CarbonEmissionQueryReportType.ItemDetailsReport,
                 dateRange,
-                subscriptionList?.ToList(),
-                resourceGroupUrlList?.ToList(),
-                resourceTypeList?.ToList(),
-                locationList?.ToList(),
-                carbonScopeList?.ToList(),
-                serializedAdditionalRawData: null,
+                subscriptionList.ToList(),
+                resourceGroupUrlList.ToList(),
+                resourceTypeList.ToList(),
+                locationList.ToList(),
+                carbonScopeList.ToList(),
+                additionalBinaryDataProperties: null,
                 categoryType,
                 orderBy,
                 sortDirection,
@@ -196,48 +210,47 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 skipToken);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionListResult"/>. </summary>
-        /// <param name="value">
-        /// The CarbonEmissionData items on this page
-        /// Please note <see cref="Models.CarbonEmission"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.CarbonEmissionItemDetail"/>, <see cref="Models.CarbonEmissionMonthlySummary"/>, <see cref="Models.CarbonEmissionOverallSummary"/>, <see cref="Models.ResourceGroupCarbonEmissionItemDetail"/>, <see cref="Models.ResourceGroupCarbonEmissionTopItemMonthlySummary"/>, <see cref="Models.ResourceGroupCarbonEmissionTopItemsSummary"/>, <see cref="Models.ResourceCarbonEmissionItemDetail"/>, <see cref="Models.ResourceCarbonEmissionTopItemMonthlySummary"/>, <see cref="Models.ResourceCarbonEmissionTopItemsSummary"/>, <see cref="Models.CarbonEmissionTopItemMonthlySummary"/> and <see cref="Models.CarbonEmissionTopItemsSummary"/>.
-        /// </param>
+        /// <summary> List of carbon emission results. </summary>
+        /// <param name="value"> The CarbonEmissionData items on this page. </param>
         /// <param name="skipToken"> The pagination token to fetch next page data, it's null or empty if it doesn't have next page data. </param>
-        /// <param name="subscriptionAccessDecisionList"> The access decision list for each input subscription. </param>
+        /// <param name="subscriptionAccessDecisionList"> The access decision list for each input subscription . </param>
         /// <returns> A new <see cref="Models.CarbonEmissionListResult"/> instance for mocking. </returns>
-        public static CarbonEmissionListResult CarbonEmissionListResult(IEnumerable<CarbonEmission> value = null, string skipToken = null, IEnumerable<SubscriptionAccessDecision> subscriptionAccessDecisionList = null)
+        public static CarbonEmissionListResult CarbonEmissionListResult(IEnumerable<CarbonEmission> value = default, string skipToken = default, IEnumerable<SubscriptionAccessDecision> subscriptionAccessDecisionList = default)
         {
-            value ??= new List<CarbonEmission>();
-            subscriptionAccessDecisionList ??= new List<SubscriptionAccessDecision>();
+            value ??= new ChangeTrackingList<CarbonEmission>();
+            subscriptionAccessDecisionList ??= new ChangeTrackingList<SubscriptionAccessDecision>();
 
-            return new CarbonEmissionListResult(value?.ToList(), skipToken, subscriptionAccessDecisionList?.ToList(), serializedAdditionalRawData: null);
+            return new CarbonEmissionListResult(value.ToList(), skipToken, subscriptionAccessDecisionList.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CarbonEmission"/>. </summary>
+        /// <summary>
+        /// The basic response for different query report, all query report result will have these information
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CarbonEmissionOverallSummary"/>, <see cref="CarbonEmissionMonthlySummary"/>, <see cref="CarbonEmissionTopItemsSummary"/>, <see cref="ResourceCarbonEmissionTopItemsSummary"/>, <see cref="ResourceGroupCarbonEmissionTopItemsSummary"/>, <see cref="CarbonEmissionTopItemMonthlySummary"/>, <see cref="ResourceCarbonEmissionTopItemMonthlySummary"/>, <see cref="ResourceGroupCarbonEmissionTopItemMonthlySummary"/>, <see cref="CarbonEmissionItemDetail"/>, <see cref="ResourceCarbonEmissionItemDetail"/>, and <see cref="ResourceGroupCarbonEmissionItemDetail"/>.
+        /// </summary>
         /// <param name="dataType"> The data type of the query result, indicating the format of the returned response. </param>
         /// <param name="latestMonthEmissions"> Total carbon emissions for the specified query parameters, measured in kgCO2E. This value represents total emissions over the specified date range (e.g., March-June). </param>
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
         /// <param name="monthlyEmissionsChangeValue"> The change in carbon emissions between the current and previous period, calculated as: latestMonthEmissions - previousMonthEmissions. </param>
         /// <returns> A new <see cref="Models.CarbonEmission"/> instance for mocking. </returns>
-        public static CarbonEmission CarbonEmission(string dataType = null, double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = null, double? monthlyEmissionsChangeValue = null)
+        public static CarbonEmission CarbonEmission(string dataType = default, double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default)
         {
             return new UnknownCarbonEmission(
-                dataType == null ? default : new CarbonEmissionDataType(dataType),
+                new CarbonEmissionDataType(dataType),
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
                 monthlyEmissionsChangeValue,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionOverallSummary"/>. </summary>
+        /// <summary> Response for Overall Carbon Emissions Summary. </summary>
         /// <param name="latestMonthEmissions"> Total carbon emissions for the specified query parameters, measured in kgCO2E. This value represents total emissions over the specified date range (e.g., March-June). </param>
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
         /// <param name="monthlyEmissionsChangeValue"> The change in carbon emissions between the current and previous period, calculated as: latestMonthEmissions - previousMonthEmissions. </param>
         /// <returns> A new <see cref="Models.CarbonEmissionOverallSummary"/> instance for mocking. </returns>
-        public static CarbonEmissionOverallSummary CarbonEmissionOverallSummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = null, double? monthlyEmissionsChangeValue = null)
+        public static CarbonEmissionOverallSummary CarbonEmissionOverallSummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default)
         {
             return new CarbonEmissionOverallSummary(
                 CarbonEmissionDataType.OverallSummaryData,
@@ -245,10 +258,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
                 monthlyEmissionsChangeValue,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionMonthlySummary"/>. </summary>
+        /// <summary> Response for Monthly Carbon Emissions Summary. </summary>
         /// <param name="latestMonthEmissions"> Total carbon emissions for the specified query parameters, measured in kgCO2E. This value represents total emissions over the specified date range (e.g., March-June). </param>
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
@@ -256,7 +269,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="date"> The date, representing the month, for which the emissions data is reported, formatted as yyyy-MM-dd (e.g., 2024-03-01). </param>
         /// <param name="carbonIntensity"> Carbon intensity for the specified month, typically in units of kgCO2E per unit of normalized usage. </param>
         /// <returns> A new <see cref="Models.CarbonEmissionMonthlySummary"/> instance for mocking. </returns>
-        public static CarbonEmissionMonthlySummary CarbonEmissionMonthlySummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = null, double? monthlyEmissionsChangeValue = null, string date = null, double carbonIntensity = default)
+        public static CarbonEmissionMonthlySummary CarbonEmissionMonthlySummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string date = default, double carbonIntensity = default)
         {
             return new CarbonEmissionMonthlySummary(
                 CarbonEmissionDataType.MonthlySummaryData,
@@ -264,12 +277,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
                 monthlyEmissionsChangeValue,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 date,
                 carbonIntensity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionTopItemsSummary"/>. </summary>
+        /// <summary> Response for Top Items by Category Type. </summary>
         /// <param name="latestMonthEmissions"> Total carbon emissions for the specified query parameters, measured in kgCO2E. This value represents total emissions over the specified date range (e.g., March-June). </param>
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
@@ -277,7 +290,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="itemName"> The identifier of the item being reported on, which could refer to the resource name, resource type name, location, resource group name, or subscription ID, depending on the specified category type. </param>
         /// <param name="categoryType"> The category type of the item. This defines which dimension the emissions are aggregated by, and the supported values are defined in CategoryTypeEnum (e.g., Subscription, ResourceGroup, Resource, etc.). </param>
         /// <returns> A new <see cref="Models.CarbonEmissionTopItemsSummary"/> instance for mocking. </returns>
-        public static CarbonEmissionTopItemsSummary CarbonEmissionTopItemsSummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = null, double? monthlyEmissionsChangeValue = null, string itemName = null, CarbonEmissionCategoryType categoryType = default)
+        public static CarbonEmissionTopItemsSummary CarbonEmissionTopItemsSummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default)
         {
             return new CarbonEmissionTopItemsSummary(
                 CarbonEmissionDataType.TopItemsSummaryData,
@@ -285,12 +298,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
                 monthlyEmissionsChangeValue,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 itemName,
                 categoryType);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceCarbonEmissionTopItemsSummary"/>. </summary>
+        /// <summary> Response for Top Items For Resource Category. </summary>
         /// <param name="latestMonthEmissions"> Total carbon emissions for the specified query parameters, measured in kgCO2E. This value represents total emissions over the specified date range (e.g., March-June). </param>
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
@@ -301,7 +314,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <param name="resourceId"> Resource Id, The URI of the resource for the Resource Category. This identifies the resource being reported. </param>
         /// <returns> A new <see cref="Models.ResourceCarbonEmissionTopItemsSummary"/> instance for mocking. </returns>
-        public static ResourceCarbonEmissionTopItemsSummary ResourceCarbonEmissionTopItemsSummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = null, double? monthlyEmissionsChangeValue = null, string itemName = null, CarbonEmissionCategoryType categoryType = default, string subscriptionId = null, string resourceGroup = null, ResourceIdentifier resourceId = null)
+        public static ResourceCarbonEmissionTopItemsSummary ResourceCarbonEmissionTopItemsSummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string subscriptionId = default, string resourceGroup = default, ResourceIdentifier resourceId = default)
         {
             return new ResourceCarbonEmissionTopItemsSummary(
                 CarbonEmissionDataType.ResourceTopItemsSummaryData,
@@ -309,7 +322,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
                 monthlyEmissionsChangeValue,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 itemName,
                 categoryType,
                 subscriptionId,
@@ -317,7 +330,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 resourceId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceGroupCarbonEmissionTopItemsSummary"/>. </summary>
+        /// <summary> Response for Top Items For ResourceGroup. </summary>
         /// <param name="latestMonthEmissions"> Total carbon emissions for the specified query parameters, measured in kgCO2E. This value represents total emissions over the specified date range (e.g., March-June). </param>
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
@@ -327,7 +340,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="resourceGroupId"> Resource Group url, value format is '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}'. </param>
         /// <returns> A new <see cref="Models.ResourceGroupCarbonEmissionTopItemsSummary"/> instance for mocking. </returns>
-        public static ResourceGroupCarbonEmissionTopItemsSummary ResourceGroupCarbonEmissionTopItemsSummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = null, double? monthlyEmissionsChangeValue = null, string itemName = null, CarbonEmissionCategoryType categoryType = default, string subscriptionId = null, ResourceIdentifier resourceGroupId = null)
+        public static ResourceGroupCarbonEmissionTopItemsSummary ResourceGroupCarbonEmissionTopItemsSummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string subscriptionId = default, ResourceIdentifier resourceGroupId = default)
         {
             return new ResourceGroupCarbonEmissionTopItemsSummary(
                 CarbonEmissionDataType.ResourceGroupTopItemsSummaryData,
@@ -335,14 +348,14 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
                 monthlyEmissionsChangeValue,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 itemName,
                 categoryType,
                 subscriptionId,
                 resourceGroupId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionTopItemMonthlySummary"/>. </summary>
+        /// <summary> Response for Top Items Carbon Emissions by Month. </summary>
         /// <param name="latestMonthEmissions"> Total carbon emissions for the specified query parameters, measured in kgCO2E. This value represents total emissions over the specified date range (e.g., March-June). </param>
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
@@ -351,7 +364,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="categoryType"> Item category, see supported type value defined in CategoryTypeEnum. </param>
         /// <param name="date"> The date, representing the month, for which the emissions data is reported, formatted as yyyy-MM-dd (e.g., 2024-03-01). </param>
         /// <returns> A new <see cref="Models.CarbonEmissionTopItemMonthlySummary"/> instance for mocking. </returns>
-        public static CarbonEmissionTopItemMonthlySummary CarbonEmissionTopItemMonthlySummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = null, double? monthlyEmissionsChangeValue = null, string itemName = null, CarbonEmissionCategoryType categoryType = default, string date = null)
+        public static CarbonEmissionTopItemMonthlySummary CarbonEmissionTopItemMonthlySummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string date = default)
         {
             return new CarbonEmissionTopItemMonthlySummary(
                 CarbonEmissionDataType.TopItemsMonthlySummaryData,
@@ -359,13 +372,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
                 monthlyEmissionsChangeValue,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 itemName,
                 categoryType,
                 date);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceCarbonEmissionTopItemMonthlySummary"/>. </summary>
+        /// <summary> Response for top items carbon emissions by month for resource. </summary>
         /// <param name="latestMonthEmissions"> Total carbon emissions for the specified query parameters, measured in kgCO2E. This value represents total emissions over the specified date range (e.g., March-June). </param>
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
@@ -377,7 +390,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="resourceGroup"> Resource Group. </param>
         /// <param name="resourceId"> The fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <returns> A new <see cref="Models.ResourceCarbonEmissionTopItemMonthlySummary"/> instance for mocking. </returns>
-        public static ResourceCarbonEmissionTopItemMonthlySummary ResourceCarbonEmissionTopItemMonthlySummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = null, double? monthlyEmissionsChangeValue = null, string itemName = null, CarbonEmissionCategoryType categoryType = default, string date = null, string subscriptionId = null, string resourceGroup = null, ResourceIdentifier resourceId = null)
+        public static ResourceCarbonEmissionTopItemMonthlySummary ResourceCarbonEmissionTopItemMonthlySummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string date = default, string subscriptionId = default, string resourceGroup = default, ResourceIdentifier resourceId = default)
         {
             return new ResourceCarbonEmissionTopItemMonthlySummary(
                 CarbonEmissionDataType.ResourceTopItemsMonthlySummaryData,
@@ -385,7 +398,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
                 monthlyEmissionsChangeValue,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 itemName,
                 categoryType,
                 date,
@@ -394,7 +407,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 resourceId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceGroupCarbonEmissionTopItemMonthlySummary"/>. </summary>
+        /// <summary> Response for top items carbon emissions by month for resource group. </summary>
         /// <param name="latestMonthEmissions"> Total carbon emissions for the specified query parameters, measured in kgCO2E. This value represents total emissions over the specified date range (e.g., March-June). </param>
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
@@ -405,7 +418,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="resourceGroupId"> Resource Group url, the format is '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}'. </param>
         /// <returns> A new <see cref="Models.ResourceGroupCarbonEmissionTopItemMonthlySummary"/> instance for mocking. </returns>
-        public static ResourceGroupCarbonEmissionTopItemMonthlySummary ResourceGroupCarbonEmissionTopItemMonthlySummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = null, double? monthlyEmissionsChangeValue = null, string itemName = null, CarbonEmissionCategoryType categoryType = default, string date = null, string subscriptionId = null, ResourceIdentifier resourceGroupId = null)
+        public static ResourceGroupCarbonEmissionTopItemMonthlySummary ResourceGroupCarbonEmissionTopItemMonthlySummary(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string date = default, string subscriptionId = default, ResourceIdentifier resourceGroupId = default)
         {
             return new ResourceGroupCarbonEmissionTopItemMonthlySummary(
                 CarbonEmissionDataType.ResourceGroupTopItemsMonthlySummaryData,
@@ -413,7 +426,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
                 monthlyEmissionsChangeValue,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 itemName,
                 categoryType,
                 date,
@@ -421,7 +434,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 resourceGroupId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionItemDetail"/>. </summary>
+        /// <summary> Response for detailed carbon emissions. </summary>
         /// <param name="latestMonthEmissions"> Total carbon emissions for the specified query parameters, measured in kgCO2E. This value represents total emissions over the specified date range (e.g., March-June). </param>
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
@@ -429,7 +442,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="itemName"> Item name, it can be resource name, resource type name, location, resource group name or subscriptionId. It depends on category type. </param>
         /// <param name="categoryType"> Item category, see supported type value defined in CategoryTypeEnum. </param>
         /// <returns> A new <see cref="Models.CarbonEmissionItemDetail"/> instance for mocking. </returns>
-        public static CarbonEmissionItemDetail CarbonEmissionItemDetail(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = null, double? monthlyEmissionsChangeValue = null, string itemName = null, CarbonEmissionCategoryType categoryType = default)
+        public static CarbonEmissionItemDetail CarbonEmissionItemDetail(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default)
         {
             return new CarbonEmissionItemDetail(
                 CarbonEmissionDataType.ItemDetailsData,
@@ -437,12 +450,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
                 monthlyEmissionsChangeValue,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 itemName,
                 categoryType);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceCarbonEmissionItemDetail"/>. </summary>
+        /// <summary> Response for Resource detailed carbon emissions. </summary>
         /// <param name="latestMonthEmissions"> Total carbon emissions for the specified query parameters, measured in kgCO2E. This value represents total emissions over the specified date range (e.g., March-June). </param>
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
@@ -455,7 +468,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="location"> Resource Location (e.g., 'east us'). </param>
         /// <param name="resourceType"> The type of resource, for example: microsoft.storage/storageaccounts. </param>
         /// <returns> A new <see cref="Models.ResourceCarbonEmissionItemDetail"/> instance for mocking. </returns>
-        public static ResourceCarbonEmissionItemDetail ResourceCarbonEmissionItemDetail(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = null, double? monthlyEmissionsChangeValue = null, string itemName = null, CarbonEmissionCategoryType categoryType = default, string subscriptionId = null, string resourceGroup = null, ResourceIdentifier resourceId = null, AzureLocation? location = null, ResourceType? resourceType = null)
+        public static ResourceCarbonEmissionItemDetail ResourceCarbonEmissionItemDetail(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string subscriptionId = default, string resourceGroup = default, ResourceIdentifier resourceId = default, AzureLocation? location = default, ResourceType? resourceType = default)
         {
             return new ResourceCarbonEmissionItemDetail(
                 CarbonEmissionDataType.ResourceItemDetailsData,
@@ -463,7 +476,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
                 monthlyEmissionsChangeValue,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 itemName,
                 categoryType,
                 subscriptionId,
@@ -473,7 +486,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 resourceType);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceGroupCarbonEmissionItemDetail"/>. </summary>
+        /// <summary> Response for Resource Group detailed carbon emissions. </summary>
         /// <param name="latestMonthEmissions"> Total carbon emissions for the specified query parameters, measured in kgCO2E. This value represents total emissions over the specified date range (e.g., March-June). </param>
         /// <param name="previousMonthEmissions"> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </param>
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
@@ -483,7 +496,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="resourceGroupId"> Resource Group url, value format is '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}'. </param>
         /// <returns> A new <see cref="Models.ResourceGroupCarbonEmissionItemDetail"/> instance for mocking. </returns>
-        public static ResourceGroupCarbonEmissionItemDetail ResourceGroupCarbonEmissionItemDetail(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = null, double? monthlyEmissionsChangeValue = null, string itemName = null, CarbonEmissionCategoryType categoryType = default, string subscriptionId = null, ResourceIdentifier resourceGroupId = null)
+        public static ResourceGroupCarbonEmissionItemDetail ResourceGroupCarbonEmissionItemDetail(double latestMonthEmissions = default, double previousMonthEmissions = default, double? monthOverMonthEmissionsChangeRatio = default, double? monthlyEmissionsChangeValue = default, string itemName = default, CarbonEmissionCategoryType categoryType = default, string subscriptionId = default, ResourceIdentifier resourceGroupId = default)
         {
             return new ResourceGroupCarbonEmissionItemDetail(
                 CarbonEmissionDataType.ResourceGroupItemDetailsData,
@@ -491,30 +504,21 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
                 monthlyEmissionsChangeValue,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 itemName,
                 categoryType,
                 subscriptionId,
                 resourceGroupId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionAccessDecision"/>. </summary>
+        /// <summary> Access Decision for each Subscription. </summary>
         /// <param name="subscriptionId"> Id of Subscription. </param>
         /// <param name="decision"> Access decision to subscription. </param>
         /// <param name="denialReason"> The reason why access request got denied. </param>
         /// <returns> A new <see cref="Models.SubscriptionAccessDecision"/> instance for mocking. </returns>
-        public static SubscriptionAccessDecision SubscriptionAccessDecision(string subscriptionId = null, CarbonEmissionAccessDecision decision = default, string denialReason = null)
+        public static SubscriptionAccessDecision SubscriptionAccessDecision(string subscriptionId = default, CarbonEmissionAccessDecision decision = default, string denialReason = default)
         {
-            return new SubscriptionAccessDecision(subscriptionId, decision, denialReason, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionAvailableDateRange"/>. </summary>
-        /// <param name="startOn"> Start date parameter, format is yyyy-MM-dd. </param>
-        /// <param name="endOn"> End date parameter, format is yyyy-MM-dd. </param>
-        /// <returns> A new <see cref="Models.CarbonEmissionAvailableDateRange"/> instance for mocking. </returns>
-        public static CarbonEmissionAvailableDateRange CarbonEmissionAvailableDateRange(DateTimeOffset startOn = default, DateTimeOffset endOn = default)
-        {
-            return new CarbonEmissionAvailableDateRange(startOn, endOn, serializedAdditionalRawData: null);
+            return new SubscriptionAccessDecision(subscriptionId, decision, denialReason, additionalBinaryDataProperties: null);
         }
     }
 }
