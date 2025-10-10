@@ -114,6 +114,9 @@ namespace Azure.Core.TestFramework
 
                 for (int retryCount = 0; retryCount < 2; retryCount++)
                 {
+                    // Create a new TestResult instance
+                    context.CurrentResult = context.CurrentTest.MakeTestResult();
+                    // Run the test again
                     context.CurrentResult = innerCommand.Execute(context);
                     results.Add(context.CurrentResult);
 
