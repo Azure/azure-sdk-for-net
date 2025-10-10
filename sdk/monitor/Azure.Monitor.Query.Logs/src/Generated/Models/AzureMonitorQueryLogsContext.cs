@@ -18,8 +18,6 @@ namespace Azure.Monitor.Query.Logs
     [ModelReaderWriterBuildable(typeof(BatchQueryResponse))]
     [ModelReaderWriterBuildable(typeof(BatchRequest))]
     [ModelReaderWriterBuildable(typeof(BatchResponse))]
-    [ModelReaderWriterBuildable(typeof(ErrorDetail))]
-    [ModelReaderWriterBuildable(typeof(ErrorInfo))]
     [ModelReaderWriterBuildable(typeof(LogsBatchQueryResult))]
     [ModelReaderWriterBuildable(typeof(LogsQueryResult))]
     [ModelReaderWriterBuildable(typeof(LogsTable))]

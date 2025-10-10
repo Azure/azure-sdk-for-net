@@ -43,7 +43,7 @@ namespace Azure.Monitor.Query.Logs.Tests
         private string TableANameSent => nameof(TableA) + DataVersion + "_" + RetentionWindowStart.DayOfYear;
 
         public string TableAName => TableANameSent + "_CL";
-        public QueryTimeRange DataTimeRange => new QueryTimeRange(RetentionWindowStart, TimeSpan.FromDays(15));
+        public LogsQueryTimeRange DataTimeRange => new LogsQueryTimeRange(RetentionWindowStart, TimeSpan.FromDays(15));
 
         private readonly MonitorQueryLogsTestEnvironment _testEnvironment;
 

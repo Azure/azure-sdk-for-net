@@ -109,7 +109,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 Response<LogsQueryResult> result = await client.QueryWorkspaceAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
-    new QueryTimeRange(TimeSpan.FromDays(1)));
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)));
 
 LogsTable table = result.Value.Table;
 
@@ -137,7 +137,7 @@ string tableName = "<table_name>";
 Response<LogsQueryResult> results = await client.QueryResourceAsync(
     new ResourceIdentifier(resourceId),
     $"{tableName} | distinct * | project TimeGenerated",
-    new QueryTimeRange(TimeSpan.FromDays(7)));
+    new LogsQueryTimeRange(TimeSpan.FromDays(7)));
 
 LogsTable resultTable = results.Value.Table;
 foreach (LogsTableRow row in resultTable.Rows)
@@ -189,7 +189,7 @@ string workspaceId = "<workspace_id>";
 Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryWorkspaceAsync<MyLogEntryModel>(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
-    new QueryTimeRange(TimeSpan.FromDays(1)));
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)));
 
 foreach (var logEntryModel in response.Value)
 {
@@ -210,7 +210,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<string>(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup",
-    new QueryTimeRange(TimeSpan.FromDays(1)));
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)));
 
 foreach (var resourceGroup in response.Value)
 {
@@ -229,7 +229,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
-    new QueryTimeRange(TimeSpan.FromDays(1)));
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)));
 
 LogsTable table = response.Value.Table;
 
@@ -268,11 +268,11 @@ var batch = new LogsBatchQuery();
 string countQueryId = batch.AddWorkspaceQuery(
     workspaceId,
     "AzureActivity | count",
-    new QueryTimeRange(TimeSpan.FromDays(1)));
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)));
 string topQueryId = batch.AddWorkspaceQuery(
     workspaceId,
     "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
-    new QueryTimeRange(TimeSpan.FromDays(1)));
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)));
 
 Response<LogsBatchQueryResultCollection> response = await client.QueryBatchAsync(batch);
 
@@ -304,7 +304,7 @@ Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<stri
         | summarize Count = count() by ResourceGroup
         | top 10 by Count
         | project ResourceGroup",
-    new QueryTimeRange(TimeSpan.FromDays(1)),
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)),
     new LogsQueryOptions
     {
         ServerTimeout = TimeSpan.FromMinutes(10)
@@ -333,7 +333,7 @@ Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<stri
         | summarize Count = count() by ResourceGroup
         | top 10 by Count
         | project ResourceGroup",
-    new QueryTimeRange(TimeSpan.FromDays(1)),
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)),
     new LogsQueryOptions
     {
         AdditionalWorkspaces = { additionalWorkspaceId }
@@ -361,7 +361,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
-    new QueryTimeRange(TimeSpan.FromDays(1)),
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)),
     new LogsQueryOptions
     {
         IncludeStatistics = true,
@@ -406,7 +406,7 @@ Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
         | where event_count > 10
         | project State, event_count
         | render columnchart",
-    new QueryTimeRange(TimeSpan.FromDays(1)),
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)),
     new LogsQueryOptions
     {
         IncludeVisualization = true,

@@ -10,12 +10,12 @@ namespace Azure.Monitor.Query.Logs
     /// <summary>
     /// Represents a span of time over which the query would be executed.
     /// </summary>
-    public readonly struct QueryTimeRange : IEquatable<QueryTimeRange>
+    public readonly struct LogsQueryTimeRange : IEquatable<LogsQueryTimeRange>
     {
         /// <summary>
-        /// Represents the maximum <see cref="QueryTimeRange"/>.
+        /// Represents the maximum <see cref="LogsQueryTimeRange"/>.
         /// </summary>
-        public static QueryTimeRange All => new QueryTimeRange(TimeSpan.MaxValue);
+        public static LogsQueryTimeRange All => new LogsQueryTimeRange(TimeSpan.MaxValue);
 
         /// <summary>
         /// Gets the duration of the range.
@@ -33,11 +33,11 @@ namespace Azure.Monitor.Query.Logs
         public DateTimeOffset? End { get; }
 
         /// <summary>
-        /// Initializes an instance of <see cref="QueryTimeRange"/> using a duration value.
+        /// Initializes an instance of <see cref="LogsQueryTimeRange"/> using a duration value.
         /// The exact query range would be determined by the service when executing the query.
         /// </summary>
         /// <param name="duration">The duration of the range.</param>
-        public QueryTimeRange(TimeSpan duration)
+        public LogsQueryTimeRange(TimeSpan duration)
         {
             Duration = duration;
             Start = null;
@@ -45,11 +45,11 @@ namespace Azure.Monitor.Query.Logs
         }
 
         /// <summary>
-        /// Initializes an instance of <see cref="QueryTimeRange"/> using a start time and a duration value.
+        /// Initializes an instance of <see cref="LogsQueryTimeRange"/> using a start time and a duration value.
         /// </summary>
         /// <param name="start">The start of the range.</param>
         /// <param name="duration">The duration of the range.</param>
-        public QueryTimeRange(DateTimeOffset start, TimeSpan duration)
+        public LogsQueryTimeRange(DateTimeOffset start, TimeSpan duration)
         {
             Duration = duration;
             Start = start;
@@ -57,11 +57,11 @@ namespace Azure.Monitor.Query.Logs
         }
 
         /// <summary>
-        /// Initializes an instance of <see cref="QueryTimeRange"/> using a duration and an end time.
+        /// Initializes an instance of <see cref="LogsQueryTimeRange"/> using a duration and an end time.
         /// </summary>
         /// <param name="duration">The duration of the range.</param>
         /// <param name="end">The end of the range.</param>
-        public QueryTimeRange(TimeSpan duration, DateTimeOffset end)
+        public LogsQueryTimeRange(TimeSpan duration, DateTimeOffset end)
         {
             Duration = duration;
             Start = null;
@@ -69,11 +69,11 @@ namespace Azure.Monitor.Query.Logs
         }
 
         /// <summary>
-        /// Initializes an instance of <see cref="QueryTimeRange"/> using a start time and an end time.
+        /// Initializes an instance of <see cref="LogsQueryTimeRange"/> using a start time and an end time.
         /// </summary>
         /// <param name="start">The start of the range.</param>
         /// <param name="end">The end of the range.</param>
-        public QueryTimeRange(DateTimeOffset start, DateTimeOffset end)
+        public LogsQueryTimeRange(DateTimeOffset start, DateTimeOffset end)
         {
             Duration = end - start;
             Start = start;
@@ -81,10 +81,10 @@ namespace Azure.Monitor.Query.Logs
         }
 
         /// <summary>
-        /// Converts a <see cref="TimeSpan"/> to a <see cref="QueryTimeRange"/>.
+        /// Converts a <see cref="TimeSpan"/> to a <see cref="LogsQueryTimeRange"/>.
         /// </summary>
         /// <param name="timeSpan">The <see cref="TimeSpan"/> value to convert.</param>
-        public static implicit operator QueryTimeRange(TimeSpan timeSpan) => new QueryTimeRange(timeSpan);
+        public static implicit operator LogsQueryTimeRange(TimeSpan timeSpan) => new LogsQueryTimeRange(timeSpan);
 
         /// <inheritdoc />
         public override string ToString()
@@ -122,7 +122,7 @@ namespace Azure.Monitor.Query.Logs
         }
 
         /// <inheritdoc />
-        public bool Equals(QueryTimeRange other)
+        public bool Equals(LogsQueryTimeRange other)
         {
             return Duration.Equals(other.Duration) &&
                    Nullable.Equals(Start, other.Start) &&
@@ -132,27 +132,27 @@ namespace Azure.Monitor.Query.Logs
         /// <inheritdoc />
         public override bool Equals(object obj)
         {
-            return obj is QueryTimeRange other && Equals(other);
+            return obj is LogsQueryTimeRange other && Equals(other);
         }
 
         /// <summary>
-        /// Determines if two <see cref="QueryTimeRange"/> values are the same.
+        /// Determines if two <see cref="LogsQueryTimeRange"/> values are the same.
         /// </summary>
-        /// <param name="left">The first <see cref="QueryTimeRange"/> to compare.</param>
-        /// <param name="right">The second <see cref="QueryTimeRange"/> to compare.</param>
+        /// <param name="left">The first <see cref="LogsQueryTimeRange"/> to compare.</param>
+        /// <param name="right">The second <see cref="LogsQueryTimeRange"/> to compare.</param>
         /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
-        public static bool operator ==(QueryTimeRange left, QueryTimeRange right)
+        public static bool operator ==(LogsQueryTimeRange left, LogsQueryTimeRange right)
         {
             return left.Equals(right);
         }
 
         /// <summary>
-        /// Determines if two <see cref="QueryTimeRange"/> values are different.
+        /// Determines if two <see cref="LogsQueryTimeRange"/> values are different.
         /// </summary>
-        /// <param name="left">The first <see cref="QueryTimeRange"/> to compare.</param>
-        /// <param name="right">The second <see cref="QueryTimeRange"/> to compare.</param>
+        /// <param name="left">The first <see cref="LogsQueryTimeRange"/> to compare.</param>
+        /// <param name="right">The second <see cref="LogsQueryTimeRange"/> to compare.</param>
         /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
-        public static bool operator !=(QueryTimeRange left, QueryTimeRange right)
+        public static bool operator !=(LogsQueryTimeRange left, LogsQueryTimeRange right)
         {
             return !left.Equals(right);
         }
@@ -164,12 +164,12 @@ namespace Azure.Monitor.Query.Logs
         }
 
         /// <summary>
-        /// Converts a <see cref="string"/> value to it's <see cref="QueryTimeRange"/> representation.
+        /// Converts a <see cref="string"/> value to it's <see cref="LogsQueryTimeRange"/> representation.
         /// </summary>
         /// <param name="value">The string to convert.</param>
-        /// <returns>A <see cref="QueryTimeRange" /> equivalent of the string.</returns>
-        /// <exception cref="FormatException"><paramref name="value" /> is not in correct format to represent a <see cref="QueryTimeRange" /> value.</exception>
-        internal static QueryTimeRange Parse(string value)
+        /// <returns>A <see cref="LogsQueryTimeRange" /> equivalent of the string.</returns>
+        /// <exception cref="FormatException"><paramref name="value" /> is not in correct format to represent a <see cref="LogsQueryTimeRange" /> value.</exception>
+        internal static LogsQueryTimeRange Parse(string value)
         {
             Argument.AssertNotNullOrWhiteSpace(value, nameof(value));
 
@@ -204,9 +204,9 @@ namespace Azure.Monitor.Query.Logs
 
                     return (firstIsDateTime, secondIsDateTime) switch
                     {
-                        (true, true) => new QueryTimeRange(dateTimeFirst, dateTimeSecond),
-                        (true, false) => new QueryTimeRange(dateTimeFirst, ParseTimeSpan(parts[1])),
-                        (false, true) => new QueryTimeRange(ParseTimeSpan(parts[0]), dateTimeSecond),
+                        (true, true) => new LogsQueryTimeRange(dateTimeFirst, dateTimeSecond),
+                        (true, false) => new LogsQueryTimeRange(dateTimeFirst, ParseTimeSpan(parts[1])),
+                        (false, true) => new LogsQueryTimeRange(ParseTimeSpan(parts[0]), dateTimeSecond),
                         _ => throw CreateFormatException()
                     };
                 default:

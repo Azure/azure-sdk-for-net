@@ -13,7 +13,7 @@ using Azure.Monitor.Query.Logs;
 namespace Azure.Monitor.Query.Logs.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class MonitorQueryModelFactory
+    public static partial class LogsQueryModelFactory
     {
         /// <summary> A column in a table. </summary>
         /// <param name="name"> The name of this column. </param>

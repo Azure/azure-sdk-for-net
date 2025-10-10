@@ -29,11 +29,11 @@ namespace Azure.Monitor.Query.Logs.Models
         /// string countQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResultCollection&gt; response = await client.QueryBatchAsync(batch);
         ///
@@ -47,7 +47,7 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <param name="timeRange">The timespan over which to query data.</param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <returns>The query identifier that has to be passed into <see cref="LogsBatchQueryResultCollection.GetResult"/> to get the result.</returns>
-        public virtual string AddWorkspaceQuery(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null)
+        public virtual string AddWorkspaceQuery(string workspaceId, string query, LogsQueryTimeRange timeRange, LogsQueryOptions options = null)
         {
             var id = _counter.ToString("G", CultureInfo.InvariantCulture);
             _counter++;

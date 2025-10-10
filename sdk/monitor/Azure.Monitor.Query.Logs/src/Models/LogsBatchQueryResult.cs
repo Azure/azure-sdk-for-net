@@ -8,12 +8,6 @@ using System.Text.Json;
 namespace Azure.Monitor.Query.Logs.Models
 {
     /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
-    [CodeGenSuppress("Error")]
-    [CodeGenSuppress("_additionalBinaryDataProperties")]
-    [CodeGenSuppress("LogsBatchQueryResult", typeof(IEnumerable<LogsTable>))]
-    [CodeGenSuppress("LogsBatchQueryResult", typeof(LogsTable), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, BinaryData>), typeof(ErrorInfo), typeof(IDictionary<string, BinaryData>))]
-    [CodeGenSuppress("LogsBatchQueryResult", typeof(IList<LogsTable>), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, BinaryData>))]
-    [CodeGenSuppress("LogsBatchQueryResult", typeof(IReadOnlyList<LogsTable>), typeof(JsonElement), typeof(JsonElement), typeof(JsonElement), typeof(IDictionary<string, BinaryData>), typeof(IList<LogsTable>), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, BinaryData>))]
     public partial class LogsBatchQueryResult : LogsQueryResult
     {
         internal int StatusCode { get; set; }

@@ -117,7 +117,7 @@ namespace Azure.Monitor.Query.Logs.Tests
             });
 
             LogsBatchQuery batch = new LogsBatchQuery();
-            batch.AddWorkspaceQuery("wid", "query", QueryTimeRange.All);
+            batch.AddWorkspaceQuery("wid", "query", LogsQueryTimeRange.All);
 
             LogsBatchQueryResultCollection batchResults = await client.QueryBatchAsync(batch);
             Assert.NotNull(batchResults.GetResult("0"));
@@ -138,7 +138,7 @@ namespace Azure.Monitor.Query.Logs.Tests
                 Transport = mockTransport
             });
 
-            await client.QueryWorkspaceAsync("", "", QueryTimeRange.All);
+            await client.QueryWorkspaceAsync("", "", LogsQueryTimeRange.All);
             StringAssert.StartsWith("https://api.loganalytics.io", mockTransport.SingleRequest.Uri.ToString());
         }
 
@@ -180,7 +180,7 @@ namespace Azure.Monitor.Query.Logs.Tests
 
             var client = new LogsQueryClient(mock.Object, options);
 
-            await client.QueryWorkspaceAsync("", "", QueryTimeRange.All);
+            await client.QueryWorkspaceAsync("", "", LogsQueryTimeRange.All);
             Assert.AreEqual(new[] { expectedScope }, scopes);
         }
 
@@ -192,13 +192,13 @@ namespace Azure.Monitor.Query.Logs.Tests
         }
 
         [Test]
-        public void MonitorQueryModelFactory_LogsQueryResult_ConvertBinaryDataToJsonElement()
+        public void LogsQueryModelFactory_LogsQueryResult_ConvertBinaryDataToJsonElement()
         {
             var errorJson = @"{
                                 ""code"": ""PartialError"",
                                 ""message"": ""There were some errors when processing your query.""
                            }";
-            var result = MonitorQueryModelFactory.LogsQueryResult(new List<LogsTable>(), new BinaryData(errorJson), new BinaryData("{}"), new BinaryData("42"));
+            var result = LogsQueryModelFactory.LogsQueryResult(new List<LogsTable>(), new BinaryData(errorJson), new BinaryData("{}"), new BinaryData("42"));
             Assert.AreEqual(result.GetStatistics().ToString(), "{}");
             Assert.AreEqual(result.GetVisualization().ToString(), "42");
             Assert.AreEqual("PartialError", result.Error.Code);
@@ -208,22 +208,22 @@ namespace Azure.Monitor.Query.Logs.Tests
         [Test]
         public void ValidateMonitorModelFactoryTableCreation()
         {
-            LogsTableColumn logsTableColumn0 = MonitorQueryModelFactory.LogsTableColumn("column0", LogsColumnType.Datetime);
-            LogsTableColumn logsTableColumn1 = MonitorQueryModelFactory.LogsTableColumn("column1", LogsColumnType.Guid);
-            LogsTableColumn logsTableColumn2 = MonitorQueryModelFactory.LogsTableColumn("column2", LogsColumnType.Int);
-            LogsTableColumn logsTableColumn3 = MonitorQueryModelFactory.LogsTableColumn("column3", LogsColumnType.Long);
-            LogsTableColumn logsTableColumn4 = MonitorQueryModelFactory.LogsTableColumn("column4", LogsColumnType.Real);
-            LogsTableColumn logsTableColumn5 = MonitorQueryModelFactory.LogsTableColumn("column5", LogsColumnType.String);
-            LogsTableColumn logsTableColumn6 = MonitorQueryModelFactory.LogsTableColumn("column6", LogsColumnType.Timespan);
-            LogsTableColumn logsTableColumn7 = MonitorQueryModelFactory.LogsTableColumn("column7", LogsColumnType.Decimal);
-            LogsTableColumn logsTableColumn8 = MonitorQueryModelFactory.LogsTableColumn("column8", LogsColumnType.Bool);
-            LogsTableColumn logsTableColumn9 = MonitorQueryModelFactory.LogsTableColumn("column9", LogsColumnType.Dynamic);
+            LogsTableColumn logsTableColumn0 = LogsQueryModelFactory.LogsTableColumn("column0", LogsColumnType.Datetime);
+            LogsTableColumn logsTableColumn1 = LogsQueryModelFactory.LogsTableColumn("column1", LogsColumnType.Guid);
+            LogsTableColumn logsTableColumn2 = LogsQueryModelFactory.LogsTableColumn("column2", LogsColumnType.Int);
+            LogsTableColumn logsTableColumn3 = LogsQueryModelFactory.LogsTableColumn("column3", LogsColumnType.Long);
+            LogsTableColumn logsTableColumn4 = LogsQueryModelFactory.LogsTableColumn("column4", LogsColumnType.Real);
+            LogsTableColumn logsTableColumn5 = LogsQueryModelFactory.LogsTableColumn("column5", LogsColumnType.String);
+            LogsTableColumn logsTableColumn6 = LogsQueryModelFactory.LogsTableColumn("column6", LogsColumnType.Timespan);
+            LogsTableColumn logsTableColumn7 = LogsQueryModelFactory.LogsTableColumn("column7", LogsColumnType.Decimal);
+            LogsTableColumn logsTableColumn8 = LogsQueryModelFactory.LogsTableColumn("column8", LogsColumnType.Bool);
+            LogsTableColumn logsTableColumn9 = LogsQueryModelFactory.LogsTableColumn("column9", LogsColumnType.Dynamic);
             LogsTableColumn[] logsTableColumns = new LogsTableColumn[] { logsTableColumn0, logsTableColumn1, logsTableColumn2, logsTableColumn3, logsTableColumn4, logsTableColumn5, logsTableColumn6, logsTableColumn7, logsTableColumn8, logsTableColumn9};
             Object[] rowValues = new Object[] { "2015-12-31T23:59:59.9Z", "74be27de-1e4e-49d9-b579-fe0b331d3642", 12345, 1234567890123, 12345.6789, "string value", "00:00:10", "0.10101", false, "{\u0022a\u0022:123,\u0022b\u0022:\u0022hello\u0022,\u0022c\u0022:[1,2,3],\u0022d\u0022:{}}" };
 
-            LogsTableRow logsTableRow = MonitorQueryModelFactory.LogsTableRow(logsTableColumns, rowValues);
+            LogsTableRow logsTableRow = LogsQueryModelFactory.LogsTableRow(logsTableColumns, rowValues);
             LogsTableRow[] rowArray = new LogsTableRow[] { logsTableRow };
-            LogsTable logsTable = MonitorQueryModelFactory.LogsTable("tester", logsTableColumns.AsEnumerable(), rowArray.AsEnumerable());
+            LogsTable logsTable = LogsQueryModelFactory.LogsTable("tester", logsTableColumns.AsEnumerable(), rowArray.AsEnumerable());
 
             Assert.AreEqual("tester", logsTable.Name);
             Assert.AreEqual(1, logsTable.Rows.Count);

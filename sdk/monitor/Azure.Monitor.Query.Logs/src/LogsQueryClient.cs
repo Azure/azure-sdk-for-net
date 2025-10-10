@@ -94,7 +94,7 @@ namespace Azure.Monitor.Query.Logs
         /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryWorkspaceAsync&lt;MyLogEntryModel&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         /// </example>
         ///
@@ -104,7 +104,7 @@ namespace Azure.Monitor.Query.Logs
         /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryWorkspaceAsync&lt;string&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         /// </example>
         /// </summary>
@@ -115,11 +115,11 @@ namespace Azure.Monitor.Query.Logs
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
         /// <remarks>
-        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// When the <paramref name="timeRange"/> argument is <see cref="LogsQueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
         /// </remarks>
         [RequiresUnreferencedCode(LogsBatchQueryResultCollection.RequiresUnreferencedCodeMessage)]
         [RequiresDynamicCode(LogsBatchQueryResultCollection.RequiresDynamicCodeMessage)]
-        public virtual Response<IReadOnlyList<T>> QueryWorkspace<T>(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<T>> QueryWorkspace<T>(string workspaceId, string query, LogsQueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = QueryWorkspace(workspaceId, query, timeRange, options, cancellationToken);
             return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.AllTables), response.GetRawResponse());
@@ -134,7 +134,7 @@ namespace Azure.Monitor.Query.Logs
         /// Response&lt;IReadOnlyList&lt;MyLogEntryModel&gt;&gt; response = await client.QueryWorkspaceAsync&lt;MyLogEntryModel&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         /// </example>
         ///
@@ -144,7 +144,7 @@ namespace Azure.Monitor.Query.Logs
         /// Response&lt;IReadOnlyList&lt;string&gt;&gt; response = await client.QueryWorkspaceAsync&lt;string&gt;(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(1)));
         /// </code>
         /// </example>
         /// </summary>
@@ -155,11 +155,11 @@ namespace Azure.Monitor.Query.Logs
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
         /// <remarks>
-        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// When the <paramref name="timeRange"/> argument is <see cref="LogsQueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
         /// </remarks>
         [RequiresUnreferencedCode(LogsBatchQueryResultCollection.RequiresUnreferencedCodeMessage)]
         [RequiresDynamicCode(LogsBatchQueryResultCollection.RequiresDynamicCodeMessage)]
-        public virtual async Task<Response<IReadOnlyList<T>>> QueryWorkspaceAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<T>>> QueryWorkspaceAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(string workspaceId, string query, LogsQueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = await QueryWorkspaceAsync(workspaceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.AllTables), response.GetRawResponse());
@@ -175,9 +175,9 @@ namespace Azure.Monitor.Query.Logs
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> containing the query results.</returns>
         /// <remarks>
-        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// When the <paramref name="timeRange"/> argument is <see cref="LogsQueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
         /// </remarks>
-        public virtual Response<LogsQueryResult> QueryWorkspace(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<LogsQueryResult> QueryWorkspace(string workspaceId, string query, LogsQueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
 
@@ -220,9 +220,9 @@ namespace Azure.Monitor.Query.Logs
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
         /// <remarks>
-        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// When the <paramref name="timeRange"/> argument is <see cref="LogsQueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
         /// </remarks>
-        public virtual async Task<Response<LogsQueryResult>> QueryWorkspaceAsync(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogsQueryResult>> QueryWorkspaceAsync(string workspaceId, string query, LogsQueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(workspaceId, nameof(workspaceId));
 
@@ -270,11 +270,11 @@ namespace Azure.Monitor.Query.Logs
         /// string countQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResultCollection&gt; response = await client.QueryBatchAsync(batch);
         ///
@@ -350,11 +350,11 @@ namespace Azure.Monitor.Query.Logs
         /// string countQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResultCollection&gt; response = await client.QueryBatchAsync(batch);
         ///
@@ -426,7 +426,7 @@ namespace Azure.Monitor.Query.Logs
         /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
         ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(7)));
         ///
         /// LogsTable resultTable = results.Value.Table;
         /// foreach (LogsTableRow row in resultTable.Rows)
@@ -449,7 +449,7 @@ namespace Azure.Monitor.Query.Logs
         /// <returns>The logs matching the query.</returns>
         [RequiresUnreferencedCode(LogsBatchQueryResultCollection.RequiresUnreferencedCodeMessage)]
         [RequiresDynamicCode(LogsBatchQueryResultCollection.RequiresDynamicCodeMessage)]
-        public virtual Response<IReadOnlyList<T>> QueryResource<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<T>> QueryResource<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(ResourceIdentifier resourceId, string query, LogsQueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = QueryResource(resourceId, query, timeRange, options, cancellationToken);
             return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.AllTables), response.GetRawResponse());
@@ -466,7 +466,7 @@ namespace Azure.Monitor.Query.Logs
         /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
         ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(7)));
         ///
         /// LogsTable resultTable = results.Value.Table;
         /// foreach (LogsTableRow row in resultTable.Rows)
@@ -488,11 +488,11 @@ namespace Azure.Monitor.Query.Logs
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The logs matching the query.</returns>
         /// <remarks>
-        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// When the <paramref name="timeRange"/> argument is <see cref="LogsQueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
         /// </remarks>
         [RequiresUnreferencedCode(LogsBatchQueryResultCollection.RequiresUnreferencedCodeMessage)]
         [RequiresDynamicCode(LogsBatchQueryResultCollection.RequiresDynamicCodeMessage)]
-        public virtual async Task<Response<IReadOnlyList<T>>> QueryResourceAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<T>>> QueryResourceAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(ResourceIdentifier resourceId, string query, LogsQueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = await QueryResourceAsync(resourceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(RowBinder.Shared.BindResults<T>(response.Value.AllTables), response.GetRawResponse());
@@ -509,7 +509,7 @@ namespace Azure.Monitor.Query.Logs
         /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
         ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(7)));
         ///
         /// LogsTable resultTable = results.Value.Table;
         /// foreach (LogsTableRow row in resultTable.Rows)
@@ -531,9 +531,9 @@ namespace Azure.Monitor.Query.Logs
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The logs matching the query.</returns>
         /// <remarks>
-        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// When the <paramref name="timeRange"/> argument is <see cref="LogsQueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
         /// </remarks>
-        public virtual Response<LogsQueryResult> QueryResource(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<LogsQueryResult> QueryResource(ResourceIdentifier resourceId, string query, LogsQueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -583,7 +583,7 @@ namespace Azure.Monitor.Query.Logs
         /// Response&lt;LogsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     new ResourceIdentifier(resourceId),
         ///     $&quot;{tableName} | distinct * | project TimeGenerated&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(7)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(7)));
         ///
         /// LogsTable resultTable = results.Value.Table;
         /// foreach (LogsTableRow row in resultTable.Rows)
@@ -605,9 +605,9 @@ namespace Azure.Monitor.Query.Logs
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The logs matching the query.</returns>
         /// <remarks>
-        /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
+        /// When the <paramref name="timeRange"/> argument is <see cref="LogsQueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
         /// </remarks>
-        public virtual async Task<Response<LogsQueryResult>> QueryResourceAsync(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogsQueryResult>> QueryResourceAsync(ResourceIdentifier resourceId, string query, LogsQueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -709,10 +709,10 @@ namespace Azure.Monitor.Query.Logs
             return string.Format(CultureInfo.InvariantCulture, query.Format, args);
         }
 
-        internal static QueryBody CreateQueryBody(string query, QueryTimeRange timeRange, LogsQueryOptions options, out string prefer)
+        internal static QueryBody CreateQueryBody(string query, LogsQueryTimeRange timeRange, LogsQueryOptions options, out string prefer)
         {
             var queryBody = new QueryBody(query);
-            if (timeRange != QueryTimeRange.All)
+            if (timeRange != LogsQueryTimeRange.All)
             {
                 queryBody.Timespan = timeRange.ToIsoString();
             }

@@ -20,7 +20,7 @@ namespace Azure.Monitor.Query.Logs.Models
     [CodeGenSuppress("LogsTable", typeof(string), typeof(IEnumerable<LogsTableColumn>), typeof(JsonElement))]
     [CodeGenSuppress("LogsBatchQueryResult", typeof(IEnumerable<LogsTable>), typeof(JsonElement), typeof(JsonElement), typeof(JsonElement))]
     [CodeGenSuppress("LogsBatchQueryResult", typeof(IEnumerable<LogsTable>), typeof(JsonElement), typeof(JsonElement), typeof(JsonElement), typeof(IEnumerable<LogsTable>), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, BinaryData>))]
-    public static partial class MonitorQueryModelFactory
+    public static partial class LogsQueryModelFactory
     {
         private const string TrimmingUnsafeMessage = "This method uses JSON serialization that is incompatible with trimming.";
 

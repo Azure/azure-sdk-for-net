@@ -37,18 +37,18 @@ namespace Azure.Monitor.Query.Logs
         public static string CreateQuery(System.FormattableString query) { throw null; }
         public virtual Azure.Response<Azure.Monitor.Query.Logs.Models.LogsBatchQueryResultCollection> QueryBatch(Azure.Monitor.Query.Logs.Models.LogsBatchQuery batch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Logs.Models.LogsBatchQueryResultCollection>> QueryBatchAsync(Azure.Monitor.Query.Logs.Models.LogsBatchQuery batch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Monitor.Query.Logs.Models.LogsQueryResult> QueryResource(Azure.Core.ResourceIdentifier resourceId, string query, Azure.Monitor.Query.Logs.QueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Logs.Models.LogsQueryResult>> QueryResourceAsync(Azure.Core.ResourceIdentifier resourceId, string query, Azure.Monitor.Query.Logs.QueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Monitor.Query.Logs.Models.LogsQueryResult> QueryResource(Azure.Core.ResourceIdentifier resourceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Logs.Models.LogsQueryResult>> QueryResourceAsync(Azure.Core.ResourceIdentifier resourceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Mapping query results to open generic types is not supported with AOT compilation. This message can be suppressed if you are certain calls will only ever attempt to map results to primitive types.")]
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<T>>> QueryResourceAsync<T>(Azure.Core.ResourceIdentifier resourceId, string query, Azure.Monitor.Query.Logs.QueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<T>>> QueryResourceAsync<T>(Azure.Core.ResourceIdentifier resourceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Mapping query results to open generic types is not supported with AOT compilation. This message can be suppressed if you are certain calls will only ever attempt to map results to primitive types.")]
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> QueryResource<T>(Azure.Core.ResourceIdentifier resourceId, string query, Azure.Monitor.Query.Logs.QueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Monitor.Query.Logs.Models.LogsQueryResult> QueryWorkspace(string workspaceId, string query, Azure.Monitor.Query.Logs.QueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Logs.Models.LogsQueryResult>> QueryWorkspaceAsync(string workspaceId, string query, Azure.Monitor.Query.Logs.QueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> QueryResource<T>(Azure.Core.ResourceIdentifier resourceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Monitor.Query.Logs.Models.LogsQueryResult> QueryWorkspace(string workspaceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Logs.Models.LogsQueryResult>> QueryWorkspaceAsync(string workspaceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Mapping query results to open generic types is not supported with AOT compilation. This message can be suppressed if you are certain calls will only ever attempt to map results to primitive types.")]
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<T>>> QueryWorkspaceAsync<T>(string workspaceId, string query, Azure.Monitor.Query.Logs.QueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<T>>> QueryWorkspaceAsync<T>(string workspaceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Mapping query results to open generic types is not supported with AOT compilation. This message can be suppressed if you are certain calls will only ever attempt to map results to primitive types.")]
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> QueryWorkspace<T>(string workspaceId, string query, Azure.Monitor.Query.Logs.QueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> QueryWorkspace<T>(string workspaceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LogsQueryClientOptions : Azure.Core.ClientOptions
     {
@@ -69,23 +69,23 @@ namespace Azure.Monitor.Query.Logs
         public System.TimeSpan? ServerTimeout { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct QueryTimeRange : System.IEquatable<Azure.Monitor.Query.Logs.QueryTimeRange>
+    public readonly partial struct LogsQueryTimeRange : System.IEquatable<Azure.Monitor.Query.Logs.LogsQueryTimeRange>
     {
         private readonly int _dummyPrimitive;
-        public QueryTimeRange(System.DateTimeOffset start, System.DateTimeOffset end) { throw null; }
-        public QueryTimeRange(System.DateTimeOffset start, System.TimeSpan duration) { throw null; }
-        public QueryTimeRange(System.TimeSpan duration) { throw null; }
-        public QueryTimeRange(System.TimeSpan duration, System.DateTimeOffset end) { throw null; }
-        public static Azure.Monitor.Query.Logs.QueryTimeRange All { get { throw null; } }
+        public LogsQueryTimeRange(System.DateTimeOffset start, System.DateTimeOffset end) { throw null; }
+        public LogsQueryTimeRange(System.DateTimeOffset start, System.TimeSpan duration) { throw null; }
+        public LogsQueryTimeRange(System.TimeSpan duration) { throw null; }
+        public LogsQueryTimeRange(System.TimeSpan duration, System.DateTimeOffset end) { throw null; }
+        public static Azure.Monitor.Query.Logs.LogsQueryTimeRange All { get { throw null; } }
         public System.TimeSpan Duration { get { throw null; } }
         public System.DateTimeOffset? End { get { throw null; } }
         public System.DateTimeOffset? Start { get { throw null; } }
-        public bool Equals(Azure.Monitor.Query.Logs.QueryTimeRange other) { throw null; }
+        public bool Equals(Azure.Monitor.Query.Logs.LogsQueryTimeRange other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Monitor.Query.Logs.QueryTimeRange left, Azure.Monitor.Query.Logs.QueryTimeRange right) { throw null; }
-        public static implicit operator Azure.Monitor.Query.Logs.QueryTimeRange (System.TimeSpan timeSpan) { throw null; }
-        public static bool operator !=(Azure.Monitor.Query.Logs.QueryTimeRange left, Azure.Monitor.Query.Logs.QueryTimeRange right) { throw null; }
+        public static bool operator ==(Azure.Monitor.Query.Logs.LogsQueryTimeRange left, Azure.Monitor.Query.Logs.LogsQueryTimeRange right) { throw null; }
+        public static implicit operator Azure.Monitor.Query.Logs.LogsQueryTimeRange (System.TimeSpan timeSpan) { throw null; }
+        public static bool operator !=(Azure.Monitor.Query.Logs.LogsQueryTimeRange left, Azure.Monitor.Query.Logs.LogsQueryTimeRange right) { throw null; }
         public override string ToString() { throw null; }
     }
 }
@@ -94,15 +94,15 @@ namespace Azure.Monitor.Query.Logs.Models
     public partial class LogsBatchQuery
     {
         public LogsBatchQuery() { }
-        public virtual string AddWorkspaceQuery(string workspaceId, string query, Azure.Monitor.Query.Logs.QueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null) { throw null; }
+        public virtual string AddWorkspaceQuery(string workspaceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null) { throw null; }
     }
     public partial class LogsBatchQueryResult : Azure.Monitor.Query.Logs.Models.LogsQueryResult, System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>
     {
         internal LogsBatchQueryResult() { }
         public string Id { get { throw null; } }
-        protected new Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.Monitor.Query.Logs.Models.LogsQueryResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected new Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.Monitor.Query.Logs.Models.LogsQueryResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -143,6 +143,18 @@ namespace Azure.Monitor.Query.Logs.Models
         public static implicit operator Azure.Monitor.Query.Logs.Models.LogsColumnType? (string value) { throw null; }
         public static bool operator !=(Azure.Monitor.Query.Logs.Models.LogsColumnType left, Azure.Monitor.Query.Logs.Models.LogsColumnType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public static partial class LogsQueryModelFactory
+    {
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses JSON serialization that is incompatible with trimming.")]
+        public static Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult LogsBatchQueryResult(System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Logs.Models.LogsTable> allTables, System.BinaryData error, System.BinaryData statistics, System.BinaryData visualization) { throw null; }
+        public static Azure.Monitor.Query.Logs.Models.LogsBatchQueryResultCollection LogsBatchQueryResultCollection(System.Collections.Generic.IList<Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult> batchQueryResults, Azure.Monitor.Query.Logs.Models.LogsBatchQuery query) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses JSON serialization that is incompatible with trimming.")]
+        public static Azure.Monitor.Query.Logs.Models.LogsQueryResult LogsQueryResult(System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Logs.Models.LogsTable> allTables, System.BinaryData error, System.BinaryData statistics, System.BinaryData visualization) { throw null; }
+        public static Azure.Monitor.Query.Logs.Models.LogsTable LogsTable(string name, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Logs.Models.LogsTableColumn> columns, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Logs.Models.LogsTableRow> rows) { throw null; }
+        public static Azure.Monitor.Query.Logs.Models.LogsTableColumn LogsTableColumn(string name = null, Azure.Monitor.Query.Logs.Models.LogsColumnType type = default(Azure.Monitor.Query.Logs.Models.LogsColumnType)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses JSON serialization that is incompatible with trimming.")]
+        public static Azure.Monitor.Query.Logs.Models.LogsTableRow LogsTableRow(System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Logs.Models.LogsTableColumn> columns, System.Collections.Generic.IEnumerable<object> values) { throw null; }
     }
     public partial class LogsQueryResult : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Logs.Models.LogsQueryResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Logs.Models.LogsQueryResult>
     {
@@ -231,18 +243,6 @@ namespace Azure.Monitor.Query.Logs.Models
         System.Collections.Generic.IEnumerator<object> System.Collections.Generic.IEnumerable<System.Object>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public override string ToString() { throw null; }
-    }
-    public static partial class MonitorQueryModelFactory
-    {
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses JSON serialization that is incompatible with trimming.")]
-        public static Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult LogsBatchQueryResult(System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Logs.Models.LogsTable> allTables, System.BinaryData error, System.BinaryData statistics, System.BinaryData visualization) { throw null; }
-        public static Azure.Monitor.Query.Logs.Models.LogsBatchQueryResultCollection LogsBatchQueryResultCollection(System.Collections.Generic.IList<Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult> batchQueryResults, Azure.Monitor.Query.Logs.Models.LogsBatchQuery query) { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses JSON serialization that is incompatible with trimming.")]
-        public static Azure.Monitor.Query.Logs.Models.LogsQueryResult LogsQueryResult(System.Collections.Generic.IReadOnlyList<Azure.Monitor.Query.Logs.Models.LogsTable> allTables, System.BinaryData error, System.BinaryData statistics, System.BinaryData visualization) { throw null; }
-        public static Azure.Monitor.Query.Logs.Models.LogsTable LogsTable(string name, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Logs.Models.LogsTableColumn> columns, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Logs.Models.LogsTableRow> rows) { throw null; }
-        public static Azure.Monitor.Query.Logs.Models.LogsTableColumn LogsTableColumn(string name = null, Azure.Monitor.Query.Logs.Models.LogsColumnType type = default(Azure.Monitor.Query.Logs.Models.LogsColumnType)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses JSON serialization that is incompatible with trimming.")]
-        public static Azure.Monitor.Query.Logs.Models.LogsTableRow LogsTableRow(System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Logs.Models.LogsTableColumn> columns, System.Collections.Generic.IEnumerable<object> values) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

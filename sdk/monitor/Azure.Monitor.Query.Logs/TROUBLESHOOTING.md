@@ -30,7 +30,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 try
 {
     await client.QueryWorkspaceAsync(
-        workspaceId, "My Not So Valid Query", new QueryTimeRange(TimeSpan.FromDays(1)));
+        workspaceId, "My Not So Valid Query", new LogsQueryTimeRange(TimeSpan.FromDays(1)));
 }
 catch (Exception e)
 {
@@ -170,7 +170,7 @@ Response<IReadOnlyList<string>> response = await client.QueryWorkspaceAsync<stri
         | summarize Count = count() by ResourceGroup
         | top 10 by Count
         | project ResourceGroup",
-    new QueryTimeRange(TimeSpan.FromDays(1)),
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)),
     new LogsQueryOptions
     {
         ServerTimeout = TimeSpan.FromMinutes(10)
@@ -190,7 +190,7 @@ By default, if the execution of a Kusto query resulted in a partially successful
 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
     TestEnvironment.WorkspaceId,
     "My Not So Valid Query",
-    new QueryTimeRange(TimeSpan.FromDays(1)),
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)),
     new LogsQueryOptions
     {
         AllowPartialErrors = true

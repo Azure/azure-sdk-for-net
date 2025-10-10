@@ -34,11 +34,11 @@ namespace Azure.Monitor.Query.Logs.Models
         /// string countQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | count&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(1)));
         /// string topQueryId = batch.AddWorkspaceQuery(
         ///     workspaceId,
         ///     &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1)));
+        ///     new LogsQueryTimeRange(TimeSpan.FromDays(1)));
         ///
         /// Response&lt;LogsBatchQueryResultCollection&gt; response = await client.QueryBatchAsync(batch);
         ///
