@@ -123,28 +123,9 @@ namespace Azure.Generator.Management.Providers
         public RequestPathPattern ContextualPath => _contextualPath;
 
         // Cached Get method providers for reuse in other places
-        public MethodProvider? GetAsyncMethodProvider
-        {
-            get
-            {
-                if (_get is not null && _getAsyncMethodProvider is null)
-                {
-                    _getAsyncMethodProvider = BuildGetMethod(isAsync: true);
-                }
-                return _getAsyncMethodProvider;
-            }
-        }
-        public MethodProvider? GetSyncMethodProvider
-        {
-            get
-            {
-                if (_get is not null && _getSyncMethodProvider is null)
-                {
-                    _getSyncMethodProvider = BuildGetMethod(isAsync: false);
-                }
-                return _getSyncMethodProvider;
-            }
-        }
+        public MethodProvider? GetAsyncMethodProvider => _getAsyncMethodProvider ??= BuildGetMethod(isAsync: true);
+
+        public MethodProvider? GetSyncMethodProvider => _getSyncMethodProvider ??= BuildGetMethod(isAsync: false);
 
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
