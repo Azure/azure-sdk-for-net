@@ -513,8 +513,9 @@ namespace Azure.Generator.Management.Providers
                     var bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(childResource.ResourceCollection.Type, client, thisResource.Id())));
                     methods.Add(new MethodProvider(signature, bodyStatement, this));
                     // Add Get methods backed by collection's Get and GetAsync methods
-                    if (childResource.ResourceCollection.GetAsyncMethodProvider is not null && childResource.ResourceCollection.GetSyncMethodProvider is not null)
+                    if (childResource.ResourceCollection.GetSyncMethodProvider is not null)
                     {
+                        Debug.Assert(childResource.ResourceCollection.GetAsyncMethodProvider is not null, "If GetSyncMethodProvider is not null, GetAsyncMethodProvider should not be null as well.");
                         // Create both async and sync Get methods
                         var methodProviders = new[]
                         {

@@ -378,21 +378,21 @@ namespace Azure.Generator.Management.Providers
 
         private List<MethodProvider> BuildGetMethods()
         {
-            if (_get is null)
-            {
-                return [];
-            }
-
             // Check if async method provider is null and build it if needed
             if (_getAsyncMethodProvider is null)
             {
-                _getAsyncMethodProvider = BuildGetMethod(isAsync: true);
+                _getAsyncMethodProvider = BuildGetMethod(true);
             }
 
             // Check if sync method provider is null and build it if needed
             if (_getSyncMethodProvider is null)
             {
-                _getSyncMethodProvider = BuildGetMethod(isAsync: false);
+                _getSyncMethodProvider = BuildGetMethod(false);
+            }
+
+            if (_getAsyncMethodProvider is null || _getSyncMethodProvider is null)
+            {
+                return [];
             }
 
             return [_getAsyncMethodProvider, _getSyncMethodProvider];
