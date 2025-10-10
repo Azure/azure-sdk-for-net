@@ -20,7 +20,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="id"> Run id. </param>
         /// <param name="operation"> Operation. </param>
         /// <param name="creationTime"> Creation time. </param>
-        internal IngestionRun(Guid id, IngestionRunInfo operation, DateTimeOffset creationTime)
+        internal IngestionRun(Guid id, IngestionRunInformation operation, DateTimeOffset creationTime)
         {
             Id = id;
             Operation = operation;
@@ -36,7 +36,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="skipExistingItems"> Skip any item that already exist in the GeoCatalog. </param>
         /// <param name="keepOriginalAssets"> Keep original source assets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionRun(Guid id, Guid? parentRunId, IngestionRunInfo operation, DateTimeOffset creationTime, Uri sourceCatalogUrl, bool? skipExistingItems, bool? keepOriginalAssets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionRun(Guid id, Guid? parentRunId, IngestionRunInformation operation, DateTimeOffset creationTime, Uri sourceCatalogUrl, bool? skipExistingItems, bool? keepOriginalAssets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ParentRunId = parentRunId;
@@ -55,7 +55,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public Guid? ParentRunId { get; }
 
         /// <summary> Operation. </summary>
-        public IngestionRunInfo Operation { get; }
+        public IngestionRunInformation Operation { get; }
 
         /// <summary> Creation time. </summary>
         public DateTimeOffset CreationTime { get; }

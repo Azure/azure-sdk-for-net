@@ -47,7 +47,7 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WriteEndArray();
             writer.WritePropertyName("renderOptions"u8);
             writer.WriteStartArray();
-            foreach (RenderOptionModel item in RenderOptions)
+            foreach (RenderConfiguration item in RenderOptions)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -123,7 +123,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             IList<StacMosaic> mosaics = default;
-            IList<RenderOptionModel> renderOptions = default;
+            IList<RenderConfiguration> renderOptions = default;
             DefaultLocation defaultLocation = default;
             IDictionary<string, BinaryData> defaultCustomQuery = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -141,10 +141,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("renderOptions"u8))
                 {
-                    List<RenderOptionModel> array = new List<RenderOptionModel>();
+                    List<RenderConfiguration> array = new List<RenderConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RenderOptionModel.DeserializeRenderOptionModel(item, options));
+                        array.Add(RenderConfiguration.DeserializeRenderConfiguration(item, options));
                     }
                     renderOptions = array;
                     continue;

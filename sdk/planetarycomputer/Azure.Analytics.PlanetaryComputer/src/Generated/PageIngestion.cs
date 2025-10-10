@@ -19,7 +19,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Initializes a new instance of <see cref="PageIngestion"/>. </summary>
         /// <param name="value"> The items on the page. </param>
-        internal PageIngestion(IEnumerable<IngestionConfiguration> value)
+        internal PageIngestion(IEnumerable<IngestionDefinition> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PageIngestion(IList<IngestionConfiguration> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PageIngestion(IList<IngestionDefinition> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> The items on the page. </summary>
-        public IList<IngestionConfiguration> Value { get; }
+        public IList<IngestionDefinition> Value { get; }
 
         /// <summary> Link to the next page of results. </summary>
         public Uri NextLink { get; }

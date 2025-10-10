@@ -21,7 +21,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="StacMosaicConfiguration"/>. </summary>
         /// <param name="mosaics"> Predefined data mosaics available for this collection. </param>
         /// <param name="renderOptions"> Available render options for visualizing the data. </param>
-        internal StacMosaicConfiguration(IEnumerable<StacMosaic> mosaics, IEnumerable<RenderOptionModel> renderOptions)
+        internal StacMosaicConfiguration(IEnumerable<StacMosaic> mosaics, IEnumerable<RenderConfiguration> renderOptions)
         {
             Mosaics = mosaics.ToList();
             RenderOptions = renderOptions.ToList();
@@ -34,7 +34,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="defaultLocation"> Default map location when displaying this collection. </param>
         /// <param name="defaultCustomQuery"> A list of CQL-JSON expressions to use as the default for  this collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacMosaicConfiguration(IList<StacMosaic> mosaics, IList<RenderOptionModel> renderOptions, DefaultLocation defaultLocation, IDictionary<string, BinaryData> defaultCustomQuery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacMosaicConfiguration(IList<StacMosaic> mosaics, IList<RenderConfiguration> renderOptions, DefaultLocation defaultLocation, IDictionary<string, BinaryData> defaultCustomQuery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mosaics = mosaics;
             RenderOptions = renderOptions;
@@ -47,7 +47,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<StacMosaic> Mosaics { get; }
 
         /// <summary> Available render options for visualizing the data. </summary>
-        public IList<RenderOptionModel> RenderOptions { get; }
+        public IList<RenderConfiguration> RenderOptions { get; }
 
         /// <summary> Default map location when displaying this collection. </summary>
         public DefaultLocation DefaultLocation { get; }

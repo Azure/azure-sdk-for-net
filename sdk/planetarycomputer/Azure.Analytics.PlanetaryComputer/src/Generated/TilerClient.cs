@@ -351,14 +351,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AssetStatisticsResult> GetAssetStatistics(string collectionId, string itemId, GetAssetStatisticsOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<StacAssetStatistics> GetAssetStatistics(string collectionId, string itemId, GetAssetStatisticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(options, nameof(options));
 
             Response result = this.GetAssetStatistics(collectionId, itemId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((AssetStatisticsResult)result, result);
+            return Response.FromValue((StacAssetStatistics)result, result);
         }
 
         /// <summary> Per Asset statistics. </summary>
@@ -369,14 +369,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AssetStatisticsResult>> GetAssetStatisticsAsync(string collectionId, string itemId, GetAssetStatisticsOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacAssetStatistics>> GetAssetStatisticsAsync(string collectionId, string itemId, GetAssetStatisticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(options, nameof(options));
 
             Response result = await this.GetAssetStatisticsAsync(collectionId, itemId, options, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((AssetStatisticsResult)result, result);
+            return Response.FromValue((StacAssetStatistics)result, result);
         }
 
         /// <summary>
@@ -701,7 +701,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/>, <paramref name="body"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CropGeoJson(string collectionId, string itemId, string format, StacItemModel body, CropGeoJsonOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> CropGeoJson(string collectionId, string itemId, string format, StacItemResource body, CropGeoJsonOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -723,7 +723,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/>, <paramref name="body"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CropGeoJsonAsync(string collectionId, string itemId, string format, StacItemModel body, CropGeoJsonOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> CropGeoJsonAsync(string collectionId, string itemId, string format, StacItemResource body, CropGeoJsonOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -859,7 +859,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/>, <paramref name="body"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CropGeoJsonWithDimensions(string collectionId, string itemId, float width, float height, string format, StacItemModel body, CropGeoJsonOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> CropGeoJsonWithDimensions(string collectionId, string itemId, float width, float height, string format, StacItemResource body, CropGeoJsonOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -883,7 +883,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/>, <paramref name="body"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, float width, float height, string format, StacItemModel body, CropGeoJsonOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, float width, float height, string format, StacItemResource body, CropGeoJsonOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -1042,7 +1042,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="body"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<GeoJsonStatisticsForStacItemCollection> GetGeoJsonStatistics(string collectionId, string itemId, StacItemCollectionModel body, GetGeoJsonStatisticsOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<GeoJsonStatisticsForStacItemCollection> GetGeoJsonStatistics(string collectionId, string itemId, StacItemCollectionResource body, GetGeoJsonStatisticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -1062,7 +1062,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="body"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<GeoJsonStatisticsForStacItemCollection>> GetGeoJsonStatisticsAsync(string collectionId, string itemId, StacItemCollectionModel body, GetGeoJsonStatisticsOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GeoJsonStatisticsForStacItemCollection>> GetGeoJsonStatisticsAsync(string collectionId, string itemId, StacItemCollectionResource body, GetGeoJsonStatisticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));

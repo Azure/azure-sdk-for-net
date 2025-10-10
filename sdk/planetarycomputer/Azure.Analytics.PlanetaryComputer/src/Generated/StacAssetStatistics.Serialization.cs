@@ -13,17 +13,17 @@ using Azure;
 
 namespace Azure.Analytics.PlanetaryComputer
 {
-    /// <summary> Generic paged response model. </summary>
-    internal partial class PageIngestion : IJsonModel<PageIngestion>
+    /// <summary> Return dataset's statistics. </summary>
+    public partial class StacAssetStatistics : IJsonModel<StacAssetStatistics>
     {
-        /// <summary> Initializes a new instance of <see cref="PageIngestion"/> for deserialization. </summary>
-        internal PageIngestion()
+        /// <summary> Initializes a new instance of <see cref="StacAssetStatistics"/> for deserialization. </summary>
+        internal StacAssetStatistics()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PageIngestion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StacAssetStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,23 +34,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageIngestion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StacAssetStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PageIngestion)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StacAssetStatistics)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("value"u8);
-            writer.WriteStartArray();
-            foreach (IngestionDefinition item in Value)
+            writer.WritePropertyName("data"u8);
+            writer.WriteStartObject();
+            foreach (var item in Data)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value, options);
             }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink.AbsoluteUri);
-            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -70,51 +66,41 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PageIngestion IJsonModel<PageIngestion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StacAssetStatistics IJsonModel<StacAssetStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PageIngestion JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StacAssetStatistics JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageIngestion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StacAssetStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PageIngestion)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StacAssetStatistics)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePageIngestion(document.RootElement, options);
+            return DeserializeStacAssetStatistics(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PageIngestion DeserializePageIngestion(JsonElement element, ModelReaderWriterOptions options)
+        internal static StacAssetStatistics DeserializeStacAssetStatistics(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<IngestionDefinition> value = default;
-            Uri nextLink = default;
+            IDictionary<string, BandStatistics> data = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("value"u8))
+                if (prop.NameEquals("data"u8))
                 {
-                    List<IngestionDefinition> array = new List<IngestionDefinition>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    Dictionary<string, BandStatistics> dictionary = new Dictionary<string, BandStatistics>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        array.Add(IngestionDefinition.DeserializeIngestionDefinition(item, options));
+                        dictionary.Add(prop0.Name, BandStatistics.DeserializeBandStatistics(prop0.Value, options));
                     }
-                    value = array;
-                    continue;
-                }
-                if (prop.NameEquals("nextLink"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextLink = new Uri(prop.Value.GetString());
+                    data = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -122,55 +108,55 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PageIngestion(value, nextLink, additionalBinaryDataProperties);
+            return new StacAssetStatistics(data, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PageIngestion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StacAssetStatistics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageIngestion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StacAssetStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PageIngestion)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StacAssetStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PageIngestion IPersistableModel<PageIngestion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StacAssetStatistics IPersistableModel<StacAssetStatistics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PageIngestion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StacAssetStatistics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageIngestion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StacAssetStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializePageIngestion(document.RootElement, options);
+                        return DeserializeStacAssetStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PageIngestion)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StacAssetStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PageIngestion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StacAssetStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PageIngestion"/> from. </param>
-        public static explicit operator PageIngestion(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="StacAssetStatistics"/> from. </param>
+        public static explicit operator StacAssetStatistics(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializePageIngestion(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeStacAssetStatistics(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

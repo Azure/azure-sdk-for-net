@@ -20,7 +20,7 @@ namespace Azure.Analytics.PlanetaryComputer
         private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
         private readonly string _apiVersion;
-        private IngestionClient _cachedIngestionClient;
+        private IngestionManagementClient _cachedIngestionManagementClient;
         private StacClient _cachedStacClient;
         private TilerClient _cachedTilerClient;
         private SharedAccessSignatureClient _cachedSharedAccessSignatureClient;
@@ -63,10 +63,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of IngestionClient. </summary>
-        public virtual IngestionClient GetIngestionClient()
+        /// <summary> Initializes a new instance of IngestionManagementClient. </summary>
+        public virtual IngestionManagementClient GetIngestionManagementClient()
         {
-            return Volatile.Read(ref _cachedIngestionClient) ?? Interlocked.CompareExchange(ref _cachedIngestionClient, new IngestionClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedIngestionClient;
+            return Volatile.Read(ref _cachedIngestionManagementClient) ?? Interlocked.CompareExchange(ref _cachedIngestionManagementClient, new IngestionManagementClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedIngestionManagementClient;
         }
 
         /// <summary> Initializes a new instance of StacClient. </summary>
