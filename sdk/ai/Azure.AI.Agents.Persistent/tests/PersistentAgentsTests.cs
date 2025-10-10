@@ -582,8 +582,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 for (int i = ids.Count; i < agentLimit; i++)
                 {
-                    PersistentAgent thread = await client.Administration.CreateAgentAsync();
-                    ids.Add((await GetAgent(client)).Id);
+                    PersistentAgent agent = await client.Administration.CreateAgentAsync(
+                        model: "gpt-4o",
+                        name: AGENT_NAME,
+                        instructions: "You are helpful agent.");
+                    ids.Add(agent.Id);
                 }
             }
             // Test calling before.
@@ -2338,7 +2341,6 @@ namespace Azure.AI.Agents.Persistent.Tests
                 contentBlocks.Add(new MessageInputImageUriBlock(new MessageImageUriParam(uri)));
             }
 
-            // TODO: Leave only async method when the 4734953(VSTS) will be resolved.
             PersistentThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
                 threadId: thread.Id,
                 role: MessageRole.User,
