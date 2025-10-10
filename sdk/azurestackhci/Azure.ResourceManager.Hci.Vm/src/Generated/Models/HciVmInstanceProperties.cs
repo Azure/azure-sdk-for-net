@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="resourceUid"> Unique identifier defined by ARC to identify the guest of the VM. </param>
         /// <param name="hyperVVmId"> Unique identifier for the Hyper-V VM resource. </param>
         /// <param name="hostNodeName"> Name of the host node that the VM is on. </param>
-        /// <param name="hostNodeIpAddress"> Name of the host node that the VM is on. </param>
+        /// <param name="hostNodeIPAddress"> Name of the host node that the VM is on. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceProperties(HciVmInstanceHardwareProfile hardwareProfile, HciVmInstancePlacementProfile placementProfile, VirtualMachineInstancePropertiesNetworkProfile networkProfile, HciVmInstanceOSProfile osProfile, HciVmInstanceSecurityProfile securityProfile, HciVmInstanceStorageProfile storageProfile, HciVmHttpProxyConfiguration httpProxyConfig, bool? isCreatingFromLocal, HciVmProvisioningState? provisioningState, VirtualMachineInstanceView instanceView, HciVmInstanceStatus status, GuestAgentInstallStatus guestAgentInstallStatus, string vmId, string resourceUid, string hyperVVmId, string hostNodeName, string hostNodeIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmInstanceProperties(HciVmInstanceHardwareProfile hardwareProfile, HciVmInstancePlacementProfile placementProfile, VirtualMachineInstancePropertiesNetworkProfile networkProfile, HciVmInstanceOSProfile osProfile, HciVmInstanceSecurityProfile securityProfile, HciVmInstanceStorageProfile storageProfile, HciVmHttpProxyConfiguration httpProxyConfig, bool? isCreatingFromLocal, HciVmProvisioningState? provisioningState, VirtualMachineInstanceView instanceView, HciVmInstanceStatus status, GuestAgentInstallStatus guestAgentInstallStatus, string vmId, string resourceUid, string hyperVVmId, string hostNodeName, string hostNodeIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             PlacementProfile = placementProfile;
             NetworkProfile = networkProfile;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             SecurityProfile = securityProfile;
             StorageProfile = storageProfile;
             HttpProxyConfig = httpProxyConfig;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             ResourceUid = resourceUid;
             HyperVVmId = hyperVVmId;
             HostNodeName = hostNodeName;
-            HostNodeIpAddress = hostNodeIpAddress;
+            HostNodeIPAddress = hostNodeIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal VirtualMachineInstancePropertiesNetworkProfile NetworkProfile { get; set; }
 
         /// <summary> OsProfile - describes the configuration of the operating system and sets login data. </summary>
-        public HciVmInstanceOSProfile OsProfile { get; set; }
+        public HciVmInstanceOSProfile OSProfile { get; set; }
 
         /// <summary> SecurityProfile - Specifies the security settings for the virtual machine instance. </summary>
         public HciVmInstanceSecurityProfile SecurityProfile { get; set; }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string HostNodeName { get; }
 
         /// <summary> Name of the host node that the VM is on. </summary>
-        public string HostNodeIpAddress { get; }
+        public string HostNodeIPAddress { get; }
 
         /// <summary> NetworkInterfaces - list of network interfaces to be attached to the virtual machine instance. </summary>
         public IList<NetworkInterfaceArmReference> NetworkInterfaces

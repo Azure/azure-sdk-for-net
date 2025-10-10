@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile, options);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OsProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

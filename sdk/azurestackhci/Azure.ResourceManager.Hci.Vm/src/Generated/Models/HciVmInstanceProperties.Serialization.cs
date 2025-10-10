@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile, options);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OsProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("hostNodeName"u8);
                 writer.WriteStringValue(HostNodeName);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostNodeIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(HostNodeIPAddress))
             {
                 writer.WritePropertyName("hostNodeIpAddress"u8);
-                writer.WriteStringValue(HostNodeIpAddress);
+                writer.WriteStringValue(HostNodeIPAddress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             string resourceUid = default;
             string hyperVVmId = default;
             string hostNodeName = default;
-            string hostNodeIpAddress = default;
+            string hostNodeIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
                 if (prop.NameEquals("hostNodeIpAddress"u8))
                 {
-                    hostNodeIpAddress = prop.Value.GetString();
+                    hostNodeIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 resourceUid,
                 hyperVVmId,
                 hostNodeName,
-                hostNodeIpAddress,
+                hostNodeIPAddress,
                 additionalBinaryDataProperties);
         }
 

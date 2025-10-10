@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
             NetworkProfile = networkProfile;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal NetworkProfileUpdate NetworkProfile { get; set; }
 
         /// <summary> OsProfile - describes the update configuration of the operating system. </summary>
-        public HciVmOSProfile OsProfile { get; set; }
+        public HciVmOSProfile OSProfile { get; set; }
 
         /// <summary> adds data disks to the virtual machine instance for the update call. </summary>
         public IList<VirtualHardDiskArmReference> StorageDataDisks

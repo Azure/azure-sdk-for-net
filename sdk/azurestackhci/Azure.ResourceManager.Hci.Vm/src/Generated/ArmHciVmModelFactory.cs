@@ -822,9 +822,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="resourceUid"> Unique identifier defined by ARC to identify the guest of the VM. </param>
         /// <param name="hyperVVmId"> Unique identifier for the Hyper-V VM resource. </param>
         /// <param name="hostNodeName"> Name of the host node that the VM is on. </param>
-        /// <param name="hostNodeIpAddress"> Name of the host node that the VM is on. </param>
+        /// <param name="hostNodeIPAddress"> Name of the host node that the VM is on. </param>
         /// <returns> A new <see cref="Models.HciVmInstanceProperties"/> instance for mocking. </returns>
-        public static HciVmInstanceProperties HciVmInstanceProperties(HciVmInstanceHardwareProfile hardwareProfile = default, HciVmInstancePlacementProfile placementProfile = default, IList<NetworkInterfaceArmReference> networkInterfaces = default, HciVmInstanceOSProfile osProfile = default, HciVmInstanceSecurityProfile securityProfile = default, HciVmInstanceStorageProfile storageProfile = default, HciVmHttpProxyConfiguration httpProxyConfig = default, bool? isCreatingFromLocal = default, HciVmProvisioningState? provisioningState = default, HciVmConfigAgentInstanceView instanceViewVmAgent = default, HciVmInstanceStatus status = default, GuestAgentInstallStatus guestAgentInstallStatus = default, string vmId = default, string resourceUid = default, string hyperVVmId = default, string hostNodeName = default, string hostNodeIpAddress = default)
+        public static HciVmInstanceProperties HciVmInstanceProperties(HciVmInstanceHardwareProfile hardwareProfile = default, HciVmInstancePlacementProfile placementProfile = default, IList<NetworkInterfaceArmReference> networkInterfaces = default, HciVmInstanceOSProfile osProfile = default, HciVmInstanceSecurityProfile securityProfile = default, HciVmInstanceStorageProfile storageProfile = default, HciVmHttpProxyConfiguration httpProxyConfig = default, bool? isCreatingFromLocal = default, HciVmProvisioningState? provisioningState = default, HciVmConfigAgentInstanceView instanceViewVmAgent = default, HciVmInstanceStatus status = default, GuestAgentInstallStatus guestAgentInstallStatus = default, string vmId = default, string resourceUid = default, string hyperVVmId = default, string hostNodeName = default, string hostNodeIPAddress = default)
         {
             return new HciVmInstanceProperties(
                 hardwareProfile,
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 resourceUid,
                 hyperVVmId,
                 hostNodeName,
-                hostNodeIpAddress,
+                hostNodeIPAddress,
                 additionalBinaryDataProperties: null);
         }
 
