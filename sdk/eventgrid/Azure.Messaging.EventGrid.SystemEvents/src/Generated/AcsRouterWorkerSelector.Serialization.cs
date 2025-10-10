@@ -43,20 +43,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsDefined(Operator))
-            {
-                writer.WritePropertyName("labelOperator"u8);
-                writer.WriteStringValue(Operator.Value.ToString());
-            }
+            writer.WritePropertyName("labelOperator"u8);
+            writer.WriteStringValue(Operator.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue<object>(LabelValue, options);
             writer.WritePropertyName("ttlSeconds"u8);
             writer.WriteNumberValue(TtlSeconds.Value);
-            if (Optional.IsDefined(SelectorState))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(SelectorState.Value.ToString());
-            }
+            writer.WritePropertyName("state"u8);
+            writer.WriteStringValue(SelectorState.ToString());
             if (Optional.IsDefined(ExpirationTime))
             {
                 writer.WritePropertyName("expirationTime"u8);
@@ -105,10 +99,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string key = default;
-            AcsRouterLabelOperator? @operator = default;
+            AcsRouterLabelOperator @operator = default;
             object labelValue = default;
             double? ttlSeconds = default;
-            AcsRouterWorkerSelectorState? selectorState = default;
+            AcsRouterWorkerSelectorState selectorState = default;
             DateTimeOffset? expirationTime = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

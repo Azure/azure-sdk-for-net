@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
-        /// <param name="properties"> Gets the properties of the chat thread created with user event. </param>
+        /// <param name="properties"> The thread properties. </param>
         internal AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string threadId, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties) : base(recipientCommunicationIdentifier, threadId)
         {
             CreatedByCommunicationIdentifier = createdByCommunicationIdentifier;
@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
         /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
-        /// <param name="properties"> Gets the properties of the chat thread created with user event. </param>
+        /// <param name="properties"> The thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         internal AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata, IReadOnlyList<AcsChatThreadParticipantProperties> participants) : base(recipientCommunicationIdentifier, transactionId, threadId, additionalBinaryDataProperties, createTime, version)

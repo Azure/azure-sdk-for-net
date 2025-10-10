@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadCreatedEventData"/>. </summary>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
-        /// <param name="properties"> Gets the properties of the chat thread created event. </param>
+        /// <param name="properties"> The thread properties. </param>
         internal AcsChatThreadCreatedEventData(string threadId, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties) : base(threadId)
         {
             CreatedByCommunicationIdentifier = createdByCommunicationIdentifier;
@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
         /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
-        /// <param name="properties"> Gets the properties of the chat thread created event. </param>
+        /// <param name="properties"> The thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         internal AcsChatThreadCreatedEventData(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata, IReadOnlyList<AcsChatThreadParticipantProperties> participants) : base(transactionId, threadId, additionalBinaryDataProperties, createTime, version)

@@ -18,8 +18,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        /// <param name="audioOffsetMs"> Gets the AudioOffsetMs. </param>
-        /// <param name="audioDurationMs"> Gets the AudioDurationMs. </param>
+        /// <param name="audioOffsetMs"></param>
+        /// <param name="audioDurationMs"></param>
         /// <param name="text"></param>
         internal SessionUpdateResponseAudioTimestampDelta(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text) : base(ServerEventType.ResponseAudioTimestampDelta)
         {
@@ -40,8 +40,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        /// <param name="audioOffsetMs"> Gets the AudioOffsetMs. </param>
-        /// <param name="audioDurationMs"> Gets the AudioDurationMs. </param>
+        /// <param name="audioOffsetMs"></param>
+        /// <param name="audioDurationMs"></param>
         /// <param name="text"></param>
         /// <param name="timestampType"></param>
         internal SessionUpdateResponseAudioTimestampDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, string timestampType) : base(@type, eventId, additionalBinaryDataProperties)
