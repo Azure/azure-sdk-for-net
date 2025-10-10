@@ -69,7 +69,13 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public TranscriptionResultState ResultState { get; set; }
 
-        private static TextFormat ConvertToTextFormatEnum(string format)
+        /// <summary>
+        /// ConvertToTextFormatEnum
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
+        public static TextFormat ConvertToTextFormatEnum(string format)
         {
             if (TextFormat.Display.ToString().Equals(format, StringComparison.OrdinalIgnoreCase))
                 return TextFormat.Display;
