@@ -145,9 +145,8 @@ if ($relatedTypeSpecProjectFolder) {
             Pop-Location
         }
         
-        # Use tsp-client from pinned version by using the full path to the binary
-        $tspClientBin = Join-Path $tspClientDir "node_modules" ".bin" "tsp-client"
-        $tspclientCommand = "$tspClientBin init --update-if-exists --tsp-config $tspConfigFile --repo $repo --commit $commitid"
+        # Use tsp-client from pinned version by passing --prefix to use tsp-client from that directory
+        $tspclientCommand = "npm exec --prefix $tspClientDir --no -- tsp-client init --update-if-exists --tsp-config $tspConfigFile --repo $repo --commit $commitid"
         if ($swaggerDir) {
             $tspclientCommand += " --local-spec-repo $typespecFolder"
         }
