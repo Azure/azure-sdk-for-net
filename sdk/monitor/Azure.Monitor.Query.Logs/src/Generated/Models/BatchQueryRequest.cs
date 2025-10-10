@@ -83,10 +83,10 @@ namespace Azure.Monitor.Query.Logs.Models
         public QueryBody Body { get; }
 
         /// <summary> The path for the batch query request. </summary>
-        public string Path { get; } = "/query";
+        internal string Path { get; } = "/query";
 
         /// <summary> The method of a single request in a batch. </summary>
-        public string Method { get; } = "POST";
+        internal string Method { get; } = "POST";
 
         /// <summary>
         /// Primary Workspace ID of the query. This is the Workspace ID from the Properties

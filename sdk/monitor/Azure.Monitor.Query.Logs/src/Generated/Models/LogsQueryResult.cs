@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query.Logs.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LogsQueryResult"/>. </summary>
-        /// <param name="allTables"> Gets the multi-table result of the query. </param>
+        /// <param name="allTables"> The results of the query in tabular format. </param>
         internal LogsQueryResult(IEnumerable<LogsTable> allTables)
         {
             AllTables = allTables.ToList();

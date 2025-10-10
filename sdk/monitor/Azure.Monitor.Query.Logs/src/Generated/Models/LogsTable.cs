@@ -21,7 +21,7 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <summary> Initializes a new instance of <see cref="LogsTable"/>. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
-        /// <param name="internalRows"></param>
+        /// <param name="internalRows"> The resulting rows from this query. </param>
         internal LogsTable(string name, IEnumerable<LogsTableColumn> columns, JsonElement internalRows)
         {
             Name = name;
@@ -32,7 +32,7 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <summary> Initializes a new instance of <see cref="LogsTable"/>. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
-        /// <param name="internalRows"></param>
+        /// <param name="internalRows"> The resulting rows from this query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal LogsTable(string name, IReadOnlyList<LogsTableColumn> columns, JsonElement internalRows, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {

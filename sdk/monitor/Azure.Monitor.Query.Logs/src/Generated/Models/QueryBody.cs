@@ -34,7 +34,7 @@ namespace Azure.Monitor.Query.Logs.Models
         /// value.  This timespan is applied in addition to any that are specified in the
         /// query expression.
         /// </param>
-        /// <param name="workspaces"> A list of workspaces that are included in the query. </param>
+        /// <param name="workspaces"> A list of workspaces to query in addition to the primary workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal QueryBody(string query, string timespan, IList<string> workspaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
