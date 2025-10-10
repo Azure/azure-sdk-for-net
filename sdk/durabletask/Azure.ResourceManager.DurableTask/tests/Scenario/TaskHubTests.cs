@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task CreateDeleteTaskHubTest()
+        public async Task CreateGetListDeleteTaskHubTest()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg", AzureLocation.NorthCentralUS);
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
             DurableTaskHubResource hub = await scheduler.GetDurableTaskHubAsync("MyHub");
             Assert.True(hub.HasData);
             Assert.True(hub.Data.Properties.DashboardUri.Host.ToLower().Contains("durabletask.io"));
-            Assert.Equals("MyHub", hub.Data.Name);
+            Assert.AreEqual("MyHub", hub.Data.Name);
 
             // The list endpoint should also return the newly created hub
             DurableTaskHubResource listHub = await collection.GetAllAsync().FirstOrDefaultAsync(t => t.Data.Name == "MyHub");
