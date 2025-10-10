@@ -22,7 +22,7 @@ The Azure SDK for .NET repository contains:
 /doc                          # Documentation
 ```
 
-For detailed developer instructions, see [CONTRIBUTING.md](CONTRIBUTING.md).
+For detailed developer instructions, see [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md).
 
 ## Agent Interaction Guidelines
 
@@ -278,23 +278,23 @@ To use MCP (Model Context Protocol) tool calls:
 - `azsdk_package_generate_code`: Generate SDK from TypeSpec locally
 - `azsdk_package_build_code`: Build/compile SDK locally
 
-See [eng/common/instructions/azsdk-tools/](eng/common/instructions/azsdk-tools/) for detailed tool documentation.
+See [eng/common/instructions/azsdk-tools/](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/instructions/azsdk-tools/) for detailed tool documentation.
 
 ## Additional Resources
 
 ### Key Documentation
 
-- **[CONTRIBUTING.md](CONTRIBUTING.md)**: Complete contribution guide
-- **[README.md](README.md)**: Repository overview and getting started
+- **[CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md)**: Complete contribution guide
+- **[README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/README.md)**: Repository overview and getting started
 - **[Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet/guidelines/)**: Design principles
-- **[Versioning](doc/dev/Versioning.md)**: Versioning strategy
+- **[Versioning](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/Versioning.md)**: Versioning strategy
 - **[Breaking Change Rules](https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/breaking-change-rules.md)**: Breaking change policy
 
 ### Agent Instructions
 
 This repository includes agent-specific instructions in `.github/copilot-instructions.md` for GitHub Copilot integration. For the most current Copilot-specific guidance, refer to:
 
-**[.github/copilot-instructions.md](.github/copilot-instructions.md)**
+**[.github/copilot-instructions.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/copilot-instructions.md)**
 
 ### Community and Support
 
@@ -325,7 +325,7 @@ For questions, contact [opencode@microsoft.com](mailto:opencode@microsoft.com).
 
 ## License
 
-This repository is licensed under the MIT License. See [LICENSE.txt](LICENSE.txt).
+This repository is licensed under the MIT License. See [LICENSE.txt](https://github.com/Azure/azure-sdk-for-net/blob/main/LICENSE.txt).
 
 ---
 
