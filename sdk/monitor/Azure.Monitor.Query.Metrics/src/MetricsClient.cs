@@ -29,7 +29,7 @@ namespace Azure.Monitor.Query.Metrics
         /// <returns>A time series metrics result for the requested metric names.</returns>
         public virtual Response<MetricsQueryResourcesResult> QueryResources(IEnumerable<ResourceIdentifier> resourceIds, IEnumerable<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (!resourceIds.Any()|| !metricNames.Any())
+            if (!resourceIds.Any() || !metricNames.Any())
             {
                 throw new ArgumentException($"{nameof(resourceIds)} or {nameof(metricNames)} cannot be empty");
             }
