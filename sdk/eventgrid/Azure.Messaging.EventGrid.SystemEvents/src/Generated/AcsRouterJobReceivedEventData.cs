@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="requestedWorkerSelectors"> Router Job Received Requested Worker Selectors. </param>
         /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
-        internal AcsRouterJobReceivedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterJobStatus? status, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors, DateTimeOffset? scheduledOn, bool unavailableForMatching) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
+        internal AcsRouterJobReceivedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterJobStatus status, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors, DateTimeOffset? scheduledOn, bool unavailableForMatching) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             Status = status;
             ClassificationPolicyId = classificationPolicyId;
