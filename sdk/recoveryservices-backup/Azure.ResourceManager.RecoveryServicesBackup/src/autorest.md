@@ -18,7 +18,6 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 use-model-reader-writer: true
 
 models-to-treat-empty-string-as-null:
@@ -397,17 +396,6 @@ directive:
   - remove-operation: BackupOperationStatuses_Get
   - remove-operation: ProtectionPolicyOperationStatuses_Get
   - remove-operation: TieringCostOperationStatus_Get
-  #- from: bms.json
-  #  where: $.definitions
-  #  transform: >
-  #    $.TieringPolicy.properties.duration['x-ms-client-name'] = 'durationValue';
-  #    $.BMSBackupSummariesQueryObject.properties.type['x-ms-client-name'] = 'BackupManagementType';
-  #    $.RecoveryPointRehydrationInfo.properties.rehydrationRetentionDuration['format'] = 'duration';
-  #- from: bms.json
-  #  where: $.parameters
-  #  transform: >
-  #    $.AzureRegion['x-ms-format'] = 'azure-location';
-  #    $.AzureRegion['x-ms-client-name'] = 'location';
   # Autorest.CSharp can't find `nextLink` from parent (allOf), so here workaround.
   # Issues filed here: https://github.com/Azure/autorest.csharp/issues/2740.
   - from: bms.json
@@ -490,12 +478,6 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies']
     transform: >
       $.get['operationId'] = 'ResourceGuardProxy_List';
-  # Here the format date-time isn't specified in swagger, hence adding it explicitly
-  # move to name-mapping section
-  #- from: bms.json
-  #  where: $.definitions.RecoveryPointProperties.properties.expiryTime
-  #  transform: >
-  #    $["format"] = "date-time";
   # TODO: Remove this workaround once we have the swagger issue fixed
   - from: bms.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}']
@@ -524,14 +506,8 @@ directive:
   - from: bms.json
     where: $.definitions.BackupManagementType
     transform: >
-      if (!$.enum) $.enum = [];
-      if ($.enum.indexOf('BackupProtectedItemCountSummary') === -1) {
-        $.enum.push('BackupProtectedItemCountSummary');
-      }
-      if ($.enum.indexOf('BackupProtectionContainerCountSummary') === -1) {
-        $.enum.push('BackupProtectionContainerCountSummary');
-      }
-      if (!$['x-ms-enum'].values) $['x-ms-enum'].values = [];
+      $.enum.push('BackupProtectedItemCountSummary');
+      $.enum.push('BackupProtectionContainerCountSummary');
       $['x-ms-enum'].values.push({
         value: 'BackupProtectedItemCountSummary',
         name: 'BackupProtectedItemCountSummary'
