@@ -13,6 +13,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
     {
         protected ModelReaderWriterContext? _context;
 
+        public virtual bool UsesContext => false;
+
         public RoundTripStrategy(ModelReaderWriterContext? context)
         {
             _context = context;
@@ -46,6 +48,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
         }
 
+        public override bool UsesContext => true;
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
 
@@ -59,7 +62,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
     }
 
-    public class ModelReaderWriterStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
+    public class ModelReaderWriterStrategy<T> : RoundTripStrategy<T>
     {
         public ModelReaderWriterStrategy() : base(null)
         {
@@ -84,6 +87,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
         }
 
+        public override bool UsesContext => true;
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
 

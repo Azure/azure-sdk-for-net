@@ -9,65 +9,65 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.AgriculturePlatform;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAgriculturePlatformModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="AgriculturePlatform.AgricultureServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+
+        /// <summary> Schema of the AgriService resource from Microsoft.AgriculturePlatform resource provider. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="AgriculturePlatform.AgricultureServiceData"/> instance for mocking. </returns>
-        public static AgricultureServiceData AgricultureServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AgricultureServiceProperties properties = null, ManagedServiceIdentity identity = null, AgriculturePlatformSku sku = null)
+        public static AgricultureServiceData AgricultureServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AgricultureServiceProperties properties = default, ManagedServiceIdentity identity = default, AgriculturePlatformSku sku = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new AgricultureServiceData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
                 identity,
-                sku,
-                serializedAdditionalRawData: null);
+                sku);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AgricultureServiceProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="config"> Config of the AgriService instance. </param>
-        /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed On Behalf Of Configuration. </param>
+        /// <param name="managedOnBehalfOfMoboBrokerResources"> Associated MoboBrokerResources. </param>
         /// <param name="dataConnectorCredentials"> Data connector credentials of AgriService instance. </param>
         /// <param name="installedSolutions"> AgriService installed solutions. </param>
         /// <returns> A new <see cref="Models.AgricultureServiceProperties"/> instance for mocking. </returns>
-        public static AgricultureServiceProperties AgricultureServiceProperties(AgriculturePlatformProvisioningState? provisioningState = null, AgricultureServiceConfig config = null, IEnumerable<SubResource> managedOnBehalfOfMoboBrokerResources = null, IEnumerable<DataConnectorCredentialMap> dataConnectorCredentials = null, IEnumerable<InstalledSolutionMap> installedSolutions = null)
+        public static AgricultureServiceProperties AgricultureServiceProperties(AgriculturePlatformProvisioningState? provisioningState = default, AgricultureServiceConfig config = default, IReadOnlyList<SubResource> managedOnBehalfOfMoboBrokerResources = default, IEnumerable<DataConnectorCredentialMap> dataConnectorCredentials = default, IEnumerable<InstalledSolutionMap> installedSolutions = default)
         {
-            managedOnBehalfOfMoboBrokerResources ??= new List<SubResource>();
-            dataConnectorCredentials ??= new List<DataConnectorCredentialMap>();
-            installedSolutions ??= new List<InstalledSolutionMap>();
+            dataConnectorCredentials ??= new ChangeTrackingList<DataConnectorCredentialMap>();
+            installedSolutions ??= new ChangeTrackingList<InstalledSolutionMap>();
 
             return new AgricultureServiceProperties(
                 provisioningState,
                 config,
-                managedOnBehalfOfMoboBrokerResources != null ? new ManagedOnBehalfOfConfiguration(managedOnBehalfOfMoboBrokerResources?.ToList(), serializedAdditionalRawData: null) : null,
-                dataConnectorCredentials?.ToList(),
-                installedSolutions?.ToList(),
-                serializedAdditionalRawData: null);
+                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration(managedOnBehalfOfMoboBrokerResources, new Dictionary<string, BinaryData>()),
+                dataConnectorCredentials.ToList(),
+                installedSolutions.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AgricultureServiceConfig"/>. </summary>
+        /// <summary> Config of the AgriService resource instance. </summary>
         /// <param name="instanceUri"> Instance URI of the AgriService instance. </param>
         /// <param name="version"> Version of AgriService instance. </param>
         /// <param name="appServiceResourceId"> App service resource Id. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="keyVaultResourceId"> Key vault resource Id. </param>
         /// <param name="redisCacheResourceId"> Redis cache resource Id. </param>
         /// <returns> A new <see cref="Models.AgricultureServiceConfig"/> instance for mocking. </returns>
-        public static AgricultureServiceConfig AgricultureServiceConfig(string instanceUri = null, string version = null, ResourceIdentifier appServiceResourceId = null, ResourceIdentifier cosmosDBResourceId = null, ResourceIdentifier storageAccountResourceId = null, ResourceIdentifier keyVaultResourceId = null, ResourceIdentifier redisCacheResourceId = null)
+        public static AgricultureServiceConfig AgricultureServiceConfig(string instanceUri = default, string version = default, ResourceIdentifier appServiceResourceId = default, ResourceIdentifier cosmosDBResourceId = default, ResourceIdentifier storageAccountResourceId = default, ResourceIdentifier keyVaultResourceId = default, ResourceIdentifier redisCacheResourceId = default)
         {
             return new AgricultureServiceConfig(
                 instanceUri,
@@ -86,20 +86,46 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 storageAccountResourceId,
                 keyVaultResourceId,
                 redisCacheResourceId,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AvailableAgriSolutionListResult"/>. </summary>
+        /// <summary> The type used for update operations of the AgriServiceResource. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.AgricultureServicePatch"/> instance for mocking. </returns>
+        public static AgricultureServicePatch AgricultureServicePatch(ManagedServiceIdentity identity = default, AgriculturePlatformSku sku = default, IDictionary<string, string> tags = default, AgriServiceResourceUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AgricultureServicePatch(identity, sku, tags, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The updatable properties of the AgriServiceResource. </summary>
+        /// <param name="config"> Config of the AgriService instance. </param>
+        /// <param name="dataConnectorCredentials"> Data connector credentials of AgriService instance. </param>
+        /// <param name="installedSolutions"> AgriService installed solutions. </param>
+        /// <returns> A new <see cref="Models.AgriServiceResourceUpdateProperties"/> instance for mocking. </returns>
+        public static AgriServiceResourceUpdateProperties AgriServiceResourceUpdateProperties(AgricultureServiceConfig config = default, IEnumerable<DataConnectorCredentialMap> dataConnectorCredentials = default, IEnumerable<InstalledSolutionMap> installedSolutions = default)
+        {
+            dataConnectorCredentials ??= new ChangeTrackingList<DataConnectorCredentialMap>();
+            installedSolutions ??= new ChangeTrackingList<InstalledSolutionMap>();
+
+            return new AgriServiceResourceUpdateProperties(config, dataConnectorCredentials.ToList(), installedSolutions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The list of available agri solutions. </summary>
         /// <param name="solutions"> Agri solutions list. </param>
         /// <returns> A new <see cref="Models.AvailableAgriSolutionListResult"/> instance for mocking. </returns>
-        public static AvailableAgriSolutionListResult AvailableAgriSolutionListResult(IEnumerable<DataManagerForAgricultureSolution> solutions = null)
+        public static AvailableAgriSolutionListResult AvailableAgriSolutionListResult(IEnumerable<DataManagerForAgricultureSolution> solutions = default)
         {
-            solutions ??= new List<DataManagerForAgricultureSolution>();
+            solutions ??= new ChangeTrackingList<DataManagerForAgricultureSolution>();
 
-            return new AvailableAgriSolutionListResult(solutions?.ToList(), serializedAdditionalRawData: null);
+            return new AvailableAgriSolutionListResult(solutions.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataManagerForAgricultureSolution"/>. </summary>
+        /// <summary> Data Manager for Agriculture solution. </summary>
         /// <param name="partnerId"> Partner Id. </param>
         /// <param name="solutionId"> Solution Id. </param>
         /// <param name="partnerTenantId"> Partner tenant Id. </param>
@@ -110,30 +136,30 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="accessAzureDataManagerForAgricultureApplicationName"> Entra application name used to access azure data manager for agriculture instance. </param>
         /// <param name="isValidateInput"> Whether solution inference will validate input. </param>
         /// <returns> A new <see cref="Models.DataManagerForAgricultureSolution"/> instance for mocking. </returns>
-        public static DataManagerForAgricultureSolution DataManagerForAgricultureSolution(string partnerId = null, string solutionId = null, string partnerTenantId = null, IEnumerable<string> dataAccessScopes = null, MarketPlaceOfferDetails marketPlaceOfferDetails = null, string saasApplicationId = null, string accessAzureDataManagerForAgricultureApplicationId = null, string accessAzureDataManagerForAgricultureApplicationName = null, bool isValidateInput = default)
+        public static DataManagerForAgricultureSolution DataManagerForAgricultureSolution(string partnerId = default, string solutionId = default, string partnerTenantId = default, IEnumerable<string> dataAccessScopes = default, MarketPlaceOfferDetails marketPlaceOfferDetails = default, string saasApplicationId = default, string accessAzureDataManagerForAgricultureApplicationId = default, string accessAzureDataManagerForAgricultureApplicationName = default, bool isValidateInput = default)
         {
-            dataAccessScopes ??= new List<string>();
+            dataAccessScopes ??= new ChangeTrackingList<string>();
 
             return new DataManagerForAgricultureSolution(
                 partnerId,
                 solutionId,
                 partnerTenantId,
-                dataAccessScopes?.ToList(),
+                dataAccessScopes.ToList(),
                 marketPlaceOfferDetails,
                 saasApplicationId,
                 accessAzureDataManagerForAgricultureApplicationId,
                 accessAzureDataManagerForAgricultureApplicationName,
                 isValidateInput,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MarketPlaceOfferDetails"/>. </summary>
+        /// <summary> Marketplace offer details of Agri solution. </summary>
         /// <param name="saasOfferId"> Saas offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <returns> A new <see cref="Models.MarketPlaceOfferDetails"/> instance for mocking. </returns>
-        public static MarketPlaceOfferDetails MarketPlaceOfferDetails(string saasOfferId = null, string publisherId = null)
+        public static MarketPlaceOfferDetails MarketPlaceOfferDetails(string saasOfferId = default, string publisherId = default)
         {
-            return new MarketPlaceOfferDetails(saasOfferId, publisherId, serializedAdditionalRawData: null);
+            return new MarketPlaceOfferDetails(saasOfferId, publisherId, additionalBinaryDataProperties: null);
         }
     }
 }
