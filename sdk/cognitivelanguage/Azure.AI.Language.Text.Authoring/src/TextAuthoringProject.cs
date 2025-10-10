@@ -1836,7 +1836,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjectResources.GetAssignDeploymentResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetAssignDeploymentResourcesStatus");
             scope.Start();
             try
             {
@@ -1874,7 +1874,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjectResources.GetAssignDeploymentResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetAssignDeploymentResourcesStatus");
             scope.Start();
             try
             {
@@ -1912,7 +1912,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjectResources.GetUnassignDeploymentResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetUnassignDeploymentResourcesStatus");
             scope.Start();
             try
             {
@@ -1950,7 +1950,7 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjectResources.GetUnassignDeploymentResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.GetUnassignDeploymentResourcesStatus");
             scope.Start();
             try
             {
@@ -1989,12 +1989,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjectResources.AssignDeploymentResources");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.AssignDeploymentResources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAssignDeploymentResourcesRequest(_projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProjectResources.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2028,12 +2028,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjectResources.AssignDeploymentResources");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.AssignDeploymentResources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAssignDeploymentResourcesRequest(_projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProjectResources.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2067,12 +2067,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjectResources.UnassignDeploymentResources");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.UnassignDeploymentResources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUnassignDeploymentResourcesRequest(_projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProjectResources.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2106,12 +2106,12 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProjectResources.UnassignDeploymentResources");
+            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.UnassignDeploymentResources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUnassignDeploymentResourcesRequest(_projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProjectResources.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
