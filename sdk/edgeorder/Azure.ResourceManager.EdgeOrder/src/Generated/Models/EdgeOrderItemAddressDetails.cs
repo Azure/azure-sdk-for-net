@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemAddressDetails"/>. </summary>
-        /// <param name="forwardAddress"> Customer address and contact details. It should be address resource. </param>
+        /// <param name="forwardAddress"> Customer address and contact details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="forwardAddress"/> is null. </exception>
         public EdgeOrderItemAddressDetails(EdgeOrderItemAddressProperties forwardAddress)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemAddressDetails"/>. </summary>
-        /// <param name="forwardAddress"> Customer address and contact details. It should be address resource. </param>
+        /// <param name="forwardAddress"> Customer address and contact details. </param>
         /// <param name="returnAddress"> Return shipping address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EdgeOrderItemAddressDetails(EdgeOrderItemAddressProperties forwardAddress, EdgeOrderItemAddressProperties returnAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
         }
 
-        /// <summary> Customer address and contact details. It should be address resource. </summary>
+        /// <summary> Customer address and contact details. </summary>
         public EdgeOrderItemAddressProperties ForwardAddress { get; set; }
         /// <summary> Return shipping address. </summary>
         public EdgeOrderItemAddressProperties ReturnAddress { get; }

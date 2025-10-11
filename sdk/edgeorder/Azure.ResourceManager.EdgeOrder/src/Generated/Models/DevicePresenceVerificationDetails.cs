@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> The list of configurations. </summary>
-    internal partial class ProductConfigurations
+    /// <summary> Proof of possession details. </summary>
+    public partial class DevicePresenceVerificationDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,25 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProductConfigurations"/>. </summary>
-        internal ProductConfigurations()
+        /// <summary> Initializes a new instance of <see cref="DevicePresenceVerificationDetails"/>. </summary>
+        public DevicePresenceVerificationDetails()
         {
-            Value = new ChangeTrackingList<ProductConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProductConfigurations"/>. </summary>
-        /// <param name="value"> List of configurations. </param>
-        /// <param name="nextLink"> Link for the next set of configurations. </param>
+        /// <summary> Initializes a new instance of <see cref="DevicePresenceVerificationDetails"/>. </summary>
+        /// <param name="status"> Proof of possession status. </param>
+        /// <param name="message"> Insights on current status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductConfigurations(IReadOnlyList<ProductConfiguration> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevicePresenceVerificationDetails(DevicePresenceVerificationStatus? status, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Status = status;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of configurations. </summary>
-        public IReadOnlyList<ProductConfiguration> Value { get; }
-        /// <summary> Link for the next set of configurations. </summary>
-        public string NextLink { get; }
+        /// <summary> Proof of possession status. </summary>
+        public DevicePresenceVerificationStatus? Status { get; }
+        /// <summary> Insights on current status. </summary>
+        public string Message { get; }
     }
 }
