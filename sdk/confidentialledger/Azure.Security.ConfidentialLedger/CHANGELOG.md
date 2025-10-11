@@ -1,5 +1,10 @@
 # Release History
 
+## 1.5.3-preview.1 (Unreleased)
+
+### Features Added
+- Added secondaryLedgerUri parameter for failover support in ConfidentialLedgerClientOptions.
+
 ## 1.4.1-beta.3 (Unreleased)
 
 ### Features Added
