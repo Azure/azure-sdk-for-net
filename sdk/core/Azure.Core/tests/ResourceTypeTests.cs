@@ -83,6 +83,58 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expected, leftResource != rightResource);
         }
 
+        [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(false, "Microsoft.Network1/Virtualnetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets2")]
+        [TestCase(true, "Microsoft.ClassicStorage/storageAccounts", "Microsoft.Network/VirtualNetworks2/subnets1")]
+        public void LessThanOpResourceTypeToResourceType(bool expected, string left, string right)
+        {
+            ResourceType leftResource = left;
+            ResourceType rightResource = right;
+            Assert.AreEqual(expected, leftResource < rightResource);
+        }
+
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/Virtualnetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets2")]
+        [TestCase(true, "Microsoft.ClassicStorage/storageAccounts", "Microsoft.Network/VirtualNetworks2/subnets1")]
+        [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2")]
+        [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        public void LessThanOrEqualOpResourceTypeToResourceType(bool expected, string left, string right)
+        {
+            ResourceType leftResource = left;
+            ResourceType rightResource = right;
+            Assert.AreEqual(expected, leftResource <= rightResource);
+        }
+
+        [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(false, "Microsoft.Network1/Virtualnetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network/VirtualNetworks2/subnets1", "Microsoft.ClassicStorage/storageAccounts")]
+        public void GreaterThanOpResourceTypeToResourceType(bool expected, string left, string right)
+        {
+            ResourceType leftResource = left;
+            ResourceType rightResource = right;
+            Assert.AreEqual(expected, leftResource > rightResource);
+        }
+
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/Virtualnetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2")]
+        [TestCase(true, "Microsoft.Network1/VirtualNetworks2/subnets2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(true, "Microsoft.Network/VirtualNetworks2/subnets1", "Microsoft.ClassicStorage/storageAccounts")]
+        [TestCase(false, "Microsoft.Network1/VirtualNetworks2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets2")]
+        public void GreaterThanOrEqualOpResourceTypeToResourceType(bool expected, string left, string right)
+        {
+            ResourceType leftResource = left;
+            ResourceType rightResource = right;
+            Assert.AreEqual(expected, leftResource >= rightResource);
+        }
+
         [TestCase]
         public void ParseArgumentException()
         {
@@ -128,6 +180,46 @@ namespace Azure.Core.Tests
             ResourceType rt = left;
             object rightObject = right;
             Assert.AreEqual(expected, rt.Equals(rightObject));
+        }
+
+        [TestCase("Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase("Microsoft.Network1/Virtualnetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        public void CompareToEqualsWithResourceType(string left, string right)
+        {
+            ResourceType rt = left;
+            ResourceType rightRt = right;
+            Assert.AreEqual(rt.CompareTo(rightRt), 0);
+        }
+
+        [TestCase("Microsoft.Network1/VirtualNetworks2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase("Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2/subnets2")]
+        [TestCase("Microsoft.ClassicStorage/storageAccounts", "Microsoft.Network/VirtualNetworks2/subnets1")]
+        public void CompareToLessThanWithResourceType(string left, string right)
+        {
+            ResourceType rt = left;
+            ResourceType rightRt = right;
+            Assert.Less(rt.CompareTo(rightRt), 0);
+        }
+
+        [TestCase("Microsoft.Network1/VirtualNetworks2/subnets1", "Microsoft.Network1/VirtualNetworks2")]
+        [TestCase("Microsoft.Network1/VirtualNetworks2/subnets2", "Microsoft.Network1/VirtualNetworks2/subnets1")]
+        [TestCase("Microsoft.Network/VirtualNetworks2/subnets1", "Microsoft.ClassicStorage/storageAccounts")]
+        public void CompareToGreaterThanWithResourceType(string left, string right)
+        {
+            ResourceType rt = left;
+            ResourceType rightRt = right;
+            Assert.Greater(rt.CompareTo(rightRt), 0);
+        }
+
+        [TestCase]
+        public void CompareToWithDefaultResourceType()
+        {
+            ResourceType rt = "Microsoft.Network1/VirtualNetworks2/subnets1";
+            ResourceType defaultRt = default;
+            ResourceType defaultRt2 = default;
+            Assert.AreEqual(defaultRt.CompareTo(defaultRt2), 0);
+            Assert.Less(defaultRt.CompareTo(rt), 0); // default < non-default ResourceType
+            Assert.Greater(rt.CompareTo(defaultRt), 0); // non-default ResourceType > default
         }
 
         [TestCase("Microsoft.classicStorage/storageAccounts")]
