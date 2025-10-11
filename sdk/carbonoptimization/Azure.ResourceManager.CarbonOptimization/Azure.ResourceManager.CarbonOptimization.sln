@@ -7,8 +7,6 @@ Project("{9DF63D78-1A0A-48A5-90DB-67203B6BEC9A}") = "Azure.ResourceManager.Carbo
 EndProject
 Project("{9DF63D78-1A0A-48A5-90DB-67203B6BEC9A}") = "Azure.ResourceManager.CarbonOptimization.Tests", "tests\Azure.ResourceManager.CarbonOptimization.Tests.csproj", "{CD514E39-C561-453D-AD75-1E9AE1D7A8C3}"
 EndProject
-Project("{9DF63D78-1A0A-48A5-90DB-67203B6BEC9A}") = "Azure.ResourceManager.CarbonOptimization.Samples", "samples\Azure.ResourceManager.CarbonOptimization.Samples.csproj", "{2AB3C72B-DE06-442A-942A-4D45C8300B3B}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

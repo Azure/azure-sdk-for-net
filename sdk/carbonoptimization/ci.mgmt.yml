@@ -10,13 +10,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/carbon/ci.mgmt.yml
-    - sdk/carbon/Azure.ResourceManager.CarbonOptimization/
+    - sdk/carbonoptimization/ci.mgmt.yml
+    - sdk/carbonoptimization/Azure.ResourceManager.CarbonOptimization/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: carbon
+    ServiceDirectory: carbonoptimization
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.CarbonOptimization

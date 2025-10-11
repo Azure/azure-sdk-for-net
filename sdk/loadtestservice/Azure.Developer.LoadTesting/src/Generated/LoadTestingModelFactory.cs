@@ -584,6 +584,18 @@ namespace Azure.Developer.LoadTesting
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.DimensionValueList"/>. </summary>
+        /// <param name="name"> The dimension name. </param>
+        /// <param name="value"> The dimension value. </param>
+        /// <param name="nextLink"> Link for the next set of values in case of paginated results, if applicable. </param>
+        /// <returns> A new <see cref="LoadTesting.DimensionValueList"/> instance for mocking. </returns>
+        public static DimensionValueList DimensionValueList(string name = null, IEnumerable<string> value = null, Uri nextLink = null)
+        {
+            value ??= new List<string>();
+
+            return new DimensionValueList(name, value?.ToList(), nextLink, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="LoadTesting.MetricDefinitions"/>. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
         /// <returns> A new <see cref="LoadTesting.MetricDefinitions"/> instance for mocking. </returns>

@@ -17,6 +17,7 @@ namespace Azure.Developer.LoadTesting
     [ModelReaderWriterBuildable(typeof(AutoStopCriteria))]
     [ModelReaderWriterBuildable(typeof(DimensionFilter))]
     [ModelReaderWriterBuildable(typeof(DimensionValue))]
+    [ModelReaderWriterBuildable(typeof(DimensionValueList))]
     [ModelReaderWriterBuildable(typeof(ErrorDetails))]
     [ModelReaderWriterBuildable(typeof(FunctionFlexConsumptionResourceConfiguration))]
     [ModelReaderWriterBuildable(typeof(FunctionFlexConsumptionTargetResourceConfigurations))]
