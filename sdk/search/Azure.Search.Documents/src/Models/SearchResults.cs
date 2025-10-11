@@ -27,6 +27,7 @@ namespace Azure.Search.Documents.Models
     /// <summary>
     /// Response containing search results from an index.
     /// </summary>
+    [SuppressMessage("Usage", "AZC0035:Output model type 'SearchResults' should have a corresponding method in a model factory class.", Justification = "Model factory method exists in SearchModelFactory but analyzer isn’t recognizing it")]
     public abstract class SearchResults<T>
     {
         /// <summary>
@@ -93,7 +94,7 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         private protected SearchClient _pagingClient;
 
-        private protected SearchResults() { }
+        internal SearchResults() { }
 
         /// <summary>
         /// Get all of the <see cref="SearchResult{T}"/>s synchronously.
