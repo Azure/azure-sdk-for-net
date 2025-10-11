@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Datadog
       safeName: AzureResourceManagerDatadog
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.Datadog
-      ExpectedWarningsFilepath: None

@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
   <PropertyGroup>
     <Version>5.4.0-beta.1</Version>

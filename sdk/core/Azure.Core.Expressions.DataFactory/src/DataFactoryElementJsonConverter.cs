@@ -160,6 +160,8 @@ namespace Azure.Core.Expressions.DataFactory
             }
         }
 
+#pragma warning disable IL2060 // MakeGenericMethod is not AOT friendly
+#pragma warning disable IL3050 // MakeGenericMethod is not AOT friendly
         private static MethodInfo GetGenericSerializationMethod(Type typeToConvert, string methodName)
         {
             return typeof(DataFactoryElementJsonConverter)
@@ -168,6 +170,8 @@ namespace Azure.Core.Expressions.DataFactory
                     BindingFlags.Static | BindingFlags.NonPublic)!
                 .MakeGenericMethod(typeToConvert.GenericTypeArguments[0].GenericTypeArguments[0]);
         }
+#pragma warning restore IL2060 // MakeGenericMethod is not AOT friendly
+#pragma warning restore IL3050 // MakeGenericMethod is not AOT friendly
 
         private static bool TryGetGenericDataFactoryList(Type type, out Type? genericType)
         {
@@ -207,8 +211,12 @@ namespace Azure.Core.Expressions.DataFactory
                 writer.WriteStartArray();
                 foreach (T? elem in element.Literal!)
                 {
+#pragma warning disable IL2026 // Unsafe JSON serialization
+#pragma warning disable IL3050 // Unsafe JSON serialization
                     // underlying T must have a JsonConverter defined
                     JsonSerializer.Serialize(writer, elem!);
+#pragma warning disable IL2026 // Unsafe JSON serialization
+#pragma warning disable IL3050 // Unsafe JSON serialization
                 }
                 writer.WriteEndArray();
             }

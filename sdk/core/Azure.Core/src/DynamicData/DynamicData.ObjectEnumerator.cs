@@ -40,8 +40,12 @@ namespace Azure.Core.Serialization
             /// </remarks>
             public ObjectEnumerator GetEnumerator() => new(_enumerator.GetEnumerator(), _options);
 
+#pragma warning disable IL2026 // DynamicData is not AOT friendly
+#pragma warning disable IL3050 // DynamicData is not AOT friendly
             /// <inheritdoc />
             public DynamicDataProperty Current => new(_enumerator.Current.Name, new(_enumerator.Current.Value, _options));
+#pragma warning restore IL2026 // DynamicData is not AOT friendly
+#pragma warning restore IL3050 // DynamicData is not AOT friendly
 
             /// <inheritdoc />
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

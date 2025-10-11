@@ -13,11 +13,9 @@
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
   </PropertyGroup>
-
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.ClientModel" />
@@ -28,11 +26,9 @@
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
     <Reference Include="System.Net.Http" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
     <Compile Include="Shared\AppContextSwitchHelper.cs" />
@@ -72,5 +68,4 @@
     <Compile Include="Shared\OperationPoller.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
   </ItemGroup>
-
 </Project>

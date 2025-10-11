@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="..\src\Azure.AI.Language.Conversations.csproj" />
   </ItemGroup>
 

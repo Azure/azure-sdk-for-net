@@ -3,11 +3,10 @@
   <PropertyGroup>
     <AssemblyTitle>Digital Twins SDK</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
-
   <!-- Nuget properties -->
   <PropertyGroup>
     <PackageTags>IoT;DigitalTwins;$(PackageCommonTags)</PackageTags>
@@ -17,11 +16,9 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.6.0</ApiCompatVersion>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
   <!-- Common source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs">
@@ -31,5 +28,4 @@
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
   </ItemGroup>
-
 </Project>

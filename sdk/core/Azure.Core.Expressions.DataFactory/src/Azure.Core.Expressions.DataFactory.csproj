@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <Description>This is the implementation of the DataFactoryExpressions</Description>
     <AssemblyTitle>Microsoft Azure DataFactory Expressions</AssemblyTitle>
@@ -12,11 +11,9 @@
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)Utf8JsonWriterExtensions.cs" LinkBase="Shared\Core" />
@@ -31,5 +28,4 @@
     <Compile Include="$(AzureCoreSharedSources)SerializationConstructorAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared\Core" />
   </ItemGroup>
-
 </Project>

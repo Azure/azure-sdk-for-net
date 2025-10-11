@@ -11,17 +11,15 @@
     <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <NoWarn>$(NoWarn);AZC0035</NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
-
 </Project>

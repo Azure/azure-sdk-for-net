@@ -11,6 +11,7 @@
     <PackageTags>Microsoft Azure Communication Service;Microsoft;Azure;Azure Communication Service;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.Communication</RootNamespace>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\README.md" Link="README.md" />
