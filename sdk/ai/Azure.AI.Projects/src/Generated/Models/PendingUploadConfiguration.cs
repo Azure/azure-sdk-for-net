@@ -38,6 +38,6 @@ namespace Azure.AI.Projects
         public string ConnectionName { get; set; }
 
         /// <summary> BlobReference is the only supported type. </summary>
-        internal PendingUploadType PendingUploadType { get; } = "BlobReference";
+        public PendingUploadType PendingUploadType { get; } = "BlobReference";
     }
 }
