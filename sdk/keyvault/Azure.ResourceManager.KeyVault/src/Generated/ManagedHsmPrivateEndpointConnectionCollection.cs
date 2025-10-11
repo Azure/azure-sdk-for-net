@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.KeyVault
     /// </summary>
     public partial class ManagedHsmPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ManagedHsmPrivateEndpointConnectionResource>, IAsyncEnumerable<ManagedHsmPrivateEndpointConnectionResource>
     {
-        private readonly ClientDiagnostics _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics;
-        private readonly MhsmPrivateEndpointConnectionsRestOperations _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics;
+        private readonly MhsmPrivateEndpointConnectionsRestOperations _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedHsmPrivateEndpointConnectionCollection"/> class for mocking. </summary>
         protected ManagedHsmPrivateEndpointConnectionCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedHsmPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ManagedHsmPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagedHsmPrivateEndpointConnectionResource.ResourceType, out string managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsApiVersion);
-            _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient = new MhsmPrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsApiVersion);
+            _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ManagedHsmPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedHsmPrivateEndpointConnectionResource.ResourceType, out string managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsApiVersion);
+            _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient = new MhsmPrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Put</description>
+        /// <description>MhsmPrivateEndpointConnection_Put</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.KeyVault
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var response = await _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Put</description>
+        /// <description>MhsmPrivateEndpointConnection_Put</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.KeyVault
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var uri = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var response = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
+                var uri = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.Get");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -227,11 +227,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.Get");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
+                var response = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_ListByResource</description>
+        /// <description>MhsmPrivateEndpointConnection_ListByResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -268,9 +268,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of <see cref="ManagedHsmPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedHsmPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedHsmPrivateEndpointConnectionResource(Client, ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(e)), _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ManagedHsmPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedHsmPrivateEndpointConnectionResource(Client, ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(e)), _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ManagedHsmPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_ListByResource</description>
+        /// <description>MhsmPrivateEndpointConnection_ListByResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of <see cref="ManagedHsmPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedHsmPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedHsmPrivateEndpointConnectionResource(Client, ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(e)), _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ManagedHsmPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedHsmPrivateEndpointConnectionResource(Client, ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(e)), _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ManagedHsmPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -332,11 +332,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.Exists");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -375,11 +375,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.Exists");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -418,11 +418,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.GetIfExists");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<ManagedHsmPrivateEndpointConnectionResource>(response.GetRawResponse());
                 return Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -463,11 +463,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.GetIfExists");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<ManagedHsmPrivateEndpointConnectionResource>(response.GetRawResponse());
                 return Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             IPRules = new ChangeTrackingList<ManagedHsmIPRule>();
             ServiceTags = new ChangeTrackingList<ManagedHsmServiceTagRule>();
-            VirtualNetworkRules = new ChangeTrackingList<ManagedHsmVirtualNetworkRule>();
+            VirtualNetworkRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmNetworkRuleSet"/>. </summary>
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="serviceTags"> The list of service tags. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass, ManagedHsmNetworkRuleAction? defaultAction, IList<ManagedHsmIPRule> ipRules, IList<ManagedHsmServiceTagRule> serviceTags, IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass, ManagedHsmNetworkRuleAction? defaultAction, IList<ManagedHsmIPRule> ipRules, IList<ManagedHsmServiceTagRule> serviceTags, IList<WritableSubResource> virtualNetworkRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Bypass = bypass;
             DefaultAction = defaultAction;
@@ -84,6 +85,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public IList<ManagedHsmServiceTagRule> ServiceTags { get; }
         /// <summary> The list of virtual network rules. </summary>
         [WirePath("virtualNetworkRules")]
-        public IList<ManagedHsmVirtualNetworkRule> VirtualNetworkRules { get; }
+        public IList<WritableSubResource> VirtualNetworkRules { get; }
     }
 }

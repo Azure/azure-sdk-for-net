@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateLinkResourceData"/>. </summary>
-        public KeyVaultPrivateLinkResourceData()
+        internal KeyVaultPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal KeyVaultPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> Required DNS zone names of the the private link resource. </summary>
         [WirePath("properties.requiredZoneNames")]
-        public IList<string> RequiredZoneNames { get; }
+        public IReadOnlyList<string> RequiredZoneNames { get; }
         /// <summary> Azure location of the key vault resource. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }

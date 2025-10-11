@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetASecret()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/getSecret.json
-            // this example is just showing the usage of "Secrets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/getSecret.json
+            // this example is just showing the usage of "Secret_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateASecret()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/updateSecret.json
-            // this example is just showing the usage of "Secrets_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/updateSecret.json
+            // this example is just showing the usage of "Secret_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

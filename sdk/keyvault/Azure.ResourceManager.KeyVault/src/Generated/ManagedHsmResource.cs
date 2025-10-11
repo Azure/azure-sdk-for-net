@@ -38,10 +38,6 @@ namespace Azure.ResourceManager.KeyVault
 
         private readonly ClientDiagnostics _managedHsmClientDiagnostics;
         private readonly ManagedHsmsRestOperations _managedHsmRestClient;
-        private readonly ClientDiagnostics _mhsmPrivateLinkResourcesClientDiagnostics;
-        private readonly MhsmPrivateLinkResourcesRestOperations _mhsmPrivateLinkResourcesRestClient;
-        private readonly ClientDiagnostics _mhsmRegionsClientDiagnostics;
-        private readonly MhsmRegionsRestOperations _mhsmRegionsRestClient;
         private readonly ManagedHsmData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -69,10 +65,6 @@ namespace Azure.ResourceManager.KeyVault
             _managedHsmClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managedHsmApiVersion);
             _managedHsmRestClient = new ManagedHsmsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedHsmApiVersion);
-            _mhsmPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _mhsmPrivateLinkResourcesRestClient = new MhsmPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _mhsmRegionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _mhsmRegionsRestClient = new MhsmRegionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -115,7 +107,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -146,7 +138,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -177,7 +169,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -217,7 +209,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -257,7 +249,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Delete</description>
+        /// <description>ManagedHsm_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -299,7 +291,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Delete</description>
+        /// <description>ManagedHsm_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -341,7 +333,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Update</description>
+        /// <description>ManagedHsm_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -387,7 +379,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Update</description>
+        /// <description>ManagedHsm_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -433,20 +425,24 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateLinkResources_ListByManagedHsmResource</description>
+        /// <description>ManagedHsms_GetPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2025-05-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedHsmPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResourceAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedHsmPrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmPrivateLinkResourcesRestClient.CreateListByManagedHsmResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData(e), _mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData(e), _managedHsmClientDiagnostics, Pipeline, "ManagedHsmResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -458,20 +454,24 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateLinkResources_ListByManagedHsmResource</description>
+        /// <description>ManagedHsms_GetPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedHsmPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResource(CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedHsmPrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmPrivateLinkResourcesRestClient.CreateListByManagedHsmResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData(e), _mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData(e), _managedHsmClientDiagnostics, Pipeline, "ManagedHsmResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -483,21 +483,25 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMRegions_ListByResource</description>
+        /// <description>ManagedHsms_GetRegions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedHsmGeoReplicatedRegion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedHsmGeoReplicatedRegion> GetMHSMRegionsByResourceAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedHsmGeoReplicatedRegion> GetRegionsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmRegionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mhsmRegionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion(e), _mhsmRegionsClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMRegionsByResource", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmRestClient.CreateGetRegionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedHsmRestClient.CreateGetRegionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion(e), _managedHsmClientDiagnostics, Pipeline, "ManagedHsmResource.GetRegions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -509,21 +513,25 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMRegions_ListByResource</description>
+        /// <description>ManagedHsms_GetRegions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2025-05-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedHsmGeoReplicatedRegion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedHsmGeoReplicatedRegion> GetMHSMRegionsByResource(CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedHsmGeoReplicatedRegion> GetRegions(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmRegionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mhsmRegionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion(e), _mhsmRegionsClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMRegionsByResource", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedHsmRestClient.CreateGetRegionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedHsmRestClient.CreateGetRegionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion(e), _managedHsmClientDiagnostics, Pipeline, "ManagedHsmResource.GetRegions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -535,7 +543,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -597,7 +605,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -659,7 +667,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -716,7 +724,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -773,7 +781,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -833,7 +841,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

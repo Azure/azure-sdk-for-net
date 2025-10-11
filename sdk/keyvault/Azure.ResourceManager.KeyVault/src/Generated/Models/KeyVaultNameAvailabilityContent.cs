@@ -48,13 +48,14 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The vault name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.KeyVault/vaults. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public KeyVaultNameAvailabilityContent(string name)
+        public KeyVaultNameAvailabilityContent(string name, ResourceType resourceType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ResourceType = "Microsoft.KeyVault/vaults";
+            ResourceType = resourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultNameAvailabilityContent"/>. </summary>

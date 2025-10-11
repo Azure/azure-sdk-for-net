@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Initializes a new instance of ManagedHsmsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public ManagedHsmsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -34,6 +34,104 @@ namespace Azure.ResourceManager.KeyVault
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string name)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the specified managed HSM Pool. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ManagedHsmData>> GetAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, name);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManagedHsmData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 204:
+                case 404:
+                    return Response.FromValue((ManagedHsmData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the specified managed HSM Pool. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ManagedHsmData> Get(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, name);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ManagedHsmData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 204:
+                case 404:
+                    return Response.FromValue((ManagedHsmData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string name, ManagedHsmData data)
@@ -75,9 +173,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Create or update a managed HSM Pool in the specified subscription. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
-        /// <param name="name"> Name of the managed HSM Pool. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="data"> Parameters to create or update the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
@@ -102,9 +200,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Create or update a managed HSM Pool in the specified subscription. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
-        /// <param name="name"> Name of the managed HSM Pool. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="data"> Parameters to create or update the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
@@ -167,9 +265,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Update a managed HSM Pool in the specified subscription. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
-        /// <param name="name"> Name of the managed HSM Pool. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="data"> Parameters to patch the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
@@ -194,9 +292,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Update a managed HSM Pool in the specified subscription. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
-        /// <param name="name"> Name of the managed HSM Pool. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="data"> Parameters to patch the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
@@ -249,15 +347,14 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Deletes the specified managed HSM Pool. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
-        /// <param name="name"> The name of the managed HSM Pool to delete. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -281,9 +378,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Deletes the specified managed HSM Pool. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
-        /// <param name="name"> The name of the managed HSM Pool to delete. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -306,104 +403,6 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string name)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string name)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the specified managed HSM Pool. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
-        /// <param name="name"> The name of the managed HSM Pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedHsmData>> GetAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, name);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ManagedHsmData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 204:
-                case 404:
-                    return Response.FromValue((ManagedHsmData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the specified managed HSM Pool. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
-        /// <param name="name"> The name of the managed HSM Pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedHsmData> Get(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, name);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ManagedHsmData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 204:
-                case 404:
-                    return Response.FromValue((ManagedHsmData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, int? top)
         {
             var uri = new RawRequestUriBuilder();
@@ -413,11 +412,11 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -433,11 +432,11 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -445,8 +444,8 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription and within the specified resource group. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -473,8 +472,8 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription and within the specified resource group. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -507,11 +506,11 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -525,11 +524,11 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -537,7 +536,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -563,7 +562,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -588,18 +587,22 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal RequestUriBuilder CreateListDeletedRequestUri(string subscriptionId)
+        internal RequestUriBuilder CreateGetPrivateLinkResourcesRequestUri(string subscriptionId, string resourceGroupName, string name)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.KeyVault/deletedManagedHSMs", false);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateLinkResources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListDeletedRequest(string subscriptionId)
+        internal HttpMessage CreateGetPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -608,7 +611,11 @@ namespace Azure.ResourceManager.KeyVault
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.KeyVault/deletedManagedHSMs", false);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateLinkResources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -616,24 +623,28 @@ namespace Azure.ResourceManager.KeyVault
             return message;
         }
 
-        /// <summary> The List operation gets information about the deleted managed HSMs associated with the subscription. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <summary> Gets the private link resources supported for the managed hsm pool. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeletedManagedHsmListResult>> ListDeletedAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ManagedHsmPrivateLinkResourceListResult>> GetPrivateLinkResourcesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListDeletedRequest(subscriptionId);
+            using var message = CreateGetPrivateLinkResourcesRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeletedManagedHsmListResult value = default;
+                        ManagedHsmPrivateLinkResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DeletedManagedHsmListResult.DeserializeDeletedManagedHsmListResult(document.RootElement);
+                        value = ManagedHsmPrivateLinkResourceListResult.DeserializeManagedHsmPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -641,24 +652,28 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> The List operation gets information about the deleted managed HSMs associated with the subscription. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <summary> Gets the private link resources supported for the managed hsm pool. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeletedManagedHsmListResult> ListDeleted(string subscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ManagedHsmPrivateLinkResourceListResult> GetPrivateLinkResources(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListDeletedRequest(subscriptionId);
+            using var message = CreateGetPrivateLinkResourcesRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeletedManagedHsmListResult value = default;
+                        ManagedHsmPrivateLinkResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DeletedManagedHsmListResult.DeserializeDeletedManagedHsmListResult(document.RootElement);
+                        value = ManagedHsmPrivateLinkResourceListResult.DeserializeManagedHsmPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -666,21 +681,22 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal RequestUriBuilder CreateGetDeletedRequestUri(string subscriptionId, AzureLocation location, string name)
+        internal RequestUriBuilder CreateGetRegionsRequestUri(string subscriptionId, string resourceGroupName, string name)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.KeyVault/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/deletedManagedHSMs/", false);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
             uri.AppendPath(name, true);
+            uri.AppendPath("/regions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetDeletedRequest(string subscriptionId, AzureLocation location, string name)
+        internal HttpMessage CreateGetRegionsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -689,10 +705,11 @@ namespace Azure.ResourceManager.KeyVault
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.KeyVault/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/deletedManagedHSMs/", false);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
             uri.AppendPath(name, true);
+            uri.AppendPath("/regions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -700,227 +717,57 @@ namespace Azure.ResourceManager.KeyVault
             return message;
         }
 
-        /// <summary> Gets the specified deleted managed HSM. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> The location of the deleted managed HSM. </param>
-        /// <param name="name"> The name of the deleted managed HSM. </param>
+        /// <summary> The List operation gets information about the regions associated with the managed HSM Pool. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeletedManagedHsmData>> GetDeletedAsync(string subscriptionId, AzureLocation location, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ManagedHsmRegionsListResult>> GetRegionsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateGetDeletedRequest(subscriptionId, location, name);
+            using var message = CreateGetRegionsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeletedManagedHsmData value = default;
+                        ManagedHsmRegionsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DeletedManagedHsmData.DeserializeDeletedManagedHsmData(document.RootElement);
+                        value = ManagedHsmRegionsListResult.DeserializeManagedHsmRegionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((DeletedManagedHsmData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets the specified deleted managed HSM. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> The location of the deleted managed HSM. </param>
-        /// <param name="name"> The name of the deleted managed HSM. </param>
+        /// <summary> The List operation gets information about the regions associated with the managed HSM Pool. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeletedManagedHsmData> GetDeleted(string subscriptionId, AzureLocation location, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ManagedHsmRegionsListResult> GetRegions(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateGetDeletedRequest(subscriptionId, location, name);
+            using var message = CreateGetRegionsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeletedManagedHsmData value = default;
+                        ManagedHsmRegionsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DeletedManagedHsmData.DeserializeDeletedManagedHsmData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DeletedManagedHsmData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreatePurgeDeletedRequestUri(string subscriptionId, AzureLocation location, string name)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.KeyVault/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/deletedManagedHSMs/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/purge", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreatePurgeDeletedRequest(string subscriptionId, AzureLocation location, string name)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.KeyVault/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/deletedManagedHSMs/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/purge", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Permanently deletes the specified managed HSM. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> The location of the soft-deleted managed HSM. </param>
-        /// <param name="name"> The name of the soft-deleted managed HSM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PurgeDeletedAsync(string subscriptionId, AzureLocation location, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreatePurgeDeletedRequest(subscriptionId, location, name);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Permanently deletes the specified managed HSM. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> The location of the soft-deleted managed HSM. </param>
-        /// <param name="name"> The name of the soft-deleted managed HSM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PurgeDeleted(string subscriptionId, AzureLocation location, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreatePurgeDeletedRequest(subscriptionId, location, name);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCheckManagedHsmNameAvailabilityRequestUri(string subscriptionId, ManagedHsmNameAvailabilityContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.KeyVault/checkMhsmNameAvailability", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCheckManagedHsmNameAvailabilityRequest(string subscriptionId, ManagedHsmNameAvailabilityContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.KeyVault/checkMhsmNameAvailability", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Checks that the managed hsm name is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="content"> The name of the managed hsm. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(string subscriptionId, ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCheckManagedHsmNameAvailabilityRequest(subscriptionId, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ManagedHsmNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ManagedHsmNameAvailabilityResult.DeserializeManagedHsmNameAvailabilityResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Checks that the managed hsm name is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="content"> The name of the managed hsm. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(string subscriptionId, ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateCheckManagedHsmNameAvailabilityRequest(subscriptionId, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ManagedHsmNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ManagedHsmNameAvailabilityResult.DeserializeManagedHsmNameAvailabilityResult(document.RootElement);
+                        value = ManagedHsmRegionsListResult.DeserializeManagedHsmRegionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -952,8 +799,8 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription and within the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -982,8 +829,8 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription and within the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the managed HSM pool. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -1034,7 +881,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -1062,7 +909,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the managed HSM Pools associated with the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -1088,7 +935,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal RequestUriBuilder CreateListDeletedNextPageRequestUri(string nextLink, string subscriptionId)
+        internal RequestUriBuilder CreateGetRegionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1096,7 +943,7 @@ namespace Azure.ResourceManager.KeyVault
             return uri;
         }
 
-        internal HttpMessage CreateListDeletedNextPageRequest(string nextLink, string subscriptionId)
+        internal HttpMessage CreateGetRegionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1110,26 +957,30 @@ namespace Azure.ResourceManager.KeyVault
             return message;
         }
 
-        /// <summary> The List operation gets information about the deleted managed HSMs associated with the subscription. </summary>
+        /// <summary> The List operation gets information about the regions associated with the managed HSM Pool. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeletedManagedHsmListResult>> ListDeletedNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ManagedHsmRegionsListResult>> GetRegionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListDeletedNextPageRequest(nextLink, subscriptionId);
+            using var message = CreateGetRegionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeletedManagedHsmListResult value = default;
+                        ManagedHsmRegionsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DeletedManagedHsmListResult.DeserializeDeletedManagedHsmListResult(document.RootElement);
+                        value = ManagedHsmRegionsListResult.DeserializeManagedHsmRegionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1137,26 +988,30 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> The List operation gets information about the deleted managed HSMs associated with the subscription. </summary>
+        /// <summary> The List operation gets information about the regions associated with the managed HSM Pool. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeletedManagedHsmListResult> ListDeletedNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ManagedHsmRegionsListResult> GetRegionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListDeletedNextPageRequest(nextLink, subscriptionId);
+            using var message = CreateGetRegionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeletedManagedHsmListResult value = default;
+                        ManagedHsmRegionsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DeletedManagedHsmListResult.DeserializeDeletedManagedHsmListResult(document.RootElement);
+                        value = ManagedHsmRegionsListResult.DeserializeManagedHsmRegionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

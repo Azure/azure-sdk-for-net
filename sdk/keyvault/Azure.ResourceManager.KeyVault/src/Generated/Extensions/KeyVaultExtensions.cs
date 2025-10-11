@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_GetDeleted</description>
+        /// <description>DeletedVault_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="vaultName"/> is null. </exception>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_GetDeleted</description>
+        /// <description>DeletedVault_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="vaultName"/> is null. </exception>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_GetDeleted</description>
+        /// <description>DeletedManagedHsm_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="name"/> is null. </exception>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_GetDeleted</description>
+        /// <description>DeletedManagedHsm_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="name"/> is null. </exception>
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_ListBySubscription</description>
+        /// <description>Vault_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_ListBySubscription</description>
+        /// <description>Vault_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -617,142 +617,6 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary>
-        /// Gets information about the deleted vaults in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_ListDeleted</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedKeyVaultResource> GetDeletedKeyVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaultsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the deleted vaults in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_ListDeleted</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedKeyVaultResource> GetDeletedKeyVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaults(cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks that the vault name is valid and is not already in use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.CheckKeyVaultNameAvailability(KeyVaultNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The name of the vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<KeyVaultNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(this SubscriptionResource subscriptionResource, KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableKeyVaultSubscriptionResource(subscriptionResource).CheckKeyVaultNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Checks that the vault name is valid and is not already in use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.CheckKeyVaultNameAvailability(KeyVaultNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The name of the vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<KeyVaultNameAvailabilityResult> CheckKeyVaultNameAvailability(this SubscriptionResource subscriptionResource, KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).CheckKeyVaultNameAvailability(content, cancellationToken);
-        }
-
-        /// <summary>
         /// The List operation gets information about the managed HSM Pools associated with the subscription.
         /// <list type="bullet">
         /// <item>
@@ -761,7 +625,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_ListBySubscription</description>
+        /// <description>ManagedHsm_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -798,7 +662,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_ListBySubscription</description>
+        /// <description>ManagedHsm_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -827,6 +691,134 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary>
+        /// Gets information about the deleted vaults in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VaultsOperationGroup_ListDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DeletedKeyVaultResource> GetDeletedKeyVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaultsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets information about the deleted vaults in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VaultsOperationGroup_ListDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DeletedKeyVaultResource> GetDeletedKeyVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaults(cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks that the vault name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VaultsOperationGroup_CheckKeyVaultNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.CheckKeyVaultNameAvailability(KeyVaultNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The name of the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<KeyVaultNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(this SubscriptionResource subscriptionResource, KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableKeyVaultSubscriptionResource(subscriptionResource).CheckKeyVaultNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks that the vault name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VaultsOperationGroup_CheckKeyVaultNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.CheckKeyVaultNameAvailability(KeyVaultNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The name of the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<KeyVaultNameAvailabilityResult> CheckKeyVaultNameAvailability(this SubscriptionResource subscriptionResource, KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).CheckKeyVaultNameAvailability(content, cancellationToken);
+        }
+
+        /// <summary>
         /// The List operation gets information about the deleted managed HSMs associated with the subscription.
         /// <list type="bullet">
         /// <item>
@@ -835,7 +827,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_ListDeleted</description>
+        /// <description>ManagedHsmsOperationGroup_ListDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -867,7 +859,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_ListDeleted</description>
+        /// <description>ManagedHsmsOperationGroup_ListDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -899,15 +891,11 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_CheckManagedHsmNameAvailability</description>
+        /// <description>ManagedHsmsOperationGroup_CheckManagedHsmNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedHsmResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -916,7 +904,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The name of the managed hsm. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -935,15 +923,11 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_CheckManagedHsmNameAvailability</description>
+        /// <description>ManagedHsmsOperationGroup_CheckManagedHsmNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedHsmResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -952,7 +936,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The name of the managed hsm. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(this SubscriptionResource subscriptionResource, ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)

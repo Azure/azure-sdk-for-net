@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateANewVaultOrUpdateAnExistingVault()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/createVault.json
-            // this example is just showing the usage of "Vaults_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/createVault.json
+            // this example is just showing the usage of "Vault_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -68,8 +68,8 @@ Certificates = {IdentityAccessCertificatePermission.Get, IdentityAccessCertifica
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAVaultWithNetworkAcls()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/createVaultWithNetworkAcls.json
-            // this example is just showing the usage of "Vaults_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/createVaultWithNetworkAcls.json
+            // this example is just showing the usage of "Vault_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -115,8 +115,8 @@ Certificates = {IdentityAccessCertificatePermission.Get, IdentityAccessCertifica
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAVault()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/getVault.json
-            // this example is just showing the usage of "Vaults_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/getVault.json
+            // this example is just showing the usage of "Vault_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -148,8 +148,8 @@ Certificates = {IdentityAccessCertificatePermission.Get, IdentityAccessCertifica
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListVaultsInTheSpecifiedResourceGroup()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/listVaultByResourceGroup.json
-            // this example is just showing the usage of "Vaults_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/listVaultByResourceGroup.json
+            // this example is just showing the usage of "Vault_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -167,8 +167,7 @@ Certificates = {IdentityAccessCertificatePermission.Get, IdentityAccessCertifica
             KeyVaultCollection collection = resourceGroupResource.GetKeyVaults();
 
             // invoke the operation and iterate over the result
-            int? top = 1;
-            await foreach (KeyVaultResource item in collection.GetAllAsync(top: top))
+            await foreach (KeyVaultResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -184,8 +183,8 @@ Certificates = {IdentityAccessCertificatePermission.Get, IdentityAccessCertifica
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RetrieveAVault()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/getVault.json
-            // this example is just showing the usage of "Vaults_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/getVault.json
+            // this example is just showing the usage of "Vault_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -213,8 +212,8 @@ Certificates = {IdentityAccessCertificatePermission.Get, IdentityAccessCertifica
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RetrieveAVault()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/getVault.json
-            // this example is just showing the usage of "Vaults_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/getVault.json
+            // this example is just showing the usage of "Vault_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

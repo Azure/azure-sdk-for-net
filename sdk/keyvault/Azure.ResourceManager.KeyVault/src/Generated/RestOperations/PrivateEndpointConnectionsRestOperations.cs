@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Initializes a new instance of PrivateEndpointConnectionsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public PrivateEndpointConnectionsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets the specified private endpoint connection associated with the key vault. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
-        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Gets the specified private endpoint connection associated with the key vault. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
-        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Updates the specified private endpoint connection associated with the key vault. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
-        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="data"> The intended state of private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -218,9 +218,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Updates the specified private endpoint connection associated with the key vault. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
-        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="data"> The intended state of private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -289,9 +289,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Deletes the specified private endpoint connection associated with the key vault. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
-        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -317,9 +317,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Deletes the specified private endpoint connection associated with the key vault. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
-        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection associated with the key vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -381,9 +381,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> The List operation gets information about the private endpoint connections associated with the vault. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
-        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -410,9 +410,9 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> The List operation gets information about the private endpoint connections associated with the vault. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
-        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -462,9 +462,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the private endpoint connections associated with the vault. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
-        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -493,9 +493,9 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> The List operation gets information about the private endpoint connections associated with the vault. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the resource group that contains the key vault. </param>
-        /// <param name="vaultName"> The name of the key vault. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>

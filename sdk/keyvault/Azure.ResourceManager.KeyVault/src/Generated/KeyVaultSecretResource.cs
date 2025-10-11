@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Secrets_Get</description>
+        /// <description>Secret_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Secrets_Get</description>
+        /// <description>Secret_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Secrets_Update</description>
+        /// <description>Secret_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Secrets_Update</description>
+        /// <description>Secret_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

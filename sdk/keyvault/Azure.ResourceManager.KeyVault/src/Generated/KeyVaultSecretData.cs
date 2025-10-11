@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Initializes a new instance of <see cref="KeyVaultSecretData"/>. </summary>
         /// <param name="properties"> Properties of the secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public KeyVaultSecretData(SecretProperties properties)
+        internal KeyVaultSecretData(SecretProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KeyVault
 
         /// <summary> Properties of the secret. </summary>
         [WirePath("properties")]
-        public SecretProperties Properties { get; set; }
+        public SecretProperties Properties { get; }
         /// <summary> Azure location of the key vault resource. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }

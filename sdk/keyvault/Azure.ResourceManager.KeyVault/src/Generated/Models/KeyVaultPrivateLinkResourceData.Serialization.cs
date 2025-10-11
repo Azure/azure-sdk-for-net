@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             SystemData systemData = default;
             string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
-            IList<string> requiredZoneNames = default;
+            IReadOnlyList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

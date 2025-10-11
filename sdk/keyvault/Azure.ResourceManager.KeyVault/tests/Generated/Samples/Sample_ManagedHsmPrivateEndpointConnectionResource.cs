@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.KeyVault.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.KeyVault.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ManagedHsmGetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/ManagedHsm_getPrivateEndpointConnection.json
-            // this example is just showing the usage of "MHSMPrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/ManagedHsm_getPrivateEndpointConnection.json
+            // this example is just showing the usage of "MhsmPrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +50,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ManagedHsmDeletePrivateEndpointConnection()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/ManagedHsm_deletePrivateEndpointConnection.json
-            // this example is just showing the usage of "MHSMPrivateEndpointConnections_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/ManagedHsm_deletePrivateEndpointConnection.json
+            // this example is just showing the usage of "MhsmPrivateEndpointConnection_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -83,8 +82,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ManagedHsmPutPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/ManagedHsm_putPrivateEndpointConnection.json
-            // this example is just showing the usage of "MHSMPrivateEndpointConnections_Put" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/ManagedHsm_putPrivateEndpointConnection.json
+            // this example is just showing the usage of "MhsmPrivateEndpointConnection_Put" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -101,14 +100,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
             ManagedHsmPrivateEndpointConnectionResource managedHsmPrivateEndpointConnection = client.GetManagedHsmPrivateEndpointConnectionResource(managedHsmPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            ManagedHsmPrivateEndpointConnectionData data = new ManagedHsmPrivateEndpointConnectionData(default)
-            {
-                PrivateLinkServiceConnectionState = new ManagedHsmPrivateLinkServiceConnectionState
-                {
-                    Status = ManagedHsmPrivateEndpointServiceConnectionStatus.Approved,
-                    Description = "My name is Joe and I'm approving this.",
-                },
-            };
+            ManagedHsmPrivateEndpointConnectionData data = new ManagedHsmPrivateEndpointConnectionData(default);
             ArmOperation<ManagedHsmPrivateEndpointConnectionResource> lro = await managedHsmPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
             ManagedHsmPrivateEndpointConnectionResource result = lro.Value;
 

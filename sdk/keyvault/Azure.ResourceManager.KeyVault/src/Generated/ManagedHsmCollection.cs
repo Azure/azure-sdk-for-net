@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_CreateOrUpdate</description>
+        /// <description>ManagedHsm_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> Name of the managed HSM Pool. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="data"> Parameters to create or update the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_CreateOrUpdate</description>
+        /// <description>ManagedHsm_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> Name of the managed HSM Pool. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="data"> Parameters to create or update the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_ListByResourceGroup</description>
+        /// <description>ManagedHsm_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_ListByResourceGroup</description>
+        /// <description>ManagedHsm_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_Get</description>
+        /// <description>ManagedHsm_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

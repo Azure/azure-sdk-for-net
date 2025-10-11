@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            ResourceIdentifier managedHsmId = default;
+            ResourceIdentifier mhsmId = default;
             AzureLocation? location = default;
             DateTimeOffset? deletionDate = default;
             DateTimeOffset? scheduledPurgeDate = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    managedHsmId = new ResourceIdentifier(property.Value.GetString());
+                    mhsmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new DeletedManagedHsmProperties(
-                managedHsmId,
+                mhsmId,
                 location,
                 deletionDate,
                 scheduledPurgeDate,

@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.KeyVault
     /// </summary>
     public partial class DeletedManagedHsmCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _deletedManagedHsmManagedHsmsClientDiagnostics;
-        private readonly ManagedHsmsRestOperations _deletedManagedHsmManagedHsmsRestClient;
+        private readonly ClientDiagnostics _deletedManagedHsmClientDiagnostics;
+        private readonly DeletedManagedHsmsRestOperations _deletedManagedHsmRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DeletedManagedHsmCollection"/> class for mocking. </summary>
         protected DeletedManagedHsmCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeletedManagedHsmCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deletedManagedHsmManagedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedManagedHsmResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DeletedManagedHsmResource.ResourceType, out string deletedManagedHsmManagedHsmsApiVersion);
-            _deletedManagedHsmManagedHsmsRestClient = new ManagedHsmsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedManagedHsmManagedHsmsApiVersion);
+            _deletedManagedHsmClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedManagedHsmResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DeletedManagedHsmResource.ResourceType, out string deletedManagedHsmApiVersion);
+            _deletedManagedHsmRestClient = new DeletedManagedHsmsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedManagedHsmApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_GetDeleted</description>
+        /// <description>DeletedManagedHsm_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _deletedManagedHsmManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmCollection.Get");
+            using var scope = _deletedManagedHsmClientDiagnostics.CreateScope("DeletedManagedHsmCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deletedManagedHsmManagedHsmsRestClient.GetDeletedAsync(Id.SubscriptionId, location, name, cancellationToken).ConfigureAwait(false);
+                var response = await _deletedManagedHsmRestClient.GetDeletedAsync(Id.SubscriptionId, location, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedManagedHsmResource(Client, response.Value), response.GetRawResponse());
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_GetDeleted</description>
+        /// <description>DeletedManagedHsm_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _deletedManagedHsmManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmCollection.Get");
+            using var scope = _deletedManagedHsmClientDiagnostics.CreateScope("DeletedManagedHsmCollection.Get");
             scope.Start();
             try
             {
-                var response = _deletedManagedHsmManagedHsmsRestClient.GetDeleted(Id.SubscriptionId, location, name, cancellationToken);
+                var response = _deletedManagedHsmRestClient.GetDeleted(Id.SubscriptionId, location, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedManagedHsmResource(Client, response.Value), response.GetRawResponse());
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_GetDeleted</description>
+        /// <description>DeletedManagedHsm_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _deletedManagedHsmManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmCollection.Exists");
+            using var scope = _deletedManagedHsmClientDiagnostics.CreateScope("DeletedManagedHsmCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _deletedManagedHsmManagedHsmsRestClient.GetDeletedAsync(Id.SubscriptionId, location, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deletedManagedHsmRestClient.GetDeletedAsync(Id.SubscriptionId, location, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_GetDeleted</description>
+        /// <description>DeletedManagedHsm_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _deletedManagedHsmManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmCollection.Exists");
+            using var scope = _deletedManagedHsmClientDiagnostics.CreateScope("DeletedManagedHsmCollection.Exists");
             scope.Start();
             try
             {
-                var response = _deletedManagedHsmManagedHsmsRestClient.GetDeleted(Id.SubscriptionId, location, name, cancellationToken: cancellationToken);
+                var response = _deletedManagedHsmRestClient.GetDeleted(Id.SubscriptionId, location, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_GetDeleted</description>
+        /// <description>DeletedManagedHsm_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -259,11 +259,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _deletedManagedHsmManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmCollection.GetIfExists");
+            using var scope = _deletedManagedHsmClientDiagnostics.CreateScope("DeletedManagedHsmCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deletedManagedHsmManagedHsmsRestClient.GetDeletedAsync(Id.SubscriptionId, location, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deletedManagedHsmRestClient.GetDeletedAsync(Id.SubscriptionId, location, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<DeletedManagedHsmResource>(response.GetRawResponse());
                 return Response.FromValue(new DeletedManagedHsmResource(Client, response.Value), response.GetRawResponse());
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_GetDeleted</description>
+        /// <description>DeletedManagedHsm_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -305,11 +305,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _deletedManagedHsmManagedHsmsClientDiagnostics.CreateScope("DeletedManagedHsmCollection.GetIfExists");
+            using var scope = _deletedManagedHsmClientDiagnostics.CreateScope("DeletedManagedHsmCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deletedManagedHsmManagedHsmsRestClient.GetDeleted(Id.SubscriptionId, location, name, cancellationToken: cancellationToken);
+                var response = _deletedManagedHsmRestClient.GetDeleted(Id.SubscriptionId, location, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<DeletedManagedHsmResource>(response.GetRawResponse());
                 return Response.FromValue(new DeletedManagedHsmResource(Client, response.Value), response.GetRawResponse());

@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> A rule governing the accessibility of a managed hsm pool from a specific virtual network. </summary>
-    public partial class ManagedHsmVirtualNetworkRule
+    /// <summary> List of private endpoint connections associated with a managed HSM Pools. </summary>
+    internal partial class MHSMPrivateEndpointConnectionsListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,32 +46,37 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedHsmVirtualNetworkRule"/>. </summary>
-        /// <param name="subnetId"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
-        public ManagedHsmVirtualNetworkRule(ResourceIdentifier subnetId)
+        /// <summary> Initializes a new instance of <see cref="MHSMPrivateEndpointConnectionsListResult"/>. </summary>
+        /// <param name="value"> The MhsmPrivateEndpointConnection items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal MHSMPrivateEndpointConnectionsListResult(IEnumerable<ManagedHsmPrivateEndpointConnectionData> value)
         {
-            Argument.AssertNotNull(subnetId, nameof(subnetId));
+            Argument.AssertNotNull(value, nameof(value));
 
-            SubnetId = subnetId;
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedHsmVirtualNetworkRule"/>. </summary>
-        /// <param name="subnetId"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
+        /// <summary> Initializes a new instance of <see cref="MHSMPrivateEndpointConnectionsListResult"/>. </summary>
+        /// <param name="value"> The MhsmPrivateEndpointConnection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmVirtualNetworkRule(ResourceIdentifier subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MHSMPrivateEndpointConnectionsListResult(IReadOnlyList<ManagedHsmPrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SubnetId = subnetId;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedHsmVirtualNetworkRule"/> for deserialization. </summary>
-        internal ManagedHsmVirtualNetworkRule()
+        /// <summary> Initializes a new instance of <see cref="MHSMPrivateEndpointConnectionsListResult"/> for deserialization. </summary>
+        internal MHSMPrivateEndpointConnectionsListResult()
         {
         }
 
-        /// <summary> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </summary>
-        [WirePath("id")]
-        public ResourceIdentifier SubnetId { get; set; }
+        /// <summary> The MhsmPrivateEndpointConnection items on this page. </summary>
+        [WirePath("value")]
+        public IReadOnlyList<ManagedHsmPrivateEndpointConnectionData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

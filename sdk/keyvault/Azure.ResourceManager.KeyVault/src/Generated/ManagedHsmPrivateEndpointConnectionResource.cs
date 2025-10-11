@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.KeyVault
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics;
-        private readonly MhsmPrivateEndpointConnectionsRestOperations _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics;
+        private readonly MhsmPrivateEndpointConnectionsRestOperations _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient;
         private readonly ManagedHsmPrivateEndpointConnectionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedHsmPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsApiVersion);
-            _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient = new MhsmPrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsApiVersion);
+            _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsApiVersion);
+            _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient = new MhsmPrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ManagedHsmPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.Get");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = await _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedHsmPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.Get");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Delete</description>
+        /// <description>MhsmPrivateEndpointConnection_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<ManagedHsmPrivateEndpointConnectionResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.Delete");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(new ManagedHsmPrivateEndpointConnectionOperationSource(Client), _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics, Pipeline, _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(new ManagedHsmPrivateEndpointConnectionOperationSource(Client), _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics, Pipeline, _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Delete</description>
+        /// <description>MhsmPrivateEndpointConnection_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -236,12 +236,12 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<ManagedHsmPrivateEndpointConnectionResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.Delete");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(new ManagedHsmPrivateEndpointConnectionOperationSource(Client), _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics, Pipeline, _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(new ManagedHsmPrivateEndpointConnectionOperationSource(Client), _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics, Pipeline, _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Put</description>
+        /// <description>MhsmPrivateEndpointConnection_Put</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -282,12 +282,12 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.Update");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Put</description>
+        /// <description>MhsmPrivateEndpointConnection_Put</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -330,12 +330,12 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.Update");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.KeyVault
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.AddTag");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.AddTag");
             scope.Start();
             try
             {
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.KeyVault
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.KeyVault
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.AddTag");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.AddTag");
             scope.Start();
             try
             {
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.KeyVault
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.SetTags");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.SetTags");
             scope.Start();
             try
             {
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.KeyVault
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.SetTags");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.SetTags");
             scope.Start();
             try
             {
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.KeyVault
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.RemoveTag");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.RemoveTag");
             scope.Start();
             try
             {
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.KeyVault
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateEndpointConnections_Get</description>
+        /// <description>MhsmPrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.RemoveTag");
+            using var scope = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionResource.RemoveTag");
             scope.Start();
             try
             {
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.KeyVault
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _managedHsmPrivateEndpointConnectionMhsmPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

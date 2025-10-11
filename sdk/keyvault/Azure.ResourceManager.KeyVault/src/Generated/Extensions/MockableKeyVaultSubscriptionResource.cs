@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.KeyVault.Mocking
     {
         private ClientDiagnostics _keyVaultVaultsClientDiagnostics;
         private VaultsRestOperations _keyVaultVaultsRestClient;
-        private ClientDiagnostics _vaultsClientDiagnostics;
-        private VaultsRestOperations _vaultsRestClient;
         private ClientDiagnostics _managedHsmClientDiagnostics;
         private ManagedHsmsRestOperations _managedHsmRestClient;
-        private ClientDiagnostics _managedHsmsClientDiagnostics;
-        private ManagedHsmsRestOperations _managedHsmsRestClient;
+        private ClientDiagnostics _vaultsOperationGroupClientDiagnostics;
+        private VaultsOperationGroupRestOperations _vaultsOperationGroupRestClient;
+        private ClientDiagnostics _managedHsmsOperationGroupClientDiagnostics;
+        private ManagedHsmsOperationGroupRestOperations _managedHsmsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableKeyVaultSubscriptionResource"/> class for mocking. </summary>
         protected MockableKeyVaultSubscriptionResource()
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.KeyVault.Mocking
 
         private ClientDiagnostics KeyVaultVaultsClientDiagnostics => _keyVaultVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault", KeyVaultResource.ResourceType.Namespace, Diagnostics);
         private VaultsRestOperations KeyVaultVaultsRestClient => _keyVaultVaultsRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(KeyVaultResource.ResourceType));
-        private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private VaultsRestOperations VaultsRestClient => _vaultsRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ManagedHsmClientDiagnostics => _managedHsmClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault", ManagedHsmResource.ResourceType.Namespace, Diagnostics);
         private ManagedHsmsRestOperations ManagedHsmRestClient => _managedHsmRestClient ??= new ManagedHsmsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedHsmResource.ResourceType));
-        private ClientDiagnostics ManagedHsmsClientDiagnostics => _managedHsmsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ManagedHsmsRestOperations ManagedHsmsRestClient => _managedHsmsRestClient ??= new ManagedHsmsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics VaultsOperationGroupClientDiagnostics => _vaultsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private VaultsOperationGroupRestOperations VaultsOperationGroupRestClient => _vaultsOperationGroupRestClient ??= new VaultsOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ManagedHsmsOperationGroupClientDiagnostics => _managedHsmsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ManagedHsmsOperationGroupRestOperations ManagedHsmsOperationGroupRestClient => _managedHsmsOperationGroupRestClient ??= new ManagedHsmsOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_GetDeleted</description>
+        /// <description>DeletedVault_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_GetDeleted</description>
+        /// <description>DeletedVault_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_GetDeleted</description>
+        /// <description>DeletedManagedHsm_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_GetDeleted</description>
+        /// <description>DeletedManagedHsm_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted managed HSM. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="name"> The name of the deleted managed HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_ListBySubscription</description>
+        /// <description>Vault_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_ListBySubscription</description>
+        /// <description>Vault_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -259,142 +259,6 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         }
 
         /// <summary>
-        /// Gets information about the deleted vaults in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_ListDeleted</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedKeyVaultResource> GetDeletedKeyVaultsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VaultsRestClient.CreateListDeletedRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultsRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedKeyVaultResource(Client, DeletedKeyVaultData.DeserializeDeletedKeyVaultData(e)), VaultsClientDiagnostics, Pipeline, "MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the deleted vaults in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_ListDeleted</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedKeyVaultResource> GetDeletedKeyVaults(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VaultsRestClient.CreateListDeletedRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultsRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedKeyVaultResource(Client, DeletedKeyVaultData.DeserializeDeletedKeyVaultData(e)), VaultsClientDiagnostics, Pipeline, "MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks that the vault name is valid and is not already in use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The name of the vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<KeyVaultNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = KeyVaultVaultsClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.CheckKeyVaultNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = await KeyVaultVaultsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks that the vault name is valid and is not already in use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Vaults_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KeyVaultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The name of the vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<KeyVaultNameAvailabilityResult> CheckKeyVaultNameAvailability(KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = KeyVaultVaultsClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.CheckKeyVaultNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = KeyVaultVaultsRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// The List operation gets information about the managed HSM Pools associated with the subscription.
         /// <list type="bullet">
         /// <item>
@@ -403,7 +267,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_ListBySubscription</description>
+        /// <description>ManagedHsm_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -434,7 +298,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_ListBySubscription</description>
+        /// <description>ManagedHsm_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -457,6 +321,134 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         }
 
         /// <summary>
+        /// Gets information about the deleted vaults in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VaultsOperationGroup_ListDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedKeyVaultResource> GetDeletedKeyVaultsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VaultsOperationGroupRestClient.CreateListDeletedRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultsOperationGroupRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedKeyVaultResource(Client, DeletedKeyVaultData.DeserializeDeletedKeyVaultData(e)), VaultsOperationGroupClientDiagnostics, Pipeline, "MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets information about the deleted vaults in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VaultsOperationGroup_ListDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedKeyVaultResource> GetDeletedKeyVaults(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VaultsOperationGroupRestClient.CreateListDeletedRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultsOperationGroupRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedKeyVaultResource(Client, DeletedKeyVaultData.DeserializeDeletedKeyVaultData(e)), VaultsOperationGroupClientDiagnostics, Pipeline, "MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks that the vault name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VaultsOperationGroup_CheckKeyVaultNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The name of the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<KeyVaultNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = VaultsOperationGroupClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.CheckKeyVaultNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = await VaultsOperationGroupRestClient.CheckKeyVaultNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks that the vault name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VaultsOperationGroup_CheckKeyVaultNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The name of the vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<KeyVaultNameAvailabilityResult> CheckKeyVaultNameAvailability(KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = VaultsOperationGroupClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.CheckKeyVaultNameAvailability");
+            scope.Start();
+            try
+            {
+                var response = VaultsOperationGroupRestClient.CheckKeyVaultNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// The List operation gets information about the deleted managed HSMs associated with the subscription.
         /// <list type="bullet">
         /// <item>
@@ -465,7 +457,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_ListDeleted</description>
+        /// <description>ManagedHsmsOperationGroup_ListDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -477,9 +469,9 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <returns> An async collection of <see cref="DeletedManagedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedManagedHsmResource> GetDeletedManagedHsmsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedHsmsRestClient.CreateListDeletedRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedHsmsRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedManagedHsmResource(Client, DeletedManagedHsmData.DeserializeDeletedManagedHsmData(e)), ManagedHsmsClientDiagnostics, Pipeline, "MockableKeyVaultSubscriptionResource.GetDeletedManagedHsms", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedHsmsOperationGroupRestClient.CreateListDeletedRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedHsmsOperationGroupRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedManagedHsmResource(Client, DeletedManagedHsmData.DeserializeDeletedManagedHsmData(e)), ManagedHsmsOperationGroupClientDiagnostics, Pipeline, "MockableKeyVaultSubscriptionResource.GetDeletedManagedHsms", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -491,7 +483,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_ListDeleted</description>
+        /// <description>ManagedHsmsOperationGroup_ListDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -503,9 +495,9 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <returns> A collection of <see cref="DeletedManagedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedManagedHsmResource> GetDeletedManagedHsms(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedHsmsRestClient.CreateListDeletedRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedHsmsRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedManagedHsmResource(Client, DeletedManagedHsmData.DeserializeDeletedManagedHsmData(e)), ManagedHsmsClientDiagnostics, Pipeline, "MockableKeyVaultSubscriptionResource.GetDeletedManagedHsms", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedHsmsOperationGroupRestClient.CreateListDeletedRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedHsmsOperationGroupRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedManagedHsmResource(Client, DeletedManagedHsmData.DeserializeDeletedManagedHsmData(e)), ManagedHsmsOperationGroupClientDiagnostics, Pipeline, "MockableKeyVaultSubscriptionResource.GetDeletedManagedHsms", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -517,30 +509,26 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_CheckManagedHsmNameAvailability</description>
+        /// <description>ManagedHsmsOperationGroup_CheckManagedHsmNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2025-05-01</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedHsmResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The name of the managed hsm. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ManagedHsmClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.CheckManagedHsmNameAvailability");
+            using var scope = ManagedHsmsOperationGroupClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.CheckManagedHsmNameAvailability");
             scope.Start();
             try
             {
-                var response = await ManagedHsmRestClient.CheckManagedHsmNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await ManagedHsmsOperationGroupRestClient.CheckManagedHsmNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -559,30 +547,26 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_CheckManagedHsmNameAvailability</description>
+        /// <description>ManagedHsmsOperationGroup_CheckManagedHsmNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2025-05-01</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedHsmResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The name of the managed hsm. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ManagedHsmClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.CheckManagedHsmNameAvailability");
+            using var scope = ManagedHsmsOperationGroupClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.CheckManagedHsmNameAvailability");
             scope.Start();
             try
             {
-                var response = ManagedHsmRestClient.CheckManagedHsmNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = ManagedHsmsOperationGroupRestClient.CheckManagedHsmNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

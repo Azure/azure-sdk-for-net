@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.KeyVault
     /// </summary>
     public partial class DeletedKeyVaultCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _deletedKeyVaultVaultsClientDiagnostics;
-        private readonly VaultsRestOperations _deletedKeyVaultVaultsRestClient;
+        private readonly ClientDiagnostics _deletedKeyVaultDeletedVaultsClientDiagnostics;
+        private readonly DeletedVaultsRestOperations _deletedKeyVaultDeletedVaultsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="DeletedKeyVaultCollection"/> class for mocking. </summary>
         protected DeletedKeyVaultCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeletedKeyVaultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deletedKeyVaultVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedKeyVaultResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DeletedKeyVaultResource.ResourceType, out string deletedKeyVaultVaultsApiVersion);
-            _deletedKeyVaultVaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedKeyVaultVaultsApiVersion);
+            _deletedKeyVaultDeletedVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedKeyVaultResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DeletedKeyVaultResource.ResourceType, out string deletedKeyVaultDeletedVaultsApiVersion);
+            _deletedKeyVaultDeletedVaultsRestClient = new DeletedVaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedKeyVaultDeletedVaultsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_GetDeleted</description>
+        /// <description>DeletedVault_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using var scope = _deletedKeyVaultVaultsClientDiagnostics.CreateScope("DeletedKeyVaultCollection.Get");
+            using var scope = _deletedKeyVaultDeletedVaultsClientDiagnostics.CreateScope("DeletedKeyVaultCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deletedKeyVaultVaultsRestClient.GetDeletedAsync(Id.SubscriptionId, location, vaultName, cancellationToken).ConfigureAwait(false);
+                var response = await _deletedKeyVaultDeletedVaultsRestClient.GetDeletedAsync(Id.SubscriptionId, location, vaultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedKeyVaultResource(Client, response.Value), response.GetRawResponse());
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_GetDeleted</description>
+        /// <description>DeletedVault_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using var scope = _deletedKeyVaultVaultsClientDiagnostics.CreateScope("DeletedKeyVaultCollection.Get");
+            using var scope = _deletedKeyVaultDeletedVaultsClientDiagnostics.CreateScope("DeletedKeyVaultCollection.Get");
             scope.Start();
             try
             {
-                var response = _deletedKeyVaultVaultsRestClient.GetDeleted(Id.SubscriptionId, location, vaultName, cancellationToken);
+                var response = _deletedKeyVaultDeletedVaultsRestClient.GetDeleted(Id.SubscriptionId, location, vaultName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedKeyVaultResource(Client, response.Value), response.GetRawResponse());
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_GetDeleted</description>
+        /// <description>DeletedVault_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using var scope = _deletedKeyVaultVaultsClientDiagnostics.CreateScope("DeletedKeyVaultCollection.Exists");
+            using var scope = _deletedKeyVaultDeletedVaultsClientDiagnostics.CreateScope("DeletedKeyVaultCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _deletedKeyVaultVaultsRestClient.GetDeletedAsync(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deletedKeyVaultDeletedVaultsRestClient.GetDeletedAsync(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_GetDeleted</description>
+        /// <description>DeletedVault_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using var scope = _deletedKeyVaultVaultsClientDiagnostics.CreateScope("DeletedKeyVaultCollection.Exists");
+            using var scope = _deletedKeyVaultDeletedVaultsClientDiagnostics.CreateScope("DeletedKeyVaultCollection.Exists");
             scope.Start();
             try
             {
-                var response = _deletedKeyVaultVaultsRestClient.GetDeleted(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken);
+                var response = _deletedKeyVaultDeletedVaultsRestClient.GetDeleted(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_GetDeleted</description>
+        /// <description>DeletedVault_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -259,11 +259,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using var scope = _deletedKeyVaultVaultsClientDiagnostics.CreateScope("DeletedKeyVaultCollection.GetIfExists");
+            using var scope = _deletedKeyVaultDeletedVaultsClientDiagnostics.CreateScope("DeletedKeyVaultCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deletedKeyVaultVaultsRestClient.GetDeletedAsync(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deletedKeyVaultDeletedVaultsRestClient.GetDeletedAsync(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<DeletedKeyVaultResource>(response.GetRawResponse());
                 return Response.FromValue(new DeletedKeyVaultResource(Client, response.Value), response.GetRawResponse());
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_GetDeleted</description>
+        /// <description>DeletedVault_GetDeleted</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted vault. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="vaultName"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -305,11 +305,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using var scope = _deletedKeyVaultVaultsClientDiagnostics.CreateScope("DeletedKeyVaultCollection.GetIfExists");
+            using var scope = _deletedKeyVaultDeletedVaultsClientDiagnostics.CreateScope("DeletedKeyVaultCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deletedKeyVaultVaultsRestClient.GetDeleted(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken);
+                var response = _deletedKeyVaultDeletedVaultsRestClient.GetDeleted(Id.SubscriptionId, location, vaultName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<DeletedKeyVaultResource>(response.GetRawResponse());
                 return Response.FromValue(new DeletedKeyVaultResource(Client, response.Value), response.GetRawResponse());

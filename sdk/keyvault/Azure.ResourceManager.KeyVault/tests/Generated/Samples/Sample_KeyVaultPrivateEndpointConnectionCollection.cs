@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.KeyVault.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.KeyVault.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_KeyVaultPutPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/putPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Put" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/putPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Put" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -44,11 +43,6 @@ namespace Azure.ResourceManager.KeyVault.Samples
             KeyVaultPrivateEndpointConnectionData data = new KeyVaultPrivateEndpointConnectionData
             {
                 ETag = new ETag(""),
-                ConnectionState = new KeyVaultPrivateLinkServiceConnectionState
-                {
-                    Status = KeyVaultPrivateEndpointServiceConnectionStatus.Approved,
-                    Description = "My name is Joe and I'm approving this.",
-                },
             };
             ArmOperation<KeyVaultPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
             KeyVaultPrivateEndpointConnectionResource result = lro.Value;
@@ -64,8 +58,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_KeyVaultGetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/getPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/getPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -98,8 +92,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_KeyVaultListPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/listPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_ListByResource" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/listPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnection_ListByResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -134,8 +128,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_KeyVaultGetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/getPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/getPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -164,8 +158,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_KeyVaultGetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2025-05-01/examples/getPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-01/getPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

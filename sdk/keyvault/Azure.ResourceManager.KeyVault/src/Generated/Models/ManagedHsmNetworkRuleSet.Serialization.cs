@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             ManagedHsmNetworkRuleAction? defaultAction = default;
             IList<ManagedHsmIPRule> ipRules = default;
             IList<ManagedHsmServiceTagRule> serviceTags = default;
-            IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules = default;
+            IList<WritableSubResource> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,10 +175,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    List<ManagedHsmVirtualNetworkRule> array = new List<ManagedHsmVirtualNetworkRule>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmVirtualNetworkRule.DeserializeManagedHsmVirtualNetworkRule(item, options));
+                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerKeyVaultContext.Default));
                     }
                     virtualNetworkRules = array;
                     continue;
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 defaultAction,
                 ipRules ?? new ChangeTrackingList<ManagedHsmIPRule>(),
                 serviceTags ?? new ChangeTrackingList<ManagedHsmServiceTagRule>(),
-                virtualNetworkRules ?? new ChangeTrackingList<ManagedHsmVirtualNetworkRule>(),
+                virtualNetworkRules ?? new ChangeTrackingList<WritableSubResource>(),
                 serializedAdditionalRawData);
         }
 

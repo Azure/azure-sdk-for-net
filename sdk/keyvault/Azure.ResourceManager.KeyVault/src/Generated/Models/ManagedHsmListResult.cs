@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> List of managed HSM Pools. </summary>
+    /// <summary> The response of a ManagedHsm list operation. </summary>
     internal partial class ManagedHsmListResult
     {
         /// <summary>
@@ -46,25 +47,36 @@ namespace Azure.ResourceManager.KeyVault.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmListResult"/>. </summary>
-        internal ManagedHsmListResult()
+        /// <param name="value"> The ManagedHsm items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ManagedHsmListResult(IEnumerable<ManagedHsmData> value)
         {
-            Value = new ChangeTrackingList<ManagedHsmData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmListResult"/>. </summary>
-        /// <param name="value"> The list of managed HSM Pools. </param>
-        /// <param name="nextLink"> The URL to get the next set of managed HSM Pools. </param>
+        /// <param name="value"> The ManagedHsm items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmListResult(IReadOnlyList<ManagedHsmData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedHsmListResult(IReadOnlyList<ManagedHsmData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of managed HSM Pools. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmListResult"/> for deserialization. </summary>
+        internal ManagedHsmListResult()
+        {
+        }
+
+        /// <summary> The ManagedHsm items on this page. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ManagedHsmData> Value { get; }
-        /// <summary> The URL to get the next set of managed HSM Pools. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

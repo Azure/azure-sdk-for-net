@@ -38,8 +38,6 @@ namespace Azure.ResourceManager.KeyVault
 
         private readonly ClientDiagnostics _keyVaultVaultsClientDiagnostics;
         private readonly VaultsRestOperations _keyVaultVaultsRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly KeyVaultData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -67,8 +65,6 @@ namespace Azure.ResourceManager.KeyVault
             _keyVaultVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string keyVaultVaultsApiVersion);
             _keyVaultVaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultVaultsApiVersion);
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -111,7 +107,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -142,7 +138,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -180,7 +176,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Secrets_Get</description>
+        /// <description>Secret_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -211,7 +207,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Secrets_Get</description>
+        /// <description>Secret_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -242,7 +238,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -282,7 +278,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -322,7 +318,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Delete</description>
+        /// <description>Vault_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -366,7 +362,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Delete</description>
+        /// <description>Vault_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -410,7 +406,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Update</description>
+        /// <description>Vault_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -452,7 +448,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Update</description>
+        /// <description>Vault_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -500,6 +496,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Default Api Version</term>
         /// <description>2025-05-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationKind"> Name of the operation. </param>
@@ -539,6 +539,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Default Api Version</term>
         /// <description>2025-05-01</description>
         /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationKind"> Name of the operation. </param>
@@ -572,11 +576,15 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_ListByVault</description>
+        /// <description>Vaults_GetPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -584,8 +592,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of <see cref="KeyVaultPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KeyVaultPrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByVaultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KeyVaultPrivateLinkResourceData.DeserializeKeyVaultPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "KeyVaultResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultVaultsRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KeyVaultPrivateLinkResourceData.DeserializeKeyVaultPrivateLinkResourceData(e), _keyVaultVaultsClientDiagnostics, Pipeline, "KeyVaultResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -597,11 +605,15 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_ListByVault</description>
+        /// <description>Vaults_GetPrivateLinkResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -609,8 +621,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of <see cref="KeyVaultPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KeyVaultPrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByVaultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KeyVaultPrivateLinkResourceData.DeserializeKeyVaultPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "KeyVaultResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultVaultsRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KeyVaultPrivateLinkResourceData.DeserializeKeyVaultPrivateLinkResourceData(e), _keyVaultVaultsClientDiagnostics, Pipeline, "KeyVaultResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -622,7 +634,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -684,7 +696,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -746,7 +758,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -803,7 +815,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -860,7 +872,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -920,7 +932,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Vaults_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

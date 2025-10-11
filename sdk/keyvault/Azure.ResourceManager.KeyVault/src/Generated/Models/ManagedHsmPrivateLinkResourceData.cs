@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class ManagedHsmPrivateLinkResourceData : TrackedResourceData
+    public partial class ManagedHsmPrivateLinkResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateLinkResourceData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public ManagedHsmPrivateLinkResourceData(AzureLocation location) : base(location)
+        internal ManagedHsmPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateLinkResourceData"/>. </summary>
@@ -60,27 +60,24 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="groupId"> Group identifier of private link resource. </param>
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
+        /// <param name="location"> The supported Azure location where the managed HSM Pool should be created. </param>
         /// <param name="sku"> SKU details. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, ManagedHsmSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedHsmPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, AzureLocation? location, ManagedHsmSku sku, IReadOnlyDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
+            Location = location;
             Sku = sku;
+            Tags = tags;
             Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateLinkResourceData"/> for deserialization. </summary>
-        internal ManagedHsmPrivateLinkResourceData()
-        {
         }
 
         /// <summary> Group identifier of private link resource. </summary>
@@ -91,12 +88,18 @@ namespace Azure.ResourceManager.KeyVault.Models
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> Required DNS zone names of the the private link resource. </summary>
         [WirePath("properties.requiredZoneNames")]
-        public IList<string> RequiredZoneNames { get; }
+        public IReadOnlyList<string> RequiredZoneNames { get; }
+        /// <summary> The supported Azure location where the managed HSM Pool should be created. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
         /// <summary> SKU details. </summary>
         [WirePath("sku")]
-        public ManagedHsmSku Sku { get; set; }
+        public ManagedHsmSku Sku { get; }
+        /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
+        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; }
     }
 }
