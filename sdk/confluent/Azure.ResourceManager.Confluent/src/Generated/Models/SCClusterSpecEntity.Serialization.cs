@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WritePropertyName("zone"u8);
                 writer.WriteStringValue(Zone);
             }
+            if (Optional.IsDefined(Package))
+            {
+                writer.WritePropertyName("package"u8);
+                writer.WriteStringValue(Package.Value.ToString());
+            }
             if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
@@ -135,6 +140,7 @@ namespace Azure.ResourceManager.Confluent.Models
             string availability = default;
             string cloud = default;
             string zone = default;
+            Package? package = default;
             string region = default;
             string kafkaBootstrapEndpoint = default;
             string httpEndpoint = default;
@@ -165,6 +171,15 @@ namespace Azure.ResourceManager.Confluent.Models
                 if (property.NameEquals("zone"u8))
                 {
                     zone = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("package"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    package = new Package(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("region"u8))
@@ -234,6 +249,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 availability,
                 cloud,
                 zone,
+                package,
                 region,
                 kafkaBootstrapEndpoint,
                 httpEndpoint,
