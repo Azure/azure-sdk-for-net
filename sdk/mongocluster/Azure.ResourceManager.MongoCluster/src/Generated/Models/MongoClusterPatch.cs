@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -52,16 +53,20 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterPatch"/>. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterPatch(IDictionary<string, string> tags, MongoClusterUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, MongoClusterUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Identity = identity;
             Tags = tags;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>
