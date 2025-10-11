@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Lists all the Files information under a workspace for an Azure subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Lists all the Files information under a workspace for an Azure subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Returns details of a specific file in a work space. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
-        /// <param name="fileName"> File Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
+        /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Returns details of a specific file in a work space. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
-        /// <param name="fileName"> File Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
+        /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -258,8 +258,8 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Creates a new file under a workspace for the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="fileWorkspaceName"> File workspace name. </param>
-        /// <param name="fileName"> File name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
+        /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="data"> Create file object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
@@ -289,8 +289,8 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Creates a new file under a workspace for the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="fileWorkspaceName"> File workspace name. </param>
-        /// <param name="fileName"> File name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
+        /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="data"> Create file object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
@@ -360,8 +360,8 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> This API allows you to upload content to a file. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="fileWorkspaceName"> File WorkspaceName. </param>
-        /// <param name="fileName"> File Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
+        /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="content"> UploadFile object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/>, <paramref name="fileName"/> or <paramref name="content"/> is null. </exception>
@@ -386,8 +386,8 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> This API allows you to upload content to a file. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="fileWorkspaceName"> File WorkspaceName. </param>
-        /// <param name="fileName"> File Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
+        /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="content"> UploadFile object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="fileWorkspaceName"/>, <paramref name="fileName"/> or <paramref name="content"/> is null. </exception>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> Lists all the Files information under a workspace for an Azure subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> Lists all the Files information under a workspace for an Azure subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
