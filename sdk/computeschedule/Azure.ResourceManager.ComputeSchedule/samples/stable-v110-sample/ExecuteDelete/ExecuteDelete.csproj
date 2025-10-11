@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+	  <RootNamespace>ExecuteDelete</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Azure.Identity" Version="1.16.0" />
+		<PackageReference Include="Azure.ResourceManager.ComputeSchedule" Version="1.1.0" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\ComputescheduleCommon\ComputescheduleCommon.csproj" />
+	</ItemGroup>
+</Project>
