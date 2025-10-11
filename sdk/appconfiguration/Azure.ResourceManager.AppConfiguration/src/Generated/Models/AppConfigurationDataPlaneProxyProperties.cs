@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationDataPlaneProxyProperties"/>. </summary>
         /// <param name="authenticationMode"> The data plane proxy authentication mode. This property manages the authentication mode of request to the data plane resources. </param>
-        /// <param name="privateLinkDelegation"> The data plane proxy private link delegation. This property manages if a request from delegated Azure Resource Manager (ARM) private link is allowed when the data plane resource requires private link. </param>
+        /// <param name="privateLinkDelegation"> The data plane proxy private link delegation. This property manages if a request from delegated ARM private link is allowed when the data plane resource requires private link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppConfigurationDataPlaneProxyProperties(DataPlaneProxyAuthenticationMode? authenticationMode, DataPlaneProxyPrivateLinkDelegation? privateLinkDelegation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> The data plane proxy authentication mode. This property manages the authentication mode of request to the data plane resources. </summary>
         [WirePath("authenticationMode")]
         public DataPlaneProxyAuthenticationMode? AuthenticationMode { get; set; }
-        /// <summary> The data plane proxy private link delegation. This property manages if a request from delegated Azure Resource Manager (ARM) private link is allowed when the data plane resource requires private link. </summary>
+        /// <summary> The data plane proxy private link delegation. This property manages if a request from delegated ARM private link is allowed when the data plane resource requires private link. </summary>
         [WirePath("privateLinkDelegation")]
         public DataPlaneProxyPrivateLinkDelegation? PrivateLinkDelegation { get; set; }
     }

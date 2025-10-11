@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ReplicasCreate()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresCreateReplica.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresCreateReplica.json
             // this example is just showing the usage of "Replicas_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ReplicasGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresGetReplica.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresGetReplica.json
             // this example is just showing the usage of "Replicas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ReplicasListByConfigurationStore()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresListReplicas.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresListReplicas.json
             // this example is just showing the usage of "Replicas_ListByConfigurationStore" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ReplicasGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresGetReplica.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresGetReplica.json
             // this example is just showing the usage of "Replicas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ReplicasGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresGetReplica.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresGetReplica.json
             // this example is just showing the usage of "Replicas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The data plane proxy private link delegation. This property manages if a request from delegated Azure Resource Manager (ARM) private link is allowed when the data plane resource requires private link. </summary>
+    /// <summary> The data plane proxy private link delegation. This property manages if a request from delegated ARM private link is allowed when the data plane resource requires private link. </summary>
     public readonly partial struct DataPlaneProxyPrivateLinkDelegation : IEquatable<DataPlaneProxyPrivateLinkDelegation>
     {
         private readonly string _value;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Azure Resource Manager (ARM) private endpoint is required if the resource requires private link. </summary>
+        /// <summary> ARM private endpoint is required if the resource requires private link. </summary>
         public static DataPlaneProxyPrivateLinkDelegation Enabled { get; } = new DataPlaneProxyPrivateLinkDelegation(EnabledValue);
         /// <summary> Request is denied if the resource requires private link. </summary>
         public static DataPlaneProxyPrivateLinkDelegation Disabled { get; } = new DataPlaneProxyPrivateLinkDelegation(DisabledValue);
