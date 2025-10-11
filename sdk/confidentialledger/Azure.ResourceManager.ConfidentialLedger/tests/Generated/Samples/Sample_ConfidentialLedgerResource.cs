@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfidentialLedgerGet()
         {
-            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2024-09-19-preview/examples/ConfidentialLedger_Get.json
+            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2025-06-10-preview/examples/ConfidentialLedger_Get.json
             // this example is just showing the usage of "Ledger_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ConfidentialLedgerDelete()
         {
-            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2024-09-19-preview/examples/ConfidentialLedger_Delete.json
+            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2025-06-10-preview/examples/ConfidentialLedger_Delete.json
             // this example is just showing the usage of "Ledger_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ConfidentialLedgerUpdate()
         {
-            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2024-09-19-preview/examples/ConfidentialLedger_Update.json
+            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2025-06-10-preview/examples/ConfidentialLedger_Update.json
             // this example is just showing the usage of "Ledger_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,6 +109,7 @@ LedgerRoleName = ConfidentialLedgerRoleName.Administrator,
 Cert = "-----BEGIN CERTIFICATE-----\nMIIDUjCCAjqgAwIBAgIQJ2IrDBawSkiAbkBYmiAopDANBgkqhkiG9w0BAQsFADAmMSQwIgYDVQQDExtTeW50aGV0aWNzIExlZGdlciBVc2VyIENlcnQwHhcNMjAwOTIzMjIxODQ2WhcNMjEwOTIzMjIyODQ2WjAmMSQwIgYDVQQDExtTeW50aGV0aWNzIExlZGdlciBVc2VyIENlcnQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCX2s/Eu4q/eQ63N+Ugeg5oAciZua/YCJr41c/696szvSY7Zg1SNJlW88/nbz70+QpO55OmqlEE3QCU+T0Vl/h0Gf//n1PYcoBbTGUnYEmV+fTTHict6rFiEwrGJ62tvcpYgwapInSLyEeUzjki0zhOLJ1OfRnYd1eGnFVMpE5aVjiS8Q5dmTEUyd51EIprGE8RYAW9aeWSwTH7gjHUsRlJnHKcdhaK/v5QKJnNu5bzPFUcpC0ZBcizoMPAtroLAD4B68Jl0z3op18MgZe6lRrVoWuxfqnk5GojuB/Vu8ohAZKoFhQ6NB6r+LL2AUs+Zr7Bt26IkEdR178n9JMEA4gHAgMBAAGjfDB6MA4GA1UdDwEB/wQEAwIFoDAJBgNVHRMEAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAfBgNVHSMEGDAWgBS/a7PU9iOfOKEyZCp11Oen5VSuuDAdBgNVHQ4EFgQUv2uz1PYjnzihMmQqddTnp+VUrrgwDQYJKoZIhvcNAQELBQADggEBAF5q2fDwnse8egXhfaJCqqM969E9gSacqFmASpoDJPRPEX7gqoO7v1ww7nqRtRDoRiBvo/yNk7jlSAkRN3nRRnZLZZ3MYQdmCr4FGyIqRg4Y94+nja+Du9pDD761rxRktMVPSOaAVM/E5DQvscDlPvlPYe9mkcrLCE4DXYpiMmLT8Tm55LJJq5m07dVDgzAIR1L/hmEcbK0pnLgzciMtMLxGO2udnyyW/UW9WxnjvrrD2JluTHH9mVbb+XQP1oFtlRBfH7aui1ZgWfKvxrdP4zdK9QoWSUvRux3TLsGmHRBjBMtqYDY3y5mB+aNjLelvWpeVb0m2aOSVXynrLwNCAVA=\n-----END CERTIFICATE-----",
 LedgerRoleName = ConfidentialLedgerRoleName.Reader,
 }},
+                    ScittConfiguration = "{\r\n        \"configuration\": {\r\n          \"policy\": {\r\n            \"policyScript\": \"export function apply(phdr) { if (!phdr.issuer) {return 'Issuer not found'} else if (phdr.issuer !== 'did:x509:0:sha256:HnwZ4lezuxq/GVcl/Sk7YWW170qAD0DZBLXilXet0jg=::eku:1.3.6.1.4.1.311.10.3.13') { return 'Invalid issuer'; } return true; }\"\r\n          },\r\n          \"authentication\": {\r\n            \"allowUnauthenticated\": false,\r\n            \"jwt\": {\r\n              \"requiredClaims\": {\r\n                \"aud\": \"scitt\",\r\n                \"iss\": \"https://authserver.com/\",\r\n                \"http://unique.claim/department_id\": \"654987\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      }",
                 },
                 Tags =
 {
@@ -130,7 +131,7 @@ LedgerRoleName = ConfidentialLedgerRoleName.Reader,
         [Ignore("Only validating compilation of examples")]
         public async Task Backup_ConfidentialLedgerBackup()
         {
-            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2024-09-19-preview/examples/ConfidentialLedger_Backup.json
+            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2025-06-10-preview/examples/ConfidentialLedger_Backup.json
             // this example is just showing the usage of "Ledger_Backup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,7 +162,7 @@ LedgerRoleName = ConfidentialLedgerRoleName.Reader,
         [Ignore("Only validating compilation of examples")]
         public async Task Restore_ConfidentialLedgerRestore()
         {
-            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2024-09-19-preview/examples/ConfidentialLedger_Restore.json
+            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2025-06-10-preview/examples/ConfidentialLedger_Restore.json
             // this example is just showing the usage of "Ledger_Restore" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
