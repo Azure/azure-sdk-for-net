@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct HybridMachineAgentInstallationStatusType : IEquatable<HybridMachineAgentInstallationStatusType>
     {
         private readonly string _value;
+        /// <summary> Installation succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Installation in progress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Installation failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="HybridMachineAgentInstallationStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridMachineAgentInstallationStatusType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string InProgressValue = "InProgress";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Installation succeeded. </summary>
         public static HybridMachineAgentInstallationStatusType Succeeded { get; } = new HybridMachineAgentInstallationStatusType(SucceededValue);
+
         /// <summary> Installation in progress. </summary>
         public static HybridMachineAgentInstallationStatusType InProgress { get; } = new HybridMachineAgentInstallationStatusType(InProgressValue);
+
         /// <summary> Installation failed. </summary>
         public static HybridMachineAgentInstallationStatusType Failed { get; } = new HybridMachineAgentInstallationStatusType(FailedValue);
+
         /// <summary> Determines if two <see cref="HybridMachineAgentInstallationStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridMachineAgentInstallationStatusType left, HybridMachineAgentInstallationStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridMachineAgentInstallationStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridMachineAgentInstallationStatusType left, HybridMachineAgentInstallationStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridMachineAgentInstallationStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridMachineAgentInstallationStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridMachineAgentInstallationStatusType(string value) => new HybridMachineAgentInstallationStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridMachineAgentInstallationStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridMachineAgentInstallationStatusType?(string value) => value == null ? null : new HybridMachineAgentInstallationStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridMachineAgentInstallationStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridMachineAgentInstallationStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
+    /// <summary></summary>
     public partial class HciVmLogicalNetworkResource : IJsonModel<HciVmLogicalNetworkData>
     {
-        private static HciVmLogicalNetworkData s_dataDeserializationInstance;
-        private static HciVmLogicalNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HciVmLogicalNetworkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HciVmLogicalNetworkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HciVmLogicalNetworkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmLogicalNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciVmLogicalNetworkData>)Data).Write(writer, options);
 
-        HciVmLogicalNetworkData IJsonModel<HciVmLogicalNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciVmLogicalNetworkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmLogicalNetworkData IJsonModel<HciVmLogicalNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HciVmLogicalNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciVmLogicalNetworkData>(Data, options, AzureResourceManagerHciVmContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HciVmLogicalNetworkData IPersistableModel<HciVmLogicalNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciVmLogicalNetworkData>(data, options, AzureResourceManagerHciVmContext.Default);
 
-        string IPersistableModel<HciVmLogicalNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciVmLogicalNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciVmLogicalNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

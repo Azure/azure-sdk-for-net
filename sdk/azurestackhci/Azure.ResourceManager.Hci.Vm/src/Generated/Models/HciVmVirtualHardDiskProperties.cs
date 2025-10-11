@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> Properties under the virtual hard disk resource. </summary>
     public partial class HciVmVirtualHardDiskProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmVirtualHardDiskProperties"/>. </summary>
         public HciVmVirtualHardDiskProperties()
@@ -65,12 +36,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="containerId"> Storage ContainerID of the storage container to be used for VHD. </param>
         /// <param name="status"> The observed state of virtual hard disks. </param>
         /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmVirtualHardDiskProperties(int? blockSizeInBytes, long? diskSizeInGB, bool? @dynamic, int? logicalSectorInBytes, int? physicalSectorInBytes, Uri downloadUri, HciVmHyperVGeneration? hyperVGeneration, HciVmDiskFileFormat? diskFileFormat, bool? isCreatingFromLocal, HciVmProvisioningState? provisioningState, ResourceIdentifier containerId, HciVmVirtualHardDiskStatus status, long? maxShares, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmVirtualHardDiskProperties(int? blockSizeInBytes, long? diskSizeInGB, bool? dynamic, int? logicalSectorInBytes, int? physicalSectorInBytes, Uri downloadUri, HciVmHyperVGeneration? hyperVGeneration, HciVmDiskFileFormat? diskFileFormat, bool? isCreatingFromLocal, HciVmProvisioningState? provisioningState, ResourceIdentifier containerId, HciVmVirtualHardDiskStatus status, long? maxShares, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlockSizeInBytes = blockSizeInBytes;
             DiskSizeInGB = diskSizeInGB;
-            Dynamic = @dynamic;
+            Dynamic = dynamic;
             LogicalSectorInBytes = logicalSectorInBytes;
             PhysicalSectorInBytes = physicalSectorInBytes;
             DownloadUri = downloadUri;
@@ -81,33 +52,45 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             ContainerId = containerId;
             Status = status;
             MaxShares = maxShares;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Block size in bytes. </summary>
         public int? BlockSizeInBytes { get; set; }
+
         /// <summary> Size of the disk in GB. </summary>
         public long? DiskSizeInGB { get; set; }
+
         /// <summary> Boolean for enabling dynamic sizing on the virtual hard disk. </summary>
         public bool? Dynamic { get; set; }
+
         /// <summary> Logical sector in bytes. </summary>
         public int? LogicalSectorInBytes { get; set; }
+
         /// <summary> Physical sector in bytes. </summary>
         public int? PhysicalSectorInBytes { get; set; }
+
         /// <summary> URL for downloading or accessing the virtual hard disk. This URL points to a secure link from where the VHD can be downloaded or accessed directly. </summary>
         public Uri DownloadUri { get; set; }
+
         /// <summary> The hypervisor generation of the Virtual Machine [V1, V2]. </summary>
         public HciVmHyperVGeneration? HyperVGeneration { get; set; }
+
         /// <summary> The format of the actual VHD file [vhd, vhdx]. </summary>
         public HciVmDiskFileFormat? DiskFileFormat { get; set; }
+
         /// <summary> Boolean indicating whether it is an existing local hard disk or if one should be created. </summary>
         public bool? IsCreatingFromLocal { get; set; }
+
         /// <summary> Provisioning state of the virtual hard disk. </summary>
         public HciVmProvisioningState? ProvisioningState { get; }
+
         /// <summary> Storage ContainerID of the storage container to be used for VHD. </summary>
         public ResourceIdentifier ContainerId { get; set; }
+
         /// <summary> The observed state of virtual hard disks. </summary>
         public HciVmVirtualHardDiskStatus Status { get; }
+
         /// <summary> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </summary>
         public long? MaxShares { get; set; }
     }
