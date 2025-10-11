@@ -12,53 +12,51 @@ using Azure.Core;
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary> Deployment along with OS Configuration. </summary>
-    public partial class DeploymentWithOSConfiguration : SapConfiguration
+    internal partial class DeploymentWithOSConfiguration : SapConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="DeploymentWithOSConfiguration"/>. </summary>
-        public DeploymentWithOSConfiguration()
+        public DeploymentWithOSConfiguration() : base(SapConfigurationType.DeploymentWithOSConfig)
         {
-            ConfigurationType = SapConfigurationType.DeploymentWithOSConfig;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentWithOSConfiguration"/>. </summary>
         /// <param name="configurationType"> The configuration type. Eg: Deployment/Discovery. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="appLocation"> The geo-location where the SAP system is to be created. </param>
-        /// <param name="infrastructureConfiguration">
-        /// The infrastructure configuration.
-        /// Please note <see cref="Models.InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
-        /// </param>
-        /// <param name="softwareConfiguration">
-        /// The software configuration.
-        /// Please note <see cref="SapSoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExternalInstallationSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
-        /// </param>
+        /// <param name="infrastructureConfiguration"> The infrastructure configuration. </param>
+        /// <param name="softwareConfiguration"> The software configuration. </param>
         /// <param name="osSapConfiguration"> The OS and SAP configuration. </param>
-        internal DeploymentWithOSConfiguration(SapConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureLocation? appLocation, InfrastructureConfiguration infrastructureConfiguration, SapSoftwareConfiguration softwareConfiguration, OSSapConfiguration osSapConfiguration) : base(configurationType, serializedAdditionalRawData)
+        internal DeploymentWithOSConfiguration(SapConfigurationType configurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? appLocation, InfrastructureConfiguration infrastructureConfiguration, SapSoftwareConfiguration softwareConfiguration, OsSapConfiguration osSapConfiguration) : base(configurationType, additionalBinaryDataProperties)
         {
             AppLocation = appLocation;
             InfrastructureConfiguration = infrastructureConfiguration;
             SoftwareConfiguration = softwareConfiguration;
-            OSSapConfiguration = osSapConfiguration;
-            ConfigurationType = configurationType;
+            OsSapConfiguration = osSapConfiguration;
         }
 
         /// <summary> The geo-location where the SAP system is to be created. </summary>
         public AzureLocation? AppLocation { get; set; }
-        /// <summary>
-        /// The infrastructure configuration.
-        /// Please note <see cref="Models.InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
-        /// </summary>
+
+        /// <summary> The infrastructure configuration. </summary>
         public InfrastructureConfiguration InfrastructureConfiguration { get; set; }
-        /// <summary>
-        /// The software configuration.
-        /// Please note <see cref="SapSoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExternalInstallationSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
-        /// </summary>
-        public SapSoftwareConfiguration SoftwareConfiguration { get; set; }
+
+        /// <summary> The software configuration. </summary>
+        internal SapSoftwareConfiguration SoftwareConfiguration { get; set; }
+
         /// <summary> The OS and SAP configuration. </summary>
-        public OSSapConfiguration OSSapConfiguration { get; set; }
+        public OsSapConfiguration OsSapConfiguration { get; set; }
+
+        /// <summary> The SAP software installation type. </summary>
+        internal SapSoftwareInstallationType? SoftwareInstallationType
+        {
+            get
+            {
+                return SoftwareConfiguration is null ? default : SoftwareConfiguration.SoftwareInstallationType;
+            }
+            set
+            {
+                SoftwareConfiguration = value.HasValue ? new Models.SapSoftwareConfiguration(value.Value) : default;
+            }
+        }
     }
 }
