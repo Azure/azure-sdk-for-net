@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Nginx
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Location);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Nginx
                 return null;
             }
             NginxCertificateProperties properties = default;
-            AzureLocation? location = default;
+            string location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -91,11 +91,7 @@ namespace Azure.ResourceManager.Nginx
                 }
                 if (property.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))

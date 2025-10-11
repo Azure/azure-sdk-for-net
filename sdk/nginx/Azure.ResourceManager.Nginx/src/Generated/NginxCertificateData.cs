@@ -13,7 +13,10 @@ using Azure.ResourceManager.Nginx.Models;
 
 namespace Azure.ResourceManager.Nginx
 {
-    /// <summary> A class representing the NginxCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the NginxCertificate data model.
+    /// Nginx Certificate
+    /// </summary>
     public partial class NginxCertificateData : ResourceData
     {
         /// <summary>
@@ -58,19 +61,19 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"></param>
-        /// <param name="location"></param>
+        /// <param name="properties"> Nginx Certificate Properties. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxCertificateProperties properties, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NginxCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxCertificateProperties properties, string location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Nginx Certificate Properties. </summary>
         public NginxCertificateProperties Properties { get; set; }
-        /// <summary> Gets or sets the location. </summary>
-        public AzureLocation? Location { get; set; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public string Location { get; set; }
     }
 }
