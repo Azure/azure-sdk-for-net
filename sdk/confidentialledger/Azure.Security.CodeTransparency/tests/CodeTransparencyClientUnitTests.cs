@@ -75,6 +75,22 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
+        public void CodeTransparencyClient_constructor_throws_if_invalid_file()
+        {
+            byte[] transparentStatementCoseSign1Bytes = new byte[] { 0x01, 0x02, 0x03 /* invalid bytes */ };
+
+            Assert.Throws<CryptographicException>(() => new CodeTransparencyClient(transparentStatementCoseSign1Bytes));
+        }
+
+        [Test]
+        public void CodeTransparencyClient_constructor_uses_valid_cose_file()
+        {
+            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
+
+            Assert.DoesNotThrow(() => new CodeTransparencyClient(transparentStatementBytes));
+        }
+
+        [Test]
         public async Task CreateEntryAsync_sendsBytes_receives_bytes()
         {
             // Create a CBOR writer
@@ -432,6 +448,33 @@ namespace Azure.Security.CodeTransparency.Tests
 
             byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
 
+            client.RunTransparentStatementVerification(transparentStatementBytes);
+#endif
+        }
+
+        [Test]
+        public void RunTransparentStatementVerification_FileBasedConstructor_success()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            var content = new MockResponse(200);
+            content.SetContent("{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}");
+
+            var mockTransport = new MockTransport(content);
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = mockTransport,
+                IdentityClientEndpoint = "https://foo.bar.com"
+            };
+            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+            var client = new CodeTransparencyClient(transparentStatementBytes, options);
             client.RunTransparentStatementVerification(transparentStatementBytes);
 #endif
         }

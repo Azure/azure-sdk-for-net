@@ -1,5 +1,17 @@
 # Release History
 
+## 1.0.0-beta.5 (2025-10-07)
+
+### Features Added
+
+- New constructor allows extracting the endpoint from the receipt in the transparent statement when the verifier does not know it
+- Exposed `CborUtils` to extract values from CBOR maps, which would otherwise require working directly with a CBOR library
+
+### Other Changes
+
+- Updated samples
+- Fixed grammar in README files
+
 ## 1.0.0-beta.4 (2025-05-06)
 
 ### Other Changes
