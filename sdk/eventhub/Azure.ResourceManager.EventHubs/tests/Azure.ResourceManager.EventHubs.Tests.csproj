@@ -17,4 +17,7 @@
     <EmbeddedResource Remove="Helpers\**" />
     <None Remove="Helpers\**" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Generated\Samples\" />
+  </ItemGroup>
 </Project>

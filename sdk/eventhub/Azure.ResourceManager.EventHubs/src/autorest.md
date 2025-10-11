@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.EventHubs
 output-folder: $(this-folder)/Generated
-require: https://github.com/Azure/azure-rest-api-specs/blob/412364b282e52b50eadc3cd88d56d283b6c8712a/specification/eventhub/resource-manager/readme.md
-tag: package-2024-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/b32730c1bbd6b12278ab390ecd70d1599580fcfc/specification/eventhub/resource-manager/readme.md
+tag: package-2025-05-preview
 clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../tests/Generated
@@ -33,6 +33,9 @@ request-path-to-resource-name:
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckEventHubsNamespaceNameAvailability
     DisasterRecoveryConfigs_CheckNameAvailability: CheckEventHubsDisasterRecoveryNameAvailability
+
+request-path-is-non-resource:
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -99,7 +102,6 @@ prepend-rp-prefix:
 rename-mapping:
   SchemaType: EventHubsSchemaType
   SchemaCompatibility: EventHubsSchemaCompatibility
-  KeySource: EventHubsKeySource
   Cluster.properties.createdAt: CreatedOn | datetime
   Cluster.properties.updatedAt: UpdatedOn | datetime
   EHNamespace: EventHubsNamespace
@@ -135,20 +137,38 @@ rename-mapping:
   GeoDataReplicationProperties: NamespaceGeoDataReplicationProperties
   GeoDRRoleType: NamespaceGeoDRRoleType
   NamespaceReplicaLocation.clusterArmId: -|arm-id
+  Mode: EventHubsConfidentialComputeMode
+  TimestampType: EventHubsTimestampType
 
 directive:
-    - from: eventhubs.json
-      where: $.definitions
-      transform: >
-        delete $.Eventhub.properties.properties.properties.messageRetentionInDays;
-    - from: SchemaRegistry.json
-      where: $.definitions
-      transform: >
-        delete $.SchemaGroup.properties.properties.properties.eTag['format'];
-    # solve dup ErrorResponse error
-    - from: namespaces-preview.json
-      where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/failover'].post
-      transform: >
-        $.responses.default['schema']['$ref'] = '../../../common/v2/definitions.json#/definitions/ErrorResponse';
-```
+  - from: eventhubs.json
+    where: $.definitions
+    transform: >
+      delete $.Eventhub.properties.properties.properties.messageRetentionInDays;
+  - from: SchemaRegistry.json
+    where: $.definitions
+    transform: >
+      delete $.SchemaGroup.properties.properties.properties.eTag['format'];
+  # solve dup ErrorResponse error
+  - from: namespaces-preview.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/failover'].post
+    transform: >
+      $.responses.default['schema']['$ref'] = '../../../common/v2/definitions.json#/definitions/ErrorResponse';
+  # remove messageRetentionInDays and eTag format
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      delete $.EventhubProperties.properties.messageRetentionInDays;
+      delete $.SchemaGroupProperties.properties.eTag['format'];
+  # rename keySource enum name to EventHubsKeySource
+  - from: openapi.json
+    where: $.definitions.Encryption.properties.keySource
+    transform: >
+      $['x-ms-enum']['name'] = 'EventHubsKeySource';
+  # set provisioningIssues readOnly to false
+  - from: openapi.json
+    where: $.definitions.NetworkSecurityPerimeterConfigurationProperties.properties.provisioningIssues
+    transform: >
+      $.readOnly = false;
 
+```

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApplicationGroupCreate()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/ApplicationGroup/ApplicationGroupCreate.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/ApplicationGroup/ApplicationGroupCreate.json
             // this example is just showing the usage of "ApplicationGroup_CreateOrUpdateApplicationGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ApplicationGroupGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/ApplicationGroup/ApplicationGroupGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/ApplicationGroup/ApplicationGroupGet.json
             // this example is just showing the usage of "ApplicationGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListApplicationGroups()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/ApplicationGroup/ApplicationGroupListByNamespace.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/ApplicationGroup/ApplicationGroupListByNamespace.json
             // this example is just showing the usage of "ApplicationGroup_ListByNamespace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApplicationGroupGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/ApplicationGroup/ApplicationGroupGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/ApplicationGroup/ApplicationGroupGet.json
             // this example is just showing the usage of "ApplicationGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApplicationGroupGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/ApplicationGroup/ApplicationGroupGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/ApplicationGroup/ApplicationGroupGet.json
             // this example is just showing the usage of "ApplicationGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
