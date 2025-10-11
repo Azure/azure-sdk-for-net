@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Relay.Models
 {
-    /// <summary> The response of the list hybrid connection operation. </summary>
+    /// <summary> The response of a HybridConnection list operation. </summary>
     internal partial class HybridConnectionListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Relay.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HybridConnectionListResult"/>. </summary>
-        internal HybridConnectionListResult()
+        /// <param name="value"> The HybridConnection items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal HybridConnectionListResult(IEnumerable<RelayHybridConnectionData> value)
         {
-            Value = new ChangeTrackingList<RelayHybridConnectionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridConnectionListResult"/>. </summary>
-        /// <param name="value"> Result of the list hybrid connections. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if value contains incomplete list hybrid connection operation. </param>
+        /// <param name="value"> The HybridConnection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectionListResult(IReadOnlyList<RelayHybridConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridConnectionListResult(IReadOnlyList<RelayHybridConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of the list hybrid connections. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionListResult"/> for deserialization. </summary>
+        internal HybridConnectionListResult()
+        {
+        }
+
+        /// <summary> The HybridConnection items on this page. </summary>
         public IReadOnlyList<RelayHybridConnectionData> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if value contains incomplete list hybrid connection operation. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
