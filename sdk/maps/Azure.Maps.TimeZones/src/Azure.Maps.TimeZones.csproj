@@ -12,6 +12,7 @@
       AZC0012;
       AZC0035; <!-- Missing model factory methods.  #51229-->
     </NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.DataProtectionBackup</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DataProtectionBackup.</Description>
     <PackageTags>azure;management;arm;resource manager;dataprotectionbackup</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

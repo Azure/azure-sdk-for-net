@@ -8,5 +8,6 @@
     <PackageTags>azure;management;compute</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <NoWarn>$(NoWarn);CS1591;</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

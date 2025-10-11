@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.WebPubSub</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.SignalRService.</Description>
     <PackageTags>azure;management;webpubsub</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

@@ -5,5 +5,6 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Blueprint.</Description>
     <PackageTags>azure;management;arm;resource manager;blueprint</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

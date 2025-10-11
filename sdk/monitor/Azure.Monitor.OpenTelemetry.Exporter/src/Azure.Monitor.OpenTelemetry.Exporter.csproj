@@ -9,6 +9,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <DefineConstants>$(DefineConstants);AZURE_MONITOR_EXPORTER;</DefineConstants>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

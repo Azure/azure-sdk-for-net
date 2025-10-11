@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Blobs.Batch client library</AssemblyTitle>
@@ -19,6 +20,7 @@
     </Description>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -27,6 +29,7 @@
       AZC0034; <!-- Type name conflict; irrelevant here due to prior approval -->
       AZC0035; <!-- Missing model factory methods.  #51227-->
     </NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,6 +5,7 @@
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <NoWarn>$(NoWarn);AZC0035</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <!-- Nuget properties -->
@@ -13,6 +14,7 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <Description>SDK for the Azure IoT Hub service</Description>
     <Version>1.0.0-preview.1</Version>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

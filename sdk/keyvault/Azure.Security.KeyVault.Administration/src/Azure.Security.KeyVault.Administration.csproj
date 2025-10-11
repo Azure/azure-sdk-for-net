@@ -11,7 +11,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021;CA1812</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <IncludeAutorestDependency>false</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

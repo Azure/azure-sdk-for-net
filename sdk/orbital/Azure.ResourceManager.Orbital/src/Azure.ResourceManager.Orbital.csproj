@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Orbital</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Orbital.</Description>
     <PackageTags>azure;management;arm;resource manager;orbital</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

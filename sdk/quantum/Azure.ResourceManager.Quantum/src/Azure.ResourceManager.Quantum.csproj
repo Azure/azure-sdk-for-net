@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.Quantum</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Quantum.</Description>
     <PackageTags>azure;management;arm;resource manager;quantum</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>
