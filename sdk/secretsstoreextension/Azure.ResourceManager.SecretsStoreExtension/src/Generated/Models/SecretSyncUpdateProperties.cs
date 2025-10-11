@@ -54,15 +54,13 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <summary> Initializes a new instance of <see cref="SecretSyncUpdateProperties"/>. </summary>
         /// <param name="secretProviderClassName"> SecretProviderClassName specifies the name of the SecretProviderClass resource, which contains the information needed to access the cloud provider secret store. </param>
         /// <param name="serviceAccountName"> ServiceAccountName specifies the name of the service account used to access the cloud provider secret store. The audience field in the service account token must be passed as parameter in the controller configuration. The audience is used when requesting a token from the API server for the service account; the supported audiences are defined by each provider. </param>
-        /// <param name="kubernetesSecretType"> Type specifies the type of the Kubernetes secret object, e.g. "Opaque" or"kubernetes.io/tls". The controller must have permission to create secrets of the specified type. </param>
         /// <param name="forceSynchronization"> ForceSynchronization can be used to force the secret synchronization. The secret synchronization is triggered by changing the value in this field. This field is not used to resolve synchronization conflicts. </param>
         /// <param name="objectSecretMapping"> An array of SecretObjectData that maps secret data from the external secret provider to the Kubernetes secret. Each entry specifies the source secret in the external provider and the corresponding key in the Kubernetes secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecretSyncUpdateProperties(string secretProviderClassName, string serviceAccountName, KubernetesSecretType? kubernetesSecretType, string forceSynchronization, IList<KubernetesSecretObjectMapping> objectSecretMapping, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecretSyncUpdateProperties(string secretProviderClassName, string serviceAccountName, string forceSynchronization, IList<KubernetesSecretObjectMapping> objectSecretMapping, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecretProviderClassName = secretProviderClassName;
             ServiceAccountName = serviceAccountName;
-            KubernetesSecretType = kubernetesSecretType;
             ForceSynchronization = forceSynchronization;
             ObjectSecretMapping = objectSecretMapping;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -72,8 +70,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public string SecretProviderClassName { get; set; }
         /// <summary> ServiceAccountName specifies the name of the service account used to access the cloud provider secret store. The audience field in the service account token must be passed as parameter in the controller configuration. The audience is used when requesting a token from the API server for the service account; the supported audiences are defined by each provider. </summary>
         public string ServiceAccountName { get; set; }
-        /// <summary> Type specifies the type of the Kubernetes secret object, e.g. "Opaque" or"kubernetes.io/tls". The controller must have permission to create secrets of the specified type. </summary>
-        public KubernetesSecretType? KubernetesSecretType { get; set; }
         /// <summary> ForceSynchronization can be used to force the secret synchronization. The secret synchronization is triggered by changing the value in this field. This field is not used to resolve synchronization conflicts. </summary>
         public string ForceSynchronization { get; set; }
         /// <summary> An array of SecretObjectData that maps secret data from the external secret provider to the Kubernetes secret. Each entry specifies the source secret in the external provider and the corresponding key in the Kubernetes secret. </summary>

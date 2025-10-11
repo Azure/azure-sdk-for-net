@@ -59,13 +59,13 @@ namespace Azure.AI.Agents.Persistent
             _forAllToolsApproval = trust;
         }
         /// <summary>
-        /// Return true if we do not trust all tool and always need to ask for approval before sending data to server.
+        /// Return true if we do not trust all tools and always need to ask for approval before sending data to server.
         /// </summary>
-        public bool AlwaysApprove{get => string.Equals(_forAllToolsApproval, ALWAYS);}
+        public bool AlwaysRequireApproval{get => string.Equals(_forAllToolsApproval, ALWAYS);}
         /// <summary>
-        /// Return true if we trust all tools and do not need to ask for approval before before sending data to server.
+        /// Return true if we trust all tools and do not need to ask for approval before sending data to server.
         /// </summary>
-        public bool NeverApprove { get => string.Equals(_forAllToolsApproval, NEVER); }
+        public bool NeverRequireApproval { get => string.Equals(_forAllToolsApproval, NEVER); }
 
         /// <summary>
         /// Return the object, describing, which tools always require approval and which do not need it.
@@ -74,7 +74,7 @@ namespace Azure.AI.Agents.Persistent
 
         internal BinaryData ToBinaryData()
         {
-            if (AlwaysApprove || NeverApprove)
+            if (AlwaysRequireApproval || NeverRequireApproval)
             {
                 return BinaryData.FromString(
                     JsonSerializer.Serialize(
