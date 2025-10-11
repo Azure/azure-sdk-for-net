@@ -106,12 +106,14 @@ namespace Azure.Storage
         /// <param name="authentication">Optional authentication policy.</param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
         /// <param name="expectContinue">Options for selecting expect continue policy.</param>
+        /// <param name="dontIncludeStorageRequestValidationPipelinePolicy">Option to prevent StorageRequestValidationPipelinePolicy being included in the pipeline.</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         public static HttpPipeline Build(
             this ClientOptions options,
             HttpPipelinePolicy authentication = null,
             Uri geoRedundantSecondaryStorageUri = null,
-            Request100ContinueOptions expectContinue = null)
+            Request100ContinueOptions expectContinue = null,
+            bool dontIncludeStorageRequestValidationPipelinePolicy = false)
         {
             StorageResponseClassifier classifier = new();
             var pipelineOptions = new HttpPipelineOptions(options)
@@ -156,7 +158,8 @@ namespace Azure.Storage
                 pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy() { ThrottleInterval = TimeSpan.FromMinutes(1) });
             }
 
-            pipelineOptions.PerRetryPolicies.Add(new StorageRequestValidationPipelinePolicy());
+            if (!dontIncludeStorageRequestValidationPipelinePolicy)
+                pipelineOptions.PerRetryPolicies.Add(new StorageRequestValidationPipelinePolicy());
             pipelineOptions.PerRetryPolicies.Add(authentication); // authentication needs to be the last of the perRetry client policies passed in to Build
 
             return HttpPipelineBuilder.Build(pipelineOptions);
@@ -169,12 +172,14 @@ namespace Azure.Storage
         /// <param name="credentials">Optional authentication credentials.</param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
         /// <param name="expectContinue">Options for selecting expect continue policy.</param>
+        /// <param name="dontIncludeStorageRequestValidationPipelinePolicy">Option to prevent StorageRequestValidationPipelinePolicy being included in the pipeline.</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         public static HttpPipeline Build(
             this ClientOptions options,
             object credentials,
             Uri geoRedundantSecondaryStorageUri = null,
-            Request100ContinueOptions expectContinue = null) =>
-            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri, expectContinue);
+            Request100ContinueOptions expectContinue = null,
+            bool dontIncludeStorageRequestValidationPipelinePolicy = false) =>
+            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri, expectContinue, dontIncludeStorageRequestValidationPipelinePolicy);
     }
 }
