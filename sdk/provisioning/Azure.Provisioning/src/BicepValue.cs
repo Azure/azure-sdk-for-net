@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Utilities;
 
 namespace Azure.Provisioning;
 
