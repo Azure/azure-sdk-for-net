@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    /// <summary> Microsoft.Elastic SKU. </summary>
+    /// <summary> Represents the SKU of a resource. </summary>
     internal partial class ElasticSku
     {
         /// <summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Elastic.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ElasticSku"/>. </summary>
-        /// <param name="name"> Name of the SKU. </param>
+        /// <param name="name"> The name of the SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ElasticSku(string name)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSku"/>. </summary>
-        /// <param name="name"> Name of the SKU. </param>
+        /// <param name="name"> The name of the SKU. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ElasticSku(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Elastic.Models
         {
         }
 
-        /// <summary> Name of the SKU. </summary>
+        /// <summary> The name of the SKU. </summary>
         public string Name { get; set; }
     }
 }

@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Upgraded api-version tag to 'package-2025-06-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/483240cc04b836dc5dd66b58ea3e4b848a13f731/specification/elastic/resource-manager/readme.md.
+
 ## 1.0.0 (2024-12-26)
 
 This package is the first stable release of the Azure Elastic management library.
