@@ -72,10 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="bmcMacAddress"> The MAC address of the BMC for this machine. </param>
         /// <param name="bootMacAddress"> The MAC address associated with the PXE NIC card. </param>
         /// <param name="machineDetails"> The free-form additional information about the machine, e.g. an asset tag. </param>
-        /// <param name="machineName">
-        /// The user-provided name for the bare metal machine created from this specification.
-        /// If not provided, the machine name will be generated programmatically.
-        /// </param>
+        /// <param name="machineName"> The user-provided name for the bare metal machine created from this specification. If not provided, the machine name will be generated programmatically. </param>
         /// <param name="rackSlot"> The slot the physical machine is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number of the machine. Hardware suppliers may use an alternate value. For example, service tag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -107,10 +104,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string BootMacAddress { get; set; }
         /// <summary> The free-form additional information about the machine, e.g. an asset tag. </summary>
         public string MachineDetails { get; set; }
-        /// <summary>
-        /// The user-provided name for the bare metal machine created from this specification.
-        /// If not provided, the machine name will be generated programmatically.
-        /// </summary>
+        /// <summary> The user-provided name for the bare metal machine created from this specification. If not provided, the machine name will be generated programmatically. </summary>
         public string MachineName { get; set; }
         /// <summary> The slot the physical machine is in the rack based on the BOM configuration. </summary>
         public long RackSlot { get; set; }
