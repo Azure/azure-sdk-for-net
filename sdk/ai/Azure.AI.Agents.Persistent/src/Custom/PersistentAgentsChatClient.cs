@@ -301,7 +301,7 @@ namespace Azure.AI.Agents.Persistent
 
                 if (options.Tools is { Count: > 0 } tools)
                 {
-                    List<ToolDefinition> toolDefinitions = [];
+                    HashSet<ToolDefinition> toolDefinitions = new(ToolDefinitionNameEqualityComparer.Instance);
                     ToolResources? toolResources = null;
 
                     // If the caller has provided any tool overrides, we'll assume they don't want to use the agent's tools.
@@ -310,13 +310,13 @@ namespace Azure.AI.Agents.Persistent
                     // along with our tools.
                     if (runOptions.OverrideTools is null || !runOptions.OverrideTools.Any())
                     {
-                        toolDefinitions.AddRange(_agent.Tools);
+                        toolDefinitions.UnionWith(_agent.Tools);
                     }
 
                     // The caller can provide tools in the supplied ThreadAndRunOptions.
                     if (runOptions.OverrideTools is not null)
                     {
-                        toolDefinitions.AddRange(runOptions.OverrideTools);
+                        toolDefinitions.UnionWith(runOptions.OverrideTools);
                     }
 
                     // Now add the tools from ChatOptions.Tools.
@@ -585,5 +585,23 @@ namespace Azure.AI.Agents.Persistent
         [JsonSerializable(typeof(string[]))]
         [JsonSerializable(typeof(IDictionary<string, object>))]
         private sealed partial class AgentsChatClientJsonContext : JsonSerializerContext;
+
+        /// <summary>
+        /// Provides the same behavior as <see cref="EqualityComparer{ToolDefinition}.Default"/>, except
+        /// for FunctionToolDefinition it compares names so that two function tool definitions with the
+        /// same name compare equally.
+        /// </summary>
+        private sealed class ToolDefinitionNameEqualityComparer : IEqualityComparer<ToolDefinition>
+        {
+            public static ToolDefinitionNameEqualityComparer Instance { get; } = new();
+
+            public bool Equals(ToolDefinition? x, ToolDefinition? y) =>
+                x is FunctionToolDefinition xFtd && y is FunctionToolDefinition yFtd ? xFtd.Name.Equals(yFtd.Name) :
+                EqualityComparer<ToolDefinition?>.Default.Equals(x, y);
+
+            public int GetHashCode(ToolDefinition obj) =>
+                obj is FunctionToolDefinition ftd ? ftd.Name.GetHashCode() :
+                EqualityComparer<ToolDefinition>.Default.GetHashCode(obj);
+        }
     }
 }
