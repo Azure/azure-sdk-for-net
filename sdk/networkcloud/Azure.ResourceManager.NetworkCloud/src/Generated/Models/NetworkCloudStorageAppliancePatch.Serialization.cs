@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudStorageAppliancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serialNumber, serializedAdditionalRawData);
+            return new NetworkCloudStorageAppliancePatch(serialNumber, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudStorageAppliancePatch>.Write(ModelReaderWriterOptions options)

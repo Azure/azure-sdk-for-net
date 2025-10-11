@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudBmcKeySetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), expiration, userList ?? new ChangeTrackingList<KeySetUser>(), serializedAdditionalRawData);
+            return new NetworkCloudBmcKeySetPatch(expiration, userList ?? new ChangeTrackingList<KeySetUser>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBmcKeySetPatch>.Write(ModelReaderWriterOptions options)

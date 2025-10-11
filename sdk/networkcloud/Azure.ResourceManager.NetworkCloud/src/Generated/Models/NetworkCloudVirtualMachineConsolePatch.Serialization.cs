@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudVirtualMachineConsolePatch(tags ?? new ChangeTrackingDictionary<string, string>(), enabled, expiration, sshPublicKey, serializedAdditionalRawData);
+            return new NetworkCloudVirtualMachineConsolePatch(enabled, expiration, sshPublicKey, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudVirtualMachineConsolePatch>.Write(ModelReaderWriterOptions options)

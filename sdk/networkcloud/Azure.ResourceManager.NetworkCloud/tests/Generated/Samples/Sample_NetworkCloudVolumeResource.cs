@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVolume()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Volumes_Get.json
-            // this example is just showing the usage of "Volumes_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/Volumes_Get.json
+            // this example is just showing the usage of "Volume_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -48,10 +48,37 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteVolume()
+        {
+            // Generated from example definition: 2025-02-01/Volumes_Delete.json
+            // this example is just showing the usage of "Volume_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkCloudVolumeResource created on azure
+            // for more information of creating NetworkCloudVolumeResource, please refer to the document of NetworkCloudVolumeResource
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string resourceGroupName = "resourceGroupName";
+            string volumeName = "volumeName";
+            ResourceIdentifier networkCloudVolumeResourceId = NetworkCloudVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, volumeName);
+            NetworkCloudVolumeResource networkCloudVolume = client.GetNetworkCloudVolumeResource(networkCloudVolumeResourceId);
+
+            // invoke the operation
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudVolume.DeleteAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchVolume()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/Volumes_Patch.json
-            // this example is just showing the usage of "Volumes_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/Volumes_Patch.json
+            // this example is just showing the usage of "Volume_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

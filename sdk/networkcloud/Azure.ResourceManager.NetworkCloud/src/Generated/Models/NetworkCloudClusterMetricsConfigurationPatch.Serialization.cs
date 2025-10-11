@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudClusterMetricsConfigurationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), collectionInterval, enabledMetrics ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new NetworkCloudClusterMetricsConfigurationPatch(collectionInterval, enabledMetrics ?? new ChangeTrackingList<string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterMetricsConfigurationPatch>.Write(ModelReaderWriterOptions options)

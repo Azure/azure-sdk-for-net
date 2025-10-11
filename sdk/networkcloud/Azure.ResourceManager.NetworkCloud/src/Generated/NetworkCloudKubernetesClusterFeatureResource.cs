@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Get</description>
+        /// <description>KubernetesClusterFeature_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Get</description>
+        /// <description>KubernetesClusterFeature_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Delete</description>
+        /// <description>KubernetesClusterFeature_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Delete</description>
+        /// <description>KubernetesClusterFeature_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Update</description>
+        /// <description>KubernetesClusterFeature_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Update</description>
+        /// <description>KubernetesClusterFeature_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Get</description>
+        /// <description>KubernetesClusterFeature_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Get</description>
+        /// <description>KubernetesClusterFeature_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Get</description>
+        /// <description>KubernetesClusterFeature_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Get</description>
+        /// <description>KubernetesClusterFeature_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Get</description>
+        /// <description>KubernetesClusterFeature_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Get</description>
+        /// <description>KubernetesClusterFeature_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineSkuSlot"/>. </summary>
-        /// <param name="rackSlot"> The position in the rack for the machine. </param>
         /// <param name="bootstrapProtocol"> The type of bootstrap protocol used. </param>
         /// <param name="cpuCores"> The count of CPU cores for this machine. </param>
         /// <param name="cpuSockets"> The count of CPU sockets for this machine. </param>
@@ -65,10 +64,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="networkInterfaces"> The list of network interfaces. </param>
         /// <param name="totalThreads"> The count of SMT and physical core threads for this machine. </param>
         /// <param name="vendor"> The make of the machine. </param>
+        /// <param name="rackSlot"> The position in the rack for the machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineSkuSlot(long? rackSlot, BootstrapProtocol? bootstrapProtocol, long? cpuCores, long? cpuSockets, IReadOnlyList<MachineDisk> disks, string generation, string hardwareVersion, long? memoryCapacityGB, string model, IReadOnlyList<NetworkCloudNetworkInterface> networkInterfaces, long? totalThreads, string vendor, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineSkuSlot(BootstrapProtocol? bootstrapProtocol, long? cpuCores, long? cpuSockets, IReadOnlyList<MachineDisk> disks, string generation, string hardwareVersion, long? memoryCapacityGB, string model, IReadOnlyList<NetworkCloudNetworkInterface> networkInterfaces, long? totalThreads, string vendor, long? rackSlot, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RackSlot = rackSlot;
             BootstrapProtocol = bootstrapProtocol;
             CpuCores = cpuCores;
             CpuSockets = cpuSockets;
@@ -80,11 +79,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             NetworkInterfaces = networkInterfaces;
             TotalThreads = totalThreads;
             Vendor = vendor;
+            RackSlot = rackSlot;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The position in the rack for the machine. </summary>
-        public long? RackSlot { get; }
         /// <summary> The type of bootstrap protocol used. </summary>
         public BootstrapProtocol? BootstrapProtocol { get; }
         /// <summary> The count of CPU cores for this machine. </summary>
@@ -107,5 +105,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? TotalThreads { get; }
         /// <summary> The make of the machine. </summary>
         public string Vendor { get; }
+        /// <summary> The position in the rack for the machine. </summary>
+        public long? RackSlot { get; }
     }
 }

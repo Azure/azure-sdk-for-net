@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudBareMetalMachineKeySetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), expiration, jumpHostsAllowed ?? new ChangeTrackingList<IPAddress>(), userList ?? new ChangeTrackingList<KeySetUser>(), serializedAdditionalRawData);
+            return new NetworkCloudBareMetalMachineKeySetPatch(expiration, jumpHostsAllowed ?? new ChangeTrackingList<IPAddress>(), userList ?? new ChangeTrackingList<KeySetUser>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBareMetalMachineKeySetPatch>.Write(ModelReaderWriterOptions options)

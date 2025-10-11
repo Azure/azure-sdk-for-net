@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RackSkus_Get</description>
+        /// <description>RackSku_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RackSkus_Get</description>
+        /// <description>RackSku_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_ListBySubscription</description>
+        /// <description>BareMetalMachine_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_ListBySubscription</description>
+        /// <description>BareMetalMachine_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudServicesNetworks_ListBySubscription</description>
+        /// <description>CloudServicesNetwork_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudServicesNetworks_ListBySubscription</description>
+        /// <description>CloudServicesNetwork_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ClusterManagers_ListBySubscription</description>
+        /// <description>ClusterManager_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ClusterManagers_ListBySubscription</description>
+        /// <description>ClusterManager_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_ListBySubscription</description>
+        /// <description>Cluster_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_ListBySubscription</description>
+        /// <description>Cluster_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_ListBySubscription</description>
+        /// <description>KubernetesCluster_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_ListBySubscription</description>
+        /// <description>KubernetesCluster_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L2Networks_ListBySubscription</description>
+        /// <description>L2Network_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L2Networks_ListBySubscription</description>
+        /// <description>L2Network_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_ListBySubscription</description>
+        /// <description>L3Network_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_ListBySubscription</description>
+        /// <description>L3Network_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Racks_ListBySubscription</description>
+        /// <description>Rack_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Racks_ListBySubscription</description>
+        /// <description>Rack_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAppliances_ListBySubscription</description>
+        /// <description>StorageAppliance_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAppliances_ListBySubscription</description>
+        /// <description>StorageAppliance_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrunkedNetworks_ListBySubscription</description>
+        /// <description>TrunkedNetwork_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TrunkedNetworks_ListBySubscription</description>
+        /// <description>TrunkedNetwork_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_ListBySubscription</description>
+        /// <description>VirtualMachine_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_ListBySubscription</description>
+        /// <description>VirtualMachine_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volumes_ListBySubscription</description>
+        /// <description>Volume_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volumes_ListBySubscription</description>
+        /// <description>Volume_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
