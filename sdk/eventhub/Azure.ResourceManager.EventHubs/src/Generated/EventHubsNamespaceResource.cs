@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.EventHubs
 
         private readonly ClientDiagnostics _eventHubsNamespaceNamespacesClientDiagnostics;
         private readonly NamespacesRestOperations _eventHubsNamespaceNamespacesRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _disasterRecoveryConfigsClientDiagnostics;
+        private readonly DisasterRecoveryConfigsRestOperations _disasterRecoveryConfigsRestClient;
         private readonly ClientDiagnostics _networkSecurityPerimeterConfigurationClientDiagnostics;
         private readonly NetworkSecurityPerimeterConfigurationRestOperations _networkSecurityPerimeterConfigurationRestClient;
         private readonly ClientDiagnostics _networkSecurityPerimeterConfigurationsClientDiagnostics;
         private readonly NetworkSecurityPerimeterConfigurationsRestOperations _networkSecurityPerimeterConfigurationsRestClient;
-        private readonly ClientDiagnostics _disasterRecoveryConfigsClientDiagnostics;
-        private readonly DisasterRecoveryConfigsRestOperations _disasterRecoveryConfigsRestClient;
+        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly EventHubsNamespaceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.EventHubs
             _eventHubsNamespaceNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string eventHubsNamespaceNamespacesApiVersion);
             _eventHubsNamespaceNamespacesRestClient = new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsNamespaceNamespacesApiVersion);
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _disasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _networkSecurityPerimeterConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _networkSecurityPerimeterConfigurationRestClient = new NetworkSecurityPerimeterConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _disasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -107,13 +107,6 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a EventHubsNetworkRuleSetResource along with the instance operations that can be performed on it in the EventHubsNamespace. </summary>
-        /// <returns> Returns a <see cref="EventHubsNetworkRuleSetResource"/> object. </returns>
-        public virtual EventHubsNetworkRuleSetResource GetEventHubsNetworkRuleSet()
-        {
-            return new EventHubsNetworkRuleSetResource(Client, Id.AppendChildResource("networkRuleSets", "default"));
-        }
-
         /// <summary> Gets a collection of EventHubsNamespaceAuthorizationRuleResources in the EventHubsNamespace. </summary>
         /// <returns> An object representing collection of EventHubsNamespaceAuthorizationRuleResources and their operations over a EventHubsNamespaceAuthorizationRuleResource. </returns>
         public virtual EventHubsNamespaceAuthorizationRuleCollection GetEventHubsNamespaceAuthorizationRules()
@@ -134,7 +127,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -165,7 +158,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,73 +176,80 @@ namespace Azure.ResourceManager.EventHubs
             return GetEventHubsNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EventHubsPrivateEndpointConnectionResources in the EventHubsNamespace. </summary>
-        /// <returns> An object representing collection of EventHubsPrivateEndpointConnectionResources and their operations over a EventHubsPrivateEndpointConnectionResource. </returns>
-        public virtual EventHubsPrivateEndpointConnectionCollection GetEventHubsPrivateEndpointConnections()
+        /// <summary> Gets an object representing a EventHubsNetworkRuleSetResource along with the instance operations that can be performed on it in the EventHubsNamespace. </summary>
+        /// <returns> Returns a <see cref="EventHubsNetworkRuleSetResource"/> object. </returns>
+        public virtual EventHubsNetworkRuleSetResource GetEventHubsNetworkRuleSet()
         {
-            return GetCachedClient(client => new EventHubsPrivateEndpointConnectionCollection(client, Id));
+            return new EventHubsNetworkRuleSetResource(Client, Id.AppendChildResource("networkRuleSets", "default"));
+        }
+
+        /// <summary> Gets a collection of EventHubsApplicationGroupResources in the EventHubsNamespace. </summary>
+        /// <returns> An object representing collection of EventHubsApplicationGroupResources and their operations over a EventHubsApplicationGroupResource. </returns>
+        public virtual EventHubsApplicationGroupCollection GetEventHubsApplicationGroups()
+        {
+            return GetCachedClient(client => new EventHubsApplicationGroupCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets a description for the specified Private Endpoint Connection name.
+        /// Gets an ApplicationGroup for a Namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/applicationGroups/{applicationGroupName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>ApplicationGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EventHubsPrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="EventHubsApplicationGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
+        /// <param name="applicationGroupName"> The Application Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EventHubsPrivateEndpointConnectionResource>> GetEventHubsPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsApplicationGroupResource>> GetEventHubsApplicationGroupAsync(string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetEventHubsPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetEventHubsApplicationGroups().GetAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a description for the specified Private Endpoint Connection name.
+        /// Gets an ApplicationGroup for a Namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/applicationGroups/{applicationGroupName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>ApplicationGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EventHubsPrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="EventHubsApplicationGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
+        /// <param name="applicationGroupName"> The Application Group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EventHubsPrivateEndpointConnectionResource> GetEventHubsPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<EventHubsApplicationGroupResource> GetEventHubsApplicationGroup(string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            return GetEventHubsPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetEventHubsApplicationGroups().Get(applicationGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EventHubsDisasterRecoveryResources in the EventHubsNamespace. </summary>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -388,6 +388,75 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Response<EventHubResource> GetEventHub(string eventHubName, CancellationToken cancellationToken = default)
         {
             return GetEventHubs().Get(eventHubName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EventHubsPrivateEndpointConnectionResources in the EventHubsNamespace. </summary>
+        /// <returns> An object representing collection of EventHubsPrivateEndpointConnectionResources and their operations over a EventHubsPrivateEndpointConnectionResource. </returns>
+        public virtual EventHubsPrivateEndpointConnectionCollection GetEventHubsPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new EventHubsPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a description for the specified Private Endpoint Connection name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsPrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventHubsPrivateEndpointConnectionResource>> GetEventHubsPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetEventHubsPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a description for the specified Private Endpoint Connection name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsPrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventHubsPrivateEndpointConnectionResource> GetEventHubsPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetEventHubsPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EventHubsSchemaGroupResources in the EventHubsNamespace. </summary>
@@ -410,7 +479,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -441,7 +510,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -459,75 +528,6 @@ namespace Azure.ResourceManager.EventHubs
             return GetEventHubsSchemaGroups().Get(schemaGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EventHubsApplicationGroupResources in the EventHubsNamespace. </summary>
-        /// <returns> An object representing collection of EventHubsApplicationGroupResources and their operations over a EventHubsApplicationGroupResource. </returns>
-        public virtual EventHubsApplicationGroupCollection GetEventHubsApplicationGroups()
-        {
-            return GetCachedClient(client => new EventHubsApplicationGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an ApplicationGroup for a Namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/applicationGroups/{applicationGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGroup_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsApplicationGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationGroupName"> The Application Group name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EventHubsApplicationGroupResource>> GetEventHubsApplicationGroupAsync(string applicationGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetEventHubsApplicationGroups().GetAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an ApplicationGroup for a Namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/applicationGroups/{applicationGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGroup_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsApplicationGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationGroupName"> The Application Group name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EventHubsApplicationGroupResource> GetEventHubsApplicationGroup(string applicationGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetEventHubsApplicationGroups().Get(applicationGroupName, cancellationToken);
-        }
-
         /// <summary>
         /// Gets the description of the specified namespace.
         /// <list type="bullet">
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubsNamespaceNamespacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation(_eventHubsNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubsNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventHubsArmOperation(_eventHubsNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubsNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubsNamespaceNamespacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new EventHubsArmOperation(_eventHubsNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubsNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventHubsArmOperation(_eventHubsNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubsNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -777,139 +777,42 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Gets lists of resources that supports Privatelinks.
+        /// GeoDR Failover
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/privateLinkResources</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/failover</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
+        /// <description>Namespaces_Failover</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubsPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventHubsPrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets lists of resources that supports Privatelinks.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/privateLinkResources</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubsPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventHubsPrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets list of current NetworkSecurityPerimeterConfiguration for Namespace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfiguration_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubsNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventHubsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration(e), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets list of current NetworkSecurityPerimeterConfiguration for Namespace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfiguration_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubsNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventHubsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration(e), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Refreshes any information about the association.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}/reconcile</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfigurations_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsNamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceAssociationName"> The ResourceAssociation Name. </param>
+        /// <param name="content"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateNetworkSecurityPerimeterConfigurationAsync(WaitUntil waitUntil, string resourceAssociationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NamespaceFailOverContent>> FailoverAsync(WaitUntil waitUntil, NamespaceFailOverContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("EventHubsNamespaceResource.CreateOrUpdateNetworkSecurityPerimeterConfiguration");
+            using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.Failover");
             scope.Start();
             try
             {
-                var response = await _networkSecurityPerimeterConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, _networkSecurityPerimeterConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName).Request, response, OperationFinalStateVia.Location);
+                var response = await _eventHubsNamespaceNamespacesRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new EventHubsArmOperation<NamespaceFailOverContent>(new NamespaceFailOverContentOperationSource(), _eventHubsNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubsNamespaceNamespacesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -920,39 +823,42 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Refreshes any information about the association.
+        /// GeoDR Failover
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}/reconcile</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/failover</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterConfigurations_CreateOrUpdate</description>
+        /// <description>Namespaces_Failover</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsNamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceAssociationName"> The ResourceAssociation Name. </param>
+        /// <param name="content"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
-        public virtual ArmOperation CreateOrUpdateNetworkSecurityPerimeterConfiguration(WaitUntil waitUntil, string resourceAssociationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NamespaceFailOverContent> Failover(WaitUntil waitUntil, NamespaceFailOverContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("EventHubsNamespaceResource.CreateOrUpdateNetworkSecurityPerimeterConfiguration");
+            using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.Failover");
             scope.Start();
             try
             {
-                var response = _networkSecurityPerimeterConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName, cancellationToken);
-                var operation = new EventHubsArmOperation(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, _networkSecurityPerimeterConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName).Request, response, OperationFinalStateVia.Location);
+                var response = _eventHubsNamespaceNamespacesRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new EventHubsArmOperation<NamespaceFailOverContent>(new NamespaceFailOverContentOperationSource(), _eventHubsNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubsNamespaceNamespacesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -975,7 +881,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1013,7 +919,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1039,6 +945,270 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
+        /// Gets list of current NetworkSecurityPerimeterConfiguration for Namespace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfiguration_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EventHubsNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventHubsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration(e), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets list of current NetworkSecurityPerimeterConfiguration for Namespace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfiguration_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EventHubsNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventHubsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration(e), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Return a NetworkSecurityPerimeterConfigurations resourceAssociationName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfigurations_GetResourceAssociationName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceAssociationName"> The ResourceAssociation Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
+        public virtual async Task<Response<EventHubsNetworkSecurityPerimeterConfiguration>> GetResourceAssociationNameNetworkSecurityPerimeterConfigurationAsync(string resourceAssociationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
+
+            using var scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("EventHubsNamespaceResource.GetResourceAssociationNameNetworkSecurityPerimeterConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await _networkSecurityPerimeterConfigurationsRestClient.GetResourceAssociationNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Return a NetworkSecurityPerimeterConfigurations resourceAssociationName
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfigurations_GetResourceAssociationName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceAssociationName"> The ResourceAssociation Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
+        public virtual Response<EventHubsNetworkSecurityPerimeterConfiguration> GetResourceAssociationNameNetworkSecurityPerimeterConfiguration(string resourceAssociationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
+
+            using var scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("EventHubsNamespaceResource.GetResourceAssociationNameNetworkSecurityPerimeterConfiguration");
+            scope.Start();
+            try
+            {
+                var response = _networkSecurityPerimeterConfigurationsRestClient.GetResourceAssociationName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refreshes any information about the association.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}/reconcile</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfigurations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceAssociationName"> The ResourceAssociation Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
+        public virtual async Task<ArmOperation> CreateOrUpdateNetworkSecurityPerimeterConfigurationAsync(WaitUntil waitUntil, string resourceAssociationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
+
+            using var scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("EventHubsNamespaceResource.CreateOrUpdateNetworkSecurityPerimeterConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await _networkSecurityPerimeterConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName, cancellationToken).ConfigureAwait(false);
+                var operation = new EventHubsArmOperation(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, _networkSecurityPerimeterConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refreshes any information about the association.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}/reconcile</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfigurations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceAssociationName"> The ResourceAssociation Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
+        public virtual ArmOperation CreateOrUpdateNetworkSecurityPerimeterConfiguration(WaitUntil waitUntil, string resourceAssociationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
+
+            using var scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("EventHubsNamespaceResource.CreateOrUpdateNetworkSecurityPerimeterConfiguration");
+            scope.Start();
+            try
+            {
+                var response = _networkSecurityPerimeterConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName, cancellationToken);
+                var operation = new EventHubsArmOperation(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, _networkSecurityPerimeterConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets lists of resources that supports Privatelinks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EventHubsPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventHubsPrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets lists of resources that supports Privatelinks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EventHubsPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventHubsPrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -1051,7 +1221,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1113,7 +1283,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1175,7 +1345,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1232,7 +1402,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1289,7 +1459,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1349,7 +1519,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

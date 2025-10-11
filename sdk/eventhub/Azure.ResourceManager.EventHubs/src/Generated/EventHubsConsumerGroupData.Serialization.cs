@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.EventHubs
                 name,
                 type,
                 systemData,
+                location,
                 createdAt,
                 updatedAt,
                 userMetadata,
-                location,
                 serializedAdditionalRawData);
         }
 

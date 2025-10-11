@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SchemaRegistryCreate()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/SchemaRegistry/SchemaRegistryCreate.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/SchemaRegistry/SchemaRegistryCreate.json
             // this example is just showing the usage of "SchemaRegistry_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SchemaRegistryGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/SchemaRegistry/SchemaRegistryGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/SchemaRegistry/SchemaRegistryGet.json
             // this example is just showing the usage of "SchemaRegistry_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SchemaRegistryListAll()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/SchemaRegistry/SchemaRegistryListByNamespace.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/SchemaRegistry/SchemaRegistryListByNamespace.json
             // this example is just showing the usage of "SchemaRegistry_ListByNamespace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SchemaRegistryGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/SchemaRegistry/SchemaRegistryGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/SchemaRegistry/SchemaRegistryGet.json
             // this example is just showing the usage of "SchemaRegistry_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SchemaRegistryGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/SchemaRegistry/SchemaRegistryGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/SchemaRegistry/SchemaRegistryGet.json
             // this example is just showing the usage of "SchemaRegistry_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

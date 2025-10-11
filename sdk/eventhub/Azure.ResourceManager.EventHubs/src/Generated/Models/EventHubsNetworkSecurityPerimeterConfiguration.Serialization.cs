@@ -284,6 +284,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 name,
                 type,
                 systemData,
+                location,
                 provisioningState,
                 provisioningIssues ?? new ChangeTrackingList<EventHubsProvisioningIssue>(),
                 networkSecurityPerimeter,
@@ -293,7 +294,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 applicableFeatures ?? new ChangeTrackingList<string>(),
                 parentAssociationName,
                 sourceResourceId,
-                location,
                 serializedAdditionalRawData);
         }
 

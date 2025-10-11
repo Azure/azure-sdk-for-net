@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableClusterRegionClusters_ListAvailableClusters()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/Clusters/ListAvailableClustersGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/Clusters/ListAvailableClustersGet.json
             // this example is just showing the usage of "Clusters_ListAvailableClusterRegion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetEventHubsClusters_ClustersListBySubscription()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/Clusters/ClustersListBySubscription.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/Clusters/ClustersListBySubscription.json
             // this example is just showing the usage of "Clusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,9 +77,34 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CheckEventHubsNamespaceNameAvailability_NamespacesCheckNameAvailability()
+        {
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/NameSpaces/EHNameSpaceCheckNameAvailability.json
+            // this example is just showing the usage of "Namespaces_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            EventHubsNameAvailabilityContent content = new EventHubsNameAvailabilityContent("sdk-Namespace-8458");
+            EventHubsNameAvailabilityResult result = await subscriptionResource.CheckEventHubsNamespaceNameAvailabilityAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetEventHubsNamespaces_NamespacesListBySubscription()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/NameSpaces/EHNameSpaceList.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/NameSpaces/EHNameSpaceList.json
             // this example is just showing the usage of "Namespaces_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,31 +129,6 @@ namespace Azure.ResourceManager.EventHubs.Samples
             }
 
             Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckEventHubsNamespaceNameAvailability_NamespacesCheckNameAvailability()
-        {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/NameSpaces/EHNameSpaceCheckNameAvailability.json
-            // this example is just showing the usage of "Namespaces_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            EventHubsNameAvailabilityContent content = new EventHubsNameAvailabilityContent("sdk-Namespace-8458");
-            EventHubsNameAvailabilityResult result = await subscriptionResource.CheckEventHubsNamespaceNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

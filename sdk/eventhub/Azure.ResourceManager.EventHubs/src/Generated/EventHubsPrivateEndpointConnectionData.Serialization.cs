@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.EventHubs
                 name,
                 type,
                 systemData,
+                location,
                 privateEndpoint,
                 privateLinkServiceConnectionState,
                 provisioningState,
-                location,
                 serializedAdditionalRawData);
         }
 
