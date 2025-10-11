@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionId);
+                writer.WriteStringValue(SubscriptionId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(SubscriptionName))
             {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string billingProfileName = default;
             string accountOwnerId = default;
             string accountName = default;
-            string subscriptionId = default;
+            Guid? subscriptionId = default;
             string subscriptionName = default;
             DateTimeOffset? date = default;
             string product = default;
@@ -460,7 +460,11 @@ namespace Azure.ResourceManager.Consumption.Models
                         }
                         if (property0.NameEquals("subscriptionId"u8))
                         {
-                            subscriptionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            subscriptionId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("subscriptionName"u8))

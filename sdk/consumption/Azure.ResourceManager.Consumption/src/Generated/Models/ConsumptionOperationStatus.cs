@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Result of listing lot summary. </summary>
-    internal partial class Lots
+    /// <summary> The status of the long running operation. </summary>
+    public partial class ConsumptionOperationStatus
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,29 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Lots"/>. </summary>
-        internal Lots()
+        /// <summary> Initializes a new instance of <see cref="ConsumptionOperationStatus"/>. </summary>
+        internal ConsumptionOperationStatus()
         {
-            Value = new ChangeTrackingList<ConsumptionLotSummary>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Lots"/>. </summary>
-        /// <param name="value"> The list of lot summary. </param>
-        /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionOperationStatus"/>. </summary>
+        /// <param name="status"> The status of the long running operation. </param>
+        /// <param name="downloadUri"> The link (url) to download the pricesheet. </param>
+        /// <param name="validTill"> Download link validity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Lots(IReadOnlyList<ConsumptionLotSummary> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConsumptionOperationStatus(ConsumptionOperationStatusType? status, Uri downloadUri, DateTimeOffset? validTill, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Status = status;
+            DownloadUri = downloadUri;
+            ValidTill = validTill;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of lot summary. </summary>
-        public IReadOnlyList<ConsumptionLotSummary> Value { get; }
-        /// <summary> URL to get the next set of operation list results if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The status of the long running operation. </summary>
+        public ConsumptionOperationStatusType? Status { get; }
+        /// <summary> The link (url) to download the pricesheet. </summary>
+        public Uri DownloadUri { get; }
+        /// <summary> Download link validity. </summary>
+        public DateTimeOffset? ValidTill { get; }
     }
 }

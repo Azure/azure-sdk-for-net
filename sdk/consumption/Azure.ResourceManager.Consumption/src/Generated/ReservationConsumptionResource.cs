@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
     /// A class extending from the ReservationResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="ReservationConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Capacity/reservationorders/reservations.
+    /// You can only construct a <see cref="ReservationConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of microsoft.Capacity/reservationorders/reservations.
     /// </summary>
     public partial class ReservationConsumptionResource : ArmResource
     {
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationId"> The reservationId. </param>
         internal static ResourceIdentifier CreateResourceIdentifier(string reservationOrderId, string reservationId)
         {
-            var resourceId = $"/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}";
+            var resourceId = $"/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _reservationsSummariesClientDiagnostics;
-        private readonly ReservationsSummariesRestOperations _reservationsSummariesRestClient;
         private readonly ClientDiagnostics _reservationsDetailsClientDiagnostics;
         private readonly ReservationsDetailsRestOperations _reservationsDetailsRestClient;
+        private readonly ClientDiagnostics _reservationsSummariesClientDiagnostics;
+        private readonly ReservationsSummariesRestOperations _reservationsSummariesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ReservationConsumptionResource"/> class for mocking. </summary>
         protected ReservationConsumptionResource()
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ReservationConsumptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _reservationsSummariesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _reservationsSummariesRestClient = new ReservationsSummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _reservationsDetailsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _reservationsDetailsRestClient = new ReservationsDetailsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _reservationsSummariesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _reservationsSummariesRestClient = new ReservationsSummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Capacity/reservationorders/reservations";
+        public static readonly ResourceType ResourceType = "microsoft.Capacity/reservationorders/reservations";
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -64,67 +64,11 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary>
-        /// Lists the reservations summaries for daily or monthly grain.
+        /// Lists the reservations details for provided date range. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. If the data size is too large, customers may also get 504 as the API timed out preparing the data. In such cases, API call should be made with smaller date ranges or a call to Generate Reservation Details Report API should be made as it is asynchronous and will not run into response size time outs.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationSummaries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationsSummaries_ListByReservationOrderAndReservation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="grain"> Can be daily or monthly. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConsumptionReservationSummary> GetReservationSummariesAsync(ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationRequest(Id.Parent.Name, Id.Name, grain, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationNextPageRequest(nextLink, Id.Parent.Name, Id.Name, grain, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationSummary.DeserializeConsumptionReservationSummary(e), _reservationsSummariesClientDiagnostics, Pipeline, "ReservationConsumptionResource.GetReservationSummaries", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the reservations summaries for daily or monthly grain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationSummaries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationsSummaries_ListByReservationOrderAndReservation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="grain"> Can be daily or monthly. </param>
-        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConsumptionReservationSummary> GetReservationSummaries(ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationRequest(Id.Parent.Name, Id.Name, grain, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationNextPageRequest(nextLink, Id.Parent.Name, Id.Name, grain, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationSummary.DeserializeConsumptionReservationSummary(e), _reservationsSummariesClientDiagnostics, Pipeline, "ReservationConsumptionResource.GetReservationSummaries", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the reservations details for provided date range. Note: ARM has a payload size limit of 12MB, so currently callers get 502 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationDetails</description>
+        /// <description>/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationDetails</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -132,7 +76,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,11 +94,11 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary>
-        /// Lists the reservations details for provided date range. Note: ARM has a payload size limit of 12MB, so currently callers get 502 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
+        /// Lists the reservations details for provided date range. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. If the data size is too large, customers may also get 504 as the API timed out preparing the data. In such cases, API call should be made with smaller date ranges or a call to Generate Reservation Details Report API should be made as it is asynchronous and will not run into response size time outs.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationDetails</description>
+        /// <description>/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationDetails</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -162,7 +106,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,6 +121,62 @@ namespace Azure.ResourceManager.Consumption
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsDetailsRestClient.CreateListByReservationOrderAndReservationRequest(Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationsDetailsRestClient.CreateListByReservationOrderAndReservationNextPageRequest(nextLink, Id.Parent.Name, Id.Name, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationDetail.DeserializeConsumptionReservationDetail(e), _reservationsDetailsClientDiagnostics, Pipeline, "ReservationConsumptionResource.GetReservationDetails", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the reservations summaries for daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsSummaries_ListByReservationOrderAndReservation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-08-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="grain"> Can be daily or monthly. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConsumptionReservationSummary> GetReservationSummariesAsync(ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationRequest(Id.Parent.Name, Id.Name, grain, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationNextPageRequest(nextLink, Id.Parent.Name, Id.Name, grain, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationSummary.DeserializeConsumptionReservationSummary(e), _reservationsSummariesClientDiagnostics, Pipeline, "ReservationConsumptionResource.GetReservationSummaries", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the reservations summaries for daily or monthly grain. Note: ARM has a payload size limit of 12MB, so currently callers get 400 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.Consumption/reservationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsSummaries_ListByReservationOrderAndReservation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-08-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="grain"> Can be daily or monthly. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConsumptionReservationSummary> GetReservationSummaries(ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationRequest(Id.Parent.Name, Id.Name, grain, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationNextPageRequest(nextLink, Id.Parent.Name, Id.Name, grain, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationSummary.DeserializeConsumptionReservationSummary(e), _reservationsSummariesClientDiagnostics, Pipeline, "ReservationConsumptionResource.GetReservationSummaries", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Consumption
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-10-01";
+            _apiVersion = apiVersion ?? "2024-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Consumption
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath("/providers/microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/aggregatedcost", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Consumption
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath("/providers/microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/aggregatedcost", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Provides the aggregate cost of a management group and all child management groups by current billing period. </summary>
-        /// <param name="managementGroupId"> Azure Management Group ID. </param>
-        /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="managementGroupId"> Order Id of the reservation. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Provides the aggregate cost of a management group and all child management groups by current billing period. </summary>
-        /// <param name="managementGroupId"> Azure Management Group ID. </param>
-        /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
+        /// <param name="managementGroupId"> Order Id of the reservation. </param>
+        /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.Consumption
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath("/providers/microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Billing/billingPeriods/", false);
+            uri.AppendPath("/providers/microsoft.Billing/billingPeriods/", false);
             uri.AppendPath(billingPeriodName, true);
             uri.AppendPath("/providers/Microsoft.Consumption/aggregatedCost", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.Consumption
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath("/providers/microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
-            uri.AppendPath("/providers/Microsoft.Billing/billingPeriods/", false);
+            uri.AppendPath("/providers/microsoft.Billing/billingPeriods/", false);
             uri.AppendPath(billingPeriodName, true);
             uri.AppendPath("/providers/Microsoft.Consumption/aggregatedCost", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Provides the aggregate cost of a management group and all child management groups by specified billing period. </summary>
-        /// <param name="managementGroupId"> Azure Management Group ID. </param>
+        /// <param name="managementGroupId"> Order Id of the reservation. </param>
         /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is null. </exception>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Provides the aggregate cost of a management group and all child management groups by specified billing period. </summary>
-        /// <param name="managementGroupId"> Azure Management Group ID. </param>
+        /// <param name="managementGroupId"> Order Id of the reservation. </param>
         /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="billingPeriodName"/> is null. </exception>

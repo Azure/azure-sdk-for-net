@@ -64,9 +64,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="creditCurrency"> The credit currency. </param>
         /// <param name="billingCurrency"> The billing currency. </param>
         /// <param name="reseller"> Credit's reseller. </param>
+        /// <param name="isEstimatedBalance"> If true, the listed details are based on an estimation and it will be subjected to change. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionCreditSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CreditBalanceSummary balanceSummary, ConsumptionAmount pendingCreditAdjustments, ConsumptionAmount expiredCredit, ConsumptionAmount pendingEligibleCharges, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionCreditSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CreditBalanceSummary balanceSummary, ConsumptionAmount pendingCreditAdjustments, ConsumptionAmount expiredCredit, ConsumptionAmount pendingEligibleCharges, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, bool? isEstimatedBalance, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BalanceSummary = balanceSummary;
             PendingCreditAdjustments = pendingCreditAdjustments;
@@ -75,6 +76,7 @@ namespace Azure.ResourceManager.Consumption.Models
             CreditCurrency = creditCurrency;
             BillingCurrency = billingCurrency;
             Reseller = reseller;
+            IsEstimatedBalance = isEstimatedBalance;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -93,6 +95,8 @@ namespace Azure.ResourceManager.Consumption.Models
         public string BillingCurrency { get; }
         /// <summary> Credit's reseller. </summary>
         public ConsumptionReseller Reseller { get; }
+        /// <summary> If true, the listed details are based on an estimation and it will be subjected to change. </summary>
+        public bool? IsEstimatedBalance { get; }
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
         public ETag? ETag { get; set; }
     }

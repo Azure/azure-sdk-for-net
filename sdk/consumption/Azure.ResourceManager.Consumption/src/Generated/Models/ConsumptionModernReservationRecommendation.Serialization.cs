@@ -104,11 +104,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("firstUsageDate"u8);
                 writer.WriteStringValue(FirstUsageOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Scope))
-            {
-                writer.WritePropertyName("scope"u8);
-                writer.WriteStringValue(Scope);
-            }
+            writer.WritePropertyName("scope"u8);
+            writer.WriteStringValue(Scope);
             if (options.Format != "W" && Optional.IsCollectionDefined(SkuProperties))
             {
                 writer.WritePropertyName("skuProperties"u8);
@@ -123,6 +120,16 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastUsageOn))
+            {
+                writer.WritePropertyName("lastUsageDate"u8);
+                writer.WriteStringValue(LastUsageOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalHours))
+            {
+                writer.WritePropertyName("totalHours"u8);
+                writer.WriteNumberValue(TotalHours.Value);
             }
             writer.WriteEndObject();
         }
@@ -147,11 +154,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            ReservationRecommendationKind kind = default;
-            AzureLocation? location = default;
-            string sku = default;
             ETag? etag = default;
             IReadOnlyDictionary<string, string> tags = default;
+            AzureLocation? location = default;
+            string sku = default;
+            ReservationRecommendationKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -172,29 +179,12 @@ namespace Azure.ResourceManager.Consumption.Models
             string scope = default;
             IReadOnlyList<ConsumptionSkuProperty> skuProperties = default;
             string skuName = default;
+            DateTimeOffset? lastUsageDate = default;
+            int? totalHours = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new ReservationRecommendationKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("sku"u8))
-                {
-                    sku = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -216,6 +206,25 @@ namespace Azure.ResourceManager.Consumption.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    sku = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new ReservationRecommendationKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -376,6 +385,24 @@ namespace Azure.ResourceManager.Consumption.Models
                             skuName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("lastUsageDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            lastUsageDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("totalHours"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            totalHours = property0.Value.GetInt32();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -390,11 +417,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 type,
                 systemData,
-                kind,
-                location,
-                sku,
                 etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                kind,
                 serializedAdditionalRawData,
                 location0,
                 lookBackPeriod,
@@ -411,7 +438,9 @@ namespace Azure.ResourceManager.Consumption.Models
                 firstUsageDate,
                 scope,
                 skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>(),
-                skuName);
+                skuName,
+                lastUsageDate,
+                totalHours);
         }
 
         BinaryData IPersistableModel<ConsumptionModernReservationRecommendation>.Write(ModelReaderWriterOptions options)

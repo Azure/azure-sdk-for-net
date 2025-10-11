@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_Budget()
         {
-            // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2021-10-01/examples/Budget.json
+            // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2024-08-01/examples/Budget.json
             // this example is just showing the usage of "Budgets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Consumption.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_BudgetsList()
         {
-            // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2021-10-01/examples/BudgetsList.json
+            // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2024-08-01/examples/BudgetsList.json
             // this example is just showing the usage of "Budgets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Consumption.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_Budget()
         {
-            // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2021-10-01/examples/Budget.json
+            // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2024-08-01/examples/Budget.json
             // this example is just showing the usage of "Budgets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Consumption.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_Budget()
         {
-            // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2021-10-01/examples/Budget.json
+            // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2024-08-01/examples/Budget.json
             // this example is just showing the usage of "Budgets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
