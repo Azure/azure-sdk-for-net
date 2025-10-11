@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -426,73 +425,6 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static JobRunError JobRunError(string code = null, string message = null, string target = null)
         {
             return new JobRunError(code, message, target, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.StorageMover.StorageMoverEndpointData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource specific properties for the Storage Mover resource.
-        /// Please note <see cref="T:Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties" /> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="T:Azure.ResourceManager.StorageMover.Models.AzureStorageBlobContainerEndpointProperties" />, <see cref="T:Azure.ResourceManager.StorageMover.Models.AzureStorageSmbFileShareEndpointProperties" />, <see cref="T:Azure.ResourceManager.StorageMover.Models.NfsMountEndpointProperties" /> and <see cref="T:Azure.ResourceManager.StorageMover.Models.SmbMountEndpointProperties" />.
-        /// </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.StorageMover.StorageMoverEndpointData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageMoverEndpointData StorageMoverEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EndpointBaseProperties properties)
-        {
-            return StorageMoverEndpointData(id: id, name: name, resourceType: resourceType, systemData: systemData, properties: properties, identity: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.StorageMover.JobDefinitionData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description for the Job Definition. </param>
-        /// <param name="copyMode"> Strategy to use for copy. </param>
-        /// <param name="sourceName"> The name of the source Endpoint. </param>
-        /// <param name="sourceResourceId"> Fully qualified resource ID of the source Endpoint. </param>
-        /// <param name="sourceSubpath"> The subpath to use when reading from the source Endpoint. </param>
-        /// <param name="targetName"> The name of the target Endpoint. </param>
-        /// <param name="targetResourceId"> Fully qualified resource ID of the target Endpoint. </param>
-        /// <param name="targetSubpath"> The subpath to use when writing to the target Endpoint. </param>
-        /// <param name="latestJobRunName"> The name of the Job Run in a non-terminal state, if exists. </param>
-        /// <param name="latestJobRunResourceId"> The fully qualified resource ID of the Job Run in a non-terminal state, if exists. </param>
-        /// <param name="latestJobRunStatus"> The current status of the Job Run in a non-terminal state, if exists. </param>
-        /// <param name="agentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
-        /// <param name="agentResourceId"> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.StorageMover.JobDefinitionData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static JobDefinitionData JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, StorageMoverProvisioningState? provisioningState)
-        {
-            return JobDefinitionData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, jobType: default, copyMode: copyMode, sourceName: sourceName, sourceResourceId: sourceResourceId, sourceSubpath: sourceSubpath, targetName: targetName, targetResourceId: targetResourceId, targetSubpath: targetSubpath, latestJobRunName: latestJobRunName, latestJobRunResourceId: latestJobRunResourceId, latestJobRunStatus: latestJobRunStatus, agentName: agentName, agentResourceId: agentResourceId, sourceTargetMapValue: default, provisioningState: provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.StorageMover.StorageMoverAgentData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description for the Agent. </param>
-        /// <param name="agentVersion"> The Agent version. </param>
-        /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
-        /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
-        /// <param name="agentStatus"> The Agent status. </param>
-        /// <param name="lastStatusUpdate"> The last updated time of the Agent status. </param>
-        /// <param name="localIPAddress"> Local IP address reported by the Agent. </param>
-        /// <param name="memoryInMB"> Available memory reported by the Agent, in MB. </param>
-        /// <param name="numberOfCores"> Available compute cores reported by the Agent. </param>
-        /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
-        /// <param name="errorDetails"></param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.StorageMover.StorageMoverAgentData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, StorageMoverAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, StorageMoverAgentPropertiesErrorDetails errorDetails, StorageMoverProvisioningState? provisioningState)
-        {
-            return StorageMoverAgentData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, agentVersion: agentVersion, arcResourceId: arcResourceId, arcVmUuid: arcVmUuid, agentStatus: agentStatus, lastStatusUpdate: lastStatusUpdate, localIPAddress: localIPAddress, memoryInMB: memoryInMB, numberOfCores: numberOfCores, uptimeInSeconds: uptimeInSeconds, timeZone: default, uploadLimitScheduleWeeklyRecurrences: default, errorDetails: errorDetails, provisioningState: provisioningState);
         }
     }
 }
