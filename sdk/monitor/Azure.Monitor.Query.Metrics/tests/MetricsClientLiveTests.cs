@@ -52,7 +52,7 @@ namespace Azure.Monitor.Query.Metrics.Tests
 
                 var resourceId = TestEnvironment.StorageAccountId;
 
-                var timeRange = new QueryTimeRange(
+                var timeRange = new MetricsQueryTimeRange(
                     start: Recording.UtcNow.Subtract(TimeSpan.FromHours(4)),
                     duration: TimeSpan.FromHours(4));
 
@@ -111,7 +111,7 @@ namespace Azure.Monitor.Query.Metrics.Tests
 
             var resourceId = TestEnvironment.StorageAccountId;
 
-            var timeRange = new QueryTimeRange(
+            var timeRange = new MetricsQueryTimeRange(
                 start: Recording.UtcNow.Subtract(TimeSpan.FromHours(4)),
                 end: Recording.UtcNow
             );
@@ -136,7 +136,7 @@ namespace Azure.Monitor.Query.Metrics.Tests
 
             var resourceId = TestEnvironment.StorageAccountId;
 
-            var timeRange = new QueryTimeRange(
+            var timeRange = new MetricsQueryTimeRange(
                 start: Recording.UtcNow.Subtract(TimeSpan.FromHours(4)),
                 duration: TimeSpan.FromHours(4)
             );
@@ -162,7 +162,7 @@ namespace Azure.Monitor.Query.Metrics.Tests
 
             var resourceId = TestEnvironment.StorageAccountId;
 
-            var timeRange = new QueryTimeRange(
+            var timeRange = new MetricsQueryTimeRange(
                 end: Recording.UtcNow,
                 duration: TimeSpan.FromHours(4)
             );
@@ -182,7 +182,7 @@ namespace Azure.Monitor.Query.Metrics.Tests
 
             var resourceId = TestEnvironment.StorageAccountId;
 
-            var timeRange = new QueryTimeRange(
+            var timeRange = new MetricsQueryTimeRange(
                 duration: TimeSpan.FromHours(4)
             );
 

@@ -157,8 +157,7 @@ namespace Azure.Monitor.Query.Metrics.Models
         public static explicit operator MetricsQueryResourcesResult(Response result)
         {
             using Response response = result;
-            BinaryData data = response.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
+            using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeMetricsQueryResourcesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

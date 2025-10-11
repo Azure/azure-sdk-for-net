@@ -13,7 +13,7 @@ using Azure.Monitor.Query.Metrics;
 namespace Azure.Monitor.Query.Metrics.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class QueryMetricsModelFactory
+    public static partial class MetricsQueryModelFactory
     {
         /// <summary> The metrics result for a resource. </summary>
         /// <param name="values"> The collection of metric data responses per resource, per metric. </param>

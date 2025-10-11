@@ -56,25 +56,25 @@ namespace Azure.Monitor.Query.Metrics
         public int? Size { get { throw null; } set { } }
         public System.DateTimeOffset? StartTime { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public Azure.Monitor.Query.Metrics.QueryTimeRange? TimeRange { get { throw null; } set { } }
+        public Azure.Monitor.Query.Metrics.MetricsQueryTimeRange? TimeRange { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct QueryTimeRange : System.IEquatable<Azure.Monitor.Query.Metrics.QueryTimeRange>
+    public readonly partial struct MetricsQueryTimeRange : System.IEquatable<Azure.Monitor.Query.Metrics.MetricsQueryTimeRange>
     {
-        public QueryTimeRange(System.DateTimeOffset start, System.DateTimeOffset end) { throw null; }
-        public QueryTimeRange(System.DateTimeOffset start, System.TimeSpan duration) { throw null; }
-        public QueryTimeRange(System.TimeSpan duration) { throw null; }
-        public QueryTimeRange(System.TimeSpan duration, System.DateTimeOffset end) { throw null; }
-        public static Azure.Monitor.Query.Metrics.QueryTimeRange All { get { throw null; } }
+        public MetricsQueryTimeRange(System.DateTimeOffset start, System.DateTimeOffset end) { throw null; }
+        public MetricsQueryTimeRange(System.DateTimeOffset start, System.TimeSpan duration) { throw null; }
+        public MetricsQueryTimeRange(System.TimeSpan duration) { throw null; }
+        public MetricsQueryTimeRange(System.TimeSpan duration, System.DateTimeOffset end) { throw null; }
+        public static Azure.Monitor.Query.Metrics.MetricsQueryTimeRange All { get { throw null; } }
         public System.TimeSpan Duration { get { throw null; } }
         public System.DateTimeOffset? End { get { throw null; } }
         public System.DateTimeOffset? Start { get { throw null; } }
-        public bool Equals(Azure.Monitor.Query.Metrics.QueryTimeRange other) { throw null; }
+        public bool Equals(Azure.Monitor.Query.Metrics.MetricsQueryTimeRange other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Monitor.Query.Metrics.QueryTimeRange left, Azure.Monitor.Query.Metrics.QueryTimeRange right) { throw null; }
-        public static implicit operator Azure.Monitor.Query.Metrics.QueryTimeRange (System.TimeSpan timeSpan) { throw null; }
-        public static bool operator !=(Azure.Monitor.Query.Metrics.QueryTimeRange left, Azure.Monitor.Query.Metrics.QueryTimeRange right) { throw null; }
+        public static bool operator ==(Azure.Monitor.Query.Metrics.MetricsQueryTimeRange left, Azure.Monitor.Query.Metrics.MetricsQueryTimeRange right) { throw null; }
+        public static implicit operator Azure.Monitor.Query.Metrics.MetricsQueryTimeRange (System.TimeSpan timeSpan) { throw null; }
+        public static bool operator !=(Azure.Monitor.Query.Metrics.MetricsQueryTimeRange left, Azure.Monitor.Query.Metrics.MetricsQueryTimeRange right) { throw null; }
         public override string ToString() { throw null; }
     }
 }
@@ -130,6 +130,16 @@ namespace Azure.Monitor.Query.Metrics.Models
         Azure.Monitor.Query.Metrics.Models.MetricResult System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Metrics.Models.MetricResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Metrics.Models.MetricResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Metrics.Models.MetricResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public static partial class MetricsQueryModelFactory
+    {
+        public static Azure.Monitor.Query.Metrics.Models.LocalizableString LocalizableString(string value = null, string localizedValue = null) { throw null; }
+        public static Azure.Monitor.Query.Metrics.Models.MetadataValue MetadataValue(Azure.Monitor.Query.Metrics.Models.LocalizableString name = null, string value = null) { throw null; }
+        public static Azure.Monitor.Query.Metrics.Models.MetricResult MetricResult(string id = null, string type = null, Azure.Monitor.Query.Metrics.Models.LocalizableString name = null, string description = null, string errorCode = null, string errorMessage = null, Azure.Monitor.Query.Metrics.Models.MetricUnit unit = default(Azure.Monitor.Query.Metrics.Models.MetricUnit), System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Metrics.Models.TimeSeriesElement> timeSeries = null) { throw null; }
+        public static Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult MetricsQueryResourcesResult(System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Metrics.Models.MetricsQueryResult> values = null) { throw null; }
+        public static Azure.Monitor.Query.Metrics.Models.MetricsQueryResult MetricsQueryResult(string starttime = null, string endtime = null, string granularity = null, string @namespace = null, string resourceregion = null, string resourceid = null, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Metrics.Models.MetricResult> metrics = null) { throw null; }
+        public static Azure.Monitor.Query.Metrics.Models.MetricValue MetricValue(System.DateTimeOffset timeStamp = default(System.DateTimeOffset), double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?)) { throw null; }
+        public static Azure.Monitor.Query.Metrics.Models.TimeSeriesElement TimeSeriesElement(System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Metrics.Models.MetadataValue> metadatavalues = null, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Metrics.Models.MetricValue> values = null) { throw null; }
     }
     public partial class MetricsQueryResourcesResult : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult>
     {
@@ -214,16 +224,6 @@ namespace Azure.Monitor.Query.Metrics.Models
         Azure.Monitor.Query.Metrics.Models.MetricValue System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Metrics.Models.MetricValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Metrics.Models.MetricValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Metrics.Models.MetricValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public static partial class QueryMetricsModelFactory
-    {
-        public static Azure.Monitor.Query.Metrics.Models.LocalizableString LocalizableString(string value = null, string localizedValue = null) { throw null; }
-        public static Azure.Monitor.Query.Metrics.Models.MetadataValue MetadataValue(Azure.Monitor.Query.Metrics.Models.LocalizableString name = null, string value = null) { throw null; }
-        public static Azure.Monitor.Query.Metrics.Models.MetricResult MetricResult(string id = null, string type = null, Azure.Monitor.Query.Metrics.Models.LocalizableString name = null, string description = null, string errorCode = null, string errorMessage = null, Azure.Monitor.Query.Metrics.Models.MetricUnit unit = default(Azure.Monitor.Query.Metrics.Models.MetricUnit), System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Metrics.Models.TimeSeriesElement> timeSeries = null) { throw null; }
-        public static Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult MetricsQueryResourcesResult(System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Metrics.Models.MetricsQueryResult> values = null) { throw null; }
-        public static Azure.Monitor.Query.Metrics.Models.MetricsQueryResult MetricsQueryResult(string starttime = null, string endtime = null, string granularity = null, string @namespace = null, string resourceregion = null, string resourceid = null, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Metrics.Models.MetricResult> metrics = null) { throw null; }
-        public static Azure.Monitor.Query.Metrics.Models.MetricValue MetricValue(System.DateTimeOffset timeStamp = default(System.DateTimeOffset), double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?)) { throw null; }
-        public static Azure.Monitor.Query.Metrics.Models.TimeSeriesElement TimeSeriesElement(System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Metrics.Models.MetadataValue> metadatavalues = null, System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Metrics.Models.MetricValue> values = null) { throw null; }
     }
     public partial class TimeSeriesElement : System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Metrics.Models.TimeSeriesElement>, System.ClientModel.Primitives.IPersistableModel<Azure.Monitor.Query.Metrics.Models.TimeSeriesElement>
     {

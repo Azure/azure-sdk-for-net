@@ -19,7 +19,7 @@ namespace Azure.Monitor.Query.Metrics
         /// Gets or sets the timespan over which the metric will be queried. If only the starttime is set, the endtime default becomes the current time. When the endtime is specified, the starttime is necessary as well. Duration is disregarded.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public QueryTimeRange? TimeRange { get; set; }
+        public MetricsQueryTimeRange? TimeRange { get; set; }
 
         /// <summary>
         /// Gets the <see cref="StartTime"/> of the query. If only the <see cref="StartTime"/> is set, the <see cref="EndTime"/> default becomes the current time. When the <see cref="EndTime"/> is specified, the <see cref="StartTime"/> is necessary as well.
