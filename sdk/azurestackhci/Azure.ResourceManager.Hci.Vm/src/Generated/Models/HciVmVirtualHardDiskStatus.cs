@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> The observed state of virtual hard disks. </summary>
     public partial class HciVmVirtualHardDiskStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmVirtualHardDiskStatus"/>. </summary>
         internal HciVmVirtualHardDiskStatus()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="uploadStatus"> The upload status of the virtual hard disk. </param>
         /// <param name="managedBy"> ARM IDs of the VMs that are consuming the VHD. </param>
         /// <param name="uniqueId"> Unique Guid identifying the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmVirtualHardDiskStatus(string errorCode, string errorMessage, HciVmVirtualHardDiskProvisioningStatus provisioningStatus, HciVmVirtualHardDiskDownloadStatus downloadStatus, HciVmVirtualHardDiskUploadStatus uploadStatus, IReadOnlyList<string> managedBy, string uniqueId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmVirtualHardDiskStatus(string errorCode, string errorMessage, HciVmVirtualHardDiskProvisioningStatus provisioningStatus, HciVmVirtualHardDiskDownloadStatus downloadStatus, HciVmVirtualHardDiskUploadStatus uploadStatus, IList<string> managedBy, string uniqueId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
@@ -69,21 +41,27 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             UploadStatus = uploadStatus;
             ManagedBy = managedBy;
             UniqueId = uniqueId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> VirtualHardDisk provisioning error code. </summary>
         public string ErrorCode { get; }
+
         /// <summary> Descriptive error message. </summary>
         public string ErrorMessage { get; }
+
         /// <summary> Provisioning status of the vhd. </summary>
         public HciVmVirtualHardDiskProvisioningStatus ProvisioningStatus { get; }
+
         /// <summary> The download status of the virtual hard disk. </summary>
         public HciVmVirtualHardDiskDownloadStatus DownloadStatus { get; }
+
         /// <summary> The upload status of the virtual hard disk. </summary>
         public HciVmVirtualHardDiskUploadStatus UploadStatus { get; }
+
         /// <summary> ARM IDs of the VMs that are consuming the VHD. </summary>
-        public IReadOnlyList<string> ManagedBy { get; }
+        public IList<string> ManagedBy { get; }
+
         /// <summary> Unique Guid identifying the resource. </summary>
         public string UniqueId { get; }
     }

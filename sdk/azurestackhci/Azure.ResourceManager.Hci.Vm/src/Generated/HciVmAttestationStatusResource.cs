@@ -6,43 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
     /// <summary>
-    /// A Class representing a HciVmAttestationStatus along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciVmAttestationStatusResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHciVmAttestationStatusResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HciVmInstanceResource"/> using the GetHciVmAttestationStatus method.
+    /// A class representing a HciVmAttestationStatus along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciVmAttestationStatusResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetHciVmAttestationStatus method.
     /// </summary>
     public partial class HciVmAttestationStatusResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HciVmAttestationStatusResource"/> instance. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
-        {
-            var resourceId = $"{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/attestationStatus/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _hciVmAttestationStatusAttestationStatusesClientDiagnostics;
-        private readonly AttestationStatusesRestOperations _hciVmAttestationStatusAttestationStatusesRestClient;
+        private readonly ClientDiagnostics _attestationStatusesClientDiagnostics;
+        private readonly AttestationStatuses _attestationStatusesRestClient;
         private readonly HciVmAttestationStatusData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/virtualMachineInstances/attestationStatus";
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmAttestationStatusResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HciVmAttestationStatusResource for mocking. </summary>
         protected HciVmAttestationStatusResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmAttestationStatusResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmAttestationStatusResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HciVmAttestationStatusResource(ArmClient client, HciVmAttestationStatusData data) : this(client, data.Id)
@@ -51,71 +43,70 @@ namespace Azure.ResourceManager.Hci.Vm
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciVmAttestationStatusResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmAttestationStatusResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmAttestationStatusResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciVmAttestationStatusAttestationStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string hciVmAttestationStatusAttestationStatusesApiVersion);
-            _hciVmAttestationStatusAttestationStatusesRestClient = new AttestationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmAttestationStatusAttestationStatusesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string hciVmAttestationStatusApiVersion);
+            _attestationStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
+            _attestationStatusesRestClient = new AttestationStatuses(_attestationStatusesClientDiagnostics, Pipeline, Endpoint, hciVmAttestationStatusApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HciVmAttestationStatusData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
+        {
+            string resourceId = $"{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/attestationStatus/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Implements AttestationStatus GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/attestationStatus/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttestationStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmAttestationStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Implements AttestationStatus GET method. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HciVmAttestationStatusResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmAttestationStatusAttestationStatusesClientDiagnostics.CreateScope("HciVmAttestationStatusResource.Get");
+            using DiagnosticScope scope = _attestationStatusesClientDiagnostics.CreateScope("HciVmAttestationStatusResource.Get");
             scope.Start();
             try
             {
-                var response = await _hciVmAttestationStatusAttestationStatusesRestClient.GetAsync(Id.Parent.Parent, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attestationStatusesRestClient.CreateGetRequest(Id.Parent, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HciVmAttestationStatusData> response = Response.FromValue(HciVmAttestationStatusData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmAttestationStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -125,37 +116,25 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
-        /// <summary>
-        /// Implements AttestationStatus GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/attestationStatus/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttestationStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciVmAttestationStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Implements AttestationStatus GET method. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HciVmAttestationStatusResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _hciVmAttestationStatusAttestationStatusesClientDiagnostics.CreateScope("HciVmAttestationStatusResource.Get");
+            using DiagnosticScope scope = _attestationStatusesClientDiagnostics.CreateScope("HciVmAttestationStatusResource.Get");
             scope.Start();
             try
             {
-                var response = _hciVmAttestationStatusAttestationStatusesRestClient.Get(Id.Parent.Parent, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attestationStatusesRestClient.CreateGetRequest(Id.Parent, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HciVmAttestationStatusData> response = Response.FromValue(HciVmAttestationStatusData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HciVmAttestationStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

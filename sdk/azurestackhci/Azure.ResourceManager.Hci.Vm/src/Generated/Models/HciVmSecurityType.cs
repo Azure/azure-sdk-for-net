@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct HciVmSecurityType : IEquatable<HciVmSecurityType>
     {
         private readonly string _value;
+        /// <summary> Trusted Launch security type. </summary>
+        private const string TrustedLaunchValue = "TrustedLaunch";
+        /// <summary> Confidential VM security type. </summary>
+        private const string ConfidentialVmValue = "ConfidentialVM";
 
         /// <summary> Initializes a new instance of <see cref="HciVmSecurityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciVmSecurityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrustedLaunchValue = "TrustedLaunch";
-        private const string ConfidentialVmValue = "ConfidentialVM";
+            _value = value;
+        }
 
         /// <summary> Trusted Launch security type. </summary>
         public static HciVmSecurityType TrustedLaunch { get; } = new HciVmSecurityType(TrustedLaunchValue);
+
         /// <summary> Confidential VM security type. </summary>
         public static HciVmSecurityType ConfidentialVm { get; } = new HciVmSecurityType(ConfidentialVmValue);
+
         /// <summary> Determines if two <see cref="HciVmSecurityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciVmSecurityType left, HciVmSecurityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciVmSecurityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciVmSecurityType left, HciVmSecurityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciVmSecurityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciVmSecurityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciVmSecurityType(string value) => new HciVmSecurityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciVmSecurityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciVmSecurityType?(string value) => value == null ? null : new HciVmSecurityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciVmSecurityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciVmSecurityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

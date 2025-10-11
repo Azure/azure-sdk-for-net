@@ -11,39 +11,10 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> This is the storage profile of a Gallery Image Version. </summary>
-    internal partial class GalleryImageVersionStorageProfile
+    public partial class GalleryImageVersionStorageProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GalleryImageVersionStorageProfile"/>. </summary>
         public GalleryImageVersionStorageProfile()
@@ -52,19 +23,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Initializes a new instance of <see cref="GalleryImageVersionStorageProfile"/>. </summary>
         /// <param name="osDiskImage"> This is the OS disk image. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageVersionStorageProfile(GalleryOSDiskImage osDiskImage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryImageVersionStorageProfile(GalleryOSDiskImage osDiskImage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OSDiskImage = osDiskImage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            OsDiskImage = osDiskImage;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This is the OS disk image. </summary>
-        internal GalleryOSDiskImage OSDiskImage { get; set; }
+        internal GalleryOSDiskImage OsDiskImage { get; set; }
+
         /// <summary> This property indicates the size of the VHD to be created. </summary>
-        public long? OSDiskImageSizeInMB
+        public long? OsDiskImageSizeInMB
         {
-            get => OSDiskImage is null ? default : OSDiskImage.SizeInMB;
+            get
+            {
+                return OsDiskImage is null ? default : OsDiskImage.SizeInMB;
+            }
         }
     }
 }

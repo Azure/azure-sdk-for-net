@@ -8,49 +8,20 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> StorageProfile - contains information about the disks and storage information for the virtual machine instance. </summary>
     public partial class HciVmInstanceStorageProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmInstanceStorageProfile"/>. </summary>
         public HciVmInstanceStorageProfile()
         {
-            DataDisks = new ChangeTrackingList<WritableSubResource>();
+            DataDisks = new ChangeTrackingList<VirtualHardDiskArmReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciVmInstanceStorageProfile"/>. </summary>
@@ -58,35 +29,43 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="imageReference"> Which Image to use for the virtual machine instance. </param>
         /// <param name="osDisk"> VHD to attach as OS disk. </param>
         /// <param name="vmConfigStoragePathId"> Id of the storage container that hosts the VM configuration file. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceStorageProfile(IList<WritableSubResource> dataDisks, WritableSubResource imageReference, HciVmInstanceStorageProfileOSDisk osDisk, ResourceIdentifier vmConfigStoragePathId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmInstanceStorageProfile(IList<VirtualHardDiskArmReference> dataDisks, ImageArmReference imageReference, HciVmInstanceStorageProfileOSDisk osDisk, ResourceIdentifier vmConfigStoragePathId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataDisks = dataDisks;
             ImageReference = imageReference;
-            OSDisk = osDisk;
+            OsDisk = osDisk;
             VmConfigStoragePathId = vmConfigStoragePathId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> adds data disks to the virtual machine instance. </summary>
-        public IList<WritableSubResource> DataDisks { get; }
+        public IList<VirtualHardDiskArmReference> DataDisks { get; }
+
         /// <summary> Which Image to use for the virtual machine instance. </summary>
-        internal WritableSubResource ImageReference { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        internal ImageArmReference ImageReference { get; set; }
+
+        /// <summary> VHD to attach as OS disk. </summary>
+        public HciVmInstanceStorageProfileOSDisk OsDisk { get; set; }
+
+        /// <summary> Id of the storage container that hosts the VM configuration file. </summary>
+        public ResourceIdentifier VmConfigStoragePathId { get; set; }
+
+        /// <summary> The ARM ID for an image resource used by the virtual machine instance. </summary>
         public ResourceIdentifier ImageReferenceId
         {
-            get => ImageReference is null ? default : ImageReference.Id;
+            get
+            {
+                return ImageReference is null ? default : ImageReference.Id;
+            }
             set
             {
                 if (ImageReference is null)
-                    ImageReference = new WritableSubResource();
+                {
+                    ImageReference = new ImageArmReference();
+                }
                 ImageReference.Id = value;
             }
         }
-
-        /// <summary> VHD to attach as OS disk. </summary>
-        public HciVmInstanceStorageProfileOSDisk OSDisk { get; set; }
-        /// <summary> Id of the storage container that hosts the VM configuration file. </summary>
-        public ResourceIdentifier VmConfigStoragePathId { get; set; }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> Defines the attestation status properties. </summary>
     public partial class HciVmAttestationStatusProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmAttestationStatusProperties"/>. </summary>
         internal HciVmAttestationStatusProperties()
@@ -61,8 +32,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningState"> Provisioning state of the virtual machine instance. </param>
         /// <param name="attestHardwarePlatform"> The hardware platform information from attestation token. This only applies to Confidential VM. </param>
         /// <param name="attestDiskSecurityEncryptionType"> The managed disk security encryption type from attestation token. This only applies to Confidential VM. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmAttestationStatusProperties(AttestSecureBootStatus? attestSecureBootEnabled, AttestCertValidationStatus? attestationCertValidated, AttestBootIntegrityStatus? bootIntegrityValidated, string linuxKernelVersion, AttestHealthStatus? healthStatus, string timestamp, string errorMessage, HciVmProvisioningState? provisioningState, AttestHardwarePlatformType? attestHardwarePlatform, AttestDiskSecurityEncryptionType? attestDiskSecurityEncryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmAttestationStatusProperties(AttestSecureBootStatus? attestSecureBootEnabled, AttestCertValidationStatus? attestationCertValidated, AttestBootIntegrityStatus? bootIntegrityValidated, string linuxKernelVersion, AttestHealthStatus? healthStatus, string timestamp, string errorMessage, HciVmProvisioningState? provisioningState, AttestHardwarePlatformType? attestHardwarePlatform, AttestDiskSecurityEncryptionType? attestDiskSecurityEncryptionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AttestSecureBootEnabled = attestSecureBootEnabled;
             AttestationCertValidated = attestationCertValidated;
@@ -74,27 +45,36 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             ProvisioningState = provisioningState;
             AttestHardwarePlatform = attestHardwarePlatform;
             AttestDiskSecurityEncryptionType = attestDiskSecurityEncryptionType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of whether secure boot is enabled. </summary>
         public AttestSecureBootStatus? AttestSecureBootEnabled { get; }
+
         /// <summary> The status of whether attestation certificate is validated. </summary>
         public AttestCertValidationStatus? AttestationCertValidated { get; }
+
         /// <summary> The status of whether the list of boot integrity properties is validated. </summary>
         public AttestBootIntegrityStatus? BootIntegrityValidated { get; }
+
         /// <summary> kernel version string for Linux VM. </summary>
         public string LinuxKernelVersion { get; }
+
         /// <summary> The health status of attestation validation and parsing. </summary>
         public AttestHealthStatus? HealthStatus { get; }
+
         /// <summary> The time stamp of the last time attestation token is validated by relying party service. </summary>
         public string Timestamp { get; }
+
         /// <summary> The error message of attestation validation and parsing. </summary>
         public string ErrorMessage { get; }
+
         /// <summary> Provisioning state of the virtual machine instance. </summary>
         public HciVmProvisioningState? ProvisioningState { get; }
+
         /// <summary> The hardware platform information from attestation token. This only applies to Confidential VM. </summary>
         public AttestHardwarePlatformType? AttestHardwarePlatform { get; }
+
         /// <summary> The managed disk security encryption type from attestation token. This only applies to Confidential VM. </summary>
         public AttestDiskSecurityEncryptionType? AttestDiskSecurityEncryptionType { get; }
     }

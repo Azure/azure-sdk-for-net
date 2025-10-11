@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> Properties under the gallery image resource. </summary>
     public partial class HciVmGalleryImageProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageProperties"/>. </summary>
         /// <param name="osType"> Operating system type that the gallery image uses [Windows, Linux]. </param>
@@ -65,8 +36,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningState"> Provisioning state of the gallery image. </param>
         /// <param name="status"> The observed state of gallery images. </param>
         /// <param name="sourceVirtualMachineId"> Resource ID of the source virtual machine from whose OS disk the gallery image is created. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmGalleryImageProperties(ResourceIdentifier containerId, string imagePath, HciVmOSType osType, CloudInitDataSource? cloudInitDataSource, HciVmHyperVGeneration? hyperVGeneration, HciVmImageRepositoryCredentials vmImageRepositoryCredentials, HciVmGalleryImageIdentifier identifier, HciVmGalleryImageVersion version, HciVmProvisioningState? provisioningState, HciVmGalleryImageStatus status, ResourceIdentifier sourceVirtualMachineId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmGalleryImageProperties(ResourceIdentifier containerId, string imagePath, HciVmOSType osType, CloudInitDataSource? cloudInitDataSource, HciVmHyperVGeneration? hyperVGeneration, HciVmImageRepositoryCredentials vmImageRepositoryCredentials, HciVmGalleryImageIdentifier identifier, HciVmGalleryImageVersion version, HciVmProvisioningState? provisioningState, HciVmGalleryImageStatus status, ResourceIdentifier sourceVirtualMachineId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContainerId = containerId;
             ImagePath = imagePath;
@@ -79,34 +50,39 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             ProvisioningState = provisioningState;
             Status = status;
             SourceVirtualMachineId = sourceVirtualMachineId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageProperties"/> for deserialization. </summary>
-        internal HciVmGalleryImageProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Storage ContainerID of the storage container to be used for gallery image. </summary>
         public ResourceIdentifier ContainerId { get; set; }
+
         /// <summary> location of the image the gallery image should be created from. </summary>
         public string ImagePath { get; set; }
+
         /// <summary> Operating system type that the gallery image uses [Windows, Linux]. </summary>
         public HciVmOSType OSType { get; set; }
+
         /// <summary> Datasource for the gallery image when provisioning with cloud-init [NoCloud, Azure]. </summary>
         public CloudInitDataSource? CloudInitDataSource { get; set; }
+
         /// <summary> The hypervisor generation of the Virtual Machine [V1, V2]. </summary>
         public HciVmHyperVGeneration? HyperVGeneration { get; set; }
+
         /// <summary> The credentials used to login to the image repository that has access to the specified image. </summary>
         public HciVmImageRepositoryCredentials VmImageRepositoryCredentials { get; set; }
+
         /// <summary> This is the gallery image definition identifier. </summary>
         public HciVmGalleryImageIdentifier Identifier { get; set; }
+
         /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
         public HciVmGalleryImageVersion Version { get; set; }
+
         /// <summary> Provisioning state of the gallery image. </summary>
         public HciVmProvisioningState? ProvisioningState { get; }
+
         /// <summary> The observed state of gallery images. </summary>
         public HciVmGalleryImageStatus Status { get; }
+
         /// <summary> Resource ID of the source virtual machine from whose OS disk the gallery image is created. </summary>
         public ResourceIdentifier SourceVirtualMachineId { get; set; }
     }
