@@ -1,0 +1,29 @@
+# This template serves as a place to upload artifacts intended to be used by LLMs
+# that handle data from the pipeline (for example github copilot).
+
+steps:
+  - pwsh: |
+      $artifactsDirectory = "$(Build.ArtifactStagingDirectory)/llm-artifacts"
+      New-Item $artifactsDirectory -ItemType directory -Force
+
+      Write-Host "================="
+      Get-ChildItem -Path $(TestTargetFramework)*.trx -Recurse -File
+      Write-Host "================="
+
+      foreach($testResultsFile in (Get-ChildItem -Path $(TestTargetFramework)*.trx -Recurse -File))
+      {
+        $fileFullName = $testResultsFile.FullName
+
+        # Convert a path like
+        #   /mnt/vss/_work/1/s/sdk/template/Azure.Template/tests/TestResults/net8.0.trx
+        # to
+        #   template-Azure.Template-net8.0.trx
+        $serviceAndPackage = ($fileFullName -split 'sdk[\\/]|[\\/]tests')[1] -replace '[\\/]', '-'
+        $trxFile     = Split-Path $fileFullName -Leaf
+        $fileName  = "$serviceAndPackage-$trxFile"
+
+        Move-Item -Path $fileFullName -Destination "$artifactsDirectory/$fileName" -ErrorAction Continue
+        Write-Host "##vso[task.setvariable variable=uploadTestResults]true"
+      }
+    condition: succeededOrFailed()
+    displayName: Copy test results files to llm artifacts staging directory
