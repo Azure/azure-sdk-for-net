@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private readonly StorageAnalyticsLogParser _parser;
         private readonly ILogger<BlobListener> _logger;
 
-        private BlobLogListener(BlobServiceClient blobClient, ILogger<BlobListener> logger)
+        public BlobLogListener(BlobServiceClient blobClient, ILogger<BlobListener> logger)
         {
             _blobClient = blobClient;
 
@@ -75,6 +75,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
 
             return blobs;
+        }
+
+        public async Task<bool> HasBlobWritesAsync(CancellationToken cancellationToken, int hoursWindow = DefaultScanHoursWindow)
+        {
+            if (hoursWindow <= 0)
+            {
+                return false;
+            }
+
+            DateTime hourCursor = DateTime.UtcNow;
+            BlobContainerClient containerClient = _blobClient.GetBlobContainerClient(LogContainer);
+
+            for (int hourIndex = 0; hourIndex < hoursWindow; hourIndex++)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                string prefix = GetSearchPrefix("blob", hourCursor, hourCursor);
+
+                await foreach (BlobItem blob in containerClient
+                    .GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, states: BlobStates.None, cancellationToken: cancellationToken)
+                    .ConfigureAwait(false))
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    if (blob.Metadata is not null &&
+                        blob.Metadata.TryGetValue(LogType, out string logType) &&
+                        !string.IsNullOrEmpty(logType) &&
+                        logType.IndexOf("write", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        return true;
+                    }
+                }
+
+                hourCursor = hourCursor.AddHours(-1);
+            }
+
+            return false;
         }
 
         internal static IEnumerable<BlobPath> GetPathsForValidBlobWrites(IEnumerable<StorageAnalyticsLogEntry> entries)
