@@ -58,7 +58,30 @@ namespace Azure.Monitor.Query.Models
         /// </summary>
         /// <param name="index">The column index.</param>
         /// <returns>The <see cref="Nullable{Decimal}"/> value of the column.</returns>
-        public decimal? GetDecimal(int index) => _row[index].ValueKind == JsonValueKind.Null ? null : decimal.Parse(_row[index].GetString(), CultureInfo.InvariantCulture);
+        /// <exception cref="FormatException">column value is not in the correct format.</exception>
+        /// <exception cref="OverflowException">column value represents a number less than <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>, or is NaN or Infinity or -Infinity.</exception>
+        /// <exception cref="InvalidOperationException">Unsupported <see cref="JsonValueKind"/>.</exception>
+        public decimal? GetDecimal(int index) => _row[index].ValueKind switch
+                                                    {
+                                                        JsonValueKind.Null => null,
+                                                        JsonValueKind.Undefined => null,
+                                                        JsonValueKind.True => 1m,
+                                                        JsonValueKind.False => 0m,
+                                                        JsonValueKind.Number => _row[index].GetDecimal(),
+                                                        JsonValueKind.String => _row[index].GetString() switch
+                                                                                {
+                                                                                    "NaN" or "Infinity" or "-Infinity"
+                                                                                        => throw new OverflowException($"{_columns[index]} value was either too large or too small for a Decimal."),
+
+                                                                                    string value
+                                                                                        => decimal.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out decimal result)
+                                                                                            ? result
+                                                                                            : throw new FormatException($"The input string '{value}' for {_columns[index]} was not in a correct format so couln't be parsed as Decimal."),
+
+                                                                                    _ => null
+                                                                                },
+                                                        _ => throw new InvalidOperationException($"Cannot convert {_columns[index]} value kind {_row[index].ValueKind}")
+                                                    };
 
         /// <summary>
         /// Gets the value of the column at the specified index as <see cref="double"/>.

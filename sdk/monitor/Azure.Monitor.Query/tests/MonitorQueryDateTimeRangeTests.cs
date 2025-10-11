@@ -8,6 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
+    [SetCulture("en-US")]
     public class MonitorQueryDateTimeRangeTests
     {
         [Test]
