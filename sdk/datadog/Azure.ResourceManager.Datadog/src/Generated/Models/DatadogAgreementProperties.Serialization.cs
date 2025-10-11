@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("signature"u8);
                 writer.WriteStringValue(Signature);
             }
-            if (Optional.IsDefined(Accepted))
+            if (Optional.IsDefined(IsAccepted))
             {
                 writer.WritePropertyName("accepted"u8);
-                writer.WriteBooleanValue(Accepted.Value);
+                writer.WriteBooleanValue(IsAccepted.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

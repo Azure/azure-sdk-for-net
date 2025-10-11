@@ -5,4 +5,7 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Datadog.</Description>
     <PackageTags>azure;management;arm;resource manager;datadog</PackageTags>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Generated\Extensions\" />
+  </ItemGroup>
 </Project>
