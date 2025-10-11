@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.DevCenter.Models
         private const string IsDisabledValue = "Disabled";
         private const string IsEnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary> Hibernate is disabled. </summary>
         public static DevCenterHibernateSupport IsDisabled { get; } = new DevCenterHibernateSupport(IsDisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary> Hibernate is enabled. </summary>
         public static DevCenterHibernateSupport IsEnabled { get; } = new DevCenterHibernateSupport(IsEnabledValue);
         /// <summary> Determines if two <see cref="DevCenterHibernateSupport"/> values are the same. </summary>
         public static bool operator ==(DevCenterHibernateSupport left, DevCenterHibernateSupport right) => left.Equals(right);

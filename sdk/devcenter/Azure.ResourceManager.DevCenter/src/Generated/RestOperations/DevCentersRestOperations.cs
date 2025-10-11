@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2025-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists all devcenters in a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists all devcenters in a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists all devcenters in a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Lists all devcenters in a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets a devcenter. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets a devcenter. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Creates or updates a devcenter resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="data"> Represents a devcenter. </param>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Creates or updates a devcenter resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="data"> Represents a devcenter. </param>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Partially updates a devcenter. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="patch"> Updatable devcenter properties. </param>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Partially updates a devcenter. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="patch"> Updatable devcenter properties. </param>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Deletes a devcenter. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -551,7 +551,6 @@ namespace Azure.ResourceManager.DevCenter
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -561,7 +560,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Deletes a devcenter. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -577,7 +576,6 @@ namespace Azure.ResourceManager.DevCenter
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -610,7 +608,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists all devcenters in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -638,7 +636,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists all devcenters in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -688,7 +686,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists all devcenters in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -718,7 +716,7 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary> Lists all devcenters in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

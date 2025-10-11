@@ -58,15 +58,17 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Managed identity properties. </param>
         /// <param name="deploymentTargetId"> Id of a subscription that the environment type will be mapped to. The environment's resources will be deployed into this subscription. </param>
+        /// <param name="displayName"> The display name of the project environment type. </param>
         /// <param name="status"> Defines whether this Environment Type can be used in this Project. </param>
         /// <param name="creatorRoleAssignment"> The role definition assigned to the environment creator on backing resources. </param>
         /// <param name="userRoleAssignments"> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterProjectEnvironmentPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ResourceIdentifier deploymentTargetId, EnvironmentTypeEnableStatus? status, ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment, IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterProjectEnvironmentPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ResourceIdentifier deploymentTargetId, string displayName, EnvironmentTypeEnableStatus? status, ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment, IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Identity = identity;
             DeploymentTargetId = deploymentTargetId;
+            DisplayName = displayName;
             Status = status;
             CreatorRoleAssignment = creatorRoleAssignment;
             UserRoleAssignments = userRoleAssignments;
@@ -79,6 +81,8 @@ namespace Azure.ResourceManager.DevCenter.Models
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Id of a subscription that the environment type will be mapped to. The environment's resources will be deployed into this subscription. </summary>
         public ResourceIdentifier DeploymentTargetId { get; set; }
+        /// <summary> The display name of the project environment type. </summary>
+        public string DisplayName { get; set; }
         /// <summary> Defines whether this Environment Type can be used in this Project. </summary>
         public EnvironmentTypeEnableStatus? Status { get; set; }
         /// <summary> The role definition assigned to the environment creator on backing resources. </summary>

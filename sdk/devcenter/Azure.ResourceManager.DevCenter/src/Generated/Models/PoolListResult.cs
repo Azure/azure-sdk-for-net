@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary> Results of the machine pool list operation. </summary>
+    /// <summary> Paged collection of Pool items. </summary>
     internal partial class PoolListResult
     {
         /// <summary>
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PoolListResult"/>. </summary>
-        internal PoolListResult()
+        /// <param name="value"> The Pool items on this page. </param>
+        internal PoolListResult(IEnumerable<DevCenterPoolData> value)
         {
-            Value = new ChangeTrackingList<DevCenterPoolData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PoolListResult"/>. </summary>
-        /// <param name="value"> Current page of results. </param>
-        /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
+        /// <param name="value"> The Pool items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PoolListResult(IReadOnlyList<DevCenterPoolData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PoolListResult(IReadOnlyList<DevCenterPoolData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Current page of results. </summary>
+        /// <summary> Initializes a new instance of <see cref="PoolListResult"/> for deserialization. </summary>
+        internal PoolListResult()
+        {
+        }
+
+        /// <summary> The Pool items on this page. </summary>
         public IReadOnlyList<DevCenterPoolData> Value { get; }
-        /// <summary> URL to get the next set of results if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

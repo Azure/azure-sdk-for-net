@@ -45,6 +45,31 @@ namespace Azure.ResourceManager.DevCenter
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(ProjectCatalogSettings))
+            {
+                writer.WritePropertyName("projectCatalogSettings"u8);
+                writer.WriteObjectValue(ProjectCatalogSettings, options);
+            }
+            if (Optional.IsDefined(NetworkSettings))
+            {
+                writer.WritePropertyName("networkSettings"u8);
+                writer.WriteObjectValue(NetworkSettings, options);
+            }
+            if (Optional.IsDefined(DevBoxProvisioningSettings))
+            {
+                writer.WritePropertyName("devBoxProvisioningSettings"u8);
+                writer.WriteObjectValue(DevBoxProvisioningSettings, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -85,6 +110,11 @@ namespace Azure.ResourceManager.DevCenter
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            Encryption encryption = default;
+            string displayName = default;
+            DevCenterProjectCatalogSettings projectCatalogSettings = default;
+            DevCenterNetworkSettings networkSettings = default;
+            DevBoxProvisioningSettings devBoxProvisioningSettings = default;
             DevCenterProvisioningState? provisioningState = default;
             Uri devCenterUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -152,6 +182,47 @@ namespace Azure.ResourceManager.DevCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryption = Encryption.DeserializeEncryption(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("projectCatalogSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            projectCatalogSettings = DevCenterProjectCatalogSettings.DeserializeDevCenterProjectCatalogSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("networkSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkSettings = DevCenterNetworkSettings.DeserializeDevCenterNetworkSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("devBoxProvisioningSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            devBoxProvisioningSettings = DevBoxProvisioningSettings.DeserializeDevBoxProvisioningSettings(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -187,6 +258,11 @@ namespace Azure.ResourceManager.DevCenter
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
+                encryption,
+                displayName,
+                projectCatalogSettings,
+                networkSettings,
+                devBoxProvisioningSettings,
                 provisioningState,
                 devCenterUri,
                 serializedAdditionalRawData);

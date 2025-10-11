@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets a Dev Box definition
+        /// Gets a Dev Box definition.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets a Dev Box definition
+        /// Gets a Dev Box definition.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Deletes a Dev Box definition
+        /// Deletes a Dev Box definition.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devBoxDefinitionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Deletes a Dev Box definition
+        /// Deletes a Dev Box definition.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devBoxDefinitionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevCenterArmOperation(_devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devBoxDefinitionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devBoxDefinitionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
