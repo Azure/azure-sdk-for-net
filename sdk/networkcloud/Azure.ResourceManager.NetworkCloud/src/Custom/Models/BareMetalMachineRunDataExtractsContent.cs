@@ -1,3 +1,19 @@
+// // Copyright (c) Microsoft Corporation. All rights reserved.
+// // Licensed under the MIT License.
+
+// #nullable disable
+
+// using System;
+// using System.Collections.Generic;
+// using System.ComponentModel;
+
+// namespace Azure.ResourceManager.NetworkCloud.Models
+// {
+// 	/// <summary> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified, the default is 1. </summary>
+//     [EditorBrowsable(EditorBrowsableState.Never)]
+//     public partial class BareMetalMachineRunDataExtractsContent
+//     {}
+// }
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
@@ -10,9 +26,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
+	/// <summary> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified, the default is 1. </summary>
     public partial class BareMetalMachineRunDataExtractsContent : IUtf8JsonSerializable, IJsonModel<BareMetalMachineRunDataExtractsContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BareMetalMachineRunDataExtractsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -34,30 +52,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("commands"u8);
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartArray();
-            foreach (var item in Commands)
-            {
-                writer.WriteObjectValue(item, options);
-            }
             writer.WriteEndArray();
-            writer.WritePropertyName("limitTimeSeconds"u8);
-            writer.WriteNumberValue(LimitTimeSeconds);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         BareMetalMachineRunDataExtractsContent IJsonModel<BareMetalMachineRunDataExtractsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,67 +73,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            IList<BareMetalMachineCommandSpecification> commands = default;
-            long limitTimeSeconds = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("commands"u8))
-                {
-                    List<BareMetalMachineCommandSpecification> array = new List<BareMetalMachineCommandSpecification>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BareMetalMachineCommandSpecification.DeserializeBareMetalMachineCommandSpecification(item, options));
-                    }
-                    commands = array;
-                    continue;
-                }
-                if (property.NameEquals("limitTimeSeconds"u8))
-                {
-                    limitTimeSeconds = property.Value.GetInt64();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new BareMetalMachineRunDataExtractsContent(commands, limitTimeSeconds, serializedAdditionalRawData);
+			return null;
         }
 
         BinaryData IPersistableModel<BareMetalMachineRunDataExtractsContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsContent>)this).GetFormatFromOptions(options) : options.Format;
 
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support writing '{options.Format}' format.");
-            }
+            throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support writing '{options.Format}' format.");
         }
 
         BareMetalMachineRunDataExtractsContent IPersistableModel<BareMetalMachineRunDataExtractsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsContent>)this).GetFormatFromOptions(options) : options.Format;
 
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBareMetalMachineRunDataExtractsContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support reading '{options.Format}' format.");
-            }
+            throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support reading '{options.Format}' format.");
         }
 
         string IPersistableModel<BareMetalMachineRunDataExtractsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

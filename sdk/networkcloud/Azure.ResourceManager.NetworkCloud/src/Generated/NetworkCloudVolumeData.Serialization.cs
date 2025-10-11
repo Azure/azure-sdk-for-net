@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteObjectValue(ExtendedLocation, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(AllocatedSizeMiB))
+            {
+                writer.WritePropertyName("allocatedSizeMiB"u8);
+                writer.WriteNumberValue(AllocatedSizeMiB.Value);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(AttachedTo))
             {
                 writer.WritePropertyName("attachedTo"u8);
@@ -79,6 +84,11 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("sizeMiB"u8);
             writer.WriteNumberValue(SizeInMiB);
+            if (Optional.IsDefined(StorageApplianceId))
+            {
+                writer.WritePropertyName("storageApplianceId"u8);
+                writer.WriteStringValue(StorageApplianceId);
+            }
             writer.WriteEndObject();
         }
 
@@ -110,12 +120,14 @@ namespace Azure.ResourceManager.NetworkCloud
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            long? allocatedSizeMiB = default;
             IReadOnlyList<string> attachedTo = default;
             VolumeDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
             VolumeProvisioningState? provisioningState = default;
             string serialNumber = default;
             long sizeMiB = default;
+            ResourceIdentifier storageApplianceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,6 +198,15 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("allocatedSizeMiB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allocatedSizeMiB = property0.Value.GetInt64();
+                            continue;
+                        }
                         if (property0.NameEquals("attachedTo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -233,6 +254,15 @@ namespace Azure.ResourceManager.NetworkCloud
                             sizeMiB = property0.Value.GetInt64();
                             continue;
                         }
+                        if (property0.NameEquals("storageApplianceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageApplianceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -251,12 +281,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 location,
                 etag,
                 extendedLocation,
+                allocatedSizeMiB,
                 attachedTo ?? new ChangeTrackingList<string>(),
                 detailedStatus,
                 detailedStatusMessage,
                 provisioningState,
                 serialNumber,
                 sizeMiB,
+                storageApplianceId,
                 serializedAdditionalRawData);
         }
 
