@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateConnectionMonitorV1()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkWatcherConnectionMonitorCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherConnectionMonitorCreate.json
             // this example is just showing the usage of "ConnectionMonitors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,7 +75,7 @@ Port = 80,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateConnectionMonitorV2()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkWatcherConnectionMonitorV2Create.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherConnectionMonitorV2Create.json
             // this example is just showing the usage of "ConnectionMonitors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +149,7 @@ Disable = false,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateConnectionMonitorWithArcNetwork()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkWatcherConnectionMonitorCreateWithArcNetwork.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherConnectionMonitorCreateWithArcNetwork.json
             // this example is just showing the usage of "ConnectionMonitors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -226,7 +226,7 @@ Disable = false,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetConnectionMonitor()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkWatcherConnectionMonitorGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherConnectionMonitorGet.json
             // this example is just showing the usage of "ConnectionMonitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -260,7 +260,7 @@ Disable = false,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListConnectionMonitors()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkWatcherConnectionMonitorList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherConnectionMonitorList.json
             // this example is just showing the usage of "ConnectionMonitors_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -296,7 +296,7 @@ Disable = false,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetConnectionMonitor()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkWatcherConnectionMonitorGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherConnectionMonitorGet.json
             // this example is just showing the usage of "ConnectionMonitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -326,7 +326,7 @@ Disable = false,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetConnectionMonitor()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkWatcherConnectionMonitorGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherConnectionMonitorGet.json
             // this example is just showing the usage of "ConnectionMonitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

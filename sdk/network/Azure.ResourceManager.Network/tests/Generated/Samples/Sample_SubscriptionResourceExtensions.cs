@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetApplicationGateways_ListsAllApplicationGatewaysInASubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ApplicationGatewayListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ApplicationGatewayListAll.json
             // this example is just showing the usage of "ApplicationGateways_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableServerVariablesApplicationGateways_GetAvailableServerVariables()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ApplicationGatewayAvailableServerVariablesGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ApplicationGatewayAvailableServerVariablesGet.json
             // this example is just showing the usage of "ApplicationGateways_ListAvailableServerVariables" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableRequestHeadersApplicationGateways_GetAvailableRequestHeaders()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ApplicationGatewayAvailableRequestHeadersGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ApplicationGatewayAvailableRequestHeadersGet.json
             // this example is just showing the usage of "ApplicationGateways_ListAvailableRequestHeaders" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableResponseHeadersApplicationGateways_GetAvailableResponseHeaders()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ApplicationGatewayAvailableResponseHeadersGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ApplicationGatewayAvailableResponseHeadersGet.json
             // this example is just showing the usage of "ApplicationGateways_ListAvailableResponseHeaders" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAppGatewayAvailableWafRuleSets_GetAvailableWafRuleSets()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ApplicationGatewayAvailableWafRuleSetsGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ApplicationGatewayAvailableWafRuleSetsGet.json
             // this example is just showing the usage of "ApplicationGateways_ListAvailableWafRuleSets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetApplicationGatewayAvailableSslOptions_GetAvailableSslOptions()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ApplicationGatewayAvailableSslOptionsGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ApplicationGatewayAvailableSslOptionsGet.json
             // this example is just showing the usage of "ApplicationGateways_ListAvailableSslOptions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetApplicationGatewayAvailableSslPredefinedPolicies_GetAvailableSslPredefinedPolicies()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ApplicationGatewayAvailableSslOptionsPredefinedPoliciesGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ApplicationGatewayAvailableSslOptionsPredefinedPoliciesGet.json
             // this example is just showing the usage of "ApplicationGateways_ListAvailableSslPredefinedPolicies" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetApplicationGatewaySslPredefinedPolicy_GetAvailableSslPredefinedPolicyByName()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ApplicationGatewayAvailableSslOptionsPredefinedPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ApplicationGatewayAvailableSslOptionsPredefinedPolicyGet.json
             // this example is just showing the usage of "ApplicationGateways_GetSslPredefinedPolicy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetApplicationSecurityGroups_ListAllApplicationSecurityGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ApplicationSecurityGroupListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ApplicationSecurityGroupListAll.json
             // this example is just showing the usage of "ApplicationSecurityGroups_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableDelegations_GetAvailableDelegations()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/AvailableDelegationsSubscriptionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AvailableDelegationsSubscriptionGet.json
             // this example is just showing the usage of "AvailableDelegations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableServiceAliases_GetAvailableServiceAliases()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/AvailableServiceAliasesList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AvailableServiceAliasesList.json
             // this example is just showing the usage of "AvailableServiceAliases_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAzureFirewalls_ListAllAzureFirewallsForAGivenSubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/AzureFirewallListBySubscription.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AzureFirewallListBySubscription.json
             // this example is just showing the usage of "AzureFirewalls_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAzureFirewallFqdnTags_ListAllAzureFirewallFQDNTagsForAGivenSubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/AzureFirewallFqdnTagsListBySubscription.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AzureFirewallFqdnTagsListBySubscription.json
             // this example is just showing the usage of "AzureFirewallFqdnTags_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetBastionHosts_ListAllBastionHostsForAGivenSubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/BastionHostListBySubscription.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/BastionHostListBySubscription.json
             // this example is just showing the usage of "BastionHosts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckDnsNameAvailability_CheckDnsNameAvailability()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/CheckDnsNameAvailability.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/CheckDnsNameAvailability.json
             // this example is just showing the usage of "CheckDnsNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCustomIPPrefixes_ListAllCustomIPPrefixes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/CustomIpPrefixListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/CustomIpPrefixListAll.json
             // this example is just showing the usage of "CustomIPPrefixes_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDdosProtectionPlans_ListAllDDoSProtectionPlans()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/DdosProtectionPlanListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/DdosProtectionPlanListAll.json
             // this example is just showing the usage of "DdosProtectionPlans_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDscpConfigurations_ListAllNetworkInterfaces()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/DscpConfigurationListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/DscpConfigurationListAll.json
             // this example is just showing the usage of "DscpConfiguration_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableEndpointServices_EndpointServicesList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/EndpointServicesList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/EndpointServicesList.json
             // this example is just showing the usage of "AvailableEndpointServices_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetExpressRouteCircuits_ListExpressRouteCircuitsInASubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ExpressRouteCircuitListBySubscription.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCircuitListBySubscription.json
             // this example is just showing the usage of "ExpressRouteCircuits_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetExpressRouteServiceProviders_ListExpressRouteProviders()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ExpressRouteProviderList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteProviderList.json
             // this example is just showing the usage of "ExpressRouteServiceProviders_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetExpressRouteCrossConnections_ExpressRouteCrossConnectionList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ExpressRouteCrossConnectionList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCrossConnectionList.json
             // this example is just showing the usage of "ExpressRouteCrossConnections_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetExpressRoutePorts_ExpressRoutePortList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ExpressRoutePortList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRoutePortList.json
             // this example is just showing the usage of "ExpressRoutePorts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFirewallPolicies_ListAllFirewallPoliciesForAGivenSubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/FirewallPolicyListBySubscription.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/FirewallPolicyListBySubscription.json
             // this example is just showing the usage of "FirewallPolicies_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIPAllocations_ListAllIpAllocations()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/IpAllocationList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/IpAllocationList.json
             // this example is just showing the usage of "IpAllocations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIPGroups_ListIpGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/IpGroupsListBySubscription.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/IpGroupsListBySubscription.json
             // this example is just showing the usage of "IpGroups_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetLoadBalancers_ListAllLoadBalancers()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/LoadBalancerListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/LoadBalancerListAll.json
             // this example is just showing the usage of "LoadBalancers_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task SwapPublicIPAddressesLoadBalancer_SwapVIPsBetweenTwoLoadBalancers()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/LoadBalancersSwapPublicIpAddresses.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/LoadBalancersSwapPublicIpAddresses.json
             // this example is just showing the usage of "LoadBalancers_SwapPublicIPAddresses" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -840,7 +840,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetNatGateways_ListAllNatGateways()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NatGatewayListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NatGatewayListAll.json
             // this example is just showing the usage of "NatGateways_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -871,7 +871,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkInterfaces_ListAllNetworkInterfaces()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkInterfaceListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkInterfaceListAll.json
             // this example is just showing the usage of "NetworkInterfaces_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -902,7 +902,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkManagers_NetworkManagersList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkManagerListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkManagerListAll.json
             // this example is just showing the usage of "NetworkManagers_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -933,7 +933,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkProfiles_ListAllNetworkProfiles()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkProfileListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkProfileListAll.json
             // this example is just showing the usage of "NetworkProfiles_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -964,7 +964,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkSecurityGroups_ListAllNetworkSecurityGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkSecurityGroupListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkSecurityGroupListAll.json
             // this example is just showing the usage of "NetworkSecurityGroups_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -995,7 +995,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkSecurityPerimeters_NetworkSecurityPerimetersList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkSecurityPerimeterListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkSecurityPerimeterListAll.json
             // this example is just showing the usage of "NetworkSecurityPerimeters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1026,7 +1026,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkSecurityPerimeterAssociableResourceTypes_NetworkSecurityPerimeterAssociableResourceTypes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PerimeterAssociableResourcesList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PerimeterAssociableResourcesList.json
             // this example is just showing the usage of "NetworkSecurityPerimeterAssociableResourceTypes_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1054,7 +1054,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkSecurityPerimeterServiceTags_NSPServiceTagsList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NspServiceTagsList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NspServiceTagsList.json
             // this example is just showing the usage of "NetworkSecurityPerimeterServiceTags_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1082,7 +1082,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkVirtualAppliances_ListAllNetworkVirtualAppliancesForAGivenSubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkVirtualApplianceListBySubscription.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkVirtualApplianceListBySubscription.json
             // this example is just showing the usage of "NetworkVirtualAppliances_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1113,7 +1113,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkWatchers_ListAllNetworkWatchers()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkWatcherListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherListAll.json
             // this example is just showing the usage of "NetworkWatchers_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1144,7 +1144,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateEndpoints_ListAllPrivateEndpoints()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointListAll.json
             // this example is just showing the usage of "PrivateEndpoints_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1175,7 +1175,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvailablePrivateEndpointTypes_GetAvailablePrivateEndpointTypes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/AvailablePrivateEndpointTypesGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AvailablePrivateEndpointTypesGet.json
             // this example is just showing the usage of "AvailablePrivateEndpointTypes_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1203,7 +1203,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkServices_ListAllPrivateListService()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateLinkServiceListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateLinkServiceListAll.json
             // this example is just showing the usage of "PrivateLinkServices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1234,7 +1234,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task CheckPrivateLinkServiceVisibilityPrivateLinkService_CheckPrivateLinkServiceVisibility()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/CheckPrivateLinkServiceVisibility.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/CheckPrivateLinkServiceVisibility.json
             // this example is just showing the usage of "PrivateLinkServices_CheckPrivateLinkServiceVisibility" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1264,7 +1264,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetAutoApprovedPrivateLinkServicesPrivateLinkServices_GetListOfPrivateLinkServiceIdThatCanBeLinkedToAPrivateEndPointWithAutoApproved()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/AutoApprovedPrivateLinkServicesGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AutoApprovedPrivateLinkServicesGet.json
             // this example is just showing the usage of "PrivateLinkServices_ListAutoApprovedPrivateLinkServices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1292,7 +1292,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetPublicIPAddresses_ListAllPublicIPAddresses()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PublicIpAddressListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpAddressListAll.json
             // this example is just showing the usage of "PublicIPAddresses_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1323,7 +1323,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetPublicIPPrefixes_ListAllPublicIPPrefixes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PublicIpPrefixListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpPrefixListAll.json
             // this example is just showing the usage of "PublicIPPrefixes_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1354,7 +1354,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetRouteFilters_RouteFilterList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/RouteFilterList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/RouteFilterList.json
             // this example is just showing the usage of "RouteFilters_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1385,7 +1385,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetRouteTables_ListAllRouteTables()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/RouteTableListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/RouteTableListAll.json
             // this example is just showing the usage of "RouteTables_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1416,7 +1416,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetSecurityPartnerProviders_ListAllSecurityPartnerProvidersForAGivenSubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SecurityPartnerProviderListBySubscription.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SecurityPartnerProviderListBySubscription.json
             // this example is just showing the usage of "SecurityPartnerProviders_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1447,7 +1447,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetBgpServiceCommunities_ServiceCommunityList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ServiceCommunityList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ServiceCommunityList.json
             // this example is just showing the usage of "BgpServiceCommunities_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1474,7 +1474,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetServiceEndpointPoliciesByServiceEndpointPolicy_ListAllServiceEndpointPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ServiceEndpointPolicyListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ServiceEndpointPolicyListAll.json
             // this example is just showing the usage of "ServiceEndpointPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1505,7 +1505,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetServiceTag_GetListOfServiceTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ServiceTagsList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ServiceTagsList.json
             // this example is just showing the usage of "ServiceTags_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1530,7 +1530,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetAllServiceTagInformation_GetListOfServiceTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ServiceTagInformationListResult.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ServiceTagInformationListResult.json
             // this example is just showing the usage of "ServiceTagInformation_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1558,7 +1558,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetAllServiceTagInformation_GetListOfServiceTagsWithNoAddressPrefixes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ServiceTagInformationListResultWithNoAddressPrefixes.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ServiceTagInformationListResultWithNoAddressPrefixes.json
             // this example is just showing the usage of "ServiceTagInformation_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1587,7 +1587,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetAllServiceTagInformation_GetListOfServiceTagsWithTagName()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ServiceTagInformationListResultWithTagname.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ServiceTagInformationListResultWithTagname.json
             // this example is just showing the usage of "ServiceTagInformation_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1616,7 +1616,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetUsages_ListUsages()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/UsageList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/UsageList.json
             // this example is just showing the usage of "Usages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1644,7 +1644,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetUsages_ListUsagesSpacedLocation()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/UsageListSpacedLocation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/UsageListSpacedLocation.json
             // this example is just showing the usage of "Usages_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1672,7 +1672,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualNetworks_ListAllVirtualNetworks()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkListAll.json
             // this example is just showing the usage of "VirtualNetworks_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1703,7 +1703,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualNetworkTaps_ListAllVirtualNetworkTaps()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualNetworkTapListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkTapListAll.json
             // this example is just showing the usage of "VirtualNetworkTaps_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1734,7 +1734,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualRouters_ListAllVirtualRoutersForAGivenSubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualRouterListBySubscription.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualRouterListBySubscription.json
             // this example is just showing the usage of "VirtualRouters_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1765,7 +1765,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualWans_VirtualWANList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualWANList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualWANList.json
             // this example is just showing the usage of "VirtualWans_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1796,7 +1796,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetVpnSites_VpnSiteList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VpnSiteList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnSiteList.json
             // this example is just showing the usage of "VpnSites_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1827,7 +1827,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetVpnServerConfigurations_VpnServerConfigurationList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VpnServerConfigurationList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnServerConfigurationList.json
             // this example is just showing the usage of "VpnServerConfigurations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1858,7 +1858,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualHubs_VirtualHubList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VirtualHubList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualHubList.json
             // this example is just showing the usage of "VirtualHubs_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1889,7 +1889,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetVpnGateways_VpnGatewayListBySubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/VpnGatewayList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnGatewayList.json
             // this example is just showing the usage of "VpnGateways_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1920,7 +1920,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetP2SVpnGateways_P2SVpnGatewayListBySubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/P2SVpnGatewayList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/P2SVpnGatewayList.json
             // this example is just showing the usage of "P2sVpnGateways_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1951,7 +1951,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetExpressRouteGateways_ExpressRouteGatewayListBySubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ExpressRouteGatewayListBySubscription.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteGatewayListBySubscription.json
             // this example is just showing the usage of "ExpressRouteGateways_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1982,7 +1982,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetWebApplicationFirewallPolicies_ListsAllWAFPoliciesInASubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/WafListAllPolicies.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/WafListAllPolicies.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

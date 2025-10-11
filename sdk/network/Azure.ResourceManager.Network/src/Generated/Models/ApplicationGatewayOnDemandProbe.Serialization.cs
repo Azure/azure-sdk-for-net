@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("pickHostNameFromBackendHttpSettings"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendHttpSettings.Value);
             }
+            if (Optional.IsDefined(EnableProbeProxyProtocolHeader))
+            {
+                writer.WritePropertyName("enableProbeProxyProtocolHeader"u8);
+                writer.WriteBooleanValue(EnableProbeProxyProtocolHeader.Value);
+            }
             if (Optional.IsDefined(Match))
             {
                 writer.WritePropertyName("match"u8);
@@ -118,6 +123,7 @@ namespace Azure.ResourceManager.Network.Models
             string path = default;
             int? timeout = default;
             bool? pickHostNameFromBackendHttpSettings = default;
+            bool? enableProbeProxyProtocolHeader = default;
             ApplicationGatewayProbeHealthResponseMatch match = default;
             WritableSubResource backendAddressPool = default;
             WritableSubResource backendHttpSettings = default;
@@ -162,6 +168,15 @@ namespace Azure.ResourceManager.Network.Models
                     pickHostNameFromBackendHttpSettings = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("enableProbeProxyProtocolHeader"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableProbeProxyProtocolHeader = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("match"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -201,6 +216,7 @@ namespace Azure.ResourceManager.Network.Models
                 path,
                 timeout,
                 pickHostNameFromBackendHttpSettings,
+                enableProbeProxyProtocolHeader,
                 match,
                 backendAddressPool,
                 backendHttpSettings,
