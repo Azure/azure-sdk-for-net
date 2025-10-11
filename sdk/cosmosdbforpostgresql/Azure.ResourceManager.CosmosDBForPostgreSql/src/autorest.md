@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: CosmosDBForPostgreSql
 namespace: Azure.ResourceManager.CosmosDBForPostgreSql
-require: https://github.com/Azure/azure-rest-api-specs/blob/765b345bc5f1acecc0b122cf8052feca8ebf8de2/specification/postgresqlhsc/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/631aaabb176ff44f032559c1b8a87606794893b1/specification/postgresqlhsc/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -61,6 +61,14 @@ rename-mapping:
   Cluster.properties.enableHa: IsHAEnabled
   Cluster.properties.coordinatorEnablePublicIpAccess: IsCoordinatorPublicIPAccessEnabled
   Cluster.properties.nodeEnablePublicIpAccess: IsNodePublicIPAccessEnabled
+  Cluster.properties.aadAuthEnabled: IsAadEnabled
+  Cluster.properties.enableGeoBackup: IsGeoBackupEnabled
+  AadEnabledEnum: IsAadEnabledForCosmosDBForPostgreSqlCluster
+  Cluster.properties.passwordEnabled: IsPasswordEnabled
+  PasswordEnabledEnum: IsPasswordEnabledForCosmosDBForPostgreSqlCluster
+  AuthConfig: CosmosDBForPostgreSqlClusterAuthConfig
+  DataEncryption: CosmosDBForPostgreSqlClusterDataEncryption
+  IdentityProperties: CosmosDBForPostgreSqlClusterIdentity
   ClusterForUpdate.properties.enableShardsOnCoordinator: IsShardsOnCoordinatorEnabled
   ClusterForUpdate.properties.enableHa: IsHAEnabled
   ClusterForUpdate.properties.coordinatorEnablePublicIpAccess: IsCoordinatorPublicIPAccessEnabled
@@ -74,6 +82,14 @@ rename-mapping:
   NameAvailability.type: -|resource-type
   NameAvailabilityRequest: CosmosDBForPostgreSqlClusterNameAvailabilityContent
   ServerConfiguration.properties.requiresRestart: IsRestartRequired
+  PrincipalType: CosmosDBForPostgreSqlClusterRolePrincipalType
+  RoleType: CosmosDBForPostgreSqlClusterRoleType
+  ActiveDirectoryAuth: CosmosDBForPostgreSqlClusterActiveDirectoryAuth
+  PasswordAuth: CosmosDBForPostgreSqlClusterPasswordAuth
+  DataEncryptionType: CosmosDBForPostgreSqlClusterDataEncryptionType
+  IdentityType: CosmosDBForPostgreSqlClusterIdentityType
+  PromoteRequest.enableGeoBackup: IsGeoBackupEnabled
+  PromoteRequest: GeoRedundantReplicaPromoteContent
 
 prepend-rp-prefix:
 - Cluster

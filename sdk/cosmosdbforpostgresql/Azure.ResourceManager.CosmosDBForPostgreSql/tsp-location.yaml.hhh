@@ -1,0 +1,3 @@
+directory: specification/postgresqlhsc/PostgresqlHsc.Management
+commit: 631aaabb176ff44f032559c1b8a87606794893b1
+repo: Azure/azure-rest-api-specs
