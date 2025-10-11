@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         private const string CloudInfrastructureValue = "CLOUD_INFRASTRUCTURE";
         private const string FullStackValue = "FULL_STACK";
+        private const string DiscoveryValue = "DISCOVERY";
 
         /// <summary> CLOUD_INFRASTRUCTURE. </summary>
         public static DynatraceOneAgentMonitoringType CloudInfrastructure { get; } = new DynatraceOneAgentMonitoringType(CloudInfrastructureValue);
         /// <summary> FULL_STACK. </summary>
         public static DynatraceOneAgentMonitoringType FullStack { get; } = new DynatraceOneAgentMonitoringType(FullStackValue);
+        /// <summary> DISCOVERY. </summary>
+        public static DynatraceOneAgentMonitoringType Discovery { get; } = new DynatraceOneAgentMonitoringType(DiscoveryValue);
         /// <summary> Determines if two <see cref="DynatraceOneAgentMonitoringType"/> values are the same. </summary>
         public static bool operator ==(DynatraceOneAgentMonitoringType left, DynatraceOneAgentMonitoringType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceOneAgentMonitoringType"/> values are not the same. </summary>

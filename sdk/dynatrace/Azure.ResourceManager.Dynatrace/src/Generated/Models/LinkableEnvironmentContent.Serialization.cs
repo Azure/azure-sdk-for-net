@@ -34,20 +34,25 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(TenantId))
+            if (TenantId != null)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(UserPrincipal))
+            else
             {
-                writer.WritePropertyName("userPrincipal"u8);
-                writer.WriteStringValue(UserPrincipal);
+                writer.WriteNull("tenantId");
             }
-            if (Optional.IsDefined(Region))
+            writer.WritePropertyName("userPrincipal"u8);
+            writer.WriteStringValue(UserPrincipal);
+            if (Region != null)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
+            }
+            else
+            {
+                writer.WriteNull("region");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -97,6 +102,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tenantId = null;
                         continue;
                     }
                     tenantId = property.Value.GetGuid();
@@ -111,6 +117,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        region = null;
                         continue;
                     }
                     region = new AzureLocation(property.Value.GetString());
