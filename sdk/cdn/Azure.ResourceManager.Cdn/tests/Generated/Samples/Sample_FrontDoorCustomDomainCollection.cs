@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task CreateOrUpdate_AFDCustomDomainsCreate()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDCustomDomains_Create.json
-            // this example is just showing the usage of "FrontDoorCustomDomains_Create" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDCustomDomains_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task Get_AFDCustomDomainsGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDCustomDomains_Get.json
-            // this example is just showing the usage of "FrontDoorCustomDomains_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDCustomDomains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task GetAll_AFDCustomDomainsListByProfile()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDCustomDomains_ListByProfile.json
-            // this example is just showing the usage of "FrontDoorCustomDomains_ListByProfile" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDCustomDomains_ListByProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task Exists_AFDCustomDomainsGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDCustomDomains_Get.json
-            // this example is just showing the usage of "FrontDoorCustomDomains_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDCustomDomains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task GetIfExists_AFDCustomDomainsGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDCustomDomains_Get.json
-            // this example is just showing the usage of "FrontDoorCustomDomains_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDCustomDomains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

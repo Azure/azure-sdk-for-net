@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Cdn
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _frontDoorOriginClientDiagnostics;
-        private readonly FrontDoorOriginsRestOperations _frontDoorOriginRestClient;
+        private readonly ClientDiagnostics _frontDoorOriginFrontDoorOriginsClientDiagnostics;
+        private readonly AFDOriginsRestOperations _frontDoorOriginFrontDoorOriginsRestClient;
         private readonly FrontDoorOriginData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorOriginResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorOriginClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string frontDoorOriginApiVersion);
-            _frontDoorOriginRestClient = new FrontDoorOriginsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorOriginApiVersion);
+            _frontDoorOriginFrontDoorOriginsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string frontDoorOriginFrontDoorOriginsApiVersion);
+            _frontDoorOriginFrontDoorOriginsRestClient = new AFDOriginsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorOriginFrontDoorOriginsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOrigins_Get</description>
+        /// <description>AFDOrigins_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FrontDoorOriginResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorOriginClientDiagnostics.CreateScope("FrontDoorOriginResource.Get");
+            using var scope = _frontDoorOriginFrontDoorOriginsClientDiagnostics.CreateScope("FrontDoorOriginResource.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorOriginRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _frontDoorOriginFrontDoorOriginsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorOriginResource(Client, response.Value), response.GetRawResponse());
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOrigins_Get</description>
+        /// <description>AFDOrigins_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FrontDoorOriginResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorOriginClientDiagnostics.CreateScope("FrontDoorOriginResource.Get");
+            using var scope = _frontDoorOriginFrontDoorOriginsClientDiagnostics.CreateScope("FrontDoorOriginResource.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorOriginRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _frontDoorOriginFrontDoorOriginsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontDoorOriginResource(Client, response.Value), response.GetRawResponse());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOrigins_Delete</description>
+        /// <description>AFDOrigins_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorOriginClientDiagnostics.CreateScope("FrontDoorOriginResource.Delete");
+            using var scope = _frontDoorOriginFrontDoorOriginsClientDiagnostics.CreateScope("FrontDoorOriginResource.Delete");
             scope.Start();
             try
             {
-                var response = await _frontDoorOriginRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation(_frontDoorOriginClientDiagnostics, Pipeline, _frontDoorOriginRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorOriginFrontDoorOriginsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_frontDoorOriginFrontDoorOriginsClientDiagnostics, Pipeline, _frontDoorOriginFrontDoorOriginsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOrigins_Delete</description>
+        /// <description>AFDOrigins_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorOriginClientDiagnostics.CreateScope("FrontDoorOriginResource.Delete");
+            using var scope = _frontDoorOriginFrontDoorOriginsClientDiagnostics.CreateScope("FrontDoorOriginResource.Delete");
             scope.Start();
             try
             {
-                var response = _frontDoorOriginRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation(_frontDoorOriginClientDiagnostics, Pipeline, _frontDoorOriginRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorOriginFrontDoorOriginsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_frontDoorOriginFrontDoorOriginsClientDiagnostics, Pipeline, _frontDoorOriginFrontDoorOriginsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOrigins_Update</description>
+        /// <description>AFDOrigins_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorOriginClientDiagnostics.CreateScope("FrontDoorOriginResource.Update");
+            using var scope = _frontDoorOriginFrontDoorOriginsClientDiagnostics.CreateScope("FrontDoorOriginResource.Update");
             scope.Start();
             try
             {
-                var response = await _frontDoorOriginRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorOriginResource>(new FrontDoorOriginOperationSource(Client), _frontDoorOriginClientDiagnostics, Pipeline, _frontDoorOriginRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorOriginFrontDoorOriginsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<FrontDoorOriginResource>(new FrontDoorOriginOperationSource(Client), _frontDoorOriginFrontDoorOriginsClientDiagnostics, Pipeline, _frontDoorOriginFrontDoorOriginsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FrontDoorOrigins_Update</description>
+        /// <description>AFDOrigins_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -329,12 +329,12 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _frontDoorOriginClientDiagnostics.CreateScope("FrontDoorOriginResource.Update");
+            using var scope = _frontDoorOriginFrontDoorOriginsClientDiagnostics.CreateScope("FrontDoorOriginResource.Update");
             scope.Start();
             try
             {
-                var response = _frontDoorOriginRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorOriginResource>(new FrontDoorOriginOperationSource(Client), _frontDoorOriginClientDiagnostics, Pipeline, _frontDoorOriginRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorOriginFrontDoorOriginsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new CdnArmOperation<FrontDoorOriginResource>(new FrontDoorOriginOperationSource(Client), _frontDoorOriginFrontDoorOriginsClientDiagnostics, Pipeline, _frontDoorOriginFrontDoorOriginsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
