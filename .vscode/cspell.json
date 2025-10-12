@@ -1182,6 +1182,70 @@
       ]
     },
     {
+      "filename": "**/sdk/planetarycomputer/**/*.cs",
+      "words": [
+        "Afmhot",
+        "Alos",
+        "Brbg",
+        "Bugn",
+        "Bupu",
+        "Cfastie",
+        "Chloris",
+        "Cividis",
+        "Cmrmap",
+        "colorinterp",
+        "Colorinterp",
+        "Drcog",
+        "dtype",
+        "Dtype",
+        "GFET",
+        "GFPET",
+        "Gnbu",
+        "Lanczos",
+        "Lcmap",
+        "Lulc",
+        "maxx",
+        "maxy",
+        "miny",
+        "Modis",
+        "Mtbs",
+        "Ncar",
+        "Nipy",
+        "Nodata",
+        "Nrcan",
+        "Orrd",
+        "Piyg",
+        "Pngraw",
+        "Prgn",
+        "Protobuf",
+        "Pubu",
+        "Pubugn",
+        "Puor",
+        "Purd",
+        "Rdbu",
+        "Rdgy",
+        "Rdpu",
+        "Rdylbu",
+        "Rdylgn",
+        "Rplumbo",
+        "stac",
+        "Stac",
+        "Terrainrgb",
+        "tilejson",
+        "Tilejson",
+        "unscale",
+        "Usgs",
+        "Viirs",
+        "Viridis",
+        "Wmts",
+        "Yarg",
+        "Ylgn",
+        "Ylgnbu",
+        "Ylorbr",
+        "Ylorrd"
+      ]
+    },
+    {
       "filename": "**/sdk/policyinsights/**/*.cs",
       "words": [
         "remediations"
@@ -1815,7 +1879,7 @@
       "words": [
         "inprogress",
         "undeployed"
-       ]
+      ]
     }
   ],
   "allowCompoundWords": true
