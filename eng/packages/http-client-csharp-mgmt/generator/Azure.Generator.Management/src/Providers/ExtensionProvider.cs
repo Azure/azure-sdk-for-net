@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -111,7 +112,14 @@ namespace Azure.Generator.Management.Providers
                 Return(Static().Invoke(getCachedClientMethod.Signature, [extensionParameter]).Invoke(target.Name, arguments, async: target.Modifiers.HasFlag(MethodSignatureModifiers.Async)))
             };
 
-            return new MethodProvider(methodSignature, body, this);
+            var redirectMethod = new MethodProvider(methodSignature, body, this);
+            // If the target method is cached in the non-resource method provider cache, cache this redirect method too
+            if (NonResourceMethodProviderCache.Contains(targetMethod))
+            {
+                NonResourceMethodProviderCache.Add(redirectMethod);
+            }
+
+            return redirectMethod;
 
             static ParameterProvider DuplicateParameter(ParameterProvider original)
             {

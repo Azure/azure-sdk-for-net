@@ -194,8 +194,13 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var method in _nonResourceMethods)
             {
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
+                var asyncMethod = BuildServiceMethod(method.InputMethod, method.InputClient, true);
+                var syncMethod = BuildServiceMethod(method.InputMethod, method.InputClient, false);
+                // Cache the non-resource method providers
+                NonResourceMethodProviderCache.Add(asyncMethod);
+                NonResourceMethodProviderCache.Add(syncMethod);
+                methods.Add(asyncMethod);
+                methods.Add(syncMethod);
             }
 
             return [.. methods];
