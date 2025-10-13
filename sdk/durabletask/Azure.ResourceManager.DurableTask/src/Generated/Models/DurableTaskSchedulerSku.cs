@@ -47,11 +47,8 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> Initializes a new instance of <see cref="DurableTaskSchedulerSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public DurableTaskSchedulerSku(string name)
+        public DurableTaskSchedulerSku(SchedulerSkuName name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
         }
 
@@ -60,7 +57,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="capacity"> The SKU capacity. This allows scale out/in for the resource and impacts zone redundancy. </param>
         /// <param name="redundancyState"> Indicates whether the current SKU configuration is zone redundant. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DurableTaskSchedulerSku(string name, int? capacity, DurableTaskResourceRedundancyState? redundancyState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DurableTaskSchedulerSku(SchedulerSkuName name, int? capacity, DurableTaskResourceRedundancyState? redundancyState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Capacity = capacity;
@@ -74,7 +71,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         }
 
         /// <summary> The name of the SKU. </summary>
-        public string Name { get; set; }
+        public SchedulerSkuName Name { get; set; }
         /// <summary> The SKU capacity. This allows scale out/in for the resource and impacts zone redundancy. </summary>
         public int? Capacity { get; set; }
         /// <summary> Indicates whether the current SKU configuration is zone redundant. </summary>

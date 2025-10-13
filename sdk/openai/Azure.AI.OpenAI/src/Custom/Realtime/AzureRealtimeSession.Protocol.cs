@@ -12,8 +12,7 @@ namespace Azure.AI.OpenAI.Realtime;
 
 internal partial class AzureRealtimeSession : RealtimeSession
 {
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    protected internal override async Task ConnectAsync(RequestOptions options)
+    protected internal override async Task ConnectAsync(string queryString = null, IDictionary<string, string> headers = null, CancellationToken cancellationToken = default)
     {
         WebSocket?.Dispose();
 
@@ -29,8 +28,16 @@ internal partial class AzureRealtimeSession : RealtimeSession
         {
             try
             {
-                ClientWebSocket webSocket = await CreateAzureWebSocketAsync(options).ConfigureAwait(false);
-                await webSocket.ConnectAsync(_endpoint, options?.CancellationToken ?? default)
+                ClientWebSocket webSocket = await CreateAzureWebSocketAsync(
+                    queryString,
+                    headers,
+                    cancellationToken.ToRequestOptions())
+                        .ConfigureAwait(false);
+                Uri connectionEndpoint
+                    = string.IsNullOrEmpty(queryString)
+                        ? _endpoint
+                        : new(_endpoint.AbsoluteUri + queryString);
+                await webSocket.ConnectAsync(connectionEndpoint, cancellationToken)
                     .ConfigureAwait(false);
                 WebSocket = webSocket;
             }
@@ -50,7 +57,7 @@ internal partial class AzureRealtimeSession : RealtimeSession
         } while (shouldRetryOnFailure);
     }
 
-    private async Task<ClientWebSocket> CreateAzureWebSocketAsync(RequestOptions options)
+    private async Task<ClientWebSocket> CreateAzureWebSocketAsync(string queryString = null, IDictionary<string, string> headers = null, RequestOptions options = default)
     {
         string clientRequestId = Guid.NewGuid().ToString();
 
@@ -59,9 +66,12 @@ internal partial class AzureRealtimeSession : RealtimeSession
         clientWebSocket.Options.SetRequestHeader("openai-beta", $"realtime=v1");
         clientWebSocket.Options.SetRequestHeader("x-ms-client-request-id", clientRequestId);
 
-        foreach (KeyValuePair<string, string> defaultHeaderPair in _defaultHeaders)
+        if (headers is not null)
         {
-            clientWebSocket.Options.SetRequestHeader(defaultHeaderPair.Key, defaultHeaderPair.Value);
+            foreach (KeyValuePair<string, string> headerPair in headers)
+            {
+                clientWebSocket.Options.SetRequestHeader(headerPair.Key, headerPair.Value);
+            }
         }
 
         try

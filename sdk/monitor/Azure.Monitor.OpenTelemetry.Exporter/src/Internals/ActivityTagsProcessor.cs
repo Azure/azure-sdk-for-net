@@ -11,8 +11,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private static readonly string[] s_semantics = {
             SemanticConventions.AttributeDbStatement,
+            SemanticConventions.AttributeDbQueryText,
             SemanticConventions.AttributeDbSystem,
+            SemanticConventions.AttributeDbSystemName,
             SemanticConventions.AttributeDbName,
+            SemanticConventions.AttributeDbNamespace,
 
             // required - HTTP
             SemanticConventions.AttributeHttpMethod,
@@ -96,6 +99,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             break;
                         case SemanticConventions.AttributeHttpRequestMethod:
                             activityType = OperationType.Http | OperationType.V2;
+                            break;
+                        case SemanticConventions.AttributeDbSystemName:
+                            activityType = OperationType.Db | OperationType.V2;
                             break;
                         case SemanticConventions.AttributeDbSystem:
                             activityType = OperationType.Db;
