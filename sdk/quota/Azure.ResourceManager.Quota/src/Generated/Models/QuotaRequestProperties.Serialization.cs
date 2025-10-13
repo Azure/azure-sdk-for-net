@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Quota.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestSubmitTime))
+            if (options.Format != "W" && Optional.IsDefined(RequestSubmitOn))
             {
                 writer.WritePropertyName("requestSubmitTime"u8);
-                writer.WriteStringValue(RequestSubmitTime.Value, "O");
+                writer.WriteStringValue(RequestSubmitOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Quota.Models
             QuotaRequestState? provisioningState = default;
             string message = default;
             ServiceErrorDetail error = default;
-            DateTimeOffset? requestSubmitTime = default;
+            DateTimeOffset? requestSubmitOn = default;
             IList<QuotaSubRequestDetail> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    requestSubmitTime = prop.Value.GetDateTimeOffset("O");
+                    requestSubmitOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Quota.Models
                 provisioningState,
                 message,
                 error,
-                requestSubmitTime,
+                requestSubmitOn,
                 value ?? new ChangeTrackingList<QuotaSubRequestDetail>(),
                 additionalBinaryDataProperties);
         }

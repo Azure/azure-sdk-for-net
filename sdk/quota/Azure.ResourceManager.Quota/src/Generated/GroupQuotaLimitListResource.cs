@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
 {
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The GroupQuotaRequest body details for specific resourceProvider/location/resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GroupQuotaLimitListResource>> UpdateAsync(WaitUntil waitUntil, Models.GroupQuotaLimitListData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GroupQuotaLimitListResource>> UpdateAsync(WaitUntil waitUntil, GroupQuotaLimitListData data = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListResource.Update");
             scope.Start();
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, Models.GroupQuotaLimitListData.ToRequestContent(data), context);
+                HttpMessage message = _groupQuotaLimitListsRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GroupQuotaLimitListData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotaLimitListResource> operation = new QuotaArmOperation<GroupQuotaLimitListResource>(
                     new GroupQuotaLimitListOperationSource(Client),
@@ -194,7 +193,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The GroupQuotaRequest body details for specific resourceProvider/location/resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GroupQuotaLimitListResource> Update(WaitUntil waitUntil, Models.GroupQuotaLimitListData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GroupQuotaLimitListResource> Update(WaitUntil waitUntil, GroupQuotaLimitListData data = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListResource.Update");
             scope.Start();
@@ -204,7 +203,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, Models.GroupQuotaLimitListData.ToRequestContent(data), context);
+                HttpMessage message = _groupQuotaLimitListsRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GroupQuotaLimitListData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotaLimitListResource> operation = new QuotaArmOperation<GroupQuotaLimitListResource>(
                     new GroupQuotaLimitListOperationSource(Client),

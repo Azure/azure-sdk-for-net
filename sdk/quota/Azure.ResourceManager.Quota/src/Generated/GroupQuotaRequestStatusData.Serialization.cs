@@ -18,7 +18,7 @@ using Azure.ResourceManager.Quota.Models;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary> Status of a single GroupQuota request. </summary>
-    public partial class GroupQuotaRequestStatusData : IJsonModel<GroupQuotaRequestStatusData>
+    public partial class GroupQuotaRequestStatusData : ResourceData, IJsonModel<GroupQuotaRequestStatusData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

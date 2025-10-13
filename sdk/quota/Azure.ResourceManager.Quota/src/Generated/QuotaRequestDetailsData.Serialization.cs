@@ -18,7 +18,7 @@ using Azure.ResourceManager.Quota.Models;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary> List of quota requests with details. </summary>
-    public partial class QuotaRequestDetailsData : IJsonModel<QuotaRequestDetailsData>
+    public partial class QuotaRequestDetailsData : ResourceData, IJsonModel<QuotaRequestDetailsData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

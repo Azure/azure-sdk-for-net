@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Quota.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Quota
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="data"> The GroupQuota body details for creation or update of a GroupQuota entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GroupQuotasEnforcementStatusResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AzureLocation location, Models.GroupQuotasEnforcementStatusData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GroupQuotasEnforcementStatusResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AzureLocation location, GroupQuotasEnforcementStatusData data = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _groupQuotasEnforcementStatusesClientDiagnostics.CreateScope("GroupQuotasEnforcementStatusCollection.CreateOrUpdate");
             scope.Start();
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, _resourceProviderName, location, Models.GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
+                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, _resourceProviderName, location, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotasEnforcementStatusResource> operation = new QuotaArmOperation<GroupQuotasEnforcementStatusResource>(
                     new GroupQuotasEnforcementStatusOperationSource(Client),
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="data"> The GroupQuota body details for creation or update of a GroupQuota entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GroupQuotasEnforcementStatusResource> CreateOrUpdate(WaitUntil waitUntil, AzureLocation location, Models.GroupQuotasEnforcementStatusData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GroupQuotasEnforcementStatusResource> CreateOrUpdate(WaitUntil waitUntil, AzureLocation location, GroupQuotasEnforcementStatusData data = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _groupQuotasEnforcementStatusesClientDiagnostics.CreateScope("GroupQuotasEnforcementStatusCollection.CreateOrUpdate");
             scope.Start();
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, _resourceProviderName, location, Models.GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
+                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, _resourceProviderName, location, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotasEnforcementStatusResource> operation = new QuotaArmOperation<GroupQuotasEnforcementStatusResource>(
                     new GroupQuotasEnforcementStatusOperationSource(Client),

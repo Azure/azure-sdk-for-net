@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Quota.Models
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(RequestSubmitTime))
+            if (Optional.IsDefined(RequestSubmitOn))
             {
                 writer.WritePropertyName("requestSubmitTime"u8);
-                writer.WriteStringValue(RequestSubmitTime.Value, "O");
+                writer.WriteStringValue(RequestSubmitOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Quota.Models
                 return null;
             }
             string subscriptionId = default;
-            DateTimeOffset? requestSubmitTime = default;
+            DateTimeOffset? requestSubmitOn = default;
             QuotaRequestStatus? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    requestSubmitTime = prop.Value.GetDateTimeOffset("O");
+                    requestSubmitOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Quota.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GroupQuotaSubscriptionRequestStatusProperties(subscriptionId, requestSubmitTime, provisioningState, additionalBinaryDataProperties);
+            return new GroupQuotaSubscriptionRequestStatusProperties(subscriptionId, requestSubmitOn, provisioningState, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

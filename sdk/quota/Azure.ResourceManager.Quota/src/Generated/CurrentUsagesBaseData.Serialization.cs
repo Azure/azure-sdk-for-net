@@ -18,7 +18,7 @@ using Azure.ResourceManager.Quota.Models;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary> Resource usage. </summary>
-    public partial class CurrentUsagesBaseData : IJsonModel<CurrentUsagesBaseData>
+    public partial class CurrentUsagesBaseData : ResourceData, IJsonModel<CurrentUsagesBaseData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

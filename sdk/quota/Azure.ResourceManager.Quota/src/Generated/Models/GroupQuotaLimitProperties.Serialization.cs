@@ -14,7 +14,7 @@ using Azure.ResourceManager.Quota;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Group Quota properties for the specified resource. </summary>
-    public partial class GroupQuotaLimitProperties : IJsonModel<GroupQuotaLimitProperties>
+    public partial class GroupQuotaLimitProperties : GroupQuotaDetails, IJsonModel<GroupQuotaLimitProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

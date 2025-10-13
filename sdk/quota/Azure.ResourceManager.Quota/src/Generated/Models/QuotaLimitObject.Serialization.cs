@@ -14,7 +14,7 @@ using Azure.ResourceManager.Quota;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> The resource quota limit value. </summary>
-    internal partial class QuotaLimitObject : IJsonModel<QuotaLimitObject>
+    internal partial class QuotaLimitObject : QuotaLimitJsonObject, IJsonModel<QuotaLimitObject>
     {
         /// <summary> Initializes a new instance of <see cref="QuotaLimitObject"/> for deserialization. </summary>
         internal QuotaLimitObject()

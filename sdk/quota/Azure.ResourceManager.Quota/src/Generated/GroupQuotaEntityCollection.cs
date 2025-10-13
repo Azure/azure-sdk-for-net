@@ -15,7 +15,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Quota.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Quota
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<GroupQuotaEntityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupQuotaName, Models.GroupQuotaEntityData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GroupQuotaEntityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupQuotaName, GroupQuotaEntityData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
 
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateCreateOrUpdateRequest(_managementGroupId, groupQuotaName, Models.GroupQuotaEntityData.ToRequestContent(data), context);
+                HttpMessage message = _groupQuotasEntitiesRestClient.CreateCreateOrUpdateRequest(_managementGroupId, groupQuotaName, GroupQuotaEntityData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotaEntityResource> operation = new QuotaArmOperation<GroupQuotaEntityResource>(
                     new GroupQuotaEntityOperationSource(Client),
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<GroupQuotaEntityResource> CreateOrUpdate(WaitUntil waitUntil, string groupQuotaName, Models.GroupQuotaEntityData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GroupQuotaEntityResource> CreateOrUpdate(WaitUntil waitUntil, string groupQuotaName, GroupQuotaEntityData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
 
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateCreateOrUpdateRequest(_managementGroupId, groupQuotaName, Models.GroupQuotaEntityData.ToRequestContent(data), context);
+                HttpMessage message = _groupQuotasEntitiesRestClient.CreateCreateOrUpdateRequest(_managementGroupId, groupQuotaName, GroupQuotaEntityData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotaEntityResource> operation = new QuotaArmOperation<GroupQuotaEntityResource>(
                     new GroupQuotaEntityOperationSource(Client),

@@ -18,7 +18,7 @@ using Azure.ResourceManager.Quota.Models;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary> Quota limit. </summary>
-    public partial class CurrentQuotaLimitBaseData : IJsonModel<CurrentQuotaLimitBaseData>
+    public partial class CurrentQuotaLimitBaseData : ResourceData, IJsonModel<CurrentQuotaLimitBaseData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

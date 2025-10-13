@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="provisioningState"> The quota request status. </param>
         /// <param name="message"> User-friendly status message. </param>
         /// <param name="error"> Error details of the quota request. </param>
-        /// <param name="requestSubmitTime"> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="requestSubmitOn"> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="value"> Quota request details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaRequestProperties(QuotaRequestState? provisioningState, string message, ServiceErrorDetail error, DateTimeOffset? requestSubmitTime, IList<QuotaSubRequestDetail> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaRequestProperties(QuotaRequestState? provisioningState, string message, ServiceErrorDetail error, DateTimeOffset? requestSubmitOn, IList<QuotaSubRequestDetail> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Message = message;
             Error = error;
-            RequestSubmitTime = requestSubmitTime;
+            RequestSubmitOn = requestSubmitOn;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota.Models
         public ServiceErrorDetail Error { get; }
 
         /// <summary> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
-        public DateTimeOffset? RequestSubmitTime { get; }
+        public DateTimeOffset? RequestSubmitOn { get; }
 
         /// <summary> Quota request details. </summary>
         public IList<QuotaSubRequestDetail> Value { get; } = new ChangeTrackingList<QuotaSubRequestDetail>();

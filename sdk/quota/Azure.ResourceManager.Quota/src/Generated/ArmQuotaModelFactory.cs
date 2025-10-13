@@ -159,13 +159,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Models.GroupQuotaRequestBase"/> instance for mocking. </returns>
         public static GroupQuotaRequestBase GroupQuotaRequestBase(long? limit = default, string region = default, string comments = default, string value = default, string localizedValue = default)
         {
-            return new GroupQuotaRequestBase(limit is null || region is null || comments is null || value is null || localizedValue is null ? default : new GroupQuotaRequestBaseProperties(
-                limit,
-                new GroupQuotaRequestBasePropertiesName(value, localizedValue, new Dictionary<string, BinaryData>()),
-                comments,
-                value,
-                new Dictionary<string, BinaryData>(),
-                new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new GroupQuotaRequestBase(limit is null || region is null || comments is null || value is null || localizedValue is null ? default : new GroupQuotaRequestBaseProperties(limit, new GroupQuotaRequestBasePropertiesName(value, localizedValue, new Dictionary<string, BinaryData>()), region, comments, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Resource details with usages and GroupQuota. </summary>
@@ -244,12 +238,12 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> The GroupQuotaSubscriptionRequestStatusProperties. </summary>
         /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="requestSubmitTime"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="requestSubmitOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="provisioningState"> Status of this subscriptionId being associated with the GroupQuotasEntity. </param>
         /// <returns> A new <see cref="Models.GroupQuotaSubscriptionRequestStatusProperties"/> instance for mocking. </returns>
-        public static GroupQuotaSubscriptionRequestStatusProperties GroupQuotaSubscriptionRequestStatusProperties(string subscriptionId = default, DateTimeOffset? requestSubmitTime = default, QuotaRequestStatus? provisioningState = default)
+        public static GroupQuotaSubscriptionRequestStatusProperties GroupQuotaSubscriptionRequestStatusProperties(string subscriptionId = default, DateTimeOffset? requestSubmitOn = default, QuotaRequestStatus? provisioningState = default)
         {
-            return new GroupQuotaSubscriptionRequestStatusProperties(subscriptionId, requestSubmitTime, provisioningState, additionalBinaryDataProperties: null);
+            return new GroupQuotaSubscriptionRequestStatusProperties(subscriptionId, requestSubmitOn, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> List of Group Quota Limit details. </summary>
@@ -414,7 +408,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Models.QuotaAllocationRequestBase"/> instance for mocking. </returns>
         public static QuotaAllocationRequestBase QuotaAllocationRequestBase(long? limit = default, string region = default, string value = default, string localizedValue = default)
         {
-            return new QuotaAllocationRequestBase(limit is null || region is null || value is null || localizedValue is null ? default : new QuotaAllocationRequestBaseProperties(limit, new QuotaAllocationRequestBasePropertiesName(value, localizedValue, new Dictionary<string, BinaryData>()), value, new Dictionary<string, BinaryData>(), new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new QuotaAllocationRequestBase(limit is null || region is null || value is null || localizedValue is null ? default : new QuotaAllocationRequestBaseProperties(limit, new QuotaAllocationRequestBasePropertiesName(value, localizedValue, new Dictionary<string, BinaryData>()), region, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The GroupQuota Enforcement status for a Azure Location/Region. </summary>
@@ -562,10 +556,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="provisioningState"> The quota request status. </param>
         /// <param name="message"> User-friendly status message. </param>
         /// <param name="error"> Error details of the quota request. </param>
-        /// <param name="requestSubmitTime"> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="requestSubmitOn"> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="value"> Quota request details. </param>
         /// <returns> A new <see cref="Quota.QuotaRequestDetailsData"/> instance for mocking. </returns>
-        public static QuotaRequestDetailsData QuotaRequestDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaRequestState? provisioningState = default, string message = default, ServiceErrorDetail error = default, DateTimeOffset? requestSubmitTime = default, IList<QuotaSubRequestDetail> value = default)
+        public static QuotaRequestDetailsData QuotaRequestDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaRequestState? provisioningState = default, string message = default, ServiceErrorDetail error = default, DateTimeOffset? requestSubmitOn = default, IList<QuotaSubRequestDetail> value = default)
         {
             return new QuotaRequestDetailsData(
                 id,
@@ -573,11 +567,11 @@ namespace Azure.ResourceManager.Quota.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null || message is null || error is null || requestSubmitTime is null || value is null ? default : new QuotaRequestProperties(
+                provisioningState is null || message is null || error is null || requestSubmitOn is null || value is null ? default : new QuotaRequestProperties(
                     provisioningState,
                     message,
                     error,
-                    requestSubmitTime,
+                    requestSubmitOn,
                     value,
                     new Dictionary<string, BinaryData>()));
         }

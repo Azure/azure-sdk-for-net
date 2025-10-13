@@ -18,7 +18,7 @@ using Azure.ResourceManager.Quota.Models;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary> The GroupQuota Enforcement status for a Azure Location/Region. </summary>
-    public partial class GroupQuotasEnforcementStatusData : IJsonModel<GroupQuotasEnforcementStatusData>
+    public partial class GroupQuotasEnforcementStatusData : ResourceData, IJsonModel<GroupQuotasEnforcementStatusData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

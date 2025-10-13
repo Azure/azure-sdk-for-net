@@ -18,7 +18,7 @@ using Azure.ResourceManager.Quota.Models;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary> This represents a Azure subscriptionId that is associated with a GroupQuotasEntity. </summary>
-    public partial class GroupQuotaSubscriptionData : IJsonModel<GroupQuotaSubscriptionData>
+    public partial class GroupQuotaSubscriptionData : ResourceData, IJsonModel<GroupQuotaSubscriptionData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

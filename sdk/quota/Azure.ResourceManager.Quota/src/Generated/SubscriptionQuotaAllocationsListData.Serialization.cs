@@ -18,7 +18,7 @@ using Azure.ResourceManager.Quota.Models;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary> Subscription quota list. </summary>
-    public partial class SubscriptionQuotaAllocationsListData : IJsonModel<SubscriptionQuotaAllocationsListData>
+    public partial class SubscriptionQuotaAllocationsListData : ResourceData, IJsonModel<SubscriptionQuotaAllocationsListData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

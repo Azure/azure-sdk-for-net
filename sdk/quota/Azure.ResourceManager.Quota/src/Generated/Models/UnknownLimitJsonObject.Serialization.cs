@@ -13,7 +13,7 @@ using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    internal partial class UnknownLimitJsonObject : IJsonModel<QuotaLimitJsonObject>
+    internal partial class UnknownLimitJsonObject : QuotaLimitJsonObject, IJsonModel<QuotaLimitJsonObject>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownLimitJsonObject"/> for deserialization. </summary>
         internal UnknownLimitJsonObject()

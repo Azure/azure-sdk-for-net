@@ -14,7 +14,7 @@ using Azure.ResourceManager.Quota;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Properties. </summary>
-    public partial class GroupQuotasEntityProperties : IJsonModel<GroupQuotasEntityProperties>
+    public partial class GroupQuotasEntityProperties : GroupQuotaEntityBase, IJsonModel<GroupQuotasEntityProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

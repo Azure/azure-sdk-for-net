@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotaSubscriptionRequestStatusProperties"/>. </summary>
         /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="requestSubmitTime"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="requestSubmitOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="provisioningState"> Status of this subscriptionId being associated with the GroupQuotasEntity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotaSubscriptionRequestStatusProperties(string subscriptionId, DateTimeOffset? requestSubmitTime, QuotaRequestStatus? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GroupQuotaSubscriptionRequestStatusProperties(string subscriptionId, DateTimeOffset? requestSubmitOn, QuotaRequestStatus? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
-            RequestSubmitTime = requestSubmitTime;
+            RequestSubmitOn = requestSubmitOn;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Quota.Models
         public string SubscriptionId { get; set; }
 
         /// <summary> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
-        public DateTimeOffset? RequestSubmitTime { get; set; }
+        public DateTimeOffset? RequestSubmitOn { get; set; }
 
         /// <summary> Status of this subscriptionId being associated with the GroupQuotasEntity. </summary>
         public QuotaRequestStatus? ProvisioningState { get; }

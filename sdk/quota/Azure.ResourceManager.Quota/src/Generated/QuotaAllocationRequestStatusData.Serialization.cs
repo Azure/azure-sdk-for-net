@@ -18,7 +18,7 @@ using Azure.ResourceManager.Quota.Models;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary> The subscription quota allocation status. </summary>
-    public partial class QuotaAllocationRequestStatusData : IJsonModel<QuotaAllocationRequestStatusData>
+    public partial class QuotaAllocationRequestStatusData : ResourceData, IJsonModel<QuotaAllocationRequestStatusData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

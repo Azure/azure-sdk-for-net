@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
-        public DateTimeOffset? RequestSubmitTime
+        public DateTimeOffset? RequestSubmitOn
         {
             get
             {
-                return Properties.RequestSubmitTime;
+                return Properties.RequestSubmitOn;
             }
         }
 

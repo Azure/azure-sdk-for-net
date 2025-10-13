@@ -18,7 +18,7 @@ using Azure.ResourceManager.Quota.Models;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary> Properties and filters for ShareQuota. The request parameter is optional, if there are no filters specified. </summary>
-    public partial class GroupQuotaEntityData : IJsonModel<GroupQuotaEntityData>
+    public partial class GroupQuotaEntityData : ResourceData, IJsonModel<GroupQuotaEntityData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
