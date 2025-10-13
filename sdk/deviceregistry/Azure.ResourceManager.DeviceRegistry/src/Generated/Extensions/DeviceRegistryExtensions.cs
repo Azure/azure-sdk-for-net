@@ -90,6 +90,158 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="NamespaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryArmClient.GetNamespaceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NamespaceResource"/> object. </returns>
+        public static NamespaceResource GetNamespaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDeviceRegistryArmClient(client).GetNamespaceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NamespaceAssetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceAssetResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceAssetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryArmClient.GetNamespaceAssetResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NamespaceAssetResource"/> object. </returns>
+        public static NamespaceAssetResource GetNamespaceAssetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDeviceRegistryArmClient(client).GetNamespaceAssetResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NamespaceDeviceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceDeviceResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceDeviceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryArmClient.GetNamespaceDeviceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NamespaceDeviceResource"/> object. </returns>
+        public static NamespaceDeviceResource GetNamespaceDeviceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDeviceRegistryArmClient(client).GetNamespaceDeviceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NamespaceDiscoveredAssetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceDiscoveredAssetResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceDiscoveredAssetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryArmClient.GetNamespaceDiscoveredAssetResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NamespaceDiscoveredAssetResource"/> object. </returns>
+        public static NamespaceDiscoveredAssetResource GetNamespaceDiscoveredAssetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDeviceRegistryArmClient(client).GetNamespaceDiscoveredAssetResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NamespaceDiscoveredDeviceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceDiscoveredDeviceResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceDiscoveredDeviceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryArmClient.GetNamespaceDiscoveredDeviceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NamespaceDiscoveredDeviceResource"/> object. </returns>
+        public static NamespaceDiscoveredDeviceResource GetNamespaceDiscoveredDeviceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDeviceRegistryArmClient(client).GetNamespaceDiscoveredDeviceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeviceRegistrySchemaRegistryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistrySchemaRegistryResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistrySchemaRegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryArmClient.GetDeviceRegistrySchemaRegistryResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DeviceRegistrySchemaRegistryResource"/> object. </returns>
+        public static DeviceRegistrySchemaRegistryResource GetDeviceRegistrySchemaRegistryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDeviceRegistryArmClient(client).GetDeviceRegistrySchemaRegistryResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeviceRegistrySchemaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistrySchemaResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistrySchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryArmClient.GetDeviceRegistrySchemaResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DeviceRegistrySchemaResource"/> object. </returns>
+        public static DeviceRegistrySchemaResource GetDeviceRegistrySchemaResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDeviceRegistryArmClient(client).GetDeviceRegistrySchemaResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeviceRegistrySchemaVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistrySchemaVersionResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistrySchemaVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryArmClient.GetDeviceRegistrySchemaVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DeviceRegistrySchemaVersionResource"/> object. </returns>
+        public static DeviceRegistrySchemaVersionResource GetDeviceRegistrySchemaVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDeviceRegistryArmClient(client).GetDeviceRegistrySchemaVersionResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of DeviceRegistryAssetResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -119,7 +271,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,7 +309,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +364,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,7 +402,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -273,6 +425,192 @@ namespace Azure.ResourceManager.DeviceRegistry
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetDeviceRegistryAssetEndpointProfile(assetEndpointProfileName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of NamespaceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.GetNamespaces()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of NamespaceResources and their operations over a NamespaceResource. </returns>
+        public static NamespaceCollection GetNamespaces(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetNamespaces();
+        }
+
+        /// <summary>
+        /// Get a Namespace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespace_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.GetNamespaceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="namespaceName"> The name of the namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<NamespaceResource>> GetNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetNamespaceAsync(namespaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Namespace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespace_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.GetNamespace(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="namespaceName"> The name of the namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<NamespaceResource> GetNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetNamespace(namespaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of DeviceRegistrySchemaRegistryResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.GetDeviceRegistrySchemaRegistries()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of DeviceRegistrySchemaRegistryResources and their operations over a DeviceRegistrySchemaRegistryResource. </returns>
+        public static DeviceRegistrySchemaRegistryCollection GetDeviceRegistrySchemaRegistries(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetDeviceRegistrySchemaRegistries();
+        }
+
+        /// <summary>
+        /// Get a SchemaRegistry
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SchemaRegistry_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.GetDeviceRegistrySchemaRegistryAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="schemaRegistryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DeviceRegistrySchemaRegistryResource>> GetDeviceRegistrySchemaRegistryAsync(this ResourceGroupResource resourceGroupResource, string schemaRegistryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetDeviceRegistrySchemaRegistryAsync(schemaRegistryName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SchemaRegistry
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SchemaRegistry_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistryResourceGroupResource.GetDeviceRegistrySchemaRegistry(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="schemaRegistryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<DeviceRegistrySchemaRegistryResource> GetDeviceRegistrySchemaRegistry(this ResourceGroupResource resourceGroupResource, string schemaRegistryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetDeviceRegistrySchemaRegistry(schemaRegistryName, cancellationToken);
         }
 
         /// <summary>
@@ -305,7 +643,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -343,7 +681,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -381,7 +719,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -417,7 +755,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -453,7 +791,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -489,7 +827,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -510,6 +848,150 @@ namespace Azure.ResourceManager.DeviceRegistry
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetDeviceRegistryAssetEndpointProfiles(cancellationToken);
+        }
+
+        /// <summary>
+        /// List Namespace resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespace_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistrySubscriptionResource.GetNamespaces(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NamespaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NamespaceResource> GetNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetNamespacesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List Namespace resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespace_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistrySubscriptionResource.GetNamespaces(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NamespaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NamespaceResource> GetNamespaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetNamespaces(cancellationToken);
+        }
+
+        /// <summary>
+        /// List SchemaRegistry resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/schemaRegistries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SchemaRegistry_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistrySubscriptionResource.GetDeviceRegistrySchemaRegistries(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DeviceRegistrySchemaRegistryResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DeviceRegistrySchemaRegistryResource> GetDeviceRegistrySchemaRegistriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetDeviceRegistrySchemaRegistriesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List SchemaRegistry resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/schemaRegistries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SchemaRegistry_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceRegistrySubscriptionResource.GetDeviceRegistrySchemaRegistries(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DeviceRegistrySchemaRegistryResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DeviceRegistrySchemaRegistryResource> GetDeviceRegistrySchemaRegistries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetDeviceRegistrySchemaRegistries(cancellationToken);
         }
     }
 }

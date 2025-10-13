@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey.Value.ToString());
             }
+            if (Optional.IsDefined(CreatorCanAdmin))
+            {
+                writer.WritePropertyName("creatorCanAdmin"u8);
+                writer.WriteStringValue(CreatorCanAdmin.Value.ToString());
+            }
             if (Optional.IsDefined(DeterministicOutboundIP))
             {
                 writer.WritePropertyName("deterministicOutboundIP"u8);
@@ -124,6 +129,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
             GrafanaZoneRedundancy? zoneRedundancy = default;
             GrafanaApiKey? apiKey = default;
+            CreatorCanAdmin? creatorCanAdmin = default;
             DeterministicOutboundIP? deterministicOutboundIP = default;
             GrafanaPublicNetworkAccess? publicNetworkAccess = default;
             GrafanaIntegrations grafanaIntegrations = default;
@@ -151,6 +157,15 @@ namespace Azure.ResourceManager.Grafana.Models
                         continue;
                     }
                     apiKey = new GrafanaApiKey(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("creatorCanAdmin"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    creatorCanAdmin = new CreatorCanAdmin(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deterministicOutboundIP"u8))
@@ -226,6 +241,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new ManagedGrafanaPatchProperties(
                 zoneRedundancy,
                 apiKey,
+                creatorCanAdmin,
                 deterministicOutboundIP,
                 publicNetworkAccess,
                 grafanaIntegrations,

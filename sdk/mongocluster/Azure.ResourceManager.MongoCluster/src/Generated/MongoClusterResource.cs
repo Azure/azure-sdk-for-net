@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -237,6 +237,75 @@ namespace Azure.ResourceManager.MongoCluster
             return GetMongoClusterPrivateEndpointConnectionResources().Get(privateEndpointConnectionName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of UserResources in the MongoCluster. </summary>
+        /// <returns> An object representing collection of UserResources and their operations over a UserResource. </returns>
+        public virtual UserCollection GetUsers()
+        {
+            return GetCachedClient(client => new UserCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the defintion of a Mongo cluster user.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>User_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userName"> The name of the mongo cluster user. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<UserResource>> GetUserAsync(string userName, CancellationToken cancellationToken = default)
+        {
+            return await GetUsers().GetAsync(userName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the defintion of a Mongo cluster user.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>User_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userName"> The name of the mongo cluster user. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<UserResource> GetUser(string userName, CancellationToken cancellationToken = default)
+        {
+            return GetUsers().Get(userName, cancellationToken);
+        }
+
         /// <summary>
         /// Gets information about a mongo cluster.
         /// <list type="bullet">
@@ -250,7 +319,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -290,7 +359,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -330,7 +399,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -372,7 +441,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -414,7 +483,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,7 +529,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -506,7 +575,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -544,7 +613,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -582,7 +651,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -628,7 +697,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -674,7 +743,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -700,7 +769,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -726,7 +795,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -752,7 +821,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -778,7 +847,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -840,7 +909,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -902,7 +971,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -959,7 +1028,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1016,7 +1085,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1076,7 +1145,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

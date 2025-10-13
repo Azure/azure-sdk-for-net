@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    internal partial class ManagedGrafanaSku : IUtf8JsonSerializable, IJsonModel<ManagedGrafanaSku>
+    public partial class ManagedGrafanaSku : IUtf8JsonSerializable, IJsonModel<ManagedGrafanaSku>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedGrafanaSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Grafana.Models
 
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Size))
+            {
+                writer.WritePropertyName("size"u8);
+                writer.WriteStringValue(Size.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -74,6 +79,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 return null;
             }
             string name = default;
+            Size? size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,13 +89,22 @@ namespace Azure.ResourceManager.Grafana.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("size"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    size = new Size(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedGrafanaSku(name, serializedAdditionalRawData);
+            return new ManagedGrafanaSku(name, size, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedGrafanaSku>.Write(ModelReaderWriterOptions options)
