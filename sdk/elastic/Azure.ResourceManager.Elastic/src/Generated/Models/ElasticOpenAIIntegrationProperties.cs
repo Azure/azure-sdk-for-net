@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="key"> Value of API key for Open AI resource. </param>
         /// <param name="lastRefreshOn"> Last Update Timestamp for key updation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticOpenAIIntegrationProperties(ResourceIdentifier openAIResourceId, string openAIResourceEndpoint, string openAIConnectorId, string key, DateTimeOffset? lastRefreshOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticOpenAIIntegrationProperties(string openAIResourceId, string openAIResourceEndpoint, string openAIConnectorId, string key, DateTimeOffset? lastRefreshOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OpenAIResourceId = openAIResourceId;
             OpenAIResourceEndpoint = openAIResourceEndpoint;
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> The resource name of Open AI resource. </summary>
-        public ResourceIdentifier OpenAIResourceId { get; }
+        public string OpenAIResourceId { get; set; }
         /// <summary> The API endpoint for Open AI resource. </summary>
         public string OpenAIResourceEndpoint { get; set; }
         /// <summary> The connector id of Open AI resource. </summary>

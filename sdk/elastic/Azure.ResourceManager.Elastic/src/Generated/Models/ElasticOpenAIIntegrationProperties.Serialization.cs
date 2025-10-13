@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(OpenAIResourceId))
             {
                 writer.WritePropertyName("openAIResourceId"u8);
-                writer.WriteStringValue(OpenAIResourceId.ToString());
+                writer.WriteStringValue(OpenAIResourceId);
             }
             if (Optional.IsDefined(OpenAIResourceEndpoint))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Elastic.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ElasticOpenAIIntegrationProperties(
-                openAIResourceId != null ? new ResourceIdentifier(openAIResourceId) : null,
+                openAIResourceId,
                 openAIResourceEndpoint,
                 openAIConnectorId,
                 key,

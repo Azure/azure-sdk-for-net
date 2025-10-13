@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -62,7 +61,6 @@ namespace Azure.ResourceManager.Elastic.Models
         internal MarketplaceSaaSInfo(MarketplaceSaaSInfoMarketplaceSubscription marketplaceSubscription, string marketplaceName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId, bool? isSubscribed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceSubscription = marketplaceSubscription;
-            MarketplaceSubscriptionId = marketplaceSubscription?.Id != null ? new ResourceIdentifier(marketplaceSubscription.Id) : null;
             MarketplaceName = marketplaceName;
             MarketplaceResourceId = marketplaceResourceId;
             MarketplaceStatus = marketplaceStatus;
@@ -73,8 +71,6 @@ namespace Azure.ResourceManager.Elastic.Models
 
         /// <summary> Marketplace Subscription. </summary>
         public MarketplaceSaaSInfoMarketplaceSubscription MarketplaceSubscription { get; }
-        /// <summary> Marketplace Subscription Id. This is a GUID-formatted string. </summary>
-        public ResourceIdentifier MarketplaceSubscriptionId { get; }
         /// <summary> Marketplace Subscription Details: SAAS Name. </summary>
         public string MarketplaceName { get; }
         /// <summary> Marketplace Subscription Details: Resource URI. </summary>

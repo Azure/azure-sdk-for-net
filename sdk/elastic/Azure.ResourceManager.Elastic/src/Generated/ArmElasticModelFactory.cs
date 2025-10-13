@@ -201,26 +201,6 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfo"/>. </summary>
-        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. This is a GUID-formatted string. </param>
-        /// <param name="marketplaceName"> Marketplace Subscription Details: SAAS Name. </param>
-        /// <param name="marketplaceResourceId"> Marketplace Subscription Details: Resource URI. </param>
-        /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
-        /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
-        /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
-        /// <returns> A new <see cref="Models.MarketplaceSaaSInfo"/> instance for mocking. </returns>
-        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(ResourceIdentifier marketplaceSubscriptionId, string marketplaceName = null, string marketplaceResourceId = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null, bool? isSubscribed = null)
-        {
-            return new MarketplaceSaaSInfo(
-                null, // marketplaceSubscription
-                marketplaceName,
-                marketplaceResourceId,
-                marketplaceStatus,
-                billedAzureSubscriptionId,
-                isSubscribed,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfo"/>. </summary>
         /// <param name="marketplaceSubscription"> Marketplace Subscription. </param>
         /// <param name="marketplaceName"> Marketplace Subscription Details: SAAS Name. </param>
         /// <param name="marketplaceResourceId"> Marketplace Subscription Details: Resource URI. </param>
@@ -325,27 +305,10 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="openAIResourceId"> The resource name of Open AI resource. </param>
         /// <param name="openAIResourceEndpoint"> The API endpoint for Open AI resource. </param>
         /// <param name="openAIConnectorId"> The connector id of Open AI resource. </param>
-        /// <param name="lastRefreshOn"> Last Update Timestamp for key updation. </param>
-        /// <returns> A new <see cref="Models.ElasticOpenAIIntegrationProperties"/> instance for mocking. </returns>
-        public static ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(ResourceIdentifier openAIResourceId, string openAIResourceEndpoint, string openAIConnectorId, DateTimeOffset? lastRefreshOn)
-        {
-            return new ElasticOpenAIIntegrationProperties(
-                openAIResourceId,
-                openAIResourceEndpoint,
-                openAIConnectorId,
-                key: null,
-                lastRefreshOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ElasticOpenAIIntegrationProperties"/>. </summary>
-        /// <param name="openAIResourceId"> The resource name of Open AI resource. </param>
-        /// <param name="openAIResourceEndpoint"> The API endpoint for Open AI resource. </param>
-        /// <param name="openAIConnectorId"> The connector id of Open AI resource. </param>
         /// <param name="key"> Value of API key for Open AI resource. </param>
         /// <param name="lastRefreshOn"> Last Update Timestamp for key updation. </param>
         /// <returns> A new <see cref="Models.ElasticOpenAIIntegrationProperties"/> instance for mocking. </returns>
-        public static ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(ResourceIdentifier openAIResourceId = null, string openAIResourceEndpoint = null, string openAIConnectorId = null, string key = null, DateTimeOffset? lastRefreshOn = null)
+        public static ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(string openAIResourceId = null, string openAIResourceEndpoint = null, string openAIConnectorId = null, string key = null, DateTimeOffset? lastRefreshOn = null)
         {
             return new ElasticOpenAIIntegrationProperties(
                 openAIResourceId,

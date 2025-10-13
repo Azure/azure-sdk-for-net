@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> Provisioning state of the monitor resource. </summary>
-        public ElasticProvisioningState? ProvisioningState { get; set; }
+        public ElasticProvisioningState? ProvisioningState { get; }
         /// <summary> Flag specifying if the resource monitoring is enabled or disabled. </summary>
         public ElasticMonitoringStatus? MonitoringStatus { get; set; }
         /// <summary> Elastic cloud properties. </summary>

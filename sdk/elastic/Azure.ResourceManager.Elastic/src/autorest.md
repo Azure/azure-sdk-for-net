@@ -9,7 +9,6 @@ csharp: true
 library-name: Elastic
 namespace: Azure.ResourceManager.Elastic
 require: https://github.com/Azure/azure-rest-api-specs/blob/3c1ce8207350922f820d20e04547cc4785c758d3/specification/elastic/resource-manager/readme.md
-#tag: package-2025-06-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
