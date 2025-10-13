@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             }
             SchedulerSkuName name = default;
             int? capacity = default;
-            DurableTaskResourceRedundancyState? redundancyState = default;
+            ResourceRedundancyState? redundancyState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                     {
                         continue;
                     }
-                    redundancyState = new DurableTaskResourceRedundancyState(property.Value.GetString());
+                    redundancyState = new ResourceRedundancyState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

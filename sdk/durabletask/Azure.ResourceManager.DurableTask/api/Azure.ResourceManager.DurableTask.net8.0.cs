@@ -186,48 +186,10 @@ namespace Azure.ResourceManager.DurableTask.Models
         public static Azure.ResourceManager.DurableTask.SchedulerData SchedulerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DurableTask.Models.SchedulerProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.SchedulerPatchProperties SchedulerPatchProperties(Azure.ResourceManager.DurableTask.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.ProvisioningState?), string endpoint = null, System.Collections.Generic.IEnumerable<string> ipAllowlist = null, Azure.ResourceManager.DurableTask.Models.SchedulerSkuUpdate sku = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.SchedulerProperties SchedulerProperties(Azure.ResourceManager.DurableTask.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.ProvisioningState?), string endpoint = null, System.Collections.Generic.IEnumerable<string> ipAllowlist = null, Azure.ResourceManager.DurableTask.Models.SchedulerSku sku = null) { throw null; }
-        public static Azure.ResourceManager.DurableTask.Models.SchedulerSku SchedulerSku(Azure.ResourceManager.DurableTask.Models.SchedulerSkuName name = default(Azure.ResourceManager.DurableTask.Models.SchedulerSkuName), int? capacity = default(int?), Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? redundancyState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState?)) { throw null; }
-        public static Azure.ResourceManager.DurableTask.Models.SchedulerSkuUpdate SchedulerSkuUpdate(Azure.ResourceManager.DurableTask.Models.SchedulerSkuName? name = default(Azure.ResourceManager.DurableTask.Models.SchedulerSkuName?), int? capacity = default(int?), Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? redundancyState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState?)) { throw null; }
+        public static Azure.ResourceManager.DurableTask.Models.SchedulerSku SchedulerSku(Azure.ResourceManager.DurableTask.Models.SchedulerSkuName name = default(Azure.ResourceManager.DurableTask.Models.SchedulerSkuName), int? capacity = default(int?), Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState? redundancyState = default(Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState?)) { throw null; }
+        public static Azure.ResourceManager.DurableTask.Models.SchedulerSkuUpdate SchedulerSkuUpdate(Azure.ResourceManager.DurableTask.Models.SchedulerSkuName? name = default(Azure.ResourceManager.DurableTask.Models.SchedulerSkuName?), int? capacity = default(int?), Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState? redundancyState = default(Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState?)) { throw null; }
         public static Azure.ResourceManager.DurableTask.SchedulerTaskHubData SchedulerTaskHubData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DurableTask.Models.SchedulerTaskHubProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.SchedulerTaskHubProperties SchedulerTaskHubProperties(Azure.ResourceManager.DurableTask.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.ProvisioningState?), System.Uri dashboardUri = null) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DurableTaskPurgeableOrchestrationState : System.IEquatable<Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DurableTaskPurgeableOrchestrationState(string value) { throw null; }
-        public static Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState Completed { get { throw null; } }
-        public static Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState Failed { get { throw null; } }
-        public static Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState Terminated { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState left, Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState left, Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DurableTaskResourceRedundancyState : System.IEquatable<Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DurableTaskResourceRedundancyState(string value) { throw null; }
-        public static Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState None { get { throw null; } }
-        public static Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState Zone { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState left, Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState left, Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.DurableTask.Models.ProvisioningState>
@@ -252,10 +214,48 @@ namespace Azure.ResourceManager.DurableTask.Models
         public static bool operator !=(Azure.ResourceManager.DurableTask.Models.ProvisioningState left, Azure.ResourceManager.DurableTask.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PurgeableOrchestrationState : System.IEquatable<Azure.ResourceManager.DurableTask.Models.PurgeableOrchestrationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PurgeableOrchestrationState(string value) { throw null; }
+        public static Azure.ResourceManager.DurableTask.Models.PurgeableOrchestrationState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.DurableTask.Models.PurgeableOrchestrationState Completed { get { throw null; } }
+        public static Azure.ResourceManager.DurableTask.Models.PurgeableOrchestrationState Failed { get { throw null; } }
+        public static Azure.ResourceManager.DurableTask.Models.PurgeableOrchestrationState Terminated { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DurableTask.Models.PurgeableOrchestrationState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DurableTask.Models.PurgeableOrchestrationState left, Azure.ResourceManager.DurableTask.Models.PurgeableOrchestrationState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DurableTask.Models.PurgeableOrchestrationState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DurableTask.Models.PurgeableOrchestrationState left, Azure.ResourceManager.DurableTask.Models.PurgeableOrchestrationState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceRedundancyState : System.IEquatable<Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceRedundancyState(string value) { throw null; }
+        public static Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState None { get { throw null; } }
+        public static Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState Zone { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState left, Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState left, Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RetentionPolicyDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.RetentionPolicyDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.RetentionPolicyDetails>
     {
         public RetentionPolicyDetails(int retentionPeriodInDays) { }
-        public Azure.ResourceManager.DurableTask.Models.DurableTaskPurgeableOrchestrationState? OrchestrationState { get { throw null; } set { } }
+        public Azure.ResourceManager.DurableTask.Models.PurgeableOrchestrationState? OrchestrationState { get { throw null; } set { } }
         public int RetentionPeriodInDays { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.Models.RetentionPolicyDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.RetentionPolicyDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         public SchedulerSku(Azure.ResourceManager.DurableTask.Models.SchedulerSkuName name) { }
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.DurableTask.Models.SchedulerSkuName Name { get { throw null; } set { } }
-        public Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? RedundancyState { get { throw null; } }
+        public Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState? RedundancyState { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.Models.SchedulerSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.SchedulerSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.SchedulerSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         public SchedulerSkuUpdate() { }
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.DurableTask.Models.SchedulerSkuName? Name { get { throw null; } set { } }
-        public Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? RedundancyState { get { throw null; } }
+        public Azure.ResourceManager.DurableTask.Models.ResourceRedundancyState? RedundancyState { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DurableTask.Models.SchedulerSkuUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.SchedulerSkuUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.SchedulerSkuUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

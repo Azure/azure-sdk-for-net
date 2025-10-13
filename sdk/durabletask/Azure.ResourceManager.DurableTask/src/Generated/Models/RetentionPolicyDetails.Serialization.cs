@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                 return null;
             }
             int retentionPeriodInDays = default;
-            DurableTaskPurgeableOrchestrationState? orchestrationState = default;
+            PurgeableOrchestrationState? orchestrationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DurableTask.Models
                     {
                         continue;
                     }
-                    orchestrationState = new DurableTaskPurgeableOrchestrationState(property.Value.GetString());
+                    orchestrationState = new PurgeableOrchestrationState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
