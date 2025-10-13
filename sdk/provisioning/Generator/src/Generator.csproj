@@ -32,7 +32,8 @@
     <PackageReference Include="Azure.ResourceManager.CosmosDB" />
     <PackageReference Include="Azure.ResourceManager.EventGrid" />
     <PackageReference Include="Azure.ResourceManager.EventHubs" />
-    <PackageReference Include="Azure.ResourceManager.KeyVault" />
+		<ProjectReference Include="..\..\..\frontdoor\Azure.ResourceManager.FrontDoor\src\Azure.ResourceManager.FrontDoor.csproj" />
+		<PackageReference Include="Azure.ResourceManager.KeyVault" />
     <PackageReference Include="Azure.ResourceManager.Kubernetes" />
     <PackageReference Include="Azure.ResourceManager.KubernetesConfiguration" />
     <PackageReference Include="Azure.ResourceManager.Kusto" />
