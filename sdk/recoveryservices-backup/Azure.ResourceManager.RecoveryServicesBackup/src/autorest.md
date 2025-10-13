@@ -502,18 +502,5 @@ directive:
     where: $.definitions
     transform: >
       $.ErrorDetail['x-ms-client-name'] = 'BackupErrorDetail';
-  # Add missing enum values
-  - from: bms.json
-    where: $.definitions.BackupManagementType
-    transform: >
-      $.enum.push('BackupProtectedItemCountSummary');
-      $.enum.push('BackupProtectionContainerCountSummary');
-      $['x-ms-enum'].values.push({
-        value: 'BackupProtectedItemCountSummary',
-        name: 'BackupProtectedItemCountSummary'
-      });
-      $['x-ms-enum'].values.push({
-        value: 'BackupProtectionContainerCountSummary', 
-        name: 'BackupProtectionContainerCountSummary'
-      });
+
 ```
