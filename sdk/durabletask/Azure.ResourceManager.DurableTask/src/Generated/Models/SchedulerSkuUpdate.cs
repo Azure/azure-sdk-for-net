@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="capacity"> The SKU capacity. This allows scale out/in for the resource and impacts zone redundancy. </param>
         /// <param name="redundancyState"> Indicates whether the current SKU configuration is zone redundant. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchedulerSkuUpdate(SchedulerSkuName? name, int? capacity, DurableTaskResourceRedundancyState? redundancyState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SchedulerSkuUpdate(SchedulerSkuName? name, int? capacity, ResourceRedundancyState? redundancyState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Capacity = capacity;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <summary> The SKU capacity. This allows scale out/in for the resource and impacts zone redundancy. </summary>
         public int? Capacity { get; set; }
         /// <summary> Indicates whether the current SKU configuration is zone redundant. </summary>
-        public DurableTaskResourceRedundancyState? RedundancyState { get; }
+        public ResourceRedundancyState? RedundancyState { get; }
     }
 }
