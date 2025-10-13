@@ -18,6 +18,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
+enable-bicep-serialization: true
 
 override-operation-name:
   Endpoints_PurgeContent: PurgeContent
