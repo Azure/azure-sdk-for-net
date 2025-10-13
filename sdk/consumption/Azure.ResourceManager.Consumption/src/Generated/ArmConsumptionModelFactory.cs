@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="category"> The category of the budget, whether the budget tracks cost or usage. </param>
         /// <param name="amount"> The total amount of cost to track with the budget. </param>
         /// <param name="timeGrain"> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </param>
@@ -29,9 +30,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="currentSpend"> The current amount of cost which is being tracked for a budget. </param>
         /// <param name="notifications"> Dictionary of notifications associated with the budget. Budget can have up to five notifications. </param>
         /// <param name="forecastSpend"> The forecasted cost which is being tracked for a budget. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Consumption.ConsumptionBudgetData"/> instance for mocking. </returns>
-        public static ConsumptionBudgetData ConsumptionBudgetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BudgetCategory? category = null, decimal? amount = null, BudgetTimeGrainType? timeGrain = null, BudgetTimePeriod timePeriod = null, ConsumptionBudgetFilter filter = null, BudgetCurrentSpend currentSpend = null, IDictionary<string, BudgetAssociatedNotification> notifications = null, BudgetForecastSpend forecastSpend = null, ETag? etag = null)
+        public static ConsumptionBudgetData ConsumptionBudgetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, BudgetCategory? category = null, decimal? amount = null, BudgetTimeGrainType? timeGrain = null, BudgetTimePeriod timePeriod = null, ConsumptionBudgetFilter filter = null, BudgetCurrentSpend currentSpend = null, IDictionary<string, BudgetAssociatedNotification> notifications = null, BudgetForecastSpend forecastSpend = null)
         {
             notifications ??= new Dictionary<string, BudgetAssociatedNotification>();
 
@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
+                etag,
                 category,
                 amount,
                 timeGrain,
@@ -48,7 +49,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 currentSpend,
                 notifications,
                 forecastSpend,
-                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -438,6 +438,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionTag"/>. </summary>
+        /// <param name="key"> Tag key. </param>
+        /// <param name="value"> Tag values. </param>
+        /// <returns> A new <see cref="Models.ConsumptionTag"/> instance for mocking. </returns>
+        public static ConsumptionTag ConsumptionTag(string key = null, IEnumerable<string> value = null)
+        {
+            value ??= new List<string>();
+
+            return new ConsumptionTag(key, value?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionUsageDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -467,6 +478,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="balanceSummary"> Summary of balances associated with this credit summary. </param>
         /// <param name="pendingCreditAdjustments"> Pending credit adjustments. </param>
         /// <param name="expiredCredit"> Expired credit. </param>
@@ -475,15 +487,16 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="billingCurrency"> The billing currency. </param>
         /// <param name="reseller"> Credit's reseller. </param>
         /// <param name="isEstimatedBalance"> If true, the listed details are based on an estimation and it will be subjected to change. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="etagPropertiesETag"> The eTag for the resource. </param>
         /// <returns> A new <see cref="Models.ConsumptionCreditSummary"/> instance for mocking. </returns>
-        public static ConsumptionCreditSummary ConsumptionCreditSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CreditBalanceSummary balanceSummary = null, ConsumptionAmount pendingCreditAdjustments = null, ConsumptionAmount expiredCredit = null, ConsumptionAmount pendingEligibleCharges = null, string creditCurrency = null, string billingCurrency = null, ConsumptionReseller reseller = null, bool? isEstimatedBalance = null, ETag? etag = null)
+        public static ConsumptionCreditSummary ConsumptionCreditSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, CreditBalanceSummary balanceSummary = null, ConsumptionAmount pendingCreditAdjustments = null, ConsumptionAmount expiredCredit = null, ConsumptionAmount pendingEligibleCharges = null, string creditCurrency = null, string billingCurrency = null, ConsumptionReseller reseller = null, bool? isEstimatedBalance = null, string etagPropertiesETag = null)
         {
             return new ConsumptionCreditSummary(
                 id,
                 name,
                 resourceType,
                 systemData,
+                etag,
                 balanceSummary,
                 pendingCreditAdjustments,
                 expiredCredit,
@@ -492,7 +505,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 billingCurrency,
                 reseller,
                 isEstimatedBalance,
-                etag,
+                etagPropertiesETag,
                 serializedAdditionalRawData: null);
         }
 
@@ -649,9 +662,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="chargesInBillingCurrency"> The amount of charges for events of type SettleCharges and PendingEligibleCharges in billing currency. </param>
         /// <param name="closedBalanceInBillingCurrency"> The balance in billing currency after the event, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
         /// <param name="isEstimatedBalance"> If true, the listed details are based on an estimation and it will be subjected to change. </param>
+        /// <param name="etagPropertiesETag"> The eTag for the resource. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ConsumptionEventSummary"/> instance for mocking. </returns>
-        public static ConsumptionEventSummary ConsumptionEventSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? transactOn = null, string description = null, ConsumptionAmount newCredit = null, ConsumptionAmount adjustments = null, ConsumptionAmount creditExpired = null, ConsumptionAmount charges = null, ConsumptionAmount closedBalance = null, string billingAccountId = null, string billingAccountDisplayName = null, ConsumptionEventType? eventType = null, string invoiceNumber = null, ResourceIdentifier billingProfileId = null, string billingProfileDisplayName = null, ResourceIdentifier lotId = null, string lotSource = null, ConsumptionAmount canceledCredit = null, string creditCurrency = null, string billingCurrency = null, ConsumptionReseller reseller = null, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency = null, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency = null, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = null, ConsumptionAmountWithExchangeRate chargesInBillingCurrency = null, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = null, bool? isEstimatedBalance = null, ETag? etag = null)
+        public static ConsumptionEventSummary ConsumptionEventSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? transactOn = null, string description = null, ConsumptionAmount newCredit = null, ConsumptionAmount adjustments = null, ConsumptionAmount creditExpired = null, ConsumptionAmount charges = null, ConsumptionAmount closedBalance = null, string billingAccountId = null, string billingAccountDisplayName = null, ConsumptionEventType? eventType = null, string invoiceNumber = null, ResourceIdentifier billingProfileId = null, string billingProfileDisplayName = null, ResourceIdentifier lotId = null, string lotSource = null, ConsumptionAmount canceledCredit = null, string creditCurrency = null, string billingCurrency = null, ConsumptionReseller reseller = null, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency = null, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency = null, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = null, ConsumptionAmountWithExchangeRate chargesInBillingCurrency = null, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = null, bool? isEstimatedBalance = null, string etagPropertiesETag = null, ETag? etag = null)
         {
             return new ConsumptionEventSummary(
                 id,
@@ -683,6 +697,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 chargesInBillingCurrency,
                 closedBalanceInBillingCurrency,
                 isEstimatedBalance,
+                etagPropertiesETag,
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -706,11 +721,12 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="closedBalanceInBillingCurrency"> The balance as of the last invoice in billing currency. </param>
         /// <param name="reseller"> The reseller of the lot. </param>
         /// <param name="isEstimatedBalance"> If true, the listed details are based on an estimation and it will be subjected to change. </param>
+        /// <param name="etagPropertiesETag"> The eTag for the resource. </param>
         /// <param name="organizationType"> The organization type of the lot. </param>
         /// <param name="usedAmount"> Amount consumed from the commitment. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ConsumptionLotSummary"/> instance for mocking. </returns>
-        public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ConsumptionAmount originalAmount = null, ConsumptionAmount closedBalance = null, ConsumptionLotSource? source = null, DateTimeOffset? startOn = null, DateTimeOffset? expireOn = null, string poNumber = null, DateTimeOffset? purchasedOn = null, ConsumptionLotStatus? status = null, string creditCurrency = null, string billingCurrency = null, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = null, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = null, ConsumptionReseller reseller = null, bool? isEstimatedBalance = null, ConsumptionOrganizationType? organizationType = null, ConsumptionAmount usedAmount = null, ETag? etag = null)
+        public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ConsumptionAmount originalAmount = null, ConsumptionAmount closedBalance = null, ConsumptionLotSource? source = null, DateTimeOffset? startOn = null, DateTimeOffset? expireOn = null, string poNumber = null, DateTimeOffset? purchasedOn = null, ConsumptionLotStatus? status = null, string creditCurrency = null, string billingCurrency = null, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = null, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = null, ConsumptionReseller reseller = null, bool? isEstimatedBalance = null, string etagPropertiesETag = null, ConsumptionOrganizationType? organizationType = null, ConsumptionAmount usedAmount = null, ETag? etag = null)
         {
             return new ConsumptionLotSummary(
                 id,
@@ -731,6 +747,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 closedBalanceInBillingCurrency,
                 reseller,
                 isEstimatedBalance,
+                etagPropertiesETag,
                 organizationType,
                 usedAmount,
                 etag,
@@ -913,27 +930,27 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="pricesheets"> Price sheet. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="download"> Pricesheet download details. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.PriceSheetResult"/> instance for mocking. </returns>
-        public static PriceSheetResult PriceSheetResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<PriceSheetProperties> pricesheets = null, string nextLink = null, ConsumptionMeterDetails download = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static PriceSheetResult PriceSheetResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, IEnumerable<PriceSheetProperties> pricesheets = null, string nextLink = null, ConsumptionMeterDetails download = null)
         {
-            pricesheets ??= new List<PriceSheetProperties>();
             tags ??= new Dictionary<string, string>();
+            pricesheets ??= new List<PriceSheetProperties>();
 
             return new PriceSheetResult(
                 id,
                 name,
                 resourceType,
                 systemData,
+                etag,
+                tags,
                 pricesheets?.ToList(),
                 nextLink,
                 download,
-                etag,
-                tags,
                 serializedAdditionalRawData: null);
         }
 

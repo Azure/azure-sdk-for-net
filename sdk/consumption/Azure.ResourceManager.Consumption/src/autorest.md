@@ -233,11 +233,16 @@ directive:
   - from: openapi.json
     where: $.definitions
     transform: >
-      delete $.CreditSummaryProperties.properties.eTag;
-      delete $.EventProperties.properties.eTag;
-      delete $.LotProperties.properties.eTag;
-      delete $.Budget.properties.eTag;
-    reason: delete the eTag property in Properties model as the original model already has got an eTag property from allOf keyword.
+      $.ProxyResource["x-ms-client-name"] = "DummyProxyResource";
+      $.Resource["x-ms-client-name"] = "DummyResource";
+  #- from: openapi.json
+  #  where: $.definitions
+  #  transform: >
+  #    delete $.CreditSummaryProperties.properties.eTag;
+  #    delete $.EventProperties.properties.eTag;
+  #    delete $.LotProperties.properties.eTag;
+  #    delete $.Budget.properties.eTag;
+  #  reason: delete the eTag property in Properties model as the original model already has got an eTag property from allOf keyword.
   - from: openapi.json
     where: $.definitions
     transform: >
@@ -255,29 +260,28 @@ directive:
   - from: consumption.json
     where: $.parameters.scopeParameter
     transform: $["x-ms-client-name"] = "reservationScope";
-  - from: openapi.json
-    where: $.definitions
-    transform: >
-      $.Budget.allOf[0]['$ref'] = '#/definitions/ProxyResource';
-      $.CreditSummary.allOf[0]['$ref'] = '#/definitions/ProxyResource';
-    reason: Force Budget, CreditSummary to inherit from current definition ProxyResource.
+  #- from: openapi.json
+  #  where: $.definitions
+  #  transform: >
+  #    $.Budget.allOf[0]['$ref'] = '#/definitions/ProxyResource';
+  #    $.CreditSummary.allOf[0]['$ref'] = '#/definitions/ProxyResource';
+  #  reason: Force Budget, CreditSummary to inherit from current definition ProxyResource.
   - from: openapi.json
     where: $.paths['/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download'].post.responses.default.schema
     transform: >
       $['$ref'] = "#/definitions/ErrorResponse";
     reason: Fix ErrorResponse reference path for PriceSheet_DownloadByBillingAccountPeriod operation.
-  - from: openapi.json
-    where: $.definitions.PriceSheetResult
-    transform: >
-      delete $.properties.etag;
-      delete $.properties.tags;
-      $.allOf[0]['$ref'] = '#/definitions/Resource';
-    reason: Fix PriceSheetResult to inherit from Resource and remove duplicated etag/tags properties.
+  #- from: openapi.json
+  #  where: $.definitions.PriceSheetResult
+  #  transform: >
+  #    delete $.properties.etag;
+  #    delete $.properties.tags;
+  #  reason: Fix PriceSheetResult to inherit from Resource and remove duplicated etag/tags properties.
   - from: openapi.json
     where: $.definitions
     transform: >
       $.LegacyReservationRecommendation.properties.properties['x-ms-client-flatten'] = true;
       $.ModernReservationRecommendation.properties.properties['x-ms-client-flatten'] = true;
     reason: Flatten the 'properties' property in both LegacyReservationRecommendation and ModernReservationRecommendation models.
-    
+
 ````

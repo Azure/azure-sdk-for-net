@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
     public partial class ConsumptionLegacyChargeSummary : ConsumptionChargeSummary
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyChargeSummary"/>. </summary>
-        public ConsumptionLegacyChargeSummary()
+        internal ConsumptionLegacyChargeSummary()
         {
             Kind = ChargeSummaryKind.Legacy;
         }

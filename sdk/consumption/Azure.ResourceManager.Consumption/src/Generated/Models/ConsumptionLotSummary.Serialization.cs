@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("isEstimatedBalance"u8);
                 writer.WriteBooleanValue(IsEstimatedBalance.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ETagPropertiesETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETagPropertiesETag);
+            }
             if (options.Format != "W" && Optional.IsDefined(OrganizationType))
             {
                 writer.WritePropertyName("OrganizationType"u8);
@@ -166,6 +171,7 @@ namespace Azure.ResourceManager.Consumption.Models
             ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default;
             ConsumptionReseller reseller = default;
             bool? isEstimatedBalance = default;
+            string etag0 = default;
             ConsumptionOrganizationType? organizationType = default;
             ConsumptionAmount usedAmount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -328,6 +334,11 @@ namespace Azure.ResourceManager.Consumption.Models
                             isEstimatedBalance = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("eTag"u8))
+                        {
+                            etag0 = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("OrganizationType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -374,6 +385,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 closedBalanceInBillingCurrency,
                 reseller,
                 isEstimatedBalance,
+                etag0,
                 organizationType,
                 usedAmount,
                 etag,

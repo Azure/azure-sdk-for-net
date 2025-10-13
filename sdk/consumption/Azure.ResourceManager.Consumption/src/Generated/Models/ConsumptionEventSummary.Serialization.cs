@@ -169,6 +169,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("isEstimatedBalance"u8);
                 writer.WriteBooleanValue(IsEstimatedBalance.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ETagPropertiesETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETagPropertiesETag);
+            }
             writer.WriteEndObject();
         }
 
@@ -222,6 +227,7 @@ namespace Azure.ResourceManager.Consumption.Models
             ConsumptionAmountWithExchangeRate chargesInBillingCurrency = default;
             ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default;
             bool? isEstimatedBalance = default;
+            string etag0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -461,6 +467,11 @@ namespace Azure.ResourceManager.Consumption.Models
                             isEstimatedBalance = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("eTag"u8))
+                        {
+                            etag0 = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -500,6 +511,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 chargesInBillingCurrency,
                 closedBalanceInBillingCurrency,
                 isEstimatedBalance,
+                etag0,
                 etag,
                 serializedAdditionalRawData);
         }

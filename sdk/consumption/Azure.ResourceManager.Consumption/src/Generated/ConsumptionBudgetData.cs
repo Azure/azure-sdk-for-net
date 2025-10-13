@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="category"> The category of the budget, whether the budget tracks cost or usage. </param>
         /// <param name="amount"> The total amount of cost to track with the budget. </param>
         /// <param name="timeGrain"> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </param>
@@ -70,10 +71,10 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="currentSpend"> The current amount of cost which is being tracked for a budget. </param>
         /// <param name="notifications"> Dictionary of notifications associated with the budget. Budget can have up to five notifications. </param>
         /// <param name="forecastSpend"> The forecasted cost which is being tracked for a budget. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionBudgetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BudgetCategory? category, decimal? amount, BudgetTimeGrainType? timeGrain, BudgetTimePeriod timePeriod, ConsumptionBudgetFilter filter, BudgetCurrentSpend currentSpend, IDictionary<string, BudgetAssociatedNotification> notifications, BudgetForecastSpend forecastSpend, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionBudgetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, BudgetCategory? category, decimal? amount, BudgetTimeGrainType? timeGrain, BudgetTimePeriod timePeriod, ConsumptionBudgetFilter filter, BudgetCurrentSpend currentSpend, IDictionary<string, BudgetAssociatedNotification> notifications, BudgetForecastSpend forecastSpend, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
             Category = category;
             Amount = amount;
             TimeGrain = timeGrain;
@@ -82,10 +83,11 @@ namespace Azure.ResourceManager.Consumption
             CurrentSpend = currentSpend;
             Notifications = notifications;
             ForecastSpend = forecastSpend;
-            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
+        public ETag? ETag { get; set; }
         /// <summary> The category of the budget, whether the budget tracks cost or usage. </summary>
         public BudgetCategory? Category { get; set; }
         /// <summary> The total amount of cost to track with the budget. </summary>
@@ -102,7 +104,5 @@ namespace Azure.ResourceManager.Consumption
         public IDictionary<string, BudgetAssociatedNotification> Notifications { get; }
         /// <summary> The forecasted cost which is being tracked for a budget. </summary>
         public BudgetForecastSpend ForecastSpend { get; }
-        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; set; }
     }
 }

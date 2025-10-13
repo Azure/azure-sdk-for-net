@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionEventSummary"/>. </summary>
-        public ConsumptionEventSummary()
+        internal ConsumptionEventSummary()
         {
         }
 
@@ -82,9 +82,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="chargesInBillingCurrency"> The amount of charges for events of type SettleCharges and PendingEligibleCharges in billing currency. </param>
         /// <param name="closedBalanceInBillingCurrency"> The balance in billing currency after the event, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
         /// <param name="isEstimatedBalance"> If true, the listed details are based on an estimation and it will be subjected to change. </param>
+        /// <param name="etagPropertiesETag"> The eTag for the resource. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionEventSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string description, ConsumptionAmount newCredit, ConsumptionAmount adjustments, ConsumptionAmount creditExpired, ConsumptionAmount charges, ConsumptionAmount closedBalance, string billingAccountId, string billingAccountDisplayName, ConsumptionEventType? eventType, string invoiceNumber, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier lotId, string lotSource, ConsumptionAmount canceledCredit, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency, ConsumptionAmountWithExchangeRate chargesInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, bool? isEstimatedBalance, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionEventSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string description, ConsumptionAmount newCredit, ConsumptionAmount adjustments, ConsumptionAmount creditExpired, ConsumptionAmount charges, ConsumptionAmount closedBalance, string billingAccountId, string billingAccountDisplayName, ConsumptionEventType? eventType, string invoiceNumber, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier lotId, string lotSource, ConsumptionAmount canceledCredit, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency, ConsumptionAmountWithExchangeRate chargesInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, bool? isEstimatedBalance, string etagPropertiesETag, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TransactOn = transactOn;
             Description = description;
@@ -111,6 +112,7 @@ namespace Azure.ResourceManager.Consumption.Models
             ChargesInBillingCurrency = chargesInBillingCurrency;
             ClosedBalanceInBillingCurrency = closedBalanceInBillingCurrency;
             IsEstimatedBalance = isEstimatedBalance;
+            ETagPropertiesETag = etagPropertiesETag;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -134,7 +136,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Name of the billing account. </summary>
         public string BillingAccountDisplayName { get; }
         /// <summary> Identifies the type of the event. </summary>
-        public ConsumptionEventType? EventType { get; set; }
+        public ConsumptionEventType? EventType { get; }
         /// <summary> The number which uniquely identifies the invoice on which the event was billed. This will be empty for unbilled events. </summary>
         public string InvoiceNumber { get; }
         /// <summary> The ID that uniquely identifies the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. </summary>
@@ -165,7 +167,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public ConsumptionAmountWithExchangeRate ClosedBalanceInBillingCurrency { get; }
         /// <summary> If true, the listed details are based on an estimation and it will be subjected to change. </summary>
         public bool? IsEstimatedBalance { get; }
+        /// <summary> The eTag for the resource. </summary>
+        public string ETagPropertiesETag { get; }
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; set; }
+        public ETag? ETag { get; }
     }
 }
