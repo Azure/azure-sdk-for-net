@@ -300,6 +300,12 @@ namespace Azure.Generator.Management.Visitors
                         continue;
                     }
 
+                    // skip if internal property type is base abstract discriminator model
+                    if (modelProvider.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
+                    {
+                        continue;
+                    }
+
                     isSafeFlatten = SafeFlatten(model, propertyMap, internalProperty, modelProvider);
                 }
             }

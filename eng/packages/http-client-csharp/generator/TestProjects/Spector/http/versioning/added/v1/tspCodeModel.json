@@ -26,45 +26,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$id": "4",
-            "kind": "enum",
-            "decorators": [],
-            "name": "EnumV1",
-            "isGeneratedName": false,
-            "namespace": "Versioning.Added",
-            "valueType": {
-              "$id": "5",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "6",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "enumMemberV1",
-                "value": "enumMemberV1",
-                "enumType": {
-                  "$ref": "4"
-                },
-                "valueType": {
-                  "$ref": "5"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "Input,Output,Json",
-            "access": "public",
-            "crossLanguageDefinitionId": "Versioning.Added.EnumV1",
-            "apiVersions": [
-              "v1"
-            ],
-            "isUnionAsEnum": false,
-            "__accessSet": true
+            "$ref": "1"
           },
           "decorators": []
         }
@@ -76,12 +38,12 @@
       "decorators": []
     },
     {
-      "$id": "7",
+      "$id": "4",
       "kind": "enum",
       "name": "Versions",
       "crossLanguageDefinitionId": "Versioning.Added.Versions",
       "valueType": {
-        "$id": "8",
+        "$id": "5",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -89,55 +51,15 @@
       },
       "values": [
         {
-          "$id": "9",
+          "$id": "6",
           "kind": "enumvalue",
           "name": "v1",
           "value": "v1",
           "valueType": {
-            "$ref": "8"
+            "$ref": "5"
           },
           "enumType": {
-            "$id": "10",
-            "kind": "enum",
-            "decorators": [],
-            "name": "Versions",
-            "isGeneratedName": false,
-            "namespace": "Versioning.Added",
-            "doc": "The version of the API.",
-            "valueType": {
-              "$id": "11",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "12",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "v1",
-                "value": "v1",
-                "doc": "The version v1.",
-                "enumType": {
-                  "$ref": "10"
-                },
-                "valueType": {
-                  "$ref": "11"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "Input,ApiVersionEnum",
-            "access": "public",
-            "crossLanguageDefinitionId": "Versioning.Added.Versions",
-            "apiVersions": [
-              "v1"
-            ],
-            "isUnionAsEnum": false,
-            "__accessSet": true
+            "$ref": "4"
           },
           "doc": "The version v1.",
           "decorators": []
@@ -153,13 +75,13 @@
   ],
   "constants": [
     {
-      "$id": "13",
+      "$id": "7",
       "kind": "constant",
       "name": "v1ContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "14",
+        "$id": "8",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -169,13 +91,13 @@
       "decorators": []
     },
     {
-      "$id": "15",
+      "$id": "9",
       "kind": "constant",
       "name": "v1ContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
-        "$id": "16",
+        "$id": "10",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -187,7 +109,7 @@
   ],
   "models": [
     {
-      "$id": "17",
+      "$id": "11",
       "kind": "model",
       "name": "ModelV1",
       "namespace": "Versioning.Added",
@@ -196,12 +118,12 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "18",
+          "$id": "12",
           "kind": "property",
           "name": "prop",
           "serializedName": "prop",
           "type": {
-            "$id": "19",
+            "$id": "13",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -221,7 +143,7 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "20",
+          "$id": "14",
           "kind": "property",
           "name": "enumProp",
           "serializedName": "enumProp",
@@ -246,14 +168,14 @@
   ],
   "clients": [
     {
-      "$id": "21",
+      "$id": "15",
       "kind": "client",
       "name": "AddedClient",
       "namespace": "Versioning.Added",
       "doc": "Test for the `@added` decorator.",
       "methods": [
         {
-          "$id": "22",
+          "$id": "16",
           "kind": "basic",
           "name": "v1",
           "accessibility": "public",
@@ -261,19 +183,19 @@
             "v1"
           ],
           "operation": {
-            "$id": "23",
+            "$id": "17",
             "name": "v1",
             "resourceName": "Added",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "24",
+                "$id": "18",
                 "kind": "header",
                 "name": "contentType",
                 "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
-                  "$ref": "13"
+                  "$ref": "7"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -284,12 +206,12 @@
                 "crossLanguageDefinitionId": "Versioning.Added.v1.contentType"
               },
               {
-                "$id": "25",
+                "$id": "19",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "15"
+                  "$ref": "9"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -300,12 +222,12 @@
                 "crossLanguageDefinitionId": "Versioning.Added.v1.accept"
               },
               {
-                "$id": "26",
+                "$id": "20",
                 "kind": "body",
                 "name": "body",
                 "serializedName": "body",
                 "type": {
-                  "$ref": "17"
+                  "$ref": "11"
                 },
                 "isApiVersion": false,
                 "contentTypes": [
@@ -325,7 +247,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "17"
+                  "$ref": "11"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -348,12 +270,12 @@
           },
           "parameters": [
             {
-              "$id": "27",
+              "$id": "21",
               "kind": "method",
               "name": "body",
               "serializedName": "body",
               "type": {
-                "$ref": "17"
+                "$ref": "11"
               },
               "location": "Body",
               "isApiVersion": false,
@@ -365,13 +287,13 @@
               "decorators": []
             },
             {
-              "$id": "28",
+              "$id": "22",
               "kind": "method",
               "name": "contentType",
               "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
-                "$ref": "13"
+                "$ref": "7"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -383,12 +305,12 @@
               "decorators": []
             },
             {
-              "$id": "29",
+              "$id": "23",
               "kind": "method",
               "name": "accept",
               "serializedName": "Accept",
               "type": {
-                "$ref": "15"
+                "$ref": "9"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -402,7 +324,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "17"
+              "$ref": "11"
             }
           },
           "isOverride": false,
@@ -413,13 +335,13 @@
       ],
       "parameters": [
         {
-          "$id": "30",
+          "$id": "24",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Need to be set as 'http://localhost:3000' in client.",
           "type": {
-            "$id": "31",
+            "$id": "25",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -434,13 +356,13 @@
           "crossLanguageDefinitionId": "Versioning.Added.endpoint"
         },
         {
-          "$id": "32",
+          "$id": "26",
           "kind": "endpoint",
           "name": "version",
           "serializedName": "version",
           "doc": "Need to be set as 'v1' or 'v2' in client.",
           "type": {
-            "$ref": "7"
+            "$ref": "4"
           },
           "isApiVersion": true,
           "optional": false,
@@ -448,7 +370,7 @@
           "isEndpoint": false,
           "defaultValue": {
             "type": {
-              "$id": "33",
+              "$id": "27",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
