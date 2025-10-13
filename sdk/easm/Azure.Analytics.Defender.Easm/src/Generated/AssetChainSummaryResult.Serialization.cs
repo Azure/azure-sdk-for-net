@@ -96,7 +96,7 @@ namespace Azure.Analytics.Defender.Easm
                 return null;
             }
             IReadOnlyList<AssetChainKindSummaryResult> affectedAssetsSummary = default;
-            IReadOnlyList<DiscoGroupSummaryResult> affectedGroupsSummary = default;
+            IReadOnlyList<DiscoveryGroupSummaryResult> affectedGroupsSummary = default;
             IReadOnlyList<ErrorResponse> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -114,10 +114,10 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (property.NameEquals("affectedGroupsSummary"u8))
                 {
-                    List<DiscoGroupSummaryResult> array = new List<DiscoGroupSummaryResult>();
+                    List<DiscoveryGroupSummaryResult> array = new List<DiscoveryGroupSummaryResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiscoGroupSummaryResult.DeserializeDiscoGroupSummaryResult(item, options));
+                        array.Add(DiscoveryGroupSummaryResult.DeserializeDiscoveryGroupSummaryResult(item, options));
                     }
                     affectedGroupsSummary = array;
                     continue;

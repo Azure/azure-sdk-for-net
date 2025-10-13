@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class DiscoGroupSummaryResult : IUtf8JsonSerializable, IJsonModel<DiscoGroupSummaryResult>
+    public partial class DiscoveryGroupSummaryResult : IUtf8JsonSerializable, IJsonModel<DiscoveryGroupSummaryResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscoGroupSummaryResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscoveryGroupSummaryResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DiscoGroupSummaryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiscoveryGroupSummaryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoGroupSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroupSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoGroupSummaryResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryGroupSummaryResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("id"u8);
@@ -57,19 +57,19 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        DiscoGroupSummaryResult IJsonModel<DiscoGroupSummaryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DiscoveryGroupSummaryResult IJsonModel<DiscoveryGroupSummaryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoGroupSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroupSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoGroupSummaryResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryGroupSummaryResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiscoGroupSummaryResult(document.RootElement, options);
+            return DeserializeDiscoveryGroupSummaryResult(document.RootElement, options);
         }
 
-        internal static DiscoGroupSummaryResult DeserializeDiscoGroupSummaryResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DiscoveryGroupSummaryResult DeserializeDiscoveryGroupSummaryResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -105,46 +105,46 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DiscoGroupSummaryResult(id, name, displayName, serializedAdditionalRawData);
+            return new DiscoveryGroupSummaryResult(id, name, displayName, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DiscoGroupSummaryResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DiscoveryGroupSummaryResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoGroupSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroupSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DiscoGroupSummaryResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryGroupSummaryResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DiscoGroupSummaryResult IPersistableModel<DiscoGroupSummaryResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DiscoveryGroupSummaryResult IPersistableModel<DiscoveryGroupSummaryResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoGroupSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroupSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDiscoGroupSummaryResult(document.RootElement, options);
+                        return DeserializeDiscoveryGroupSummaryResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiscoGroupSummaryResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryGroupSummaryResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DiscoGroupSummaryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiscoveryGroupSummaryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DiscoGroupSummaryResult FromResponse(Response response)
+        internal static DiscoveryGroupSummaryResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDiscoGroupSummaryResult(document.RootElement);
+            return DeserializeDiscoveryGroupSummaryResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

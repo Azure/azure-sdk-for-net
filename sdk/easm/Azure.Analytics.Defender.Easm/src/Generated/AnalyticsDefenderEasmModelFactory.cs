@@ -2368,10 +2368,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="affectedGroupsSummary"> A list of disco group summaries. </param>
         /// <param name="errors"> The list of exceptions. </param>
         /// <returns> A new <see cref="Easm.AssetChainSummaryResult"/> instance for mocking. </returns>
-        public static AssetChainSummaryResult AssetChainSummaryResult(IEnumerable<AssetChainKindSummaryResult> affectedAssetsSummary = null, IEnumerable<DiscoGroupSummaryResult> affectedGroupsSummary = null, IEnumerable<ErrorResponse> errors = null)
+        public static AssetChainSummaryResult AssetChainSummaryResult(IEnumerable<AssetChainKindSummaryResult> affectedAssetsSummary = null, IEnumerable<DiscoveryGroupSummaryResult> affectedGroupsSummary = null, IEnumerable<ErrorResponse> errors = null)
         {
             affectedAssetsSummary ??= new List<AssetChainKindSummaryResult>();
-            affectedGroupsSummary ??= new List<DiscoGroupSummaryResult>();
+            affectedGroupsSummary ??= new List<DiscoveryGroupSummaryResult>();
             errors ??= new List<ErrorResponse>();
 
             return new AssetChainSummaryResult(affectedAssetsSummary?.ToList(), affectedGroupsSummary?.ToList(), errors?.ToList(), serializedAdditionalRawData: null);
@@ -2386,14 +2386,14 @@ namespace Azure.Analytics.Defender.Easm
             return new AssetChainKindSummaryResult(kind, affectedCount, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.DiscoGroupSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Easm.DiscoveryGroupSummaryResult"/>. </summary>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
-        /// <returns> A new <see cref="Easm.DiscoGroupSummaryResult"/> instance for mocking. </returns>
-        public static DiscoGroupSummaryResult DiscoGroupSummaryResult(string id = null, string name = null, string displayName = null)
+        /// <returns> A new <see cref="Easm.DiscoveryGroupSummaryResult"/> instance for mocking. </returns>
+        public static DiscoveryGroupSummaryResult DiscoveryGroupSummaryResult(string id = null, string name = null, string displayName = null)
         {
-            return new DiscoGroupSummaryResult(id, name, displayName, serializedAdditionalRawData: null);
+            return new DiscoveryGroupSummaryResult(id, name, displayName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.DiscoveryTemplate"/>. </summary>

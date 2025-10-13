@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A list of disco group summaries. </summary>
-    public partial class DiscoGroupSummaryResult
+    public partial class DiscoveryGroupSummaryResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DiscoGroupSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryGroupSummaryResult"/>. </summary>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="displayName"/> is null. </exception>
-        internal DiscoGroupSummaryResult(string id, string name, string displayName)
+        internal DiscoveryGroupSummaryResult(string id, string name, string displayName)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(name, nameof(name));
@@ -61,12 +61,12 @@ namespace Azure.Analytics.Defender.Easm
             DisplayName = displayName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiscoGroupSummaryResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryGroupSummaryResult"/>. </summary>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoGroupSummaryResult(string id, string name, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiscoveryGroupSummaryResult(string id, string name, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -74,8 +74,8 @@ namespace Azure.Analytics.Defender.Easm
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiscoGroupSummaryResult"/> for deserialization. </summary>
-        internal DiscoGroupSummaryResult()
+        /// <summary> Initializes a new instance of <see cref="DiscoveryGroupSummaryResult"/> for deserialization. </summary>
+        internal DiscoveryGroupSummaryResult()
         {
         }
 

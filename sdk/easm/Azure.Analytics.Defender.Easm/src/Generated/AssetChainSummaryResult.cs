@@ -50,7 +50,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="affectedAssetsSummary"> A list of asset chain summaries per asset kind. </param>
         /// <param name="affectedGroupsSummary"> A list of disco group summaries. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="affectedAssetsSummary"/> or <paramref name="affectedGroupsSummary"/> is null. </exception>
-        internal AssetChainSummaryResult(IEnumerable<AssetChainKindSummaryResult> affectedAssetsSummary, IEnumerable<DiscoGroupSummaryResult> affectedGroupsSummary)
+        internal AssetChainSummaryResult(IEnumerable<AssetChainKindSummaryResult> affectedAssetsSummary, IEnumerable<DiscoveryGroupSummaryResult> affectedGroupsSummary)
         {
             Argument.AssertNotNull(affectedAssetsSummary, nameof(affectedAssetsSummary));
             Argument.AssertNotNull(affectedGroupsSummary, nameof(affectedGroupsSummary));
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="affectedGroupsSummary"> A list of disco group summaries. </param>
         /// <param name="errors"> The list of exceptions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetChainSummaryResult(IReadOnlyList<AssetChainKindSummaryResult> affectedAssetsSummary, IReadOnlyList<DiscoGroupSummaryResult> affectedGroupsSummary, IReadOnlyList<ErrorResponse> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetChainSummaryResult(IReadOnlyList<AssetChainKindSummaryResult> affectedAssetsSummary, IReadOnlyList<DiscoveryGroupSummaryResult> affectedGroupsSummary, IReadOnlyList<ErrorResponse> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AffectedAssetsSummary = affectedAssetsSummary;
             AffectedGroupsSummary = affectedGroupsSummary;
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> A list of asset chain summaries per asset kind. </summary>
         public IReadOnlyList<AssetChainKindSummaryResult> AffectedAssetsSummary { get; }
         /// <summary> A list of disco group summaries. </summary>
-        public IReadOnlyList<DiscoGroupSummaryResult> AffectedGroupsSummary { get; }
+        public IReadOnlyList<DiscoveryGroupSummaryResult> AffectedGroupsSummary { get; }
         /// <summary> The list of exceptions. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
     }
