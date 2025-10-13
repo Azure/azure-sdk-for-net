@@ -48,7 +48,6 @@ internal class NameVisitor : ScmLibraryVisitor
         };
 
     private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
-    private readonly HashSet<CSharpType> _nonResourceMethodBodyParameterModelTypes = new();
     private readonly Dictionary<MrwSerializationTypeDefinition, string> _deserializationRename = new();
 
     protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
@@ -98,12 +97,6 @@ internal class NameVisitor : ScmLibraryVisitor
             {
                 _resourceUpdateModelTypes.Add(serializationProvider.Type);
             }
-        }
-
-        // If the input model is used as a body parameter in non-resource methods, cache the type
-        if (inputLibrary.IsNonResourceMethodBodyParameterModel(model))
-        {
-            _nonResourceMethodBodyParameterModelTypes.Add(type.Type);
         }
 
         return base.PreVisitModel(model, type);
@@ -212,7 +205,7 @@ internal class NameVisitor : ScmLibraryVisitor
         {
             if (method.IsNonResourceMethod())
             {
-                if (_nonResourceMethodBodyParameterModelTypes.Contains(parameter.Type))
+                if (parameter.Location == ParameterLocation.Body)
                 {
                     parameter.Update(name: "content");
                     parameterUpdated = true;

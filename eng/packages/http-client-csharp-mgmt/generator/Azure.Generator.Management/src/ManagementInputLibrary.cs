@@ -26,9 +26,6 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<InputModelType, IList<InputModelProperty>>? _flattenPropertyMap;
         internal IReadOnlyDictionary<InputModelType, IList<InputModelProperty>> FlattenPropertyMap => _flattenPropertyMap ??= BuildFlattenPropertyMap();
 
-        private HashSet<InputModelType>? _nonResourceMethodBodyParameterModels;
-
-        internal HashSet<InputModelType> NonResourceMethodBodyParameterModels => _nonResourceMethodBodyParameterModels ??= BuildNonResourceMethodBodyParameterModels();
         private IReadOnlyDictionary<InputModelType, IList<InputModelProperty>> BuildFlattenPropertyMap()
         {
             var result = new Dictionary<InputModelType, IList<InputModelProperty>>();
@@ -50,22 +47,6 @@ namespace Azure.Generator.Management
                             result[model] = properties;
                         }
                         properties.Add(property);
-                    }
-                }
-            }
-            return result;
-        }
-
-        private HashSet<InputModelType> BuildNonResourceMethodBodyParameterModels()
-        {
-            var result = new HashSet<InputModelType>();
-            foreach (var nonResourceMethod in NonResourceMethods)
-            {
-                foreach (var parameter in nonResourceMethod.InputMethod.Parameters)
-                {
-                    if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType modelType)
-                    {
-                        result.Add(modelType);
                     }
                 }
             }
@@ -225,7 +206,5 @@ namespace Azure.Generator.Management
         {
             return ResourceUpdateModelToResourceNameMap.TryGetValue(model, out resourceName);
         }
-
-        internal bool IsNonResourceMethodBodyParameterModel(InputModelType model) => NonResourceMethodBodyParameterModels.Contains(model);
     }
 }

@@ -9,7 +9,7 @@ namespace Azure.Generator.Management.Utilities
     /// <summary>
     /// Utility class that provides extension methods for MethodProvider instances.
     /// </summary>
-    internal static class MethodProviderExtension
+    internal static class MethodProviderExtensions
     {
         /// <summary>
         /// Determines whether the method provider is a non-resource method.
