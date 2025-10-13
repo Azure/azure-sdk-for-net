@@ -197,7 +197,7 @@ function ProcessPackage($packageInfo)
     if ($packageInfo.PSObject.Members.Name -contains "Group") {
         $groupId = $packageInfo.Group
         if ($groupId){
-            $fullPackageName = "${$groupId}:${$packageInfo.ArtifactName}"
+            $fullPackageName = "${groupId}:${$packageInfo.ArtifactName}"
         }
     }
 
