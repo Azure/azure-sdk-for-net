@@ -118,6 +118,8 @@ namespace Azure.Generator.Management.Providers
 
             var redirectMethod = new MethodProvider(methodSignature, body, this);
 
+            // mockableResource.NonResourceMethodProviders implies that mockableResource's BuildMethods has been called before, since NonResourceMethodProviders is populated in BuildMethods
+            // TODO: figure out a way to ensure mockableResource.NonResourceMethodProviders has been fully populated before being used here
             if (mockableResource.NonResourceMethodProviders.Contains(targetMethod))
             {
                 _nonResourceMethodProviders.Add(redirectMethod);
