@@ -67,13 +67,29 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $ciProps = $pkgProp.GetCIYmlForArtifact()
 
     if ($ciProps) {
-      # CheckAOTCompat logic: if set in CI.yml, respect that value; otherwise use AotCompatOptOut from project settings
+      # First, check if this artifact has baselined warnings in AOTTestInputs
+      $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
+      $hasBaselinedWarnings = $false
+      if ($aotArtifacts) {
+        $matchingAotArtifact = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
+        if ($matchingAotArtifact -and $matchingAotArtifact.ExpectedWarningsFilepath) {
+          $hasBaselinedWarnings = $true
+        }
+      }
+
+      # CheckAOTCompat logic: if set in CI.yml, respect that value; 
+      # if artifact has baselined warnings, run AOT checks; 
+      # otherwise use AotCompatOptOut from project settings
       $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
       if ($null -ne $shouldAot) {
         $parsedBool = $null
         if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
           $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
         }
+      }
+      elseif ($hasBaselinedWarnings) {
+        # If artifact has baselined warnings, enable AOT checks
+        $pkgProp.CIParameters["CheckAOTCompat"] = $true
       }
       else {
         # If not explicitly opted out of AOT compat, run the check
@@ -82,7 +98,6 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
       # If CheckAOTCompat is true, look for additional AOTTestInputs parameter
       if ($pkgProp.CIParameters["CheckAOTCompat"]) {
-        $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
         if ($aotArtifacts) {
           $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
           $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
