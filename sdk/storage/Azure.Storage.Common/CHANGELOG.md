@@ -1,6 +1,6 @@
 # Release History
 
-## 12.25.0 (unreleased)
+## 12.25.0 (2025-10-13)
 
 ### Features Added
 - This release contains bug fixes to improve quality.
