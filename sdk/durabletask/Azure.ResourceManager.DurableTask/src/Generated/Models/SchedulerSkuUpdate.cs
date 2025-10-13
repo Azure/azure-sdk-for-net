@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
-    /// <summary> The response of a TaskHub list operation. </summary>
-    internal partial class TaskHubListResult
+    /// <summary> The SKU (Stock Keeping Unit) properties to be updated. </summary>
+    public partial class SchedulerSkuUpdate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,29 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TaskHubListResult"/>. </summary>
-        /// <param name="value"> The TaskHub items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal TaskHubListResult(IEnumerable<SchedulerTaskHubData> value)
+        /// <summary> Initializes a new instance of <see cref="SchedulerSkuUpdate"/>. </summary>
+        public SchedulerSkuUpdate()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaskHubListResult"/>. </summary>
-        /// <param name="value"> The TaskHub items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="SchedulerSkuUpdate"/>. </summary>
+        /// <param name="name"> The name of the SKU. </param>
+        /// <param name="capacity"> The SKU capacity. This allows scale out/in for the resource and impacts zone redundancy. </param>
+        /// <param name="redundancyState"> Indicates whether the current SKU configuration is zone redundant. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TaskHubListResult(IReadOnlyList<SchedulerTaskHubData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SchedulerSkuUpdate(SchedulerSkuName? name, int? capacity, ResourceRedundancyState? redundancyState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Name = name;
+            Capacity = capacity;
+            RedundancyState = redundancyState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaskHubListResult"/> for deserialization. </summary>
-        internal TaskHubListResult()
-        {
-        }
-
-        /// <summary> The TaskHub items on this page. </summary>
-        public IReadOnlyList<SchedulerTaskHubData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The name of the SKU. </summary>
+        public SchedulerSkuName? Name { get; set; }
+        /// <summary> The SKU capacity. This allows scale out/in for the resource and impacts zone redundancy. </summary>
+        public int? Capacity { get; set; }
+        /// <summary> Indicates whether the current SKU configuration is zone redundant. </summary>
+        public ResourceRedundancyState? RedundancyState { get; }
     }
 }
