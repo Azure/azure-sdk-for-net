@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.PortalServicesCopilot</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.PortalServices.</Description>
     <PackageTags>azure;management;arm;resource manager;portalservices</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

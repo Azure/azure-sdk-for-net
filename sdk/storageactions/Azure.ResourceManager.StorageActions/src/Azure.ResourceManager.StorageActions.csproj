@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.StorageActions</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider StorageActions.</Description>
     <PackageTags>azure;management;arm;resource manager;storageactions</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.PineconeVectorDB</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider liftrpinecone.</Description>
     <PackageTags>azure;management;arm;resource manager;liftrpinecone</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>
