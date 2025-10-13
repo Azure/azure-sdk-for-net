@@ -40,9 +40,21 @@ namespace Azure.ResourceManager.NeonPostgres
         protected NeonBranchResource() { }
         public virtual Azure.ResourceManager.NeonPostgres.NeonBranchData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NeonPostgres.Models.NeonEndpoint> CreateOrUpdateEndpoint(Azure.WaitUntil waitUntil, string endpointName, Azure.ResourceManager.NeonPostgres.Models.NeonEndpoint resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NeonPostgres.Models.NeonEndpoint>> CreateOrUpdateEndpointAsync(Azure.WaitUntil waitUntil, string endpointName, Azure.ResourceManager.NeonPostgres.Models.NeonEndpoint resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NeonPostgres.Models.NeonDatabase> CreateOrUpdateNeonDatabase(Azure.WaitUntil waitUntil, string neonDatabaseName, Azure.ResourceManager.NeonPostgres.Models.NeonDatabase resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NeonPostgres.Models.NeonDatabase>> CreateOrUpdateNeonDatabaseAsync(Azure.WaitUntil waitUntil, string neonDatabaseName, Azure.ResourceManager.NeonPostgres.Models.NeonDatabase resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NeonPostgres.Models.NeonRole> CreateOrUpdateNeonRole(Azure.WaitUntil waitUntil, string neonRoleName, Azure.ResourceManager.NeonPostgres.Models.NeonRole resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NeonPostgres.Models.NeonRole>> CreateOrUpdateNeonRoleAsync(Azure.WaitUntil waitUntil, string neonRoleName, Azure.ResourceManager.NeonPostgres.Models.NeonRole resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteEndpoint(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteEndpointAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteNeonDatabase(string neonDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteNeonDatabaseAsync(string neonDatabaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteNeonRole(string neonRoleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteNeonRoleAsync(string neonRoleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NeonPostgres.NeonBranchResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NeonPostgres.NeonBranchResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NeonPostgres.Models.NeonCompute> GetComputes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -53,6 +65,8 @@ namespace Azure.ResourceManager.NeonPostgres
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NeonPostgres.Models.NeonDatabase> GetNeonDatabasesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NeonPostgres.Models.NeonRole> GetNeonRoles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NeonPostgres.Models.NeonRole> GetNeonRolesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckResult> Preflight(Azure.ResourceManager.NeonPostgres.Models.PreflightCheckContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckResult>> PreflightAsync(Azure.ResourceManager.NeonPostgres.Models.PreflightCheckContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.NeonPostgres.NeonBranchData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.NeonBranchData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.NeonBranchData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NeonPostgres.NeonBranchData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.NeonBranchData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -114,8 +128,8 @@ namespace Azure.ResourceManager.NeonPostgres
         Azure.ResourceManager.NeonPostgres.NeonOrganizationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.NeonOrganizationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.NeonOrganizationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.NeonOrganizationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NeonPostgres.NeonOrganizationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NeonPostgres.NeonOrganizationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NeonPostgres.NeonOrganizationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NeonPostgres.NeonOrganizationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NeonPostgres.NeonOrganizationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NeonPostgres.NeonOrganizationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class NeonPostgresExtensions
     {
@@ -214,20 +228,30 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     {
         public static Azure.ResourceManager.NeonPostgres.Models.ConnectionUriProperties ConnectionUriProperties(string projectId = null, string branchId = null, string databaseName = null, string roleName = null, string endpointId = null, bool? isPooled = default(bool?), string connectionStringUri = null) { throw null; }
         public static Azure.ResourceManager.NeonPostgres.NeonBranchData NeonBranchData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NeonPostgres.Models.NeonBranchProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.NeonPostgres.Models.NeonBranchProperties NeonBranchProperties(string entityId = null, string entityName = null, string createdAt = null, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState = default(Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attributes = null, string projectId = null, string parentId = null, string roleName = null, string databaseName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties> roles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.NeonDatabaseProperties> databases = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties> endpoints = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NeonPostgres.Models.NeonBranchProperties NeonBranchProperties(string entityId, string entityName, string createdAt, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attributes, string projectId, string parentId, string roleName, string databaseName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties> roles, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.NeonDatabaseProperties> databases, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties> endpoints) { throw null; }
+        public static Azure.ResourceManager.NeonPostgres.Models.NeonBranchProperties NeonBranchProperties(string entityId = null, string entityName = null, string createdAt = null, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState = default(Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attributes = null, string projectId = null, string parentId = null, string roleName = null, string databaseName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties> roles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.NeonDatabaseProperties> databases = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties> endpoints = null, string branchId = null, string branch = null, string dataSize = null, string lastActive = null, string computeHours = null, bool? isProtected = default(bool?), bool? isDefault = default(bool?)) { throw null; }
         public static Azure.ResourceManager.NeonPostgres.Models.NeonCompute NeonCompute(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NeonPostgres.Models.NeonComputeProperties properties = null) { throw null; }
         public static Azure.ResourceManager.NeonPostgres.Models.NeonComputeProperties NeonComputeProperties(string entityId = null, string entityName = null, string createdAt = null, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState = default(Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attributes = null, string region = null, int? cpuCores = default(int?), int? memory = default(int?), string status = null) { throw null; }
         public static Azure.ResourceManager.NeonPostgres.Models.NeonDatabase NeonDatabase(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NeonPostgres.Models.NeonDatabaseProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.NeonPostgres.Models.NeonDatabaseProperties NeonDatabaseProperties(string entityId = null, string entityName = null, string createdAt = null, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState = default(Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attributes = null, string branchId = null, string ownerName = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NeonPostgres.Models.NeonDatabaseProperties NeonDatabaseProperties(string entityId, string entityName, string createdAt, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attributes, string branchId, string ownerName) { throw null; }
+        public static Azure.ResourceManager.NeonPostgres.Models.NeonDatabaseProperties NeonDatabaseProperties(string entityId = null, string entityName = null, string createdAt = null, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState = default(Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attributes = null, string branchId = null, string ownerName = null, string databaseName = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.NeonPostgres.Models.NeonEndpoint NeonEndpoint(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties NeonEndpointProperties(string entityId = null, string entityName = null, string createdAt = null, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState = default(Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attributes = null, string projectId = null, string branchId = null, Azure.ResourceManager.NeonPostgres.Models.EndpointType? endpointType = default(Azure.ResourceManager.NeonPostgres.Models.EndpointType?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties NeonEndpointProperties(string entityId, string entityName, string createdAt, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attributes, string projectId, string branchId, Azure.ResourceManager.NeonPostgres.Models.EndpointType? endpointType) { throw null; }
+        public static Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties NeonEndpointProperties(string entityId = null, string entityName = null, string createdAt = null, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState = default(Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attributes = null, string projectId = null, string branchId = null, Azure.ResourceManager.NeonPostgres.Models.EndpointType? endpointType = default(Azure.ResourceManager.NeonPostgres.Models.EndpointType?), string endpointId = null, string computeName = null, Azure.ResourceManager.NeonPostgres.Models.NeonComputeEndpointStatus? status = default(Azure.ResourceManager.NeonPostgres.Models.NeonComputeEndpointStatus?), System.DateTimeOffset? lastActiveOn = default(System.DateTimeOffset?), Azure.ResourceManager.NeonPostgres.Models.NeonComputeAutoscalingSize size = null) { throw null; }
         public static Azure.ResourceManager.NeonPostgres.NeonOrganizationData NeonOrganizationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationProperties NeonOrganizationProperties(Azure.ResourceManager.NeonPostgres.Models.NeonMarketplaceDetails marketplaceDetails = null, Azure.ResourceManager.NeonPostgres.Models.NeonUserDetails userDetails = null, Azure.ResourceManager.NeonPostgres.Models.NeonCompanyDetails companyDetails = null, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState = default(Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState?), Azure.ResourceManager.NeonPostgres.Models.PartnerOrganizationProperties partnerOrganizationProperties = null, Azure.ResourceManager.NeonPostgres.Models.NeonProjectProperties projectProperties = null) { throw null; }
         public static Azure.ResourceManager.NeonPostgres.NeonProjectData NeonProjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NeonPostgres.Models.NeonProjectProperties properties = null) { throw null; }
         public static Azure.ResourceManager.NeonPostgres.Models.NeonProjectProperties NeonProjectProperties(string entityId = null, string entityName = null, string createdAt = null, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState = default(Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attribute = null, string regionId = null, long? storage = default(long?), int? postgresVersion = default(int?), int? historyRetention = default(int?), Azure.ResourceManager.NeonPostgres.Models.DefaultEndpointSettings defaultEndpointSettings = null, Azure.ResourceManager.NeonPostgres.Models.NeonBranchProperties branch = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties> roles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.NeonDatabaseProperties> databases = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties> endpoints = null) { throw null; }
         public static Azure.ResourceManager.NeonPostgres.Models.NeonRole NeonRole(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties NeonRoleProperties(string entityId = null, string entityName = null, string createdAt = null, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState = default(Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attributes = null, string branchId = null, System.Collections.Generic.IEnumerable<string> permissions = null, bool? isSuperUser = default(bool?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties NeonRoleProperties(string entityId, string entityName, string createdAt, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attributes, string branchId, System.Collections.Generic.IEnumerable<string> permissions, bool? isSuperUser) { throw null; }
+        public static Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties NeonRoleProperties(string entityId = null, string entityName = null, string createdAt = null, Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? provisioningState = default(Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.Attributes> attributes = null, string branchId = null, System.Collections.Generic.IEnumerable<string> permissions = null, bool? isSuperUser = default(bool?), string roleName = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), string owns = null) { throw null; }
         public static Azure.ResourceManager.NeonPostgres.Models.PgVersionsResult PgVersionsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.Models.PgVersion> versions = null) { throw null; }
+        public static Azure.ResourceManager.NeonPostgres.Models.PreflightCheckContent PreflightCheckContent(string projectId = null, string branchId = null, Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType entityType = default(Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType), Azure.ResourceManager.NeonPostgres.Models.NeonBranchProperties branchProperties = null, Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties roleProperties = null, Azure.ResourceManager.NeonPostgres.Models.NeonDatabaseProperties databaseProperties = null, Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties endpointProperties = null) { throw null; }
+        public static Azure.ResourceManager.NeonPostgres.Models.PreflightCheckResult PreflightCheckResult(bool isValid = false, string reason = null) { throw null; }
     }
     public partial class Attributes : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.Attributes>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.Attributes>
     {
@@ -312,12 +336,19 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     {
         public NeonBranchProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NeonPostgres.Models.Attributes> Attributes { get { throw null; } }
+        public string Branch { get { throw null; } set { } }
+        public string BranchId { get { throw null; } set { } }
+        public string ComputeHours { get { throw null; } }
         public string CreatedAt { get { throw null; } }
         public string DatabaseName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NeonPostgres.Models.NeonDatabaseProperties> Databases { get { throw null; } }
+        public string DataSize { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties> Endpoints { get { throw null; } }
         public string EntityId { get { throw null; } }
         public string EntityName { get { throw null; } set { } }
+        public bool? IsDefault { get { throw null; } }
+        public bool? IsProtected { get { throw null; } }
+        public string LastActive { get { throw null; } }
         public string ParentId { get { throw null; } set { } }
         public string ProjectId { get { throw null; } set { } }
         public Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? ProvisioningState { get { throw null; } }
@@ -357,6 +388,37 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonCompute>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonCompute>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class NeonComputeAutoscalingSize : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonComputeAutoscalingSize>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonComputeAutoscalingSize>
+    {
+        public NeonComputeAutoscalingSize(float autoscalingLimitMinCu, float autoscalingLimitMaxCu) { }
+        public float AutoscalingLimitMaxCu { get { throw null; } set { } }
+        public float AutoscalingLimitMinCu { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NeonPostgres.Models.NeonComputeAutoscalingSize System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonComputeAutoscalingSize>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonComputeAutoscalingSize>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NeonPostgres.Models.NeonComputeAutoscalingSize System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonComputeAutoscalingSize>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonComputeAutoscalingSize>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonComputeAutoscalingSize>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NeonComputeEndpointStatus : System.IEquatable<Azure.ResourceManager.NeonPostgres.Models.NeonComputeEndpointStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NeonComputeEndpointStatus(string value) { throw null; }
+        public static Azure.ResourceManager.NeonPostgres.Models.NeonComputeEndpointStatus Active { get { throw null; } }
+        public static Azure.ResourceManager.NeonPostgres.Models.NeonComputeEndpointStatus Idle { get { throw null; } }
+        public static Azure.ResourceManager.NeonPostgres.Models.NeonComputeEndpointStatus Init { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NeonPostgres.Models.NeonComputeEndpointStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NeonPostgres.Models.NeonComputeEndpointStatus left, Azure.ResourceManager.NeonPostgres.Models.NeonComputeEndpointStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NeonPostgres.Models.NeonComputeEndpointStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NeonPostgres.Models.NeonComputeEndpointStatus left, Azure.ResourceManager.NeonPostgres.Models.NeonComputeEndpointStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class NeonComputeProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonComputeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonComputeProperties>
     {
         internal NeonComputeProperties() { }
@@ -378,8 +440,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     }
     public partial class NeonDatabase : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonDatabase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonDatabase>
     {
-        internal NeonDatabase() { }
-        public Azure.ResourceManager.NeonPostgres.Models.NeonDatabaseProperties Properties { get { throw null; } }
+        public NeonDatabase() { }
+        public Azure.ResourceManager.NeonPostgres.Models.NeonDatabaseProperties Properties { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NeonPostgres.Models.NeonDatabase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonDatabase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonDatabase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -393,8 +455,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.NeonPostgres.Models.Attributes> Attributes { get { throw null; } }
         public string BranchId { get { throw null; } set { } }
         public string CreatedAt { get { throw null; } }
+        public string DatabaseName { get { throw null; } set { } }
         public string EntityId { get { throw null; } }
         public string EntityName { get { throw null; } set { } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public string OwnerName { get { throw null; } set { } }
         public Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -406,8 +470,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     }
     public partial class NeonEndpoint : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonEndpoint>
     {
-        internal NeonEndpoint() { }
-        public Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties Properties { get { throw null; } }
+        public NeonEndpoint() { }
+        public Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties Properties { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NeonPostgres.Models.NeonEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -420,12 +484,17 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         public NeonEndpointProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NeonPostgres.Models.Attributes> Attributes { get { throw null; } }
         public string BranchId { get { throw null; } set { } }
+        public string ComputeName { get { throw null; } set { } }
         public string CreatedAt { get { throw null; } }
+        public string EndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.NeonPostgres.Models.EndpointType? EndpointType { get { throw null; } set { } }
         public string EntityId { get { throw null; } }
         public string EntityName { get { throw null; } set { } }
+        public System.DateTimeOffset? LastActiveOn { get { throw null; } }
         public string ProjectId { get { throw null; } set { } }
         public Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.NeonPostgres.Models.NeonComputeAutoscalingSize Size { get { throw null; } set { } }
+        public Azure.ResourceManager.NeonPostgres.Models.NeonComputeEndpointStatus? Status { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -461,6 +530,18 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         Azure.ResourceManager.NeonPostgres.Models.NeonOfferDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonOfferDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonOfferDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonOfferDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NeonOrganizationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationPatch>
+    {
+        public NeonOrganizationPatch() { }
+        public Azure.ResourceManager.NeonPostgres.Models.OrganizationResourceUpdateProperties Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NeonOrganizationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonOrganizationProperties>
     {
@@ -523,8 +604,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     }
     public partial class NeonRole : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonRole>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonRole>
     {
-        internal NeonRole() { }
-        public Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties Properties { get { throw null; } }
+        public NeonRole() { }
+        public Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties Properties { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NeonPostgres.Models.NeonRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -541,8 +622,11 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         public string EntityId { get { throw null; } }
         public string EntityName { get { throw null; } set { } }
         public bool? IsSuperUser { get { throw null; } set { } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public string Owns { get { throw null; } }
         public System.Collections.Generic.IList<string> Permissions { get { throw null; } }
         public Azure.ResourceManager.NeonPostgres.Models.NeonResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public string RoleName { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -598,6 +682,21 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonUserDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.NeonUserDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class OrganizationResourceUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.OrganizationResourceUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.OrganizationResourceUpdateProperties>
+    {
+        public OrganizationResourceUpdateProperties() { }
+        public Azure.ResourceManager.NeonPostgres.Models.NeonCompanyDetails CompanyDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.NeonPostgres.Models.NeonMarketplaceDetails MarketplaceDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.NeonPostgres.Models.PartnerOrganizationProperties PartnerOrganizationProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.NeonPostgres.Models.NeonProjectProperties ProjectProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.NeonPostgres.Models.NeonUserDetails UserDetails { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NeonPostgres.Models.OrganizationResourceUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.OrganizationResourceUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.OrganizationResourceUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NeonPostgres.Models.OrganizationResourceUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.OrganizationResourceUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.OrganizationResourceUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.OrganizationResourceUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class PartnerOrganizationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.PartnerOrganizationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.PartnerOrganizationProperties>
     {
         public PartnerOrganizationProperties(string organizationName) { }
@@ -632,5 +731,54 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         Azure.ResourceManager.NeonPostgres.Models.PgVersionsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.PgVersionsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.PgVersionsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.PgVersionsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PreflightCheckContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckContent>
+    {
+        public PreflightCheckContent(string projectId, string branchId, Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType entityType) { }
+        public string BranchId { get { throw null; } }
+        public Azure.ResourceManager.NeonPostgres.Models.NeonBranchProperties BranchProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.NeonPostgres.Models.NeonDatabaseProperties DatabaseProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.NeonPostgres.Models.NeonEndpointProperties EndpointProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType EntityType { get { throw null; } }
+        public string ProjectId { get { throw null; } }
+        public Azure.ResourceManager.NeonPostgres.Models.NeonRoleProperties RoleProperties { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NeonPostgres.Models.PreflightCheckContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NeonPostgres.Models.PreflightCheckContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PreflightCheckEntityType : System.IEquatable<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PreflightCheckEntityType(string value) { throw null; }
+        public static Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType Branch { get { throw null; } }
+        public static Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType Endpoint { get { throw null; } }
+        public static Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType NeonDatabase { get { throw null; } }
+        public static Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType NeonRole { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType left, Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType left, Azure.ResourceManager.NeonPostgres.Models.PreflightCheckEntityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PreflightCheckResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckResult>
+    {
+        internal PreflightCheckResult() { }
+        public bool IsValid { get { throw null; } }
+        public string Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NeonPostgres.Models.PreflightCheckResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NeonPostgres.Models.PreflightCheckResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NeonPostgres.Models.PreflightCheckResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
