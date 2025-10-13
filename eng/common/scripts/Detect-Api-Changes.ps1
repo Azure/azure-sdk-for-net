@@ -142,7 +142,7 @@ foreach ($packageInfoFile in $packageInfoFiles)
     # Call function with appropriate parameters
     if ($supportsPackageInfoParam) {
         LogInfo "Calling $FindArtifactForApiReviewFn with packageInfo parameter"
-        $packages = &$FindArtifactForApiReviewFn $ArtifactPath $pkgArtifactName $packageInfo
+        $packages = &$FindArtifactForApiReviewFn $ArtifactPath $packageInfo
     }
     else {
         LogInfo "Calling $FindArtifactForApiReviewFn with legacy parameters"
