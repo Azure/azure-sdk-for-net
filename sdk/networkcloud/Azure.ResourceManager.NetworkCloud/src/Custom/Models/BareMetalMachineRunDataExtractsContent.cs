@@ -1,19 +1,3 @@
-// // Copyright (c) Microsoft Corporation. All rights reserved.
-// // Licensed under the MIT License.
-
-// #nullable disable
-
-// using System;
-// using System.Collections.Generic;
-// using System.ComponentModel;
-
-// namespace Azure.ResourceManager.NetworkCloud.Models
-// {
-// 	/// <summary> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified, the default is 1. </summary>
-//     [EditorBrowsable(EditorBrowsableState.Never)]
-//     public partial class BareMetalMachineRunDataExtractsContent
-//     {}
-// }
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
@@ -24,15 +8,48 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-	/// <summary> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified, the default is 1. </summary>
+    /// <summary> BareMetalMachineRunDataExtractsContent represents the body of the request to extract data from bare metal machine. </summary>
     public partial class BareMetalMachineRunDataExtractsContent : IUtf8JsonSerializable, IJsonModel<BareMetalMachineRunDataExtractsContent>
     {
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineRunDataExtractsContent"/>. </summary>
+        /// <param name="commands"> The list of curated data extraction commands to be executed directly against the target machine. </param>
+        /// <param name="limitTimeSeconds"> The maximum time the commands are allowed to run. If the execution time exceeds the limit, the commands will be stopped, any output produced will be captured, and the exit code will be set to 124. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="commands"/> is null. </exception>
+        public BareMetalMachineRunDataExtractsContent(IEnumerable<BareMetalMachineCommandSpecification> commands, long limitTimeSeconds)
+        {
+            Argument.AssertNotNull(commands, nameof(commands));
+
+            Commands = commands.ToList();
+            LimitTimeSeconds = limitTimeSeconds;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineRunDataExtractsContent"/>. </summary>
+        /// <param name="commands"> The list of curated data extraction commands to be executed directly against the target machine. </param>
+        /// <param name="limitTimeSeconds"> The maximum time the commands are allowed to run. If the execution time exceeds the limit, the commands will be stopped, any output produced will be captured, and the exit code will be set to 124. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BareMetalMachineRunDataExtractsContent(IList<BareMetalMachineCommandSpecification> commands, long limitTimeSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Commands = commands;
+            LimitTimeSeconds = limitTimeSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineRunDataExtractsContent"/> for deserialization. </summary>
+        internal BareMetalMachineRunDataExtractsContent()
+        {
+        }
+
+        /// <summary> The list of curated data extraction commands to be executed directly against the target machine. </summary>
+        public IList<BareMetalMachineCommandSpecification> Commands { get; }
+        /// <summary> The maximum time the commands are allowed to run. If the execution time exceeds the limit, the commands will be stopped, any output produced will be captured, and the exit code will be set to 124. </summary>
+        public long LimitTimeSeconds { get; }
+
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BareMetalMachineRunDataExtractsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BareMetalMachineRunDataExtractsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -52,9 +69,30 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("properties"u8);
+            writer.WritePropertyName("commands"u8);
             writer.WriteStartArray();
+            foreach (var item in Commands)
+            {
+                writer.WriteObjectValue(item, options);
+            }
             writer.WriteEndArray();
+            writer.WritePropertyName("limitTimeSeconds"u8);
+            writer.WriteNumberValue(LimitTimeSeconds);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         BareMetalMachineRunDataExtractsContent IJsonModel<BareMetalMachineRunDataExtractsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,21 +111,69 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
-			return null;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<BareMetalMachineCommandSpecification> commands = default;
+            long limitTimeSeconds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("commands"u8))
+                {
+                    List<BareMetalMachineCommandSpecification> array = new List<BareMetalMachineCommandSpecification>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(BareMetalMachineCommandSpecification.DeserializeBareMetalMachineCommandSpecification(item, options));
+                    }
+                    commands = array;
+                    continue;
+                }
+                if (property.NameEquals("limitTimeSeconds"u8))
+                {
+                    limitTimeSeconds = property.Value.GetInt64();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BareMetalMachineRunDataExtractsContent(commands ?? new ChangeTrackingList<BareMetalMachineCommandSpecification>(), limitTimeSeconds, serializedAdditionalRawData);
         }
+
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         BinaryData IPersistableModel<BareMetalMachineRunDataExtractsContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsContent>)this).GetFormatFromOptions(options) : options.Format;
 
-            throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support writing '{options.Format}' format.");
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support writing '{options.Format}' format.");
+            }
         }
 
         BareMetalMachineRunDataExtractsContent IPersistableModel<BareMetalMachineRunDataExtractsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsContent>)this).GetFormatFromOptions(options) : options.Format;
 
-            throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support reading '{options.Format}' format.");
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBareMetalMachineRunDataExtractsContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support reading '{options.Format}' format.");
+            }
         }
 
         string IPersistableModel<BareMetalMachineRunDataExtractsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
