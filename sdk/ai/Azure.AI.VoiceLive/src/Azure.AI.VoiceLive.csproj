@@ -17,7 +17,9 @@
       See https://aka.ms/voicelivesdk-net for more information.
     </Description>
     <AssemblyTitle>Microsoft Azure.AI.VoiceLive client library</AssemblyTitle>
-    <Version>1.0.0-beta.5</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure.AI.VoiceLive</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
