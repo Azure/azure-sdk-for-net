@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class TranslationBatch : IUtf8JsonSerializable, IJsonModel<TranslationBatch>
+    public partial class BatchOptions : IUtf8JsonSerializable, IJsonModel<BatchOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranslationBatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TranslationBatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,23 +28,16 @@ namespace Azure.AI.Translation.Document
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TranslationBatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TranslationBatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("inputs"u8);
-            writer.WriteStartArray();
-            foreach (var item in Inputs)
+            if (Optional.IsDefined(TranslateTextWithinImage))
             {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(Options))
-            {
-                writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options, options);
+                writer.WritePropertyName("translateTextWithinImage"u8);
+                writer.WriteBooleanValue(TranslateTextWithinImage.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,19 +56,19 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        TranslationBatch IJsonModel<TranslationBatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BatchOptions IJsonModel<BatchOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TranslationBatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TranslationBatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTranslationBatch(document.RootElement, options);
+            return DeserializeBatchOptions(document.RootElement, options);
         }
 
-        internal static TranslationBatch DeserializeTranslationBatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BatchOptions DeserializeBatchOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,29 +76,18 @@ namespace Azure.AI.Translation.Document
             {
                 return null;
             }
-            IList<DocumentTranslationInput> inputs = default;
-            BatchOptions options0 = default;
+            bool? translateTextWithinImage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inputs"u8))
-                {
-                    List<DocumentTranslationInput> array = new List<DocumentTranslationInput>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DocumentTranslationInput.DeserializeDocumentTranslationInput(item, options));
-                    }
-                    inputs = array;
-                    continue;
-                }
-                if (property.NameEquals("options"u8))
+                if (property.NameEquals("translateTextWithinImage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    options0 = BatchOptions.DeserializeBatchOptions(property.Value, options);
+                    translateTextWithinImage = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,46 +96,46 @@ namespace Azure.AI.Translation.Document
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TranslationBatch(inputs, options0, serializedAdditionalRawData);
+            return new BatchOptions(translateTextWithinImage, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TranslationBatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BatchOptions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TranslationBatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAITranslationDocumentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TranslationBatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TranslationBatch IPersistableModel<TranslationBatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BatchOptions IPersistableModel<BatchOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TranslationBatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTranslationBatch(document.RootElement, options);
+                        return DeserializeBatchOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TranslationBatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TranslationBatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TranslationBatch FromResponse(Response response)
+        internal static BatchOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTranslationBatch(document.RootElement);
+            return DeserializeBatchOptions(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

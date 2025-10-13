@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Translation.Document
 {
-    /// <summary> Translation job submission batch request. </summary>
-    public partial class TranslationBatch
+    /// <summary> Translation batch request options. </summary>
+    public partial class BatchOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,21 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TranslationBatch"/>. </summary>
-        /// <param name="inputs"> The input list of documents or folders containing documents. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        public TranslationBatch(IEnumerable<DocumentTranslationInput> inputs)
+        /// <summary> Initializes a new instance of <see cref="BatchOptions"/>. </summary>
+        public BatchOptions()
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-
-            Inputs = inputs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslationBatch"/>. </summary>
-        /// <param name="inputs"> The input list of documents or folders containing documents. </param>
-        /// <param name="options"> The batch operation options. </param>
+        /// <summary> Initializes a new instance of <see cref="BatchOptions"/>. </summary>
+        /// <param name="translateTextWithinImage"> Translation text within an image option. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationBatch(IList<DocumentTranslationInput> inputs, BatchOptions options, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchOptions(bool? translateTextWithinImage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Inputs = inputs;
-            Options = options;
+            TranslateTextWithinImage = translateTextWithinImage;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranslationBatch"/> for deserialization. </summary>
-        internal TranslationBatch()
-        {
-        }
-
-        /// <summary> The input list of documents or folders containing documents. </summary>
-        public IList<DocumentTranslationInput> Inputs { get; }
-        /// <summary> The batch operation options. </summary>
-        public BatchOptions Options { get; set; }
+        /// <summary> Translation text within an image option. </summary>
+        public bool? TranslateTextWithinImage { get; set; }
     }
 }
