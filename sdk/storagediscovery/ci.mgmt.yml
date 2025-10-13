@@ -33,4 +33,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.StorageDiscovery
       safeName: AzureResourceManagerStorageDiscovery
-    CheckAOTCompat: true
+    CheckAOTCompat: true 
+    AOTTestInputs: 
+    - ArtifactName: Azure.ResourceManager.StorageDiscovery 
+      ExpectedWarningsFilepath: None 

@@ -12,16 +12,16 @@ using Azure.ResourceManager.StorageDiscovery;
 namespace Azure.ResourceManager.StorageDiscovery.Models
 {
     /// <summary> Storage Discovery Resource Type. </summary>
-    public readonly partial struct StorageDiscoveryResourceType : IEquatable<StorageDiscoveryResourceType>
+    public readonly partial struct StorageDiscoveryResourceKind : IEquatable<StorageDiscoveryResourceKind>
     {
         private readonly string _value;
         /// <summary> Storage Account Resource Type. </summary>
         private const string StorageAccountsValue = "Microsoft.Storage/storageAccounts";
 
-        /// <summary> Initializes a new instance of <see cref="StorageDiscoveryResourceType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageDiscoveryResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageDiscoveryResourceType(string value)
+        public StorageDiscoveryResourceKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         }
 
         /// <summary> Storage Account Resource Type. </summary>
-        public static StorageDiscoveryResourceType StorageAccounts { get; } = new StorageDiscoveryResourceType(StorageAccountsValue);
+        public static StorageDiscoveryResourceKind StorageAccounts { get; } = new StorageDiscoveryResourceKind(StorageAccountsValue);
 
-        /// <summary> Determines if two <see cref="StorageDiscoveryResourceType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="StorageDiscoveryResourceKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(StorageDiscoveryResourceType left, StorageDiscoveryResourceType right) => left.Equals(right);
+        public static bool operator ==(StorageDiscoveryResourceKind left, StorageDiscoveryResourceKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StorageDiscoveryResourceType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="StorageDiscoveryResourceKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(StorageDiscoveryResourceType left, StorageDiscoveryResourceType right) => !left.Equals(right);
+        public static bool operator !=(StorageDiscoveryResourceKind left, StorageDiscoveryResourceKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StorageDiscoveryResourceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageDiscoveryResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageDiscoveryResourceType(string value) => new StorageDiscoveryResourceType(value);
+        public static implicit operator StorageDiscoveryResourceKind(string value) => new StorageDiscoveryResourceKind(value);
 
-        /// <summary> Converts a string to a <see cref="StorageDiscoveryResourceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="StorageDiscoveryResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageDiscoveryResourceType?(string value) => value == null ? null : new StorageDiscoveryResourceType(value);
+        public static implicit operator StorageDiscoveryResourceKind?(string value) => value == null ? null : new StorageDiscoveryResourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StorageDiscoveryResourceType other && Equals(other);
+        public override bool Equals(object obj) => obj is StorageDiscoveryResourceKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(StorageDiscoveryResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StorageDiscoveryResourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
