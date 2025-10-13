@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticOpenAIIntegrationProperties"/>. </summary>
-        /// <param name="openAIResourceId"> The resource id of Open AI resource. </param>
+        /// <param name="openAIResourceId"> The resource name of Open AI resource. </param>
         /// <param name="openAIResourceEndpoint"> The API endpoint for Open AI resource. </param>
         /// <param name="key"> Value of API key for Open AI resource. </param>
         /// <param name="lastRefreshOn"> Last Update Timestamp for key updation. </param>

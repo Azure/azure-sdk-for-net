@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Elastic.Models
                 throw new FormatException($"The model {nameof(ElasticOpenAIIntegrationProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(OpenAIResourceId))
+            if (Optional.IsDefined(OpenAIResourceId))
             {
                 writer.WritePropertyName("openAIResourceId"u8);
                 writer.WriteStringValue(OpenAIResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OpenAIResourceEndpoint))
+            if (Optional.IsDefined(OpenAIResourceEndpoint))
             {
                 writer.WritePropertyName("openAIResourceEndpoint"u8);
                 writer.WriteStringValue(OpenAIResourceEndpoint);
