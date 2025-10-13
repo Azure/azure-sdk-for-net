@@ -30,12 +30,8 @@ namespace Azure.Core.Serialization
         /// </summary>
         public DynamicData Value { get; }
 
-#pragma warning disable IL2026 // DynamicData is not AOT friendly
-#pragma warning disable IL3050 // DynamicData is not AOT friendly
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
-#pragma warning restore IL2026 // DynamicData is not AOT friendly
-#pragma warning restore IL3050 // DynamicData is not AOT friendly
 
         [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
         private class MetaObject : DynamicMetaObject

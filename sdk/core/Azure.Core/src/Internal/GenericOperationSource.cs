@@ -19,11 +19,7 @@ namespace Azure.Core
         private T CreateResult(Response response)
             // This call will never be invoked with a collection of models, so we can safely disable the warning
 #pragma warning disable AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
-#pragma warning disable IL3050 // This class uses reflection.  Pass in a generated ModelReaderWriterContext to be AOT compatible.
-#pragma warning disable IL2026 // This class uses reflection.  Pass in a generated ModelReaderWriterContext to be AOT compatible.
             => ModelReaderWriter.Read<T>(response.Content)!;
 #pragma warning restore AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
-#pragma warning restore IL3050 // This class uses reflection.  Pass in a generated ModelReaderWriterContext to be AOT compatible.
-#pragma warning restore IL2026 // This class uses reflection.  Pass in a generated ModelReaderWriterContext to be AOT compatible.
     }
 }
