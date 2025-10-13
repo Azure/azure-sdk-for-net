@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DurableTask.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDurableTaskModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="DurableTask.DurableTaskSchedulerData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DurableTask.SchedulerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DurableTask.DurableTaskSchedulerData"/> instance for mocking. </returns>
-        public static DurableTaskSchedulerData DurableTaskSchedulerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DurableTaskSchedulerProperties properties = null)
+        /// <returns> A new <see cref="DurableTask.SchedulerData"/> instance for mocking. </returns>
+        public static SchedulerData SchedulerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SchedulerProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DurableTaskSchedulerData(
+            return new SchedulerData(
                 id,
                 name,
                 resourceType,
@@ -40,62 +40,62 @@ namespace Azure.ResourceManager.DurableTask.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DurableTaskSchedulerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SchedulerProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="endpoint"> URL of the durable task scheduler. </param>
         /// <param name="ipAllowlist"> IP allow list for durable task scheduler. Values can be IPv4, IPv6 or CIDR. </param>
         /// <param name="sku"> SKU of the durable task scheduler. </param>
-        /// <returns> A new <see cref="Models.DurableTaskSchedulerProperties"/> instance for mocking. </returns>
-        public static DurableTaskSchedulerProperties DurableTaskSchedulerProperties(DurableTaskProvisioningState? provisioningState = null, string endpoint = null, IEnumerable<string> ipAllowlist = null, DurableTaskSchedulerSku sku = null)
+        /// <returns> A new <see cref="Models.SchedulerProperties"/> instance for mocking. </returns>
+        public static SchedulerProperties SchedulerProperties(ProvisioningState? provisioningState = null, string endpoint = null, IEnumerable<string> ipAllowlist = null, SchedulerSku sku = null)
         {
             ipAllowlist ??= new List<string>();
 
-            return new DurableTaskSchedulerProperties(provisioningState, endpoint, ipAllowlist?.ToList(), sku, serializedAdditionalRawData: null);
+            return new SchedulerProperties(provisioningState, endpoint, ipAllowlist?.ToList(), sku, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DurableTaskSchedulerSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SchedulerSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="capacity"> The SKU capacity. This allows scale out/in for the resource and impacts zone redundancy. </param>
         /// <param name="redundancyState"> Indicates whether the current SKU configuration is zone redundant. </param>
-        /// <returns> A new <see cref="Models.DurableTaskSchedulerSku"/> instance for mocking. </returns>
-        public static DurableTaskSchedulerSku DurableTaskSchedulerSku(string name = null, int? capacity = null, DurableTaskResourceRedundancyState? redundancyState = null)
+        /// <returns> A new <see cref="Models.SchedulerSku"/> instance for mocking. </returns>
+        public static SchedulerSku SchedulerSku(SchedulerSkuName name = default, int? capacity = null, DurableTaskResourceRedundancyState? redundancyState = null)
         {
-            return new DurableTaskSchedulerSku(name, capacity, redundancyState, serializedAdditionalRawData: null);
+            return new SchedulerSku(name, capacity, redundancyState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DurableTaskSchedulerPatchProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SchedulerPatchProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="endpoint"> URL of the durable task scheduler. </param>
         /// <param name="ipAllowlist"> IP allow list for durable task scheduler. Values can be IPv4, IPv6 or CIDR. </param>
         /// <param name="sku"> SKU of the durable task scheduler. </param>
-        /// <returns> A new <see cref="Models.DurableTaskSchedulerPatchProperties"/> instance for mocking. </returns>
-        public static DurableTaskSchedulerPatchProperties DurableTaskSchedulerPatchProperties(DurableTaskProvisioningState? provisioningState = null, string endpoint = null, IEnumerable<string> ipAllowlist = null, DurableTaskSchedulerSkuUpdate sku = null)
+        /// <returns> A new <see cref="Models.SchedulerPatchProperties"/> instance for mocking. </returns>
+        public static SchedulerPatchProperties SchedulerPatchProperties(ProvisioningState? provisioningState = null, string endpoint = null, IEnumerable<string> ipAllowlist = null, SchedulerSkuUpdate sku = null)
         {
             ipAllowlist ??= new List<string>();
 
-            return new DurableTaskSchedulerPatchProperties(provisioningState, endpoint, ipAllowlist?.ToList(), sku, serializedAdditionalRawData: null);
+            return new SchedulerPatchProperties(provisioningState, endpoint, ipAllowlist?.ToList(), sku, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DurableTaskSchedulerSkuUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SchedulerSkuUpdate"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="capacity"> The SKU capacity. This allows scale out/in for the resource and impacts zone redundancy. </param>
         /// <param name="redundancyState"> Indicates whether the current SKU configuration is zone redundant. </param>
-        /// <returns> A new <see cref="Models.DurableTaskSchedulerSkuUpdate"/> instance for mocking. </returns>
-        public static DurableTaskSchedulerSkuUpdate DurableTaskSchedulerSkuUpdate(string name = null, int? capacity = null, DurableTaskResourceRedundancyState? redundancyState = null)
+        /// <returns> A new <see cref="Models.SchedulerSkuUpdate"/> instance for mocking. </returns>
+        public static SchedulerSkuUpdate SchedulerSkuUpdate(SchedulerSkuName? name = null, int? capacity = null, DurableTaskResourceRedundancyState? redundancyState = null)
         {
-            return new DurableTaskSchedulerSkuUpdate(name, capacity, redundancyState, serializedAdditionalRawData: null);
+            return new SchedulerSkuUpdate(name, capacity, redundancyState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DurableTask.DurableTaskHubData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DurableTask.SchedulerTaskHubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DurableTask.DurableTaskHubData"/> instance for mocking. </returns>
-        public static DurableTaskHubData DurableTaskHubData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DurableTaskHubProperties properties = null)
+        /// <returns> A new <see cref="DurableTask.SchedulerTaskHubData"/> instance for mocking. </returns>
+        public static SchedulerTaskHubData SchedulerTaskHubData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SchedulerTaskHubProperties properties = null)
         {
-            return new DurableTaskHubData(
+            return new SchedulerTaskHubData(
                 id,
                 name,
                 resourceType,
@@ -104,25 +104,25 @@ namespace Azure.ResourceManager.DurableTask.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DurableTaskHubProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SchedulerTaskHubProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="dashboardUri"> URL of the durable task scheduler dashboard. </param>
-        /// <returns> A new <see cref="Models.DurableTaskHubProperties"/> instance for mocking. </returns>
-        public static DurableTaskHubProperties DurableTaskHubProperties(DurableTaskProvisioningState? provisioningState = null, Uri dashboardUri = null)
+        /// <returns> A new <see cref="Models.SchedulerTaskHubProperties"/> instance for mocking. </returns>
+        public static SchedulerTaskHubProperties SchedulerTaskHubProperties(ProvisioningState? provisioningState = null, Uri dashboardUri = null)
         {
-            return new DurableTaskHubProperties(provisioningState, dashboardUri, serializedAdditionalRawData: null);
+            return new SchedulerTaskHubProperties(provisioningState, dashboardUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DurableTask.DurableTaskRetentionPolicyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DurableTask.RetentionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DurableTask.DurableTaskRetentionPolicyData"/> instance for mocking. </returns>
-        public static DurableTaskRetentionPolicyData DurableTaskRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DurableTaskRetentionPolicyProperties properties = null)
+        /// <returns> A new <see cref="DurableTask.RetentionPolicyData"/> instance for mocking. </returns>
+        public static RetentionPolicyData RetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RetentionPolicyProperties properties = null)
         {
-            return new DurableTaskRetentionPolicyData(
+            return new RetentionPolicyData(
                 id,
                 name,
                 resourceType,
@@ -131,15 +131,15 @@ namespace Azure.ResourceManager.DurableTask.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DurableTaskRetentionPolicyProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RetentionPolicyProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="retentionPolicies"> The orchestration retention policies. </param>
-        /// <returns> A new <see cref="Models.DurableTaskRetentionPolicyProperties"/> instance for mocking. </returns>
-        public static DurableTaskRetentionPolicyProperties DurableTaskRetentionPolicyProperties(DurableTaskProvisioningState? provisioningState = null, IEnumerable<DurableTaskRetentionPolicyDetails> retentionPolicies = null)
+        /// <returns> A new <see cref="Models.RetentionPolicyProperties"/> instance for mocking. </returns>
+        public static RetentionPolicyProperties RetentionPolicyProperties(ProvisioningState? provisioningState = null, IEnumerable<RetentionPolicyDetails> retentionPolicies = null)
         {
-            retentionPolicies ??= new List<DurableTaskRetentionPolicyDetails>();
+            retentionPolicies ??= new List<RetentionPolicyDetails>();
 
-            return new DurableTaskRetentionPolicyProperties(provisioningState, retentionPolicies?.ToList(), serializedAdditionalRawData: null);
+            return new RetentionPolicyProperties(provisioningState, retentionPolicies?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }
