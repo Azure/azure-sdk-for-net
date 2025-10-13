@@ -210,7 +210,7 @@ internal class NameVisitor : ScmLibraryVisitor
         var parameterUpdated = false;
         foreach (var parameter in method.Signature.Parameters)
         {
-            if (NonResourceMethodProviderCache.Contains(method))
+            if (method.IsNonResourceMethod())
             {
                 if (_nonResourceMethodBodyParameterModelTypes.Contains(parameter.Type))
                 {

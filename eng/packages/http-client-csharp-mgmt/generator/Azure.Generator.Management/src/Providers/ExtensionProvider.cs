@@ -22,6 +22,10 @@ namespace Azure.Generator.Management.Providers
     internal class ExtensionProvider : TypeProvider
     {
         private readonly IReadOnlyList<MockableResourceProvider> _mockableResources;
+        private readonly HashSet<MethodProvider> _nonResourceMethodProviders = new();
+
+        internal IReadOnlySet<MethodProvider> NonResourceMethodProviders => _nonResourceMethodProviders;
+
         public ExtensionProvider(IReadOnlyList<MockableResourceProvider> mockableResources)
         {
             _mockableResources = mockableResources;
@@ -51,7 +55,7 @@ namespace Azure.Generator.Management.Providers
             {
                 var getCachedClientMethod = getCachedClientMethods[mockableResource.ArmCoreType];
                 redirectedMethods.AddRange(
-                    mockableResource.Methods.Select(m => BuildRedirectMethod(mockableResource.ArmCoreType, m, getCachedClientMethod))
+                    mockableResource.Methods.Select(m => BuildRedirectMethod(mockableResource, m, getCachedClientMethod))
                     );
             }
 
@@ -83,14 +87,14 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(methodSignature, statements, this);
         }
 
-        private MethodProvider BuildRedirectMethod(CSharpType coreType, MethodProvider targetMethod, MethodProvider getCachedClientMethod)
+        private MethodProvider BuildRedirectMethod(MockableResourceProvider mockableResource, MethodProvider targetMethod, MethodProvider getCachedClientMethod)
         {
             var target = targetMethod.Signature;
             // TODO -- add mocking information in method description
             var extensionParameter = new ParameterProvider(
-                GetArmCoreTypeVariableName(coreType),
-                $"The {coreType:C} the method will execute against.",
-                coreType,
+                GetArmCoreTypeVariableName(mockableResource.ArmCoreType),
+                $"The {mockableResource.ArmCoreType:C} the method will execute against.",
+                mockableResource.ArmCoreType,
                 validation: ParameterValidationType.AssertNotNull);
             IReadOnlyList<ParameterProvider> parameters = [
                 extensionParameter,
@@ -113,10 +117,10 @@ namespace Azure.Generator.Management.Providers
             };
 
             var redirectMethod = new MethodProvider(methodSignature, body, this);
-            // If the target method is cached in the non-resource method provider cache, cache this redirect method too
-            if (NonResourceMethodProviderCache.Contains(targetMethod))
+
+            if (mockableResource.NonResourceMethodProviders.Contains(targetMethod))
             {
-                NonResourceMethodProviderCache.Add(redirectMethod);
+                _nonResourceMethodProviders.Add(redirectMethod);
             }
 
             return redirectMethod;

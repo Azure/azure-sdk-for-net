@@ -28,6 +28,7 @@ namespace Azure.Generator.Management.Providers
         private protected readonly IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> _resourceMethods;
         private protected readonly IReadOnlyList<NonResourceMethod> _nonResourceMethods;
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
+        private readonly HashSet<MethodProvider> _nonResourceMethodProviders = new();
 
         private readonly RequestPathPattern _contextualPath;
 
@@ -106,6 +107,8 @@ namespace Azure.Generator.Management.Providers
         }
 
         internal CSharpType ArmCoreType { get; }
+
+        internal IReadOnlySet<MethodProvider> NonResourceMethodProviders => _nonResourceMethodProviders;
 
         protected override string BuildNamespace() => $"{base.BuildNamespace()}.Mocking";
 
@@ -196,9 +199,10 @@ namespace Azure.Generator.Management.Providers
             {
                 var asyncMethod = BuildServiceMethod(method.InputMethod, method.InputClient, true);
                 var syncMethod = BuildServiceMethod(method.InputMethod, method.InputClient, false);
-                // Cache the non-resource method providers
-                NonResourceMethodProviderCache.Add(asyncMethod);
-                NonResourceMethodProviderCache.Add(syncMethod);
+
+                _nonResourceMethodProviders.Add(asyncMethod);
+                _nonResourceMethodProviders.Add(syncMethod);
+
                 methods.Add(asyncMethod);
                 methods.Add(syncMethod);
             }
