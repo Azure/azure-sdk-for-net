@@ -74,6 +74,8 @@ namespace Azure.ResourceManager.Elastic
         private readonly DetachTrafficFilterRestOperations _detachTrafficFilterRestClient;
         private readonly ClientDiagnostics _trafficFiltersClientDiagnostics;
         private readonly TrafficFiltersRestOperations _trafficFiltersRestClient;
+        private readonly ClientDiagnostics _organizationsClientDiagnostics;
+        private readonly OrganizationsRestOperations _organizationsRestClient;
         private readonly ElasticMonitorData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -137,6 +139,8 @@ namespace Azure.ResourceManager.Elastic
             _detachTrafficFilterRestClient = new DetachTrafficFilterRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _trafficFiltersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _trafficFiltersRestClient = new TrafficFiltersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _organizationsRestClient = new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -163,6 +167,75 @@ namespace Azure.ResourceManager.Elastic
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of MonitoredSubscriptionPropertyResources in the ElasticMonitor. </summary>
+        /// <returns> An object representing collection of MonitoredSubscriptionPropertyResources and their operations over a MonitoredSubscriptionPropertyResource. </returns>
+        public virtual MonitoredSubscriptionPropertyCollection GetMonitoredSubscriptionProperties()
+        {
+            return GetCachedClient(client => new MonitoredSubscriptionPropertyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get detailed information about all subscriptions currently being monitored by the Elastic monitor resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/monitoredSubscriptions/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MonitoredSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MonitoredSubscriptionPropertyResource>> GetMonitoredSubscriptionPropertyAsync(string configurationName, CancellationToken cancellationToken = default)
+        {
+            return await GetMonitoredSubscriptionProperties().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get detailed information about all subscriptions currently being monitored by the Elastic monitor resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/monitoredSubscriptions/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MonitoredSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MonitoredSubscriptionPropertyResource> GetMonitoredSubscriptionProperty(string configurationName, CancellationToken cancellationToken = default)
+        {
+            return GetMonitoredSubscriptionProperties().Get(configurationName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ElasticOpenAIIntegrationResources in the ElasticMonitor. </summary>
         /// <returns> An object representing collection of ElasticOpenAIIntegrationResources and their operations over a ElasticOpenAIIntegrationResource. </returns>
         public virtual ElasticOpenAIIntegrationCollection GetElasticOpenAIIntegrations()
@@ -171,7 +244,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get OpenAI integration rule for a given monitor resource.
+        /// Get detailed information about OpenAI integration rules for a given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -183,7 +256,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -202,7 +275,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get OpenAI integration rule for a given monitor resource.
+        /// Get detailed information about OpenAI integration rules for a given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -214,7 +287,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -240,7 +313,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get a tag rule set for a given monitor resource.
+        /// Get detailed information about a tag rule set for a given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -252,7 +325,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -271,7 +344,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get a tag rule set for a given monitor resource.
+        /// Get detailed information about a tag rule set for a given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -283,7 +356,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -302,7 +375,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get the properties of a specific monitor resource.
+        /// Get detailed properties of a specific Elastic monitor resource, helping you manage observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -314,7 +387,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -342,7 +415,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get the properties of a specific monitor resource.
+        /// Get detailed properties of a specific Elastic monitor resource, helping you manage observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -354,7 +427,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -382,7 +455,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Delete a monitor resource.
+        /// Delete an existing Elastic monitor resource from your Azure subscription, removing its observability and monitoring capabilities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -394,7 +467,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -424,7 +497,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Delete a monitor resource.
+        /// Delete an existing Elastic monitor resource from your Azure subscription, removing its observability and monitoring capabilities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -436,7 +509,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -466,7 +539,99 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List the resources currently being monitored by the Elastic monitor resource.
+        /// Update an existing Elastic monitor resource in your Azure subscription, ensuring optimal observability and performance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Elastic resource model update parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<ElasticMonitorResource>> UpdateAsync(WaitUntil waitUntil, ElasticMonitorPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _elasticMonitorMonitorsClientDiagnostics.CreateScope("ElasticMonitorResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _elasticMonitorMonitorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorOperationSource(Client), _elasticMonitorMonitorsClientDiagnostics, Pipeline, _elasticMonitorMonitorsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update an existing Elastic monitor resource in your Azure subscription, ensuring optimal observability and performance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Elastic resource model update parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<ElasticMonitorResource> Update(WaitUntil waitUntil, ElasticMonitorPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _elasticMonitorMonitorsClientDiagnostics.CreateScope("ElasticMonitorResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _elasticMonitorMonitorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorOperationSource(Client), _elasticMonitorMonitorsClientDiagnostics, Pipeline, _elasticMonitorMonitorsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all resources currently being monitored by the Elastic monitor resource, helping you manage observability.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -478,7 +643,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -492,7 +657,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List the resources currently being monitored by the Elastic monitor resource.
+        /// List all resources currently being monitored by the Elastic monitor resource, helping you manage observability.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -504,7 +669,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +683,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Fetch information regarding Elastic cloud deployment corresponding to the Elastic monitor resource.
+        /// Fetch detailed information about Elastic cloud deployments corresponding to the Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -530,7 +695,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -552,7 +717,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Fetch information regarding Elastic cloud deployment corresponding to the Elastic monitor resource.
+        /// Fetch detailed information about Elastic cloud deployments corresponding to the Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -564,7 +729,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -586,7 +751,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create User inside elastic deployment which are used by customers to perform operations on the elastic deployment
+        /// Create or update external user configurations for your Elastic monitor resource, enabling access and management by external users.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -598,7 +763,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -621,7 +786,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create User inside elastic deployment which are used by customers to perform operations on the elastic deployment
+        /// Create or update external user configurations for your Elastic monitor resource, enabling access and management by external users.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -633,7 +798,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -656,7 +821,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get marketplace and organization info mapped to the given monitor.
+        /// Retrieve marketplace and organization billing information mapped to the given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -668,7 +833,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -690,7 +855,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get marketplace and organization info mapped to the given monitor.
+        /// Retrieve marketplace and organization billing information mapped to the given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -702,7 +867,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -724,7 +889,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List of all active deployments that are associated with the marketplace subscription linked to the given monitor.
+        /// List all active deployments associated with the marketplace subscription linked to the given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -736,7 +901,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -750,7 +915,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List of all active deployments that are associated with the marketplace subscription linked to the given monitor.
+        /// List all active deployments associated with the marketplace subscription linked to the given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -762,7 +927,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -776,7 +941,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List the vm resources currently being monitored by the Elastic monitor resource.
+        /// List all VM resources currently being monitored by the Elastic monitor resource, helping you manage observability.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -788,7 +953,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -802,7 +967,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List the vm resources currently being monitored by the Elastic monitor resource.
+        /// List all VM resources currently being monitored by the Elastic monitor resource, helping you manage observability.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -814,7 +979,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -828,7 +993,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List the vm ingestion details that will be monitored by the Elastic monitor resource.
+        /// List detailed information about VM ingestion that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -840,7 +1005,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -862,7 +1027,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List the vm ingestion details that will be monitored by the Elastic monitor resource.
+        /// List detailed information about VM ingestion that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -874,7 +1039,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -896,7 +1061,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Update the vm details that will be monitored by the Elastic monitor resource.
+        /// Update the VM details that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -908,7 +1073,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -931,7 +1096,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Update the vm details that will be monitored by the Elastic monitor resource.
+        /// Update the VM details that will be monitored by the Elastic monitor resource, ensuring optimal observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -943,7 +1108,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -966,7 +1131,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List of upgradable versions for a given monitor resource.
+        /// List all upgradable versions for your Elastic monitor resource, helping you plan and execute upgrades.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -978,7 +1143,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1000,7 +1165,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List of upgradable versions for a given monitor resource.
+        /// List all upgradable versions for your Elastic monitor resource, helping you plan and execute upgrades.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1012,7 +1177,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1034,7 +1199,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Upgradable version for a monitor resource.
+        /// Upgrade the Elastic monitor resource to a newer version, ensuring optimal observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1046,7 +1211,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1073,7 +1238,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Upgradable version for a monitor resource.
+        /// Upgrade the Elastic monitor resource to a newer version, ensuring optimal observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1085,7 +1250,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1112,7 +1277,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get the list of all traffic filters for the account.
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1124,7 +1289,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1146,7 +1311,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get the list of all traffic filters for the account.
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1158,7 +1323,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1180,7 +1345,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get the list of all associated traffic filters for the given deployment.
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1192,7 +1357,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1214,7 +1379,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get the list of all associated traffic filters for the given deployment.
+        /// List all traffic filters associated with your Elastic monitor resource, helping you manage network traffic control.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1226,7 +1391,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1248,7 +1413,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create and Associate IP traffic filter for the given deployment.
+        /// Create and associate an IP filter with your Elastic monitor resource to control and manage network traffic.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1260,7 +1425,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1288,7 +1453,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create and Associate IP traffic filter for the given deployment.
+        /// Create and associate an IP filter with your Elastic monitor resource to control and manage network traffic.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1300,7 +1465,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1328,7 +1493,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create and Associate private link traffic filter for the given deployment.
+        /// Create and associate a PL filter with your Elastic monitor resource to control and manage network traffic.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1340,7 +1505,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1369,7 +1534,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create and Associate private link traffic filter for the given deployment.
+        /// Create and associate a PL filter with your Elastic monitor resource to control and manage network traffic.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1381,7 +1546,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1410,7 +1575,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Associate traffic filter for the given deployment.
+        /// Associate a traffic filter with your Elastic monitor resource to control and manage network traffic.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1422,7 +1587,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1449,7 +1614,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Associate traffic filter for the given deployment.
+        /// Associate a traffic filter with your Elastic monitor resource to control and manage network traffic.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1461,7 +1626,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1488,7 +1653,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Detach and Delete traffic filter from the given deployment.
+        /// Detach and delete an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1500,7 +1665,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1523,7 +1688,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Detach and Delete traffic filter from the given deployment.
+        /// Detach and delete an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1535,7 +1700,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1558,7 +1723,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Detach traffic filter for the given deployment.
+        /// Detach an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1570,7 +1735,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1597,7 +1762,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Detach traffic filter for the given deployment.
+        /// Detach an existing traffic filter from your Elastic monitor resource, removing its network traffic control capabilities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1609,7 +1774,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1636,7 +1801,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Delete traffic filter from the account.
+        /// Delete an existing traffic filter associated with your Elastic monitor resource, removing its network traffic control capabilities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1648,7 +1813,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1671,7 +1836,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Delete traffic filter from the account.
+        /// Delete an existing traffic filter associated with your Elastic monitor resource, removing its network traffic control capabilities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1683,7 +1848,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1706,6 +1871,84 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
+        /// Resubscribe the Elasticsearch Organization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/resubscribe</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organizations_Resubscribe</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> Resubscribe Properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<ElasticMonitorResource>> ResubscribeOrganizationAsync(WaitUntil waitUntil, ResubscribeProperties body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _organizationsClientDiagnostics.CreateScope("ElasticMonitorResource.ResubscribeOrganization");
+            scope.Start();
+            try
+            {
+                var response = await _organizationsRestClient.ResubscribeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorOperationSource(Client), _organizationsClientDiagnostics, Pipeline, _organizationsRestClient.CreateResubscribeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resubscribe the Elasticsearch Organization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/resubscribe</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organizations_Resubscribe</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> Resubscribe Properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<ElasticMonitorResource> ResubscribeOrganization(WaitUntil waitUntil, ResubscribeProperties body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _organizationsClientDiagnostics.CreateScope("ElasticMonitorResource.ResubscribeOrganization");
+            scope.Start();
+            try
+            {
+                var response = _organizationsRestClient.Resubscribe(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorOperationSource(Client), _organizationsClientDiagnostics, Pipeline, _organizationsRestClient.CreateResubscribeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -1718,7 +1961,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1756,8 +1999,8 @@ namespace Azure.ResourceManager.Elastic
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1780,7 +2023,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1818,8 +2061,8 @@ namespace Azure.ResourceManager.Elastic
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1842,7 +2085,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1875,8 +2118,8 @@ namespace Azure.ResourceManager.Elastic
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new ElasticMonitorPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1899,7 +2142,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1932,8 +2175,8 @@ namespace Azure.ResourceManager.Elastic
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
                     var patch = new ElasticMonitorPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1956,7 +2199,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1992,8 +2235,8 @@ namespace Azure.ResourceManager.Elastic
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -2016,7 +2259,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2052,8 +2295,8 @@ namespace Azure.ResourceManager.Elastic
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

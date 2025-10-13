@@ -58,8 +58,10 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="elasticsearchEndPoint"> Elasticsearch endpoint in Elastic cloud deployment. This is either the aliased_endpoint if available, or the service_url otherwise. </param>
         /// <param name="deploymentUri"> Deployment URL of the elasticsearch in Elastic cloud deployment. </param>
         /// <param name="marketplaceSaasInfo"> Marketplace SaaS Info of the resource. </param>
+        /// <param name="projectType"> Project Type - Applicable for Serverless only. </param>
+        /// <param name="configurationType"> ConfigurationType Type - Applicable for Serverless only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticDeploymentInfoResult(ElasticDeploymentStatus? status, string version, string memoryCapacity, string diskCapacity, string elasticsearchEndPoint, Uri deploymentUri, MarketplaceSaaSInfo marketplaceSaasInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticDeploymentInfoResult(ElasticDeploymentStatus? status, string version, string memoryCapacity, string diskCapacity, string elasticsearchEndPoint, Uri deploymentUri, MarketplaceSaaSInfo marketplaceSaasInfo, string projectType, string configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Version = version;
@@ -68,6 +70,8 @@ namespace Azure.ResourceManager.Elastic.Models
             ElasticsearchEndPoint = elasticsearchEndPoint;
             DeploymentUri = deploymentUri;
             MarketplaceSaasInfo = marketplaceSaasInfo;
+            ProjectType = projectType;
+            ConfigurationType = configurationType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -85,5 +89,9 @@ namespace Azure.ResourceManager.Elastic.Models
         public Uri DeploymentUri { get; }
         /// <summary> Marketplace SaaS Info of the resource. </summary>
         public MarketplaceSaaSInfo MarketplaceSaasInfo { get; }
+        /// <summary> Project Type - Applicable for Serverless only. </summary>
+        public string ProjectType { get; }
+        /// <summary> ConfigurationType Type - Applicable for Serverless only. </summary>
+        public string ConfigurationType { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Elastic
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> List all monitors under the specified subscription. </summary>
+        /// <summary> List all Elastic monitor resources within a specified subscription, helping you audit and manage your monitoring setup. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> List all monitors under the specified subscription. </summary>
+        /// <summary> List all Elastic monitor resources within a specified subscription, helping you audit and manage your monitoring setup. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> List all monitors under the specified resource group. </summary>
+        /// <summary> List all Elastic monitor resources within a specified resource group of the subscription, helping you audit and manage your monitoring setup. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> List all monitors under the specified resource group. </summary>
+        /// <summary> List all Elastic monitor resources within a specified resource group of the subscription, helping you audit and manage your monitoring setup. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> Get the properties of a specific monitor resource. </summary>
+        /// <summary> Get detailed properties of a specific Elastic monitor resource, helping you manage observability and performance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> Get the properties of a specific monitor resource. </summary>
+        /// <summary> Get detailed properties of a specific Elastic monitor resource, helping you manage observability and performance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> Create a monitor resource. </summary>
+        /// <summary> Create a new Elastic monitor resource in your Azure subscription, enabling observability and monitoring of your Azure resources through Elastic. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> Create a monitor resource. </summary>
+        /// <summary> Create a new Elastic monitor resource in your Azure subscription, enabling observability and monitoring of your Azure resources through Elastic. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> Update a monitor resource. </summary>
+        /// <summary> Update an existing Elastic monitor resource in your Azure subscription, ensuring optimal observability and performance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ElasticMonitorData>> UpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -446,18 +446,14 @@ namespace Azure.ResourceManager.Elastic
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        ElasticMonitorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ElasticMonitorData.DeserializeElasticMonitorData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Update a monitor resource. </summary>
+        /// <summary> Update an existing Elastic monitor resource in your Azure subscription, ensuring optimal observability and performance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -465,7 +461,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ElasticMonitorData> Update(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -477,12 +473,8 @@ namespace Azure.ResourceManager.Elastic
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        ElasticMonitorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ElasticMonitorData.DeserializeElasticMonitorData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -522,7 +514,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> Delete a monitor resource. </summary>
+        /// <summary> Delete an existing Elastic monitor resource from your Azure subscription, removing its observability and monitoring capabilities. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -548,7 +540,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> Delete a monitor resource. </summary>
+        /// <summary> Delete an existing Elastic monitor resource from your Azure subscription, removing its observability and monitoring capabilities. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -596,7 +588,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> List all monitors under the specified subscription. </summary>
+        /// <summary> List all Elastic monitor resources within a specified subscription, helping you audit and manage your monitoring setup. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -623,7 +615,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> List all monitors under the specified subscription. </summary>
+        /// <summary> List all Elastic monitor resources within a specified subscription, helping you audit and manage your monitoring setup. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -672,7 +664,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> List all monitors under the specified resource group. </summary>
+        /// <summary> List all Elastic monitor resources within a specified resource group of the subscription, helping you audit and manage your monitoring setup. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -701,7 +693,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> List all monitors under the specified resource group. </summary>
+        /// <summary> List all Elastic monitor resources within a specified resource group of the subscription, helping you audit and manage your monitoring setup. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

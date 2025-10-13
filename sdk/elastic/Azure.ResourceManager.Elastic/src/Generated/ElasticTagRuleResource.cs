@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get a tag rule set for a given monitor resource.
+        /// Get detailed information about a tag rule set for a given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get a tag rule set for a given monitor resource.
+        /// Get detailed information about a tag rule set for a given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Delete a tag rule set for a given monitor resource.
+        /// Delete a tag rule set for a given Elastic monitor resource, removing fine-grained control over observability based on resource tags.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Delete a tag rule set for a given monitor resource.
+        /// Delete a tag rule set for a given Elastic monitor resource, removing fine-grained control over observability based on resource tags.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create or update a tag rule set for a given monitor resource.
+        /// Create or update a tag rule set for a given Elastic monitor resource, enabling fine-grained control over observability based on resource tags.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create or update a tag rule set for a given monitor resource.
+        /// Create or update a tag rule set for a given Elastic monitor resource, enabling fine-grained control over observability based on resource tags.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

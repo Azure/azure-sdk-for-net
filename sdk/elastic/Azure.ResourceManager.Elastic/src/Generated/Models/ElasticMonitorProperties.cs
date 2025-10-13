@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="liftrResourceCategory"></param>
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
         /// <param name="isApiKeyGenerated"> Flag to determine if User API Key has to be generated and shared. </param>
+        /// <param name="hostingType"> Hosting type of the monitor resource - either Hosted deployments OR Serverless Projects. </param>
+        /// <param name="projectDetails"> Project details of the monitor resource IF it belongs to Serverless offer kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticMonitorProperties(ElasticProvisioningState? provisioningState, ElasticMonitoringStatus? monitoringStatus, ElasticCloudProperties elasticProperties, ElasticUserInfo userInfo, ElasticPlanDetails planDetails, string version, string subscriptionState, string saaSAzureSubscriptionStatus, string sourceCampaignName, string sourceCampaignId, ElasticLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, bool? isApiKeyGenerated, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticMonitorProperties(ElasticProvisioningState? provisioningState, ElasticMonitoringStatus? monitoringStatus, ElasticCloudProperties elasticProperties, ElasticUserInfo userInfo, ElasticPlanDetails planDetails, string version, string subscriptionState, string saaSAzureSubscriptionStatus, string sourceCampaignName, string sourceCampaignId, ElasticLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, bool? isApiKeyGenerated, HostingType? hostingType, ProjectDetails projectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             MonitoringStatus = monitoringStatus;
@@ -80,6 +82,8 @@ namespace Azure.ResourceManager.Elastic.Models
             LiftrResourceCategory = liftrResourceCategory;
             LiftrResourcePreference = liftrResourcePreference;
             IsApiKeyGenerated = isApiKeyGenerated;
+            HostingType = hostingType;
+            ProjectDetails = projectDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -109,5 +113,9 @@ namespace Azure.ResourceManager.Elastic.Models
         public int? LiftrResourcePreference { get; }
         /// <summary> Flag to determine if User API Key has to be generated and shared. </summary>
         public bool? IsApiKeyGenerated { get; set; }
+        /// <summary> Hosting type of the monitor resource - either Hosted deployments OR Serverless Projects. </summary>
+        public HostingType? HostingType { get; set; }
+        /// <summary> Project details of the monitor resource IF it belongs to Serverless offer kind. </summary>
+        public ProjectDetails ProjectDetails { get; set; }
     }
 }

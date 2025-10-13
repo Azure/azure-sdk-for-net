@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get OpenAI integration rule for a given monitor resource.
+        /// Get detailed information about OpenAI integration rules for a given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get OpenAI integration rule for a given monitor resource.
+        /// Get detailed information about OpenAI integration rules for a given Elastic monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Delete OpenAI integration rule for a given monitor resource.
+        /// Delete an OpenAI integration rule for a given Elastic monitor resource, removing AI-driven observability and monitoring capabilities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Delete OpenAI integration rule for a given monitor resource.
+        /// Delete an OpenAI integration rule for a given Elastic monitor resource, removing AI-driven observability and monitoring capabilities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create or update a OpenAI integration rule for a given monitor resource.
+        /// Create or update an OpenAI integration rule for a given Elastic monitor resource, enabling advanced AI-driven observability and monitoring.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create or update a OpenAI integration rule for a given monitor resource.
+        /// Create or update an OpenAI integration rule for a given Elastic monitor resource, enabling advanced AI-driven observability and monitoring.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get OpenAI integration status for a given integration.
+        /// Get the status of OpenAI integration for a given Elastic monitor resource, ensuring optimal observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get OpenAI integration status for a given integration.
+        /// Get the status of OpenAI integration for a given Elastic monitor resource, ensuring optimal observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

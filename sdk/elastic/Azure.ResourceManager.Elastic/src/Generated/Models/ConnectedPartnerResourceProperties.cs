@@ -52,27 +52,31 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedPartnerResourceProperties"/>. </summary>
-        /// <param name="partnerDeploymentName"> Elastic deployment name. </param>
-        /// <param name="partnerDeploymentUri"> Deployment URL of the elasticsearch in Elastic cloud deployment. </param>
-        /// <param name="azureResourceId"> The azure resource Id of the deployment. </param>
-        /// <param name="location"> The location of the deployment. </param>
+        /// <param name="partnerDeploymentName"> Elastic resource name. </param>
+        /// <param name="partnerDeploymentUri"> URL of the resource in Elastic cloud. </param>
+        /// <param name="azureResourceId"> The azure resource Id of the resource. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="connectedPartnerResourcePropertiesType"> The hosting type of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedPartnerResourceProperties(string partnerDeploymentName, Uri partnerDeploymentUri, ResourceIdentifier azureResourceId, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectedPartnerResourceProperties(string partnerDeploymentName, Uri partnerDeploymentUri, ResourceIdentifier azureResourceId, AzureLocation? location, string connectedPartnerResourcePropertiesType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PartnerDeploymentName = partnerDeploymentName;
             PartnerDeploymentUri = partnerDeploymentUri;
             AzureResourceId = azureResourceId;
             Location = location;
+            ConnectedPartnerResourcePropertiesType = connectedPartnerResourcePropertiesType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Elastic deployment name. </summary>
+        /// <summary> Elastic resource name. </summary>
         public string PartnerDeploymentName { get; }
-        /// <summary> Deployment URL of the elasticsearch in Elastic cloud deployment. </summary>
+        /// <summary> URL of the resource in Elastic cloud. </summary>
         public Uri PartnerDeploymentUri { get; }
-        /// <summary> The azure resource Id of the deployment. </summary>
+        /// <summary> The azure resource Id of the resource. </summary>
         public ResourceIdentifier AzureResourceId { get; }
-        /// <summary> The location of the deployment. </summary>
+        /// <summary> The location of the resource. </summary>
         public AzureLocation? Location { get; }
+        /// <summary> The hosting type of the resource. </summary>
+        public string ConnectedPartnerResourcePropertiesType { get; }
     }
 }
