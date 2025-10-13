@@ -3,6 +3,7 @@
     <Description>Azure Batch object model code generation library</Description>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <SignAssembly>false</SignAssembly>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <PropertyGroup>
