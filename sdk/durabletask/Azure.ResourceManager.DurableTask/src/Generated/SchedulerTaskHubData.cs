@@ -7,12 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
+using Azure.ResourceManager.DurableTask.Models;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.DurableTask.Models
+namespace Azure.ResourceManager.DurableTask
 {
-    /// <summary> The response of a TaskHub list operation. </summary>
-    internal partial class TaskHubListResult
+    /// <summary>
+    /// A class representing the SchedulerTaskHub data model.
+    /// A Task Hub resource belonging to the scheduler
+    /// </summary>
+    public partial class SchedulerTaskHubData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +51,25 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TaskHubListResult"/>. </summary>
-        /// <param name="value"> The TaskHub items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal TaskHubListResult(IEnumerable<SchedulerTaskHubData> value)
+        /// <summary> Initializes a new instance of <see cref="SchedulerTaskHubData"/>. </summary>
+        public SchedulerTaskHubData()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaskHubListResult"/>. </summary>
-        /// <param name="value"> The TaskHub items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="SchedulerTaskHubData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TaskHubListResult(IReadOnlyList<SchedulerTaskHubData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SchedulerTaskHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SchedulerTaskHubProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaskHubListResult"/> for deserialization. </summary>
-        internal TaskHubListResult()
-        {
-        }
-
-        /// <summary> The TaskHub items on this page. </summary>
-        public IReadOnlyList<SchedulerTaskHubData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public SchedulerTaskHubProperties Properties { get; set; }
     }
 }
