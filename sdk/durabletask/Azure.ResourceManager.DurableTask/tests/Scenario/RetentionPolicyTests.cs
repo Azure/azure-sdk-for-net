@@ -30,42 +30,42 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
             string resourceName = Recording.GenerateAssetName("resource");
 
             // Create Scheduler
-            DurableTaskSchedulerData createSchedulerData = new(AzureLocation.NorthCentralUS)
+            SchedulerData createSchedulerData = new(AzureLocation.NorthCentralUS)
             {
-                Properties = new DurableTaskSchedulerProperties(
+                Properties = new SchedulerProperties(
                     ipAllowlist: ["0.0.0.0/0"], // all IPs allowed to access the endpoint
-                    sku: new DurableTaskSchedulerSku() { Name = SchedulerSkuName.Dedicated, Capacity = 1 }
+                    sku: new SchedulerSku() { Name = SchedulerSkuName.Dedicated, Capacity = 1 }
                 )
             };
-            ArmOperation<DurableTaskSchedulerResource> longRunningOperation =
-                await rg.GetDurableTaskSchedulers().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, createSchedulerData);
-            DurableTaskSchedulerResource scheduler = longRunningOperation.Value;
+            ArmOperation<SchedulerResource> longRunningOperation =
+                await rg.GetSchedulers().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, createSchedulerData);
+            SchedulerResource scheduler = longRunningOperation.Value;
 
             // This is a singleton resource, but it does not yet exist until we create it
-            DurableTaskRetentionPolicyResource singletonRetentionPolicy = scheduler.GetDurableTaskRetentionPolicy();
+            RetentionPolicyResource singletonRetentionPolicy = scheduler.GetRetentionPolicy();
 
             // Construct the retention policy with multiple rules
-            DurableTaskRetentionPolicyProperties retentionPolicyProperties = new DurableTaskRetentionPolicyProperties();
+            RetentionPolicyProperties retentionPolicyProperties = new RetentionPolicyProperties();
             retentionPolicyProperties.RetentionPolicies.Add(
-                new DurableTaskRetentionPolicyDetails()
+                new RetentionPolicyDetails()
                 {
                     RetentionPeriodInDays = 3,
                     OrchestrationState = DurableTaskPurgeableOrchestrationState.Completed
                 });
             retentionPolicyProperties.RetentionPolicies.Add(
-                new DurableTaskRetentionPolicyDetails()
+                new RetentionPolicyDetails()
                 {
                     RetentionPeriodInDays = 30,
                     OrchestrationState = DurableTaskPurgeableOrchestrationState.Failed
                 });
             retentionPolicyProperties.RetentionPolicies.Add(
-                new DurableTaskRetentionPolicyDetails()
+                new RetentionPolicyDetails()
                 {
                      RetentionPeriodInDays = 30,
                     // without OrchestrationState, this policy applies to all states not explicitly mentioned in other policies
                 });
 
-            DurableTaskRetentionPolicyData payload = new DurableTaskRetentionPolicyData()
+            RetentionPolicyData payload = new RetentionPolicyData()
             {
                 Properties = retentionPolicyProperties
             };
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DurableTask.Tests.Scenario
             Assert.AreEqual(3, singletonRetentionPolicy.Data.Properties.RetentionPolicies.Count);
 
             // Assert the specific policy for Completed orchestrations has the expected retention period
-            DurableTaskRetentionPolicyDetails completedPolicy = singletonRetentionPolicy.Data.Properties.RetentionPolicies
+            RetentionPolicyDetails completedPolicy = singletonRetentionPolicy.Data.Properties.RetentionPolicies
                 .SingleOrDefault(p => p.OrchestrationState == DurableTaskPurgeableOrchestrationState.Completed);
 
             Assert.NotNull(completedPolicy, "Expected a retention policy with OrchestrationState=Completed.");
