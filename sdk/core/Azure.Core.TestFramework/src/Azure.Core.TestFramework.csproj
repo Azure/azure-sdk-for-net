@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net47</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
