@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class EasmAssetsExportRequestContent : IUtf8JsonSerializable, IJsonModel<EasmAssetsExportRequestContent>
+    public partial class DeltaDateResult : IUtf8JsonSerializable, IJsonModel<DeltaDateResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EasmAssetsExportRequestContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeltaDateResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EasmAssetsExportRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeltaDateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,19 +28,19 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EasmAssetsExportRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeltaDateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmAssetsExportRequestContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeltaDateResult)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("fileName"u8);
-            writer.WriteStringValue(FileName);
-            writer.WritePropertyName("columns"u8);
+            writer.WritePropertyName("date"u8);
+            writer.WriteStringValue(Date, "O");
+            writer.WritePropertyName("deltas"u8);
             writer.WriteStartArray();
-            foreach (var item in Columns)
+            foreach (var item in Deltas)
             {
-                writer.WriteStringValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -60,19 +60,19 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        EasmAssetsExportRequestContent IJsonModel<EasmAssetsExportRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeltaDateResult IJsonModel<DeltaDateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EasmAssetsExportRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeltaDateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmAssetsExportRequestContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeltaDateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEasmAssetsExportRequestContent(document.RootElement, options);
+            return DeserializeDeltaDateResult(document.RootElement, options);
         }
 
-        internal static EasmAssetsExportRequestContent DeserializeEasmAssetsExportRequestContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeltaDateResult DeserializeDeltaDateResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,25 +80,25 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            string fileName = default;
-            IList<string> columns = default;
+            DateTimeOffset date = default;
+            IReadOnlyList<DailyDeltaTypeResult> deltas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fileName"u8))
+                if (property.NameEquals("date"u8))
                 {
-                    fileName = property.Value.GetString();
+                    date = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("columns"u8))
+                if (property.NameEquals("deltas"u8))
                 {
-                    List<string> array = new List<string>();
+                    List<DailyDeltaTypeResult> array = new List<DailyDeltaTypeResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(DailyDeltaTypeResult.DeserializeDailyDeltaTypeResult(item, options));
                     }
-                    columns = array;
+                    deltas = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,46 +107,46 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EasmAssetsExportRequestContent(fileName, columns, serializedAdditionalRawData);
+            return new DeltaDateResult(date, deltas, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EasmAssetsExportRequestContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeltaDateResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EasmAssetsExportRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeltaDateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EasmAssetsExportRequestContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeltaDateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EasmAssetsExportRequestContent IPersistableModel<EasmAssetsExportRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeltaDateResult IPersistableModel<DeltaDateResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EasmAssetsExportRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeltaDateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEasmAssetsExportRequestContent(document.RootElement, options);
+                        return DeserializeDeltaDateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EasmAssetsExportRequestContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeltaDateResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EasmAssetsExportRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeltaDateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EasmAssetsExportRequestContent FromResponse(Response response)
+        internal static DeltaDateResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEasmAssetsExportRequestContent(document.RootElement);
+            return DeserializeDeltaDateResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

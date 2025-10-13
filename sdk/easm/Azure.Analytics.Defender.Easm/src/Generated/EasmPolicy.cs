@@ -50,7 +50,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="action"> Action specifying what the policy should do. </param>
         /// <param name="actionParameters"> Additional parameters needed to perform the policy action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="actionParameters"/> is null. </exception>
-        public EasmPolicy(string filterName, PolicyAction action, EasmActionParametersContent actionParameters)
+        public EasmPolicy(string filterName, PolicyAction action, ActionParametersContent actionParameters)
         {
             Argument.AssertNotNull(filterName, nameof(filterName));
             Argument.AssertNotNull(actionParameters, nameof(actionParameters));
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="updatedDate"> The date this policy was last updated, in RFC3339 format. </param>
         /// <param name="actionParameters"> Additional parameters needed to perform the policy action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EasmPolicy(string id, string name, string displayName, string description, string filterName, PolicyAction action, long? updatedAssetsCount, string user, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, EasmActionParametersContent actionParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EasmPolicy(string id, string name, string displayName, string description, string filterName, PolicyAction action, long? updatedAssetsCount, string user, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, ActionParametersContent actionParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -115,6 +115,6 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> The date this policy was last updated, in RFC3339 format. </summary>
         public DateTimeOffset? UpdatedDate { get; }
         /// <summary> Additional parameters needed to perform the policy action. </summary>
-        public EasmActionParametersContent ActionParameters { get; set; }
+        public ActionParametersContent ActionParameters { get; set; }
     }
 }

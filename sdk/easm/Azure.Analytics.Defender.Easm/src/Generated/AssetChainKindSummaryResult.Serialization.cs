@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class EasmDeltaSummaryRequestContent : IUtf8JsonSerializable, IJsonModel<EasmDeltaSummaryRequestContent>
+    public partial class AssetChainKindSummaryResult : IUtf8JsonSerializable, IJsonModel<AssetChainKindSummaryResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EasmDeltaSummaryRequestContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssetChainKindSummaryResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EasmDeltaSummaryRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AssetChainKindSummaryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,22 +28,16 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EasmDeltaSummaryRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssetChainKindSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmDeltaSummaryRequestContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetChainKindSummaryResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(PriorDays))
-            {
-                writer.WritePropertyName("priorDays"u8);
-                writer.WriteNumberValue(PriorDays.Value);
-            }
-            if (Optional.IsDefined(Date))
-            {
-                writer.WritePropertyName("date"u8);
-                writer.WriteStringValue(Date);
-            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("affectedCount"u8);
+            writer.WriteNumberValue(AffectedCount);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -61,19 +55,19 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        EasmDeltaSummaryRequestContent IJsonModel<EasmDeltaSummaryRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AssetChainKindSummaryResult IJsonModel<AssetChainKindSummaryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EasmDeltaSummaryRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssetChainKindSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmDeltaSummaryRequestContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetChainKindSummaryResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEasmDeltaSummaryRequestContent(document.RootElement, options);
+            return DeserializeAssetChainKindSummaryResult(document.RootElement, options);
         }
 
-        internal static EasmDeltaSummaryRequestContent DeserializeEasmDeltaSummaryRequestContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AssetChainKindSummaryResult DeserializeAssetChainKindSummaryResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,24 +75,20 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            int? priorDays = default;
-            string date = default;
+            AssetKind kind = default;
+            long affectedCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("priorDays"u8))
+                if (property.NameEquals("kind"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    priorDays = property.Value.GetInt32();
+                    kind = new AssetKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("date"u8))
+                if (property.NameEquals("affectedCount"u8))
                 {
-                    date = property.Value.GetString();
+                    affectedCount = property.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,46 +97,46 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EasmDeltaSummaryRequestContent(priorDays, date, serializedAdditionalRawData);
+            return new AssetChainKindSummaryResult(kind, affectedCount, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EasmDeltaSummaryRequestContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AssetChainKindSummaryResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EasmDeltaSummaryRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssetChainKindSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EasmDeltaSummaryRequestContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetChainKindSummaryResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EasmDeltaSummaryRequestContent IPersistableModel<EasmDeltaSummaryRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AssetChainKindSummaryResult IPersistableModel<AssetChainKindSummaryResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EasmDeltaSummaryRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssetChainKindSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEasmDeltaSummaryRequestContent(document.RootElement, options);
+                        return DeserializeAssetChainKindSummaryResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EasmDeltaSummaryRequestContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetChainKindSummaryResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EasmDeltaSummaryRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AssetChainKindSummaryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EasmDeltaSummaryRequestContent FromResponse(Response response)
+        internal static AssetChainKindSummaryResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEasmDeltaSummaryRequestContent(document.RootElement);
+            return DeserializeAssetChainKindSummaryResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

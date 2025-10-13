@@ -127,7 +127,7 @@ namespace Azure.Analytics.Defender.Easm
             string user = default;
             DateTimeOffset? createdDate = default;
             DateTimeOffset? updatedDate = default;
-            EasmActionParametersContent actionParameters = default;
+            ActionParametersContent actionParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (property.NameEquals("actionParameters"u8))
                 {
-                    actionParameters = EasmActionParametersContent.DeserializeEasmActionParametersContent(property.Value, options);
+                    actionParameters = ActionParametersContent.DeserializeActionParametersContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

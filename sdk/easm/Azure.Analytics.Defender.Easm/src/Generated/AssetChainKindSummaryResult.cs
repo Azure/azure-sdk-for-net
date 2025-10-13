@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> This is an object that exists to provide a common schema definition for the action parameters. </summary>
-    public partial class EasmActionParametersContent
+    /// <summary> A list of asset chain summaries per asset kind. </summary>
+    public partial class AssetChainKindSummaryResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,34 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EasmActionParametersContent"/>. </summary>
-        public EasmActionParametersContent()
+        /// <summary> Initializes a new instance of <see cref="AssetChainKindSummaryResult"/>. </summary>
+        /// <param name="kind"> The kind of asset. </param>
+        /// <param name="affectedCount"> The amount of assets affected for a given asset kind. </param>
+        internal AssetChainKindSummaryResult(AssetKind kind, long affectedCount)
         {
+            Kind = kind;
+            AffectedCount = affectedCount;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EasmActionParametersContent"/>. </summary>
-        /// <param name="value">
-        /// The value parameter that is used by the policy action. This is action specific,
-        /// for further information please refer to documentation here:
-        /// https://learn.microsoft.com/en-us/azure/external-attack-surface-management/policy-engine
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="AssetChainKindSummaryResult"/>. </summary>
+        /// <param name="kind"> The kind of asset. </param>
+        /// <param name="affectedCount"> The amount of assets affected for a given asset kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EasmActionParametersContent(string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetChainKindSummaryResult(AssetKind kind, long affectedCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
+            Kind = kind;
+            AffectedCount = affectedCount;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The value parameter that is used by the policy action. This is action specific,
-        /// for further information please refer to documentation here:
-        /// https://learn.microsoft.com/en-us/azure/external-attack-surface-management/policy-engine
-        /// </summary>
-        public string Value { get; set; }
+        /// <summary> Initializes a new instance of <see cref="AssetChainKindSummaryResult"/> for deserialization. </summary>
+        internal AssetChainKindSummaryResult()
+        {
+        }
+
+        /// <summary> The kind of asset. </summary>
+        public AssetKind Kind { get; }
+        /// <summary> The amount of assets affected for a given asset kind. </summary>
+        public long AffectedCount { get; }
     }
 }

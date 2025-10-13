@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> AssetChainRequest containing information needed for the retrieval of the asset chain summary. </summary>
-    public partial class EasmAssetChainRequestContent
+    /// <summary> Date information for the delta response. </summary>
+    public partial class DeltaDateResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,37 +46,37 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EasmAssetChainRequestContent"/>. </summary>
-        /// <param name="assetChainSource"> Asset chain source. </param>
-        /// <param name="sourceIds"> A collection of asset chain source ids. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceIds"/> is null. </exception>
-        public EasmAssetChainRequestContent(AssetChainSource assetChainSource, IEnumerable<string> sourceIds)
+        /// <summary> Initializes a new instance of <see cref="DeltaDateResult"/>. </summary>
+        /// <param name="date"> The date that is being requested. </param>
+        /// <param name="deltas"> A list of summary counts per day. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deltas"/> is null. </exception>
+        internal DeltaDateResult(DateTimeOffset date, IEnumerable<DailyDeltaTypeResult> deltas)
         {
-            Argument.AssertNotNull(sourceIds, nameof(sourceIds));
+            Argument.AssertNotNull(deltas, nameof(deltas));
 
-            AssetChainSource = assetChainSource;
-            SourceIds = sourceIds.ToList();
+            Date = date;
+            Deltas = deltas.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EasmAssetChainRequestContent"/>. </summary>
-        /// <param name="assetChainSource"> Asset chain source. </param>
-        /// <param name="sourceIds"> A collection of asset chain source ids. </param>
+        /// <summary> Initializes a new instance of <see cref="DeltaDateResult"/>. </summary>
+        /// <param name="date"> The date that is being requested. </param>
+        /// <param name="deltas"> A list of summary counts per day. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EasmAssetChainRequestContent(AssetChainSource assetChainSource, IList<string> sourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeltaDateResult(DateTimeOffset date, IReadOnlyList<DailyDeltaTypeResult> deltas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AssetChainSource = assetChainSource;
-            SourceIds = sourceIds;
+            Date = date;
+            Deltas = deltas;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EasmAssetChainRequestContent"/> for deserialization. </summary>
-        internal EasmAssetChainRequestContent()
+        /// <summary> Initializes a new instance of <see cref="DeltaDateResult"/> for deserialization. </summary>
+        internal DeltaDateResult()
         {
         }
 
-        /// <summary> Asset chain source. </summary>
-        public AssetChainSource AssetChainSource { get; }
-        /// <summary> A collection of asset chain source ids. </summary>
-        public IList<string> SourceIds { get; }
+        /// <summary> The date that is being requested. </summary>
+        public DateTimeOffset Date { get; }
+        /// <summary> A list of summary counts per day. </summary>
+        public IReadOnlyList<DailyDeltaTypeResult> Deltas { get; }
     }
 }

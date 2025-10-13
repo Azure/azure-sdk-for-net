@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class EasmActionParametersContent : IUtf8JsonSerializable, IJsonModel<EasmActionParametersContent>
+    public partial class DiscoGroupSummaryResult : IUtf8JsonSerializable, IJsonModel<DiscoGroupSummaryResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EasmActionParametersContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscoGroupSummaryResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EasmActionParametersContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiscoGroupSummaryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,17 +28,18 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EasmActionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoGroupSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmActionParametersContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoGroupSummaryResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
-            }
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("displayName"u8);
+            writer.WriteStringValue(DisplayName);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -56,19 +57,19 @@ namespace Azure.Analytics.Defender.Easm
             }
         }
 
-        EasmActionParametersContent IJsonModel<EasmActionParametersContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DiscoGroupSummaryResult IJsonModel<DiscoGroupSummaryResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EasmActionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoGroupSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmActionParametersContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoGroupSummaryResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEasmActionParametersContent(document.RootElement, options);
+            return DeserializeDiscoGroupSummaryResult(document.RootElement, options);
         }
 
-        internal static EasmActionParametersContent DeserializeEasmActionParametersContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DiscoGroupSummaryResult DeserializeDiscoGroupSummaryResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,14 +77,26 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            string value = default;
+            string id = default;
+            string name = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    value = property.Value.GetString();
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -92,46 +105,46 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EasmActionParametersContent(value, serializedAdditionalRawData);
+            return new DiscoGroupSummaryResult(id, name, displayName, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EasmActionParametersContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DiscoGroupSummaryResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EasmActionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoGroupSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EasmActionParametersContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoGroupSummaryResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EasmActionParametersContent IPersistableModel<EasmActionParametersContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DiscoGroupSummaryResult IPersistableModel<DiscoGroupSummaryResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EasmActionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoGroupSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEasmActionParametersContent(document.RootElement, options);
+                        return DeserializeDiscoGroupSummaryResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EasmActionParametersContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoGroupSummaryResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EasmActionParametersContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiscoGroupSummaryResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EasmActionParametersContent FromResponse(Response response)
+        internal static DiscoGroupSummaryResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEasmActionParametersContent(document.RootElement);
+            return DeserializeDiscoGroupSummaryResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

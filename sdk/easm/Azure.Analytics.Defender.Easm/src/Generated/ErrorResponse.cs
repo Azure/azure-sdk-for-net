@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> A request body used to export an asset. </summary>
-    public partial class EasmAssetsExportRequestContent
+    /// <summary> A response containing error details. </summary>
+    public partial class ErrorResponse
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,38 +45,31 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EasmAssetsExportRequestContent"/>. </summary>
-        /// <param name="fileName"> The name of the file to export. </param>
-        /// <param name="columns"> The columns to export. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="columns"/> is null. </exception>
-        public EasmAssetsExportRequestContent(string fileName, IEnumerable<string> columns)
+        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
+        internal ErrorResponse(ResponseError error)
         {
-            Argument.AssertNotNull(fileName, nameof(fileName));
-            Argument.AssertNotNull(columns, nameof(columns));
+            Argument.AssertNotNull(error, nameof(error));
 
-            FileName = fileName;
-            Columns = columns.ToList();
+            Error = error;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EasmAssetsExportRequestContent"/>. </summary>
-        /// <param name="fileName"> The name of the file to export. </param>
-        /// <param name="columns"> The columns to export. </param>
+        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <param name="error"> The error object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EasmAssetsExportRequestContent(string fileName, IList<string> columns, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ErrorResponse(ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FileName = fileName;
-            Columns = columns;
+            Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EasmAssetsExportRequestContent"/> for deserialization. </summary>
-        internal EasmAssetsExportRequestContent()
+        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/> for deserialization. </summary>
+        internal ErrorResponse()
         {
         }
 
-        /// <summary> The name of the file to export. </summary>
-        public string FileName { get; }
-        /// <summary> The columns to export. </summary>
-        public IList<string> Columns { get; }
+        /// <summary> The error object. </summary>
+        public ResponseError Error { get; }
     }
 }

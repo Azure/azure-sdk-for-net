@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> A request body used to retrieve a delta summary. </summary>
-    public partial class EasmDeltaSummaryRequestContent
+    /// <summary> A request body used for an asset report snapshot export. </summary>
+    public partial class ReportAssetSnapshotExportPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,30 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EasmDeltaSummaryRequestContent"/>. </summary>
-        public EasmDeltaSummaryRequestContent()
+        /// <summary> Initializes a new instance of <see cref="ReportAssetSnapshotExportPayload"/>. </summary>
+        public ReportAssetSnapshotExportPayload()
         {
+            Columns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EasmDeltaSummaryRequestContent"/>. </summary>
-        /// <param name="priorDays"> The number of days prior to retrieve deltas for. </param>
-        /// <param name="date"> expected format to be: yyyy-MM-dd. </param>
+        /// <summary> Initializes a new instance of <see cref="ReportAssetSnapshotExportPayload"/>. </summary>
+        /// <param name="metric"> The metric to retrieve a snapshot for. </param>
+        /// <param name="fileName"> The filename of the exported file. </param>
+        /// <param name="columns"> The columns to include in the export. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EasmDeltaSummaryRequestContent(int? priorDays, string date, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReportAssetSnapshotExportPayload(string metric, string fileName, IList<string> columns, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PriorDays = priorDays;
-            Date = date;
+            Metric = metric;
+            FileName = fileName;
+            Columns = columns;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The number of days prior to retrieve deltas for. </summary>
-        public int? PriorDays { get; set; }
-        /// <summary> expected format to be: yyyy-MM-dd. </summary>
-        public string Date { get; set; }
+        /// <summary> The metric to retrieve a snapshot for. </summary>
+        public string Metric { get; set; }
+        /// <summary> The filename of the exported file. </summary>
+        public string FileName { get; set; }
+        /// <summary> The columns to include in the export. </summary>
+        public IList<string> Columns { get; }
     }
 }
