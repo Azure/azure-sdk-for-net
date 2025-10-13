@@ -120,7 +120,8 @@ rename-mapping:
   ConnectionOAuth2: CognitiveServicesConnectionOAuth2
   ConnectionServicePrincipal: CognitiveServicesConnectionServicePrincipal
   ConnectionUsernamePassword: CognitiveServicesConnectionUsernamePassword
-  NetworkInjections: AIFoundryNetworkInjection
+  NetworkInjection: AIFoundryNetworkInjection
+  AccountProperties.networkInjections: AIFoundryNetworkInjections
   PATAuthTypeConnectionProperties: PatAuthTypeConnectionProperties
   ScenarioType: AIFoundryNetworkInjectionScenarioType
 

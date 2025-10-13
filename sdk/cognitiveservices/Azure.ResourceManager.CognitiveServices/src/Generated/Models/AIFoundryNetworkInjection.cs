@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Specifies in AI Foundry where virtual network injection occurs to secure scenarios like Agents entirely within the user's private network, eliminating public internet exposure while maintaining control over network configurations and resources. </summary>
-    public partial class NetworkInjection
+    public partial class AIFoundryNetworkInjection
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkInjection"/>. </summary>
-        public NetworkInjection()
+        /// <summary> Initializes a new instance of <see cref="AIFoundryNetworkInjection"/>. </summary>
+        public AIFoundryNetworkInjection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkInjection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIFoundryNetworkInjection"/>. </summary>
         /// <param name="scenario"> Specifies what features in AI Foundry network injection applies to. Currently only supports 'agent' for agent scenarios. 'none' means no network injection. </param>
         /// <param name="subnetArmId"> Specify the subnet for which your Agent Client is injected into. </param>
         /// <param name="useMicrosoftManagedNetwork"> Boolean to enable Microsoft Managed Network for subnet delegation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkInjection(AIFoundryNetworkInjectionScenarioType? scenario, ResourceIdentifier subnetArmId, bool? useMicrosoftManagedNetwork, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AIFoundryNetworkInjection(AIFoundryNetworkInjectionScenarioType? scenario, ResourceIdentifier subnetArmId, bool? useMicrosoftManagedNetwork, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Scenario = scenario;
             SubnetArmId = subnetArmId;

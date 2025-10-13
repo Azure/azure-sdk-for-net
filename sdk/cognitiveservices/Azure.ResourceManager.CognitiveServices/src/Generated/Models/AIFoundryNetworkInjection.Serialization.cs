@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class NetworkInjection : IUtf8JsonSerializable, IJsonModel<NetworkInjection>
+    public partial class AIFoundryNetworkInjection : IUtf8JsonSerializable, IJsonModel<AIFoundryNetworkInjection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInjection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AIFoundryNetworkInjection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NetworkInjection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AIFoundryNetworkInjection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkInjection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AIFoundryNetworkInjection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInjection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AIFoundryNetworkInjection)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Scenario))
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
         }
 
-        NetworkInjection IJsonModel<NetworkInjection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AIFoundryNetworkInjection IJsonModel<AIFoundryNetworkInjection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkInjection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AIFoundryNetworkInjection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInjection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AIFoundryNetworkInjection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkInjection(document.RootElement, options);
+            return DeserializeAIFoundryNetworkInjection(document.RootElement, options);
         }
 
-        internal static NetworkInjection DeserializeNetworkInjection(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AIFoundryNetworkInjection DeserializeAIFoundryNetworkInjection(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkInjection(scenario, subnetArmId, useMicrosoftManagedNetwork, serializedAdditionalRawData);
+            return new AIFoundryNetworkInjection(scenario, subnetArmId, useMicrosoftManagedNetwork, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NetworkInjection>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AIFoundryNetworkInjection>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkInjection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AIFoundryNetworkInjection>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -202,26 +202,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInjection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIFoundryNetworkInjection)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NetworkInjection IPersistableModel<NetworkInjection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AIFoundryNetworkInjection IPersistableModel<AIFoundryNetworkInjection>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkInjection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AIFoundryNetworkInjection>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkInjection(document.RootElement, options);
+                        return DeserializeAIFoundryNetworkInjection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInjection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIFoundryNetworkInjection)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetworkInjection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AIFoundryNetworkInjection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
