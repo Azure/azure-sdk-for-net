@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services CustomVision Prediction SDK</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services CustomVision Prediction APIs.</Description>
@@ -12,15 +12,18 @@
     1) Updated CustomVisionPredictionClient to take in a credentials class for use with different types of authentication credentials. Client now use an ApiKeyServiceClientCredentials instead of passing in an ApiKey.
     ]]>
     </PackageReleaseNotes>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageProjectUrl>http://customvision.ai</PackageProjectUrl>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>
     <AzureApiTag />
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>
