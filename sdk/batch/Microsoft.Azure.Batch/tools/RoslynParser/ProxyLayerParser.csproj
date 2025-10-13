@@ -2,7 +2,6 @@
   <PropertyGroup>
     <Description>Azure Batch roslyn based parser for generating code</Description>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -3,7 +3,6 @@
     <Description>Azure Batch object model code generation library</Description>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <SignAssembly>false</SignAssembly>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>
