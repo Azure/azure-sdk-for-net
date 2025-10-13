@@ -226,11 +226,6 @@ namespace Azure.Generator.Management
             return ResourceUpdateModelToResourceNameMap.TryGetValue(model, out resourceName);
         }
 
-        /// <summary>
-        /// Determines whether the specified input model is used as a body parameter in any non-resource method.
-        /// </summary>
-        /// <param name="model">The input model to check.</param>
-        /// <returns>true if the model is used as a body parameter in non-resource methods; otherwise, false.</returns>
         internal bool IsNonResourceMethodBodyParameterModel(InputModelType model) => NonResourceMethodBodyParameterModels.Contains(model);
     }
 }

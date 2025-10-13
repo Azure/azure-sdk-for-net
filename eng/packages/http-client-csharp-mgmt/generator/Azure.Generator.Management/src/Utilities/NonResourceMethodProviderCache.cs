@@ -20,12 +20,17 @@ namespace Azure.Generator.Management.Utilities
         private static readonly ConcurrentDictionary<MethodProvider, byte> _methodProviderCache = new();
 
         /// <summary>
+        /// Placeholder value used in the cache dictionary. The value is not used; only the key matters.
+        /// </summary>
+        private const byte CachePlaceholderValue = 0;
+
+        /// <summary>
         /// Adds a method provider to the cache.
         /// </summary>
         /// <param name="methodProvider">The method provider to add to the cache.</param>
         public static void Add(MethodProvider methodProvider)
         {
-            _methodProviderCache.TryAdd(methodProvider, 0);
+            _methodProviderCache.TryAdd(methodProvider, CachePlaceholderValue);
         }
 
         /// <summary>
