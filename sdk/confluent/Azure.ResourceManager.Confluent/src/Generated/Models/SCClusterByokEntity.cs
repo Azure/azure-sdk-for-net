@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Confluent.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SCClusterByokEntity"/>. </summary>
-        internal SCClusterByokEntity()
+        public SCClusterByokEntity()
         {
         }
 
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.Confluent.Models
         }
 
         /// <summary> ID of the referred resource. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> API URL for accessing or modifying the referred object. </summary>
-        public string Related { get; }
+        public string Related { get; set; }
         /// <summary> CRN reference to the referred resource. </summary>
-        public string ResourceName { get; }
+        public string ResourceName { get; set; }
     }
 }
