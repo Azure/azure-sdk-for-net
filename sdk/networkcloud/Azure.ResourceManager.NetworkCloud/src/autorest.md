@@ -18,10 +18,6 @@ sample-gen:
     # Not support generate samples from customized operations
     - AgentPools_Delete
     - BareMetalMachineKeySets_Delete
-    - BareMetalMachines_RunDataExtracts
-    - BareMetalMachines_RunDataExtractsAsync
-    - BareMetalMachines_RunDataExtractsRestricted
-    - BareMetalMachines_RunDataExtractsRestrictedAsync
     - BmcKeySets_Delete
     - CloudServicesNetworks_Delete
     - ClusterManagers_Delete
