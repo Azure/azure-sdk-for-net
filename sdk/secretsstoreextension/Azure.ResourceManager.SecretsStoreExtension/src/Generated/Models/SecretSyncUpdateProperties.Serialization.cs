@@ -44,11 +44,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 writer.WritePropertyName("serviceAccountName"u8);
                 writer.WriteStringValue(ServiceAccountName);
             }
-            if (Optional.IsDefined(KubernetesSecretType))
-            {
-                writer.WritePropertyName("kubernetesSecretType"u8);
-                writer.WriteStringValue(KubernetesSecretType.Value.ToString());
-            }
             if (Optional.IsDefined(ForceSynchronization))
             {
                 writer.WritePropertyName("forceSynchronization"u8);
@@ -103,7 +98,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
             }
             string secretProviderClassName = default;
             string serviceAccountName = default;
-            KubernetesSecretType? kubernetesSecretType = default;
             string forceSynchronization = default;
             IList<KubernetesSecretObjectMapping> objectSecretMapping = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -118,15 +112,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 if (property.NameEquals("serviceAccountName"u8))
                 {
                     serviceAccountName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("kubernetesSecretType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    kubernetesSecretType = new KubernetesSecretType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("forceSynchronization"u8))
@@ -154,13 +139,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SecretSyncUpdateProperties(
-                secretProviderClassName,
-                serviceAccountName,
-                kubernetesSecretType,
-                forceSynchronization,
-                objectSecretMapping ?? new ChangeTrackingList<KubernetesSecretObjectMapping>(),
-                serializedAdditionalRawData);
+            return new SecretSyncUpdateProperties(secretProviderClassName, serviceAccountName, forceSynchronization, objectSecretMapping ?? new ChangeTrackingList<KubernetesSecretObjectMapping>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretSyncUpdateProperties>.Write(ModelReaderWriterOptions options)
