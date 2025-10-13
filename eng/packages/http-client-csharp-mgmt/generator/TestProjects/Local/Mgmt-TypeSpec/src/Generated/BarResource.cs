@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
 {
@@ -561,6 +562,24 @@ namespace MgmtTypeSpec
         public virtual BarQuotaResourceCollection GetBarQuotaResources()
         {
             return GetCachedClient(client => new BarQuotaResourceCollection(client, Id));
+        }
+
+        /// <summary> Get a BarQuotaResource. </summary>
+        /// <param name="barQuotaResourceName"> The name of the BarQuotaResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BarQuotaResource>> GetBarQuotaResourceAsync(QuotaName barQuotaResourceName, CancellationToken cancellationToken = default)
+        {
+            return await GetBarQuotaResources().GetAsync(barQuotaResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a BarQuotaResource. </summary>
+        /// <param name="barQuotaResourceName"> The name of the BarQuotaResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<BarQuotaResource> GetBarQuotaResource(QuotaName barQuotaResourceName, CancellationToken cancellationToken = default)
+        {
+            return GetBarQuotaResources().Get(barQuotaResourceName, cancellationToken);
         }
     }
 }

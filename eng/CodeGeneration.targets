@@ -2,8 +2,9 @@
   
   <PropertyGroup>
     <TypeSpecInput Condition="Exists('$(MSBuildProjectDirectory)/../tsp-location.yaml') and $(MSBuildProjectDirectory.EndsWith('src'))">$(MSBuildProjectDirectory)/../tsp-location.yaml</TypeSpecInput>
-    <_TypeSpecProjectGenerateCommand>npx --no-install --package=@azure-tools/typespec-client-generator-cli --yes tsp-client generate --no-prompt --output-dir $(MSBuildProjectDirectory)/../</_TypeSpecProjectGenerateCommand>
-    <_TypeSpecProjectSyncAndGenerateCommand>npx --no-install --package=@azure-tools/typespec-client-generator-cli --yes tsp-client update --no-prompt --output-dir $(MSBuildProjectDirectory)/../</_TypeSpecProjectSyncAndGenerateCommand>
+    <_TspClientDir>$(MSBuildThisFileDirectory)common/tsp-client</_TspClientDir>
+    <_TypeSpecProjectGenerateCommand>npm exec --prefix $(_TspClientDir) --no -- tsp-client generate --no-prompt --output-dir $(MSBuildProjectDirectory)/../</_TypeSpecProjectGenerateCommand>
+    <_TypeSpecProjectSyncAndGenerateCommand>npm exec --prefix $(_TspClientDir) --no -- tsp-client update --no-prompt --output-dir $(MSBuildProjectDirectory)/../</_TypeSpecProjectSyncAndGenerateCommand>
     <_SaveInputs Condition="'$(SaveInputs)' == 'true'">--save-inputs</_SaveInputs>
     <_Trace Condition="'$(Trace)' == 'true'">--trace @typespec/http-client-csharp @azure-typespec/http-client-csharp @azure-typespec/http-client-csharp-mgmt --debug</_Trace>
     <!-- Here we append the generate-test-project configuration to TypespecAdditionalOptions if it is specified -->
@@ -17,7 +18,7 @@
    So we need to add it here. -->
   <Target Name="GenerateCode" Condition="'$(TypeSpecInput)' != ''">
     <Error Text="You used skipped sync but didn't have the TempTypeSpecFiles in your project directory.  Please run 'dotnet build /t:GenerateCode /p:SaveInputs=true' without SkipSync first at least once" Condition="'$(SkipSync)' == 'true' AND !Exists('$(MSBuildProjectDirectory)/../TempTypeSpecFiles')" />
-    <Exec Command="npm install --prefix $(MSBuildProjectDirectory)/../ @azure-tools/typespec-client-generator-cli --no-save" />
+    <Exec Command="npm ci --prefix $(_TspClientDir)" />
     <Exec Condition="'$(SkipSync)' == 'true'" Command="$(_TypeSpecProjectGenerateCommand) $(_SaveInputs) $(_TypespecAdditionalOptions) $(_Trace)"/>
     <Exec Condition="'$(SkipSync)' != 'true'" Command="$(_TypeSpecProjectSyncAndGenerateCommand) $(_SaveInputs) $(_LocalSpecRepo) $(_TypespecAdditionalOptions) $(_Trace)"/>
   </Target>
