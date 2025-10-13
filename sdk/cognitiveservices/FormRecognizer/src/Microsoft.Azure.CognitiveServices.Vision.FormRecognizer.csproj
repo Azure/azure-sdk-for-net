@@ -22,12 +22,10 @@ This is a public preview release of the Cognitive Services Form Recognizer SDK.
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   
   <PropertyGroup>
     <AzureApiTag />
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

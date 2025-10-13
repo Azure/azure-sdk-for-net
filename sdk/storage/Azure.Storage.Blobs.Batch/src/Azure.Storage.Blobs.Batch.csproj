@@ -20,7 +20,6 @@
     </Description>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -29,7 +28,6 @@
       AZC0034; <!-- Type name conflict; irrelevant here due to prior approval -->
       AZC0035; <!-- Missing model factory methods.  #51227-->
     </NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

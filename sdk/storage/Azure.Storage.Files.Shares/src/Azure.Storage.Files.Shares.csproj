@@ -21,7 +21,6 @@
     </Description>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <NoWarn>$(NoWarn);AZC0034;AZC0007;AZC0010</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />

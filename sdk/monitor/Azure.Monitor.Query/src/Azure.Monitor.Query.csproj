@@ -19,7 +19,6 @@
       $(NoWarn);
       AZC0035; <!-- Missing model factory methods.  #51228-->
     </NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

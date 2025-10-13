@@ -14,7 +14,6 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <Description>SDK for the Azure IoT Hub service</Description>
     <Version>1.0.0-preview.1</Version>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
