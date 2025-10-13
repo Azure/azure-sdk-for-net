@@ -1,11 +1,11 @@
 [CmdletBinding()]
 Param (
-  [Parameter(Mandatory=$True)]
+  [Parameter(Mandatory=$False)]
   [array] $ArtifactList,
   [Parameter(Mandatory=$True)]
-  [string] $ArtifactPath,  
+  [string] $ArtifactPath,
   [Parameter(Mandatory=$True)]
-  [string] $APIKey,  
+  [string] $APIKey,
   [string] $SourceBranch,
   [string] $DefaultBranch,
   [string] $RepoName,
@@ -14,7 +14,9 @@ Param (
   [string] $ConfigFileDir = "",
   [string] $APIViewUri = "https://apiview.dev/AutoReview",
   [string] $ArtifactName = "packages",
-  [bool] $MarkPackageAsShipped = $false
+  [bool] $MarkPackageAsShipped = $false,
+  [Parameter(Mandatory=$False)]
+  [array] $PackageInfoFiles
 )
 
 Set-StrictMode -Version 3
@@ -51,7 +53,7 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
     $versionContent.Headers.ContentDisposition = $versionParam
     $multipartContent.Add($versionContent)
     Write-Host "Request param, packageVersion: $packageVersion"
-    
+
     $releaseTagParam = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
     $releaseTagParam.Name = "setReleaseTag"
     $releaseTagParamContent = [System.Net.Http.StringContent]::new($MarkPackageAsShipped)
@@ -96,7 +98,7 @@ function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $review
     $fileName = Split-Path -Leaf $filePath
     Write-Host "OriginalFile name: $fileName"
 
-    $params = "buildId=${BuildId}&artifactName=${ArtifactName}&originalFilePath=${fileName}&reviewFilePath=${reviewFileName}"    
+    $params = "buildId=${BuildId}&artifactName=${ArtifactName}&originalFilePath=${fileName}&reviewFilePath=${reviewFileName}"
     $params += "&label=${apiLabel}&repoName=${RepoName}&packageName=${packageName}&project=internal&packageVersion=${packageVersion}"
     if($MarkPackageAsShipped) {
         $params += "&setReleaseTag=true"
@@ -141,17 +143,16 @@ function Get-APITokenFileName($packageName)
     }
 }
 
-function Submit-APIReview($packageInfo, $packagePath, $packageArtifactName)
+function Submit-APIReview($packageInfo, $packagePath)
 {
-    $packageName = $packageInfo.Name    
     $apiLabel = "Source Branch:${SourceBranch}"
 
     # Get generated review token file if present
     # APIView processes request using different API if token file is already generated
-    $reviewTokenFileName =  Get-APITokenFileName $packageArtifactName
+    $reviewTokenFileName =  Get-APITokenFileName $packageInfo.ArtifactName
     if ($reviewTokenFileName) {
         Write-Host "Uploading review token file $reviewTokenFileName to APIView."
-        return Upload-ReviewTokenFile $packageArtifactName $apiLabel $packageInfo.ReleaseStatus $reviewTokenFileName $packageInfo.Version $packagePath
+        return Upload-ReviewTokenFile $packageInfo.ArtifactName $apiLabel $packageInfo.ReleaseStatus $reviewTokenFileName $packageInfo.Version $packagePath
     }
     else {
         Write-Host "Uploading $packagePath to APIView."
@@ -172,12 +173,32 @@ function IsApiviewStatusCheckRequired($packageInfo)
     return $false
 }
 
-function ProcessPackage($packageName)
+function ProcessPackage($packageInfo)
 {
     $packages = @{}
     if ($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn"))
     {
-        $packages = &$FindArtifactForApiReviewFn $ArtifactPath $packageName
+        $pkgArtifactName = $packageInfo.ArtifactName ?? $packageInfo.Name
+
+        # Check if the function supports the packageInfo parameter
+        $functionInfo = Get-Command $FindArtifactForApiReviewFn -ErrorAction SilentlyContinue
+        $supportsPackageInfoParam = $false
+        
+        if ($functionInfo -and $functionInfo.Parameters) {
+            # Check if function specifically supports packageInfo parameter
+            $parameterNames = $functionInfo.Parameters.Keys
+            $supportsPackageInfoParam = $parameterNames -contains 'packageInfo'
+        }
+        
+        # Call function with appropriate parameters
+        if ($supportsPackageInfoParam) {
+            LogInfo "Calling $FindArtifactForApiReviewFn with packageInfo parameter"
+            $packages = &$FindArtifactForApiReviewFn $ArtifactPath $pkgArtifactName $packageInfo
+        }
+        else {
+            LogInfo "Calling $FindArtifactForApiReviewFn with legacy parameters"
+            $packages = &$FindArtifactForApiReviewFn $ArtifactPath $pkgArtifactName
+        }
     }
     else
     {
@@ -192,31 +213,23 @@ function ProcessPackage($packageName)
         foreach($pkgPath in $packages.Values)
         {
             $pkg = Split-Path -Leaf $pkgPath
-            $pkgPropPath = Join-Path -Path $ConfigFileDir "$packageName.json"
-            if (-Not (Test-Path $pkgPropPath))
+            $version = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
+            if ($null -eq $version)
             {
-                Write-Host " Package property file path $($pkgPropPath) is invalid."
-                continue
-            }
-            # Get package info from json file created before updating version to daily dev
-            $pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
-            $version = [AzureEngSemanticVersion]::ParseVersionString($pkgInfo.Version)
-            if ($version -eq $null)
-            {
-                Write-Host "Version info is not available for package $packageName, because version '$(pkgInfo.Version)' is invalid. Please check if the version follows Azure SDK package versioning guidelines."
+                Write-Host "Version info is not available for package $($packageInfo.ArtifactName), because version '$($packageInfo.Version)' is invalid. Please check if the version follows Azure SDK package versioning guidelines."
                 return 1
             }
-            
+
             Write-Host "Version: $($version)"
-            Write-Host "SDK Type: $($pkgInfo.SdkType)"
-            Write-Host "Release Status: $($pkgInfo.ReleaseStatus)"
+            Write-Host "SDK Type: $($packageInfo.SdkType)"
+            Write-Host "Release Status: $($packageInfo.ReleaseStatus)"
 
             # Run create review step only if build is triggered from main branch or if version is GA.
             # This is to avoid invalidating review status by a build triggered from feature branch
             if ( ($SourceBranch -eq $DefaultBranch) -or (-not $version.IsPrerelease) -or $MarkPackageAsShipped)
             {
                 Write-Host "Submitting API Review request for package $($pkg), File path: $($pkgPath)"
-                $respCode = Submit-APIReview $pkgInfo $pkgPath $packageName
+                $respCode = Submit-APIReview $packageInfo $pkgPath
                 Write-Host "HTTP Response code: $($respCode)"
 
                 # no need to check API review status when marking a package as shipped
@@ -224,10 +237,10 @@ function ProcessPackage($packageName)
                 {
                     if ($respCode -eq '500')
                     {
-                        Write-Host "Failed to mark package ${packageName} as released. Please reach out to Azure SDK engineering systems on teams channel."   
+                        Write-Host "Failed to mark package $($packageInfo.ArtifactName) as released. Please reach out to Azure SDK engineering systems on teams channel."
                         return 1
                     }
-                    Write-Host "Package ${packageName} is marked as released."   
+                    Write-Host "Package $($packageInfo.ArtifactName) is marked as released."
                     return 0
                 }
 
@@ -239,41 +252,41 @@ function ProcessPackage($packageName)
                     IsApproved = $false
                     Details = ""
                 }
-                Process-ReviewStatusCode $respCode $packageName $apiStatus $pkgNameStatus
+                Process-ReviewStatusCode $respCode $packageInfo.ArtifactName $apiStatus $pkgNameStatus
 
                 if ($apiStatus.IsApproved) {
                     Write-Host "API status: $($apiStatus.Details)"
                 }
-                elseif (!$pkgInfo.ReleaseStatus -or $pkgInfo.ReleaseStatus -eq "Unreleased") {
+                elseif (!$packageInfo.ReleaseStatus -or $packageInfo.ReleaseStatus -eq "Unreleased") {
                     Write-Host "Release date is not set for current version in change log file for package. Ignoring API review approval status since package is not yet ready for release."
                 }
                 elseif ($version.IsPrerelease)
                 {
                     # Check if package name is approved. Preview version cannot be released without package name approval
-                    if (!$pkgNameStatus.IsApproved) 
+                    if (!$pkgNameStatus.IsApproved)
                     {
-                        if (IsApiviewStatusCheckRequired $pkgInfo)
+                        if (IsApiviewStatusCheckRequired $packageInfo)
                         {
                             Write-Error $($pkgNameStatus.Details)
                             return 1
                         }
                         else{
-                            Write-Host "Package name is not approved for package $($packageName), however it is not required for this package type so it can still be released without API review approval."
-                        }                        
+                            Write-Host "Package name is not approved for package $($packageInfo.ArtifactName), however it is not required for this package type so it can still be released without API review approval."
+                        }
                     }
                     # Ignore API review status for prerelease version
                     Write-Host "Package version is not GA. Ignoring API view approval status"
-                }                
+                }
                 else
                 {
                     # Return error code if status code is 201 for new data plane package
                     # Temporarily enable API review for spring SDK types. Ideally this should be done be using 'IsReviewRequired' method in language side
                     # to override default check of SDK type client
-                    if (IsApiviewStatusCheckRequired $pkgInfo)
+                    if (IsApiviewStatusCheckRequired $packageInfo)
                     {
                         if (!$apiStatus.IsApproved)
                         {
-                            Write-Host "Package version $($version) is GA and automatic API Review is not yet approved for package $($packageName)."
+                            Write-Host "Package version $($version) is GA and automatic API Review is not yet approved for package $($packageInfo.ArtifactName)."
                             Write-Host "Build and release is not allowed for GA package without API review approval."
                             Write-Host "You will need to queue another build to proceed further after API review is approved"
                             Write-Host "You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval."
@@ -281,7 +294,7 @@ function ProcessPackage($packageName)
                         return 1
                     }
                     else {
-                        Write-Host "API review is not approved for package $($packageName), however it is not required for this package type so it can still be released without API review approval."
+                        Write-Host "API review is not approved for package $($packageInfo.ArtifactName), however it is not required for this package type so it can still be released without API review approval."
                     }
                 }
             }
@@ -296,38 +309,80 @@ function ProcessPackage($packageName)
     return 0
 }
 
-$responses = @{}
-# Check if package config file is present. This file has package version, SDK type etc info.
-if (-not $ConfigFileDir)
-{
+Write-Host "Artifact path: $($ArtifactPath)"
+Write-Host "Source branch: $($SourceBranch)"
+Write-Host "Package Info Files: $($PackageInfoFiles)"
+Write-Host "Artifact List: $($ArtifactList)"
+Write-Host "Package Name: $($PackageName)"
+
+# Parameter priority and backward compatibility logic
+# Priority order: PackageName > Artifacts > PackageInfoFiles (for backward compatibility)
+
+if (-not $ConfigFileDir) {
     $ConfigFileDir = Join-Path -Path $ArtifactPath "PackageInfo"
 }
 
-Write-Host "Artifact path: $($ArtifactPath)"
-Write-Host "Source branch: $($SourceBranch)"
 Write-Host "Config File directory: $($ConfigFileDir)"
 
-# if package name param is not empty then process only that package
-if ($PackageName)
-{
-    Write-Host "Processing $($PackageName)"
-    $result = ProcessPackage -packageName $PackageName
-    $responses[$PackageName] = $result 
-}
-else
-{
-    # process all packages in the artifact
-    foreach ($artifact in $ArtifactList)
-    {
-        Write-Host "Processing $($artifact.name)"
-        $result = ProcessPackage -packageName $artifact.name
-        $responses[$artifact.name] = $result
+# Initialize working variable
+$ProcessedPackageInfoFiles = @()
+
+if ($PackageName -and $PackageName -ne "") {
+    # Highest Priority: Single package mode (existing usage)
+    Write-Host "Using PackageName parameter: $PackageName"
+    $pkgPropPath = Join-Path -Path $ConfigFileDir "$PackageName.json"
+    if (Test-Path $pkgPropPath) {
+        $ProcessedPackageInfoFiles = @($pkgPropPath)
     }
+    else {
+        Write-Error "Package property file path $pkgPropPath is invalid."
+        exit 1
+    }
+}
+elseif ($ArtifactList -and $ArtifactList.Count -gt 0) {
+    # Second Priority: Multiple artifacts mode (existing usage)
+    Write-Host "Using ArtifactList parameter with $($ArtifactList.Count) artifacts"
+    foreach ($artifact in $ArtifactList) {
+        $pkgPropPath = Join-Path -Path $ConfigFileDir "$($artifact.name).json"
+        if (Test-Path $pkgPropPath) {
+            $ProcessedPackageInfoFiles += $pkgPropPath
+        }
+        else {
+            Write-Warning "Package property file path $pkgPropPath is invalid."
+        }
+    }
+}
+elseif ($PackageInfoFiles -and $PackageInfoFiles.Count -gt 0) {
+    # Lowest Priority: Direct PackageInfoFiles (new method)
+    Write-Host "Using PackageInfoFiles parameter with $($PackageInfoFiles.Count) files"
+    $ProcessedPackageInfoFiles = $PackageInfoFiles  # Use as-is
+}
+else {
+    Write-Error "No package information provided. Please provide either 'PackageName', 'ArtifactList', or 'PackageInfoFiles' parameters."
+    exit 1
+}
+
+# Validate that we have package info files to process
+if (-not $ProcessedPackageInfoFiles -or $ProcessedPackageInfoFiles.Count -eq 0) {
+    Write-Error "No package info files found after processing parameters."
+    exit 1
+}
+
+$responses = @{}
+Write-Host "Processed Package Info Files: $($ProcessedPackageInfoFiles -join ', ')"
+
+# Process all packages using the processed PackageInfoFiles array
+foreach ($packageInfoFile in $ProcessedPackageInfoFiles)
+{
+    $packageInfo = Get-Content $packageInfoFile | ConvertFrom-Json
+    Write-Host "Processing $($packageInfo.ArtifactName)"
+    $result = ProcessPackage -packageInfo $packageInfo
+    $responses[$packageInfo.ArtifactName] = $result
 }
 
 $exitCode = 0
 foreach($pkg in $responses.keys)
-{    
+{
     if ($responses[$pkg] -eq 1)
     {
         Write-Host "API changes are not approved for $($pkg)"
