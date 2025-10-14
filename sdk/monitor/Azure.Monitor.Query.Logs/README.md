@@ -100,7 +100,7 @@ You can query logs by Log Analytics workspace ID or Azure resource ID. The resul
 
 #### Workspace-centric logs query
 
-To query by workspace ID, use the [LogsQueryClient.QueryWorkspaceAsync](https://learn.microsoft.com/dotnet/api/azure.monitor.query.logsqueryclient.queryworkspaceasync) method:
+To query by workspace ID, use the [LogsQueryClient.QueryWorkspaceAsync](https://learn.microsoft.com/dotnet/api/azure.monitor.query.logs.logsqueryclient.queryworkspaceasync) method:
 
 ```C# Snippet:QueryLogs_QueryLogsAsTable
 string workspaceId = "<workspace_id>";
