@@ -8,58 +8,58 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> STAC Item representing a spatiotemporal asset with statistical information. </summary>
-    public partial class GeoJsonStatisticsItemResult
+    public partial class StacItemStatisticsGeoJson
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GeoJsonStatisticsItemResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StacItemStatisticsGeoJson"/>. </summary>
         /// <param name="geometry"> Geometry object defining the feature's shape. </param>
-        /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
-        /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="type"> GeoJSON type identifier for Feature. </param>
-        /// <param name="properties"> Properties. </param>
-        internal GeoJsonStatisticsItemResult(GeoJsonGeometry geometry, IEnumerable<float> boundingBox, string id, FeatureType @type, StacItemProperties properties)
+        /// <param name="id"> Unique identifier for the feature. </param>
+        /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
+        internal StacItemStatisticsGeoJson(GeoJsonGeometry geometry, FeatureType @type, string id, IEnumerable<float> boundingBox)
         {
             Geometry = geometry;
-            BoundingBox = boundingBox.ToList();
-            Id = id;
             Type = @type;
-            Properties = properties;
+            Properties = new ChangeTrackingDictionary<string, BinaryData>();
+            Id = id;
+            BoundingBox = boundingBox.ToList();
             StacExtensions = new ChangeTrackingList<Uri>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GeoJsonStatisticsItemResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StacItemStatisticsGeoJson"/>. </summary>
         /// <param name="geometry"> Geometry object defining the feature's shape. </param>
-        /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
-        /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="type"> GeoJSON type identifier for Feature. </param>
+        /// <param name="properties"> Feature properties. </param>
         /// <param name="createdOn"> MSFT Created. </param>
         /// <param name="updatedOn"> MSFT Updated. </param>
         /// <param name="shortDescription"> MSFT Short Description. </param>
+        /// <param name="id"> Unique identifier for the feature. </param>
+        /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
         /// <param name="stacVersion"> Stac Version. </param>
         /// <param name="collection"> ID of the STAC collection this item belongs to. </param>
-        /// <param name="properties"> Properties. </param>
         /// <param name="timestamp"> MSFT Timestamp. </param>
         /// <param name="eTag"> MSFT ETag. </param>
         /// <param name="stacExtensions"> List of STAC extension URLs used by this item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GeoJsonStatisticsItemResult(GeoJsonGeometry geometry, IList<float> boundingBox, string id, FeatureType @type, string createdOn, string updatedOn, string shortDescription, string stacVersion, string collection, StacItemProperties properties, string timestamp, string eTag, IList<Uri> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacItemStatisticsGeoJson(GeoJsonGeometry geometry, FeatureType @type, IDictionary<string, BinaryData> properties, string createdOn, string updatedOn, string shortDescription, string id, IList<float> boundingBox, string stacVersion, string collection, string timestamp, string eTag, IList<Uri> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Geometry = geometry;
-            BoundingBox = boundingBox;
-            Id = id;
             Type = @type;
+            Properties = properties;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
             ShortDescription = shortDescription;
+            Id = id;
+            BoundingBox = boundingBox;
             StacVersion = stacVersion;
             Collection = collection;
-            Properties = properties;
             Timestamp = timestamp;
             ETag = eTag;
             StacExtensions = stacExtensions;
@@ -69,14 +69,36 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Geometry object defining the feature's shape. </summary>
         public GeoJsonGeometry Geometry { get; }
 
-        /// <summary> Bounding box coordinates for the feature. </summary>
-        public IList<float> BoundingBox { get; }
-
-        /// <summary> Unique identifier for the feature. </summary>
-        public string Id { get; }
-
         /// <summary> GeoJSON type identifier for Feature. </summary>
         public FeatureType Type { get; }
+
+        /// <summary>
+        /// Feature properties
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> Properties { get; }
 
         /// <summary> MSFT Created. </summary>
         public string CreatedOn { get; }
@@ -87,14 +109,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> MSFT Short Description. </summary>
         public string ShortDescription { get; }
 
+        /// <summary> Unique identifier for the feature. </summary>
+        public string Id { get; }
+
+        /// <summary> Bounding box coordinates for the feature. </summary>
+        public IList<float> BoundingBox { get; }
+
         /// <summary> Stac Version. </summary>
         public string StacVersion { get; }
 
         /// <summary> ID of the STAC collection this item belongs to. </summary>
         public string Collection { get; }
-
-        /// <summary> Properties. </summary>
-        public StacItemProperties Properties { get; }
 
         /// <summary> MSFT Timestamp. </summary>
         public string Timestamp { get; }

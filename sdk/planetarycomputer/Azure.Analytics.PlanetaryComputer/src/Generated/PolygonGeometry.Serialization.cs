@@ -13,16 +13,16 @@ using System.Text.Json;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Represents a Polygon. </summary>
-    public partial class GeoJsonPolygon : GeoJsonGeometry, IJsonModel<GeoJsonPolygon>
+    public partial class PolygonGeometry : GeoJsonGeometry, IJsonModel<PolygonGeometry>
     {
-        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygon"/> for deserialization. </summary>
-        internal GeoJsonPolygon()
+        /// <summary> Initializes a new instance of <see cref="PolygonGeometry"/> for deserialization. </summary>
+        internal PolygonGeometry()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GeoJsonPolygon>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PolygonGeometry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonPolygon>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolygonGeometry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeoJsonPolygon)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PolygonGeometry)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("coordinates"u8);
@@ -70,24 +70,24 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GeoJsonPolygon IJsonModel<GeoJsonPolygon>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GeoJsonPolygon)JsonModelCreateCore(ref reader, options);
+        PolygonGeometry IJsonModel<PolygonGeometry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PolygonGeometry)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override GeoJsonGeometry JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonPolygon>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolygonGeometry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeoJsonPolygon)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PolygonGeometry)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGeoJsonPolygon(document.RootElement, options);
+            return DeserializePolygonGeometry(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GeoJsonPolygon DeserializeGeoJsonPolygon(JsonElement element, ModelReaderWriterOptions options)
+        internal static PolygonGeometry DeserializePolygonGeometry(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,47 +157,47 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GeoJsonPolygon(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates);
+            return new PolygonGeometry(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GeoJsonPolygon>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PolygonGeometry>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonPolygon>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolygonGeometry>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GeoJsonPolygon)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolygonGeometry)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GeoJsonPolygon IPersistableModel<GeoJsonPolygon>.Create(BinaryData data, ModelReaderWriterOptions options) => (GeoJsonPolygon)PersistableModelCreateCore(data, options);
+        PolygonGeometry IPersistableModel<PolygonGeometry>.Create(BinaryData data, ModelReaderWriterOptions options) => (PolygonGeometry)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonPolygon>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolygonGeometry>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeGeoJsonPolygon(document.RootElement, options);
+                        return DeserializePolygonGeometry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GeoJsonPolygon)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolygonGeometry)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GeoJsonPolygon>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PolygonGeometry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

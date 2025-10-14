@@ -14,16 +14,16 @@ using Azure;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> UnsignedLink. </summary>
-    public partial class SignedLink : IJsonModel<SignedLink>
+    public partial class SharedAccessSignatureSignedLink : IJsonModel<SharedAccessSignatureSignedLink>
     {
-        /// <summary> Initializes a new instance of <see cref="SignedLink"/> for deserialization. </summary>
-        internal SignedLink()
+        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureSignedLink"/> for deserialization. </summary>
+        internal SharedAccessSignatureSignedLink()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SignedLink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SharedAccessSignatureSignedLink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,10 +34,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SignedLink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharedAccessSignatureSignedLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignedLink)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedAccessSignatureSignedLink)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ExpiresOn))
             {
@@ -65,24 +65,24 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SignedLink IJsonModel<SignedLink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SharedAccessSignatureSignedLink IJsonModel<SharedAccessSignatureSignedLink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SignedLink JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SharedAccessSignatureSignedLink JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SignedLink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharedAccessSignatureSignedLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignedLink)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedAccessSignatureSignedLink)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSignedLink(document.RootElement, options);
+            return DeserializeSharedAccessSignatureSignedLink(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SignedLink DeserializeSignedLink(JsonElement element, ModelReaderWriterOptions options)
+        internal static SharedAccessSignatureSignedLink DeserializeSharedAccessSignatureSignedLink(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,55 +112,55 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SignedLink(expiresOn, href, additionalBinaryDataProperties);
+            return new SharedAccessSignatureSignedLink(expiresOn, href, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SignedLink>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SharedAccessSignatureSignedLink>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SignedLink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharedAccessSignatureSignedLink>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SignedLink)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedAccessSignatureSignedLink)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SignedLink IPersistableModel<SignedLink>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SharedAccessSignatureSignedLink IPersistableModel<SharedAccessSignatureSignedLink>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SignedLink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SharedAccessSignatureSignedLink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SignedLink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharedAccessSignatureSignedLink>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeSignedLink(document.RootElement, options);
+                        return DeserializeSharedAccessSignatureSignedLink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignedLink)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedAccessSignatureSignedLink)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SignedLink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SharedAccessSignatureSignedLink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SignedLink"/> from. </param>
-        public static explicit operator SignedLink(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SharedAccessSignatureSignedLink"/> from. </param>
+        public static explicit operator SharedAccessSignatureSignedLink(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeSignedLink(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSharedAccessSignatureSignedLink(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

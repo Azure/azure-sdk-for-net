@@ -43,13 +43,6 @@ namespace Azure.Analytics.PlanetaryComputer
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("geometry"u8);
             writer.WriteObjectValue(Geometry, options);
-            writer.WritePropertyName("bbox"u8);
-            writer.WriteStartArray();
-            foreach (float item in BoundingBox)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             if (Optional.IsDefined(Collection))
@@ -57,6 +50,13 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("collection"u8);
                 writer.WriteStringValue(Collection);
             }
+            writer.WritePropertyName("bbox"u8);
+            writer.WriteStartArray();
+            foreach (float item in BoundingBox)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("assets"u8);
@@ -113,9 +113,9 @@ namespace Azure.Analytics.PlanetaryComputer
             IList<string> stacExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             GeoJsonGeometry geometry = default;
-            IList<float> boundingBox = default;
             string id = default;
             string collection = default;
+            IList<float> boundingBox = default;
             StacItemProperties properties = default;
             IDictionary<string, StacAsset> assets = default;
             string timestamp = default;
@@ -187,16 +187,6 @@ namespace Azure.Analytics.PlanetaryComputer
                     geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("bbox"u8))
-                {
-                    List<float> array = new List<float>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetSingle());
-                    }
-                    boundingBox = array;
-                    continue;
-                }
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
@@ -205,6 +195,16 @@ namespace Azure.Analytics.PlanetaryComputer
                 if (prop.NameEquals("collection"u8))
                 {
                     collection = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("bbox"u8))
+                {
+                    List<float> array = new List<float>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetSingle());
+                    }
+                    boundingBox = array;
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -247,9 +247,9 @@ namespace Azure.Analytics.PlanetaryComputer
                 stacExtensions ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties,
                 geometry,
-                boundingBox,
                 id,
                 collection,
+                boundingBox,
                 properties,
                 assets,
                 timestamp,

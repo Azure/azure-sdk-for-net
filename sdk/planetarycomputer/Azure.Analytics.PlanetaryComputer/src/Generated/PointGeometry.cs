@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Represents a GeoJSON Point geometry. </summary>
-    public partial class GeoJsonPoint : GeoJsonGeometry
+    public partial class PointGeometry : GeoJsonGeometry
     {
-        /// <summary> Initializes a new instance of <see cref="GeoJsonPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointGeometry"/>. </summary>
         /// <param name="coordinates"> The coordinates of the point as [longitude, latitude]. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public GeoJsonPoint(string coordinates) : base(GeometryType.Point)
+        public PointGeometry(string coordinates) : base(GeometryType.Point)
         {
             Argument.AssertNotNull(coordinates, nameof(coordinates));
 
             Coordinates = coordinates;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GeoJsonPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointGeometry"/>. </summary>
         /// <param name="type"> Discriminator property for GeoJsonGeometry. </param>
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the point as [longitude, latitude]. </param>
-        internal GeoJsonPoint(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, string coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
+        internal PointGeometry(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, string coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
         }

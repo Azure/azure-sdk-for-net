@@ -119,12 +119,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SignedLink> GetSign(Uri href, int? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual Response<SharedAccessSignatureSignedLink> GetSign(Uri href, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(href, nameof(href));
 
             Response result = GetSign(href, durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((SignedLink)result, result);
+            return Response.FromValue((SharedAccessSignatureSignedLink)result, result);
         }
 
         /// <summary>
@@ -136,12 +136,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SignedLink>> GetSignAsync(Uri href, int? durationInMinutes = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedAccessSignatureSignedLink>> GetSignAsync(Uri href, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(href, nameof(href));
 
             Response result = await GetSignAsync(href, durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((SignedLink)result, result);
+            return Response.FromValue((SharedAccessSignatureSignedLink)result, result);
         }
 
         /// <summary>

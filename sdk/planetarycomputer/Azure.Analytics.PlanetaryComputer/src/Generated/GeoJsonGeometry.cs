@@ -22,7 +22,7 @@ namespace Azure.Analytics.PlanetaryComputer
     /// - **MultiPolygon**: A collection of Polygons.
     /// 
     /// Used for spatial filtering in STAC.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GeoJsonPoint"/>, <see cref="GeoJsonPolygon"/>, <see cref="MultiPolygon"/>, <see cref="MultiLineString"/>, <see cref="LineString"/>, and <see cref="MultiPoint"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PointGeometry"/>, <see cref="PolygonGeometry"/>, <see cref="MultiPolygon"/>, <see cref="MultiLineString"/>, <see cref="LineString"/>, and <see cref="MultiPoint"/>.
     /// </summary>
     public abstract partial class GeoJsonGeometry
     {

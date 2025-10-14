@@ -12,7 +12,7 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Base type for STAC items and collections with discriminator.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StacItemResource"/> and <see cref="StacItemCollectionResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StacItemCollectionResource"/> and <see cref="StacItemResource"/>.
     /// </summary>
     public abstract partial class StacItemOrStacItemCollection
     {

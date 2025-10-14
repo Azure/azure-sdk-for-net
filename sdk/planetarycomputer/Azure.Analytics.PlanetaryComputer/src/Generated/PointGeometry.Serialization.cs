@@ -13,16 +13,16 @@ using System.Text.Json;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Represents a GeoJSON Point geometry. </summary>
-    public partial class GeoJsonPoint : GeoJsonGeometry, IJsonModel<GeoJsonPoint>
+    public partial class PointGeometry : GeoJsonGeometry, IJsonModel<PointGeometry>
     {
-        /// <summary> Initializes a new instance of <see cref="GeoJsonPoint"/> for deserialization. </summary>
-        internal GeoJsonPoint()
+        /// <summary> Initializes a new instance of <see cref="PointGeometry"/> for deserialization. </summary>
+        internal PointGeometry()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GeoJsonPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PointGeometry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonPoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PointGeometry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeoJsonPoint)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PointGeometry)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("coordinates"u8);
@@ -45,24 +45,24 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GeoJsonPoint IJsonModel<GeoJsonPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GeoJsonPoint)JsonModelCreateCore(ref reader, options);
+        PointGeometry IJsonModel<PointGeometry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PointGeometry)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override GeoJsonGeometry JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonPoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PointGeometry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeoJsonPoint)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PointGeometry)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGeoJsonPoint(document.RootElement, options);
+            return DeserializePointGeometry(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GeoJsonPoint DeserializeGeoJsonPoint(JsonElement element, ModelReaderWriterOptions options)
+        internal static PointGeometry DeserializePointGeometry(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,47 +103,47 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GeoJsonPoint(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates);
+            return new PointGeometry(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties, coordinates);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GeoJsonPoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PointGeometry>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonPoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PointGeometry>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GeoJsonPoint)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PointGeometry)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GeoJsonPoint IPersistableModel<GeoJsonPoint>.Create(BinaryData data, ModelReaderWriterOptions options) => (GeoJsonPoint)PersistableModelCreateCore(data, options);
+        PointGeometry IPersistableModel<PointGeometry>.Create(BinaryData data, ModelReaderWriterOptions options) => (PointGeometry)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonPoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PointGeometry>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeGeoJsonPoint(document.RootElement, options);
+                        return DeserializePointGeometry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GeoJsonPoint)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PointGeometry)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GeoJsonPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PointGeometry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

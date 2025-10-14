@@ -1482,7 +1482,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetMosaicsAssetsForTileRequest(string searchId, string tileMatrixSetId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
+        internal HttpMessage CreateGetMosaicsAssetsForTileRequest(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1518,6 +1518,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered, null), true);
             }
+            uri.AppendQuery("collection", collectionId, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

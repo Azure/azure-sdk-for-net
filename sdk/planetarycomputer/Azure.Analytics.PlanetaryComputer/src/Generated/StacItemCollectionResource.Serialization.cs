@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Analytics.PlanetaryComputer
 {
@@ -258,18 +257,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StacItemCollectionResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="stacItemCollectionResource"> The <see cref="StacItemCollectionResource"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(StacItemCollectionResource stacItemCollectionResource)
-        {
-            if (stacItemCollectionResource == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stacItemCollectionResource, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="StacItemCollectionResource"/> from. </param>
         public static explicit operator StacItemCollectionResource(Response result)

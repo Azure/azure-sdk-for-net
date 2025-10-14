@@ -649,7 +649,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
@@ -705,7 +705,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
@@ -754,7 +754,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Create image from a geojson feature. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="body"> Request GeoJson body. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
@@ -778,7 +778,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CropGeoJson(string collectionId, string itemId, string format, StacItemResource body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> CropGeoJson(string collectionId, string itemId, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -792,7 +792,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Create image from a geojson feature. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="body"> Request GeoJson body. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
@@ -816,7 +816,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CropGeoJsonAsync(string collectionId, string itemId, string format, StacItemResource body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> CropGeoJsonAsync(string collectionId, string itemId, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -966,7 +966,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CropGeoJsonWithDimensions(string collectionId, string itemId, float width, float height, string format, StacItemResource body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> CropGeoJsonWithDimensions(string collectionId, string itemId, float width, float height, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -1004,7 +1004,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, float width, float height, string format, StacItemResource body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, float width, float height, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
@@ -1016,7 +1016,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Get Statistics from a geojson feature or featureCollection.
+        /// [Protocol Method] Get Statistics from a geojson feature.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1085,7 +1085,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Get Statistics from a geojson feature or featureCollection.
+        /// [Protocol Method] Get Statistics from a geojson feature.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1153,7 +1153,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Get Statistics from a geojson feature or featureCollection. </summary>
+        /// <summary> Get Statistics from a geojson feature. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="body"> Request GeoJson body. </param>
@@ -1194,17 +1194,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<GeoJsonStatisticsForStacItemCollection> GetGeoJsonStatistics(string collectionId, string itemId, StacItemCollectionResource body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual Response<StacItemStatisticsGeoJson> GetGeoJsonStatistics(string collectionId, string itemId, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = GetGeoJsonStatistics(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((GeoJsonStatisticsForStacItemCollection)result, result);
+            return Response.FromValue((StacItemStatisticsGeoJson)result, result);
         }
 
-        /// <summary> Get Statistics from a geojson feature or featureCollection. </summary>
+        /// <summary> Get Statistics from a geojson feature. </summary>
         /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="itemId"> STAC Item Identifier. </param>
         /// <param name="body"> Request GeoJson body. </param>
@@ -1245,14 +1245,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<GeoJsonStatisticsForStacItemCollection>> GetGeoJsonStatisticsAsync(string collectionId, string itemId, StacItemCollectionResource body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacItemStatisticsGeoJson>> GetGeoJsonStatisticsAsync(string collectionId, string itemId, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await GetGeoJsonStatisticsAsync(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((GeoJsonStatisticsForStacItemCollection)result, result);
+            return Response.FromValue((StacItemStatisticsGeoJson)result, result);
         }
 
         /// <summary>
@@ -3022,8 +3022,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
         /// MatrixWidth-1 for the selected TileMatrix.
         /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
@@ -3094,8 +3094,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
         /// MatrixWidth-1 for the selected TileMatrix.
         /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
@@ -3159,8 +3159,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
         /// MatrixWidth-1 for the selected TileMatrix.
         /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
@@ -3213,8 +3213,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
         /// MatrixWidth-1 for the selected TileMatrix.
         /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
@@ -3979,6 +3979,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
         /// MatrixWidth-1 for the selected TileMatrix.
         /// </param>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
         /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
         /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
@@ -3988,11 +3989,11 @@ namespace Azure.Analytics.PlanetaryComputer
         /// to True in PgSTAC).
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMosaicsAssetsForTile(string searchId, string tileMatrixSetId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
+        public virtual Response GetMosaicsAssetsForTile(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsAssetsForTile");
             scope.Start();
@@ -4000,8 +4001,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
                 Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-                using HttpMessage message = CreateGetMosaicsAssetsForTileRequest(searchId, tileMatrixSetId, z, x, y, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, context);
+                using HttpMessage message = CreateGetMosaicsAssetsForTileRequest(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4033,6 +4035,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
         /// MatrixWidth-1 for the selected TileMatrix.
         /// </param>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
         /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
         /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
@@ -4042,11 +4045,11 @@ namespace Azure.Analytics.PlanetaryComputer
         /// to True in PgSTAC).
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsAssetsForTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
+        public virtual async Task<Response> GetMosaicsAssetsForTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("TilerClient.GetMosaicsAssetsForTile");
             scope.Start();
@@ -4054,8 +4057,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
                 Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-                using HttpMessage message = CreateGetMosaicsAssetsForTileRequest(searchId, tileMatrixSetId, z, x, y, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, context);
+                using HttpMessage message = CreateGetMosaicsAssetsForTileRequest(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4080,6 +4084,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
         /// MatrixWidth-1 for the selected TileMatrix.
         /// </param>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
         /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
         /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
@@ -4089,15 +4094,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// to True in PgSTAC).
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<BinaryData>> GetMosaicsAssetsForTile(string searchId, string tileMatrixSetId, float z, float x, float y, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<BinaryData>> GetMosaicsAssetsForTile(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetMosaicsAssetsForTile(searchId, tileMatrixSetId, z, x, y, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetMosaicsAssetsForTile(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             IList<BinaryData> value = new List<BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -4130,6 +4136,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
         /// MatrixWidth-1 for the selected TileMatrix.
         /// </param>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
         /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
         /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
         /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
@@ -4139,15 +4146,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// to True in PgSTAC).
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<BinaryData>>> GetMosaicsAssetsForTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<BinaryData>>> GetMosaicsAssetsForTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetMosaicsAssetsForTileAsync(searchId, tileMatrixSetId, z, x, y, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetMosaicsAssetsForTileAsync(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             IList<BinaryData> value = new List<BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -4647,8 +4655,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
         /// MatrixWidth-1 for the selected TileMatrix.
         /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
@@ -4725,8 +4733,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
         /// MatrixWidth-1 for the selected TileMatrix.
         /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
@@ -4796,8 +4804,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
         /// MatrixWidth-1 for the selected TileMatrix.
         /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>
@@ -4856,8 +4864,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
         /// MatrixWidth-1 for the selected TileMatrix.
         /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
+        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
+        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes). </param>

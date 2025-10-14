@@ -14,7 +14,7 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Base type for STAC items and collections with discriminator.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StacItemResource"/> and <see cref="StacItemCollectionResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StacItemCollectionResource"/> and <see cref="StacItemResource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownStacItemOrStacItemCollection))]
     public abstract partial class StacItemOrStacItemCollection : IJsonModel<StacItemOrStacItemCollection>
@@ -135,10 +135,10 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 switch (discriminator.GetString())
                 {
-                    case "Feature":
-                        return StacItemResource.DeserializeStacItemResource(element, options);
                     case "FeatureCollection":
                         return StacItemCollectionResource.DeserializeStacItemCollectionResource(element, options);
+                    case "Feature":
+                        return StacItemResource.DeserializeStacItemResource(element, options);
                 }
             }
             return UnknownStacItemOrStacItemCollection.DeserializeUnknownStacItemOrStacItemCollection(element, options);
