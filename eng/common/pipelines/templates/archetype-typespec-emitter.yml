@@ -142,26 +142,15 @@ extends:
             # Create emitter identifier from package path for disambiguation
             $emitterIdentifier = ""
             if (-not [string]::IsNullOrWhiteSpace($emitterPackagePath)) {
-              # Get the directory path
-              $dirPath = [System.IO.Path]::GetDirectoryName($emitterPackagePath)
-              
-              if (-not [string]::IsNullOrWhiteSpace($dirPath)) {
-                # Normalize path separators
-                $dirPath = $dirPath -replace '\\', '/'
-                
-                # Split path and filter out empty parts
-                $pathParts = @($dirPath -split '/' | Where-Object { $_ })
-                
-                # Remove common root directories
-                $pathParts = @($pathParts | Where-Object { $_ -notin @('packages', 'eng', 'tools') })
-                
-                # Take the last two parts (scope and name) if available
-                if ($pathParts.Count -ge 2) {
-                  $scope = $pathParts[-2]
-                  $name = $pathParts[-1]
-                  $emitterIdentifier = "$scope/$name"
-                } elseif ($pathParts.Count -eq 1) {
-                  $emitterIdentifier = $pathParts[0]
+              # Read the package name from package.json
+              if (Test-Path $emitterPackagePath) {
+                try {
+                  $packageJson = Get-Content $emitterPackagePath -Raw | ConvertFrom-Json
+                  if ($packageJson.name) {
+                    $emitterIdentifier = $packageJson.name
+                  }
+                } catch {
+                  Write-Host "Warning: Could not read package name from $emitterPackagePath"
                 }
               }
               
