@@ -1,10 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2025-06-01)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version tag to 'package-2025-06-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/3c1ce8207350922f820d20e04547cc4785c758d3/specification/elastic/resource-manager/readme.md.
 
 ### Bugs Fixed
 
