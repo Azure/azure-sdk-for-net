@@ -111,6 +111,14 @@ namespace Azure.Generator.Management.Providers
                 Return(Static().Invoke(getCachedClientMethod.Signature, [extensionParameter]).Invoke(target.Name, arguments, async: target.Modifiers.HasFlag(MethodSignatureModifiers.Async)))
             };
 
+            foreach (var p in methodSignature.Parameters)
+            {
+                if (p.Location == ParameterLocation.Body)
+                {
+                    p.Update(name: "content");
+                }
+            }
+
             return new MethodProvider(methodSignature, body, this);
 
             static ParameterProvider DuplicateParameter(ParameterProvider original)
