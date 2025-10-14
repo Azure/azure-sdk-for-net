@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using static Azure.Core.Pipeline.TaskExtensions;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -33,27 +34,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationSnapshotData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppConfigurationSnapshotData AppConfigurationSnapshotData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string snapshotType = null, AppConfigurationProvisioningState? provisioningState = null, AppConfigurationSnapshotStatus? status = null, IEnumerable<SnapshotKeyValueFilter> filters = null, SnapshotCompositionType? compositionType = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, long? retentionPeriod = null, long? size = null, long? itemsCount = null, IDictionary<string, string> tags = null, ETag? eTag = null)
-        {
-            filters ??= new List<SnapshotKeyValueFilter>();
-            tags ??= new Dictionary<string, string>();
-
-            return AppConfigurationSnapshotData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState,
-                status,
-                filters?.ToList(),
-                compositionType,
-                createdOn,
-                expireOn,
-                retentionPeriod,
-                size,
-                itemsCount,
-                tags,
-                eTag);
-        }
+        public static AppConfigurationSnapshotData AppConfigurationSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string snapshotType, AppConfigurationProvisioningState? provisioningState = null, AppConfigurationSnapshotStatus? status = null, IEnumerable<SnapshotKeyValueFilter> filters = null, SnapshotCompositionType? compositionType = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, long? retentionPeriod = null, long? size = null, long? itemsCount = null, IDictionary<string, string> tags = null, ETag? eTag = null)
+            => AppConfigurationSnapshotData(id, name, resourceType, systemData, provisioningState, status, filters, compositionType, createdOn, expireOn, retentionPeriod, size, itemsCount, tags, eTag);
     }
 }

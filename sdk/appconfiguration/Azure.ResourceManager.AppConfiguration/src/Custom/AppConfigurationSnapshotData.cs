@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> The type of the resource. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("type")]
-        [CodeGenMember("type")]
-        public string SnapshotType { get; }
+        public string SnapshotType => ResourceType.ToString();
     }
 }
