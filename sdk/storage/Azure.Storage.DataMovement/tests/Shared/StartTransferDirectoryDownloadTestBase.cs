@@ -645,7 +645,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(true, transfer.Status.HasFailedItems);
             if (!testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage))
             {
-                Assert.Fail($"Did not throw the expected exception. Actual exception thrown: {testEventsRaised.FailedEvents.First().Exception.Message}");
+                Assert.Fail($"Did not throw the expected exception. Actual exception thrown: {testEventsRaised.FailedEvents.First().Exception}");
             }
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
         }
