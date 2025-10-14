@@ -50,6 +50,10 @@ namespace Azure.Identity.Tests
             string podOutput = RunCommand(kubectlPath, "get pods -o jsonpath='{.items[0].metadata.name}'");
             Assert.That(podOutput, Does.Contain(podName));
 
+            // Wait for the pod to be ready
+            Console.WriteLine($"Waiting for pod {podName} to be ready...");
+            RunCommand(kubectlPath, $"wait --for=condition=Ready pod/{podName} --timeout=300s");
+
             // copy the test binaries to the cluster
             RunCommand(kubectlPath, $"cp {buildArtifacts}/artifacts/bin/Azure.Identity.Tests/Debug/{targetFramework} {podName}:./tests/");
         }
@@ -59,7 +63,7 @@ namespace Azure.Identity.Tests
         {
             SetupKubernetesEnvironment();
             // Run the test app on the cluster
-            string output = RunCommand(kubectlPath, $"exec {podName} -- ./tests/Integration.Identity.Container");
+            string output = RunCommand(kubectlPath, $"exec {podName} -- dotnet ./tests/Integration.Identity.Container.dll");
             Assert.That(output, Does.Contain("Passed!"));
         }
 
