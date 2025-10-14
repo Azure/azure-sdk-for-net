@@ -10,8 +10,6 @@
 
 - Fixed serialization issue in `ElasticCloudDeployment` where `ElasticsearchServiceUri`, `KibanaServiceUri`, and `KibanaSsoUri` properties would throw `InvalidOperationException` when containing relative URIs. Added custom serialization hooks to handle both absolute and relative URIs by using `OriginalString` for relative URIs instead of `AbsoluteUri`. This resolves issue #50974.
 
-### Other Changes
-
 ## 1.0.0 (2024-12-26)
 
 This package is the first stable release of the Azure Elastic management library.
