@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.Support
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(LocalDisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
+                writer.WriteStringValue(LocalDisplayName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SecondaryConsentEnabled))
+            if (Optional.IsCollectionDefined(LocalSecondaryConsentEnabled))
             {
                 writer.WritePropertyName("secondaryConsentEnabled"u8);
                 writer.WriteStartArray();
-                foreach (var item in SecondaryConsentEnabled)
+                foreach (var item in LocalSecondaryConsentEnabled)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Support
             ResourceType type = default;
             SystemData systemData = default;
             string displayName = default;
-            IReadOnlyList<SecondaryConsentEnabled> secondaryConsentEnabled = default;
+            IList<SecondaryConsentEnabled> secondaryConsentEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

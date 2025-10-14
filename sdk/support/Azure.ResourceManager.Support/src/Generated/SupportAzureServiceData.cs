@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> Initializes a new instance of <see cref="SupportAzureServiceData"/>. </summary>
         public SupportAzureServiceData()
         {
-            ResourceTypes = new ChangeTrackingList<string>();
+            LocalResourceTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportAzureServiceData"/>. </summary>
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Support
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Localized name of the Azure service. </param>
-        /// <param name="resourceTypes"> ARM Resource types. </param>
+        /// <param name="localDisplayName"> Localized name of the Azure service. </param>
+        /// <param name="localResourceTypes"> ARM Resource types. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportAzureServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SupportAzureServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string localDisplayName, IList<string> localResourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            ResourceTypes = resourceTypes;
+            LocalDisplayName = localDisplayName;
+            LocalResourceTypes = localResourceTypes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Localized name of the Azure service. </summary>
-        public string DisplayName { get; set; }
+        public string LocalDisplayName { get; set; }
         /// <summary> ARM Resource types. </summary>
-        public IReadOnlyList<string> ResourceTypes { get; }
+        public IList<string> LocalResourceTypes { get; }
     }
 }

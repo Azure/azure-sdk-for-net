@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Localized name of the Azure service. </param>
-        /// <param name="resourceTypes"> ARM Resource types. </param>
+        /// <param name="localDisplayName"> Localized name of the Azure service. </param>
+        /// <param name="localResourceTypes"> ARM Resource types. </param>
         /// <returns> A new <see cref="Support.SupportAzureServiceData"/> instance for mocking. </returns>
-        public static SupportAzureServiceData SupportAzureServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> resourceTypes = null)
+        public static SupportAzureServiceData SupportAzureServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string localDisplayName = null, IEnumerable<string> localResourceTypes = null)
         {
-            resourceTypes ??= new List<string>();
+            localResourceTypes ??= new List<string>();
 
             return new SupportAzureServiceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                displayName,
-                resourceTypes?.ToList(),
+                localDisplayName,
+                localResourceTypes?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -97,30 +97,21 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Localized name of problem classification. </param>
-        /// <param name="secondaryConsentEnabled"> This property indicates whether secondary consent is present for problem classification. </param>
+        /// <param name="localDisplayName"> Localized name of problem classification. </param>
+        /// <param name="localSecondaryConsentEnabled"> This property indicates whether secondary consent is present for problem classification. </param>
         /// <returns> A new <see cref="Support.ProblemClassificationData"/> instance for mocking. </returns>
-        public static ProblemClassificationData ProblemClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<SecondaryConsentEnabled> secondaryConsentEnabled = null)
+        public static ProblemClassificationData ProblemClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string localDisplayName = null, IEnumerable<SecondaryConsentEnabled> localSecondaryConsentEnabled = null)
         {
-            secondaryConsentEnabled ??= new List<SecondaryConsentEnabled>();
+            localSecondaryConsentEnabled ??= new List<SecondaryConsentEnabled>();
 
             return new ProblemClassificationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                displayName,
-                secondaryConsentEnabled?.ToList(),
+                localDisplayName,
+                localSecondaryConsentEnabled?.ToList(),
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecondaryConsentEnabled"/>. </summary>
-        /// <param name="description"> User consent description. </param>
-        /// <param name="secondaryConsentEnabledType"> The Azure service for which secondary consent is needed for case creation. </param>
-        /// <returns> A new <see cref="Models.SecondaryConsentEnabled"/> instance for mocking. </returns>
-        public static SecondaryConsentEnabled SecondaryConsentEnabled(string description = null, string secondaryConsentEnabledType = null)
-        {
-            return new SecondaryConsentEnabled(description, secondaryConsentEnabledType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Support.SupportTicketData"/>. </summary>

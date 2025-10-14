@@ -48,7 +48,11 @@ namespace Azure.ResourceManager.Support
     public partial class ProblemClassificationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ProblemClassificationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ProblemClassificationData>
     {
         public ProblemClassificationData() { }
-        public string DisplayName { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string DisplayName { get { throw null; } }
+        public string LocalDisplayName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> LocalSecondaryConsentEnabled { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> SecondaryConsentEnabled { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.ProblemClassificationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ProblemClassificationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -164,7 +168,11 @@ namespace Azure.ResourceManager.Support
     public partial class SupportAzureServiceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportAzureServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportAzureServiceData>
     {
         public SupportAzureServiceData() { }
-        public string DisplayName { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string DisplayName { get { throw null; } }
+        public string LocalDisplayName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LocalResourceTypes { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<string> ResourceTypes { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.SupportAzureServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportAzureServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -638,9 +646,10 @@ namespace Azure.ResourceManager.Support.Models
         public static Azure.ResourceManager.Support.ChatTranscriptDetailData ChatTranscriptDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties> messages = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties ChatTranscriptMessageProperties(Azure.ResourceManager.Support.Models.TranscriptContentType? contentType = default(Azure.ResourceManager.Support.Models.TranscriptContentType?), Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection? communicationDirection = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection?), string sender = null, string body = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Support.FileWorkspaceDetailData FileWorkspaceDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Support.ProblemClassificationData ProblemClassificationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> secondaryConsentEnabled = null) { throw null; }
-        public static Azure.ResourceManager.Support.Models.SecondaryConsentEnabled SecondaryConsentEnabled(string description = null, string secondaryConsentEnabledType = null) { throw null; }
-        public static Azure.ResourceManager.Support.SupportAzureServiceData SupportAzureServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<string> resourceTypes = null) { throw null; }
+        public static Azure.ResourceManager.Support.ProblemClassificationData ProblemClassificationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string localDisplayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> localSecondaryConsentEnabled = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Support.Models.SecondaryConsentEnabled SecondaryConsentEnabled(string description, string secondaryConsentEnabledType) { throw null; }
+        public static Azure.ResourceManager.Support.SupportAzureServiceData SupportAzureServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string localDisplayName = null, System.Collections.Generic.IEnumerable<string> localResourceTypes = null) { throw null; }
         public static Azure.ResourceManager.Support.SupportFileDetailData SupportFileDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), int? chunkSize = default(int?), int? fileSize = default(int?), int? numberOfChunks = default(int?)) { throw null; }
         public static Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult SupportNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement SupportServiceLevelAgreement(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), int? slaInMinutes = default(int?)) { throw null; }
@@ -725,8 +734,12 @@ namespace Azure.ResourceManager.Support.Models
     }
     public partial class SecondaryConsentEnabled : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>
     {
-        internal SecondaryConsentEnabled() { }
+        public SecondaryConsentEnabled() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Description { get { throw null; } }
+        public string LocalDescription { get { throw null; } set { } }
+        public string LocalSecondaryConsentEnabledType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string SecondaryConsentEnabledType { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.SecondaryConsentEnabled System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

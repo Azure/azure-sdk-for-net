@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.Support
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(LocalDisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
+                writer.WriteStringValue(LocalDisplayName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceTypes))
+            if (Optional.IsCollectionDefined(LocalResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResourceTypes)
+                foreach (var item in LocalResourceTypes)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Support
             ResourceType type = default;
             SystemData systemData = default;
             string displayName = default;
-            IReadOnlyList<string> resourceTypes = default;
+            IList<string> resourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

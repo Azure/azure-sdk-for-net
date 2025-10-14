@@ -46,24 +46,24 @@ namespace Azure.ResourceManager.Support.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecondaryConsentEnabled"/>. </summary>
-        internal SecondaryConsentEnabled()
+        public SecondaryConsentEnabled()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SecondaryConsentEnabled"/>. </summary>
-        /// <param name="description"> User consent description. </param>
-        /// <param name="secondaryConsentEnabledType"> The Azure service for which secondary consent is needed for case creation. </param>
+        /// <param name="localDescription"> User consent description. </param>
+        /// <param name="localSecondaryConsentEnabledType"> The Azure service for which secondary consent is needed for case creation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecondaryConsentEnabled(string description, string secondaryConsentEnabledType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecondaryConsentEnabled(string localDescription, string localSecondaryConsentEnabledType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Description = description;
-            SecondaryConsentEnabledType = secondaryConsentEnabledType;
+            LocalDescription = localDescription;
+            LocalSecondaryConsentEnabledType = localSecondaryConsentEnabledType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> User consent description. </summary>
-        public string Description { get; }
+        public string LocalDescription { get; set; }
         /// <summary> The Azure service for which secondary consent is needed for case creation. </summary>
-        public string SecondaryConsentEnabledType { get; }
+        public string LocalSecondaryConsentEnabledType { get; set; }
     }
 }

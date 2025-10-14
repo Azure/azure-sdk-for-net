@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: Support
 namespace: Azure.ResourceManager.Support
-require: https://github.com/Azure/azure-rest-api-specs/blob/3331035cd1d184d5f66d2c1f3899ac7001c5679a/specification/support/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/9edc30686813e52c7f027eb8ea1c56c3d6dc5d1f/specification/support/resource-manager/readme.md
 #tag: package-preview-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -88,17 +88,8 @@ rename-mapping:
   Consent: AdvancedDiagnosticConsent
   MessageProperties: ChatTranscriptMessageProperties
   UploadFile: UploadFileContent
-  LookUpResourceIdResponse: LookUpResourceIdResult
-  LookUpResourceIdResponse.resourceId: -|arm-id
-  ServiceClassificationRequest: ServiceClassificationContent
-  ResourceType: SupportResourceTypeName
-  LookUpResourceIdRequest.type: ResourceType
-  ProblemClassificationsClassificationInput: ServiceProblemClassificationContent
-  ProblemClassificationsClassificationOutput: ServiceProblemClassificationListResult
-  ProblemClassificationsClassificationResult: ServiceProblemClassificationResult
-  ProblemClassificationsClassificationResult.serviceId: -|arm-id
-  ProblemClassificationsClassificationResult.relatedService.serviceId: RelatedServiceId
-  ClassificationService.resourceTypes: -|resource-type
+  SecondaryConsentEnabled.description: LocalDescription
+  SecondaryConsentEnabled.type: LocalSecondaryConsentEnabledType
 
 models-to-treat-empty-string-as-null:
   - LookUpResourceIdResult
@@ -108,20 +99,23 @@ models-to-treat-empty-string-as-null:
 override-operation-name:
   Communications_CheckNameAvailability: CheckCommunicationNameAvailability
   SupportTickets_CheckNameAvailability: CheckSupportTicketNameAvailability
-  LookUpResourceId_Post: LookUpResourceId
-  ProblemClassificationsNoSubscription_classifyProblems: ClassifyServiceProblem
-  ProblemClassifications_classifyProblems: ClassifyServiceProblem
 
 directive:
+  # It was found during the Swagger comparison that the contentType is missing the 'x-ms-enum' object content,
+  # so it is supplemented here.
   - from: support.json
     where: $.definitions
     transform: >
-      $.ProblemClassificationProperties['properties']['secondaryConsentEnabled']['readOnly'] = true;
-      $.ServiceProperties['properties']['resourceTypes']['readOnly'] = true;
-      # It was found during the Swagger comparison that the contentType is missing the 'x-ms-enum' object content,
-      # so it is supplemented here.
       $.MessageProperties['properties']['contentType']['x-ms-enum'] = {
           name: 'TranscriptContentType',
           modelAsString: true
       };
+  - from: support.json
+    where: $.definitions
+    transform: >
+      $.ProblemClassificationProperties.properties.displayName['x-ms-client-name'] = 'LocalDisplayName';
+      $.ProblemClassificationProperties.properties.secondaryConsentEnabled['x-ms-client-name'] = 'LocalSecondaryConsentEnabled';
+      $.ServiceProperties.properties.displayName['x-ms-client-name'] = 'LocalDisplayName';
+      $.ServiceProperties.properties.resourceTypes['x-ms-client-name'] = 'LocalResourceTypes';
+ 
 ```
