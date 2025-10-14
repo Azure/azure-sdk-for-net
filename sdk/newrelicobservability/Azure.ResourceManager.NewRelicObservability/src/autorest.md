@@ -157,8 +157,8 @@ rename-mapping:
   SubscriptionList: NewRelicMonitoredSubscriptionProperties
   MonitoredSubscription: NewRelicMonitoredSubscriptionInfo
   MonitoringTagRulesProperties: NewRelicMonitoringTagRules
-  LatestLinkedSaaSResponse: NewRelicObservabilityLatestLinkedSaaSResponseResult
-  SaaSResourceDetailsResponse: NewRelicObservabilitySaaSResourceDetailsResponseResult
+  LatestLinkedSaaSResponse: NewRelicObservabilityLatestLinkedSaaSResult
+  SaaSResourceDetailsResponse: NewRelicObservabilitySaaSResourceDetailsResult
   SaaSData: NewRelicObservabilitySaaSInfo
 
 
