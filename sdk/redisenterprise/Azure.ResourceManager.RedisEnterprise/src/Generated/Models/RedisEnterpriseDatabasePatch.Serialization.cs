@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisEnterpriseEvictionPolicy? evictionPolicy = default;
             RedisPersistenceSettings persistence = default;
             IList<RedisEnterpriseModule> modules = default;
-            RedisEnterpriseDatabaseGeoReplication geoReplication = default;
+            DatabaseCommonPropertiesGeoReplication geoReplication = default;
             string redisVersion = default;
             DeferUpgradeSetting? deferUpgrade = default;
             AccessKeysAuthentication? accessKeysAuthentication = default;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             {
                                 continue;
                             }
-                            geoReplication = RedisEnterpriseDatabaseGeoReplication.DeserializeRedisEnterpriseDatabaseGeoReplication(property0.Value, options);
+                            geoReplication = DatabaseCommonPropertiesGeoReplication.DeserializeDatabaseCommonPropertiesGeoReplication(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("redisVersion"u8))
