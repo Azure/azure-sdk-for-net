@@ -4,8 +4,6 @@
     <OutputType>Exe</OutputType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <SignAssembly>false</SignAssembly>
-    <IsTestProject>false</IsTestProject>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>
