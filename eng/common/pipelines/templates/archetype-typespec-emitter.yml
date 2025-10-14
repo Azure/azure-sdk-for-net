@@ -383,6 +383,7 @@ extends:
           displayName: Create PR
           dependsOn: 
           - Generate
+          condition: succeededOrFailed()
           variables:
             generateJobResult: $[dependencies.Generate.result]
             emitterVersion: $[stageDependencies.Build.Build.outputs['initialize.emitterVersion']]
