@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> The resource quota limit value. </summary>
-    internal partial class QuotaLimitObject : QuotaLimitJsonObject
+    public partial class QuotaLimitObject : QuotaLimitJsonObject
     {
         /// <summary> Initializes a new instance of <see cref="QuotaLimitObject"/>. </summary>
         /// <param name="value"> The quota/limit value. </param>

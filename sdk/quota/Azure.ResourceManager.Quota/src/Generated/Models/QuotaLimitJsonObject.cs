@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Quota.Models
     /// LimitJson abstract class.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="QuotaLimitObject"/>.
     /// </summary>
-    internal abstract partial class QuotaLimitJsonObject
+    public abstract partial class QuotaLimitJsonObject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

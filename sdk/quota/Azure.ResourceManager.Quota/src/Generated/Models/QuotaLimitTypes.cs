@@ -12,7 +12,7 @@ using Azure.ResourceManager.Quota;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> The quota or usages limit types. </summary>
-    internal readonly partial struct QuotaLimitTypes : IEquatable<QuotaLimitTypes>
+    public readonly partial struct QuotaLimitTypes : IEquatable<QuotaLimitTypes>
     {
         private readonly string _value;
         private const string IndependentValue = "Independent";

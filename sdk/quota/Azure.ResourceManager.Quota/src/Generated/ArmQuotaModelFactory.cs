@@ -276,25 +276,25 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotaLimitListProperties(provisioningState, value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Group Quota properties for the specified resource. </summary>
         /// <param name="resourceName"> The resource name, such as SKU name. </param>
         /// <param name="limit"> The current Group Quota Limit at the parentId level. </param>
         /// <param name="comment"> Any comment related to quota request. </param>
         /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
-        /// <param name="name"> Name of the resource provided by the resource provider. This property is already included in the request URI, so it is a readonly property returned in the response. </param>
+        /// <param name="value"> Resource name. </param>
+        /// <param name="localizedValue"> Resource display name. </param>
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
-        /// <param name="allocatedToSubscriptions"> Quota allocated to subscriptions. </param>
+        /// <param name="allocatedToSubscriptionsValue"> List of Group Quota Limit allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaLimitProperties"/> instance for mocking. </returns>
-        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = default, long? limit = default, string comment = default, string unit = default, GroupQuotaDetailsName name = default, long? availableLimit = default, AllocatedQuotaToSubscriptionList allocatedToSubscriptions = default)
+        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = default, long? limit = default, string comment = default, string unit = default, string value = default, string localizedValue = default, long? availableLimit = default, IList<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = default)
         {
             return new GroupQuotaLimitProperties(
                 resourceName,
                 limit,
                 comment,
                 unit,
-                name,
+                value is null || localizedValue is null ? default : new GroupQuotaDetailsName(value, localizedValue, new Dictionary<string, BinaryData>()),
                 availableLimit,
-                allocatedToSubscriptions,
+                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue, new Dictionary<string, BinaryData>()),
                 additionalBinaryDataProperties: null);
         }
 
@@ -359,15 +359,15 @@ namespace Azure.ResourceManager.Quota.Models
             return new SubscriptionQuotaAllocationsListProperties(provisioningState, value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Quota properties for the specified resource. </summary>
         /// <param name="resourceName"> The resource name, such as SKU name. </param>
         /// <param name="limit"> The total quota limit for the subscription. </param>
         /// <param name="shareableQuota"> The shareable quota for the subscription. </param>
-        /// <param name="name"> Name of the resource provided by the resource provider. This property is already included in the request URI, so it is a readonly property returned in the response. </param>
+        /// <param name="value"> Resource name. </param>
+        /// <param name="localizedValue"> Resource display name. </param>
         /// <returns> A new <see cref="Models.SubscriptionQuotaAllocationsProperties"/> instance for mocking. </returns>
-        public static SubscriptionQuotaAllocationsProperties SubscriptionQuotaAllocationsProperties(string resourceName = default, long? limit = default, long? shareableQuota = default, SubscriptionQuotaDetailsName name = default)
+        public static SubscriptionQuotaAllocationsProperties SubscriptionQuotaAllocationsProperties(string resourceName = default, long? limit = default, long? shareableQuota = default, string value = default, string localizedValue = default)
         {
-            return new SubscriptionQuotaAllocationsProperties(resourceName, limit, shareableQuota, name, additionalBinaryDataProperties: null);
+            return new SubscriptionQuotaAllocationsProperties(resourceName, limit, shareableQuota, value is null || localizedValue is null ? default : new SubscriptionQuotaDetailsName(value, localizedValue, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <param name="resourceName"> The resource name, such as SKU name. </param>
@@ -522,7 +522,8 @@ namespace Azure.ResourceManager.Quota.Models
                 properties);
         }
 
-        /// <param name="limitObjectType"> The limit object type. </param>
+        /// <summary> Quota properties for the specified resource. </summary>
+        /// <param name="limit"> Resource quota limit properties. </param>
         /// <param name="unit"> The quota units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="name"> Resource name provided by the resource provider. Use this property name when requesting quota. </param>
         /// <param name="resourceTypeName"> The name of the resource type. Optional field. </param>
@@ -536,10 +537,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="isQuotaApplicable"> States if quota can be requested for this resource. </param>
         /// <param name="properties"> Additional properties for the specific resource provider. </param>
         /// <returns> A new <see cref="Models.QuotaProperties"/> instance for mocking. </returns>
-        public static QuotaProperties QuotaProperties(LimitType? limitObjectType = default, string unit = default, QuotaRequestResourceName name = default, string resourceTypeName = default, TimeSpan? quotaPeriod = default, bool? isQuotaApplicable = default, BinaryData properties = default)
+        public static QuotaProperties QuotaProperties(QuotaLimitJsonObject limit = default, string unit = default, QuotaRequestResourceName name = default, string resourceTypeName = default, TimeSpan? quotaPeriod = default, bool? isQuotaApplicable = default, BinaryData properties = default)
         {
             return new QuotaProperties(
-                limitObjectType is null ? default : new Models.QuotaLimitJsonObject(limitObjectType.Value, new Dictionary<string, BinaryData>()),
+                limit,
                 unit,
                 name,
                 resourceTypeName,
@@ -576,15 +577,16 @@ namespace Azure.ResourceManager.Quota.Models
                     new Dictionary<string, BinaryData>()));
         }
 
+        /// <summary> Request property. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceTypeName"> Resource type for which the quota properties were requested. </param>
         /// <param name="unit"> Quota limit units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="provisioningState"> The quota request status. </param>
         /// <param name="message"> User-friendly status message. </param>
         /// <param name="subRequestId"> Quota request ID. </param>
-        /// <param name="limitObjectType"> The limit object type. </param>
+        /// <param name="limit"> Resource quota limit properties. </param>
         /// <returns> A new <see cref="Models.QuotaSubRequestDetail"/> instance for mocking. </returns>
-        public static QuotaSubRequestDetail QuotaSubRequestDetail(QuotaRequestResourceName name = default, string resourceTypeName = default, string unit = default, QuotaRequestState? provisioningState = default, string message = default, Guid? subRequestId = default, LimitType? limitObjectType = default)
+        public static QuotaSubRequestDetail QuotaSubRequestDetail(QuotaRequestResourceName name = default, string resourceTypeName = default, string unit = default, QuotaRequestState? provisioningState = default, string message = default, Guid? subRequestId = default, QuotaLimitJsonObject limit = default)
         {
             return new QuotaSubRequestDetail(
                 name,
@@ -593,7 +595,7 @@ namespace Azure.ResourceManager.Quota.Models
                 provisioningState,
                 message,
                 subRequestId,
-                limitObjectType is null ? default : new Models.QuotaLimitJsonObject(limitObjectType.Value, new Dictionary<string, BinaryData>()),
+                limit,
                 additionalBinaryDataProperties: null);
         }
     }

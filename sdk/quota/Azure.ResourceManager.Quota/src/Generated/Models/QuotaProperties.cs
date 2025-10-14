@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Resource quota limit properties. </summary>
-        internal QuotaLimitJsonObject Limit { get; set; }
+        public QuotaLimitJsonObject Limit { get; set; }
 
         /// <summary> The quota units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </summary>
         public string Unit { get; }
@@ -100,18 +100,5 @@ namespace Azure.ResourceManager.Quota.Models
         /// </para>
         /// </summary>
         public BinaryData Properties { get; set; }
-
-        /// <summary> The limit object type. </summary>
-        internal LimitType? LimitObjectType
-        {
-            get
-            {
-                return Limit is null ? default : Limit.LimitObjectType;
-            }
-            set
-            {
-                Limit = value.HasValue ? new Models.QuotaLimitJsonObject(value.Value) : default;
-            }
-        }
     }
 }

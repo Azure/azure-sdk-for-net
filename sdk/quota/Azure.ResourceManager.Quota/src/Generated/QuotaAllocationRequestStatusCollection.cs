@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.Quota
     /// Each <see cref="QuotaAllocationRequestStatusResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
     /// To get a <see cref="QuotaAllocationRequestStatusCollection"/> instance call the GetQuotaAllocationRequestStatuses method from an instance of the parent resource.
     /// </summary>
-    public partial class QuotaAllocationRequestStatusCollection : ArmCollection, IEnumerable<QuotaAllocationRequestStatusResource>, IAsyncEnumerable<QuotaAllocationRequestStatusResource>
+    public partial class QuotaAllocationRequestStatusCollection : ArmCollection
     {
         private readonly ClientDiagnostics _quotaAllocationRequestStatusesClientDiagnostics;
         private readonly QuotaAllocationRequestStatuses _quotaAllocationRequestStatusesRestClient;
@@ -88,7 +86,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, context);
+                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, Guid.Parse(_subscriptionId), _groupQuotaName, _resourceProviderName, allocationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QuotaAllocationRequestStatusData> response = Response.FromValue(QuotaAllocationRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -121,7 +119,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, context);
+                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, Guid.Parse(_subscriptionId), _groupQuotaName, _resourceProviderName, allocationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QuotaAllocationRequestStatusData> response = Response.FromValue(QuotaAllocationRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -160,7 +158,7 @@ namespace Azure.ResourceManager.Quota
             return new AsyncPageableWrapper<QuotaAllocationRequestStatusData, QuotaAllocationRequestStatusResource>(new QuotaAllocationRequestStatusesGetAllAsyncCollectionResultOfT(
                 _quotaAllocationRequestStatusesRestClient,
                 _managementGroupId,
-                _subscriptionId,
+                Guid.Parse(_subscriptionId),
                 _groupQuotaName,
                 _resourceProviderName,
                 filter,
@@ -190,7 +188,7 @@ namespace Azure.ResourceManager.Quota
             return new PageableWrapper<QuotaAllocationRequestStatusData, QuotaAllocationRequestStatusResource>(new QuotaAllocationRequestStatusesGetAllCollectionResultOfT(
                 _quotaAllocationRequestStatusesRestClient,
                 _managementGroupId,
-                _subscriptionId,
+                Guid.Parse(_subscriptionId),
                 _groupQuotaName,
                 _resourceProviderName,
                 filter,
@@ -214,7 +212,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, context);
+                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, Guid.Parse(_subscriptionId), _groupQuotaName, _resourceProviderName, allocationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<QuotaAllocationRequestStatusData> response = default;
@@ -255,7 +253,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, context);
+                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, Guid.Parse(_subscriptionId), _groupQuotaName, _resourceProviderName, allocationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<QuotaAllocationRequestStatusData> response = default;
@@ -296,7 +294,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, context);
+                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, Guid.Parse(_subscriptionId), _groupQuotaName, _resourceProviderName, allocationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<QuotaAllocationRequestStatusData> response = default;
@@ -341,7 +339,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, allocationId, context);
+                HttpMessage message = _quotaAllocationRequestStatusesRestClient.CreateGetRequest(_managementGroupId, Guid.Parse(_subscriptionId), _groupQuotaName, _resourceProviderName, allocationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<QuotaAllocationRequestStatusData> response = default;
@@ -367,22 +365,6 @@ namespace Azure.ResourceManager.Quota
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<QuotaAllocationRequestStatusResource> IEnumerable<QuotaAllocationRequestStatusResource>.GetEnumerator()
-        {
-            return this.GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<QuotaAllocationRequestStatusResource> IAsyncEnumerable<QuotaAllocationRequestStatusResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

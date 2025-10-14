@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.Quota
     /// Each <see cref="GroupQuotaSubscriptionRequestStatusResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
     /// To get a <see cref="GroupQuotaSubscriptionRequestStatusCollection"/> instance call the GetGroupQuotaSubscriptionRequestStatuses method from an instance of the parent resource.
     /// </summary>
-    public partial class GroupQuotaSubscriptionRequestStatusCollection : ArmCollection, IEnumerable<GroupQuotaSubscriptionRequestStatusResource>, IAsyncEnumerable<GroupQuotaSubscriptionRequestStatusResource>
+    public partial class GroupQuotaSubscriptionRequestStatusCollection : ArmCollection
     {
         private readonly ClientDiagnostics _groupQuotaSubscriptionRequestStatusesClientDiagnostics;
         private readonly GroupQuotaSubscriptionRequestStatuses _groupQuotaSubscriptionRequestStatusesRestClient;
@@ -315,22 +313,6 @@ namespace Azure.ResourceManager.Quota
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<GroupQuotaSubscriptionRequestStatusResource> IEnumerable<GroupQuotaSubscriptionRequestStatusResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<GroupQuotaSubscriptionRequestStatusResource> IAsyncEnumerable<GroupQuotaSubscriptionRequestStatusResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

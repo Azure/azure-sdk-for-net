@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Quota.Models
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="QuotaLimitObject"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownLimitJsonObject))]
-    internal abstract partial class QuotaLimitJsonObject : IJsonModel<QuotaLimitJsonObject>
+    public abstract partial class QuotaLimitJsonObject : IJsonModel<QuotaLimitJsonObject>
     {
         /// <summary> Initializes a new instance of <see cref="QuotaLimitJsonObject"/> for deserialization. </summary>
         internal QuotaLimitJsonObject()

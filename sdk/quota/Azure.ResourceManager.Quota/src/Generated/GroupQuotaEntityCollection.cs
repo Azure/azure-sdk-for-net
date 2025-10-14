@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.Quota
     /// Each <see cref="GroupQuotaEntityResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
     /// To get a <see cref="GroupQuotaEntityCollection"/> instance call the GetGroupQuotaEntities method from an instance of the parent resource.
     /// </summary>
-    public partial class GroupQuotaEntityCollection : ArmCollection, IEnumerable<GroupQuotaEntityResource>, IAsyncEnumerable<GroupQuotaEntityResource>
+    public partial class GroupQuotaEntityCollection : ArmCollection
     {
         private readonly ClientDiagnostics _groupQuotasEntitiesClientDiagnostics;
         private readonly GroupQuotasEntities _groupQuotasEntitiesRestClient;
@@ -401,22 +399,6 @@ namespace Azure.ResourceManager.Quota
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<GroupQuotaEntityResource> IEnumerable<GroupQuotaEntityResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<GroupQuotaEntityResource> IAsyncEnumerable<GroupQuotaEntityResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

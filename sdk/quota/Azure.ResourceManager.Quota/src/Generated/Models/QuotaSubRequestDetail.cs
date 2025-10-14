@@ -61,15 +61,6 @@ namespace Azure.ResourceManager.Quota.Models
         public Guid? SubRequestId { get; }
 
         /// <summary> Resource quota limit properties. </summary>
-        internal QuotaLimitJsonObject Limit { get; }
-
-        /// <summary> The limit object type. </summary>
-        internal LimitType? LimitObjectType
-        {
-            get
-            {
-                return Limit.LimitObjectType;
-            }
-        }
+        public QuotaLimitJsonObject Limit { get; }
     }
 }
