@@ -202,10 +202,6 @@ directive:
   # `delete` transformations are to remove APIs/methods that result in Access Denied for end users.
   - remove-operation: BareMetalMachines_CreateOrUpdate
   - remove-operation: BareMetalMachines_Delete
-  - remove-operation: BareMetalMachines_RunDataExtracts
-  - remove-operation: BareMetalMachines_RunDataExtractsAsync
-  - remove-operation: BareMetalMachines_RunDataExtractsRestricted
-  - remove-operation: BareMetalMachines_RunDataExtractsRestrictedAsync
   - remove-operation: Racks_CreateOrUpdate
   - remove-operation: Racks_Delete
   - remove-operation: StorageAppliances_CreateOrUpdate
