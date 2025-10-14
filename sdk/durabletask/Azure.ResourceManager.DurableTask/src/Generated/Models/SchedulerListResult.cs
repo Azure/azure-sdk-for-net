@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <summary> Initializes a new instance of <see cref="SchedulerListResult"/>. </summary>
         /// <param name="value"> The Scheduler items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SchedulerListResult(IEnumerable<DurableTaskSchedulerData> value)
+        internal SchedulerListResult(IEnumerable<SchedulerData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="value"> The Scheduler items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchedulerListResult(IReadOnlyList<DurableTaskSchedulerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SchedulerListResult(IReadOnlyList<SchedulerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         }
 
         /// <summary> The Scheduler items on this page. </summary>
-        public IReadOnlyList<DurableTaskSchedulerData> Value { get; }
+        public IReadOnlyList<SchedulerData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

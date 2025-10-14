@@ -50,14 +50,18 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> The host name of the frontendEndpoint. Must be a domain name. </summary>
+        [WirePath("properties.hostName")]
         public string HostName { get; set; }
         /// <summary> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.sessionAffinityEnabledState")]
         public SessionAffinityEnabledState? SessionAffinityEnabledState { get; set; }
         /// <summary> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </summary>
+        [WirePath("properties.sessionAffinityTtlSeconds")]
         public int? SessionAffinityTtlInSeconds { get; set; }
         /// <summary> Defines the Web Application Firewall policy for each host (if applicable). </summary>
         internal WritableSubResource WebApplicationFirewallPolicyLink { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.webApplicationFirewallPolicyLink.id")]
         public ResourceIdentifier WebApplicationFirewallPolicyLinkId
         {
             get => WebApplicationFirewallPolicyLink is null ? default : WebApplicationFirewallPolicyLink.Id;
@@ -70,12 +74,16 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Resource status. </summary>
+        [WirePath("properties.resourceState")]
         public FrontDoorResourceState? ResourceState { get; }
         /// <summary> Provisioning status of Custom Https of the frontendEndpoint. </summary>
+        [WirePath("properties.customHttpsProvisioningState")]
         public FrontendEndpointCustomHttpsProvisioningState? CustomHttpsProvisioningState { get; }
         /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </summary>
+        [WirePath("properties.customHttpsProvisioningSubstate")]
         public FrontendEndpointCustomHttpsProvisioningSubstate? CustomHttpsProvisioningSubstate { get; }
         /// <summary> The configuration specifying how to enable HTTPS. </summary>
+        [WirePath("properties.customHttpsConfiguration")]
         public CustomHttpsConfiguration CustomHttpsConfiguration { get; }
     }
 }
