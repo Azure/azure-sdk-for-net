@@ -88,8 +88,6 @@ namespace Azure.Monitor.Query.Metrics.Models
         internal MetricResult() { }
         public string Description { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
-        public string ErrorCode { get { throw null; } }
-        public string ErrorMessage { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Monitor.Query.Metrics.Models.MetricTimeSeriesElement> TimeSeries { get { throw null; } }
