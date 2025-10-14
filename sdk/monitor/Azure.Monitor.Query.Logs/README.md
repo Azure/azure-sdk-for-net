@@ -15,7 +15,7 @@ The Azure Monitor Query Logs client library is used to execute read-only queries
 
 ### Install the package
 
-Install the Azure Monitor Query client library for .NET with NuGet:
+Install the Azure Monitor Query Logs client library for .NET with NuGet:
 
 ```dotnetcli
 dotnet add package Azure.Monitor.Query.Logs
