@@ -8,7 +8,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
     /// <summary>
     /// A class used to parse the parameters passed into the sample
     /// </summary>
-    public class Options
+    public class SamplesOptions
     {
         /// <summary>
         /// The Time Series Insights environment FQDN.

@@ -9,6 +9,7 @@
     <NoWarn>$(NoWarn);CS1591;SA1636</NoWarn>
     <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
