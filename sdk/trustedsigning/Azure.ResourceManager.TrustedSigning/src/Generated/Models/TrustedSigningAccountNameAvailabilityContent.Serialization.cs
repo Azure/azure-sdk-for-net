@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 throw new FormatException($"The model {nameof(TrustedSigningAccountNameAvailabilityContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ResourceType);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -86,14 +86,14 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             {
                 return null;
             }
-            ResourceType @type = default;
+            ResourceType resourceType = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ResourceType(prop.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TrustedSigningAccountNameAvailabilityContent(@type, name, additionalBinaryDataProperties);
+            return new TrustedSigningAccountNameAvailabilityContent(resourceType, name, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

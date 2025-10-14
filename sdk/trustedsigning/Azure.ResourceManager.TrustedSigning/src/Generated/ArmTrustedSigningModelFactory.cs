@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         }
 
         /// <summary> The parameters used to check the availability of the trusted signing account name. </summary>
-        /// <param name="type"> The type of the resource, "Microsoft.CodeSigning/codeSigningAccounts". </param>
+        /// <param name="resourceType"> The type of the resource, "Microsoft.CodeSigning/codeSigningAccounts". </param>
         /// <param name="name"> Trusted signing account name. </param>
         /// <returns> A new <see cref="Models.TrustedSigningAccountNameAvailabilityContent"/> instance for mocking. </returns>
-        public static TrustedSigningAccountNameAvailabilityContent TrustedSigningAccountNameAvailabilityContent(ResourceType @type = default, string name = default)
+        public static TrustedSigningAccountNameAvailabilityContent TrustedSigningAccountNameAvailabilityContent(ResourceType resourceType = default, string name = default)
         {
-            return new TrustedSigningAccountNameAvailabilityContent(@type, name, additionalBinaryDataProperties: null);
+            return new TrustedSigningAccountNameAvailabilityContent(resourceType, name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The CheckNameAvailability operation response. </summary>

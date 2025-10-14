@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             }
             if (Optional.IsDefined(RevocationStatus))
             {
-                writer.WritePropertyName("revocationStatus"u8);
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(RevocationStatus.Value.ToString());
             }
             if (Optional.IsDefined(FailureReason))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                     remarks = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("revocationStatus"u8))
+                if (prop.NameEquals("status"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,30 +19,30 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountNameAvailabilityContent"/>. </summary>
-        /// <param name="type"> The type of the resource, "Microsoft.CodeSigning/codeSigningAccounts". </param>
+        /// <param name="resourceType"> The type of the resource, "Microsoft.CodeSigning/codeSigningAccounts". </param>
         /// <param name="name"> Trusted signing account name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public TrustedSigningAccountNameAvailabilityContent(ResourceType @type, string name)
+        public TrustedSigningAccountNameAvailabilityContent(ResourceType resourceType, string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Type = @type;
+            ResourceType = resourceType;
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountNameAvailabilityContent"/>. </summary>
-        /// <param name="type"> The type of the resource, "Microsoft.CodeSigning/codeSigningAccounts". </param>
+        /// <param name="resourceType"> The type of the resource, "Microsoft.CodeSigning/codeSigningAccounts". </param>
         /// <param name="name"> Trusted signing account name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrustedSigningAccountNameAvailabilityContent(ResourceType @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrustedSigningAccountNameAvailabilityContent(ResourceType resourceType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ResourceType = resourceType;
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of the resource, "Microsoft.CodeSigning/codeSigningAccounts". </summary>
-        public ResourceType Type { get; }
+        public ResourceType ResourceType { get; }
 
         /// <summary> Trusted signing account name. </summary>
         public string Name { get; }
