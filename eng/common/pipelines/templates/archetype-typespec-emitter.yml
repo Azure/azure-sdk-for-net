@@ -446,7 +446,8 @@ extends:
                 Write-Error "Build.Repository.Name not in the expected {Owner}/{Name} format"
               }
 
-              $openAsDraft = -not ($reason -eq 'IndividualCI' -and $sourceBranch -eq 'refs/heads/main')
+              # Open PR as draft if generation failed, or if it's not an IndividualCI build from main
+              $openAsDraft = ($generateJobResult -ne 'Succeeded') -or (-not ($reason -eq 'IndividualCI' -and $sourceBranch -eq 'refs/heads/main'))
               Write-Host "Setting OpenAsDraftBool = $openAsDraft"
               Write-Host "##vso[task.setvariable variable=OpenAsDraft]$openAsDraft"
               if ($openAsDraft) {
