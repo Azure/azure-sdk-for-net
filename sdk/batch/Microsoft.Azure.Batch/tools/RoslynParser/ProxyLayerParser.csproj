@@ -3,6 +3,7 @@
     <Description>Azure Batch roslyn based parser for generating code</Description>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <IsTestProject>false</IsTestProject>
+    <IsPackable>false</IsPackable> 
   </PropertyGroup>
 
   <PropertyGroup>
