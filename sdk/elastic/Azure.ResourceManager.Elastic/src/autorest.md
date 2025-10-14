@@ -59,6 +59,7 @@ rename-mapping:
   ElasticVersionListProperties.version: AvailableVersion
   OpenAIIntegrationRPModel: ElasticOpenAIIntegration
   OpenAIIntegrationProperties: ElasticOpenAIIntegrationProperties
+  OpenAIIntegrationProperties.openAIResourceId: -|arm-id
   BillingInfoResponse: ElasticBillingInfoResult
   ConnectedPartnerResourceProperties.azureResourceId: -|arm-id
   ConnectedPartnerResourcesListFormat: ConnectedPartnerResourceInfo
@@ -100,6 +101,16 @@ rename-mapping:
   VMIngestionDetailsResponse: VmIngestionDetailsResult
   VMResources: ElasticVMResourceInfo
   VMResources.vmResourceId: -|arm-id
+  ConfigurationType: ElasticsearchProjectConfigurationType
+  HostingType: MonitorResourceHostingType
+  MarketplaceSaaSInfoMarketplaceSubscription.id: -|arm-id
+  Operation: ResourcePatchOperation
+  MonitoredSubscription.subscriptionId: -|arm-id
+  ProjectDetails: MonitorResourceProjectDetails
+  ProjectType: MonitorResourceProjectType
+  Status: MonitoringStatus
+  ResubscribeProperties.subscriptionId: -|arm-id
+  SubscriptionList: MonitoredSubscriptionList
 
 prepend-rp-prefix:
   - MonitoringStatus
@@ -121,5 +132,16 @@ override-operation-name:
   DetachTrafficFilter_Update: DetachTrafficFilter
   Organizations_GetApiKey: GetApiKey
   Organizations_GetElasticToAzureSubscriptionMapping: GetElasticToAzureSubscriptionMapping
+
+directive:
+  - from: elastic.json
+    where: $.definitions.MonitoringTagRulesProperties.properties.provisioningState
+    transform: $['readOnly'] = false;
+  - from: elastic.json
+    where: $.definitions.MonitorProperties.properties.provisioningState
+    transform: $['readOnly'] = false;
+  - from: elastic.json
+    where: $.definitions.ProvisioningState
+    transform: $['readOnly'] = false;
 
 ```

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="resourceGroup"> Newly selected Azure resource group in which the new Marketplace subscription will be created for Resubscribe. </param>
         /// <param name="organizationId"> Organization Id of the Elastic Organization that needs to be resubscribed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResubscribeProperties(string planId, string term, string subscriptionId, string resourceGroup, string organizationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResubscribeProperties(string planId, string term, ResourceIdentifier subscriptionId, string resourceGroup, string organizationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PlanId = planId;
             Term = term;
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> Newly selected term to create the new Marketplace subscription for Resubscribe. </summary>
         public string Term { get; set; }
         /// <summary> Newly selected Azure Subscription Id in which the new Marketplace subscription will be created for Resubscribe. </summary>
-        public string SubscriptionId { get; set; }
+        public ResourceIdentifier SubscriptionId { get; set; }
         /// <summary> Newly selected Azure resource group in which the new Marketplace subscription will be created for Resubscribe. </summary>
         public string ResourceGroup { get; set; }
         /// <summary> Organization Id of the Elastic Organization that needs to be resubscribed. </summary>

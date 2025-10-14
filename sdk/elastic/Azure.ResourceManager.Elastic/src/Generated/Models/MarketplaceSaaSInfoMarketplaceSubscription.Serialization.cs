@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string publisherId = default;
             string offerId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -95,7 +95,11 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("publisherId"u8))

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="publisherId"> Publisher Id of the Marketplace offer. </param>
         /// <param name="offerId"> Offer Id of the Marketplace offer,. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSaaSInfoMarketplaceSubscription(string id, string publisherId, string offerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MarketplaceSaaSInfoMarketplaceSubscription(ResourceIdentifier id, string publisherId, string offerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PublisherId = publisherId;
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> Marketplace Subscription Id. This is a GUID-formatted string. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Publisher Id of the Marketplace offer. </summary>
         public string PublisherId { get; }
         /// <summary> Offer Id of the Marketplace offer,. </summary>

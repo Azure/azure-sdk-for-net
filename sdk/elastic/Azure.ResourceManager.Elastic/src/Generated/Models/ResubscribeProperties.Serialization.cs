@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Elastic.Models
             }
             string planId = default;
             string term = default;
-            string subscriptionId = default;
+            ResourceIdentifier subscriptionId = default;
             string resourceGroup = default;
             string organizationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -117,7 +117,11 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
                 if (property.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subscriptionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceGroup"u8))

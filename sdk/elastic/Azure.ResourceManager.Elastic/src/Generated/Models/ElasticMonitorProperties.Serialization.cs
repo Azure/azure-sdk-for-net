@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 throw new FormatException($"The model {nameof(ElasticMonitorProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.Elastic.Models
             ElasticLiftrResourceCategory? liftrResourceCategory = default;
             int? liftrResourcePreference = default;
             bool? generateApiKey = default;
-            HostingType? hostingType = default;
-            ProjectDetails projectDetails = default;
+            MonitorResourceHostingType? hostingType = default;
+            MonitorResourceProjectDetails projectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    hostingType = new HostingType(property.Value.GetString());
+                    hostingType = new MonitorResourceHostingType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("projectDetails"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    projectDetails = ProjectDetails.DeserializeProjectDetails(property.Value, options);
+                    projectDetails = MonitorResourceProjectDetails.DeserializeMonitorResourceProjectDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

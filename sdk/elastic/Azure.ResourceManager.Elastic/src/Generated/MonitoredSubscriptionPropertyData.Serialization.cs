@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 return null;
             }
-            SubscriptionList properties = default;
+            MonitoredSubscriptionList properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Elastic
                     {
                         continue;
                     }
-                    properties = SubscriptionList.DeserializeSubscriptionList(property.Value, options);
+                    properties = MonitoredSubscriptionList.DeserializeMonitoredSubscriptionList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

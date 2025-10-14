@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class SubscriptionList : IUtf8JsonSerializable, IJsonModel<SubscriptionList>
+    public partial class MonitoredSubscriptionList : IUtf8JsonSerializable, IJsonModel<MonitoredSubscriptionList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoredSubscriptionList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SubscriptionList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitoredSubscriptionList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoredSubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoredSubscriptionList)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Operation))
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(MonitoredSubscriptionList))
+            if (Optional.IsCollectionDefined(MonitoredSubscriptionListValue))
             {
                 writer.WritePropertyName("monitoredSubscriptionList"u8);
                 writer.WriteStartArray();
-                foreach (var item in MonitoredSubscriptionList)
+                foreach (var item in MonitoredSubscriptionListValue)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.Elastic.Models
             }
         }
 
-        SubscriptionList IJsonModel<SubscriptionList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MonitoredSubscriptionList IJsonModel<MonitoredSubscriptionList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoredSubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoredSubscriptionList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubscriptionList(document.RootElement, options);
+            return DeserializeMonitoredSubscriptionList(document.RootElement, options);
         }
 
-        internal static SubscriptionList DeserializeSubscriptionList(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MonitoredSubscriptionList DeserializeMonitoredSubscriptionList(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Operation? operation = default;
+            ResourcePatchOperation? operation = default;
             IList<MonitoredSubscription> monitoredSubscriptionList = default;
             ElasticProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    operation = new Operation(property.Value.GetString());
+                    operation = new ResourcePatchOperation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("monitoredSubscriptionList"u8))
@@ -136,38 +136,38 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SubscriptionList(operation, monitoredSubscriptionList ?? new ChangeTrackingList<MonitoredSubscription>(), provisioningState, serializedAdditionalRawData);
+            return new MonitoredSubscriptionList(operation, monitoredSubscriptionList ?? new ChangeTrackingList<MonitoredSubscription>(), provisioningState, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SubscriptionList>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MonitoredSubscriptionList>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoredSubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoredSubscriptionList)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SubscriptionList IPersistableModel<SubscriptionList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MonitoredSubscriptionList IPersistableModel<MonitoredSubscriptionList>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoredSubscriptionList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSubscriptionList(document.RootElement, options);
+                        return DeserializeMonitoredSubscriptionList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoredSubscriptionList)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SubscriptionList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitoredSubscriptionList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

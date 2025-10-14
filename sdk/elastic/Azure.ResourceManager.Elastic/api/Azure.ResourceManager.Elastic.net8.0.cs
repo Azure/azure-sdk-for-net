@@ -120,7 +120,11 @@ namespace Azure.ResourceManager.Elastic
         Azure.ResourceManager.Elastic.ElasticMonitorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.ElasticMonitorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.ElasticMonitorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.ElasticMonitorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.Elastic.ElasticMonitorResource> Update(Azure.ResourceManager.Elastic.Models.ElasticMonitorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Elastic.ElasticMonitorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Elastic.Models.ElasticMonitorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Elastic.ElasticMonitorResource>> UpdateAsync(Azure.ResourceManager.Elastic.Models.ElasticMonitorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Elastic.ElasticMonitorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Elastic.Models.ElasticMonitorPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateVmCollection(Azure.ResourceManager.Elastic.Models.VmCollectionContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateVmCollectionAsync(Azure.ResourceManager.Elastic.Models.VmCollectionContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -243,7 +247,7 @@ namespace Azure.ResourceManager.Elastic
     public partial class MonitoredSubscriptionPropertyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.MonitoredSubscriptionPropertyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.MonitoredSubscriptionPropertyData>
     {
         public MonitoredSubscriptionPropertyData() { }
-        public Azure.ResourceManager.Elastic.Models.SubscriptionList Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Elastic.Models.MonitoredSubscriptionList Properties { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.MonitoredSubscriptionPropertyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.MonitoredSubscriptionPropertyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.MonitoredSubscriptionPropertyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -321,48 +325,31 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.ElasticMonitorData ElasticMonitorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string kind = null, string skuName = null, Azure.ResourceManager.Elastic.Models.ElasticMonitorProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Elastic.Models.ElasticMonitorProperties ElasticMonitorProperties(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? provisioningState, Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus? monitoringStatus, Azure.ResourceManager.Elastic.Models.ElasticCloudProperties elasticProperties, Azure.ResourceManager.Elastic.Models.ElasticUserInfo userInfo, Azure.ResourceManager.Elastic.Models.ElasticPlanDetails planDetails, string version, string subscriptionState, string saaSAzureSubscriptionStatus, string sourceCampaignName, string sourceCampaignId, Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, bool? isApiKeyGenerated) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.ElasticMonitorProperties ElasticMonitorProperties(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? provisioningState = default(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState?), Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus? monitoringStatus = default(Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus?), Azure.ResourceManager.Elastic.Models.ElasticCloudProperties elasticProperties = null, Azure.ResourceManager.Elastic.Models.ElasticUserInfo userInfo = null, Azure.ResourceManager.Elastic.Models.ElasticPlanDetails planDetails = null, string version = null, string subscriptionState = null, string saaSAzureSubscriptionStatus = null, string sourceCampaignName = null, string sourceCampaignId = null, Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory? liftrResourceCategory = default(Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory?), int? liftrResourcePreference = default(int?), bool? isApiKeyGenerated = default(bool?), Azure.ResourceManager.Elastic.Models.HostingType? hostingType = default(Azure.ResourceManager.Elastic.Models.HostingType?), Azure.ResourceManager.Elastic.Models.ProjectDetails projectDetails = null) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.ElasticMonitorProperties ElasticMonitorProperties(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? provisioningState = default(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState?), Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus? monitoringStatus = default(Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus?), Azure.ResourceManager.Elastic.Models.ElasticCloudProperties elasticProperties = null, Azure.ResourceManager.Elastic.Models.ElasticUserInfo userInfo = null, Azure.ResourceManager.Elastic.Models.ElasticPlanDetails planDetails = null, string version = null, string subscriptionState = null, string saaSAzureSubscriptionStatus = null, string sourceCampaignName = null, string sourceCampaignId = null, Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory? liftrResourceCategory = default(Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory?), int? liftrResourcePreference = default(int?), bool? isApiKeyGenerated = default(bool?), Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType? hostingType = default(Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType?), Azure.ResourceManager.Elastic.Models.MonitorResourceProjectDetails projectDetails = null) { throw null; }
         public static Azure.ResourceManager.Elastic.ElasticOpenAIIntegrationData ElasticOpenAIIntegrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(string openAIResourceId = null, string openAIResourceEndpoint = null, string openAIConnectorId = null, string key = null, System.DateTimeOffset? lastRefreshOn = default(System.DateTimeOffset?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(Azure.Core.ResourceIdentifier openAIResourceId, string openAIResourceEndpoint, string key, System.DateTimeOffset? lastRefreshOn) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(Azure.Core.ResourceIdentifier openAIResourceId = null, string openAIResourceEndpoint = null, string openAIConnectorId = null, string key = null, System.DateTimeOffset? lastRefreshOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationStatusResult ElasticOpenAIIntegrationStatusResult(string elasticOpenAIIntegrationStatus = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingProperties ElasticOrganizationToAzureSubscriptionMappingProperties(string billedAzureSubscriptionId = null, Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo marketplaceSaasInfo = null, string elasticOrganizationId = null, string elasticOrganizationName = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingResult ElasticOrganizationToAzureSubscriptionMappingResult(Azure.ResourceManager.Elastic.Models.ElasticOrganizationToAzureSubscriptionMappingProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Elastic.ElasticTagRuleData ElasticTagRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Elastic.Models.ElasticTagRuleProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.ElasticTagRuleProperties ElasticTagRuleProperties(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? provisioningState = default(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState?), Azure.ResourceManager.Elastic.Models.ElasticLogRules logRules = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticTrafficFilter ElasticTrafficFilter(string id = null, string name = null, string description = null, string region = null, Azure.ResourceManager.Elastic.Models.ElasticFilterType? filterType = default(Azure.ResourceManager.Elastic.Models.ElasticFilterType?), bool? doesIncludeByDefault = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterRule> rules = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterListResult ElasticTrafficFilterListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Elastic.Models.ElasticTrafficFilter> rulesets = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticTrafficFilterRule ElasticTrafficFilterRule(string source = null, string description = null, string azureEndpointGuid = null, string azureEndpointName = null, string id = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticUserApiKeyResult ElasticUserApiKeyResult(string elasticUserApiKey = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticVersion ElasticVersion(string availableVersion = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticVmResourceInfo ElasticVmResourceInfo(Azure.Core.ResourceIdentifier vmResourceId = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo MarketplaceSaaSInfo(Azure.Core.ResourceIdentifier marketplaceSubscriptionId = null, string marketplaceName = null, string marketplaceResourceId = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null, bool? isSubscribed = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo MarketplaceSaaSInfo(Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription marketplaceSubscription = null, string marketplaceName = null, string marketplaceResourceId = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null, bool? isSubscribed = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription MarketplaceSaaSInfoMarketplaceSubscription(string id = null, string publisherId = null, string offerId = null) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription MarketplaceSaaSInfoMarketplaceSubscription(Azure.Core.ResourceIdentifier id = null, string publisherId = null, string offerId = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.MonitoredResourceInfo MonitoredResourceInfo(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.Elastic.Models.SendingLogsStatus? sendingLogs = default(Azure.ResourceManager.Elastic.Models.SendingLogsStatus?), string reasonForLogsStatus = null) { throw null; }
-        public static Azure.ResourceManager.Elastic.MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Elastic.Models.SubscriptionList properties = null) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.MonitoredSubscriptionList MonitoredSubscriptionList(Azure.ResourceManager.Elastic.Models.ResourcePatchOperation? operation = default(Azure.ResourceManager.Elastic.Models.ResourcePatchOperation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Elastic.Models.MonitoredSubscription> monitoredSubscriptionListValue = null, Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? provisioningState = default(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Elastic.MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Elastic.Models.MonitoredSubscriptionList properties = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.PartnerBillingEntity PartnerBillingEntity(string id = null, string name = null, System.Uri partnerEntityUri = null) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.SubscriptionList SubscriptionList(Azure.ResourceManager.Elastic.Models.Operation? operation = default(Azure.ResourceManager.Elastic.Models.Operation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Elastic.Models.MonitoredSubscription> monitoredSubscriptionList = null, Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? provisioningState = default(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.UpgradableVersionListResult UpgradableVersionListResult(string currentVersion = null, System.Collections.Generic.IEnumerable<string> upgradableVersions = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.VmIngestionDetailsResult VmIngestionDetailsResult(string cloudId = null, string ingestionKey = null) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ConfigurationType : System.IEquatable<Azure.ResourceManager.Elastic.Models.ConfigurationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ConfigurationType(string value) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.ConfigurationType GeneralPurpose { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.ConfigurationType NotApplicable { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.ConfigurationType TimeSeries { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.ConfigurationType Vector { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Elastic.Models.ConfigurationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Elastic.Models.ConfigurationType left, Azure.ResourceManager.Elastic.Models.ConfigurationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Elastic.Models.ConfigurationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Elastic.Models.ConfigurationType left, Azure.ResourceManager.Elastic.Models.ConfigurationType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ConnectedPartnerResourceInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourceInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ConnectedPartnerResourceInfo>
     {
@@ -618,14 +605,14 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         public ElasticMonitorProperties() { }
         public Azure.ResourceManager.Elastic.Models.ElasticCloudProperties ElasticProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Elastic.Models.HostingType? HostingType { get { throw null; } set { } }
+        public Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType? HostingType { get { throw null; } set { } }
         public bool? IsApiKeyGenerated { get { throw null; } set { } }
         public Azure.ResourceManager.Elastic.Models.ElasticLiftrResourceCategory? LiftrResourceCategory { get { throw null; } }
         public int? LiftrResourcePreference { get { throw null; } }
         public Azure.ResourceManager.Elastic.Models.ElasticMonitoringStatus? MonitoringStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Elastic.Models.ElasticPlanDetails PlanDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.Elastic.Models.ProjectDetails ProjectDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Elastic.Models.MonitorResourceProjectDetails ProjectDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? ProvisioningState { get { throw null; } set { } }
         public string SaaSAzureSubscriptionStatus { get { throw null; } set { } }
         public string SourceCampaignId { get { throw null; } set { } }
         public string SourceCampaignName { get { throw null; } set { } }
@@ -657,7 +644,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public System.DateTimeOffset? LastRefreshOn { get { throw null; } }
         public string OpenAIConnectorId { get { throw null; } set { } }
         public string OpenAIResourceEndpoint { get { throw null; } set { } }
-        public string OpenAIResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier OpenAIResourceId { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticOpenAIIntegrationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -741,11 +728,31 @@ namespace Azure.ResourceManager.Elastic.Models
         public static bool operator !=(Azure.ResourceManager.Elastic.Models.ElasticProvisioningState left, Azure.ResourceManager.Elastic.Models.ElasticProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ElasticsearchProjectConfigurationType : System.IEquatable<Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ElasticsearchProjectConfigurationType(string value) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType GeneralPurpose { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType NotApplicable { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType TimeSeries { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType Vector { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType left, Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType left, Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ElasticTagRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticTagRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ElasticTagRuleProperties>
     {
         public ElasticTagRuleProperties() { }
         public Azure.ResourceManager.Elastic.Models.ElasticLogRules LogRules { get { throw null; } set { } }
-        public Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? ProvisioningState { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ElasticTagRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticTagRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ElasticTagRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -873,24 +880,6 @@ namespace Azure.ResourceManager.Elastic.Models
         public static bool operator !=(Azure.ResourceManager.Elastic.Models.FilteringTagAction left, Azure.ResourceManager.Elastic.Models.FilteringTagAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HostingType : System.IEquatable<Azure.ResourceManager.Elastic.Models.HostingType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public HostingType(string value) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.HostingType Hosted { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.HostingType Serverless { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Elastic.Models.HostingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Elastic.Models.HostingType left, Azure.ResourceManager.Elastic.Models.HostingType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Elastic.Models.HostingType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Elastic.Models.HostingType left, Azure.ResourceManager.Elastic.Models.HostingType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class MarketplaceSaaSInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo>
     {
         internal MarketplaceSaaSInfo() { }
@@ -900,6 +889,8 @@ namespace Azure.ResourceManager.Elastic.Models
         public string MarketplaceResourceId { get { throw null; } }
         public string MarketplaceStatus { get { throw null; } }
         public Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription MarketplaceSubscription { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Core.ResourceIdentifier MarketplaceSubscriptionId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -910,7 +901,7 @@ namespace Azure.ResourceManager.Elastic.Models
     public partial class MarketplaceSaaSInfoMarketplaceSubscription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MarketplaceSaaSInfoMarketplaceSubscription>
     {
         internal MarketplaceSaaSInfoMarketplaceSubscription() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string OfferId { get { throw null; } }
         public string PublisherId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -937,8 +928,8 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         public MonitoredSubscription() { }
         public string Error { get { throw null; } set { } }
-        public Azure.ResourceManager.Elastic.Models.Status? Status { get { throw null; } set { } }
-        public string SubscriptionId { get { throw null; } set { } }
+        public Azure.ResourceManager.Elastic.Models.MonitoringStatus? Status { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubscriptionId { get { throw null; } set { } }
         public Azure.ResourceManager.Elastic.Models.ElasticTagRuleProperties TagRules { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.MonitoredSubscription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitoredSubscription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -947,25 +938,87 @@ namespace Azure.ResourceManager.Elastic.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitoredSubscription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitoredSubscription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MonitoredSubscriptionList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitoredSubscriptionList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitoredSubscriptionList>
+    {
+        public MonitoredSubscriptionList() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Elastic.Models.MonitoredSubscription> MonitoredSubscriptionListValue { get { throw null; } }
+        public Azure.ResourceManager.Elastic.Models.ResourcePatchOperation? Operation { get { throw null; } set { } }
+        public Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Elastic.Models.MonitoredSubscriptionList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitoredSubscriptionList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitoredSubscriptionList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Elastic.Models.MonitoredSubscriptionList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitoredSubscriptionList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitoredSubscriptionList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitoredSubscriptionList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Operation : System.IEquatable<Azure.ResourceManager.Elastic.Models.Operation>
+    public readonly partial struct MonitoringStatus : System.IEquatable<Azure.ResourceManager.Elastic.Models.MonitoringStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public Operation(string value) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.Operation Active { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.Operation AddBegin { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.Operation AddComplete { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.Operation DeleteBegin { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.Operation DeleteComplete { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Elastic.Models.Operation other) { throw null; }
+        public MonitoringStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.MonitoringStatus Active { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.MonitoringStatus Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.MonitoringStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.MonitoringStatus InProgress { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Elastic.Models.MonitoringStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Elastic.Models.Operation left, Azure.ResourceManager.Elastic.Models.Operation right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Elastic.Models.Operation (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Elastic.Models.Operation left, Azure.ResourceManager.Elastic.Models.Operation right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Elastic.Models.MonitoringStatus left, Azure.ResourceManager.Elastic.Models.MonitoringStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Elastic.Models.MonitoringStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Elastic.Models.MonitoringStatus left, Azure.ResourceManager.Elastic.Models.MonitoringStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorResourceHostingType : System.IEquatable<Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorResourceHostingType(string value) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType Hosted { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType Serverless { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType left, Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType left, Azure.ResourceManager.Elastic.Models.MonitorResourceHostingType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MonitorResourceProjectDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitorResourceProjectDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitorResourceProjectDetails>
+    {
+        public MonitorResourceProjectDetails() { }
+        public Azure.ResourceManager.Elastic.Models.ElasticsearchProjectConfigurationType? ConfigurationType { get { throw null; } set { } }
+        public Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType? ProjectType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Elastic.Models.MonitorResourceProjectDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitorResourceProjectDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.MonitorResourceProjectDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Elastic.Models.MonitorResourceProjectDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitorResourceProjectDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitorResourceProjectDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.MonitorResourceProjectDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorResourceProjectType : System.IEquatable<Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorResourceProjectType(string value) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType Elasticsearch { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType NotApplicable { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType Observability { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType Security { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType left, Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType left, Azure.ResourceManager.Elastic.Models.MonitorResourceProjectType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PartnerBillingEntity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.PartnerBillingEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.PartnerBillingEntity>
@@ -981,36 +1034,25 @@ namespace Azure.ResourceManager.Elastic.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.PartnerBillingEntity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.PartnerBillingEntity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProjectDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ProjectDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ProjectDetails>
-    {
-        public ProjectDetails() { }
-        public Azure.ResourceManager.Elastic.Models.ConfigurationType? ConfigurationType { get { throw null; } set { } }
-        public Azure.ResourceManager.Elastic.Models.ProjectType? ProjectType { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Elastic.Models.ProjectDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ProjectDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ProjectDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Elastic.Models.ProjectDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ProjectDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ProjectDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ProjectDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProjectType : System.IEquatable<Azure.ResourceManager.Elastic.Models.ProjectType>
+    public readonly partial struct ResourcePatchOperation : System.IEquatable<Azure.ResourceManager.Elastic.Models.ResourcePatchOperation>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ProjectType(string value) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.ProjectType Elasticsearch { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.ProjectType NotApplicable { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.ProjectType Observability { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.ProjectType Security { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Elastic.Models.ProjectType other) { throw null; }
+        public ResourcePatchOperation(string value) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.ResourcePatchOperation Active { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.ResourcePatchOperation AddBegin { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.ResourcePatchOperation AddComplete { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.ResourcePatchOperation DeleteBegin { get { throw null; } }
+        public static Azure.ResourceManager.Elastic.Models.ResourcePatchOperation DeleteComplete { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Elastic.Models.ResourcePatchOperation other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Elastic.Models.ProjectType left, Azure.ResourceManager.Elastic.Models.ProjectType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Elastic.Models.ProjectType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Elastic.Models.ProjectType left, Azure.ResourceManager.Elastic.Models.ProjectType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Elastic.Models.ResourcePatchOperation left, Azure.ResourceManager.Elastic.Models.ResourcePatchOperation right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Elastic.Models.ResourcePatchOperation (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Elastic.Models.ResourcePatchOperation left, Azure.ResourceManager.Elastic.Models.ResourcePatchOperation right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ResubscribeProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ResubscribeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.ResubscribeProperties>
@@ -1019,7 +1061,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public string OrganizationId { get { throw null; } set { } }
         public string PlanId { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
-        public string SubscriptionId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubscriptionId { get { throw null; } set { } }
         public string Term { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Elastic.Models.ResubscribeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.ResubscribeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1045,39 +1087,6 @@ namespace Azure.ResourceManager.Elastic.Models
         public static implicit operator Azure.ResourceManager.Elastic.Models.SendingLogsStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Elastic.Models.SendingLogsStatus left, Azure.ResourceManager.Elastic.Models.SendingLogsStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.Elastic.Models.Status>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Status(string value) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.Status Active { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.Status Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.Status Failed { get { throw null; } }
-        public static Azure.ResourceManager.Elastic.Models.Status InProgress { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Elastic.Models.Status other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Elastic.Models.Status left, Azure.ResourceManager.Elastic.Models.Status right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Elastic.Models.Status (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Elastic.Models.Status left, Azure.ResourceManager.Elastic.Models.Status right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SubscriptionList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.SubscriptionList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.SubscriptionList>
-    {
-        public SubscriptionList() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Elastic.Models.MonitoredSubscription> MonitoredSubscriptionList { get { throw null; } }
-        public Azure.ResourceManager.Elastic.Models.Operation? Operation { get { throw null; } set { } }
-        public Azure.ResourceManager.Elastic.Models.ElasticProvisioningState? ProvisioningState { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Elastic.Models.SubscriptionList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.SubscriptionList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.SubscriptionList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Elastic.Models.SubscriptionList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.SubscriptionList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.SubscriptionList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.SubscriptionList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UpgradableVersionListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.UpgradableVersionListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.UpgradableVersionListResult>
     {

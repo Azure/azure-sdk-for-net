@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="hostingType"> Hosting type of the monitor resource - either Hosted deployments OR Serverless Projects. </param>
         /// <param name="projectDetails"> Project details of the monitor resource IF it belongs to Serverless offer kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticMonitorProperties(ElasticProvisioningState? provisioningState, ElasticMonitoringStatus? monitoringStatus, ElasticCloudProperties elasticProperties, ElasticUserInfo userInfo, ElasticPlanDetails planDetails, string version, string subscriptionState, string saaSAzureSubscriptionStatus, string sourceCampaignName, string sourceCampaignId, ElasticLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, bool? isApiKeyGenerated, HostingType? hostingType, ProjectDetails projectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticMonitorProperties(ElasticProvisioningState? provisioningState, ElasticMonitoringStatus? monitoringStatus, ElasticCloudProperties elasticProperties, ElasticUserInfo userInfo, ElasticPlanDetails planDetails, string version, string subscriptionState, string saaSAzureSubscriptionStatus, string sourceCampaignName, string sourceCampaignId, ElasticLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, bool? isApiKeyGenerated, MonitorResourceHostingType? hostingType, MonitorResourceProjectDetails projectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             MonitoringStatus = monitoringStatus;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> Provisioning state of the monitor resource. </summary>
-        public ElasticProvisioningState? ProvisioningState { get; }
+        public ElasticProvisioningState? ProvisioningState { get; set; }
         /// <summary> Flag specifying if the resource monitoring is enabled or disabled. </summary>
         public ElasticMonitoringStatus? MonitoringStatus { get; set; }
         /// <summary> Elastic cloud properties. </summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> Flag to determine if User API Key has to be generated and shared. </summary>
         public bool? IsApiKeyGenerated { get; set; }
         /// <summary> Hosting type of the monitor resource - either Hosted deployments OR Serverless Projects. </summary>
-        public HostingType? HostingType { get; set; }
+        public MonitorResourceHostingType? HostingType { get; set; }
         /// <summary> Project details of the monitor resource IF it belongs to Serverless offer kind. </summary>
-        public ProjectDetails ProjectDetails { get; set; }
+        public MonitorResourceProjectDetails ProjectDetails { get; set; }
     }
 }

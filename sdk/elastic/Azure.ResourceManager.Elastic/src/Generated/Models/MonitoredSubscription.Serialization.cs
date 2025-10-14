@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            string subscriptionId = default;
-            Status? status = default;
+            ResourceIdentifier subscriptionId = default;
+            MonitoringStatus? status = default;
             string error = default;
             ElasticTagRuleProperties tagRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +101,11 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 if (property.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subscriptionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new MonitoringStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))

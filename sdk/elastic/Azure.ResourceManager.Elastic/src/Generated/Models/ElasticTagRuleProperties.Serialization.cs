@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 throw new FormatException($"The model {nameof(ElasticTagRuleProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

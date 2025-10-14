@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    /// <summary> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </summary>
-    public partial class SubscriptionList
+    /// <summary> Project details of the monitor resource IF it belongs to Serverless offer kind. </summary>
+    public partial class MonitorResourceProjectDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,30 +45,25 @@ namespace Azure.ResourceManager.Elastic.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionList"/>. </summary>
-        public SubscriptionList()
+        /// <summary> Initializes a new instance of <see cref="MonitorResourceProjectDetails"/>. </summary>
+        public MonitorResourceProjectDetails()
         {
-            MonitoredSubscriptionList = new ChangeTrackingList<MonitoredSubscription>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionList"/>. </summary>
-        /// <param name="operation"> The operation for the patch on the resource. </param>
-        /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
-        /// <param name="provisioningState"> Provisioning State of the resource. </param>
+        /// <summary> Initializes a new instance of <see cref="MonitorResourceProjectDetails"/>. </summary>
+        /// <param name="projectType"> Project type; ex: Elasticsearch / Observability / Security. </param>
+        /// <param name="configurationType"> Configuration type of the Elasticsearch project. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionList(Operation? operation, IList<MonitoredSubscription> monitoredSubscriptionList, ElasticProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorResourceProjectDetails(MonitorResourceProjectType? projectType, ElasticsearchProjectConfigurationType? configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Operation = operation;
-            MonitoredSubscriptionList = monitoredSubscriptionList;
-            ProvisioningState = provisioningState;
+            ProjectType = projectType;
+            ConfigurationType = configurationType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The operation for the patch on the resource. </summary>
-        public Operation? Operation { get; set; }
-        /// <summary> List of subscriptions and the state of the monitoring. </summary>
-        public IList<MonitoredSubscription> MonitoredSubscriptionList { get; }
-        /// <summary> Provisioning State of the resource. </summary>
-        public ElasticProvisioningState? ProvisioningState { get; }
+        /// <summary> Project type; ex: Elasticsearch / Observability / Security. </summary>
+        public MonitorResourceProjectType? ProjectType { get; set; }
+        /// <summary> Configuration type of the Elasticsearch project. </summary>
+        public ElasticsearchProjectConfigurationType? ConfigurationType { get; set; }
     }
 }
