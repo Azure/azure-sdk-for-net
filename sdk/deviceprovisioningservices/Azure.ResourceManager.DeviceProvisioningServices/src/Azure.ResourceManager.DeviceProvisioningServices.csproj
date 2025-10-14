@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.3.0-beta.2</Version>
+    <Version>1.3.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.2.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.DeviceProvisioningServices</PackageId>
