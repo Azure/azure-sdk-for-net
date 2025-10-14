@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary></summary>
+    /// <summary> Output audio format types supported. </summary>
     public readonly partial struct OutputAudioFormat : IEquatable<OutputAudioFormat>
     {
         private readonly string _value;

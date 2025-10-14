@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListGiVersionsByLocationGeneratedByMaximumSetRule()
+        public async Task GetAll_GiVersionsListByLocationMaximumSet()
         {
-            // Generated from example definition: 2025-03-01/GiVersions_ListByLocation_MaximumSet_Gen.json
+            // Generated from example definition: 2025-09-01/GiVersions_ListByLocation_MaximumSet_Gen.json
             // this example is just showing the usage of "GiVersion_ListByLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -40,8 +40,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleGIVersionCollection collection = subscriptionResource.GetOracleGIVersions(location);
 
             // invoke the operation and iterate over the result
-            OracleDatabaseSystemShape? shape = new OracleDatabaseSystemShape("osixsklyaauhoqnkxvnvsqeqenhzogntqnpubldrrfvqncwetdtwqwjjcvspwhgecbimdlulwcubikebrdzmidrucgtsuqvytkqutmbyrvvyioxpocpmuwiivyanjzucaegihztluuvpznzaoakfsselumhhsvrtrbzwpjhcihsvyouonlxdluwhqfxoqvgthkaxppbydtqjntscgzbivfdcaobbkthrbdjwpejirqmbly");
-            await foreach (OracleGIVersionResource item in collection.GetAllAsync(shape: shape))
+            OracleDatabaseSystemShape? shape = OracleDatabaseSystemShape.ExadataX9M;
+            string zone = "hpzuyaemum";
+            await foreach (OracleGIVersionResource item in collection.GetAllAsync(shape: shape, zone: zone))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -55,9 +56,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListGiVersionsByLocationGeneratedByMinimumSetRule()
+        public async Task GetAll_GiVersionsListByLocationMinimumSet()
         {
-            // Generated from example definition: 2025-03-01/GiVersions_ListByLocation_MinimumSet_Gen.json
+            // Generated from example definition: 2025-09-01/GiVersions_ListByLocation_MinimumSet_Gen.json
             // this example is just showing the usage of "GiVersion_ListByLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

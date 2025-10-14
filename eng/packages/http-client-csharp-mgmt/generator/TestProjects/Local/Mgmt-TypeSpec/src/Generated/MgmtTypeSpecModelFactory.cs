@@ -40,10 +40,11 @@ namespace MgmtTypeSpec.Models
         /// <param name="doubleValue"> double value. </param>
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets the Prop2. </param>
+        /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <param name="extendedLocation"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/> or <paramref name="prop1"/> is null. </exception>
         /// <returns> A new <see cref="MgmtTypeSpec.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IList<string> prop1 = default, IList<int> prop2 = default, ExtendedLocation extendedLocation = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IList<string> prop1 = default, IList<int> prop2 = default, FooProperties nestedPropertyProperties = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -55,7 +56,7 @@ namespace MgmtTypeSpec.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                serviceUri is null || something is null || boolValue is null || floatValue is null || doubleValue is null || prop1 is null || prop2 is null ? default : new FooProperties(
+                serviceUri is null || something is null || boolValue is null || floatValue is null || doubleValue is null || prop1 is null || prop2 is null || nestedPropertyProperties is null ? default : new FooProperties(
                     serviceUri,
                     something,
                     boolValue,
@@ -63,11 +64,11 @@ namespace MgmtTypeSpec.Models
                     doubleValue,
                     prop1,
                     prop2,
+                    new NestedFooModel(nestedPropertyProperties, new Dictionary<string, BinaryData>()),
                     new Dictionary<string, BinaryData>()),
                 extendedLocation);
         }
 
-        /// <summary> The FooProperties. </summary>
         /// <param name="serviceUri"> the service url. </param>
         /// <param name="something"> something. </param>
         /// <param name="boolValue"> boolean value. </param>
@@ -75,8 +76,9 @@ namespace MgmtTypeSpec.Models
         /// <param name="doubleValue"> double value. </param>
         /// <param name="prop1"></param>
         /// <param name="prop2"></param>
+        /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default)
+        public static FooProperties FooProperties(Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default)
         {
             prop1 ??= new ChangeTrackingList<string>();
             prop2 ??= new ChangeTrackingList<int>();
@@ -89,6 +91,7 @@ namespace MgmtTypeSpec.Models
                 doubleValue,
                 prop1.ToList(),
                 prop2.ToList(),
+                nestedPropertyProperties is null ? default : new NestedFooModel(nestedPropertyProperties, new Dictionary<string, BinaryData>()),
                 additionalBinaryDataProperties: null);
         }
 
@@ -158,9 +161,10 @@ namespace MgmtTypeSpec.Models
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets or sets the Prop2. </param>
         /// <param name="optionalFlattenPropertyRandomCollectionProp"> Gets the RandomCollectionProp. </param>
+        /// <param name="discriminatorProperty"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/>, <paramref name="middleProp2"/> or <paramref name="prop1"/> is null. </exception>
         /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IList<string> prop1 = default, int? prop2 = default, IList<string> optionalFlattenPropertyRandomCollectionProp = default)
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IList<string> prop1 = default, int? prop2 = default, IList<string> optionalFlattenPropertyRandomCollectionProp = default, LimitJsonObject discriminatorProperty = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -182,7 +186,8 @@ namespace MgmtTypeSpec.Models
                     middleProp2,
                     prop1,
                     prop2.Value),
-                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType(optionalFlattenPropertyRandomCollectionProp, new Dictionary<string, BinaryData>()));
+                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType(optionalFlattenPropertyRandomCollectionProp, new Dictionary<string, BinaryData>()),
+                discriminatorProperty);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -359,7 +364,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="jobName"> Gets or sets the JobName. </param>
         /// <param name="tags"></param>
         /// <returns> A new <see cref="Models.JobResourcePatch"/> instance for mocking. </returns>
-        public static JobResourcePatch JobResourcePatch(string jobName, IDictionary<string, string> tags = default)
+        public static JobResourcePatch JobResourcePatch(string jobName = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

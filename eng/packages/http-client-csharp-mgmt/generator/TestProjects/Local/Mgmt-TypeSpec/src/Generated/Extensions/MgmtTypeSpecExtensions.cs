@@ -38,6 +38,12 @@ namespace MgmtTypeSpec
             return subscriptionResource.GetCachedClient(client => new MockableMgmtTypeSpecSubscriptionResource(client, subscriptionResource.Id));
         }
 
+        /// <param name="tenantResource"></param>
+        private static MockableMgmtTypeSpecTenantResource GetMockableMgmtTypeSpecTenantResource(TenantResource tenantResource)
+        {
+            return tenantResource.GetCachedClient(client => new MockableMgmtTypeSpecTenantResource(client, tenantResource.Id));
+        }
+
         /// <summary> Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -550,27 +556,49 @@ namespace MgmtTypeSpec
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"></param>
-        /// <param name="body"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<FooPreviewAction>> PreviewActionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
+        public static async Task<Response<FooPreviewAction>> PreviewActionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FooPreviewAction content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, body, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"></param>
-        /// <param name="body"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<FooPreviewAction> PreviewActions(this SubscriptionResource subscriptionResource, AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
+        public static Response<FooPreviewAction> PreviewActions(this SubscriptionResource subscriptionResource, AzureLocation location, FooPreviewAction content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).PreviewActions(location, body, cancellationToken);
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).PreviewActions(location, content, cancellationToken);
+        }
+
+        /// <summary> Starts a failed runtime resource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response> StartFailedServerlessRuntimeAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableMgmtTypeSpecTenantResource(tenantResource).StartFailedServerlessRuntimeAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Starts a failed runtime resource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response StartFailedServerlessRuntime(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableMgmtTypeSpecTenantResource(tenantResource).StartFailedServerlessRuntime(cancellationToken);
         }
     }
 }

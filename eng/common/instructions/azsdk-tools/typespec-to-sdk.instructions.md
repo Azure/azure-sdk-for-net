@@ -33,7 +33,7 @@ Wait for the user to respond with a confirmation before proceeding to Step 1. Us
 1. Run `azsdk_get_github_user_details` to verify login status
 2. If not logged in, prompt: "Please login to GitHub using `gh auth login`"
 3. Once logged in, display user details to confirm identity
-4. Run `azsdk_check_typespec_project_in_public_repo` to verify repository
+4. Run `azsdk_typespec_check_project_in_public_repo` to verify repository
 5. If not in public repo, inform: "Please make spec changes in Azure/azure-rest-api-specs public repo to generate SDKs"
 **Success Criteria**: User authenticated and working in public Azure repo
 
