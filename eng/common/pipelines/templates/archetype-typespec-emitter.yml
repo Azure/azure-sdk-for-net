@@ -142,12 +142,39 @@ extends:
             # Create emitter identifier from package path for disambiguation
             $emitterIdentifier = ""
             if (-not [string]::IsNullOrWhiteSpace($emitterPackagePath)) {
-              # Extract filename without extension and make it safe for branch names
-              $emitterIdentifier = [System.IO.Path]::GetFileNameWithoutExtension($emitterPackagePath)
-              # Replace any characters that aren't alphanumeric, hyphens, or underscores
-              $emitterIdentifier = $emitterIdentifier -replace '[^a-zA-Z0-9\-_]', '-'
-              # Remove any leading/trailing hyphens and convert to lowercase
+              # Get the directory path
+              $dirPath = [System.IO.Path]::GetDirectoryName($emitterPackagePath)
+              
+              if (-not [string]::IsNullOrWhiteSpace($dirPath)) {
+                # Normalize path separators
+                $dirPath = $dirPath -replace '\\', '/'
+                
+                # Split path and filter out empty parts
+                $pathParts = @($dirPath -split '/' | Where-Object { $_ })
+                
+                # Remove common root directories
+                $pathParts = @($pathParts | Where-Object { $_ -notin @('packages', 'eng', 'tools') })
+                
+                # Take the last two parts (scope and name) if available
+                if ($pathParts.Count -ge 2) {
+                  $scope = $pathParts[-2]
+                  $name = $pathParts[-1]
+                  $emitterIdentifier = "$scope/$name"
+                } elseif ($pathParts.Count -eq 1) {
+                  $emitterIdentifier = $pathParts[0]
+                }
+              }
+              
+              # If we still don't have an identifier, fall back to filename
+              if ([string]::IsNullOrWhiteSpace($emitterIdentifier)) {
+                $emitterIdentifier = [System.IO.Path]::GetFileNameWithoutExtension($emitterPackagePath)
+              }
+              
+              # Clean up the identifier: remove @ prefix, replace invalid chars
+              $emitterIdentifier = $emitterIdentifier -replace '^@', ''
+              $emitterIdentifier = $emitterIdentifier -replace '[^a-zA-Z0-9\-_/]', '-'
               $emitterIdentifier = $emitterIdentifier.Trim('-').ToLower()
+              
               if (-not [string]::IsNullOrWhiteSpace($emitterIdentifier)) {
                 $emitterIdentifier = "-$emitterIdentifier"
               }
