@@ -11,19 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    public partial class MetricsObjectFirewallResource : IJsonModel<MetricsObjectFirewallResourceData>
+    public partial class MetricsObjectFirewallResource : IJsonModel<MetricsObjectFirewallData>
     {
-        private static MetricsObjectFirewallResourceData s_dataDeserializationInstance;
-        private static MetricsObjectFirewallResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static MetricsObjectFirewallData s_dataDeserializationInstance;
+        private static MetricsObjectFirewallData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        void IJsonModel<MetricsObjectFirewallResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MetricsObjectFirewallResourceData>)Data).Write(writer, options);
+        void IJsonModel<MetricsObjectFirewallData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MetricsObjectFirewallData>)Data).Write(writer, options);
 
-        MetricsObjectFirewallResourceData IJsonModel<MetricsObjectFirewallResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MetricsObjectFirewallResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        MetricsObjectFirewallData IJsonModel<MetricsObjectFirewallData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MetricsObjectFirewallData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MetricsObjectFirewallResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MetricsObjectFirewallResourceData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+        BinaryData IPersistableModel<MetricsObjectFirewallData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MetricsObjectFirewallData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        MetricsObjectFirewallResourceData IPersistableModel<MetricsObjectFirewallResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MetricsObjectFirewallResourceData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+        MetricsObjectFirewallData IPersistableModel<MetricsObjectFirewallData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MetricsObjectFirewallData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        string IPersistableModel<MetricsObjectFirewallResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MetricsObjectFirewallResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<MetricsObjectFirewallData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MetricsObjectFirewallData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

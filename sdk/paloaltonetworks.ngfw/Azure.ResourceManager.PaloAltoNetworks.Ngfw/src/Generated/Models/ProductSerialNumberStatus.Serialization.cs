@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WriteStringValue(SerialNumber);
             }
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
+            writer.WriteStringValue(Status.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString().ToProductSerialStatusValue();
+                    status = new ProductSerialStatusValue(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    internal class MetricsObjectFirewallResourceOperationSource : IOperationSource<MetricsObjectFirewallResource>
+    internal class MetricsObjectFirewallOperationSource : IOperationSource<MetricsObjectFirewallResource>
     {
         private readonly ArmClient _client;
 
-        internal MetricsObjectFirewallResourceOperationSource(ArmClient client)
+        internal MetricsObjectFirewallOperationSource(ArmClient client)
         {
             _client = client;
         }
 
         MetricsObjectFirewallResource IOperationSource<MetricsObjectFirewallResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MetricsObjectFirewallResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+            var data = ModelReaderWriter.Read<MetricsObjectFirewallData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
             return new MetricsObjectFirewallResource(_client, data);
         }
 
         async ValueTask<MetricsObjectFirewallResource> IOperationSource<MetricsObjectFirewallResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MetricsObjectFirewallResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+            var data = ModelReaderWriter.Read<MetricsObjectFirewallData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
             return await Task.FromResult(new MetricsObjectFirewallResource(_client, data)).ConfigureAwait(false);
         }
     }

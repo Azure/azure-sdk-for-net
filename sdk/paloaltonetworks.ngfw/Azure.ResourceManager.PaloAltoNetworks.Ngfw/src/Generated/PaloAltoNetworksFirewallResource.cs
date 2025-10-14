@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> Gets an object representing a MetricsObjectFirewallResource along with the instance operations that can be performed on it in the PaloAltoNetworksFirewall. </summary>
         /// <returns> Returns a <see cref="MetricsObjectFirewallResource"/> object. </returns>
-        public virtual MetricsObjectFirewallResource GetMetricsObjectFirewallResource()
+        public virtual MetricsObjectFirewallResource GetMetricsObjectFirewall()
         {
             return new MetricsObjectFirewallResource(Client, Id.AppendChildResource("metrics", "default"));
         }

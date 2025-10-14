@@ -124,6 +124,7 @@ rename-mapping:
   VwanConfiguration.vHub: Vhub
   EnableStatus: FreeTrialEnableStatus
   RegistrationStatus: AccountRegistrationStatus
+  MetricsObjectFirewallResource: MetricsObjectFirewall
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -192,5 +193,9 @@ directive:
           }
         }
       }
+  - from: PaloAltoNetworks.Cloudngfw.json
+    where: $.definitions
+    transform: >
+      $['ProductSerialStatusValues']['x-ms-enum'].modelAsString = true
 
 ```

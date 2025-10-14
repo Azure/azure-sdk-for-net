@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Ngfw.MetricsObjectFirewallResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.MetricsObjectFirewallData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -661,10 +661,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="applicationInsightsConnectionString"> Connection string of application insights resource. </param>
         /// <param name="panETag"> read only string representing last create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Ngfw.MetricsObjectFirewallResourceData"/> instance for mocking. </returns>
-        public static MetricsObjectFirewallResourceData MetricsObjectFirewallResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string applicationInsightsResourceId = null, string applicationInsightsConnectionString = null, ETag? panETag = null, FirewallProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Ngfw.MetricsObjectFirewallData"/> instance for mocking. </returns>
+        public static MetricsObjectFirewallData MetricsObjectFirewallData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string applicationInsightsResourceId = null, string applicationInsightsConnectionString = null, ETag? panETag = null, FirewallProvisioningState? provisioningState = null)
         {
-            return new MetricsObjectFirewallResourceData(
+            return new MetricsObjectFirewallData(
                 id,
                 name,
                 resourceType,

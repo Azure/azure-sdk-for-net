@@ -5,14 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> allocation status of the product serial number. </summary>
-    public enum ProductSerialStatusValue
+    public readonly partial struct ProductSerialStatusValue : IEquatable<ProductSerialStatusValue>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ProductSerialStatusValue"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProductSerialStatusValue(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string AllocatedValue = "Allocated";
+        private const string InProgressValue = "InProgress";
+
         /// <summary> Allocated. </summary>
-        Allocated,
+        public static ProductSerialStatusValue Allocated { get; } = new ProductSerialStatusValue(AllocatedValue);
         /// <summary> InProgress. </summary>
-        InProgress
+        public static ProductSerialStatusValue InProgress { get; } = new ProductSerialStatusValue(InProgressValue);
+        /// <summary> Determines if two <see cref="ProductSerialStatusValue"/> values are the same. </summary>
+        public static bool operator ==(ProductSerialStatusValue left, ProductSerialStatusValue right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ProductSerialStatusValue"/> values are not the same. </summary>
+        public static bool operator !=(ProductSerialStatusValue left, ProductSerialStatusValue right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProductSerialStatusValue"/>. </summary>
+        public static implicit operator ProductSerialStatusValue(string value) => new ProductSerialStatusValue(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ProductSerialStatusValue other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(ProductSerialStatusValue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

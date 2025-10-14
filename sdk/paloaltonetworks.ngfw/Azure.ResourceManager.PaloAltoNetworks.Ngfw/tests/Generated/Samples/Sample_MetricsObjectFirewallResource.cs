@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string firewallName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier metricsObjectFirewallResourceId = MetricsObjectFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
-            MetricsObjectFirewallResource metricsObjectFirewallResource = client.GetMetricsObjectFirewallResource(metricsObjectFirewallResourceId);
+            MetricsObjectFirewallResource metricsObjectFirewall = client.GetMetricsObjectFirewallResource(metricsObjectFirewallResourceId);
 
             // invoke the operation
-            MetricsObjectFirewallResource result = await metricsObjectFirewallResource.GetAsync();
+            MetricsObjectFirewallResource result = await metricsObjectFirewall.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MetricsObjectFirewallResourceData resourceData = result.Data;
+            MetricsObjectFirewallData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string firewallName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier metricsObjectFirewallResourceId = MetricsObjectFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
-            MetricsObjectFirewallResource metricsObjectFirewallResource = client.GetMetricsObjectFirewallResource(metricsObjectFirewallResourceId);
+            MetricsObjectFirewallResource metricsObjectFirewall = client.GetMetricsObjectFirewallResource(metricsObjectFirewallResourceId);
 
             // invoke the operation
-            MetricsObjectFirewallResource result = await metricsObjectFirewallResource.GetAsync();
+            MetricsObjectFirewallResource result = await metricsObjectFirewall.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MetricsObjectFirewallResourceData resourceData = result.Data;
+            MetricsObjectFirewallData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string firewallName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier metricsObjectFirewallResourceId = MetricsObjectFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
-            MetricsObjectFirewallResource metricsObjectFirewallResource = client.GetMetricsObjectFirewallResource(metricsObjectFirewallResourceId);
+            MetricsObjectFirewallResource metricsObjectFirewall = client.GetMetricsObjectFirewallResource(metricsObjectFirewallResourceId);
 
             // invoke the operation
-            await metricsObjectFirewallResource.DeleteAsync(WaitUntil.Completed);
+            await metricsObjectFirewall.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string firewallName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier metricsObjectFirewallResourceId = MetricsObjectFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
-            MetricsObjectFirewallResource metricsObjectFirewallResource = client.GetMetricsObjectFirewallResource(metricsObjectFirewallResourceId);
+            MetricsObjectFirewallResource metricsObjectFirewall = client.GetMetricsObjectFirewallResource(metricsObjectFirewallResourceId);
 
             // invoke the operation
-            await metricsObjectFirewallResource.DeleteAsync(WaitUntil.Completed);
+            await metricsObjectFirewall.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -145,19 +145,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string firewallName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier metricsObjectFirewallResourceId = MetricsObjectFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
-            MetricsObjectFirewallResource metricsObjectFirewallResource = client.GetMetricsObjectFirewallResource(metricsObjectFirewallResourceId);
+            MetricsObjectFirewallResource metricsObjectFirewall = client.GetMetricsObjectFirewallResource(metricsObjectFirewallResourceId);
 
             // invoke the operation
-            MetricsObjectFirewallResourceData data = new MetricsObjectFirewallResourceData("aaaaaaaaaaaaaaa", "aaa")
+            MetricsObjectFirewallData data = new MetricsObjectFirewallData("aaaaaaaaaaaaaaa", "aaa")
             {
                 PanETag = new ETag("aaaaaaaaaa"),
             };
-            ArmOperation<MetricsObjectFirewallResource> lro = await metricsObjectFirewallResource.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<MetricsObjectFirewallResource> lro = await metricsObjectFirewall.CreateOrUpdateAsync(WaitUntil.Completed, data);
             MetricsObjectFirewallResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MetricsObjectFirewallResourceData resourceData = result.Data;
+            MetricsObjectFirewallData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -180,16 +180,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             string resourceGroupName = "rgopenapi";
             string firewallName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier metricsObjectFirewallResourceId = MetricsObjectFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
-            MetricsObjectFirewallResource metricsObjectFirewallResource = client.GetMetricsObjectFirewallResource(metricsObjectFirewallResourceId);
+            MetricsObjectFirewallResource metricsObjectFirewall = client.GetMetricsObjectFirewallResource(metricsObjectFirewallResourceId);
 
             // invoke the operation
-            MetricsObjectFirewallResourceData data = new MetricsObjectFirewallResourceData("aaaaaaaaaaaaaaa", "aaa");
-            ArmOperation<MetricsObjectFirewallResource> lro = await metricsObjectFirewallResource.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            MetricsObjectFirewallData data = new MetricsObjectFirewallData("aaaaaaaaaaaaaaa", "aaa");
+            ArmOperation<MetricsObjectFirewallResource> lro = await metricsObjectFirewall.CreateOrUpdateAsync(WaitUntil.Completed, data);
             MetricsObjectFirewallResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MetricsObjectFirewallResourceData resourceData = result.Data;
+            MetricsObjectFirewallData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

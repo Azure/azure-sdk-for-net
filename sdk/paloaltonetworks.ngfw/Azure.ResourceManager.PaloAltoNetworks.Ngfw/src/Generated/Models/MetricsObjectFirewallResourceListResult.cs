@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of <see cref="MetricsObjectFirewallResourceListResult"/>. </summary>
         /// <param name="value"> The MetricsObjectFirewallResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MetricsObjectFirewallResourceListResult(IEnumerable<MetricsObjectFirewallResourceData> value)
+        internal MetricsObjectFirewallResourceListResult(IEnumerable<MetricsObjectFirewallData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="value"> The MetricsObjectFirewallResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricsObjectFirewallResourceListResult(IReadOnlyList<MetricsObjectFirewallResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MetricsObjectFirewallResourceListResult(IReadOnlyList<MetricsObjectFirewallData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         }
 
         /// <summary> The MetricsObjectFirewallResource items on this page. </summary>
-        public IReadOnlyList<MetricsObjectFirewallResourceData> Value { get; }
+        public IReadOnlyList<MetricsObjectFirewallData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

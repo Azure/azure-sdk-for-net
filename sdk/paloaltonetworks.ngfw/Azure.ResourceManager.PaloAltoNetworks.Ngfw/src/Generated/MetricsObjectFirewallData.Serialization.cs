@@ -16,11 +16,11 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    public partial class MetricsObjectFirewallResourceData : IUtf8JsonSerializable, IJsonModel<MetricsObjectFirewallResourceData>
+    public partial class MetricsObjectFirewallData : IUtf8JsonSerializable, IJsonModel<MetricsObjectFirewallData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsObjectFirewallResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsObjectFirewallData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MetricsObjectFirewallResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MetricsObjectFirewallData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricsObjectFirewallResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsObjectFirewallData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricsObjectFirewallResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricsObjectFirewallData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             writer.WriteEndObject();
         }
 
-        MetricsObjectFirewallResourceData IJsonModel<MetricsObjectFirewallResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MetricsObjectFirewallData IJsonModel<MetricsObjectFirewallData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricsObjectFirewallResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsObjectFirewallData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricsObjectFirewallResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricsObjectFirewallData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMetricsObjectFirewallResourceData(document.RootElement, options);
+            return DeserializeMetricsObjectFirewallData(document.RootElement, options);
         }
 
-        internal static MetricsObjectFirewallResourceData DeserializeMetricsObjectFirewallResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MetricsObjectFirewallData DeserializeMetricsObjectFirewallData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MetricsObjectFirewallResourceData(
+            return new MetricsObjectFirewallData(
                 id,
                 name,
                 type,
@@ -171,35 +171,35 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MetricsObjectFirewallResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MetricsObjectFirewallData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricsObjectFirewallResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsObjectFirewallData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MetricsObjectFirewallResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricsObjectFirewallData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MetricsObjectFirewallResourceData IPersistableModel<MetricsObjectFirewallResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MetricsObjectFirewallData IPersistableModel<MetricsObjectFirewallData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricsObjectFirewallResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsObjectFirewallData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMetricsObjectFirewallResourceData(document.RootElement, options);
+                        return DeserializeMetricsObjectFirewallData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricsObjectFirewallResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricsObjectFirewallData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MetricsObjectFirewallResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MetricsObjectFirewallData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

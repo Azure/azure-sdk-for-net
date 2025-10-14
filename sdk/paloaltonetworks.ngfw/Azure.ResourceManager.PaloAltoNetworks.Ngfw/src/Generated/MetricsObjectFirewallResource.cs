@@ -15,10 +15,10 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A Class representing a MetricsObjectFirewallResource along with the instance operations that can be performed on it.
+    /// A Class representing a MetricsObjectFirewall along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MetricsObjectFirewallResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetMetricsObjectFirewallResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PaloAltoNetworksFirewallResource"/> using the GetMetricsObjectFirewallResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PaloAltoNetworksFirewallResource"/> using the GetMetricsObjectFirewall method.
     /// </summary>
     public partial class MetricsObjectFirewallResource : ArmResource
     {
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _metricsObjectFirewallResourceMetricsObjectFirewallClientDiagnostics;
-        private readonly MetricsObjectFirewallRestOperations _metricsObjectFirewallResourceMetricsObjectFirewallRestClient;
-        private readonly MetricsObjectFirewallResourceData _data;
+        private readonly ClientDiagnostics _metricsObjectFirewallClientDiagnostics;
+        private readonly MetricsObjectFirewallRestOperations _metricsObjectFirewallRestClient;
+        private readonly MetricsObjectFirewallData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/firewalls/metrics";
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <summary> Initializes a new instance of the <see cref="MetricsObjectFirewallResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MetricsObjectFirewallResource(ArmClient client, MetricsObjectFirewallResourceData data) : this(client, data.Id)
+        internal MetricsObjectFirewallResource(ArmClient client, MetricsObjectFirewallData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MetricsObjectFirewallResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _metricsObjectFirewallResourceMetricsObjectFirewallClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string metricsObjectFirewallResourceMetricsObjectFirewallApiVersion);
-            _metricsObjectFirewallResourceMetricsObjectFirewallRestClient = new MetricsObjectFirewallRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, metricsObjectFirewallResourceMetricsObjectFirewallApiVersion);
+            _metricsObjectFirewallClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string metricsObjectFirewallApiVersion);
+            _metricsObjectFirewallRestClient = new MetricsObjectFirewallRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, metricsObjectFirewallApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual MetricsObjectFirewallResourceData Data
+        public virtual MetricsObjectFirewallData Data
         {
             get
             {
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MetricsObjectFirewallResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _metricsObjectFirewallResourceMetricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.Get");
+            using var scope = _metricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.Get");
             scope.Start();
             try
             {
-                var response = await _metricsObjectFirewallResourceMetricsObjectFirewallRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _metricsObjectFirewallRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MetricsObjectFirewallResource(Client, response.Value), response.GetRawResponse());
@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MetricsObjectFirewallResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _metricsObjectFirewallResourceMetricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.Get");
+            using var scope = _metricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.Get");
             scope.Start();
             try
             {
-                var response = _metricsObjectFirewallResourceMetricsObjectFirewallRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _metricsObjectFirewallRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MetricsObjectFirewallResource(Client, response.Value), response.GetRawResponse());
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _metricsObjectFirewallResourceMetricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.Delete");
+            using var scope = _metricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.Delete");
             scope.Start();
             try
             {
-                var response = await _metricsObjectFirewallResourceMetricsObjectFirewallRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation(_metricsObjectFirewallResourceMetricsObjectFirewallClientDiagnostics, Pipeline, _metricsObjectFirewallResourceMetricsObjectFirewallRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _metricsObjectFirewallRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NgfwArmOperation(_metricsObjectFirewallClientDiagnostics, Pipeline, _metricsObjectFirewallRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,12 +234,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _metricsObjectFirewallResourceMetricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.Delete");
+            using var scope = _metricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.Delete");
             scope.Start();
             try
             {
-                var response = _metricsObjectFirewallResourceMetricsObjectFirewallRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                var operation = new NgfwArmOperation(_metricsObjectFirewallResourceMetricsObjectFirewallClientDiagnostics, Pipeline, _metricsObjectFirewallResourceMetricsObjectFirewallRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _metricsObjectFirewallRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var operation = new NgfwArmOperation(_metricsObjectFirewallClientDiagnostics, Pipeline, _metricsObjectFirewallRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -276,16 +276,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MetricsObjectFirewallResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MetricsObjectFirewallResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MetricsObjectFirewallResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MetricsObjectFirewallData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _metricsObjectFirewallResourceMetricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.CreateOrUpdate");
+            using var scope = _metricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _metricsObjectFirewallResourceMetricsObjectFirewallRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation<MetricsObjectFirewallResource>(new MetricsObjectFirewallResourceOperationSource(Client), _metricsObjectFirewallResourceMetricsObjectFirewallClientDiagnostics, Pipeline, _metricsObjectFirewallResourceMetricsObjectFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _metricsObjectFirewallRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NgfwArmOperation<MetricsObjectFirewallResource>(new MetricsObjectFirewallOperationSource(Client), _metricsObjectFirewallClientDiagnostics, Pipeline, _metricsObjectFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -322,16 +322,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MetricsObjectFirewallResource> CreateOrUpdate(WaitUntil waitUntil, MetricsObjectFirewallResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MetricsObjectFirewallResource> CreateOrUpdate(WaitUntil waitUntil, MetricsObjectFirewallData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _metricsObjectFirewallResourceMetricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.CreateOrUpdate");
+            using var scope = _metricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _metricsObjectFirewallResourceMetricsObjectFirewallRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new NgfwArmOperation<MetricsObjectFirewallResource>(new MetricsObjectFirewallResourceOperationSource(Client), _metricsObjectFirewallResourceMetricsObjectFirewallClientDiagnostics, Pipeline, _metricsObjectFirewallResourceMetricsObjectFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _metricsObjectFirewallRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
+                var operation = new NgfwArmOperation<MetricsObjectFirewallResource>(new MetricsObjectFirewallOperationSource(Client), _metricsObjectFirewallClientDiagnostics, Pipeline, _metricsObjectFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

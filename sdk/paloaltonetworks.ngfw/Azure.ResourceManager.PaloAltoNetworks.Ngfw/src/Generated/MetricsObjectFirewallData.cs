@@ -14,10 +14,10 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A class representing the MetricsObjectFirewallResource data model.
+    /// A class representing the MetricsObjectFirewall data model.
     /// Firewall Metrics Object
     /// </summary>
-    public partial class MetricsObjectFirewallResourceData : ResourceData
+    public partial class MetricsObjectFirewallData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MetricsObjectFirewallResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsObjectFirewallData"/>. </summary>
         /// <param name="applicationInsightsResourceId"> Resource Id of application insights resource. </param>
         /// <param name="applicationInsightsConnectionString"> Connection string of application insights resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationInsightsResourceId"/> or <paramref name="applicationInsightsConnectionString"/> is null. </exception>
-        public MetricsObjectFirewallResourceData(string applicationInsightsResourceId, string applicationInsightsConnectionString)
+        public MetricsObjectFirewallData(string applicationInsightsResourceId, string applicationInsightsConnectionString)
         {
             Argument.AssertNotNull(applicationInsightsResourceId, nameof(applicationInsightsResourceId));
             Argument.AssertNotNull(applicationInsightsConnectionString, nameof(applicationInsightsConnectionString));
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             ApplicationInsightsConnectionString = applicationInsightsConnectionString;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricsObjectFirewallResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsObjectFirewallData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="panETag"> read only string representing last create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricsObjectFirewallResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string applicationInsightsResourceId, string applicationInsightsConnectionString, ETag? panETag, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MetricsObjectFirewallData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string applicationInsightsResourceId, string applicationInsightsConnectionString, ETag? panETag, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ApplicationInsightsResourceId = applicationInsightsResourceId;
             ApplicationInsightsConnectionString = applicationInsightsConnectionString;
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricsObjectFirewallResourceData"/> for deserialization. </summary>
-        internal MetricsObjectFirewallResourceData()
+        /// <summary> Initializes a new instance of <see cref="MetricsObjectFirewallData"/> for deserialization. </summary>
+        internal MetricsObjectFirewallData()
         {
         }
 

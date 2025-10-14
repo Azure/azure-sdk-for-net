@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            IReadOnlyList<MetricsObjectFirewallResourceData> value = default;
+            IReadOnlyList<MetricsObjectFirewallData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<MetricsObjectFirewallResourceData> array = new List<MetricsObjectFirewallResourceData>();
+                    List<MetricsObjectFirewallData> array = new List<MetricsObjectFirewallData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricsObjectFirewallResourceData.DeserializeMetricsObjectFirewallResourceData(item, options));
+                        array.Add(MetricsObjectFirewallData.DeserializeMetricsObjectFirewallData(item, options));
                     }
                     value = array;
                     continue;
