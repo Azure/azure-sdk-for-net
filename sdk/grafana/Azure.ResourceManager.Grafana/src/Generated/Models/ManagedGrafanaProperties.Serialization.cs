@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Grafana.Models
             GrafanaPublicNetworkAccess? publicNetworkAccess = default;
             GrafanaZoneRedundancy? zoneRedundancy = default;
             GrafanaApiKey? apiKey = default;
-            CreatorCanAdmin? creatorCanAdmin = default;
+            GrafanaCreatorCanAdmin? creatorCanAdmin = default;
             DeterministicOutboundIP? deterministicOutboundIP = default;
             IReadOnlyList<string> outboundIPs = default;
             IReadOnlyList<GrafanaPrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    creatorCanAdmin = new CreatorCanAdmin(property.Value.GetString());
+                    creatorCanAdmin = new GrafanaCreatorCanAdmin(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deterministicOutboundIP"u8))

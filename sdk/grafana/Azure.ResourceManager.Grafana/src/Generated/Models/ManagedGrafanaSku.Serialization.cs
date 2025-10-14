@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 return null;
             }
             string name = default;
-            Size? size = default;
+            GrafanaSize? size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    size = new Size(property.Value.GetString());
+                    size = new GrafanaSize(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="size"> Specifies the capacity tier of the Grafana instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedGrafanaSku(string name, Size? size, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedGrafanaSku(string name, GrafanaSize? size, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Size = size;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> The name of the SKU. </summary>
         public string Name { get; set; }
         /// <summary> Specifies the capacity tier of the Grafana instance. </summary>
-        public Size? Size { get; set; }
+        public GrafanaSize? Size { get; set; }
     }
 }

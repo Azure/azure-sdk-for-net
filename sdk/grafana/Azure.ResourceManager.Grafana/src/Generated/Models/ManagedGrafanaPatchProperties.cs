@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="grafanaPlugins"> Update of Grafana plugin. Key is plugin id, value is plugin definition. If plugin definition is null, plugin with given plugin id will be removed. Otherwise, given plugin will be installed. </param>
         /// <param name="grafanaMajorVersion"> The major Grafana software version to target. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedGrafanaPatchProperties(GrafanaZoneRedundancy? zoneRedundancy, GrafanaApiKey? apiKey, CreatorCanAdmin? creatorCanAdmin, DeterministicOutboundIP? deterministicOutboundIP, GrafanaPublicNetworkAccess? publicNetworkAccess, GrafanaIntegrations grafanaIntegrations, EnterpriseConfigurations enterpriseConfigurations, GrafanaConfigurations grafanaConfigurations, IDictionary<string, GrafanaPlugin> grafanaPlugins, string grafanaMajorVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedGrafanaPatchProperties(GrafanaZoneRedundancy? zoneRedundancy, GrafanaApiKey? apiKey, GrafanaCreatorCanAdmin? creatorCanAdmin, DeterministicOutboundIP? deterministicOutboundIP, GrafanaPublicNetworkAccess? publicNetworkAccess, GrafanaIntegrations grafanaIntegrations, EnterpriseConfigurations enterpriseConfigurations, GrafanaConfigurations grafanaConfigurations, IDictionary<string, GrafanaPlugin> grafanaPlugins, string grafanaMajorVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ZoneRedundancy = zoneRedundancy;
             ApiKey = apiKey;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> The api key setting of the Grafana instance. </summary>
         public GrafanaApiKey? ApiKey { get; set; }
         /// <summary> The creator will have admin access for the Grafana instance. </summary>
-        public CreatorCanAdmin? CreatorCanAdmin { get; set; }
+        public GrafanaCreatorCanAdmin? CreatorCanAdmin { get; set; }
         /// <summary> Whether a Grafana instance uses deterministic outbound IPs. </summary>
         public DeterministicOutboundIP? DeterministicOutboundIP { get; set; }
         /// <summary> Indicate the state for enable or disable traffic over the public interface. </summary>
