@@ -16,6 +16,8 @@ namespace MgmtTypeSpec
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AllocatedQuotaToSubscriptionList))]
+    [ModelReaderWriterBuildable(typeof(AllocatedToSubscription))]
     [ModelReaderWriterBuildable(typeof(BarData))]
     [ModelReaderWriterBuildable(typeof(BarDeeplyNestedQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(BarListResult))]
@@ -48,6 +50,10 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(FooSettingsPropertiesMetaData))]
     [ModelReaderWriterBuildable(typeof(FooSettingsResource))]
     [ModelReaderWriterBuildable(typeof(FooSettingsUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaDetails))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaLimitProperties))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaSubscriptionRequestStatusData))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaSubscriptionRequestStatusResource))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceData))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(HciVmInstanceResource))]
