@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> Ip Access Policy of the Traffic Controller Security Policy. Single Security Policy can have only one policy type set. </summary>
         internal IPAccessRulesPolicy IPAccessRulesPolicy { get; set; }
         /// <summary> Ip Access Policy Rules List. </summary>
-        public IList<IPAccessRule> Rules
+        public IList<ServiceNetworkingIPAccessRule> Rules
         {
             get
             {

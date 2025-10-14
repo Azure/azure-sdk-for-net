@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="rules"> Ip Access Policy of the Traffic Controller Security Policy. Single Security Policy can have only one policy type set. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
         /// <returns> A new <see cref="ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyData"/> instance for mocking. </returns>
-        public static ApplicationGatewayForContainersSecurityPolicyData ApplicationGatewayForContainersSecurityPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ApplicationGatewayForContainersSecurityPolicyType? policyType = null, ResourceIdentifier wafPolicyId = null, IEnumerable<IPAccessRule> rules = null, ServiceNetworkingProvisioningState? provisioningState = null)
+        public static ApplicationGatewayForContainersSecurityPolicyData ApplicationGatewayForContainersSecurityPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ApplicationGatewayForContainersSecurityPolicyType? policyType = null, ResourceIdentifier wafPolicyId = null, IEnumerable<ServiceNetworkingIPAccessRule> rules = null, ServiceNetworkingProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
-            rules ??= new List<IPAccessRule>();
+            rules ??= new List<ServiceNetworkingIPAccessRule>();
 
             return new ApplicationGatewayForContainersSecurityPolicyData(
                 id,

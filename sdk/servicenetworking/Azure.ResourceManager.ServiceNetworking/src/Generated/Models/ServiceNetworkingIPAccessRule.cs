@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> Ip Access Policy Rules. </summary>
-    public partial class IPAccessRule
+    public partial class ServiceNetworkingIPAccessRule
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IPAccessRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworkingIPAccessRule"/>. </summary>
         /// <param name="name"> Name of the Ip Access Rule. </param>
         /// <param name="priority"> The priority of the rule. The value can be between 1 and 500. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="sourceAddressPrefixes"> Source Address Prefixed Applied by the Rule. Asterisk '*' can also be used to match all source IPs. </param>
         /// <param name="action"> Action of the Rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="sourceAddressPrefixes"/> is null. </exception>
-        public IPAccessRule(string name, int priority, IEnumerable<string> sourceAddressPrefixes, IPAccessRuleAction action)
+        public ServiceNetworkingIPAccessRule(string name, int priority, IEnumerable<string> sourceAddressPrefixes, ServiceNetworkingIPAccessRuleAction action)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(sourceAddressPrefixes, nameof(sourceAddressPrefixes));
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPAccessRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworkingIPAccessRule"/>. </summary>
         /// <param name="name"> Name of the Ip Access Rule. </param>
         /// <param name="priority"> The priority of the rule. The value can be between 1 and 500. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="sourceAddressPrefixes"> Source Address Prefixed Applied by the Rule. Asterisk '*' can also be used to match all source IPs. </param>
         /// <param name="action"> Action of the Rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPAccessRule(string name, int priority, IList<string> sourceAddressPrefixes, IPAccessRuleAction action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceNetworkingIPAccessRule(string name, int priority, IList<string> sourceAddressPrefixes, ServiceNetworkingIPAccessRuleAction action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Priority = priority;
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPAccessRule"/> for deserialization. </summary>
-        internal IPAccessRule()
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworkingIPAccessRule"/> for deserialization. </summary>
+        internal ServiceNetworkingIPAccessRule()
         {
         }
 
@@ -90,6 +90,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> Source Address Prefixed Applied by the Rule. Asterisk '*' can also be used to match all source IPs. </summary>
         public IList<string> SourceAddressPrefixes { get; }
         /// <summary> Action of the Rule. </summary>
-        public IPAccessRuleAction Action { get; set; }
+        public ServiceNetworkingIPAccessRuleAction Action { get; set; }
     }
 }

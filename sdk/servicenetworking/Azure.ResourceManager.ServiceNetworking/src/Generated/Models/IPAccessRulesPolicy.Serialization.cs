@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 return null;
             }
-            IList<IPAccessRule> rules = default;
+            IList<ServiceNetworkingIPAccessRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     {
                         continue;
                     }
-                    List<IPAccessRule> array = new List<IPAccessRule>();
+                    List<ServiceNetworkingIPAccessRule> array = new List<ServiceNetworkingIPAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAccessRule.DeserializeIPAccessRule(item, options));
+                        array.Add(ServiceNetworkingIPAccessRule.DeserializeServiceNetworkingIPAccessRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IPAccessRulesPolicy(rules ?? new ChangeTrackingList<IPAccessRule>(), serializedAdditionalRawData);
+            return new IPAccessRulesPolicy(rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPAccessRulesPolicy>.Write(ModelReaderWriterOptions options)

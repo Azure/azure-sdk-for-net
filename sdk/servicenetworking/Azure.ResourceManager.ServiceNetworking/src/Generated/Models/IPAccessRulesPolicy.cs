@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> Initializes a new instance of <see cref="IPAccessRulesPolicy"/>. </summary>
         public IPAccessRulesPolicy()
         {
-            Rules = new ChangeTrackingList<IPAccessRule>();
+            Rules = new ChangeTrackingList<ServiceNetworkingIPAccessRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IPAccessRulesPolicy"/>. </summary>
         /// <param name="rules"> Ip Access Policy Rules List. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPAccessRulesPolicy(IList<IPAccessRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IPAccessRulesPolicy(IList<ServiceNetworkingIPAccessRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rules = rules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Ip Access Policy Rules List. </summary>
-        public IList<IPAccessRule> Rules { get; }
+        public IList<ServiceNetworkingIPAccessRule> Rules { get; }
     }
 }
