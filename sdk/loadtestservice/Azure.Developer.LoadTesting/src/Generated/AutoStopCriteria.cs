@@ -54,12 +54,14 @@ namespace Azure.Developer.LoadTesting
         /// <param name="autoStopDisabled"> Whether auto-stop should be disabled. The default value is false. </param>
         /// <param name="errorRate"> Threshold percentage of errors on which test run should be automatically stopped. Allowed values are in range of 0.0-100.0. </param>
         /// <param name="errorRateTimeWindow"> Time window during which the error percentage should be evaluated in seconds. </param>
+        /// <param name="maximumVirtualUsersPerEngine"> Maximum number of virtual users per load testing engine, at which the test run should be automatically stopped. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoStopCriteria(bool? autoStopDisabled, float? errorRate, TimeSpan? errorRateTimeWindow, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutoStopCriteria(bool? autoStopDisabled, float? errorRate, TimeSpan? errorRateTimeWindow, int? maximumVirtualUsersPerEngine, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AutoStopDisabled = autoStopDisabled;
             ErrorRate = errorRate;
             ErrorRateTimeWindow = errorRateTimeWindow;
+            MaximumVirtualUsersPerEngine = maximumVirtualUsersPerEngine;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,5 +71,7 @@ namespace Azure.Developer.LoadTesting
         public float? ErrorRate { get; set; }
         /// <summary> Time window during which the error percentage should be evaluated in seconds. </summary>
         public TimeSpan? ErrorRateTimeWindow { get; set; }
+        /// <summary> Maximum number of virtual users per load testing engine, at which the test run should be automatically stopped. </summary>
+        public int? MaximumVirtualUsersPerEngine { get; set; }
     }
 }
