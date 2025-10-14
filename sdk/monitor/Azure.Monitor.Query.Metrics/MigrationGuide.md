@@ -15,12 +15,12 @@ This guide assists in migrating querying metrics operations in `Azure.Monitor.Qu
 
 ## Migration benefits
 
-The Azure Monitor Query library for .NET has been modularized to provide more focused functionality. The operations for querying metrics have been moved from the combined `Azure.Monitor.Query` package which also included querying metrics to a dedicated `Azure.Monitor.Query.Metrics` package. This separation offers several advantages:
+The Azure Monitor Query library for .NET has been modularized to provide more focused functionality. The operations for querying metrics have been moved from the combined `Azure.Monitor.Query` package which also included querying logs to a dedicated `Azure.Monitor.Query.Metrics` package. This separation offers several advantages:
 
 - Smaller dependency footprint for applications that only need to query metrics 
 - More focused API design specific to metrics query operations
 - Independent versioning allowing metrics functionality to evolve separately
-- Clearer separation of concerns between metrics and metrics operations
+- Clearer separation of concerns between logs and metrics operations
 
 ## Important changes
 
@@ -35,7 +35,7 @@ The root namespace has changed to `Azure.Monitor.Query.Metrics` in the new packa
 
 ### Client differences
 
-`MetricsQueryClient` in the `Azure.Monitor.Query` package  has moved to the new `Azure.Monitor.Query.Metrics` package in the new `Azure.Monitor.Query.Metrics` library. The client names and the client builder name remains the same in both libraries.
+`MetricsClient` in the `Azure.Monitor.Query` package  has moved to the new `Azure.Monitor.Query.Metrics` package in the new `Azure.Monitor.Query.Metrics` library. The client names remain the same in both libraries.
 
 ### API changes
 
@@ -208,4 +208,4 @@ foreach (MetricsQueryResult value in metricsQueryResults.Values)
 More examples can be found in the [Azure Monitor Query Metrics samples][metrics-samples].
 
 <!-- Links -->
-[metrics-samples]: https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/monitor/Azure.Monitor.Query.Metrics/src/samples/README.md
+[metrics-samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query.Metrics/src/README.md#examples
