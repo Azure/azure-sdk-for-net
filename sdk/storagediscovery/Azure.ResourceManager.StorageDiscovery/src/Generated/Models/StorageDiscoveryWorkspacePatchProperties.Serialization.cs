@@ -15,11 +15,11 @@ using Azure.ResourceManager.StorageDiscovery;
 namespace Azure.ResourceManager.StorageDiscovery.Models
 {
     /// <summary> The template for adding updateable properties. </summary>
-    public partial class StorageDiscoveryWorkspacePropertiesUpdate : IJsonModel<StorageDiscoveryWorkspacePropertiesUpdate>
+    public partial class StorageDiscoveryWorkspacePatchProperties : IJsonModel<StorageDiscoveryWorkspacePatchProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StorageDiscoveryWorkspacePropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageDiscoveryWorkspacePatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryWorkspacePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryWorkspacePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageDiscoveryWorkspacePropertiesUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageDiscoveryWorkspacePatchProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Sku))
             {
@@ -89,24 +89,24 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageDiscoveryWorkspacePropertiesUpdate IJsonModel<StorageDiscoveryWorkspacePropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StorageDiscoveryWorkspacePatchProperties IJsonModel<StorageDiscoveryWorkspacePatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageDiscoveryWorkspacePropertiesUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StorageDiscoveryWorkspacePatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryWorkspacePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryWorkspacePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageDiscoveryWorkspacePropertiesUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageDiscoveryWorkspacePatchProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageDiscoveryWorkspacePropertiesUpdate(document.RootElement, options);
+            return DeserializeStorageDiscoveryWorkspacePatchProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageDiscoveryWorkspacePropertiesUpdate DeserializeStorageDiscoveryWorkspacePropertiesUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static StorageDiscoveryWorkspacePatchProperties DeserializeStorageDiscoveryWorkspacePatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -173,47 +173,47 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageDiscoveryWorkspacePropertiesUpdate(sku, description, workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>(), scopes ?? new ChangeTrackingList<StorageDiscoveryScope>(), additionalBinaryDataProperties);
+            return new StorageDiscoveryWorkspacePatchProperties(sku, description, workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>(), scopes ?? new ChangeTrackingList<StorageDiscoveryScope>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageDiscoveryWorkspacePropertiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StorageDiscoveryWorkspacePatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryWorkspacePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryWorkspacePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StorageDiscoveryWorkspacePropertiesUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageDiscoveryWorkspacePatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageDiscoveryWorkspacePropertiesUpdate IPersistableModel<StorageDiscoveryWorkspacePropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StorageDiscoveryWorkspacePatchProperties IPersistableModel<StorageDiscoveryWorkspacePatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageDiscoveryWorkspacePropertiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StorageDiscoveryWorkspacePatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryWorkspacePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryWorkspacePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeStorageDiscoveryWorkspacePropertiesUpdate(document.RootElement, options);
+                        return DeserializeStorageDiscoveryWorkspacePatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageDiscoveryWorkspacePropertiesUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageDiscoveryWorkspacePatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageDiscoveryWorkspacePropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageDiscoveryWorkspacePatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
