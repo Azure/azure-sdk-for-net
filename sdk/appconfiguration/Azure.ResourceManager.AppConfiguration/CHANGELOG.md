@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Upgraded api-version tag from 'package-2024-05-01' to '2025-02-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/8d1a34be1b0021f926e61f3ae95b2de62a9df9ae/specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/readme.md.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -14,7 +16,7 @@
 
 ### Features Added
 
-- Make `Azure.ResourceManager.AppConfiguration` AOT-compatible. 
+- Make `Azure.ResourceManager.AppConfiguration` AOT-compatible.
 
 ## 1.4.0 (2025-01-24)
 
