@@ -115,7 +115,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
                 Properties = new SecretSyncUpdateProperties(
                     secretProviderClassName: props.SecretProviderClassName,
                     serviceAccountName: props.ServiceAccountName,
-                    kubernetesSecretType: props.KubernetesSecretType,
                     forceSynchronization: props.ForceSynchronization,
                     objectSecretMapping: oms,
                     serializedAdditionalRawData: null)

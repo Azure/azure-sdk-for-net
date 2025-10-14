@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -241,6 +242,180 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endDateTimeUTC: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    builder.Append("  endDateTimeUTC: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AValue))
+                {
+                    builder.Append("  aValue: ");
+                    builder.AppendLine($"'{AValue.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BValue))
+                {
+                    builder.Append("  bValue: ");
+                    builder.AppendLine($"'{BValue.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Delta), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  delta: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Delta))
+                {
+                    builder.Append("  delta: ");
+                    builder.AppendLine($"'{Delta.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeltaPercent), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deltaPercent: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeltaPercent))
+                {
+                    builder.Append("  deltaPercent: ");
+                    builder.AppendLine($"'{DeltaPercent.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ACLower95CI), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aCLower95CI: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ACLower95CI))
+                {
+                    builder.Append("  aCLower95CI: ");
+                    builder.AppendLine($"'{ACLower95CI.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AHUpper95CI), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aHUpper95CI: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AHUpper95CI))
+                {
+                    builder.Append("  aHUpper95CI: ");
+                    builder.AppendLine($"'{AHUpper95CI.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BCLower95CI), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bCLower95CI: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BCLower95CI))
+                {
+                    builder.Append("  bCLower95CI: ");
+                    builder.AppendLine($"'{BCLower95CI.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BUpper95CI), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bUpper95CI: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BUpper95CI))
+                {
+                    builder.Append("  bUpper95CI: ");
+                    builder.AppendLine($"'{BUpper95CI.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<LatencyMetric>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
@@ -249,6 +424,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LatencyMetric)} does not support writing '{options.Format}' format.");
             }
