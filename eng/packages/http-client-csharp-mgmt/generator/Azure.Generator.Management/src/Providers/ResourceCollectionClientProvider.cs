@@ -148,7 +148,7 @@ namespace Azure.Generator.Management.Providers
 
         private bool ShouldSkipIEnumerableImplementation()
         {
-            return _getAll is null || _getAll.InputMethod.Parameters.Any(p => p.IsRequired);
+            return _getAll is null || _getAll.InputMethod.Parameters.Any(p => p.DefaultValue != null);
         }
 
         protected override PropertyProvider[] BuildProperties()
