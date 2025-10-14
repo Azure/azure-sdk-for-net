@@ -47,15 +47,19 @@ namespace Azure.Generator.Management.Visitors
             foreach (var method in modelFactory.Methods)
             {
                 var returnType = method.Signature.ReturnType;
-                if (returnType is not null && _flattenedModelTypes.TryGetValue(returnType, out var value))
+                if (returnType is not null &&
+                    (_flattenedModelTypes.TryGetValue(returnType, out var value)
+                    // handle the case where the return type is a derived type of a flattened model type
+                    // we only deal with single level inheritance here to avoid complexity
+                    || (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(returnType, out var typeProvider) && typeProvider is ModelProvider model && model.BaseType is not null && _flattenedModelTypes.TryGetValue(model.BaseType, out value))))
                 {
                     var (propertyNameMap, _) = value;
-                    UpdateModelFactoryMethod(method, returnType, propertyNameMap);
+                    UpdateModelFactoryMethod(method, propertyNameMap);
                 }
             }
         }
 
-        private void UpdateModelFactoryMethod(MethodProvider method, CSharpType returnType, Dictionary<string, List<FlattenPropertyInfo>> propertyNameMap)
+        private void UpdateModelFactoryMethod(MethodProvider method, Dictionary<string, List<FlattenPropertyInfo>> propertyNameMap)
         {
             var parameterMap = new Dictionary<ParameterProvider, ParameterProvider>();
             var updatedParameters = new List<ParameterProvider>(method.Signature.Parameters.Count);
