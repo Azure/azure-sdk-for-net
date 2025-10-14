@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
     /// <summary> The updatable properties of the OrganizationResource. </summary>
-    public partial class OrganizationResourceUpdateProperties
+    public partial class NeonOrganizationPatchProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourceUpdateProperties"/>. </summary>
-        public OrganizationResourceUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="NeonOrganizationPatchProperties"/>. </summary>
+        public NeonOrganizationPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourceUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeonOrganizationPatchProperties"/>. </summary>
         /// <param name="marketplaceDetails"> Marketplace details of the resource. </param>
         /// <param name="userDetails"> Details of the user. </param>
         /// <param name="companyDetails"> Details of the company. </param>
         /// <param name="partnerOrganizationProperties"> Neon Organization properties. </param>
         /// <param name="projectProperties"> Neon Project Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationResourceUpdateProperties(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails, PartnerOrganizationProperties partnerOrganizationProperties, NeonProjectProperties projectProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonOrganizationPatchProperties(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails, PartnerOrganizationProperties partnerOrganizationProperties, NeonProjectProperties projectProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceDetails = marketplaceDetails;
             UserDetails = userDetails;

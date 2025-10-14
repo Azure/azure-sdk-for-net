@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonOrganizationPatch(IDictionary<string, string> tags, OrganizationResourceUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonOrganizationPatch(IDictionary<string, string> tags, NeonOrganizationPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Properties = properties;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>
-        public OrganizationResourceUpdateProperties Properties { get; set; }
+        public NeonOrganizationPatchProperties Properties { get; set; }
     }
 }
