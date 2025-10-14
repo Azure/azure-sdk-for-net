@@ -208,6 +208,16 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("createdByType"u8);
                 writer.WriteStringValue(CreatedByType.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(CreatedByUri))
+            {
+                writer.WritePropertyName("createdByUri"u8);
+                writer.WriteStringValue(CreatedByUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EstimatedVirtualUserHours))
+            {
+                writer.WritePropertyName("estimatedVirtualUserHours"u8);
+                writer.WriteNumberValue(EstimatedVirtualUserHours.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(CreatedDateTime))
             {
                 writer.WritePropertyName("createdDateTime"u8);
@@ -294,6 +304,8 @@ namespace Azure.Developer.LoadTesting
             bool? debugLogsEnabled = default;
             bool? publicIPDisabled = default;
             CreatedByType? createdByType = default;
+            Uri createdByUri = default;
+            double? estimatedVirtualUserHours = default;
             DateTimeOffset? createdDateTime = default;
             string createdBy = default;
             DateTimeOffset? lastModifiedDateTime = default;
@@ -568,6 +580,24 @@ namespace Azure.Developer.LoadTesting
                     createdByType = new CreatedByType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("createdByUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdByUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("estimatedVirtualUserHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    estimatedVirtualUserHours = property.Value.GetDouble();
+                    continue;
+                }
                 if (property.NameEquals("createdDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -632,6 +662,8 @@ namespace Azure.Developer.LoadTesting
                 debugLogsEnabled,
                 publicIPDisabled,
                 createdByType,
+                createdByUri,
+                estimatedVirtualUserHours,
                 createdDateTime,
                 createdBy,
                 lastModifiedDateTime,

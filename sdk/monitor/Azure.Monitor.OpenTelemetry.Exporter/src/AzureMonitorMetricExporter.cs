@@ -44,10 +44,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // even if there are no items in batch
                 if (batch.Count > 0)
                 {
-                    var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, MetricResource, _instrumentationKey);
+                    (var telemetryItems, var telemetrySchemaTypeCounter) = MetricHelper.OtelToAzureMonitorMetrics(batch, MetricResource, _instrumentationKey);
                     if (telemetryItems.Count > 0)
                     {
-                        exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorMetricExporter, false, CancellationToken.None).EnsureCompleted();
+                        exportResult = _transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.AzureMonitorMetricExporter, false, CancellationToken.None).EnsureCompleted();
                     }
                 }
                 else

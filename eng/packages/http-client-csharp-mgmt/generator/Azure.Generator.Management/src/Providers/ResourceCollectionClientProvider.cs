@@ -35,6 +35,10 @@ namespace Azure.Generator.Management.Providers
         private readonly ResourceMethod? _create;
         private readonly ResourceMethod? _get;
 
+        // Cached Get method providers
+        private MethodProvider? _getAsyncMethodProvider;
+        private MethodProvider? _getSyncMethodProvider;
+
         // Support for multiple rest clients
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
@@ -118,6 +122,11 @@ namespace Azure.Generator.Management.Providers
         public IReadOnlyList<ParameterProvider> PathParameters => _pathParameterMap.Keys.ToList();
         public RequestPathPattern ContextualPath => _contextualPath;
 
+        // Cached Get method providers for reuse in other places
+        public MethodProvider? GetAsyncMethodProvider => _getAsyncMethodProvider ??= BuildGetMethod(isAsync: true);
+
+        public MethodProvider? GetSyncMethodProvider => _getSyncMethodProvider ??= BuildGetMethod(isAsync: false);
+
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
 
@@ -133,9 +142,14 @@ namespace Azure.Generator.Management.Providers
         protected override CSharpType? BuildBaseType() => typeof(ArmCollection);
 
         protected override CSharpType[] BuildImplements() =>
-            _getAll is null
+            ShouldSkipIEnumerableImplementation()
             ? []
             : [new CSharpType(typeof(IEnumerable<>), _resource.Type), new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)];
+
+        private bool ShouldSkipIEnumerableImplementation()
+        {
+            return _getAll is null || _getAll.InputMethod.Parameters.Any(p => p.DefaultValue != null);
+        }
 
         protected override PropertyProvider[] BuildProperties()
         {
@@ -187,7 +201,7 @@ namespace Azure.Generator.Management.Providers
                 fields.Add(clientInfo.DiagnosticsField);
                 fields.Add(clientInfo.RestClientField);
             }
-            return [ .. fields, .. _pathParameterMap.Values];
+            return [.. fields, .. _pathParameterMap.Values];
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -285,7 +299,7 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider[] BuildEnumeratorMethods()
         {
-            if (_getAll is null)
+            if (ShouldSkipIEnumerableImplementation())
             {
                 return [];
             }
@@ -337,21 +351,37 @@ namespace Azure.Generator.Management.Providers
             };
         }
 
-        private List<MethodProvider> BuildGetMethods()
+        private MethodProvider? BuildGetMethod(bool isAsync)
         {
             if (_get is null)
+            {
+                return null;
+            }
+
+            var restClientInfo = _clientInfos[_get.InputClient];
+            return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync);
+        }
+
+        private List<MethodProvider> BuildGetMethods()
+        {
+            // Check if async method provider is null and build it if needed
+            if (_getAsyncMethodProvider is null)
+            {
+                _getAsyncMethodProvider = BuildGetMethod(true);
+            }
+
+            // Check if sync method provider is null and build it if needed
+            if (_getSyncMethodProvider is null)
+            {
+                _getSyncMethodProvider = BuildGetMethod(false);
+            }
+
+            if (_getAsyncMethodProvider is null || _getSyncMethodProvider is null)
             {
                 return [];
             }
 
-            var result = new List<MethodProvider>();
-            var restClientInfo = _clientInfos[_get.InputClient];
-            foreach (var isAsync in new List<bool> { true, false })
-            {
-                result.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, _get.InputMethod, isAsync));
-            }
-
-            return result;
+            return [_getAsyncMethodProvider, _getSyncMethodProvider];
         }
 
         private List<MethodProvider> BuildExistsMethods()

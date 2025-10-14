@@ -85,6 +85,7 @@ namespace Azure.AI.Agents.Persistent
                     case "bing_grounding": return RunStepBingGroundingToolCall.DeserializeRunStepBingGroundingToolCall(element, options);
                     case "browser_automation": return RunStepBrowserAutomationToolCall.DeserializeRunStepBrowserAutomationToolCall(element, options);
                     case "code_interpreter": return RunStepCodeInterpreterToolCall.DeserializeRunStepCodeInterpreterToolCall(element, options);
+                    case "computer_use_preview": return RunStepComputerUseToolCall.DeserializeRunStepComputerUseToolCall(element, options);
                     case "connected_agent": return RunStepConnectedAgentToolCall.DeserializeRunStepConnectedAgentToolCall(element, options);
                     case "deep_research": return RunStepDeepResearchToolCall.DeserializeRunStepDeepResearchToolCall(element, options);
                     case "fabric_dataagent": return RunStepMicrosoftFabricToolCall.DeserializeRunStepMicrosoftFabricToolCall(element, options);

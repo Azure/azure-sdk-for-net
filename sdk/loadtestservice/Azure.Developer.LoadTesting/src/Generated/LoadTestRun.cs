@@ -99,12 +99,14 @@ namespace Azure.Developer.LoadTesting
         /// <param name="debugLogsEnabled"> Enable or disable debug level logging. True if debug logs are enabled for the test run. False otherwise. </param>
         /// <param name="publicIpDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
         /// <param name="createdByType"> The type of the entity that created the test run. (E.x. User, ScheduleTrigger, etc). </param>
+        /// <param name="createdByUri"> The URI pointing to the entity that created the test run. </param>
+        /// <param name="estimatedVirtualUserHours"> Estimated virtual user hours for the test run. </param>
         /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<ErrorDetails> errorDetails, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, Uri portalUri, long? duration, double? virtualUserHours, string subnetId, LoadTestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIpDisabled, CreatedByType? createdByType, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadTestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, TestSecret> secrets, TestCertificate certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<ErrorDetails> errorDetails, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, Uri portalUri, long? duration, double? virtualUserHours, string subnetId, LoadTestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIpDisabled, CreatedByType? createdByType, Uri createdByUri, double? estimatedVirtualUserHours, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TestRunId = testRunId;
             PassFailCriteria = passFailCriteria;
@@ -135,6 +137,8 @@ namespace Azure.Developer.LoadTesting
             DebugLogsEnabled = debugLogsEnabled;
             PublicIpDisabled = publicIpDisabled;
             CreatedByType = createdByType;
+            CreatedByUri = createdByUri;
+            EstimatedVirtualUserHours = estimatedVirtualUserHours;
             CreatedDateTime = createdDateTime;
             CreatedBy = createdBy;
             LastModifiedDateTime = lastModifiedDateTime;
@@ -214,6 +218,10 @@ namespace Azure.Developer.LoadTesting
         public bool? PublicIpDisabled { get; }
         /// <summary> The type of the entity that created the test run. (E.x. User, ScheduleTrigger, etc). </summary>
         public CreatedByType? CreatedByType { get; set; }
+        /// <summary> The URI pointing to the entity that created the test run. </summary>
+        public Uri CreatedByUri { get; }
+        /// <summary> Estimated virtual user hours for the test run. </summary>
+        public double? EstimatedVirtualUserHours { get; }
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
         public DateTimeOffset? CreatedDateTime { get; }
         /// <summary> The user that created. </summary>

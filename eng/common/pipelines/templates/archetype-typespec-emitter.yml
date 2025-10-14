@@ -137,13 +137,28 @@ extends:
             $sourceBranch = '$(Build.SourceBranch)'
             $buildReason = '$(Build.Reason)'
             $buildNumber = '$(Build.BuildNumber)'
+            $emitterPackagePath = '${{ parameters.EmitterPackagePath }}'
+
+            # Create emitter identifier from package path for disambiguation
+            $emitterIdentifier = ""
+            if (-not [string]::IsNullOrWhiteSpace($emitterPackagePath)) {
+              # Extract filename without extension and make it safe for branch names
+              $emitterIdentifier = [System.IO.Path]::GetFileNameWithoutExtension($emitterPackagePath)
+              # Replace any characters that aren't alphanumeric, hyphens, or underscores
+              $emitterIdentifier = $emitterIdentifier -replace '[^a-zA-Z0-9\-_]', '-'
+              # Remove any leading/trailing hyphens and convert to lowercase
+              $emitterIdentifier = $emitterIdentifier.Trim('-').ToLower()
+              if (-not [string]::IsNullOrWhiteSpace($emitterIdentifier)) {
+                $emitterIdentifier = "-$emitterIdentifier"
+              }
+            }
 
             if ($buildReason -eq 'Schedule') {
-              $branchName = 'validate-typespec-scheduled'
+              $branchName = "validate-typespec-scheduled$emitterIdentifier"
             } elseif ($sourceBranch -match "^refs/pull/(\d+)/(head|merge)$") {
-              $branchName = "validate-typespec-pr-$($Matches[1])"
+              $branchName = "validate-typespec-pr-$($Matches[1])$emitterIdentifier"
             } else {
-              $branchName = "validate-typespec-$buildNumber"
+              $branchName = "validate-typespec-$buildNumber$emitterIdentifier"
             }
 
             Write-Host "Setting variable 'branchName' to '$branchName'"
@@ -259,27 +274,34 @@ extends:
             displayName: Download pipeline artifacts
 
           - pwsh: |
-              npm install -g @azure-tools/typespec-client-generator-cli@latest
+              npm ci
             displayName: Install tsp-client
+            workingDirectory: $(Build.SourcesDirectory)/eng/common/tsp-client
 
           - pwsh: |
+              # Resolve EmitterPackageJsonOutputPath to absolute path if it's relative
+              $emitterPath = '${{ parameters.EmitterPackageJsonOutputPath }}'
+              if (-not [System.IO.Path]::IsPathRooted($emitterPath)) {
+                $emitterPath = Join-Path '$(Build.SourcesDirectory)' $emitterPath
+              }
+
               Write-Host "Overrides location: $(buildArtifactsPath)/packages/overrides.json"
+              Write-Host "Resolved emitter package path: $emitterPath"
 
               if (Test-Path -Path '$(buildArtifactsPath)/packages/overrides.json') {
                 Write-Host "Using overrides.json to generate emitter-package.json"
-                tsp-client generate-config-files `
-                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}' `
-                --overrides '$(buildArtifactsPath)/packages/overrides.json'
+                npm exec --no -- tsp-client generate-config-files `
+                  --package-json '$(buildArtifactsPath)/lock-files/package.json' `
+                  --emitter-package-json-path "$emitterPath" `
+                  --overrides '$(buildArtifactsPath)/packages/overrides.json'
               } else {
                 Write-Host "No overrides.json found. Running tsp-client without overrides."
-
-                tsp-client generate-config-files `
-                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}'
+                npm exec --no -- tsp-client generate-config-files `
+                  --package-json '$(buildArtifactsPath)/lock-files/package.json' `
+                  --emitter-package-json-path "$emitterPath"
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
-            workingDirectory: $(Build.SourcesDirectory)
+            workingDirectory: $(Build.SourcesDirectory)/eng/common/tsp-client
 
           - ${{ parameters.InitializationSteps }}
 
