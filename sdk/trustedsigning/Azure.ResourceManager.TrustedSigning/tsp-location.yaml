@@ -1,0 +1,4 @@
+directory: specification/codesigning/CodeSigning.Management
+commit: 0e0d3b7a64ea7bbb9b978e16161ac9a2c17a7999
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
