@@ -90,6 +90,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets an object representing a MetricsObjectFirewallResource along with the instance operations that can be performed on it in the PaloAltoNetworksFirewall. </summary>
+        /// <returns> Returns a <see cref="MetricsObjectFirewallResource"/> object. </returns>
+        public virtual MetricsObjectFirewallResource GetMetricsObjectFirewallResource()
+        {
+            return new MetricsObjectFirewallResource(Client, Id.AppendChildResource("metrics", "default"));
+        }
+
         /// <summary> Gets an object representing a PaloAltoNetworksFirewallStatusResource along with the instance operations that can be performed on it in the PaloAltoNetworksFirewall. </summary>
         /// <returns> Returns a <see cref="PaloAltoNetworksFirewallStatusResource"/> object. </returns>
         public virtual PaloAltoNetworksFirewallStatusResource GetPaloAltoNetworksFirewallStatus()
@@ -110,7 +117,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -150,7 +157,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -190,7 +197,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,7 +239,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -274,7 +281,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,7 +323,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -358,7 +365,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -396,7 +403,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -434,7 +441,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -472,7 +479,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -510,7 +517,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -549,7 +556,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -588,7 +595,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -627,7 +634,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -666,7 +673,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -728,7 +735,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -790,7 +797,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -847,7 +854,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -904,7 +911,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -964,7 +971,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

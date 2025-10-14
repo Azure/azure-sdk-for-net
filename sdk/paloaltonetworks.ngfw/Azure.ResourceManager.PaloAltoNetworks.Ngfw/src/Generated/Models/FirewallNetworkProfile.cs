@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             EnableEgressNat = enableEgressNat;
             EgressNatIP = new ChangeTrackingList<IPAddressInfo>();
             TrustedRanges = new ChangeTrackingList<string>();
+            PrivateSourceNatRulesDestination = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallNetworkProfile"/>. </summary>
@@ -70,8 +71,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="enableEgressNat"> Enable egress NAT, enabled by default. </param>
         /// <param name="egressNatIP"> Egress nat IP to use. </param>
         /// <param name="trustedRanges"> Non-RFC 1918 address. </param>
+        /// <param name="privateSourceNatRulesDestination"> Array of ipv4 destination address for which source NAT is to be performed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallNetworkProfile(FirewallVnetConfiguration vnetConfiguration, FirewallVwanConfiguration vwanConfiguration, FirewallNetworkType networkType, IList<IPAddressInfo> publicIPs, AllowEgressNatType enableEgressNat, IList<IPAddressInfo> egressNatIP, IList<string> trustedRanges, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FirewallNetworkProfile(FirewallVnetConfiguration vnetConfiguration, FirewallVwanConfiguration vwanConfiguration, FirewallNetworkType networkType, IList<IPAddressInfo> publicIPs, AllowEgressNatType enableEgressNat, IList<IPAddressInfo> egressNatIP, IList<string> trustedRanges, IList<string> privateSourceNatRulesDestination, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VnetConfiguration = vnetConfiguration;
             VwanConfiguration = vwanConfiguration;
@@ -80,6 +82,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             EnableEgressNat = enableEgressNat;
             EgressNatIP = egressNatIP;
             TrustedRanges = trustedRanges;
+            PrivateSourceNatRulesDestination = privateSourceNatRulesDestination;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -102,5 +105,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public IList<IPAddressInfo> EgressNatIP { get; }
         /// <summary> Non-RFC 1918 address. </summary>
         public IList<string> TrustedRanges { get; }
+        /// <summary> Array of ipv4 destination address for which source NAT is to be performed. </summary>
+        public IList<string> PrivateSourceNatRulesDestination { get; }
     }
 }

@@ -75,6 +75,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(PrivateSourceNatRulesDestination))
+            {
+                writer.WritePropertyName("privateSourceNatRulesDestination"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateSourceNatRulesDestination)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -119,6 +129,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             AllowEgressNatType enableEgressNat = default;
             IList<IPAddressInfo> egressNatIP = default;
             IList<string> trustedRanges = default;
+            IList<string> privateSourceNatRulesDestination = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,6 +200,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     trustedRanges = array;
                     continue;
                 }
+                if (property.NameEquals("privateSourceNatRulesDestination"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    privateSourceNatRulesDestination = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -203,6 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 enableEgressNat,
                 egressNatIP ?? new ChangeTrackingList<IPAddressInfo>(),
                 trustedRanges ?? new ChangeTrackingList<string>(),
+                privateSourceNatRulesDestination ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 

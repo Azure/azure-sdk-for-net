@@ -5,16 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockablePaloAltoNetworksNgfwSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _paloAltoNetworksCloudngfwOperationsClientDiagnostics;
+        private PaloAltoNetworksCloudngfwRestOperations _paloAltoNetworksCloudngfwOperationsRestClient;
         private ClientDiagnostics _paloAltoNetworksFirewallFirewallsClientDiagnostics;
         private FirewallsRestOperations _paloAltoNetworksFirewallFirewallsRestClient;
         private ClientDiagnostics _localRulestackClientDiagnostics;
@@ -32,6 +37,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         {
         }
 
+        private ClientDiagnostics PaloAltoNetworksCloudngfwOperationsClientDiagnostics => _paloAltoNetworksCloudngfwOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private PaloAltoNetworksCloudngfwRestOperations PaloAltoNetworksCloudngfwOperationsRestClient => _paloAltoNetworksCloudngfwOperationsRestClient ??= new PaloAltoNetworksCloudngfwRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics PaloAltoNetworksFirewallFirewallsClientDiagnostics => _paloAltoNetworksFirewallFirewallsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", PaloAltoNetworksFirewallResource.ResourceType.Namespace, Diagnostics);
         private FirewallsRestOperations PaloAltoNetworksFirewallFirewallsRestClient => _paloAltoNetworksFirewallFirewallsRestClient ??= new FirewallsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PaloAltoNetworksFirewallResource.ResourceType));
         private ClientDiagnostics LocalRulestackClientDiagnostics => _localRulestackClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", LocalRulestackResource.ResourceType.Namespace, Diagnostics);
@@ -41,6 +48,252 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/createProductSerialNumber</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaloAltoNetworksCloudngfwOperations_CreateProductSerialNumber</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-07-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ProductSerialNumberRequestStatus>> CreateProductSerialNumberPaloAltoNetworksCloudngfwOperationAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = PaloAltoNetworksCloudngfwOperationsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwSubscriptionResource.CreateProductSerialNumberPaloAltoNetworksCloudngfwOperation");
+            scope.Start();
+            try
+            {
+                var response = await PaloAltoNetworksCloudngfwOperationsRestClient.CreateProductSerialNumberAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/createProductSerialNumber</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaloAltoNetworksCloudngfwOperations_CreateProductSerialNumber</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-07-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ProductSerialNumberRequestStatus> CreateProductSerialNumberPaloAltoNetworksCloudngfwOperation(CancellationToken cancellationToken = default)
+        {
+            using var scope = PaloAltoNetworksCloudngfwOperationsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwSubscriptionResource.CreateProductSerialNumberPaloAltoNetworksCloudngfwOperation");
+            scope.Start();
+            try
+            {
+                var response = PaloAltoNetworksCloudngfwOperationsRestClient.CreateProductSerialNumber(Id.SubscriptionId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/listCloudManagerTenants</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaloAltoNetworksCloudngfwOperations_ListCloudManagerTenants</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-07-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<string> GetCloudManagerTenantsPaloAltoNetworksCloudngfwOperationsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PaloAltoNetworksCloudngfwOperationsRestClient.CreateListCloudManagerTenantsRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), PaloAltoNetworksCloudngfwOperationsClientDiagnostics, Pipeline, "MockablePaloAltoNetworksNgfwSubscriptionResource.GetCloudManagerTenantsPaloAltoNetworksCloudngfwOperations", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/listCloudManagerTenants</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaloAltoNetworksCloudngfwOperations_ListCloudManagerTenants</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-07-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<string> GetCloudManagerTenantsPaloAltoNetworksCloudngfwOperations(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PaloAltoNetworksCloudngfwOperationsRestClient.CreateListCloudManagerTenantsRequest(Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), PaloAltoNetworksCloudngfwOperationsClientDiagnostics, Pipeline, "MockablePaloAltoNetworksNgfwSubscriptionResource.GetCloudManagerTenantsPaloAltoNetworksCloudngfwOperations", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/listProductSerialNumberStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaloAltoNetworksCloudngfwOperations_ListProductSerialNumberStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-07-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ProductSerialNumberStatus>> GetProductSerialNumberStatusPaloAltoNetworksCloudngfwOperationAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = PaloAltoNetworksCloudngfwOperationsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwSubscriptionResource.GetProductSerialNumberStatusPaloAltoNetworksCloudngfwOperation");
+            scope.Start();
+            try
+            {
+                var response = await PaloAltoNetworksCloudngfwOperationsRestClient.ListProductSerialNumberStatusAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/listProductSerialNumberStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaloAltoNetworksCloudngfwOperations_ListProductSerialNumberStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-07-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ProductSerialNumberStatus> GetProductSerialNumberStatusPaloAltoNetworksCloudngfwOperation(CancellationToken cancellationToken = default)
+        {
+            using var scope = PaloAltoNetworksCloudngfwOperationsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwSubscriptionResource.GetProductSerialNumberStatusPaloAltoNetworksCloudngfwOperation");
+            scope.Start();
+            try
+            {
+                var response = PaloAltoNetworksCloudngfwOperationsRestClient.ListProductSerialNumberStatus(Id.SubscriptionId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/listSupportInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaloAltoNetworksCloudngfwOperations_ListSupportInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-07-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SupportInfoModel>> GetSupportInfoPaloAltoNetworksCloudngfwOperationAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = PaloAltoNetworksCloudngfwOperationsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwSubscriptionResource.GetSupportInfoPaloAltoNetworksCloudngfwOperation");
+            scope.Start();
+            try
+            {
+                var response = await PaloAltoNetworksCloudngfwOperationsRestClient.ListSupportInfoAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/listSupportInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PaloAltoNetworksCloudngfwOperations_ListSupportInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-07-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SupportInfoModel> GetSupportInfoPaloAltoNetworksCloudngfwOperation(CancellationToken cancellationToken = default)
+        {
+            using var scope = PaloAltoNetworksCloudngfwOperationsClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwSubscriptionResource.GetSupportInfoPaloAltoNetworksCloudngfwOperation");
+            scope.Start();
+            try
+            {
+                var response = PaloAltoNetworksCloudngfwOperationsRestClient.ListSupportInfo(Id.SubscriptionId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -56,7 +309,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -86,7 +339,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -116,7 +369,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,7 +399,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-07-07-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: PaloAltoNetworks.Ngfw
 namespace: Azure.ResourceManager.PaloAltoNetworks.Ngfw
-require: https://github.com/Azure/azure-rest-api-specs/blob/6301be1289cf6b8cf44074f0e4229c2adf822991/specification/paloaltonetworks/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/009b2427e9e98848d04aa6cc136968e05b5d4877/specification/paloaltonetworks/resource-manager/readme.md
 #tag: package-2023-09-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -122,6 +122,8 @@ rename-mapping:
   VnetConfiguration: FirewallVnetConfiguration
   VwanConfiguration: FirewallVwanConfiguration
   VwanConfiguration.vHub: Vhub
+  EnableStatus: FreeTrialEnableStatus
+  RegistrationStatus: AccountRegistrationStatus
 
 format-by-name-rules:
   'tenantId': 'uuid'

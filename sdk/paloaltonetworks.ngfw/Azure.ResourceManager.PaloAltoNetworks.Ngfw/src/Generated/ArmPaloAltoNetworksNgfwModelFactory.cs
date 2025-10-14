@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -330,34 +331,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Ngfw.GlobalRulestackPrefixData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> prefix description. </param>
-        /// <param name="prefixList"> prefix list. </param>
-        /// <param name="etag"> etag info. </param>
-        /// <param name="auditComment"> comment for this object. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Ngfw.GlobalRulestackPrefixData"/> instance for mocking. </returns>
-        public static GlobalRulestackPrefixData GlobalRulestackPrefixData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<string> prefixList = null, ETag? etag = null, string auditComment = null, FirewallProvisioningState? provisioningState = null)
-        {
-            prefixList ??= new List<string>();
-
-            return new GlobalRulestackPrefixData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description,
-                prefixList?.ToList(),
-                etag,
-                auditComment,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Ngfw.PreRulestackRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -418,6 +391,42 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Ngfw.GlobalRulestackPrefixData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> prefix description. </param>
+        /// <param name="prefixList"> prefix list. </param>
+        /// <param name="etag"> etag info. </param>
+        /// <param name="auditComment"> comment for this object. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Ngfw.GlobalRulestackPrefixData"/> instance for mocking. </returns>
+        public static GlobalRulestackPrefixData GlobalRulestackPrefixData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<string> prefixList = null, ETag? etag = null, string auditComment = null, FirewallProvisioningState? provisioningState = null)
+        {
+            prefixList ??= new List<string>();
+
+            return new GlobalRulestackPrefixData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                prefixList?.ToList(),
+                etag,
+                auditComment,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProductSerialNumberRequestStatus"/>. </summary>
+        /// <param name="status"> allocation status of the product serial number. </param>
+        /// <returns> A new <see cref="Models.ProductSerialNumberRequestStatus"/> instance for mocking. </returns>
+        public static ProductSerialNumberRequestStatus ProductSerialNumberRequestStatus(string status = null)
+        {
+            return new ProductSerialNumberRequestStatus(status, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Ngfw.PaloAltoNetworksFirewallData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -429,7 +438,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="panETag"> panEtag info. </param>
         /// <param name="networkProfile"> Network settings. </param>
         /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
+        /// <param name="isStrataCloudManaged"> Strata Cloud Managed: Default is False. Default will be CloudSec managed. </param>
         /// <param name="panoramaConfig"> Panorama Configuration. </param>
+        /// <param name="cloudManagerName"> Strata Cloud Manager Configuration, only applicable if Strata Cloud Manager is selected. </param>
         /// <param name="associatedRulestack"> Associated Rulestack. </param>
         /// <param name="dnsSettings"> DNS settings for Firewall. </param>
         /// <param name="frontEndSettings"> Frontend settings for Firewall. </param>
@@ -437,7 +448,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="planData"> Billing plan information. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
         /// <returns> A new <see cref="Ngfw.PaloAltoNetworksFirewallData"/> instance for mocking. </returns>
-        public static PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ETag? panETag = null, FirewallNetworkProfile networkProfile = null, FirewallBooleanType? isPanoramaManaged = null, FirewallPanoramaConfiguration panoramaConfig = null, RulestackDetails associatedRulestack = null, FirewallDnsSettings dnsSettings = null, IEnumerable<FirewallFrontendSetting> frontEndSettings = null, FirewallProvisioningState? provisioningState = null, FirewallBillingPlanInfo planData = null, PanFirewallMarketplaceDetails marketplaceDetails = null)
+        public static PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ETag? panETag = null, FirewallNetworkProfile networkProfile = null, FirewallBooleanType? isPanoramaManaged = null, FirewallBooleanType? isStrataCloudManaged = null, FirewallPanoramaConfiguration panoramaConfig = null, string cloudManagerName = null, RulestackDetails associatedRulestack = null, FirewallDnsSettings dnsSettings = null, IEnumerable<FirewallFrontendSetting> frontEndSettings = null, FirewallProvisioningState? provisioningState = null, FirewallBillingPlanInfo planData = null, PanFirewallMarketplaceDetails marketplaceDetails = null)
         {
             tags ??= new Dictionary<string, string>();
             frontEndSettings ??= new List<FirewallFrontendSetting>();
@@ -453,7 +464,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 panETag,
                 networkProfile,
                 isPanoramaManaged,
+                isStrataCloudManaged,
                 panoramaConfig,
+                cloudManagerName != null ? new StrataCloudManagerConfig(cloudManagerName, serializedAdditionalRawData: null) : null,
                 associatedRulestack,
                 dnsSettings,
                 frontEndSettings?.ToList(),
@@ -507,6 +520,53 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static PanFirewallMarketplaceDetails PanFirewallMarketplaceDetails(string marketplaceSubscriptionId = null, string offerId = null, string publisherId = null, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null)
         {
             return new PanFirewallMarketplaceDetails(marketplaceSubscriptionId, offerId, publisherId, marketplaceSubscriptionStatus, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProductSerialNumberStatus"/>. </summary>
+        /// <param name="serialNumber"> product Serial associated with given resource. </param>
+        /// <param name="status"> allocation status of the product serial number. </param>
+        /// <returns> A new <see cref="Models.ProductSerialNumberStatus"/> instance for mocking. </returns>
+        public static ProductSerialNumberStatus ProductSerialNumberStatus(string serialNumber = null, ProductSerialStatusValue status = default)
+        {
+            return new ProductSerialNumberStatus(serialNumber, status, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SupportInfoModel"/>. </summary>
+        /// <param name="productSku"> product SKU associated with given resource. </param>
+        /// <param name="productSerial"> product Serial associated with given resource. </param>
+        /// <param name="accountRegistrationStatus"> account registered in Customer Support Portal. </param>
+        /// <param name="accountId"> Support account associated with given resource. </param>
+        /// <param name="freeTrial"> Product usage is in free trial period. </param>
+        /// <param name="freeTrialDaysLeft"> Free trial days remaining. </param>
+        /// <param name="freeTrialCreditLeft"> Free trial credit remaining. </param>
+        /// <param name="helpURL"> URL for paloaltonetworks live community. </param>
+        /// <param name="supportURL"> URL for paloaltonetworks Customer Service Portal. </param>
+        /// <param name="registerURL"> URL for registering product in paloaltonetworks Customer Service Portal. </param>
+        /// <param name="hubUri"> URL for Strata Cloud Manager. </param>
+        /// <param name="credits"> credits purchased, unit per hour. </param>
+        /// <param name="monthlyCreditLeft"> monthly credit is computed as credits * days in calendar month. </param>
+        /// <param name="startDateForCredits"> date in format yyyy-mm-dd. </param>
+        /// <param name="endDateForCredits"> date in format yyyy-mm-dd. </param>
+        /// <returns> A new <see cref="Models.SupportInfoModel"/> instance for mocking. </returns>
+        public static SupportInfoModel SupportInfoModel(string productSku = null, string productSerial = null, RegistrationStatus? accountRegistrationStatus = null, string accountId = null, EnableStatus? freeTrial = null, int? freeTrialDaysLeft = null, int? freeTrialCreditLeft = null, string helpURL = null, string supportURL = null, string registerURL = null, Uri hubUri = null, int? credits = null, int? monthlyCreditLeft = null, string startDateForCredits = null, string endDateForCredits = null)
+        {
+            return new SupportInfoModel(
+                productSku,
+                productSerial,
+                accountRegistrationStatus,
+                accountId,
+                freeTrial,
+                freeTrialDaysLeft,
+                freeTrialCreditLeft,
+                helpURL,
+                supportURL,
+                registerURL,
+                hubUri,
+                credits,
+                monthlyCreditLeft,
+                startDateForCredits,
+                endDateForCredits,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Ngfw.LocalRulestackData"/>. </summary>
@@ -592,6 +652,30 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Ngfw.MetricsObjectFirewallResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="applicationInsightsResourceId"> Resource Id of application insights resource. </param>
+        /// <param name="applicationInsightsConnectionString"> Connection string of application insights resource. </param>
+        /// <param name="panETag"> read only string representing last create or update. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Ngfw.MetricsObjectFirewallResourceData"/> instance for mocking. </returns>
+        public static MetricsObjectFirewallResourceData MetricsObjectFirewallResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string applicationInsightsResourceId = null, string applicationInsightsConnectionString = null, ETag? panETag = null, FirewallProvisioningState? provisioningState = null)
+        {
+            return new MetricsObjectFirewallResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                applicationInsightsResourceId,
+                applicationInsightsConnectionString,
+                panETag,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Ngfw.PaloAltoNetworksFirewallStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -602,8 +686,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="healthReason"> Detail description of current health of the Firewall. </param>
         /// <param name="panoramaStatus"> Panorama Status. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="isStrataCloudManaged"> Strata Cloud Manager. </param>
+        /// <param name="strataCloudManagerInfo"> This field is only present if Strata Cloud Manager is managing the policy for this firewall. </param>
         /// <returns> A new <see cref="Ngfw.PaloAltoNetworksFirewallStatusData"/> instance for mocking. </returns>
-        public static PaloAltoNetworksFirewallStatusData PaloAltoNetworksFirewallStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FirewallBooleanType? isPanoramaManaged = null, FirewallHealthStatus? healthStatus = null, string healthReason = null, FirewallPanoramaStatus panoramaStatus = null, FirewallProvisioningStateType? provisioningState = null)
+        public static PaloAltoNetworksFirewallStatusData PaloAltoNetworksFirewallStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FirewallBooleanType? isPanoramaManaged = null, FirewallHealthStatus? healthStatus = null, string healthReason = null, FirewallPanoramaStatus panoramaStatus = null, FirewallProvisioningStateType? provisioningState = null, FirewallBooleanType? isStrataCloudManaged = null, StrataCloudManagerInfo strataCloudManagerInfo = null)
         {
             return new PaloAltoNetworksFirewallStatusData(
                 id,
@@ -615,6 +701,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 healthReason,
                 panoramaStatus,
                 provisioningState,
+                isStrataCloudManaged,
+                strataCloudManagerInfo,
                 serializedAdditionalRawData: null);
         }
 
@@ -769,6 +857,48 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 auditComment,
                 provisioningState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="panETag"> panEtag info. </param>
+        /// <param name="networkProfile"> Network settings. </param>
+        /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
+        /// <param name="panoramaConfig"> Panorama Configuration. </param>
+        /// <param name="associatedRulestack"> Associated Rulestack. </param>
+        /// <param name="dnsSettings"> DNS settings for Firewall. </param>
+        /// <param name="frontEndSettings"> Frontend settings for Firewall. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="planData"> Billing plan information. </param>
+        /// <param name="marketplaceDetails"> Marketplace details. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? panETag, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallPanoramaConfiguration panoramaConfig, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IEnumerable<FirewallFrontendSetting> frontEndSettings, FirewallProvisioningState? provisioningState, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails)
+        {
+            return PaloAltoNetworksFirewallData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, panETag: panETag, networkProfile: networkProfile, isPanoramaManaged: isPanoramaManaged, isStrataCloudManaged: default, panoramaConfig: panoramaConfig, cloudManagerName: default, associatedRulestack: associatedRulestack, dnsSettings: dnsSettings, frontEndSettings: frontEndSettings, provisioningState: provisioningState, planData: planData, marketplaceDetails: marketplaceDetails);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
+        /// <param name="healthStatus"> Current status of the Firewall. </param>
+        /// <param name="healthReason"> Detail description of current health of the Firewall. </param>
+        /// <param name="panoramaStatus"> Panorama Status. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PaloAltoNetworksFirewallStatusData PaloAltoNetworksFirewallStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FirewallBooleanType? isPanoramaManaged, FirewallHealthStatus? healthStatus, string healthReason, FirewallPanoramaStatus panoramaStatus, FirewallProvisioningStateType? provisioningState)
+        {
+            return PaloAltoNetworksFirewallStatusData(id: id, name: name, resourceType: resourceType, systemData: systemData, isPanoramaManaged: isPanoramaManaged, healthStatus: healthStatus, healthReason: healthReason, panoramaStatus: panoramaStatus, provisioningState: provisioningState, isStrataCloudManaged: default, strataCloudManagerInfo: default);
         }
     }
 }
