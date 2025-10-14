@@ -43,7 +43,7 @@ The following API changes were made between `Azure.Monitor.Query` and `Azure.Mon
 
 | `Azure.Monitor.Query` | `Azure.Monitor.Query.Logs`                                  | Notes                                           |
 |------------------------|-------------------------------------------------------------|-------------------------------------------------|
-| `Azure.Monitor.Query.QueryTimeRange ` | `Azure.Monitor.Query.LogsLogsQueryTimeRange ` | Used to specify the time range for logs queries |
+| `Azure.Monitor.Query.QueryTimeRange ` | `Azure.Monitor.Query.LogsQueryTimeRange ` | Used to specify the time range for logs queries |
 
 Code using the previous `QueryTimeRange` class will need to be updated to use the new `LogsLogsQueryTimeRange` class:
 
