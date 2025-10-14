@@ -160,12 +160,12 @@ namespace MgmtTypeSpec.Mocking
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>
-        /// <param name="body"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<FooPreviewAction>> PreviewActionsAsync(AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<FooPreviewAction>> PreviewActionsAsync(AzureLocation location, FooPreviewAction content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = MgmtTypeSpecClientClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
             scope.Start();
@@ -175,7 +175,7 @@ namespace MgmtTypeSpec.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MgmtTypeSpecClientRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
+                HttpMessage message = MgmtTypeSpecClientRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
@@ -193,12 +193,12 @@ namespace MgmtTypeSpec.Mocking
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>
-        /// <param name="body"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<FooPreviewAction> PreviewActions(AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<FooPreviewAction> PreviewActions(AzureLocation location, FooPreviewAction content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = MgmtTypeSpecClientClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
             scope.Start();
@@ -208,7 +208,7 @@ namespace MgmtTypeSpec.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MgmtTypeSpecClientRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
+                HttpMessage message = MgmtTypeSpecClientRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
