@@ -714,9 +714,9 @@ IsOverridable = true,
 },
 },
 }},
-                    Mode = FleetMode.Instance,
-                    CapacityType = CapacityType.VCpu,
-                    ZoneAllocationPolicy = new ZoneAllocationPolicy(ZoneDistributionStrategy.Prioritized)
+                    Mode = ComputeFleetMode.Instance,
+                    CapacityType = ComputeFleetCapacityType.VCpu,
+                    ZoneAllocationPolicy = new ComputeFleetZoneAllocationPolicy(ComputeFleetZoneDistributionStrategy.Prioritized)
                     {
                         ZonePreferences = {new ZonePreference("1")
 {

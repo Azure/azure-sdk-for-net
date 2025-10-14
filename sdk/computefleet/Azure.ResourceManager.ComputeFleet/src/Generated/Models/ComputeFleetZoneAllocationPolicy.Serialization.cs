@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class ZoneAllocationPolicy : IUtf8JsonSerializable, IJsonModel<ZoneAllocationPolicy>
+    public partial class ComputeFleetZoneAllocationPolicy : IUtf8JsonSerializable, IJsonModel<ComputeFleetZoneAllocationPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ZoneAllocationPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetZoneAllocationPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ZoneAllocationPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeFleetZoneAllocationPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ZoneAllocationPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetZoneAllocationPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("distributionStrategy"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        ZoneAllocationPolicy IJsonModel<ZoneAllocationPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeFleetZoneAllocationPolicy IJsonModel<ComputeFleetZoneAllocationPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ZoneAllocationPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetZoneAllocationPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeZoneAllocationPolicy(document.RootElement, options);
+            return DeserializeComputeFleetZoneAllocationPolicy(document.RootElement, options);
         }
 
-        internal static ZoneAllocationPolicy DeserializeZoneAllocationPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeFleetZoneAllocationPolicy DeserializeComputeFleetZoneAllocationPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            ZoneDistributionStrategy distributionStrategy = default;
+            ComputeFleetZoneDistributionStrategy distributionStrategy = default;
             IList<ZonePreference> zonePreferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 if (property.NameEquals("distributionStrategy"u8))
                 {
-                    distributionStrategy = new ZoneDistributionStrategy(property.Value.GetString());
+                    distributionStrategy = new ComputeFleetZoneDistributionStrategy(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zonePreferences"u8))
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ZoneAllocationPolicy(distributionStrategy, zonePreferences ?? new ChangeTrackingList<ZonePreference>(), serializedAdditionalRawData);
+            return new ComputeFleetZoneAllocationPolicy(distributionStrategy, zonePreferences ?? new ChangeTrackingList<ZonePreference>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ZoneAllocationPolicy>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeFleetZoneAllocationPolicy>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ZoneAllocationPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetZoneAllocationPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ZoneAllocationPolicy IPersistableModel<ZoneAllocationPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeFleetZoneAllocationPolicy IPersistableModel<ComputeFleetZoneAllocationPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeZoneAllocationPolicy(document.RootElement, options);
+                        return DeserializeComputeFleetZoneAllocationPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ZoneAllocationPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetZoneAllocationPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ZoneAllocationPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeFleetZoneAllocationPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

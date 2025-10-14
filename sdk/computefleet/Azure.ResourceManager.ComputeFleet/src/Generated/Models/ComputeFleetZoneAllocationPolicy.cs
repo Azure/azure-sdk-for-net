@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> ZoneAllocationPolicy for Compute Fleet. </summary>
-    public partial class ZoneAllocationPolicy
+    public partial class ComputeFleetZoneAllocationPolicy
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,32 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ZoneAllocationPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetZoneAllocationPolicy"/>. </summary>
         /// <param name="distributionStrategy"> Distribution strategy used for zone allocation policy. </param>
-        public ZoneAllocationPolicy(ZoneDistributionStrategy distributionStrategy)
+        public ComputeFleetZoneAllocationPolicy(ComputeFleetZoneDistributionStrategy distributionStrategy)
         {
             DistributionStrategy = distributionStrategy;
             ZonePreferences = new ChangeTrackingList<ZonePreference>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ZoneAllocationPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetZoneAllocationPolicy"/>. </summary>
         /// <param name="distributionStrategy"> Distribution strategy used for zone allocation policy. </param>
         /// <param name="zonePreferences"> Zone preferences, required when zone distribution strategy is Prioritized. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ZoneAllocationPolicy(ZoneDistributionStrategy distributionStrategy, IList<ZonePreference> zonePreferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeFleetZoneAllocationPolicy(ComputeFleetZoneDistributionStrategy distributionStrategy, IList<ZonePreference> zonePreferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DistributionStrategy = distributionStrategy;
             ZonePreferences = zonePreferences;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ZoneAllocationPolicy"/> for deserialization. </summary>
-        internal ZoneAllocationPolicy()
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetZoneAllocationPolicy"/> for deserialization. </summary>
+        internal ComputeFleetZoneAllocationPolicy()
         {
         }
 
         /// <summary> Distribution strategy used for zone allocation policy. </summary>
-        public ZoneDistributionStrategy DistributionStrategy { get; set; }
+        public ComputeFleetZoneDistributionStrategy DistributionStrategy { get; set; }
         /// <summary> Zone preferences, required when zone distribution strategy is Prioritized. </summary>
         public IList<ZonePreference> ZonePreferences { get; }
     }

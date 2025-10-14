@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class VirtualMachine : IUtf8JsonSerializable, IJsonModel<VirtualMachine>
+    public partial class ComputeFleetVirtualMachine : IUtf8JsonSerializable, IJsonModel<ComputeFleetVirtualMachine>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachine>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVirtualMachine>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VirtualMachine>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeFleetVirtualMachine>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachine)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetVirtualMachine)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        VirtualMachine IJsonModel<VirtualMachine>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeFleetVirtualMachine IJsonModel<ComputeFleetVirtualMachine>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachine)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeFleetVirtualMachine)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachine(document.RootElement, options);
+            return DeserializeComputeFleetVirtualMachine(document.RootElement, options);
         }
 
-        internal static VirtualMachine DeserializeVirtualMachine(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeFleetVirtualMachine DeserializeComputeFleetVirtualMachine(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            VmOperationStatus operationStatus = default;
+            ComputeFleetVmOperationStatus operationStatus = default;
             ComputeFleetApiError error = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 if (property.NameEquals("operationStatus"u8))
                 {
-                    operationStatus = new VmOperationStatus(property.Value.GetString());
+                    operationStatus = new ComputeFleetVmOperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualMachine(
+            return new ComputeFleetVirtualMachine(
                 id,
                 name,
                 type,
@@ -133,35 +133,35 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VirtualMachine>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeFleetVirtualMachine>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachine)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetVirtualMachine)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VirtualMachine IPersistableModel<VirtualMachine>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeFleetVirtualMachine IPersistableModel<ComputeFleetVirtualMachine>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVirtualMachine(document.RootElement, options);
+                        return DeserializeComputeFleetVirtualMachine(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachine)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeFleetVirtualMachine)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VirtualMachine>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeFleetVirtualMachine>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

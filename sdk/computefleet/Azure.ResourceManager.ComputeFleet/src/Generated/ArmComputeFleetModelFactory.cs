@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for Fleet. </param>
         /// <returns> A new <see cref="Models.ComputeFleetProperties"/> instance for mocking. </returns>
-        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = null, SpotPriorityProfile spotPriorityProfile = null, RegularPriorityProfile regularPriorityProfile = null, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = null, ComputeFleetVmAttributes vmAttributes = null, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = null, ComputeFleetComputeProfile computeProfile = null, DateTimeOffset? createdOn = null, string uniqueId = null, FleetMode? mode = null, CapacityType? capacityType = null, ZoneAllocationPolicy zoneAllocationPolicy = null)
+        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = null, SpotPriorityProfile spotPriorityProfile = null, RegularPriorityProfile regularPriorityProfile = null, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = null, ComputeFleetVmAttributes vmAttributes = null, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = null, ComputeFleetComputeProfile computeProfile = null, DateTimeOffset? createdOn = null, string uniqueId = null, ComputeFleetMode? mode = null, ComputeFleetCapacityType? capacityType = null, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = null)
         {
             vmSizesProfile ??= new List<ComputeFleetVmSizeProfile>();
             additionalLocationsLocationProfiles ??= new List<LocationProfile>();
@@ -350,17 +350,17 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetInnerError(exceptionType, errorDetail, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachine"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeFleetVirtualMachine"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
-        /// <returns> A new <see cref="Models.VirtualMachine"/> instance for mocking. </returns>
-        public static VirtualMachine VirtualMachine(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VmOperationStatus operationStatus = default, ComputeFleetApiError error = null)
+        /// <returns> A new <see cref="Models.ComputeFleetVirtualMachine"/> instance for mocking. </returns>
+        public static ComputeFleetVirtualMachine ComputeFleetVirtualMachine(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ComputeFleetVmOperationStatus operationStatus = default, ComputeFleetApiError error = null)
         {
-            return new VirtualMachine(
+            return new ComputeFleetVirtualMachine(
                 id,
                 name,
                 resourceType,

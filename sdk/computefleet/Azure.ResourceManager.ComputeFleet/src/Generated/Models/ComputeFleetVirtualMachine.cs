@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> An instant Fleet's virtual machine. </summary>
-    public partial class VirtualMachine : ResourceData
+    public partial class ComputeFleetVirtualMachine : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachine"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVirtualMachine"/>. </summary>
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
-        internal VirtualMachine(VmOperationStatus operationStatus)
+        internal ComputeFleetVirtualMachine(ComputeFleetVmOperationStatus operationStatus)
         {
             OperationStatus = operationStatus;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachine"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVirtualMachine"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -62,20 +62,20 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachine(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VmOperationStatus operationStatus, ComputeFleetApiError error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ComputeFleetVirtualMachine(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComputeFleetVmOperationStatus operationStatus, ComputeFleetApiError error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             OperationStatus = operationStatus;
             Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachine"/> for deserialization. </summary>
-        internal VirtualMachine()
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetVirtualMachine"/> for deserialization. </summary>
+        internal ComputeFleetVirtualMachine()
         {
         }
 
         /// <summary> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </summary>
-        public VmOperationStatus OperationStatus { get; }
+        public ComputeFleetVmOperationStatus OperationStatus { get; }
         /// <summary> Error information when `operationStatus` is `Failed`. </summary>
         public ComputeFleetApiError Error { get; }
     }

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for Fleet. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, FleetMode? mode, CapacityType? capacityType, ZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, ComputeFleetMode? mode, ComputeFleetCapacityType? capacityType, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             SpotPriorityProfile = spotPriorityProfile;
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Specifies the ID which uniquely identifies a Compute Fleet. </summary>
         public string UniqueId { get; }
         /// <summary> Mode of the Fleet. </summary>
-        public FleetMode? Mode { get; set; }
+        public ComputeFleetMode? Mode { get; set; }
         /// <summary>
         /// Specifies capacity type for Fleet Regular and Spot priority profiles.
         /// capacityType is an immutable property. Once set during Fleet creation, it cannot be updated.
         /// Specifying different capacity type for Fleet Regular and Spot priority profiles is not allowed.
         /// </summary>
-        public CapacityType? CapacityType { get; set; }
+        public ComputeFleetCapacityType? CapacityType { get; set; }
         /// <summary> Zone Allocation Policy for Fleet. </summary>
-        public ZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
+        public ComputeFleetZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
     }
 }

@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ComputeFleetComputeProfile computeProfile = default;
             DateTimeOffset? timeCreated = default;
             string uniqueId = default;
-            FleetMode? mode = default;
-            CapacityType? capacityType = default;
-            ZoneAllocationPolicy zoneAllocationPolicy = default;
+            ComputeFleetMode? mode = default;
+            ComputeFleetCapacityType? capacityType = default;
+            ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    mode = new FleetMode(property.Value.GetString());
+                    mode = new ComputeFleetMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("capacityType"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    capacityType = new CapacityType(property.Value.GetString());
+                    capacityType = new ComputeFleetCapacityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zoneAllocationPolicy"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    zoneAllocationPolicy = ZoneAllocationPolicy.DeserializeZoneAllocationPolicy(property.Value, options);
+                    zoneAllocationPolicy = ComputeFleetZoneAllocationPolicy.DeserializeComputeFleetZoneAllocationPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

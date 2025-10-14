@@ -773,9 +773,9 @@ IsOverridable = true,
 },
 },
 }},
-                    Mode = FleetMode.Managed,
-                    CapacityType = CapacityType.Vm,
-                    ZoneAllocationPolicy = new ZoneAllocationPolicy(ZoneDistributionStrategy.BestEffortSingleZone),
+                    Mode = ComputeFleetMode.Managed,
+                    CapacityType = ComputeFleetCapacityType.Vm,
+                    ZoneAllocationPolicy = new ComputeFleetZoneAllocationPolicy(ComputeFleetZoneDistributionStrategy.BestEffortSingleZone),
                 },
             };
             ArmOperation<ComputeFleetResource> lro = await computeFleet.UpdateAsync(WaitUntil.Completed, patch);
@@ -793,7 +793,7 @@ IsOverridable = true,
         public async Task GetVirtualMachineScaleSets_FleetsListVirtualMachineScaleSets()
         {
             // Generated from example definition: 2025-07-01-preview/Fleets_ListVirtualMachineScaleSets.json
-            // this example is just showing the usage of "VirtualMachineScaleSet_ListVirtualMachineScaleSets" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Fleets_ListVirtualMachineScaleSets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -804,8 +804,8 @@ IsOverridable = true,
             // for more information of creating ComputeFleetResource, please refer to the document of ComputeFleetResource
             string subscriptionId = "1DC2F28C-A625-4B0E-9748-9885A3C9E9EB";
             string resourceGroupName = "rgazurefleet";
-            string name = "myFleet";
-            ResourceIdentifier computeFleetResourceId = ComputeFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            string fleetName = null;
+            ResourceIdentifier computeFleetResourceId = ComputeFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             ComputeFleetResource computeFleet = client.GetComputeFleetResource(computeFleetResourceId);
 
             // invoke the operation and iterate over the result
@@ -822,7 +822,7 @@ IsOverridable = true,
         public async Task GetVirtualMachines_FleetsListVirtualMachinesMaximumSet()
         {
             // Generated from example definition: 2025-07-01-preview/Fleets_ListVirtualMachines.json
-            // this example is just showing the usage of "VirtualMachine_ListVirtualMachines" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Fleets_ListVirtualMachines" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -833,12 +833,12 @@ IsOverridable = true,
             // for more information of creating ComputeFleetResource, please refer to the document of ComputeFleetResource
             string subscriptionId = "3453D930-6DDF-4466-B3B3-E1AEE9BD448C";
             string resourceGroupName = "rgazurefleet";
-            string name = "myFleet";
-            ResourceIdentifier computeFleetResourceId = ComputeFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            string fleetName = null;
+            ResourceIdentifier computeFleetResourceId = ComputeFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             ComputeFleetResource computeFleet = client.GetComputeFleetResource(computeFleetResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (VirtualMachine item in computeFleet.GetVirtualMachinesAsync())
+            await foreach (ComputeFleetVirtualMachine item in computeFleet.GetVirtualMachinesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

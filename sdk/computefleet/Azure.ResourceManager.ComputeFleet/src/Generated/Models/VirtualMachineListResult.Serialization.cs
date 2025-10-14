@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            IReadOnlyList<VirtualMachine> value = default;
+            IReadOnlyList<ComputeFleetVirtualMachine> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<VirtualMachine> array = new List<VirtualMachine>();
+                    List<ComputeFleetVirtualMachine> array = new List<ComputeFleetVirtualMachine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachine.DeserializeVirtualMachine(item, options));
+                        array.Add(ComputeFleetVirtualMachine.DeserializeComputeFleetVirtualMachine(item, options));
                     }
                     value = array;
                     continue;

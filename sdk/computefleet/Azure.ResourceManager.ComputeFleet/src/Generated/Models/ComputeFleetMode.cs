@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Modes for Compute Fleet. </summary>
-    public readonly partial struct FleetMode : IEquatable<FleetMode>
+    public readonly partial struct ComputeFleetMode : IEquatable<ComputeFleetMode>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="FleetMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FleetMode(string value)
+        public ComputeFleetMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         private const string InstanceValue = "Instance";
 
         /// <summary> Default. Managed is the default mode for Compute Fleet where VMs are provisioned via VMSS. </summary>
-        public static FleetMode Managed { get; } = new FleetMode(ManagedValue);
+        public static ComputeFleetMode Managed { get; } = new ComputeFleetMode(ManagedValue);
         /// <summary> Instance mode for Compute Fleet will directly provision VM instances. </summary>
-        public static FleetMode Instance { get; } = new FleetMode(InstanceValue);
-        /// <summary> Determines if two <see cref="FleetMode"/> values are the same. </summary>
-        public static bool operator ==(FleetMode left, FleetMode right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="FleetMode"/> values are not the same. </summary>
-        public static bool operator !=(FleetMode left, FleetMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FleetMode"/>. </summary>
-        public static implicit operator FleetMode(string value) => new FleetMode(value);
+        public static ComputeFleetMode Instance { get; } = new ComputeFleetMode(InstanceValue);
+        /// <summary> Determines if two <see cref="ComputeFleetMode"/> values are the same. </summary>
+        public static bool operator ==(ComputeFleetMode left, ComputeFleetMode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ComputeFleetMode"/> values are not the same. </summary>
+        public static bool operator !=(ComputeFleetMode left, ComputeFleetMode right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetMode"/>. </summary>
+        public static implicit operator ComputeFleetMode(string value) => new ComputeFleetMode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FleetMode other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeFleetMode other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(FleetMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeFleetMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

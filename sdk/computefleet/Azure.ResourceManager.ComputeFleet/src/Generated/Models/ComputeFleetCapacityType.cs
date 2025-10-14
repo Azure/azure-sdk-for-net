@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Capacity types for Compute Fleet. </summary>
-    public readonly partial struct CapacityType : IEquatable<CapacityType>
+    public readonly partial struct ComputeFleetCapacityType : IEquatable<ComputeFleetCapacityType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="CapacityType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeFleetCapacityType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CapacityType(string value)
+        public ComputeFleetCapacityType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         private const string VCpuValue = "VCpu";
 
         /// <summary> Default. VM is the default capacity type for Compute Fleet where Fleet capacity is provisioned in terms of VMs. </summary>
-        public static CapacityType Vm { get; } = new CapacityType(VmValue);
+        public static ComputeFleetCapacityType Vm { get; } = new ComputeFleetCapacityType(VmValue);
         /// <summary>
         /// VCpu is the capacity type for Compute Fleet where Fleet capacity is provisioned in terms of VCpus.
         /// If VCpu capacity is not exactly divisible by VCpu count in VMSizes, Fleet capacity in VCpus will be overprovisioned by default.
         /// </summary>
-        public static CapacityType VCpu { get; } = new CapacityType(VCpuValue);
-        /// <summary> Determines if two <see cref="CapacityType"/> values are the same. </summary>
-        public static bool operator ==(CapacityType left, CapacityType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="CapacityType"/> values are not the same. </summary>
-        public static bool operator !=(CapacityType left, CapacityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacityType"/>. </summary>
-        public static implicit operator CapacityType(string value) => new CapacityType(value);
+        public static ComputeFleetCapacityType VCpu { get; } = new ComputeFleetCapacityType(VCpuValue);
+        /// <summary> Determines if two <see cref="ComputeFleetCapacityType"/> values are the same. </summary>
+        public static bool operator ==(ComputeFleetCapacityType left, ComputeFleetCapacityType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ComputeFleetCapacityType"/> values are not the same. </summary>
+        public static bool operator !=(ComputeFleetCapacityType left, ComputeFleetCapacityType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetCapacityType"/>. </summary>
+        public static implicit operator ComputeFleetCapacityType(string value) => new ComputeFleetCapacityType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CapacityType other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeFleetCapacityType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(CapacityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeFleetCapacityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
