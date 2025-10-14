@@ -10,14 +10,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/fleet/ci.mgmt.yml
-    - sdk/fleet/Azure.ResourceManager.ContainerServiceFleet/
+    - sdk/computerecommender/ci.mgmt.yml
+    - sdk/computerecommender/Azure.ResourceManager.Compute.Recommender
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: fleet
-    LimitForPullRequest: true
+    ServiceDirectory: computerecommender
     Artifacts:
-    - name: Azure.ResourceManager.ContainerServiceFleet
-      safeName: AzureResourceManagerContainerServiceFleet
+    - name: Azure.ResourceManager.Compute.Recommender
+      safeName: AzureResourceManagerComputeRecommender

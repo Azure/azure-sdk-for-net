@@ -11,6 +11,7 @@
     <IsTestProject>false</IsTestProject>
     <IncludeAutorestDependency>false</IncludeAutorestDependency>
     <IsPackable>true</IsPackable>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
