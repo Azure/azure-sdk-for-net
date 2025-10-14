@@ -173,7 +173,12 @@ function DeployStressTests(
                 -MatrixReplace $MatrixReplace `
                 -MatrixNonSparseParameters $MatrixNonSparseParameters)
     Write-Host "" "Found $($pkgs.Length) stress test packages:"
-    Write-Host $pkgs.Directory ""
+    if ($pkgs.Length -eq 0){
+    Write-Output "No stress test packages found matching the specified criteria."
+    exit 0
+    } else {
+        Write-Host $pkgs.Directory ""
+    }
     foreach ($pkg in $pkgs) {
         Write-Host "Deploying stress test at '$($pkg.Directory)'"
         DeployStressPackage `
