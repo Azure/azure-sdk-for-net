@@ -132,13 +132,13 @@ foreach ($packageInfoFile in $packageInfoFiles)
     # Check if the function supports the packageInfo parameter
     $functionInfo = Get-Command $FindArtifactForApiReviewFn -ErrorAction SilentlyContinue
     $supportsPackageInfoParam = $false
-    
+
     if ($functionInfo -and $functionInfo.Parameters) {
         # Check if function specifically supports packageInfo parameter
         $parameterNames = $functionInfo.Parameters.Keys
         $supportsPackageInfoParam = $parameterNames -contains 'packageInfo'
     }
-    
+
     # Call function with appropriate parameters
     if ($supportsPackageInfoParam) {
         LogInfo "Calling $FindArtifactForApiReviewFn with packageInfo parameter"
