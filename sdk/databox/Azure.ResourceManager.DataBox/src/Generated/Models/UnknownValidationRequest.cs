@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Unknown version of ValidationRequest. </summary>
+    /// <summary> Unknown version of DataBoxValidationContent. </summary>
     internal partial class UnknownValidationRequest : DataBoxValidationContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownValidationRequest"/>. </summary>
@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="DataBoxValidateAddressContent"/>, <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/> and <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownValidationRequest(DataBoxValidationCategory validationCategory, IList<DataBoxValidationInputContent> individualRequestDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(validationCategory, individualRequestDetails, serializedAdditionalRawData)
+        internal UnknownValidationRequest(string validationCategory, IList<DataBoxValidationInputContent> individualRequestDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(validationCategory, individualRequestDetails, serializedAdditionalRawData)
         {
-            ValidationCategory = validationCategory;
+            ValidationCategory = validationCategory ?? "Unknown";
         }
 
         /// <summary> Initializes a new instance of <see cref="UnknownValidationRequest"/> for deserialization. </summary>

@@ -51,6 +51,7 @@ extends:
       - /eng/Directory.Build.Common.props
       - /eng/Directory.Build.Common.targets
       - /eng/service.proj
+      - /sdk/keyvault/Azure.Security.KeyVault.Secrets/
 
     - name: Azure.Core.Experimental
       safeName: AzureCoreExperimental
@@ -66,6 +67,9 @@ extends:
       safeName: AzureCoreAmqp
     - name: System.ClientModel
       safeName: SystemClientModel
+    - name: Microsoft.ClientModel.TestFramework
+      safeName: MicrosoftClientModelTestFramework
+      skipReleaseStage: true
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Core

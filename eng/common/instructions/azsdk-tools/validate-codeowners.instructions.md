@@ -1,9 +1,9 @@
 ---
 mode: 'agent'
-tools: ['azsdk_check_service_label', 'azsdk_engsys_validate_codeowners_entry_for_service', 'azsdk_engsys_codeowner_update'] 
+tools: ['azsdk_check_service_label', 'azsdk_engsys_validate_codeowners_entry_for_service', 'azsdk_engsys_codeowner_update']
 ---
 
-## Goal: 
+## Goal:
 Validate service label and ensure at least 2 valid code owners exist for SDK repositories.
 
 ## Step 1: Validate Service Label
@@ -11,12 +11,12 @@ Use `azsdk_check_service_label` to verify the service label exists:
 - **DoesNotExist/NotAServiceLabel**: Direct user to create valid service label first. Stop validation process until service label is created.
 - **Exists/InReview**: Proceed to Step 2
 
-## Step 2: Validate Code Owners  
+## Step 2: Validate Code Owners
 Ask user to specify SDK repository they want to validate codeowners for or detect from context.
 
 Repository name mapping:
 - .NET/dotnet: use "azure-sdk-for-net"
-- Python: use "azure-sdk-for-python" 
+- Python: use "azure-sdk-for-python"
 - Java: use "azure-sdk-for-java"
 - JavaScript: use "azure-sdk-for-js"
 - Go: use "azure-sdk-for-go"
@@ -28,7 +28,7 @@ Use `azsdk_engsys_validate_codeowners_entry_for_service` with either `serviceLab
 
 ## Step 3: Check Existing Code Owners
 Valid code owners must be:
-- PUBLIC members of Microsoft and Azure GitHub organizations  
+- PUBLIC members of Microsoft and Azure GitHub organizations
 - Have write access to the SDK repository
 
 **If at least 2 valid owners**: Success - optionally add or delete additional owners
@@ -41,7 +41,7 @@ When no CODEOWNERS entry exists yet:
 1. Ensure you have the following information
    - repo - **Required** - Repository name mapping:
       - .NET/dotnet: use "azure-sdk-for-net"
-      - Python: use "azure-sdk-for-python" 
+      - Python: use "azure-sdk-for-python"
       - Java: use "azure-sdk-for-java"
       - JavaScript: use "azure-sdk-for-js"
       - Go: use "azure-sdk-for-go"
@@ -71,4 +71,4 @@ When no CODEOWNERS entry exists yet:
 ## Requirements
 - **MINIMUM**: At least 2 valid code owners at all times
 - **NO EXCEPTIONS**: Cannot proceed with insufficient owners
-- **RESPONSE HANDLING**: If any exception occurs during validation or creation, ALWAYS provide documentation link [Codeowners documentation](https://eng.ms/docs/products/azure-developer-experience/develop/supporting-sdk-customers/codeowners)
+- **RESPONSE HANDLING**: If any exception occurs during validation or creation, ALWAYS provide documentation link [CODEOWNERS documentation](https://eng.ms/docs/products/azure-developer-experience/develop/supporting-sdk-customers/codeowners)

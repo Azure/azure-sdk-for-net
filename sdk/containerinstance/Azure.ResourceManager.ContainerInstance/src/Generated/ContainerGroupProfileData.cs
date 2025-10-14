@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary>
     /// A class representing the ContainerGroupProfile data model.
-    /// container group profile object
+    /// A container group profile object
     /// </summary>
     public partial class ContainerGroupProfileData : TrackedResourceData
     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerInstance
             Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
             ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
             Volumes = new ChangeTrackingList<ContainerVolume>();
-            RegisteredRevisions = new ChangeTrackingList<long>();
+            RegisteredRevisions = new ChangeTrackingList<int>();
             Zones = new ChangeTrackingList<string>();
         }
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="useKrypton"> Gets or sets Krypton use property. </param>
         /// <param name="zones"> The zones for the container group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<ContainerInstanceContainer> containers, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, DateTimeOffset? shutdownGracePeriod, ContainerGroupIPAddress ipAddress, DateTimeOffset? timeToLive, ContainerInstanceOperatingSystemType? osType, IList<ContainerVolume> volumes, ContainerGroupDiagnostics diagnostics, ContainerGroupPriority? priority, ConfidentialComputeProperties confidentialComputeProperties, ContainerSecurityContextDefinition securityContext, long? revision, IList<long> registeredRevisions, bool? useKrypton, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerGroupProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<ContainerInstanceContainer> containers, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, DateTimeOffset? shutdownGracePeriod, ContainerGroupIPAddress ipAddress, DateTimeOffset? timeToLive, ContainerInstanceOperatingSystemType? osType, IList<ContainerVolume> volumes, ContainerGroupDiagnostics diagnostics, ContainerGroupPriority? priority, ConfidentialComputeProperties confidentialComputeProperties, ContainerSecurityContextDefinition securityContext, int? revision, IReadOnlyList<int> registeredRevisions, bool? useKrypton, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             EncryptionProperties = encryptionProperties;
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> The container security properties. </summary>
         public ContainerSecurityContextDefinition SecurityContext { get; set; }
         /// <summary> Container group profile current revision number. </summary>
-        public long? Revision { get; set; }
+        public int? Revision { get; }
         /// <summary> Registered revisions are calculated at request time based off the records in the table logs. </summary>
-        public IList<long> RegisteredRevisions { get; }
+        public IReadOnlyList<int> RegisteredRevisions { get; }
         /// <summary> Gets or sets Krypton use property. </summary>
         public bool? UseKrypton { get; set; }
         /// <summary> The zones for the container group. </summary>

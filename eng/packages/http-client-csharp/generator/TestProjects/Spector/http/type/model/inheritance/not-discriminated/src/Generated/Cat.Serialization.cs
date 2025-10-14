@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
-    public partial class Cat : IJsonModel<Cat>
+    public partial class Cat : Pet, IJsonModel<Cat>
     {
         internal Cat() => throw null;
 

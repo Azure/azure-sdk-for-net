@@ -7,8 +7,8 @@ namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Specifies trait information to be included when listing blobs with the
-    /// <see cref="BlobContainerClient.GetBlobsAsync"/> and
-    /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>
+    /// <see cref="BlobContainerClient.GetBlobsAsync(GetBlobsOptions, System.Threading.CancellationToken)"/> and
+    /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync(GetBlobsByHierarchyOptions, System.Threading.CancellationToken)"/>
     /// operations.
     /// </summary>
     [Flags]

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public partial class IsUnknownAdditionalPropertiesDerived : IJsonModel<IsUnknownAdditionalPropertiesDerived>
+    public partial class IsUnknownAdditionalPropertiesDerived : IsUnknownAdditionalProperties, IJsonModel<IsUnknownAdditionalPropertiesDerived>
     {
         internal IsUnknownAdditionalPropertiesDerived() => throw null;
 

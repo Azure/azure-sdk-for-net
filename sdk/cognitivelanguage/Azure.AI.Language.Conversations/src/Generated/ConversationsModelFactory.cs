@@ -24,23 +24,23 @@ namespace Azure.AI.Language.Conversations
             return new ConversationalAITask(AnalyzeConversationInputKind.ConversationalAI, serializedAdditionalRawData: null, analysisInput, parameters);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AIConversationLanguageUnderstandingActionContent"/>. </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="deploymentName"> The name of the deployment to use. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        /// <returns> A new <see cref="Models.AIConversationLanguageUnderstandingActionContent"/> instance for mocking. </returns>
-        public static AIConversationLanguageUnderstandingActionContent AIConversationLanguageUnderstandingActionContent(string projectName = null, string deploymentName = null, StringIndexType? stringIndexType = null)
+        /// <summary> Initializes a new instance of <see cref="Models.TextConversation"/>. </summary>
+        /// <param name="id"> Unique identifier for the conversation. </param>
+        /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
+        /// <param name="domain"> domain. </param>
+        /// <param name="conversationItems"> Ordered list of text conversation items in the conversation. </param>
+        /// <returns> A new <see cref="Models.TextConversation"/> instance for mocking. </returns>
+        public static TextConversation TextConversation(string id = null, string language = null, ConversationDomain? domain = null, IEnumerable<TextConversationItem> conversationItems = null)
         {
-            return new AIConversationLanguageUnderstandingActionContent(projectName, deploymentName, stringIndexType, serializedAdditionalRawData: null);
-        }
+            conversationItems ??= new List<TextConversationItem>();
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationLanguageUnderstandingInput"/>. </summary>
-        /// <param name="conversationInput"> The input ConversationItem and its optional parameters. </param>
-        /// <param name="actionContent"> Input parameters necessary for a Conversation language understanding task. </param>
-        /// <returns> A new <see cref="Models.ConversationLanguageUnderstandingInput"/> instance for mocking. </returns>
-        public static ConversationLanguageUnderstandingInput ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput = null, ConversationLanguageUnderstandingActionContent actionContent = null)
-        {
-            return new ConversationLanguageUnderstandingInput(AnalyzeConversationInputKind.Conversation, serializedAdditionalRawData: null, conversationInput, actionContent);
+            return new TextConversation(
+                id,
+                language,
+                InputModality.Text,
+                domain,
+                serializedAdditionalRawData: null,
+                conversationItems?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TextConversationItem"/>. </summary>
@@ -61,6 +61,87 @@ namespace Azure.AI.Language.Conversations
                 role,
                 text,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConversationInput"/>. </summary>
+        /// <param name="id"> Unique identifier for the conversation. </param>
+        /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
+        /// <param name="modality"> modality. </param>
+        /// <param name="domain"> domain. </param>
+        /// <returns> A new <see cref="Models.ConversationInput"/> instance for mocking. </returns>
+        public static ConversationInput ConversationInput(string id = null, string language = null, string modality = null, ConversationDomain? domain = null)
+        {
+            return new UnknownConversationInput(id, language, modality == null ? default : new InputModality(modality), domain, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TranscriptConversation"/>. </summary>
+        /// <param name="id"> Unique identifier for the conversation. </param>
+        /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
+        /// <param name="domain"> domain. </param>
+        /// <param name="conversationItems"> Ordered list of transcript conversation items in the conversation. </param>
+        /// <returns> A new <see cref="Models.TranscriptConversation"/> instance for mocking. </returns>
+        public static TranscriptConversation TranscriptConversation(string id = null, string language = null, ConversationDomain? domain = null, IEnumerable<TranscriptConversationItem> conversationItems = null)
+        {
+            conversationItems ??= new List<TranscriptConversationItem>();
+
+            return new TranscriptConversation(
+                id,
+                language,
+                InputModality.Transcript,
+                domain,
+                serializedAdditionalRawData: null,
+                conversationItems?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TranscriptConversationItem"/>. </summary>
+        /// <param name="id"> The ID of a conversation item. </param>
+        /// <param name="participantId"> The participant ID of a conversation item. </param>
+        /// <param name="language"> The override language of a conversation item in BCP 47 language representation. </param>
+        /// <param name="modality"> Enumeration of supported conversational modalities. </param>
+        /// <param name="role"> Role of the participant. </param>
+        /// <param name="inverseTextNormalized"> Inverse text normalization (ITN) representation of input. The inverse-text-normalized form is the recognized text from Microsoft's speech-to-text API, with phone numbers, numbers, abbreviations, and other transformations applied. </param>
+        /// <param name="maskedInverseTextNormalized"> Inverse-text-normalized format with profanity masking applied. </param>
+        /// <param name="text"> Display form of the recognized text from the speech-to-text API, with punctuation and capitalization added. </param>
+        /// <param name="lexical"> Lexical form of the recognized text from the speech-to-text API, with the actual words recognized. </param>
+        /// <param name="wordLevelTimings"> List of word-level audio timing information. </param>
+        /// <param name="conversationItemLevelTiming"> Audio timing at the conversation item level. This still can help with AI quality if word-level audio timings are not available. </param>
+        /// <returns> A new <see cref="Models.TranscriptConversationItem"/> instance for mocking. </returns>
+        public static TranscriptConversationItem TranscriptConversationItem(string id = null, string participantId = null, string language = null, InputModality? modality = null, ParticipantRole? role = null, string inverseTextNormalized = null, string maskedInverseTextNormalized = null, string text = null, string lexical = null, IEnumerable<WordLevelTiming> wordLevelTimings = null, ConversationItemLevelTiming conversationItemLevelTiming = null)
+        {
+            wordLevelTimings ??= new List<WordLevelTiming>();
+
+            return new TranscriptConversationItem(
+                id,
+                participantId,
+                language,
+                modality,
+                role,
+                inverseTextNormalized,
+                maskedInverseTextNormalized,
+                text,
+                lexical,
+                wordLevelTimings?.ToList(),
+                conversationItemLevelTiming,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AIConversationLanguageUnderstandingActionContent"/>. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the deployment to use. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <returns> A new <see cref="Models.AIConversationLanguageUnderstandingActionContent"/> instance for mocking. </returns>
+        public static AIConversationLanguageUnderstandingActionContent AIConversationLanguageUnderstandingActionContent(string projectName = null, string deploymentName = null, StringIndexType? stringIndexType = null)
+        {
+            return new AIConversationLanguageUnderstandingActionContent(projectName, deploymentName, stringIndexType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConversationLanguageUnderstandingInput"/>. </summary>
+        /// <param name="conversationInput"> The input ConversationItem and its optional parameters. </param>
+        /// <param name="actionContent"> Input parameters necessary for a Conversation language understanding task. </param>
+        /// <returns> A new <see cref="Models.ConversationLanguageUnderstandingInput"/> instance for mocking. </returns>
+        public static ConversationLanguageUnderstandingInput ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput = null, ConversationLanguageUnderstandingActionContent actionContent = null)
+        {
+            return new ConversationLanguageUnderstandingInput(AnalyzeConversationInputKind.Conversation, serializedAdditionalRawData: null, conversationInput, actionContent);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConversationLanguageUnderstandingActionContent"/>. </summary>
@@ -1022,87 +1103,6 @@ namespace Azure.AI.Language.Conversations
             actions ??= new List<AnalyzeConversationOperationAction>();
 
             return new AnalyzeConversationOperationInput(displayName, conversationInput, actions?.ToList(), cancelAfter, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationInput"/>. </summary>
-        /// <param name="id"> Unique identifier for the conversation. </param>
-        /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
-        /// <param name="modality"> modality. </param>
-        /// <param name="domain"> domain. </param>
-        /// <returns> A new <see cref="Models.ConversationInput"/> instance for mocking. </returns>
-        public static ConversationInput ConversationInput(string id = null, string language = null, string modality = null, ConversationDomain? domain = null)
-        {
-            return new UnknownConversationInput(id, language, modality == null ? default : new InputModality(modality), domain, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TextConversation"/>. </summary>
-        /// <param name="id"> Unique identifier for the conversation. </param>
-        /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
-        /// <param name="domain"> domain. </param>
-        /// <param name="conversationItems"> Ordered list of text conversation items in the conversation. </param>
-        /// <returns> A new <see cref="Models.TextConversation"/> instance for mocking. </returns>
-        public static TextConversation TextConversation(string id = null, string language = null, ConversationDomain? domain = null, IEnumerable<TextConversationItem> conversationItems = null)
-        {
-            conversationItems ??= new List<TextConversationItem>();
-
-            return new TextConversation(
-                id,
-                language,
-                InputModality.Text,
-                domain,
-                serializedAdditionalRawData: null,
-                conversationItems?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TranscriptConversation"/>. </summary>
-        /// <param name="id"> Unique identifier for the conversation. </param>
-        /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
-        /// <param name="domain"> domain. </param>
-        /// <param name="conversationItems"> Ordered list of transcript conversation items in the conversation. </param>
-        /// <returns> A new <see cref="Models.TranscriptConversation"/> instance for mocking. </returns>
-        public static TranscriptConversation TranscriptConversation(string id = null, string language = null, ConversationDomain? domain = null, IEnumerable<TranscriptConversationItem> conversationItems = null)
-        {
-            conversationItems ??= new List<TranscriptConversationItem>();
-
-            return new TranscriptConversation(
-                id,
-                language,
-                InputModality.Transcript,
-                domain,
-                serializedAdditionalRawData: null,
-                conversationItems?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TranscriptConversationItem"/>. </summary>
-        /// <param name="id"> The ID of a conversation item. </param>
-        /// <param name="participantId"> The participant ID of a conversation item. </param>
-        /// <param name="language"> The override language of a conversation item in BCP 47 language representation. </param>
-        /// <param name="modality"> Enumeration of supported conversational modalities. </param>
-        /// <param name="role"> Role of the participant. </param>
-        /// <param name="inverseTextNormalized"> Inverse text normalization (ITN) representation of input. The inverse-text-normalized form is the recognized text from Microsoft's speech-to-text API, with phone numbers, numbers, abbreviations, and other transformations applied. </param>
-        /// <param name="maskedInverseTextNormalized"> Inverse-text-normalized format with profanity masking applied. </param>
-        /// <param name="text"> Display form of the recognized text from the speech-to-text API, with punctuation and capitalization added. </param>
-        /// <param name="lexical"> Lexical form of the recognized text from the speech-to-text API, with the actual words recognized. </param>
-        /// <param name="wordLevelTimings"> List of word-level audio timing information. </param>
-        /// <param name="conversationItemLevelTiming"> Audio timing at the conversation item level. This still can help with AI quality if word-level audio timings are not available. </param>
-        /// <returns> A new <see cref="Models.TranscriptConversationItem"/> instance for mocking. </returns>
-        public static TranscriptConversationItem TranscriptConversationItem(string id = null, string participantId = null, string language = null, InputModality? modality = null, ParticipantRole? role = null, string inverseTextNormalized = null, string maskedInverseTextNormalized = null, string text = null, string lexical = null, IEnumerable<WordLevelTiming> wordLevelTimings = null, ConversationItemLevelTiming conversationItemLevelTiming = null)
-        {
-            wordLevelTimings ??= new List<WordLevelTiming>();
-
-            return new TranscriptConversationItem(
-                id,
-                participantId,
-                language,
-                modality,
-                role,
-                inverseTextNormalized,
-                maskedInverseTextNormalized,
-                text,
-                lexical,
-                wordLevelTimings?.ToList(),
-                conversationItemLevelTiming,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomConversationSummarizationActionContent"/>. </summary>

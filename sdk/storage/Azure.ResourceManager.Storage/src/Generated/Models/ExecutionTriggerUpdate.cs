@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExecutionTriggerUpdate"/>. </summary>
-        /// <param name="triggerType"> The trigger type of the storage task assignment execution. </param>
+        /// <param name="taskExecutionTriggerType"> The trigger type of the storage task assignment execution. </param>
         /// <param name="parameters"> The trigger parameters of the storage task assignment execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecutionTriggerUpdate(ExecutionTriggerType? triggerType, ExecutionTriggerParametersUpdate parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExecutionTriggerUpdate(TaskExecutionTriggerType? taskExecutionTriggerType, ExecutionTriggerParametersUpdate parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            TriggerType = triggerType;
+            TaskExecutionTriggerType = taskExecutionTriggerType;
             Parameters = parameters;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The trigger type of the storage task assignment execution. </summary>
         [WirePath("type")]
-        public ExecutionTriggerType? TriggerType { get; set; }
+        public TaskExecutionTriggerType? TaskExecutionTriggerType { get; set; }
         /// <summary> The trigger parameters of the storage task assignment execution. </summary>
         [WirePath("parameters")]
         public ExecutionTriggerParametersUpdate Parameters { get; set; }

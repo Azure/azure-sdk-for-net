@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Playwright.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceQuotaProperties"/>. </summary>
-        /// <param name="freeTrial"> The Playwright workspace quota resource free-trial properties. </param>
+        /// <param name="freeTrial"> The Playwright workspace quota free trial properties. </param>
         /// <param name="provisioningState"> The status of the last resource operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PlaywrightWorkspaceQuotaProperties(PlaywrightWorkspaceFreeTrialProperties freeTrial, PlaywrightProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Playwright.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Playwright workspace quota resource free-trial properties. </summary>
+        /// <summary> The Playwright workspace quota free trial properties. </summary>
         public PlaywrightWorkspaceFreeTrialProperties FreeTrial { get; }
         /// <summary> The status of the last resource operation. </summary>
         public PlaywrightProvisioningState? ProvisioningState { get; }
