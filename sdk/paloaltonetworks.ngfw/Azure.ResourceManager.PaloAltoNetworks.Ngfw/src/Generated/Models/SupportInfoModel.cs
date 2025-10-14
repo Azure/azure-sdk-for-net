@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="startDateForCredits"> date in format yyyy-mm-dd. </param>
         /// <param name="endDateForCredits"> date in format yyyy-mm-dd. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportInfoModel(string productSku, string productSerial, RegistrationStatus? accountRegistrationStatus, string accountId, EnableStatus? freeTrial, int? freeTrialDaysLeft, int? freeTrialCreditLeft, string helpURL, string supportURL, string registerURL, Uri hubUri, int? credits, int? monthlyCreditLeft, string startDateForCredits, string endDateForCredits, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SupportInfoModel(string productSku, string productSerial, AccountRegistrationStatus? accountRegistrationStatus, string accountId, FreeTrialEnableStatus? freeTrial, int? freeTrialDaysLeft, int? freeTrialCreditLeft, string helpURL, string supportURL, string registerURL, Uri hubUri, int? credits, int? monthlyCreditLeft, string startDateForCredits, string endDateForCredits, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProductSku = productSku;
             ProductSerial = productSerial;
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> product Serial associated with given resource. </summary>
         public string ProductSerial { get; }
         /// <summary> account registered in Customer Support Portal. </summary>
-        public RegistrationStatus? AccountRegistrationStatus { get; }
+        public AccountRegistrationStatus? AccountRegistrationStatus { get; }
         /// <summary> Support account associated with given resource. </summary>
         public string AccountId { get; }
         /// <summary> Product usage is in free trial period. </summary>
-        public EnableStatus? FreeTrial { get; }
+        public FreeTrialEnableStatus? FreeTrial { get; }
         /// <summary> Free trial days remaining. </summary>
         public int? FreeTrialDaysLeft { get; }
         /// <summary> Free trial credit remaining. </summary>

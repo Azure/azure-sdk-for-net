@@ -949,6 +949,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
 }
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AccountRegistrationStatus : System.IEquatable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AccountRegistrationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus NotRegistered { get { throw null; } }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus Registered { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AdvancedSecurityObject : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObject>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AdvancedSecurityObject>
     {
         internal AdvancedSecurityObject() { }
@@ -1096,7 +1114,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackCountry RulestackCountry(string code = null, string description = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceListResult RulestackSecurityServiceListResult(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceTypeList value = null, string nextLink = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceTypeList RulestackSecurityServiceTypeList(string securityServicesTypeListType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject> entry = null) { throw null; }
-        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel SupportInfoModel(string productSku = null, string productSerial = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RegistrationStatus? accountRegistrationStatus = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RegistrationStatus?), string accountId = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnableStatus? freeTrial = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnableStatus?), int? freeTrialDaysLeft = default(int?), int? freeTrialCreditLeft = default(int?), string helpURL = null, string supportURL = null, string registerURL = null, System.Uri hubUri = null, int? credits = default(int?), int? monthlyCreditLeft = default(int?), string startDateForCredits = null, string endDateForCredits = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SupportInfoModel SupportInfoModel(string productSku = null, string productSerial = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus? accountRegistrationStatus = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus?), string accountId = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus? freeTrial = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus?), int? freeTrialDaysLeft = default(int?), int? freeTrialCreditLeft = default(int?), string helpURL = null, string supportURL = null, string registerURL = null, System.Uri hubUri = null, int? credits = default(int?), int? monthlyCreditLeft = default(int?), string startDateForCredits = null, string endDateForCredits = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DecryptionRuleType : System.IEquatable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleType>
@@ -1160,24 +1178,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnabledDnsType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EnableStatus : System.IEquatable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnableStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EnableStatus(string value) { throw null; }
-        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnableStatus Disabled { get { throw null; } }
-        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnableStatus Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnableStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnableStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnableStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnableStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnableStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnableStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class EventHubConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EventHubConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EventHubConfiguration>
@@ -1657,6 +1657,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FreeTrialEnableStatus : System.IEquatable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FreeTrialEnableStatus(string value) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class GlobalRulestackInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo>
     {
         internal GlobalRulestackInfo() { }
@@ -1869,24 +1887,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     {
         Allocated = 0,
         InProgress = 1,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RegistrationStatus : System.IEquatable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RegistrationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RegistrationStatus(string value) { throw null; }
-        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RegistrationStatus NotRegistered { get { throw null; } }
-        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RegistrationStatus Registered { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RegistrationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RegistrationStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RegistrationStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RegistrationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RegistrationStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RegistrationStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RuleCreationDefaultMode : System.IEquatable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode>
@@ -2120,10 +2120,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     {
         internal SupportInfoModel() { }
         public string AccountId { get { throw null; } }
-        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RegistrationStatus? AccountRegistrationStatus { get { throw null; } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AccountRegistrationStatus? AccountRegistrationStatus { get { throw null; } }
         public int? Credits { get { throw null; } }
         public string EndDateForCredits { get { throw null; } }
-        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.EnableStatus? FreeTrial { get { throw null; } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FreeTrialEnableStatus? FreeTrial { get { throw null; } }
         public int? FreeTrialCreditLeft { get { throw null; } }
         public int? FreeTrialDaysLeft { get { throw null; } }
         public string HelpURL { get { throw null; } }

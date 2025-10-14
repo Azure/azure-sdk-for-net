@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="startDateForCredits"> date in format yyyy-mm-dd. </param>
         /// <param name="endDateForCredits"> date in format yyyy-mm-dd. </param>
         /// <returns> A new <see cref="Models.SupportInfoModel"/> instance for mocking. </returns>
-        public static SupportInfoModel SupportInfoModel(string productSku = null, string productSerial = null, RegistrationStatus? accountRegistrationStatus = null, string accountId = null, EnableStatus? freeTrial = null, int? freeTrialDaysLeft = null, int? freeTrialCreditLeft = null, string helpURL = null, string supportURL = null, string registerURL = null, Uri hubUri = null, int? credits = null, int? monthlyCreditLeft = null, string startDateForCredits = null, string endDateForCredits = null)
+        public static SupportInfoModel SupportInfoModel(string productSku = null, string productSerial = null, AccountRegistrationStatus? accountRegistrationStatus = null, string accountId = null, FreeTrialEnableStatus? freeTrial = null, int? freeTrialDaysLeft = null, int? freeTrialCreditLeft = null, string helpURL = null, string supportURL = null, string registerURL = null, Uri hubUri = null, int? credits = null, int? monthlyCreditLeft = null, string startDateForCredits = null, string endDateForCredits = null)
         {
             return new SupportInfoModel(
                 productSku,

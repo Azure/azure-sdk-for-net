@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             string productSku = default;
             string productSerial = default;
-            RegistrationStatus? accountRegistrationStatus = default;
+            AccountRegistrationStatus? accountRegistrationStatus = default;
             string accountId = default;
-            EnableStatus? freeTrial = default;
+            FreeTrialEnableStatus? freeTrial = default;
             int? freeTrialDaysLeft = default;
             int? freeTrialCreditLeft = default;
             string helpURL = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    accountRegistrationStatus = new RegistrationStatus(property.Value.GetString());
+                    accountRegistrationStatus = new AccountRegistrationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("accountId"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    freeTrial = new EnableStatus(property.Value.GetString());
+                    freeTrial = new FreeTrialEnableStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("freeTrialDaysLeft"u8))
