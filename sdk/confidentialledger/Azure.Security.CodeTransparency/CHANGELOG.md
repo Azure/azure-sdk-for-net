@@ -1,11 +1,12 @@
 # Release History
 
-## 1.0.0-beta.5 (2025-10-07)
+## 1.0.0-beta.5 (2025-10-20)
 
 ### Features Added
 
 - New constructor allows extracting the endpoint from the receipt in the transparent statement when the verifier does not know it
 - Exposed `CborUtils` to extract values from CBOR maps, which would otherwise require working directly with a CBOR library
+- Added new static verification method `CodeTransparencyClient.VerifyTransparentStatement` which accepts `CodeTransparencyVerificationOptions`, this allows verifying receipts from specific issuers 
 
 ### Other Changes
 

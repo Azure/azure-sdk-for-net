@@ -18,7 +18,7 @@ namespace Azure.Security.CodeTransparency
     [CodeGenSuppress("CreateEntry", typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateEntryAsync", typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateEntry", typeof(BinaryData), typeof(CancellationToken))]
-    [CodeGenSuppress("CreateEntryAsync", typeof(BinaryData),typeof(CancellationToken))]
+    [CodeGenSuppress("CreateEntryAsync", typeof(BinaryData), typeof(CancellationToken))]
     [CodeGenSuppress("CreateGetTransparencyConfigCborRequest", typeof(RequestContext))]
     [CodeGenSuppress("CreateGetPublicKeysRequest", typeof(RequestContext))]
     [CodeGenSuppress("CreateGetOperationRequest", typeof(string), typeof(RequestContext))]
@@ -27,6 +27,11 @@ namespace Azure.Security.CodeTransparency
     [CodeGenSuppress("CreateCreateEntryRequest", typeof(RequestContent), typeof(RequestContext))]
     public partial class CodeTransparencyClient
     {
+        /// <summary>
+        /// Expected tree algorithm value in the receipt.
+        /// </summary>
+        public static readonly string UnknownIssuerPrefix = "unknown-issuer";
+
         /// <summary>
         /// Initializes a new instance of CodeTransparencyClient. The client will download its own
         /// TLS CA cert to perform server cert authentication.
@@ -70,62 +75,13 @@ namespace Azure.Security.CodeTransparency
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of CodeTransparencyClient. The client will download its own
-        /// TLS CA cert to perform server cert authentication.
-        /// If the CA changes then there is a TTL which will help healing the long lived clients.
-        /// </summary>
-        /// <param name="transparentStatementCoseSign1Bytes"> The transparent statement COSE_Sign1 bytes containing embedded receipts. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="InvalidOperationException"> Thrown when no receipts are found, receipts have different issuers, issuer is not found, or issuer is not a valid host name. </exception>
-        public CodeTransparencyClient(byte[] transparentStatementCoseSign1Bytes, CodeTransparencyClientOptions options = default)
-            : this(GetEndpointFromTransparentStatement(transparentStatementCoseSign1Bytes), null, options)
-        {
-        }
-
-        private static Uri GetEndpointFromTransparentStatement(byte[] transparentStatementCoseSign1Bytes)
-        {
-            // get all receipts from the transparent statement
-            var receiptList = GetReceiptsFromTransparentStatementStatic(transparentStatementCoseSign1Bytes);
-            if (receiptList.Count == 0)
-            {
-                throw new InvalidOperationException("No receipts found in the transparent statement.");
-            }
-            // get receipt issuer from the receipts. expect the same issuer in all receipts
-            // iterate over receipts and get the issuer, if it is different then throw
-            string issuer = string.Empty;
-            foreach (var receipt in receiptList)
-            {
-                string currentIssuer = GetReceiptIssuerHostStatic(receipt);
-                if (string.IsNullOrEmpty(issuer))
-                {
-                    issuer = currentIssuer;
-                }
-                else if (!issuer.Equals(currentIssuer, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    throw new InvalidOperationException("Receipts have different issuers.");
-                }
-            }
-            if (string.IsNullOrEmpty(issuer))
-            {
-                throw new InvalidOperationException("Issuer not found in receipts.");
-            }
-
-            // create endpoint from the issuer
-            if (!Uri.TryCreate($"https://{issuer}", UriKind.Absolute, out Uri endpoint))
-            {
-                throw new InvalidOperationException($"Issuer '{issuer}' is not a valid host name.");
-            }
-            return endpoint;
-        }
-
-        private static List<byte[]> GetReceiptsFromTransparentStatementStatic(byte[] transparentStatementCoseSign1Bytes)
+        private static List<(string IssuerHost, byte[] ReceiptBytes)> GetReceiptsFromTransparentStatementStatic(byte[] transparentStatementCoseSign1Bytes)
         {
             CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(transparentStatementCoseSign1Bytes);
 
             if (!coseSign1Message.UnprotectedHeaders.
-                TryGetValue(new CoseHeaderLabel(CcfReceipt.CoseHeaderEmbeddedReceipts),
-                out CoseHeaderValue embeddedReceipts))
+            TryGetValue(new CoseHeaderLabel(CcfReceipt.CoseHeaderEmbeddedReceipts),
+            out CoseHeaderValue embeddedReceipts))
             {
                 throw new InvalidOperationException("embeddedReceipts not found");
             }
@@ -133,10 +89,24 @@ namespace Azure.Security.CodeTransparency
             CborReader cborReader = new CborReader(embeddedReceipts.EncodedValue);
             cborReader.ReadStartArray();
 
-            var receiptList = new List<byte[]>();
+            var receiptList = new List<(string, byte[])>();
             while (cborReader.PeekState() != CborReaderState.EndArray)
             {
-                receiptList.Add(cborReader.ReadByteString());
+                var receipt = cborReader.ReadByteString();
+                // the receipt could be from any other system and we can only validate the ones
+                // that originate in our service instances and have an issuer we can parse
+                // identify receipts with unknown issuers with appended index to avoid clashes
+                // verification logic has a separate path to handle unknown issuers
+                string issuer = string.Empty;
+                try
+                {
+                    issuer = GetReceiptIssuerHostStatic(receipt);
+                }
+                catch (InvalidOperationException)
+                {
+                    issuer = UnknownIssuerPrefix + receiptList.Count;
+                }
+                receiptList.Add((issuer, receipt));
             }
             cborReader.ReadEndArray();
 
@@ -206,7 +176,7 @@ namespace Azure.Security.CodeTransparency
                 if (!isChainValid)
                     return false;
 
-                // Ensure that the presented certificate chain passes validation only if it is rooted in the the ledger identity TLS certificate.
+                // Ensure that the presented certificate chain passes validation only if it is rooted in the ledger identity TLS certificate.
                 X509Certificate2 rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
                 bool isChainRootedInTheTlsCert = rootCert.Thumbprint.Equals(identityServiceCert.Thumbprint);
                 return isChainRootedInTheTlsCert;
@@ -230,8 +200,6 @@ namespace Azure.Security.CodeTransparency
             {
                 using HttpMessage message = CreateCreateEntryRequest(content, context);
                 Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
-
-                BinaryData result = Response.FromValue(response.Content, response);
 
                 string operationId = string.Empty;
                 try
@@ -282,8 +250,6 @@ namespace Azure.Security.CodeTransparency
                 using HttpMessage message = CreateCreateEntryRequest(content, context);
                 Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
 
-                BinaryData result = Response.FromValue(response.Content, response);
-
                 string operationId = string.Empty;
                 try
                 {
@@ -304,7 +270,7 @@ namespace Azure.Security.CodeTransparency
 
                     if (waitUntil == WaitUntil.Completed)
                     {
-                       await entryOperation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                        await entryOperation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                     }
 
                     return entryOperation;
@@ -322,37 +288,194 @@ namespace Azure.Security.CodeTransparency
         /// and check if receipt was endorsed by the given service certificate.
         /// In the case of multiple receipts being embedded in the signature then verify
         /// all of them.
-        /// Calls <!-- see cref="CcfReceiptVerifier.VerifyTransparentStatementReceipt(JsonWebKey, byte[], byte[])"/> for each receipt found in the transparent statement.-->
         /// </summary>
         /// <param name="transparentStatementCoseSign1Bytes">Receipt cbor or Cose_Sign1 (with an embedded receipt) bytes.</param>
+        [Obsolete("Use the static VerifyTransparentStatement method with options instead.")]
         public virtual void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes)
         {
-            List<Exception> failures = new List<Exception>();
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AllowedIssuerDomains = new string[] { _endpoint.Host },
+                AllowedDomainVerificationBehavior = AllowedDomainVerificationBehavior.EachAllowListedDomainMustHaveValidReceipt,
+                NonAllowListedReceiptBehavior = NonAllowListedReceiptBehavior.FailIfPresent
+            };
+            VerifyTransparentStatement(transparentStatementCoseSign1Bytes, verificationOptions);
+        }
 
-            var receiptList = GetReceiptsFromTransparentStatementStatic(transparentStatementCoseSign1Bytes);
+        /// <summary>
+        /// Verify the receipt integrity against the COSE_Sign1 envelope
+        /// and check if receipt was endorsed by the service public keys.
+        /// This method expects the issuer in the receipt to match the CodeTransparencyClient client endpoint.
+        /// Calls <!-- see cref="CcfReceiptVerifier.VerifyTransparentStatementReceipt(JsonWebKey, byte[], byte[])"/> for each receipt found in the transparent statement.-->
+        /// </summary>
+        /// <param name="signedStatementCoseSign1Bytes">Signed statement in Cose_Sign1 cbor bytes.</param>
+        /// <param name="receiptCoseSign1Bytes">Receipt in COSE_Sign1 cbor bytes.</param>
+        /// <exception cref="InvalidOperationException">Thrown when the verification fails.</exception>
+        public virtual void RunTransparentStatementVerification(byte[] signedStatementCoseSign1Bytes, byte[] receiptCoseSign1Bytes)
+        {
+            CoseSign1Message inputSignedStatement = CoseMessage.DecodeSign1(signedStatementCoseSign1Bytes);
+            inputSignedStatement.UnprotectedHeaders.Clear();
+            JsonWebKey jsonWebKey = GetServiceCertificateKey(receiptCoseSign1Bytes);
+            CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, receiptCoseSign1Bytes, inputSignedStatement.Encode());
+        }
+
+        /// <summary>
+        /// Verify the receipt integrity against the COSE_Sign1 envelope and (optionally) enforce issuer domain allow-list rules.
+        /// It will create an instance of CodeTransparencyClient for each issuer domain encountered in the verification process.
+        /// </summary>
+        /// <param name="transparentStatementCoseSign1Bytes">Receipt cbor or Cose_Sign1 (with an embedded receipt) bytes.</param>
+        /// <param name="verificationOptions">Optional verification options. If null or if <see cref="CodeTransparencyVerificationOptions.AllowedIssuerDomains"/> is empty, all receipts are verified (original behavior).</param>
+        /// <param name="clientOptions"> The options for configuring the client instances that download public keys required for verification. </param>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown when: no receipts exist; allow-list is provided and no receipt matches any allowed domain; a disallowed receipt exists while <see cref="NonAllowListedReceiptBehavior.FailIfPresent"/> is selected.
+        /// </exception>
+        /// <exception cref="AggregateException">Thrown containing individual failures encountered during verification.</exception>
+        public static void VerifyTransparentStatement(byte[] transparentStatementCoseSign1Bytes, CodeTransparencyVerificationOptions verificationOptions = default, CodeTransparencyClientOptions clientOptions = default)
+        {
+            verificationOptions ??= new CodeTransparencyVerificationOptions();
+
+            List<Exception> failures = [];
+
+            List<(string, byte[])> receiptList = GetReceiptsFromTransparentStatementStatic(transparentStatementCoseSign1Bytes);
             if (receiptList.Count == 0)
             {
                 throw new InvalidOperationException("No receipts found in the transparent statement.");
             }
 
-            // Get the input signed statement bytes from the transparent statement
-            // by removing the unprotected headers and encoding the message again
-            CoseSign1Message inputSignedStatement = CoseMessage.DecodeSign1(transparentStatementCoseSign1Bytes);
-            inputSignedStatement.UnprotectedHeaders.Clear();
+            Dictionary<string, CodeTransparencyClient> clientInstances = [];
 
-            // Verify each receipt and keep failure counter
-            foreach (var receipt in receiptList)
+            // Prepare allow list state. If no allow list provided, implicitly allow all detected issuer domains encountered in receipts.
+            var configuredAllowList = verificationOptions?.AllowedIssuerDomains ?? Array.Empty<string>();
+            bool userProvidedAllowList = configuredAllowList.Count > 0;
+            HashSet<string> allowListNormalized = new(StringComparer.OrdinalIgnoreCase);
+            if (userProvidedAllowList)
             {
+                foreach (var domain in configuredAllowList)
+                {
+                    if (!string.IsNullOrWhiteSpace(domain) && !domain.StartsWith(UnknownIssuerPrefix))
+                    {
+                        allowListNormalized.Add(domain.Trim());
+                    }
+                }
+            }
+            else
+            {
+                // Implicit allow list derived from receipts
+                foreach ((string issuer, byte[] receiptBytes) in receiptList)
+                {
+                    // Skip unknown issuers for implicit allow list
+                    if (!issuer.StartsWith(UnknownIssuerPrefix))
+                    {
+                        allowListNormalized.Add(issuer);
+                    }
+                }
+            }
+
+            // Tracking for behaviors
+            HashSet<string> validAllowedDomainsEncountered = new(StringComparer.OrdinalIgnoreCase);
+            HashSet<string> allowedDomainsWithReceipt = new(StringComparer.OrdinalIgnoreCase);
+
+            // Early failure if we must fail on presence of non-allow-listed receipts
+            if (verificationOptions.NonAllowListedReceiptBehavior == NonAllowListedReceiptBehavior.FailIfPresent)
+            {
+                foreach ((string issuer, byte[] receiptBytes) in receiptList)
+                {
+                    if (!allowListNormalized.Contains(issuer))
+                    {
+                        throw new InvalidOperationException($"Receipt issuer '{issuer}' is not in the allowed domain list.");
+                    }
+                }
+            }
+
+            foreach ((string issuer, byte[] receiptBytes) in receiptList)
+            {
+                bool isAllowedIssuer = allowListNormalized.Contains(issuer);
+                if (isAllowedIssuer)
+                {
+                    allowedDomainsWithReceipt.Add(issuer);
+                }
+
+                // Determine if this receipt should be verified
+                bool shouldVerify;
+                if (isAllowedIssuer)
+                {
+                    // Always verify receipts from allowed issuers; enforcement comes later.
+                    shouldVerify = true;
+                }
+                else
+                {
+                    // Non-allow-listed receipts handled per options
+                    shouldVerify = verificationOptions?.NonAllowListedReceiptBehavior switch
+                    {
+                        NonAllowListedReceiptBehavior.Verify => true,
+                        NonAllowListedReceiptBehavior.Ignore => false,
+                        NonAllowListedReceiptBehavior.FailIfPresent => false, // already handled in early phase
+                        _ => true
+                    };
+                }
+
+                if (!shouldVerify)
+                {
+                    continue;
+                }
+
+                if (issuer.StartsWith(UnknownIssuerPrefix))
+                {
+                    // Cannot verify receipts with unknown issuers
+                    failures.Add(new InvalidOperationException($"Cannot verify receipt with unknown issuer '{issuer}'."));
+                    continue;
+                }
+
                 try
                 {
-                    JsonWebKey jsonWebKey = GetServiceCertificateKey(receipt);
-                    CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, receipt, inputSignedStatement.Encode());
+                    if (!clientInstances.TryGetValue(issuer, out CodeTransparencyClient clientInstance))
+                    {
+                        clientInstance = new CodeTransparencyClient(new Uri($"https://{issuer}"), clientOptions);
+                        clientInstances[issuer] = clientInstance;
+                    }
+                    clientInstance.RunTransparentStatementVerification(transparentStatementCoseSign1Bytes, receiptBytes);
+
+                    if (isAllowedIssuer)
+                    {
+                        validAllowedDomainsEncountered.Add(issuer);
+                    }
                 }
                 catch (Exception e)
                 {
                     failures.Add(e);
                 }
             }
+
+            // Post-processing based on allowed domain verification behavior (only applies to user-provided allow list)
+            switch (verificationOptions.AllowedDomainVerificationBehavior)
+            {
+                case AllowedDomainVerificationBehavior.AnyAllowedDomainPresentAndValid:
+                    if (validAllowedDomainsEncountered.Count == 0)
+                    {
+                        failures.Add(new InvalidOperationException("No valid receipts found for any allowed issuer domain."));
+                    }
+                    break;
+                case AllowedDomainVerificationBehavior.AllAllowListedReceiptsMustBeValid:
+                    // All receipts from allowed domains must be valid: i.e., any receipt from an allowed domain that failed adds failure (already captured) -> if any allowed domain had receipt but not all successful? We check failures now.
+                    foreach (var domain in allowedDomainsWithReceipt)
+                    {
+                        if (!validAllowedDomainsEncountered.Contains(domain))
+                        {
+                            failures.Add(new InvalidOperationException($"A receipt from the required domain '{domain}' failed verification."));
+                        }
+                    }
+                    break;
+                case AllowedDomainVerificationBehavior.EachAllowListedDomainMustHaveValidReceipt:
+                    foreach (var domain in allowListNormalized)
+                    {
+                        if (!validAllowedDomainsEncountered.Contains(domain))
+                        {
+                            failures.Add(new InvalidOperationException($"No valid receipt found for a required domain '{domain}'."));
+                        }
+                    }
+                    break;
+            }
+
             if (failures.Count > 0)
             {
                 throw new AggregateException(failures);
@@ -370,9 +493,9 @@ namespace Azure.Security.CodeTransparency
             string issuer = GetReceiptIssuerHostStatic(receiptBytes);
 
             // Validate issuer and CTS instance are matching
-            if (!issuer.Equals(_endpoint.Host, StringComparison.InvariantCultureIgnoreCase))
+            if (!issuer.Equals(_endpoint.Host, StringComparison.OrdinalIgnoreCase))
             {
-                throw new InvalidOperationException("Issuer and CTS instance name are not matching.");
+                throw new InvalidOperationException("Issuer and service instance name are not matching.");
             }
 
             // Get all the public keys from the JWKS endpoint

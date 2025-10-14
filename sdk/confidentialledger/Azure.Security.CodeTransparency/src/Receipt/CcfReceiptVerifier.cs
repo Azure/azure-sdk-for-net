@@ -41,6 +41,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         /// <param name="jsonWebKey">The service certificate key (JWK).</param>
         /// <param name="receiptBytes">Receipt in COSE_Sign1 cbor bytes.</param>
         /// <param name="signedStatementBytes">The input signed statement bytes.</param>
+        /// <exception cref="InvalidOperationException">Thrown when the verification fails.</exception>
         public static void VerifyTransparentStatementReceipt(JsonWebKey jsonWebKey, byte[] receiptBytes, byte[] signedStatementBytes)
         {
             byte[] claimsDigest = s_sha256.ComputeHash(signedStatementBytes);

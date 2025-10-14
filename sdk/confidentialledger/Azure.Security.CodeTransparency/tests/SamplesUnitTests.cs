@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic; // Added for List<T>
 using System.Formats.Cbor;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.Cose;
 using System.Reflection;
+using System.Security.Cryptography.Cose;
 using System.Threading.Tasks;
-using System.Collections.Generic; // Added for List<T>
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;

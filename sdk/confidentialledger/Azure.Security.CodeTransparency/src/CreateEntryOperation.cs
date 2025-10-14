@@ -108,7 +108,7 @@ namespace Azure.Security.CodeTransparency
                         RequestFailedException ex = new(response);
                         return OperationState.Failure(response, new RequestFailedException($"Operation status check failed. Unknown Status: '{status}' OperationId '{Id}'", ex));
                 }
-             }
+            }
         }
 
         // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
