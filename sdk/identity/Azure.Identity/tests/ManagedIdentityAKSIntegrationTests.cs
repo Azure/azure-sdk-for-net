@@ -63,7 +63,7 @@ namespace Azure.Identity.Tests
         {
             SetupKubernetesEnvironment();
             // Run the test app on the cluster
-            string output = RunCommand(kubectlPath, $"exec {podName} -- dotnet ./tests/Integration.Identity.Container.dll");
+            string output = RunCommand(kubectlPath, $"exec {podName} -- ./tests/Integration.Identity.Container");
             Assert.That(output, Does.Contain("Passed!"));
         }
 
