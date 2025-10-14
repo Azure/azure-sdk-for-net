@@ -467,7 +467,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
 [changelog]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query.Logs/CHANGELOG.md
 [kusto_query_language]: https://learn.microsoft.com/azure/data-explorer/kusto/query/
-[msdocs_apiref]: https://learn.microsoft.com/dotnet/api/overview/azure/monitor.query-readme?view=azure-dotnet
+[msdocs_apiref]: https://learn.microsoft.com/dotnet/api/overview/azure/monitor.query.logs-readme?view=azure-dotnet
 [package]: https://www.nuget.org/packages/Azure.Monitor.Query.Logs
 [source]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query.Logs/src
 
