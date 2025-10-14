@@ -348,15 +348,15 @@ namespace Azure.ResourceManager.ComputeFleet
         }
 
         /// <summary>
-        /// List VirtualMachineScaleSet resources of an instance Fleet.
+        /// List VirtualMachineScaleSet resources by Fleet
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}/virtualMachineScaleSets</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{name}/virtualMachineScaleSets</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleets_ListVirtualMachineScaleSets</description>
+        /// <description>VirtualMachineScaleSet_ListVirtualMachineScaleSets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -378,15 +378,15 @@ namespace Azure.ResourceManager.ComputeFleet
         }
 
         /// <summary>
-        /// List VirtualMachineScaleSet resources of an instance Fleet.
+        /// List VirtualMachineScaleSet resources by Fleet
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}/virtualMachineScaleSets</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{name}/virtualMachineScaleSets</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleets_ListVirtualMachineScaleSets</description>
+        /// <description>VirtualMachineScaleSet_ListVirtualMachineScaleSets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -412,11 +412,11 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}/virtualMachines</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{name}/virtualMachines</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleets_ListVirtualMachines</description>
+        /// <description>VirtualMachine_ListVirtualMachines</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -429,13 +429,13 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter expression to filter the virtual machines. </param>
-        /// <param name="skiptoken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
+        /// <param name="skipToken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ComputeFleetVirtualMachine"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComputeFleetVirtualMachine> GetVirtualMachinesAsync(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ComputeFleetVirtualMachine> GetVirtualMachinesAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _computeFleetFleetsRestClient.CreateListVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computeFleetFleetsRestClient.CreateListVirtualMachinesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skiptoken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _computeFleetFleetsRestClient.CreateListVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computeFleetFleetsRestClient.CreateListVirtualMachinesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ComputeFleetVirtualMachine.DeserializeComputeFleetVirtualMachine(e), _computeFleetFleetsClientDiagnostics, Pipeline, "ComputeFleetResource.GetVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
@@ -444,11 +444,11 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}/virtualMachines</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{name}/virtualMachines</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleets_ListVirtualMachines</description>
+        /// <description>VirtualMachine_ListVirtualMachines</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -461,13 +461,13 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter expression to filter the virtual machines. </param>
-        /// <param name="skiptoken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
+        /// <param name="skipToken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ComputeFleetVirtualMachine"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComputeFleetVirtualMachine> GetVirtualMachines(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ComputeFleetVirtualMachine> GetVirtualMachines(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _computeFleetFleetsRestClient.CreateListVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computeFleetFleetsRestClient.CreateListVirtualMachinesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skiptoken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _computeFleetFleetsRestClient.CreateListVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computeFleetFleetsRestClient.CreateListVirtualMachinesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ComputeFleetVirtualMachine.DeserializeComputeFleetVirtualMachine(e), _computeFleetFleetsClientDiagnostics, Pipeline, "ComputeFleetResource.GetVirtualMachines", "value", "nextLink", cancellationToken);
         }
 

@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.ComputeFleet
             }
         }
 
-        internal RequestUriBuilder CreateListVirtualMachineScaleSetsRequestUri(string subscriptionId, string resourceGroupName, string fleetName)
+        internal RequestUriBuilder CreateListVirtualMachineScaleSetsRequestUri(string subscriptionId, string resourceGroupName, string name)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -572,13 +572,13 @@ namespace Azure.ResourceManager.ComputeFleet
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureFleet/fleets/", false);
-            uri.AppendPath(fleetName, true);
+            uri.AppendPath(name, true);
             uri.AppendPath("/virtualMachineScaleSets", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListVirtualMachineScaleSetsRequest(string subscriptionId, string resourceGroupName, string fleetName)
+        internal HttpMessage CreateListVirtualMachineScaleSetsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.ComputeFleet
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureFleet/fleets/", false);
-            uri.AppendPath(fleetName, true);
+            uri.AppendPath(name, true);
             uri.AppendPath("/virtualMachineScaleSets", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -599,20 +599,20 @@ namespace Azure.ResourceManager.ComputeFleet
             return message;
         }
 
-        /// <summary> List VirtualMachineScaleSet resources of an instance Fleet. </summary>
+        /// <summary> List VirtualMachineScaleSet resources by Fleet. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fleetName"> The name of the Compute Fleet. </param>
+        /// <param name="name"> The name of the Fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualMachineScaleSetListResult>> ListVirtualMachineScaleSetsAsync(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualMachineScaleSetListResult>> ListVirtualMachineScaleSetsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListVirtualMachineScaleSetsRequest(subscriptionId, resourceGroupName, fleetName);
+            using var message = CreateListVirtualMachineScaleSetsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -628,20 +628,20 @@ namespace Azure.ResourceManager.ComputeFleet
             }
         }
 
-        /// <summary> List VirtualMachineScaleSet resources of an instance Fleet. </summary>
+        /// <summary> List VirtualMachineScaleSet resources by Fleet. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fleetName"> The name of the Compute Fleet. </param>
+        /// <param name="name"> The name of the Fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualMachineScaleSetListResult> ListVirtualMachineScaleSets(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualMachineScaleSetListResult> ListVirtualMachineScaleSets(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListVirtualMachineScaleSetsRequest(subscriptionId, resourceGroupName, fleetName);
+            using var message = CreateListVirtualMachineScaleSetsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.ComputeFleet
             }
         }
 
-        internal RequestUriBuilder CreateListVirtualMachinesRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string filter, string skiptoken)
+        internal RequestUriBuilder CreateListVirtualMachinesRequestUri(string subscriptionId, string resourceGroupName, string name, string filter, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -666,21 +666,21 @@ namespace Azure.ResourceManager.ComputeFleet
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureFleet/fleets/", false);
-            uri.AppendPath(fleetName, true);
+            uri.AppendPath(name, true);
             uri.AppendPath("/virtualMachines", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
             return uri;
         }
 
-        internal HttpMessage CreateListVirtualMachinesRequest(string subscriptionId, string resourceGroupName, string fleetName, string filter, string skiptoken)
+        internal HttpMessage CreateListVirtualMachinesRequest(string subscriptionId, string resourceGroupName, string name, string filter, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -692,16 +692,16 @@ namespace Azure.ResourceManager.ComputeFleet
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.AzureFleet/fleets/", false);
-            uri.AppendPath(fleetName, true);
+            uri.AppendPath(name, true);
             uri.AppendPath("/virtualMachines", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -712,19 +712,19 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <summary> List VirtualMachine resources of an instance Fleet. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fleetName"> The name of the Compute Fleet. </param>
+        /// <param name="name"> The name of the Fleet. </param>
         /// <param name="filter"> Filter expression to filter the virtual machines. </param>
-        /// <param name="skiptoken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
+        /// <param name="skipToken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualMachineListResult>> ListVirtualMachinesAsync(string subscriptionId, string resourceGroupName, string fleetName, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualMachineListResult>> ListVirtualMachinesAsync(string subscriptionId, string resourceGroupName, string name, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListVirtualMachinesRequest(subscriptionId, resourceGroupName, fleetName, filter, skiptoken);
+            using var message = CreateListVirtualMachinesRequest(subscriptionId, resourceGroupName, name, filter, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -743,19 +743,19 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <summary> List VirtualMachine resources of an instance Fleet. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fleetName"> The name of the Compute Fleet. </param>
+        /// <param name="name"> The name of the Fleet. </param>
         /// <param name="filter"> Filter expression to filter the virtual machines. </param>
-        /// <param name="skiptoken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
+        /// <param name="skipToken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualMachineListResult> ListVirtualMachines(string subscriptionId, string resourceGroupName, string fleetName, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualMachineListResult> ListVirtualMachines(string subscriptionId, string resourceGroupName, string name, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListVirtualMachinesRequest(subscriptionId, resourceGroupName, fleetName, filter, skiptoken);
+            using var message = CreateListVirtualMachinesRequest(subscriptionId, resourceGroupName, name, filter, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1010,7 +1010,7 @@ namespace Azure.ResourceManager.ComputeFleet
             }
         }
 
-        internal RequestUriBuilder CreateListVirtualMachineScaleSetsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string fleetName)
+        internal RequestUriBuilder CreateListVirtualMachineScaleSetsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1018,7 +1018,7 @@ namespace Azure.ResourceManager.ComputeFleet
             return uri;
         }
 
-        internal HttpMessage CreateListVirtualMachineScaleSetsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string fleetName)
+        internal HttpMessage CreateListVirtualMachineScaleSetsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1032,22 +1032,22 @@ namespace Azure.ResourceManager.ComputeFleet
             return message;
         }
 
-        /// <summary> List VirtualMachineScaleSet resources of an instance Fleet. </summary>
+        /// <summary> List VirtualMachineScaleSet resources by Fleet. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fleetName"> The name of the Compute Fleet. </param>
+        /// <param name="name"> The name of the Fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualMachineScaleSetListResult>> ListVirtualMachineScaleSetsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualMachineScaleSetListResult>> ListVirtualMachineScaleSetsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListVirtualMachineScaleSetsNextPageRequest(nextLink, subscriptionId, resourceGroupName, fleetName);
+            using var message = CreateListVirtualMachineScaleSetsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1063,22 +1063,22 @@ namespace Azure.ResourceManager.ComputeFleet
             }
         }
 
-        /// <summary> List VirtualMachineScaleSet resources of an instance Fleet. </summary>
+        /// <summary> List VirtualMachineScaleSet resources by Fleet. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fleetName"> The name of the Compute Fleet. </param>
+        /// <param name="name"> The name of the Fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualMachineScaleSetListResult> ListVirtualMachineScaleSetsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualMachineScaleSetListResult> ListVirtualMachineScaleSetsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListVirtualMachineScaleSetsNextPageRequest(nextLink, subscriptionId, resourceGroupName, fleetName);
+            using var message = CreateListVirtualMachineScaleSetsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.ComputeFleet
             }
         }
 
-        internal RequestUriBuilder CreateListVirtualMachinesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, string filter, string skiptoken)
+        internal RequestUriBuilder CreateListVirtualMachinesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1102,7 +1102,7 @@ namespace Azure.ResourceManager.ComputeFleet
             return uri;
         }
 
-        internal HttpMessage CreateListVirtualMachinesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, string filter, string skiptoken)
+        internal HttpMessage CreateListVirtualMachinesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1120,20 +1120,20 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fleetName"> The name of the Compute Fleet. </param>
+        /// <param name="name"> The name of the Fleet. </param>
         /// <param name="filter"> Filter expression to filter the virtual machines. </param>
-        /// <param name="skiptoken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
+        /// <param name="skipToken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualMachineListResult>> ListVirtualMachinesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualMachineListResult>> ListVirtualMachinesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListVirtualMachinesNextPageRequest(nextLink, subscriptionId, resourceGroupName, fleetName, filter, skiptoken);
+            using var message = CreateListVirtualMachinesNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, filter, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1153,20 +1153,20 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fleetName"> The name of the Compute Fleet. </param>
+        /// <param name="name"> The name of the Fleet. </param>
         /// <param name="filter"> Filter expression to filter the virtual machines. </param>
-        /// <param name="skiptoken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
+        /// <param name="skipToken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualMachineListResult> ListVirtualMachinesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualMachineListResult> ListVirtualMachinesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListVirtualMachinesNextPageRequest(nextLink, subscriptionId, resourceGroupName, fleetName, filter, skiptoken);
+            using var message = CreateListVirtualMachinesNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, filter, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
