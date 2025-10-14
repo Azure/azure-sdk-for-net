@@ -33,7 +33,7 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 
 #### Configure the client for an Azure sovereign cloud
 
-By default the client is configured to use the Azure Public Cloud. To use a sovereign cloud instead, set the `Audience` property on the appropriate `Options`-suffixed class. For example:
+By default, the client is configured to use the Azure Public Cloud. To use a sovereign cloud instead, set the `Audience` property on the appropriate `Options`-suffixed class. For example:
 
 ```C# Snippet:QueryLogs_CreateClientsWithOptions
 // LogsQueryClient - by default, Azure Public Cloud is used
