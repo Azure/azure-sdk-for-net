@@ -190,6 +190,18 @@ namespace Azure.Storage.Sas
         public string DelegatedUserObjectId { get; set; }
 
         /// <summary>
+        /// Optional. Custom Request Headers to include in the SAS. Any usage of the SAS must
+        /// include these headers and values in the request. A header may have multiple values.
+        /// </summary>
+        public Dictionary<string, List<string>> RequestHeaders { get; set; }
+
+        /// <summary>
+        /// Optional. Custom Request Query Parameters to include in the SAS. Any usage of the SAS must
+        /// include these query parameters and values in the request. A query parameter may have multiple values.
+        /// </summary>
+        public Dictionary<string, List<string>> RequestQueryParameters { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
         /// class.
         /// </summary>
@@ -462,6 +474,7 @@ namespace Azure.Storage.Sas
             EnsureState();
 
             stringToSign = ToStringToSign(userDelegationKey, accountName);
+            Console.WriteLine($"StringToSign = \n{stringToSign}\nEND");
 
             string signature = SasExtensions.ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
@@ -491,7 +504,9 @@ namespace Azure.Storage.Sas
                 authorizedAadObjectId: PreauthorizedAgentObjectId,
                 correlationId: CorrelationId,
                 encryptionScope: EncryptionScope,
-                delegatedUserObjectId: DelegatedUserObjectId);
+                delegatedUserObjectId: DelegatedUserObjectId,
+                requestHeader: RequestHeaders,
+                requestQueryParameter: RequestQueryParameters);
             return p;
         }
 
@@ -501,6 +516,10 @@ namespace Azure.Storage.Sas
             string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
             string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
             string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+            string canonicalizedSignedRequestHeaders = GetCanonicalRequestHeadersStringToSign();
+            string canonicalizedSignedRequestQueryParameters = GetCanonicalRequestQueryParametersStringToSign();
+            Console.WriteLine($"canonicalizedSignedRequestHeaders = {canonicalizedSignedRequestHeaders}");
+            Console.WriteLine($"canonicalizedSignedRequestQueryParameters = {canonicalizedSignedRequestQueryParameters}");
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             return string.Join("\n",
@@ -525,6 +544,8 @@ namespace Azure.Storage.Sas
                     Resource,
                     Snapshot ?? BlobVersionId,
                     EncryptionScope,
+                    canonicalizedSignedRequestHeaders,
+                    canonicalizedSignedRequestQueryParameters,
                     CacheControl,
                     ContentDisposition,
                     ContentEncoding,
@@ -591,6 +612,48 @@ namespace Azure.Storage.Sas
             }
 
             Version = SasQueryParametersInternals.DefaultSasVersionInternal;
+        }
+
+        private string GetCanonicalRequestHeadersStringToSign()
+        {
+            if (RequestHeaders == null || RequestHeaders.Count == 0)
+            {
+                return null;
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach (var entry in RequestHeaders)
+            {
+                if (!string.IsNullOrEmpty(entry.Key))
+                {
+                    sb
+                    .Append(entry.Key)
+                    .Append(':')
+                    .Append(string.Join(",", entry.Value))
+                    .Append('\n');
+                }
+            }
+            return sb.ToString();
+        }
+
+        private string GetCanonicalRequestQueryParametersStringToSign()
+        {
+            if (RequestQueryParameters == null || RequestQueryParameters.Count == 0)
+            {
+                return null;
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach (var entry in RequestQueryParameters)
+            {
+                if (!string.IsNullOrEmpty(entry.Key))
+                {
+                    sb
+                    .Append('\n')
+                    .Append(entry.Key)
+                    .Append(':')
+                    .Append(string.Join(",", entry.Value));
+                }
+            }
+            return sb.ToString();
         }
 
         /// <summary>
