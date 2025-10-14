@@ -6,6 +6,20 @@
 
 * Added mapping for `enduser.pseudo.id` attribute to `user_Id`
 
+* Added support for configuring sampling via OpenTelemetry environment
+  variables:
+  * `OTEL_TRACES_SAMPLER` (supported values: `microsoft.rate_limited`,
+    `microsoft.fixed_percentage`).
+  * `OTEL_TRACES_SAMPLER_ARG` (rate limit in traces/sec for
+  `microsoft.rate_limited`, sampling ratio 0.0 - 1.0 for
+  `microsoft.fixed_percentage`). This now applies to both
+  `UseAzureMonitorExporter` and the direct
+  `Sdk.CreateTracerProviderBuilder().AddAzureMonitorTraceExporter(...)` path.
+  ([#52720](https://github.com/Azure/azure-sdk-for-net/pull/52720))
+
+* Added handling of stable database client span semantic conventions
+  ([#53050](https://github.com/Azure/azure-sdk-for-net/pull/53050))
+
 ### Breaking Changes
 
 ### Bugs Fixed

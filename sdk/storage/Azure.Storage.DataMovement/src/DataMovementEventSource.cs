@@ -16,6 +16,7 @@ namespace Azure.Storage.DataMovement
         private const int EnumerationCompleteEvent = 4;
         private const int ResumeTransferEvent = 5;
         private const int ResumeEnumerationCompleteEvent = 6;
+        private const int UnexpectedTransferFailedEvent = 7;
 
         private DataMovementEventSource() : base(EventSourceName) { }
 
@@ -91,6 +92,12 @@ namespace Azure.Storage.DataMovement
         public void ResumeEnumerationComplete(string transferId, int jobPartCount)
         {
             WriteEvent(ResumeEnumerationCompleteEvent, transferId, jobPartCount);
+        }
+
+        [Event(UnexpectedTransferFailedEvent, Level = EventLevel.Error, Message = "Transfer [{0}] Transfer failed: {1}")]
+        public void UnexpectedTransferFailed(string transferId, string errorMessage)
+        {
+            WriteEvent(UnexpectedTransferFailedEvent, transferId, errorMessage);
         }
     }
 }

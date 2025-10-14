@@ -40,16 +40,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The redirect type the rule will use when redirecting traffic. </summary>
+        [WirePath("redirectType")]
         public FrontDoorRedirectType? RedirectType { get; set; }
         /// <summary> The protocol of the destination to where the traffic is redirected. </summary>
+        [WirePath("redirectProtocol")]
         public FrontDoorRedirectProtocol? RedirectProtocol { get; set; }
         /// <summary> Host to redirect. Leave empty to use the incoming host as the destination host. </summary>
+        [WirePath("customHost")]
         public string CustomHost { get; set; }
         /// <summary> The full path to redirect. Path cannot be empty and must start with /. Leave empty to use the incoming path as destination path. </summary>
+        [WirePath("customPath")]
         public string CustomPath { get; set; }
         /// <summary> Fragment to add to the redirect URL. Fragment is the part of the URL that comes after #. Do not include the #. </summary>
+        [WirePath("customFragment")]
         public string CustomFragment { get; set; }
         /// <summary> The set of query strings to be placed in the redirect URL. Setting this value would replace any existing query string; leave empty to preserve the incoming query string. Query string must be in &lt;key&gt;=&lt;value&gt; format. The first ? and &amp; will be added automatically so do not include them in the front, but do separate multiple query strings with &amp;. </summary>
+        [WirePath("customQueryString")]
         public string CustomQueryString { get; set; }
     }
 }
