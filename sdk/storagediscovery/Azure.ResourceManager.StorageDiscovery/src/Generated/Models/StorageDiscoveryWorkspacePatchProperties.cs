@@ -13,25 +13,25 @@ using Azure.ResourceManager.StorageDiscovery;
 namespace Azure.ResourceManager.StorageDiscovery.Models
 {
     /// <summary> The template for adding updateable properties. </summary>
-    public partial class StorageDiscoveryWorkspacePropertiesUpdate
+    public partial class StorageDiscoveryWorkspacePatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageDiscoveryWorkspacePropertiesUpdate"/>. </summary>
-        public StorageDiscoveryWorkspacePropertiesUpdate()
+        /// <summary> Initializes a new instance of <see cref="StorageDiscoveryWorkspacePatchProperties"/>. </summary>
+        public StorageDiscoveryWorkspacePatchProperties()
         {
             WorkspaceRoots = new ChangeTrackingList<ResourceIdentifier>();
             Scopes = new ChangeTrackingList<StorageDiscoveryScope>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageDiscoveryWorkspacePropertiesUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageDiscoveryWorkspacePatchProperties"/>. </summary>
         /// <param name="sku"> The storage discovery sku. </param>
         /// <param name="description"> The description of the storage discovery workspace. </param>
         /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
         /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageDiscoveryWorkspacePropertiesUpdate(StorageDiscoverySku? sku, string description, IList<ResourceIdentifier> workspaceRoots, IList<StorageDiscoveryScope> scopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku, string description, IList<ResourceIdentifier> workspaceRoots, IList<StorageDiscoveryScope> scopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Description = description;
