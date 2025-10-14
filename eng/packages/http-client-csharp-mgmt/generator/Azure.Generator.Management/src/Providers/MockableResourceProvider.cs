@@ -205,7 +205,7 @@ namespace Azure.Generator.Management.Providers
                     var updated = false;
                     foreach (var p in m.Signature.Parameters)
                     {
-                        if (p.Location == ParameterLocation.Body)
+                        if (p.Location == ParameterLocation.Body && p.Type.IsModelType())
                         {
                             p.Update(name: "content");
                             updated = true;

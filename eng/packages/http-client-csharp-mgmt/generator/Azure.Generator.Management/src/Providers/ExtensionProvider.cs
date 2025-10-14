@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -113,7 +114,7 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var p in methodSignature.Parameters)
             {
-                if (p.Location == ParameterLocation.Body)
+                if (p.Location == ParameterLocation.Body && p.Type.IsModelType())
                 {
                     p.Update(name: "content");
                 }
