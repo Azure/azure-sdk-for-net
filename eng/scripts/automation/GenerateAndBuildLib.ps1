@@ -912,7 +912,8 @@ function GetSDKProjectFolder()
     Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
     $yml = ConvertFrom-YAML $tspConfigYaml
     $service = ""
-    $packageDir = ""
+    $nameSpace = ""
+    $emitterOutputDir = ""
     if ($yml) {
         if ($yml["parameters"] -And $yml["parameters"]["service-dir"]) {
             $service = $yml["parameters"]["service-dir"]["default"];
@@ -928,19 +929,51 @@ function GetSDKProjectFolder()
         }
         
         if ($csharpOpts) {
-            if ($csharpOpts["package-dir"]) {
-                $packageDir = $csharpOpts["package-dir"]
-            } elseif ($csharpOpts["namespace"]) {
-                $packageDir = $csharpOpts["namespace"]
+            if ($csharpOpts["namespace"]) {
+                $nameSpace = $csharpOpts["namespace"]
             }
             if ($csharpOpts["service-dir"]) {
                 $service = $csharpOpts["service-dir"]
             }
+            if ($csharpOpts["emitter-output-dir"]) {
+                $emitterOutputDir = $csharpOpts["emitter-output-dir"]
+                
+                # Handle emitterOutputDir based on number of segments
+                $segments = $emitterOutputDir -split "/"
+                
+                if ($segments.Count -eq 3) {
+                    # 3 segments: {output-dir}/{service-dir}/{namespace}
+                    # Second segment must be {service-dir} placeholder - don't override service-dir
+                    if ($segments[1] -ne "{service-dir}") {
+                        throw "[ERROR] Invalid emitter-output-dir format: '$emitterOutputDir'. For 3 segments, the second segment must be '{service-dir}' placeholder."
+                    }
+                    # Only check namespace (last segment) for override
+                    $namespaceSegment = $segments[2]
+                    if ($namespaceSegment -ne "{namespace}") {
+                        $nameSpace = $namespaceSegment
+                        Write-Host "Overriding namespace from emitter-output-dir with: $nameSpace"
+                    }
+                } elseif ($segments.Count -eq 4) {
+                    # 4 segments: {output-dir}/sdk/serviceName/namespaceName
+                    # Override service-dir to "sdk/serviceName"
+                    $serviceSegment = $segments[1] + "/" + $segments[2]
+                    $service = $serviceSegment
+                    Write-Host "Overriding service-dir from emitter-output-dir with: $service"
+                    
+                    # Check namespace (last segment)
+                    $namespaceSegment = $segments[3]
+                    if ($namespaceSegment -ne "{namespace}") {
+                        $nameSpace = $namespaceSegment
+                        Write-Host "Overriding namespace from emitter-output-dir with: $nameSpace"
+                    }
+                }
+            }
         }
     }
-    if ([string]::IsNullOrEmpty($service) -or [string]::IsNullOrEmpty($packageDir)) {
-        throw "[ERROR] 'service-dir' or 'namespace'/'package-dir' not provided. Please configure these settings in the 'tspconfig.yaml' file."
+    
+    if ([string]::IsNullOrEmpty($service) -or [string]::IsNullOrEmpty($nameSpace)) {
+        throw "[ERROR] 'service-dir' or 'namespace' not provided. Please configure these settings in the 'tspconfig.yaml' file."
     }
-    $projectFolder = (Join-Path $sdkRepoRoot $service $packageDir)
+    $projectFolder = (Join-Path $sdkRepoRoot $service $nameSpace)
     return $projectFolder
 }
