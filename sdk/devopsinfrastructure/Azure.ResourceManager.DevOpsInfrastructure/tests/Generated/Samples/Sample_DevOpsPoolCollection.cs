@@ -54,7 +54,7 @@ OpenAccess = true,
 new DevOpsPoolVmImage
 {
 ResourceId = "/MicrosoftWindowsServer/WindowsServer/2019-Datacenter/latest",
-EphemeralType = EphemeralType.Automatic,
+EphemeralType = DevOpsEphemeralType.Automatic,
 }
             })
             {

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             string wellKnownImageName = default;
             IList<string> aliases = default;
             string buffer = default;
-            EphemeralType? ephemeralType = default;
+            DevOpsEphemeralType? ephemeralType = default;
             bool? isEphemeral = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    ephemeralType = new EphemeralType(property.Value.GetString());
+                    ephemeralType = new DevOpsEphemeralType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isEphemeral"u8))

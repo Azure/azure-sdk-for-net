@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckNameAvailabilityPool_PoolsCheckNameAvailability()
+        public async Task CheckDevOpsPoolNameAvailability_PoolsCheckNameAvailability()
         {
             // Generated from example definition: 2025-09-20/Pools_CheckNameAvailability.json
-            // this example is just showing the usage of "Pools_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Pools_CheckDevOpsPoolNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 
             // invoke the operation
             CheckNameAvailability body = new CheckNameAvailability("mydevopspool", DevOpsInfrastructureResourceType.MicrosoftDevOpsInfrastructurePools);
-            CheckNameAvailabilityResult result = await subscriptionResource.CheckNameAvailabilityPoolAsync(body);
+            DevOpsCheckNameAvailabilityResult result = await subscriptionResource.CheckDevOpsPoolNameAvailabilityAsync(body);
 
             Console.WriteLine($"Succeeded: {result}");
         }

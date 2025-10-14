@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             }
         }
 
-        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, CheckNameAvailability body)
+        internal RequestUriBuilder CreateCheckDevOpsPoolNameAvailabilityRequestUri(string subscriptionId, CheckNameAvailability body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             return uri;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, CheckNameAvailability body)
+        internal HttpMessage CreateCheckDevOpsPoolNameAvailabilityRequest(string subscriptionId, CheckNameAvailability body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -601,20 +601,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, CheckNameAvailability body, CancellationToken cancellationToken = default)
+        public async Task<Response<DevOpsCheckNameAvailabilityResult>> CheckDevOpsPoolNameAvailabilityAsync(string subscriptionId, CheckNameAvailability body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, body);
+            using var message = CreateCheckDevOpsPoolNameAvailabilityRequest(subscriptionId, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResult value = default;
+                        DevOpsCheckNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
+                        value = DevOpsCheckNameAvailabilityResult.DeserializeDevOpsCheckNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -628,20 +628,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string subscriptionId, CheckNameAvailability body, CancellationToken cancellationToken = default)
+        public Response<DevOpsCheckNameAvailabilityResult> CheckDevOpsPoolNameAvailability(string subscriptionId, CheckNameAvailability body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, body);
+            using var message = CreateCheckDevOpsPoolNameAvailabilityRequest(subscriptionId, body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResult value = default;
+                        DevOpsCheckNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
+                        value = DevOpsCheckNameAvailabilityResult.DeserializeDevOpsCheckNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

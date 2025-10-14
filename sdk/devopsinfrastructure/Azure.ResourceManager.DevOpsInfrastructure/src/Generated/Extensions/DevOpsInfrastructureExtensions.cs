@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_CheckNameAvailability</description>
+        /// <description>Pools_CheckDevOpsPoolNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -307,18 +307,18 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.CheckNameAvailabilityPool(CheckNameAvailability,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.CheckDevOpsPoolNameAvailability(CheckNameAvailability,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="body"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityPoolAsync(this SubscriptionResource subscriptionResource, CheckNameAvailability body, CancellationToken cancellationToken = default)
+        public static async Task<Response<DevOpsCheckNameAvailabilityResult>> CheckDevOpsPoolNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailability body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).CheckNameAvailabilityPoolAsync(body, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).CheckDevOpsPoolNameAvailabilityAsync(body, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_CheckNameAvailability</description>
+        /// <description>Pools_CheckDevOpsPoolNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -343,18 +343,18 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.CheckNameAvailabilityPool(CheckNameAvailability,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.CheckDevOpsPoolNameAvailability(CheckNameAvailability,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="body"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityPool(this SubscriptionResource subscriptionResource, CheckNameAvailability body, CancellationToken cancellationToken = default)
+        public static Response<DevOpsCheckNameAvailabilityResult> CheckDevOpsPoolNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailability body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).CheckNameAvailabilityPool(body, cancellationToken);
+            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).CheckDevOpsPoolNameAvailability(body, cancellationToken);
         }
 
         /// <summary>

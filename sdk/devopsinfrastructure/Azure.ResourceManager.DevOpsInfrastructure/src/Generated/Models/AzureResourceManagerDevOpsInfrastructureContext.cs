@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AutomaticResourcePredictionsProfile))]
     [ModelReaderWriterBuildable(typeof(CheckNameAvailability))]
-    [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(DevOpsAzureOrganizationProfile))]
     [ModelReaderWriterBuildable(typeof(DevOpsAzurePermissionProfile))]
     [ModelReaderWriterBuildable(typeof(DevOpsAzureSku))]
+    [ModelReaderWriterBuildable(typeof(DevOpsCheckNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(DevOpsDataDisk))]
     [ModelReaderWriterBuildable(typeof(DevOpsDeleteResourcesDetails))]
     [ModelReaderWriterBuildable(typeof(DevOpsFabricProfile))]

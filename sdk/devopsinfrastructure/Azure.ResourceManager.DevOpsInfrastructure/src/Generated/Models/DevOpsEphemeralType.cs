@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary> The type of Ephemeral option the pool will use on underlying VMs when loading this image. </summary>
-    public readonly partial struct EphemeralType : IEquatable<EphemeralType>
+    public readonly partial struct DevOpsEphemeralType : IEquatable<DevOpsEphemeralType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="EphemeralType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevOpsEphemeralType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EphemeralType(string value)
+        public DevOpsEphemeralType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -27,23 +27,23 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         private const string ResourceDiskValue = "ResourceDisk";
 
         /// <summary> Ephemeral is handled by Managed DevOps Pools service. </summary>
-        public static EphemeralType Automatic { get; } = new EphemeralType(AutomaticValue);
+        public static DevOpsEphemeralType Automatic { get; } = new DevOpsEphemeralType(AutomaticValue);
         /// <summary> CacheDisk ephemeral only, requires that the SKU has a cache that is large enough for the image. </summary>
-        public static EphemeralType CacheDisk { get; } = new EphemeralType(CacheDiskValue);
+        public static DevOpsEphemeralType CacheDisk { get; } = new DevOpsEphemeralType(CacheDiskValue);
         /// <summary> ResourceDisk ephemeral only, requires only that the SKU supports it. </summary>
-        public static EphemeralType ResourceDisk { get; } = new EphemeralType(ResourceDiskValue);
-        /// <summary> Determines if two <see cref="EphemeralType"/> values are the same. </summary>
-        public static bool operator ==(EphemeralType left, EphemeralType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="EphemeralType"/> values are not the same. </summary>
-        public static bool operator !=(EphemeralType left, EphemeralType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EphemeralType"/>. </summary>
-        public static implicit operator EphemeralType(string value) => new EphemeralType(value);
+        public static DevOpsEphemeralType ResourceDisk { get; } = new DevOpsEphemeralType(ResourceDiskValue);
+        /// <summary> Determines if two <see cref="DevOpsEphemeralType"/> values are the same. </summary>
+        public static bool operator ==(DevOpsEphemeralType left, DevOpsEphemeralType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="DevOpsEphemeralType"/> values are not the same. </summary>
+        public static bool operator !=(DevOpsEphemeralType left, DevOpsEphemeralType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsEphemeralType"/>. </summary>
+        public static implicit operator DevOpsEphemeralType(string value) => new DevOpsEphemeralType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EphemeralType other && Equals(other);
+        public override bool Equals(object obj) => obj is DevOpsEphemeralType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(EphemeralType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DevOpsEphemeralType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary> The CheckNameAvailability operation response. </summary>
-    public partial class CheckNameAvailabilityResult
+    public partial class DevOpsCheckNameAvailabilityResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevOpsCheckNameAvailabilityResult"/>. </summary>
         /// <param name="available"> Availability status of the name. </param>
         /// <param name="message"> A message explaining why the name is unavailable. Will be null if the name is available. </param>
         /// <param name="name"> The name whose availability was checked. </param>
         /// <param name="reason"> The reason code explaining why the name is unavailable. Will be null if the name is available. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> or <paramref name="name"/> is null. </exception>
-        internal CheckNameAvailabilityResult(AvailabilityStatus available, string message, string name, CheckNameAvailabilityReason reason)
+        internal DevOpsCheckNameAvailabilityResult(DevOpsAvailabilityStatus available, string message, string name, CheckNameAvailabilityReason reason)
         {
             Argument.AssertNotNull(message, nameof(message));
             Argument.AssertNotNull(name, nameof(name));
@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             Reason = reason;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevOpsCheckNameAvailabilityResult"/>. </summary>
         /// <param name="available"> Availability status of the name. </param>
         /// <param name="message"> A message explaining why the name is unavailable. Will be null if the name is available. </param>
         /// <param name="name"> The name whose availability was checked. </param>
         /// <param name="reason"> The reason code explaining why the name is unavailable. Will be null if the name is available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityResult(AvailabilityStatus available, string message, string name, CheckNameAvailabilityReason reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevOpsCheckNameAvailabilityResult(DevOpsAvailabilityStatus available, string message, string name, CheckNameAvailabilityReason reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Available = available;
             Message = message;
@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/> for deserialization. </summary>
-        internal CheckNameAvailabilityResult()
+        /// <summary> Initializes a new instance of <see cref="DevOpsCheckNameAvailabilityResult"/> for deserialization. </summary>
+        internal DevOpsCheckNameAvailabilityResult()
         {
         }
 
         /// <summary> Availability status of the name. </summary>
-        public AvailabilityStatus Available { get; }
+        public DevOpsAvailabilityStatus Available { get; }
         /// <summary> A message explaining why the name is unavailable. Will be null if the name is available. </summary>
         public string Message { get; }
         /// <summary> The name whose availability was checked. </summary>

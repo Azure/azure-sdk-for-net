@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_CheckNameAvailability</description>
+        /// <description>Pools_CheckDevOpsPoolNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -134,15 +134,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// <param name="body"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityPoolAsync(CheckNameAvailability body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevOpsCheckNameAvailabilityResult>> CheckDevOpsPoolNameAvailabilityAsync(CheckNameAvailability body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = DevOpsPoolPoolsClientDiagnostics.CreateScope("MockableDevOpsInfrastructureSubscriptionResource.CheckNameAvailabilityPool");
+            using var scope = DevOpsPoolPoolsClientDiagnostics.CreateScope("MockableDevOpsInfrastructureSubscriptionResource.CheckDevOpsPoolNameAvailability");
             scope.Start();
             try
             {
-                var response = await DevOpsPoolPoolsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, body, cancellationToken).ConfigureAwait(false);
+                var response = await DevOpsPoolPoolsRestClient.CheckDevOpsPoolNameAvailabilityAsync(Id.SubscriptionId, body, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_CheckNameAvailability</description>
+        /// <description>Pools_CheckDevOpsPoolNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -176,15 +176,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// <param name="body"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityPool(CheckNameAvailability body, CancellationToken cancellationToken = default)
+        public virtual Response<DevOpsCheckNameAvailabilityResult> CheckDevOpsPoolNameAvailability(CheckNameAvailability body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = DevOpsPoolPoolsClientDiagnostics.CreateScope("MockableDevOpsInfrastructureSubscriptionResource.CheckNameAvailabilityPool");
+            using var scope = DevOpsPoolPoolsClientDiagnostics.CreateScope("MockableDevOpsInfrastructureSubscriptionResource.CheckDevOpsPoolNameAvailability");
             scope.Start();
             try
             {
-                var response = DevOpsPoolPoolsRestClient.CheckNameAvailability(Id.SubscriptionId, body, cancellationToken);
+                var response = DevOpsPoolPoolsRestClient.CheckDevOpsPoolNameAvailability(Id.SubscriptionId, body, cancellationToken);
                 return response;
             }
             catch (Exception e)
