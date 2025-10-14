@@ -1,14 +1,10 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.4.1 (2025-10-15)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `WirePath` attribute for all models' properties.
 
 ## 1.4.0 (2025-05-10)
 
