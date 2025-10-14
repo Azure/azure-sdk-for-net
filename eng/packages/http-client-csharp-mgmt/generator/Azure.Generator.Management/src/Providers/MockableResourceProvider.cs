@@ -211,6 +211,7 @@ namespace Azure.Generator.Management.Providers
                             updated = true;
                         }
                     }
+                    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
                     if (updated)
                     {
                         m.Update(signature: m.Signature);
