@@ -71,63 +71,63 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DeviceRegistryNamespaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistryNamespaceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryNamespaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceResource"/> object. </returns>
-        public virtual NamespaceResource GetNamespaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceRegistryNamespaceResource"/> object. </returns>
+        public virtual DeviceRegistryNamespaceResource GetDeviceRegistryNamespaceResource(ResourceIdentifier id)
         {
-            NamespaceResource.ValidateResourceId(id);
-            return new NamespaceResource(Client, id);
+            DeviceRegistryNamespaceResource.ValidateResourceId(id);
+            return new DeviceRegistryNamespaceResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceAssetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceAssetResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceAssetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DeviceRegistryNamespaceAssetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistryNamespaceAssetResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryNamespaceAssetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceAssetResource"/> object. </returns>
-        public virtual NamespaceAssetResource GetNamespaceAssetResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceRegistryNamespaceAssetResource"/> object. </returns>
+        public virtual DeviceRegistryNamespaceAssetResource GetDeviceRegistryNamespaceAssetResource(ResourceIdentifier id)
         {
-            NamespaceAssetResource.ValidateResourceId(id);
-            return new NamespaceAssetResource(Client, id);
+            DeviceRegistryNamespaceAssetResource.ValidateResourceId(id);
+            return new DeviceRegistryNamespaceAssetResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceDeviceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceDeviceResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DeviceRegistryNamespaceDeviceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistryNamespaceDeviceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryNamespaceDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceDeviceResource"/> object. </returns>
-        public virtual NamespaceDeviceResource GetNamespaceDeviceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceRegistryNamespaceDeviceResource"/> object. </returns>
+        public virtual DeviceRegistryNamespaceDeviceResource GetDeviceRegistryNamespaceDeviceResource(ResourceIdentifier id)
         {
-            NamespaceDeviceResource.ValidateResourceId(id);
-            return new NamespaceDeviceResource(Client, id);
+            DeviceRegistryNamespaceDeviceResource.ValidateResourceId(id);
+            return new DeviceRegistryNamespaceDeviceResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceDiscoveredAssetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceDiscoveredAssetResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceDiscoveredAssetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistryNamespaceDiscoveredAssetResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceDiscoveredAssetResource"/> object. </returns>
-        public virtual NamespaceDiscoveredAssetResource GetNamespaceDiscoveredAssetResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> object. </returns>
+        public virtual DeviceRegistryNamespaceDiscoveredAssetResource GetDeviceRegistryNamespaceDiscoveredAssetResource(ResourceIdentifier id)
         {
-            NamespaceDiscoveredAssetResource.ValidateResourceId(id);
-            return new NamespaceDiscoveredAssetResource(Client, id);
+            DeviceRegistryNamespaceDiscoveredAssetResource.ValidateResourceId(id);
+            return new DeviceRegistryNamespaceDiscoveredAssetResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceDiscoveredDeviceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceDiscoveredDeviceResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceDiscoveredDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceDiscoveredDeviceResource"/> object. </returns>
-        public virtual NamespaceDiscoveredDeviceResource GetNamespaceDiscoveredDeviceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> object. </returns>
+        public virtual DeviceRegistryNamespaceDiscoveredDeviceResource GetDeviceRegistryNamespaceDiscoveredDeviceResource(ResourceIdentifier id)
         {
-            NamespaceDiscoveredDeviceResource.ValidateResourceId(id);
-            return new NamespaceDiscoveredDeviceResource(Client, id);
+            DeviceRegistryNamespaceDiscoveredDeviceResource.ValidateResourceId(id);
+            return new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, id);
         }
 
         /// <summary>

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="config"> Defines the device status config properties. </param>
         /// <param name="endpoints"> Defines the device status for inbound/outbound endpoints. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceStatus(StatusConfig config, DeviceStatusEndpoints endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceStatus(DeviceRegistryStatusConfig config, DeviceStatusEndpoints endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Config = config;
             Endpoints = endpoints;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         }
 
         /// <summary> Defines the device status config properties. </summary>
-        public StatusConfig Config { get; }
+        public DeviceRegistryStatusConfig Config { get; }
         /// <summary> Defines the device status for inbound/outbound endpoints. </summary>
         internal DeviceStatusEndpoints Endpoints { get; }
         /// <summary> KeyValue pair representing status of inbound endpoints. </summary>

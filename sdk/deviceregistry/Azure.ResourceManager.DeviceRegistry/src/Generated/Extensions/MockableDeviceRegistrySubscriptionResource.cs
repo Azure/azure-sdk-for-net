@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         private AssetsRestOperations _deviceRegistryAssetAssetsRestClient;
         private ClientDiagnostics _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics;
         private AssetEndpointProfilesRestOperations _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient;
-        private ClientDiagnostics _namespaceClientDiagnostics;
-        private NamespacesRestOperations _namespaceRestClient;
+        private ClientDiagnostics _deviceRegistryNamespaceNamespacesClientDiagnostics;
+        private NamespacesRestOperations _deviceRegistryNamespaceNamespacesRestClient;
         private ClientDiagnostics _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics;
         private SchemaRegistriesRestOperations _deviceRegistrySchemaRegistrySchemaRegistriesRestClient;
 
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         private AssetsRestOperations DeviceRegistryAssetAssetsRestClient => _deviceRegistryAssetAssetsRestClient ??= new AssetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceRegistryAssetResource.ResourceType));
         private ClientDiagnostics DeviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics => _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryAssetEndpointProfileResource.ResourceType.Namespace, Diagnostics);
         private AssetEndpointProfilesRestOperations DeviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient => _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient ??= new AssetEndpointProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceRegistryAssetEndpointProfileResource.ResourceType));
-        private ClientDiagnostics NamespaceClientDiagnostics => _namespaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", NamespaceResource.ResourceType.Namespace, Diagnostics);
-        private NamespacesRestOperations NamespaceRestClient => _namespaceRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NamespaceResource.ResourceType));
+        private ClientDiagnostics DeviceRegistryNamespaceNamespacesClientDiagnostics => _deviceRegistryNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryNamespaceResource.ResourceType.Namespace, Diagnostics);
+        private NamespacesRestOperations DeviceRegistryNamespaceNamespacesRestClient => _deviceRegistryNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceRegistryNamespaceResource.ResourceType));
         private ClientDiagnostics DeviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics => _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistrySchemaRegistryResource.ResourceType.Namespace, Diagnostics);
         private SchemaRegistriesRestOperations DeviceRegistrySchemaRegistrySchemaRegistriesRestClient => _deviceRegistrySchemaRegistrySchemaRegistriesRestClient ??= new SchemaRegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceRegistrySchemaRegistryResource.ResourceType));
 
@@ -259,17 +259,17 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NamespaceResource"/></description>
+        /// <description><see cref="DeviceRegistryNamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NamespaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NamespaceResource> GetNamespacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeviceRegistryNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeviceRegistryNamespaceResource> GetDeviceRegistryNamespacesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NamespaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NamespaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NamespaceResource(Client, NamespaceData.DeserializeNamespaceData(e)), NamespaceClientDiagnostics, Pipeline, "MockableDeviceRegistrySubscriptionResource.GetNamespaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceRegistryNamespaceNamespacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceRegistryNamespaceNamespacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistryNamespaceResource(Client, DeviceRegistryNamespaceData.DeserializeDeviceRegistryNamespaceData(e)), DeviceRegistryNamespaceNamespacesClientDiagnostics, Pipeline, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -289,17 +289,17 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NamespaceResource"/></description>
+        /// <description><see cref="DeviceRegistryNamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NamespaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NamespaceResource> GetNamespaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeviceRegistryNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeviceRegistryNamespaceResource> GetDeviceRegistryNamespaces(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NamespaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NamespaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NamespaceResource(Client, NamespaceData.DeserializeNamespaceData(e)), NamespaceClientDiagnostics, Pipeline, "MockableDeviceRegistrySubscriptionResource.GetNamespaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceRegistryNamespaceNamespacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceRegistryNamespaceNamespacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistryNamespaceResource(Client, DeviceRegistryNamespaceData.DeserializeDeviceRegistryNamespaceData(e)), DeviceRegistryNamespaceNamespacesClientDiagnostics, Pipeline, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

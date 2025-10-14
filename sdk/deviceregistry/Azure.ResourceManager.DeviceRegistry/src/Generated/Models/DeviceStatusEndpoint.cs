@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Initializes a new instance of <see cref="DeviceStatusEndpoint"/>. </summary>
         /// <param name="error"> Defines the error related to this endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceStatusEndpoint(StatusError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceStatusEndpoint(DeviceRegistryStatusError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines the error related to this endpoint. </summary>
-        public StatusError Error { get; }
+        public DeviceRegistryStatusError Error { get; }
     }
 }
