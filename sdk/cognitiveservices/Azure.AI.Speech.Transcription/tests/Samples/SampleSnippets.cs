@@ -277,12 +277,14 @@ namespace Azure.AI.Speech.Transcription.Samples
 #endif
             using (FileStream fileStream = File.Open(filePath, FileMode.Open))
             {
-                var diarizationOptions = new TranscriptionDiarizationOptions();
-                diarizationOptions.Enabled = true;
-                diarizationOptions.MaxSpeakers = 2;
-
-                var options = new TranscriptionOptions();
-                options.DiarizationOptions = diarizationOptions;
+                var options = new TranscriptionOptions()
+                {
+                    DiarizationOptions = new()
+                    {
+                        Enabled = true,
+                        MaxSpeakers = 2
+                    }
+                };
 
                 var request = new TranscribeRequestContent
                 {

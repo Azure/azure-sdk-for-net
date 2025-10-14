@@ -4,7 +4,7 @@ This sample shows how to transcribe a local file using the `Azure.AI.Speech.Tran
 
 ## Create a Transcription Client
 
-To create a TranscriptionClient, you will need the service endpoint and credentials of your SpeechService resource. You can specify the service version by providing a TranscriptionClientOptions instance.
+To create a Transcription Client, you will need the service endpoint and credentials of your AI Foundry resource or Speech Service resource. You can specify the service version by providing a TranscriptionClientOptions instance.
 
 ```C# Snippet:CreateTranscriptionClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");

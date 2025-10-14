@@ -4,7 +4,7 @@ This sample shows how to transcribe files using the options of the `Azure.AI.Spe
 
 ## Create a Transcription Client
 
-To create a TranscriptionClient, you will need the service endpoint and credentials of your SpeechService resource. You can specify the service version by providing a TranscriptionClientOptions instance.
+To create a Transcription Client, you will need the service endpoint and credentials of your AI Foundry resource or Speech Service resource. You can specify the service version by providing a TranscriptionClientOptions instance.
 
 ```C# Snippet:CreateTranscriptionClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
@@ -142,12 +142,14 @@ string filePath = "path/to/audio.wav";
 TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.api.cognitive.microsoft.com/"), new AzureKeyCredential("your apikey"));
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
-    var diarizationOptions = new TranscriptionDiarizationOptions();
-    diarizationOptions.Enabled = true;
-    diarizationOptions.MaxSpeakers = 2;
-
-    var options = new TranscriptionOptions();
-    options.DiarizationOptions = diarizationOptions;
+    var options = new TranscriptionOptions()
+    {
+        DiarizationOptions = new()
+        {
+            Enabled = true,
+            MaxSpeakers = 2
+        }
+    };
 
     var request = new TranscribeRequestContent
     {
