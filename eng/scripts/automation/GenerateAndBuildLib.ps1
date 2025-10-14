@@ -911,69 +911,105 @@ function GetSDKProjectFolder()
 
     Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
     $yml = ConvertFrom-YAML $tspConfigYaml
-    $service = ""
-    $nameSpace = ""
-    $emitterOutputDir = ""
+    $service = $null
+    $namespace = $null
+    $packageDir = $null
+    $emitterOutputDir = $null
+
     if ($yml) {
-        if ($yml["parameters"] -And $yml["parameters"]["service-dir"]) {
-            $service = $yml["parameters"]["service-dir"]["default"];
+        if ($yml["parameters"] -and $yml["parameters"]["service-dir"]) {
+            $service = $yml["parameters"]["service-dir"]["default"]
         }
-        # Support both old and new C# emitters
+
+        $csharpOptionKeys = @(
+            "@azure-tools/typespec-csharp",
+            "@azure-typespec/http-client-csharp",
+            "@azure-typespec/http-client-csharp-mgmt"
+        )
+
         $csharpOpts = $null
-        if ($yml["options"] -And $yml["options"]["@azure-tools/typespec-csharp"]) {
-            $csharpOpts = $yml["options"]["@azure-tools/typespec-csharp"]
-        } elseif ($yml["options"] -And $yml["options"]["@azure-typespec/http-client-csharp"]) {
-            $csharpOpts = $yml["options"]["@azure-typespec/http-client-csharp"]
-        } elseif ($yml["options"] -And $yml["options"]["@azure-typespec/http-client-csharp-mgmt"]) {
-            $csharpOpts = $yml["options"]["@azure-typespec/http-client-csharp-mgmt"]
+        if ($yml["options"]) {
+            foreach ($key in $csharpOptionKeys) {
+                if ($yml["options"]["$key"]) {
+                    $csharpOpts = $yml["options"]["$key"]
+                    break
+                }
+            }
         }
-        
+
         if ($csharpOpts) {
             if ($csharpOpts["namespace"]) {
-                $nameSpace = $csharpOpts["namespace"]
+                $namespace = $csharpOpts["namespace"]
             }
+
+            if ($csharpOpts["package-dir"]) {
+                $packageDir = $csharpOpts["package-dir"]
+            }
+
             if ($csharpOpts["service-dir"]) {
                 $service = $csharpOpts["service-dir"]
             }
+
             if ($csharpOpts["emitter-output-dir"]) {
                 $emitterOutputDir = $csharpOpts["emitter-output-dir"]
-                
-                # Handle emitterOutputDir based on number of segments
-                $segments = $emitterOutputDir -split "/"
-                
-                if ($segments.Count -eq 3) {
-                    # 3 segments: {output-dir}/{service-dir}/{namespace}
-                    # Second segment must be {service-dir} placeholder - don't override service-dir
-                    if ($segments[1] -ne "{service-dir}") {
-                        throw "[ERROR] Invalid emitter-output-dir format: '$emitterOutputDir'. For 3 segments, the second segment must be '{service-dir}' placeholder."
+            }
+        }
+    }
+
+    if (-not [string]::IsNullOrWhiteSpace($emitterOutputDir)) {
+        $relativePath = $emitterOutputDir
+        $prefix = "{output-dir}/"
+        if ($relativePath.StartsWith($prefix)) {
+            $relativePath = $relativePath.Substring($prefix.Length)
+        }
+
+        $resolvedSegments = @()
+        $segments = $relativePath -split "/"
+        foreach ($segment in $segments) {
+            switch ($segment) {
+                "{service-dir}" {
+                    if ([string]::IsNullOrWhiteSpace($service)) {
+                        throw "[ERROR] 'service-dir' must be provided when '{service-dir}' is used in 'emitter-output-dir'."
                     }
-                    # Only check namespace (last segment) for override
-                    $namespaceSegment = $segments[2]
-                    if ($namespaceSegment -ne "{namespace}") {
-                        $nameSpace = $namespaceSegment
-                        Write-Host "Overriding namespace from emitter-output-dir with: $nameSpace"
+                    $normalizedService = ($service -replace "\\", "/") -split "/"
+                    $resolvedSegments += ($normalizedService | Where-Object { $_ })
+                    continue
+                }
+                "{namespace}" {
+                    if ([string]::IsNullOrWhiteSpace($namespace)) {
+                        throw "[ERROR] 'namespace' must be provided when '{namespace}' is used in 'emitter-output-dir'."
                     }
-                } elseif ($segments.Count -eq 4) {
-                    # 4 segments: {output-dir}/sdk/serviceName/namespaceName
-                    # Override service-dir to "sdk/serviceName"
-                    $serviceSegment = $segments[1] + "/" + $segments[2]
-                    $service = $serviceSegment
-                    Write-Host "Overriding service-dir from emitter-output-dir with: $service"
-                    
-                    # Check namespace (last segment)
-                    $namespaceSegment = $segments[3]
-                    if ($namespaceSegment -ne "{namespace}") {
-                        $nameSpace = $namespaceSegment
-                        Write-Host "Overriding namespace from emitter-output-dir with: $nameSpace"
+                    $normalizedNamespace = ($namespace -replace "\\", "/") -split "/"
+                    $resolvedSegments += ($normalizedNamespace | Where-Object { $_ })
+                    continue
+                }
+                default {
+                    if (![string]::IsNullOrWhiteSpace($segment)) {
+                        $resolvedSegments += $segment
                     }
                 }
             }
         }
+
+        if ($resolvedSegments.Count -eq 0) {
+            throw "[ERROR] Unable to resolve SDK project path from 'emitter-output-dir'."
+        }
+
+        $projectFolder = $sdkRepoRoot
+        foreach ($resolvedSegment in $resolvedSegments) {
+            $projectFolder = Join-Path $projectFolder $resolvedSegment
+        }
+
+        return $projectFolder
     }
-    
-    if ([string]::IsNullOrEmpty($service) -or [string]::IsNullOrEmpty($nameSpace)) {
-        throw "[ERROR] 'service-dir' or 'namespace' not provided. Please configure these settings in the 'tspconfig.yaml' file."
+
+    if ([string]::IsNullOrWhiteSpace($packageDir)) {
+        $packageDir = $namespace
     }
-    $projectFolder = (Join-Path $sdkRepoRoot $service $nameSpace)
-    return $projectFolder
+
+    if ([string]::IsNullOrWhiteSpace($service) -or [string]::IsNullOrWhiteSpace($namespace)) {
+        throw "[ERROR] 'service-dir' or 'namespace'/'package-dir' not provided. Please configure these settings in the 'tspconfig.yaml' file."
+    }
+
+    return (Join-Path $sdkRepoRoot $service $packageDir)
 }
