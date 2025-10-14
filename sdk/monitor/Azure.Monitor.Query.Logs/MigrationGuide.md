@@ -215,4 +215,4 @@ foreach (LogsTableColumn columns in resultTable.Columns)
 More examples can be found in the [Azure Monitor Query Logs samples][logs-samples].
 
 <!-- Links -->
-[logs-samples]: https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/monitor/Azure.Monitor.Query.Logs/src/samples/README.md
+[logs-samples]: https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/monitor/Azure.Monitor.Query.Logs/src/README.md#examples
