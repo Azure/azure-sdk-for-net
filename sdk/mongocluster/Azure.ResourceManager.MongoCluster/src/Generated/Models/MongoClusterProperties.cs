@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="authConfig"> The authentication configuration for the cluster. </param>
         /// <param name="encryption"> The encryption configuration for the cluster. Depends on identity being configured. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterProperties(MongoClusterCreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaContent replicaParameters, MongoClusterAdministratorProperties administrator, string serverVersion, string connectionString, MongoClusterProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, StorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, DataApiProperties dataApi, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IList<MongoClusterPreviewFeature> previewFeatures, MongoClusterReplicationProperties replica, string infrastructureVersion, AuthConfigProperties authConfig, EncryptionProperties encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterProperties(MongoClusterCreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaContent replicaParameters, MongoClusterAdministratorProperties administrator, string serverVersion, string connectionString, MongoClusterProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, MongoClusterStorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, DataApiProperties dataApi, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IList<MongoClusterPreviewFeature> previewFeatures, MongoClusterReplicationProperties replica, string infrastructureVersion, AuthConfigProperties authConfig, EncryptionProperties encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateMode = createMode;
             RestoreParameters = restoreParameters;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> The storage properties of the mongo cluster. </summary>
-        public StorageProperties Storage { get; set; }
+        public MongoClusterStorageProperties Storage { get; set; }
         /// <summary> The sharding properties of the mongo cluster. </summary>
         internal ShardingProperties Sharding { get; set; }
         /// <summary> Number of shards to provision on the cluster. </summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> The Data API properties of the mongo cluster. </summary>
         internal DataApiProperties DataApi { get; set; }
         /// <summary> The mode to indicate whether the Mongo Data API is enabled for a cluster. </summary>
-        public DataApiMode? DataApiMode
+        public MongoClusterDataApiMode? DataApiMode
         {
             get => DataApi is null ? default : DataApi.Mode;
             set
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> The authentication configuration for the cluster. </summary>
         internal AuthConfigProperties AuthConfig { get; set; }
         /// <summary> Allowed authentication modes for data access on the cluster. </summary>
-        public IList<AuthenticationMode> AuthConfigAllowedModes
+        public IList<MongoClusterAuthenticationMode> AuthConfigAllowedModes
         {
             get
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> The encryption configuration for the cluster. Depends on identity being configured. </summary>
         internal EncryptionProperties Encryption { get; set; }
         /// <summary> Customer managed key encryption settings. </summary>
-        public CustomerManagedKeyEncryptionProperties CustomerManagedKeyEncryption
+        public MongoClusterCmkEncryptionProperties CustomerManagedKeyEncryption
         {
             get => Encryption is null ? default : Encryption.CustomerManagedKeyEncryption;
             set

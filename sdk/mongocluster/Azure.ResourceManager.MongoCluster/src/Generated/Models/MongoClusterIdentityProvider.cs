@@ -10,8 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Data API properties. </summary>
-    internal partial class DataApiProperties
+    /// <summary>
+    /// Defines a user's identity provider definition.
+    /// Please note <see cref="MongoClusterIdentityProvider"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="MongoClusterEntraIdentityProvider"/>.
+    /// </summary>
+    public abstract partial class MongoClusterIdentityProvider
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,23 +47,23 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataApiProperties"/>. </summary>
-        public DataApiProperties()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterIdentityProvider"/>. </summary>
+        protected MongoClusterIdentityProvider()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataApiProperties"/>. </summary>
-        /// <param name="mode"> The mode to indicate whether the Mongo Data API is enabled for a cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterIdentityProvider"/>. </summary>
+        /// <param name="type"> The type of identity provider that the user belongs to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataApiProperties(MongoClusterDataApiMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterIdentityProvider(IdentityProviderType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Mode = mode;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The mode to indicate whether the Mongo Data API is enabled for a cluster. </summary>
-        public MongoClusterDataApiMode? Mode { get; set; }
+        /// <summary> The type of identity provider that the user belongs to. </summary>
+        internal IdentityProviderType Type { get; set; }
     }
 }

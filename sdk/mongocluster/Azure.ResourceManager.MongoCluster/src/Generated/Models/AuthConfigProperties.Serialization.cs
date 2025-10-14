@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 return null;
             }
-            IList<AuthenticationMode> allowedModes = default;
+            IList<MongoClusterAuthenticationMode> allowedModes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    List<AuthenticationMode> array = new List<AuthenticationMode>();
+                    List<MongoClusterAuthenticationMode> array = new List<MongoClusterAuthenticationMode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new AuthenticationMode(item.GetString()));
+                        array.Add(new MongoClusterAuthenticationMode(item.GetString()));
                     }
                     allowedModes = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AuthConfigProperties(allowedModes ?? new ChangeTrackingList<AuthenticationMode>(), serializedAdditionalRawData);
+            return new AuthConfigProperties(allowedModes ?? new ChangeTrackingList<MongoClusterAuthenticationMode>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthConfigProperties>.Write(ModelReaderWriterOptions options)

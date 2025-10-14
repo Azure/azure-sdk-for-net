@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Data API properties. </summary>
-    internal partial class DataApiProperties
+    /// <summary> The identity used for key encryption key. </summary>
+    public partial class MongoClusterKeyEncryptionKeyIdentity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,25 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataApiProperties"/>. </summary>
-        public DataApiProperties()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterKeyEncryptionKeyIdentity"/>. </summary>
+        public MongoClusterKeyEncryptionKeyIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataApiProperties"/>. </summary>
-        /// <param name="mode"> The mode to indicate whether the Mongo Data API is enabled for a cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterKeyEncryptionKeyIdentity"/>. </summary>
+        /// <param name="identityType"> The type of identity. Only 'UserAssignedIdentity' is supported. </param>
+        /// <param name="userAssignedIdentityResourceId"> The user assigned identity resource id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataApiProperties(MongoClusterDataApiMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterKeyEncryptionKeyIdentity(MongoClusterKeyEncryptionKeyIdentityType? identityType, string userAssignedIdentityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Mode = mode;
+            IdentityType = identityType;
+            UserAssignedIdentityResourceId = userAssignedIdentityResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The mode to indicate whether the Mongo Data API is enabled for a cluster. </summary>
-        public MongoClusterDataApiMode? Mode { get; set; }
+        /// <summary> The type of identity. Only 'UserAssignedIdentity' is supported. </summary>
+        public MongoClusterKeyEncryptionKeyIdentityType? IdentityType { get; set; }
+        /// <summary> The user assigned identity resource id. </summary>
+        public string UserAssignedIdentityResourceId { get; set; }
     }
 }

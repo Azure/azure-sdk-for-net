@@ -91,22 +91,22 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="UserResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UserResource.CreateResourceIdentifier" /> to create an <see cref="UserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MongoClusterUserResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoClusterUserResource.CreateResourceIdentifier" /> to create a <see cref="MongoClusterUserResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMongoClusterArmClient.GetUserResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMongoClusterArmClient.GetMongoClusterUserResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="UserResource"/> object. </returns>
-        public static UserResource GetUserResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoClusterUserResource"/> object. </returns>
+        public static MongoClusterUserResource GetMongoClusterUserResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMongoClusterArmClient(client).GetUserResource(id);
+            return GetMockableMongoClusterArmClient(client).GetMongoClusterUserResource(id);
         }
 
         /// <summary>

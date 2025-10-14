@@ -237,11 +237,11 @@ namespace Azure.ResourceManager.MongoCluster
             return GetMongoClusterPrivateEndpointConnectionResources().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of UserResources in the MongoCluster. </summary>
-        /// <returns> An object representing collection of UserResources and their operations over a UserResource. </returns>
-        public virtual UserCollection GetUsers()
+        /// <summary> Gets a collection of MongoClusterUserResources in the MongoCluster. </summary>
+        /// <returns> An object representing collection of MongoClusterUserResources and their operations over a MongoClusterUserResource. </returns>
+        public virtual MongoClusterUserCollection GetMongoClusterUsers()
         {
-            return GetCachedClient(client => new UserCollection(client, Id));
+            return GetCachedClient(client => new MongoClusterUserCollection(client, Id));
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="UserResource"/></description>
+        /// <description><see cref="MongoClusterUserResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,9 +270,9 @@ namespace Azure.ResourceManager.MongoCluster
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<UserResource>> GetUserAsync(string userName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MongoClusterUserResource>> GetMongoClusterUserAsync(string userName, CancellationToken cancellationToken = default)
         {
-            return await GetUsers().GetAsync(userName, cancellationToken).ConfigureAwait(false);
+            return await GetMongoClusterUsers().GetAsync(userName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="UserResource"/></description>
+        /// <description><see cref="MongoClusterUserResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,9 +301,9 @@ namespace Azure.ResourceManager.MongoCluster
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<UserResource> GetUser(string userName, CancellationToken cancellationToken = default)
+        public virtual Response<MongoClusterUserResource> GetMongoClusterUser(string userName, CancellationToken cancellationToken = default)
         {
-            return GetUsers().Get(userName, cancellationToken);
+            return GetMongoClusterUsers().Get(userName, cancellationToken);
         }
 
         /// <summary>

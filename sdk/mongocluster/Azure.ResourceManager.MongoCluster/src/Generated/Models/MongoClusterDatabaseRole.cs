@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Data API properties. </summary>
-    internal partial class DataApiProperties
+    /// <summary> Database role definition that is assigned to a user. </summary>
+    public partial class MongoClusterDatabaseRole
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,37 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataApiProperties"/>. </summary>
-        public DataApiProperties()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterDatabaseRole"/>. </summary>
+        /// <param name="db"> Database scope that the role is assigned to. </param>
+        /// <param name="role"> The role that is assigned to the user on the database scope. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="db"/> is null. </exception>
+        public MongoClusterDatabaseRole(string db, MongoClusterUserRole role)
         {
+            Argument.AssertNotNull(db, nameof(db));
+
+            Db = db;
+            Role = role;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataApiProperties"/>. </summary>
-        /// <param name="mode"> The mode to indicate whether the Mongo Data API is enabled for a cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterDatabaseRole"/>. </summary>
+        /// <param name="db"> Database scope that the role is assigned to. </param>
+        /// <param name="role"> The role that is assigned to the user on the database scope. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataApiProperties(MongoClusterDataApiMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterDatabaseRole(string db, MongoClusterUserRole role, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Mode = mode;
+            Db = db;
+            Role = role;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The mode to indicate whether the Mongo Data API is enabled for a cluster. </summary>
-        public MongoClusterDataApiMode? Mode { get; set; }
+        /// <summary> Initializes a new instance of <see cref="MongoClusterDatabaseRole"/> for deserialization. </summary>
+        internal MongoClusterDatabaseRole()
+        {
+        }
+
+        /// <summary> Database scope that the role is assigned to. </summary>
+        public string Db { get; set; }
+        /// <summary> The role that is assigned to the user on the database scope. </summary>
+        public MongoClusterUserRole Role { get; set; }
     }
 }

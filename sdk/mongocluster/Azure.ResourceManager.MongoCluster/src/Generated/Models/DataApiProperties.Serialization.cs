@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 return null;
             }
-            DataApiMode? mode = default;
+            MongoClusterDataApiMode? mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    mode = new DataApiMode(property.Value.GetString());
+                    mode = new MongoClusterDataApiMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

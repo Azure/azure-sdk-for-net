@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                     },
                     ServerVersion = "5.0",
                     HighAvailabilityTargetMode = HighAvailabilityMode.ZoneRedundantPreferred,
-                    Storage = new StorageProperties
+                    Storage = new MongoClusterStorageProperties
                     {
                         SizeGb = 128L,
                     },
                     ShardingShardCount = 1,
                     ComputeTier = "M30",
-                    AuthConfigAllowedModes = { AuthenticationMode.NativeAuth },
+                    AuthConfigAllowedModes = { MongoClusterAuthenticationMode.NativeAuth },
                 },
             };
             ArmOperation<MongoClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, mongoClusterName, data);
@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                 {
                     CreateMode = MongoClusterCreateMode.GeoReplica,
                     ReplicaParameters = new MongoClusterReplicaContent(new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/mySourceMongoCluster"), new AzureLocation("eastus")),
-                    CustomerManagedKeyEncryption = new CustomerManagedKeyEncryptionProperties
+                    CustomerManagedKeyEncryption = new MongoClusterCmkEncryptionProperties
                     {
-                        KeyEncryptionKeyIdentity = new KeyEncryptionKeyIdentity
+                        KeyEncryptionKeyIdentity = new MongoClusterKeyEncryptionKeyIdentity
                         {
-                            IdentityType = KeyEncryptionKeyIdentityType.UserAssignedIdentity,
+                            IdentityType = MongoClusterKeyEncryptionKeyIdentityType.UserAssignedIdentity,
                             UserAssignedIdentityResourceId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myidentity",
                         },
                         KeyEncryptionKeyUri = "https://myVault.vault.azure.net/keys/myKey",
@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                         PointInTimeUTC = DateTimeOffset.Parse("2023-01-13T20:07:35Z"),
                         SourceResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myOtherMongoCluster"),
                     },
-                    CustomerManagedKeyEncryption = new CustomerManagedKeyEncryptionProperties
+                    CustomerManagedKeyEncryption = new MongoClusterCmkEncryptionProperties
                     {
-                        KeyEncryptionKeyIdentity = new KeyEncryptionKeyIdentity
+                        KeyEncryptionKeyIdentity = new MongoClusterKeyEncryptionKeyIdentity
                         {
-                            IdentityType = KeyEncryptionKeyIdentityType.UserAssignedIdentity,
+                            IdentityType = MongoClusterKeyEncryptionKeyIdentityType.UserAssignedIdentity,
                             UserAssignedIdentityResourceId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myidentity",
                         },
                         KeyEncryptionKeyUri = "https://myVault.vault.azure.net/keys/myKey",
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                         PointInTimeUTC = DateTimeOffset.Parse("2023-01-13T20:07:35Z"),
                         SourceResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myOtherMongoCluster"),
                     },
-                    AuthConfigAllowedModes = { AuthenticationMode.MicrosoftEntraId },
+                    AuthConfigAllowedModes = { MongoClusterAuthenticationMode.MicrosoftEntraId },
                 },
             };
             ArmOperation<MongoClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, mongoClusterName, data);
@@ -366,17 +366,17 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                         Password = "password",
                     },
                     HighAvailabilityTargetMode = HighAvailabilityMode.Disabled,
-                    Storage = new StorageProperties
+                    Storage = new MongoClusterStorageProperties
                     {
                         SizeGb = 32L,
                     },
                     ShardingShardCount = 1,
                     ComputeTier = "M30",
-                    CustomerManagedKeyEncryption = new CustomerManagedKeyEncryptionProperties
+                    CustomerManagedKeyEncryption = new MongoClusterCmkEncryptionProperties
                     {
-                        KeyEncryptionKeyIdentity = new KeyEncryptionKeyIdentity
+                        KeyEncryptionKeyIdentity = new MongoClusterKeyEncryptionKeyIdentity
                         {
-                            IdentityType = KeyEncryptionKeyIdentityType.UserAssignedIdentity,
+                            IdentityType = MongoClusterKeyEncryptionKeyIdentityType.UserAssignedIdentity,
                             UserAssignedIdentityResourceId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myidentity",
                         },
                         KeyEncryptionKeyUri = "https://myVault.vault.azure.net/keys/myKey",
@@ -435,14 +435,14 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                     },
                     ServerVersion = "5.0",
                     HighAvailabilityTargetMode = HighAvailabilityMode.ZoneRedundantPreferred,
-                    Storage = new StorageProperties
+                    Storage = new MongoClusterStorageProperties
                     {
                         SizeGb = 32L,
-                        Type = StorageType.PremiumSSDv2,
+                        Type = MongoClusterStorageType.PremiumSSDv2,
                     },
                     ShardingShardCount = 1,
                     ComputeTier = "M30",
-                    AuthConfigAllowedModes = { AuthenticationMode.NativeAuth },
+                    AuthConfigAllowedModes = { MongoClusterAuthenticationMode.NativeAuth },
                 },
             };
             ArmOperation<MongoClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, mongoClusterName, data);

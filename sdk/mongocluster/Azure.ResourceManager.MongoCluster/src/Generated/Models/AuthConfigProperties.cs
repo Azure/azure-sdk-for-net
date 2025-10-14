@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> Initializes a new instance of <see cref="AuthConfigProperties"/>. </summary>
         public AuthConfigProperties()
         {
-            AllowedModes = new ChangeTrackingList<AuthenticationMode>();
+            AllowedModes = new ChangeTrackingList<MongoClusterAuthenticationMode>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthConfigProperties"/>. </summary>
         /// <param name="allowedModes"> Allowed authentication modes for data access on the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthConfigProperties(IList<AuthenticationMode> allowedModes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AuthConfigProperties(IList<MongoClusterAuthenticationMode> allowedModes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllowedModes = allowedModes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Allowed authentication modes for data access on the cluster. </summary>
-        public IList<AuthenticationMode> AllowedModes { get; }
+        public IList<MongoClusterAuthenticationMode> AllowedModes { get; }
     }
 }

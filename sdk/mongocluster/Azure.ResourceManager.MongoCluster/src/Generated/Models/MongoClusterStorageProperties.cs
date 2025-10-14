@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Data API properties. </summary>
-    internal partial class DataApiProperties
+    /// <summary> The storage properties of the cluster. This includes the data storage size and scaling applied to servers in the cluster. </summary>
+    public partial class MongoClusterStorageProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,25 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataApiProperties"/>. </summary>
-        public DataApiProperties()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterStorageProperties"/>. </summary>
+        public MongoClusterStorageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataApiProperties"/>. </summary>
-        /// <param name="mode"> The mode to indicate whether the Mongo Data API is enabled for a cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterStorageProperties"/>. </summary>
+        /// <param name="sizeGb"> The size of the data disk assigned to each server. </param>
+        /// <param name="type"> The type of storage to provision the cluster servers with. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataApiProperties(MongoClusterDataApiMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterStorageProperties(long? sizeGb, MongoClusterStorageType? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Mode = mode;
+            SizeGb = sizeGb;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The mode to indicate whether the Mongo Data API is enabled for a cluster. </summary>
-        public MongoClusterDataApiMode? Mode { get; set; }
+        /// <summary> The size of the data disk assigned to each server. </summary>
+        public long? SizeGb { get; set; }
+        /// <summary> The type of storage to provision the cluster servers with. </summary>
+        public MongoClusterStorageType? Type { get; set; }
     }
 }

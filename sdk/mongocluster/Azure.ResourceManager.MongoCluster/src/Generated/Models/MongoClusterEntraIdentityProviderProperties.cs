@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Data API properties. </summary>
-    internal partial class DataApiProperties
+    /// <summary> Microsoft Entra ID provider properties. </summary>
+    public partial class MongoClusterEntraIdentityProviderProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,28 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataApiProperties"/>. </summary>
-        public DataApiProperties()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterEntraIdentityProviderProperties"/>. </summary>
+        /// <param name="principalType"> The principal type of the user. </param>
+        public MongoClusterEntraIdentityProviderProperties(MongoClusterEntraPrincipalType principalType)
         {
+            PrincipalType = principalType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataApiProperties"/>. </summary>
-        /// <param name="mode"> The mode to indicate whether the Mongo Data API is enabled for a cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterEntraIdentityProviderProperties"/>. </summary>
+        /// <param name="principalType"> The principal type of the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataApiProperties(MongoClusterDataApiMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterEntraIdentityProviderProperties(MongoClusterEntraPrincipalType principalType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Mode = mode;
+            PrincipalType = principalType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The mode to indicate whether the Mongo Data API is enabled for a cluster. </summary>
-        public MongoClusterDataApiMode? Mode { get; set; }
+        /// <summary> Initializes a new instance of <see cref="MongoClusterEntraIdentityProviderProperties"/> for deserialization. </summary>
+        internal MongoClusterEntraIdentityProviderProperties()
+        {
+        }
+
+        /// <summary> The principal type of the user. </summary>
+        public MongoClusterEntraPrincipalType PrincipalType { get; set; }
     }
 }

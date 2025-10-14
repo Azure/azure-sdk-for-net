@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
         /// <param name="customerManagedKeyEncryption"> Customer managed key encryption settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionProperties(CustomerManagedKeyEncryptionProperties customerManagedKeyEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EncryptionProperties(MongoClusterCmkEncryptionProperties customerManagedKeyEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomerManagedKeyEncryption = customerManagedKeyEncryption;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Customer managed key encryption settings. </summary>
-        public CustomerManagedKeyEncryptionProperties CustomerManagedKeyEncryption { get; set; }
+        public MongoClusterCmkEncryptionProperties CustomerManagedKeyEncryption { get; set; }
     }
 }

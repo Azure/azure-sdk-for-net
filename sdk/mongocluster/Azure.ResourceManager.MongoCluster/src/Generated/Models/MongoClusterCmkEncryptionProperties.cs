@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Data API properties. </summary>
-    internal partial class DataApiProperties
+    /// <summary> Customer managed key encryption settings. </summary>
+    public partial class MongoClusterCmkEncryptionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,25 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataApiProperties"/>. </summary>
-        public DataApiProperties()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterCmkEncryptionProperties"/>. </summary>
+        public MongoClusterCmkEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataApiProperties"/>. </summary>
-        /// <param name="mode"> The mode to indicate whether the Mongo Data API is enabled for a cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterCmkEncryptionProperties"/>. </summary>
+        /// <param name="keyEncryptionKeyIdentity"> The identity used to access the key encryption key. </param>
+        /// <param name="keyEncryptionKeyUri"> The URI of the key vault key used for encryption. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataApiProperties(MongoClusterDataApiMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterCmkEncryptionProperties(MongoClusterKeyEncryptionKeyIdentity keyEncryptionKeyIdentity, string keyEncryptionKeyUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Mode = mode;
+            KeyEncryptionKeyIdentity = keyEncryptionKeyIdentity;
+            KeyEncryptionKeyUri = keyEncryptionKeyUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The mode to indicate whether the Mongo Data API is enabled for a cluster. </summary>
-        public MongoClusterDataApiMode? Mode { get; set; }
+        /// <summary> The identity used to access the key encryption key. </summary>
+        public MongoClusterKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get; set; }
+        /// <summary> The URI of the key vault key used for encryption. </summary>
+        public string KeyEncryptionKeyUri { get; set; }
     }
 }

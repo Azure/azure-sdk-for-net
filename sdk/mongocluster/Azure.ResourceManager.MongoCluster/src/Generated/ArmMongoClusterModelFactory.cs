@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="authConfigAllowedModes"> The authentication configuration for the cluster. </param>
         /// <param name="customerManagedKeyEncryption"> The encryption configuration for the cluster. Depends on identity being configured. </param>
         /// <returns> A new <see cref="Models.MongoClusterProperties"/> instance for mocking. </returns>
-        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = null, MongoClusterRestoreContent restoreParameters = null, MongoClusterReplicaContent replicaParameters = null, MongoClusterAdministratorProperties administrator = null, string serverVersion = null, string connectionString = null, MongoClusterProvisioningState? provisioningState = null, MongoClusterStatus? clusterStatus = null, MongoClusterPublicNetworkAccess? publicNetworkAccess = null, HighAvailabilityMode? highAvailabilityTargetMode = null, StorageProperties storage = null, int? shardingShardCount = null, string computeTier = null, string backupEarliestRestoreTime = null, DataApiMode? dataApiMode = null, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = null, IEnumerable<MongoClusterPreviewFeature> previewFeatures = null, MongoClusterReplicationProperties replica = null, string infrastructureVersion = null, IEnumerable<AuthenticationMode> authConfigAllowedModes = null, CustomerManagedKeyEncryptionProperties customerManagedKeyEncryption = null)
+        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = null, MongoClusterRestoreContent restoreParameters = null, MongoClusterReplicaContent replicaParameters = null, MongoClusterAdministratorProperties administrator = null, string serverVersion = null, string connectionString = null, MongoClusterProvisioningState? provisioningState = null, MongoClusterStatus? clusterStatus = null, MongoClusterPublicNetworkAccess? publicNetworkAccess = null, HighAvailabilityMode? highAvailabilityTargetMode = null, MongoClusterStorageProperties storage = null, int? shardingShardCount = null, string computeTier = null, string backupEarliestRestoreTime = null, MongoClusterDataApiMode? dataApiMode = null, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = null, IEnumerable<MongoClusterPreviewFeature> previewFeatures = null, MongoClusterReplicationProperties replica = null, string infrastructureVersion = null, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = null, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = null)
         {
             privateEndpointConnections ??= new List<MongoClusterPrivateEndpointConnection>();
             previewFeatures ??= new List<MongoClusterPreviewFeature>();
-            authConfigAllowedModes ??= new List<AuthenticationMode>();
+            authConfigAllowedModes ??= new List<MongoClusterAuthenticationMode>();
 
             return new MongoClusterProperties(
                 createMode,
@@ -271,16 +271,16 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoCluster.UserData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoCluster.MongoClusterUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="MongoCluster.UserData"/> instance for mocking. </returns>
-        public static UserData UserData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, UserProperties properties = null)
+        /// <returns> A new <see cref="MongoCluster.MongoClusterUserData"/> instance for mocking. </returns>
+        public static MongoClusterUserData MongoClusterUserData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MongoClusterUserProperties properties = null)
         {
-            return new UserData(
+            return new MongoClusterUserData(
                 id,
                 name,
                 resourceType,
@@ -289,20 +289,20 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UserProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterUserProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the user. </param>
         /// <param name="identityProvider">
         /// The user's identity provider definition.
-        /// Please note <see cref="IdentityProvider"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EntraIdentityProvider"/>.
+        /// Please note <see cref="MongoClusterIdentityProvider"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MongoClusterEntraIdentityProvider"/>.
         /// </param>
         /// <param name="roles"> Database roles that are assigned to the user. </param>
-        /// <returns> A new <see cref="Models.UserProperties"/> instance for mocking. </returns>
-        public static UserProperties UserProperties(MongoClusterProvisioningState? provisioningState = null, IdentityProvider identityProvider = null, IEnumerable<DatabaseRole> roles = null)
+        /// <returns> A new <see cref="Models.MongoClusterUserProperties"/> instance for mocking. </returns>
+        public static MongoClusterUserProperties MongoClusterUserProperties(MongoClusterProvisioningState? provisioningState = null, MongoClusterIdentityProvider identityProvider = null, IEnumerable<MongoClusterDatabaseRole> roles = null)
         {
-            roles ??= new List<DatabaseRole>();
+            roles ??= new List<MongoClusterDatabaseRole>();
 
-            return new UserProperties(provisioningState, identityProvider, roles?.ToList(), serializedAdditionalRawData: null);
+            return new MongoClusterUserProperties(provisioningState, identityProvider, roles?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

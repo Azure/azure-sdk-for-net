@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             MongoClusterStatus? clusterStatus = default;
             MongoClusterPublicNetworkAccess? publicNetworkAccess = default;
             HighAvailabilityProperties highAvailability = default;
-            StorageProperties storage = default;
+            MongoClusterStorageProperties storage = default;
             ShardingProperties sharding = default;
             ComputeProperties compute = default;
             BackupProperties backup = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    storage = StorageProperties.DeserializeStorageProperties(property.Value, options);
+                    storage = MongoClusterStorageProperties.DeserializeMongoClusterStorageProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sharding"u8))

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MongoCluster
         public static Azure.ResourceManager.MongoCluster.MongoClusterCollection GetMongoClusters(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.MongoCluster.MongoClusterResource> GetMongoClusters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.MongoCluster.MongoClusterResource> GetMongoClustersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.MongoCluster.UserResource GetUserResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MongoCluster.MongoClusterUserResource GetMongoClusterUserResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MongoClusterFirewallRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MongoCluster.MongoClusterFirewallRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.MongoClusterFirewallRuleResource>, System.Collections.IEnumerable
     {
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.MongoCluster
         public virtual Azure.Response<Azure.ResourceManager.MongoCluster.MongoClusterPrivateEndpointConnectionResource> GetMongoClusterPrivateEndpointConnectionResource(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoCluster.MongoClusterPrivateEndpointConnectionResource>> GetMongoClusterPrivateEndpointConnectionResourceAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MongoCluster.MongoClusterPrivateEndpointConnectionResourceCollection GetMongoClusterPrivateEndpointConnectionResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MongoCluster.MongoClusterUserResource> GetMongoClusterUser(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoCluster.MongoClusterUserResource>> GetMongoClusterUserAsync(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MongoCluster.MongoClusterUserCollection GetMongoClusterUsers() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkResourceData> GetPrivateLinks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkResourceData> GetPrivateLinksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MongoCluster.Models.MongoClusterReplica> GetReplicasByParent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MongoCluster.Models.MongoClusterReplica> GetReplicasByParentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MongoCluster.UserResource> GetUser(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoCluster.UserResource>> GetUserAsync(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.MongoCluster.UserCollection GetUsers() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Promote(Azure.WaitUntil waitUntil, Azure.ResourceManager.MongoCluster.Models.PromoteReplicaContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PromoteAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MongoCluster.Models.PromoteReplicaContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MongoCluster.MongoClusterResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -185,52 +185,52 @@ namespace Azure.ResourceManager.MongoCluster
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoCluster.MongoClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MongoCluster.Models.MongoClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoCluster.MongoClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MongoCluster.Models.MongoClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class UserCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MongoCluster.UserResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.UserResource>, System.Collections.IEnumerable
+    public partial class MongoClusterUserCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MongoCluster.MongoClusterUserResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.MongoClusterUserResource>, System.Collections.IEnumerable
     {
-        protected UserCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoCluster.UserResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string userName, Azure.ResourceManager.MongoCluster.UserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoCluster.UserResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string userName, Azure.ResourceManager.MongoCluster.UserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected MongoClusterUserCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoCluster.MongoClusterUserResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string userName, Azure.ResourceManager.MongoCluster.MongoClusterUserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoCluster.MongoClusterUserResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string userName, Azure.ResourceManager.MongoCluster.MongoClusterUserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MongoCluster.UserResource> Get(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.MongoCluster.UserResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.MongoCluster.UserResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoCluster.UserResource>> GetAsync(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.MongoCluster.UserResource> GetIfExists(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MongoCluster.UserResource>> GetIfExistsAsync(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MongoCluster.UserResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MongoCluster.UserResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MongoCluster.UserResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.UserResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MongoCluster.MongoClusterUserResource> Get(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MongoCluster.MongoClusterUserResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MongoCluster.MongoClusterUserResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoCluster.MongoClusterUserResource>> GetAsync(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.MongoCluster.MongoClusterUserResource> GetIfExists(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MongoCluster.MongoClusterUserResource>> GetIfExistsAsync(string userName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MongoCluster.MongoClusterUserResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MongoCluster.MongoClusterUserResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MongoCluster.MongoClusterUserResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.MongoClusterUserResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class UserData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.UserData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.UserData>
+    public partial class MongoClusterUserData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>
     {
-        public UserData() { }
-        public Azure.ResourceManager.MongoCluster.Models.UserProperties Properties { get { throw null; } set { } }
+        public MongoClusterUserData() { }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterUserProperties Properties { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.UserData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.UserData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.UserData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.UserData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.UserData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.UserData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.UserData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MongoCluster.MongoClusterUserData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.MongoClusterUserData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UserResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.UserData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.UserData>
+    public partial class MongoClusterUserResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected UserResource() { }
-        public virtual Azure.ResourceManager.MongoCluster.UserData Data { get { throw null; } }
+        protected MongoClusterUserResource() { }
+        public virtual Azure.ResourceManager.MongoCluster.MongoClusterUserData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mongoClusterName, string userName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.MongoCluster.UserResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoCluster.UserResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.MongoCluster.UserData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.UserData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.UserData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.UserData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.UserData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.UserData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.UserData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoCluster.UserResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MongoCluster.UserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoCluster.UserResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MongoCluster.UserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MongoCluster.MongoClusterUserResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoCluster.MongoClusterUserResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MongoCluster.MongoClusterUserData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.MongoClusterUserData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.MongoClusterUserData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoCluster.MongoClusterUserResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MongoCluster.MongoClusterUserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoCluster.MongoClusterUserResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MongoCluster.MongoClusterUserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.MongoCluster.Mocking
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         public virtual Azure.ResourceManager.MongoCluster.MongoClusterFirewallRuleResource GetMongoClusterFirewallRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MongoCluster.MongoClusterPrivateEndpointConnectionResource GetMongoClusterPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MongoCluster.MongoClusterResource GetMongoClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.MongoCluster.UserResource GetUserResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MongoCluster.MongoClusterUserResource GetMongoClusterUserResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableMongoClusterResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -274,112 +274,12 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.MongoClusterPrivateEndpointConnectionResourceData MongoClusterPrivateEndpointConnectionResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkResourceData MongoClusterPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkResourceProperties MongoClusterPrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
-        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterProperties MongoClusterProperties(Azure.ResourceManager.MongoCluster.Models.MongoClusterCreateMode? createMode = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterCreateMode?), Azure.ResourceManager.MongoCluster.Models.MongoClusterRestoreContent restoreParameters = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicaContent replicaParameters = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterAdministratorProperties administrator = null, string serverVersion = null, string connectionString = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState? provisioningState = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState?), Azure.ResourceManager.MongoCluster.Models.MongoClusterStatus? clusterStatus = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterStatus?), Azure.ResourceManager.MongoCluster.Models.MongoClusterPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterPublicNetworkAccess?), Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode? highAvailabilityTargetMode = default(Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode?), Azure.ResourceManager.MongoCluster.Models.StorageProperties storage = null, int? shardingShardCount = default(int?), string computeTier = null, string backupEarliestRestoreTime = null, Azure.ResourceManager.MongoCluster.Models.DataApiMode? dataApiMode = default(Azure.ResourceManager.MongoCluster.Models.DataApiMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnection> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.Models.MongoClusterPreviewFeature> previewFeatures = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationProperties replica = null, string infrastructureVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.Models.AuthenticationMode> authConfigAllowedModes = null, Azure.ResourceManager.MongoCluster.Models.CustomerManagedKeyEncryptionProperties customerManagedKeyEncryption = null) { throw null; }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterProperties MongoClusterProperties(Azure.ResourceManager.MongoCluster.Models.MongoClusterCreateMode? createMode = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterCreateMode?), Azure.ResourceManager.MongoCluster.Models.MongoClusterRestoreContent restoreParameters = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicaContent replicaParameters = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterAdministratorProperties administrator = null, string serverVersion = null, string connectionString = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState? provisioningState = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState?), Azure.ResourceManager.MongoCluster.Models.MongoClusterStatus? clusterStatus = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterStatus?), Azure.ResourceManager.MongoCluster.Models.MongoClusterPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterPublicNetworkAccess?), Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode? highAvailabilityTargetMode = default(Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode?), Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageProperties storage = null, int? shardingShardCount = default(int?), string computeTier = null, string backupEarliestRestoreTime = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode? dataApiMode = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnection> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.Models.MongoClusterPreviewFeature> previewFeatures = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationProperties replica = null, string infrastructureVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode> authConfigAllowedModes = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = null) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterReplica MongoClusterReplica(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterProperties properties = null) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationProperties MongoClusterReplicationProperties(Azure.Core.ResourceIdentifier sourceResourceId = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationRole? role = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationRole?), Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationState? replicationState = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationState?)) { throw null; }
+        public static Azure.ResourceManager.MongoCluster.MongoClusterUserData MongoClusterUserData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterUserProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterUserProperties MongoClusterUserProperties(Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState? provisioningState = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState?), Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider identityProvider = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.Models.MongoClusterDatabaseRole> roles = null) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.PromoteReplicaContent PromoteReplicaContent(Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteOption promoteOption = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteOption), Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteMode? mode = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterPromoteMode?)) { throw null; }
-        public static Azure.ResourceManager.MongoCluster.UserData UserData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MongoCluster.Models.UserProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.MongoCluster.Models.UserProperties UserProperties(Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState? provisioningState = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState?), Azure.ResourceManager.MongoCluster.Models.IdentityProvider identityProvider = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoCluster.Models.DatabaseRole> roles = null) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AuthenticationMode : System.IEquatable<Azure.ResourceManager.MongoCluster.Models.AuthenticationMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AuthenticationMode(string value) { throw null; }
-        public static Azure.ResourceManager.MongoCluster.Models.AuthenticationMode MicrosoftEntraId { get { throw null; } }
-        public static Azure.ResourceManager.MongoCluster.Models.AuthenticationMode NativeAuth { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MongoCluster.Models.AuthenticationMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.AuthenticationMode left, Azure.ResourceManager.MongoCluster.Models.AuthenticationMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MongoCluster.Models.AuthenticationMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.AuthenticationMode left, Azure.ResourceManager.MongoCluster.Models.AuthenticationMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CustomerManagedKeyEncryptionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.CustomerManagedKeyEncryptionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.CustomerManagedKeyEncryptionProperties>
-    {
-        public CustomerManagedKeyEncryptionProperties() { }
-        public Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get { throw null; } set { } }
-        public string KeyEncryptionKeyUri { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.CustomerManagedKeyEncryptionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.CustomerManagedKeyEncryptionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.CustomerManagedKeyEncryptionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.CustomerManagedKeyEncryptionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.CustomerManagedKeyEncryptionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.CustomerManagedKeyEncryptionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.CustomerManagedKeyEncryptionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DataApiMode : System.IEquatable<Azure.ResourceManager.MongoCluster.Models.DataApiMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DataApiMode(string value) { throw null; }
-        public static Azure.ResourceManager.MongoCluster.Models.DataApiMode Disabled { get { throw null; } }
-        public static Azure.ResourceManager.MongoCluster.Models.DataApiMode Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MongoCluster.Models.DataApiMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.DataApiMode left, Azure.ResourceManager.MongoCluster.Models.DataApiMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MongoCluster.Models.DataApiMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.DataApiMode left, Azure.ResourceManager.MongoCluster.Models.DataApiMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class DatabaseRole : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.DatabaseRole>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.DatabaseRole>
-    {
-        public DatabaseRole(string db, Azure.ResourceManager.MongoCluster.Models.UserRole role) { }
-        public string Db { get { throw null; } set { } }
-        public Azure.ResourceManager.MongoCluster.Models.UserRole Role { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.DatabaseRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.DatabaseRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.DatabaseRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.DatabaseRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.DatabaseRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.DatabaseRole>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.DatabaseRole>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class EntraIdentityProvider : Azure.ResourceManager.MongoCluster.Models.IdentityProvider, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProvider>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProvider>
-    {
-        public EntraIdentityProvider(Azure.ResourceManager.MongoCluster.Models.EntraIdentityProviderProperties properties) { }
-        public Azure.ResourceManager.MongoCluster.Models.EntraPrincipalType? EntraIdentityProviderPrincipalType { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.EntraIdentityProvider System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProvider>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProvider>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.EntraIdentityProvider System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProvider>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProvider>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProvider>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class EntraIdentityProviderProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProviderProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProviderProperties>
-    {
-        public EntraIdentityProviderProperties(Azure.ResourceManager.MongoCluster.Models.EntraPrincipalType principalType) { }
-        public Azure.ResourceManager.MongoCluster.Models.EntraPrincipalType PrincipalType { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.EntraIdentityProviderProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProviderProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProviderProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.EntraIdentityProviderProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProviderProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProviderProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.EntraIdentityProviderProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EntraPrincipalType : System.IEquatable<Azure.ResourceManager.MongoCluster.Models.EntraPrincipalType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EntraPrincipalType(string value) { throw null; }
-        public static Azure.ResourceManager.MongoCluster.Models.EntraPrincipalType ServicePrincipal { get { throw null; } }
-        public static Azure.ResourceManager.MongoCluster.Models.EntraPrincipalType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MongoCluster.Models.EntraPrincipalType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.EntraPrincipalType left, Azure.ResourceManager.MongoCluster.Models.EntraPrincipalType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MongoCluster.Models.EntraPrincipalType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.EntraPrincipalType left, Azure.ResourceManager.MongoCluster.Models.EntraPrincipalType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HighAvailabilityMode : System.IEquatable<Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode>
@@ -400,45 +300,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode left, Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class IdentityProvider : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.IdentityProvider>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.IdentityProvider>
-    {
-        protected IdentityProvider() { }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.IdentityProvider System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.IdentityProvider>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.IdentityProvider>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.IdentityProvider System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.IdentityProvider>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.IdentityProvider>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.IdentityProvider>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class KeyEncryptionKeyIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentity>
-    {
-        public KeyEncryptionKeyIdentity() { }
-        public Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentityType? IdentityType { get { throw null; } set { } }
-        public string UserAssignedIdentityResourceId { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KeyEncryptionKeyIdentityType : System.IEquatable<Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KeyEncryptionKeyIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentityType UserAssignedIdentity { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentityType left, Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentityType left, Azure.ResourceManager.MongoCluster.Models.KeyEncryptionKeyIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class MongoClusterAdministratorProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterAdministratorProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterAdministratorProperties>
     {
         public MongoClusterAdministratorProperties() { }
@@ -450,6 +311,36 @@ namespace Azure.ResourceManager.MongoCluster.Models
         Azure.ResourceManager.MongoCluster.Models.MongoClusterAdministratorProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterAdministratorProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterAdministratorProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterAdministratorProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MongoClusterAuthenticationMode : System.IEquatable<Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MongoClusterAuthenticationMode(string value) { throw null; }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode MicrosoftEntraId { get { throw null; } }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode NativeAuth { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode left, Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode left, Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MongoClusterCmkEncryptionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterCmkEncryptionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterCmkEncryptionProperties>
+    {
+        public MongoClusterCmkEncryptionProperties() { }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get { throw null; } set { } }
+        public string KeyEncryptionKeyUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterCmkEncryptionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterCmkEncryptionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterCmkEncryptionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterCmkEncryptionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterCmkEncryptionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterCmkEncryptionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterCmkEncryptionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MongoClusterConnectionString : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterConnectionString>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterConnectionString>
     {
@@ -495,6 +386,76 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.MongoClusterCreateMode left, Azure.ResourceManager.MongoCluster.Models.MongoClusterCreateMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MongoClusterDataApiMode : System.IEquatable<Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MongoClusterDataApiMode(string value) { throw null; }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode Disabled { get { throw null; } }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode left, Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode left, Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MongoClusterDatabaseRole : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterDatabaseRole>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterDatabaseRole>
+    {
+        public MongoClusterDatabaseRole(string db, Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole role) { }
+        public string Db { get { throw null; } set { } }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole Role { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterDatabaseRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterDatabaseRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterDatabaseRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterDatabaseRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterDatabaseRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterDatabaseRole>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterDatabaseRole>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MongoClusterEntraIdentityProvider : Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProvider>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProvider>
+    {
+        public MongoClusterEntraIdentityProvider(Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProviderProperties properties) { }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType? MongoClusterEntraIdentityProviderPrincipalType { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProvider System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProvider>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProvider>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProvider System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProvider>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProvider>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProvider>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MongoClusterEntraIdentityProviderProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProviderProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProviderProperties>
+    {
+        public MongoClusterEntraIdentityProviderProperties(Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType principalType) { }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType PrincipalType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProviderProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProviderProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProviderProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProviderProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProviderProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProviderProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraIdentityProviderProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MongoClusterEntraPrincipalType : System.IEquatable<Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MongoClusterEntraPrincipalType(string value) { throw null; }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType ServicePrincipal { get { throw null; } }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType User { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType left, Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType left, Azure.ResourceManager.MongoCluster.Models.MongoClusterEntraPrincipalType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MongoClusterFirewallRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterFirewallRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterFirewallRuleProperties>
     {
         public MongoClusterFirewallRuleProperties(string startIPAddress, string endIPAddress) { }
@@ -507,6 +468,45 @@ namespace Azure.ResourceManager.MongoCluster.Models
         Azure.ResourceManager.MongoCluster.Models.MongoClusterFirewallRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterFirewallRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterFirewallRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterFirewallRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class MongoClusterIdentityProvider : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider>
+    {
+        protected MongoClusterIdentityProvider() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MongoClusterKeyEncryptionKeyIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentity>
+    {
+        public MongoClusterKeyEncryptionKeyIdentity() { }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType? IdentityType { get { throw null; } set { } }
+        public string UserAssignedIdentityResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MongoClusterKeyEncryptionKeyIdentityType : System.IEquatable<Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MongoClusterKeyEncryptionKeyIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType UserAssignedIdentity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType left, Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType left, Azure.ResourceManager.MongoCluster.Models.MongoClusterKeyEncryptionKeyIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MongoClusterNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterNameAvailabilityContent>
     {
@@ -720,14 +720,14 @@ namespace Azure.ResourceManager.MongoCluster.Models
     {
         public MongoClusterProperties() { }
         public Azure.ResourceManager.MongoCluster.Models.MongoClusterAdministratorProperties Administrator { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.MongoCluster.Models.AuthenticationMode> AuthConfigAllowedModes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode> AuthConfigAllowedModes { get { throw null; } }
         public string BackupEarliestRestoreTime { get { throw null; } }
         public Azure.ResourceManager.MongoCluster.Models.MongoClusterStatus? ClusterStatus { get { throw null; } }
         public string ComputeTier { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } }
         public Azure.ResourceManager.MongoCluster.Models.MongoClusterCreateMode? CreateMode { get { throw null; } set { } }
-        public Azure.ResourceManager.MongoCluster.Models.CustomerManagedKeyEncryptionProperties CustomerManagedKeyEncryption { get { throw null; } set { } }
-        public Azure.ResourceManager.MongoCluster.Models.DataApiMode? DataApiMode { get { throw null; } set { } }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterCmkEncryptionProperties CustomerManagedKeyEncryption { get { throw null; } set { } }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode? DataApiMode { get { throw null; } set { } }
         public Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode? HighAvailabilityTargetMode { get { throw null; } set { } }
         public string InfrastructureVersion { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MongoCluster.Models.MongoClusterPreviewFeature> PreviewFeatures { get { throw null; } }
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public Azure.ResourceManager.MongoCluster.Models.MongoClusterRestoreContent RestoreParameters { get { throw null; } set { } }
         public string ServerVersion { get { throw null; } set { } }
         public int? ShardingShardCount { get { throw null; } set { } }
-        public Azure.ResourceManager.MongoCluster.Models.StorageProperties Storage { get { throw null; } set { } }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageProperties Storage { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MongoCluster.Models.MongoClusterProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -899,27 +899,87 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.MongoClusterStatus left, Azure.ResourceManager.MongoCluster.Models.MongoClusterStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MongoClusterStorageProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageProperties>
+    {
+        public MongoClusterStorageProperties() { }
+        public long? SizeGb { get { throw null; } set { } }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType? Type { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MongoClusterStorageType : System.IEquatable<Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MongoClusterStorageType(string value) { throw null; }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType PremiumSSD { get { throw null; } }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType PremiumSSDv2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType left, Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType left, Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MongoClusterUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUpdateProperties>
     {
         public MongoClusterUpdateProperties() { }
         public Azure.ResourceManager.MongoCluster.Models.MongoClusterAdministratorProperties Administrator { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.MongoCluster.Models.AuthenticationMode> AuthConfigAllowedModes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode> AuthConfigAllowedModes { get { throw null; } }
         public string BackupEarliestRestoreTime { get { throw null; } }
         public string ComputeTier { get { throw null; } set { } }
-        public Azure.ResourceManager.MongoCluster.Models.CustomerManagedKeyEncryptionProperties CustomerManagedKeyEncryption { get { throw null; } set { } }
-        public Azure.ResourceManager.MongoCluster.Models.DataApiMode? DataApiMode { get { throw null; } set { } }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterCmkEncryptionProperties CustomerManagedKeyEncryption { get { throw null; } set { } }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterDataApiMode? DataApiMode { get { throw null; } set { } }
         public Azure.ResourceManager.MongoCluster.Models.HighAvailabilityMode? HighAvailabilityTargetMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MongoCluster.Models.MongoClusterPreviewFeature> PreviewFeatures { get { throw null; } }
         public Azure.ResourceManager.MongoCluster.Models.MongoClusterPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public string ServerVersion { get { throw null; } set { } }
         public int? ShardingShardCount { get { throw null; } set { } }
-        public Azure.ResourceManager.MongoCluster.Models.StorageProperties Storage { get { throw null; } set { } }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterStorageProperties Storage { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MongoCluster.Models.MongoClusterUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MongoCluster.Models.MongoClusterUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MongoClusterUserProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUserProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUserProperties>
+    {
+        public MongoClusterUserProperties() { }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider IdentityProvider { get { throw null; } set { } }
+        public Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MongoCluster.Models.MongoClusterDatabaseRole> Roles { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterUserProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUserProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUserProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MongoCluster.Models.MongoClusterUserProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUserProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUserProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterUserProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MongoClusterUserRole : System.IEquatable<Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MongoClusterUserRole(string value) { throw null; }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole Root { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole left, Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole left, Azure.ResourceManager.MongoCluster.Models.MongoClusterUserRole right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class PromoteReplicaContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.PromoteReplicaContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.PromoteReplicaContent>
     {
@@ -932,65 +992,5 @@ namespace Azure.ResourceManager.MongoCluster.Models
         Azure.ResourceManager.MongoCluster.Models.PromoteReplicaContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.PromoteReplicaContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.PromoteReplicaContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.PromoteReplicaContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class StorageProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.StorageProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.StorageProperties>
-    {
-        public StorageProperties() { }
-        public long? SizeGb { get { throw null; } set { } }
-        public Azure.ResourceManager.MongoCluster.Models.StorageType? Type { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.StorageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.StorageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.StorageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.StorageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.StorageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.StorageProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.StorageProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageType : System.IEquatable<Azure.ResourceManager.MongoCluster.Models.StorageType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StorageType(string value) { throw null; }
-        public static Azure.ResourceManager.MongoCluster.Models.StorageType PremiumSSD { get { throw null; } }
-        public static Azure.ResourceManager.MongoCluster.Models.StorageType PremiumSSDv2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MongoCluster.Models.StorageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.StorageType left, Azure.ResourceManager.MongoCluster.Models.StorageType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MongoCluster.Models.StorageType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.StorageType left, Azure.ResourceManager.MongoCluster.Models.StorageType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class UserProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.UserProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.UserProperties>
-    {
-        public UserProperties() { }
-        public Azure.ResourceManager.MongoCluster.Models.IdentityProvider IdentityProvider { get { throw null; } set { } }
-        public Azure.ResourceManager.MongoCluster.Models.MongoClusterProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.MongoCluster.Models.DatabaseRole> Roles { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.UserProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.UserProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.UserProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MongoCluster.Models.UserProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.UserProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.UserProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.UserProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UserRole : System.IEquatable<Azure.ResourceManager.MongoCluster.Models.UserRole>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UserRole(string value) { throw null; }
-        public static Azure.ResourceManager.MongoCluster.Models.UserRole Root { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MongoCluster.Models.UserRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MongoCluster.Models.UserRole left, Azure.ResourceManager.MongoCluster.Models.UserRole right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MongoCluster.Models.UserRole (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MongoCluster.Models.UserRole left, Azure.ResourceManager.MongoCluster.Models.UserRole right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }
