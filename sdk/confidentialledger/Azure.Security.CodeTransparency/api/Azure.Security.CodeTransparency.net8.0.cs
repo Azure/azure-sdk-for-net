@@ -1,5 +1,11 @@
 namespace Azure.Security.CodeTransparency
 {
+    public enum AllowedDomainVerificationBehavior
+    {
+        AnyAllowedDomainPresentAndValid = 0,
+        AllAllowListedReceiptsMustBeValid = 1,
+        EachAllowListedDomainMustHaveValidReceipt = 2,
+    }
     public partial class AzureSecurityCodeTransparencyContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureSecurityCodeTransparencyContext() { }
@@ -24,8 +30,8 @@ namespace Azure.Security.CodeTransparency
     }
     public partial class CodeTransparencyClient
     {
+        public static readonly string UnknownIssuerPrefix;
         protected CodeTransparencyClient() { }
-        public CodeTransparencyClient(byte[] transparentStatementCoseSign1Bytes, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options = null) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options = null) { }
@@ -52,7 +58,10 @@ namespace Azure.Security.CodeTransparency
         public virtual Azure.Response<System.BinaryData> GetTransparencyConfigCbor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTransparencyConfigCborAsync(Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetTransparencyConfigCborAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use the static VerifyTransparentStatement method with options instead.")]
         public virtual void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes) { }
+        public virtual void RunTransparentStatementVerification(byte[] signedStatementCoseSign1Bytes, byte[] receiptCoseSign1Bytes) { }
+        public static void VerifyTransparentStatement(byte[] transparentStatementCoseSign1Bytes, Azure.Security.CodeTransparency.CodeTransparencyVerificationOptions verificationOptions = null, Azure.Security.CodeTransparency.CodeTransparencyClientOptions clientOptions = null) { }
     }
     public partial class CodeTransparencyClientOptions : Azure.Core.ClientOptions
     {
@@ -70,6 +79,13 @@ namespace Azure.Security.CodeTransparency
         Running = 0,
         Failed = 1,
         Succeeded = 2,
+    }
+    public sealed partial class CodeTransparencyVerificationOptions
+    {
+        public CodeTransparencyVerificationOptions() { }
+        public Azure.Security.CodeTransparency.AllowedDomainVerificationBehavior AllowedDomainVerificationBehavior { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> AllowedIssuerDomains { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.NonAllowListedReceiptBehavior NonAllowListedReceiptBehavior { get { throw null; } set { } }
     }
     public partial class JsonWebKey : System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JsonWebKey>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JsonWebKey>
     {
@@ -108,6 +124,12 @@ namespace Azure.Security.CodeTransparency
         Azure.Security.CodeTransparency.JwksDocument System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum NonAllowListedReceiptBehavior
+    {
+        Verify = 0,
+        Ignore = 1,
+        FailIfPresent = 2,
     }
     public static partial class SecurityCodeTransparencyModelFactory
     {
