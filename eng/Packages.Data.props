@@ -361,11 +361,11 @@
     <PackageReference Update="Microsoft.Azure.ApplicationInsights.Query" Version="1.0.0" />
     <PackageReference Update="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
-    <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.3" />
-    <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.1.25" />
-    <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" Version="2.1.40" />
+    <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.3.0" />
+    <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.6" />
+    <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" Version="2.3.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.1.4" />
-    <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.3.0" />
     <PackageReference Update="Microsoft.Azure.Core.Spatial" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Devices" Version="1.38.2" />
@@ -438,7 +438,7 @@
     <PackageReference Update="System.ClientModel" Version="1.7.0" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
-    <PackageReference Update="System.IO.Pipelines" Version="4.5.1" />
+    <PackageReference Update="System.IO.Pipelines" Version="8.0.0" />
     <PackageReference Update="System.Linq.Async" Version="5.0.0" />
     <PackageReference Update="System.Memory.Data" Version="8.0.1" />
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
