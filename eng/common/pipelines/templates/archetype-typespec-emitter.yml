@@ -142,15 +142,18 @@ extends:
             # Create emitter identifier from package path for disambiguation
             $emitterIdentifier = ""
             if (-not [string]::IsNullOrWhiteSpace($emitterPackagePath)) {
+              # Resolve emitterPackagePath to absolute path (it's relative to repo root)
+              $absoluteEmitterPackagePath = Join-Path '$(Build.SourcesDirectory)' $emitterPackagePath
+              
               # Read the package name from package.json
-              if (Test-Path $emitterPackagePath) {
+              if (Test-Path $absoluteEmitterPackagePath) {
                 try {
-                  $packageJson = Get-Content $emitterPackagePath -Raw | ConvertFrom-Json
+                  $packageJson = Get-Content $absoluteEmitterPackagePath -Raw | ConvertFrom-Json
                   if ($packageJson.name) {
                     $emitterIdentifier = $packageJson.name
                   }
                 } catch {
-                  Write-Host "Warning: Could not read package name from $emitterPackagePath"
+                  Write-Host "Warning: Could not read package name from $absoluteEmitterPackagePath"
                 }
               }
               
