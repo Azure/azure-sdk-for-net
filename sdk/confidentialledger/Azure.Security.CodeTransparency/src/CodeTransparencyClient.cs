@@ -334,7 +334,8 @@ namespace Azure.Security.CodeTransparency
         {
             verificationOptions ??= new CodeTransparencyVerificationOptions();
 
-            List<Exception> failures = new List<Exception>();
+            List<Exception> authorizedFailures = new List<Exception>();
+            List<Exception> unauthorizedFailures = new List<Exception>();
 
             List<(string, byte[])> receiptList = GetReceiptsFromTransparentStatementStatic(transparentStatementCoseSign1Bytes);
             if (receiptList.Count == 0)
@@ -410,7 +411,7 @@ namespace Azure.Security.CodeTransparency
                 if (issuer.StartsWith(UnknownIssuerPrefix))
                 {
                     // Cannot verify receipts with unknown issuers
-                    failures.Add(new InvalidOperationException($"Cannot verify receipt with unknown issuer '{issuer}'."));
+                    unauthorizedFailures.Add(new InvalidOperationException($"Cannot verify receipt with unknown issuer '{issuer}'."));
                     continue;
                 }
 
@@ -430,7 +431,14 @@ namespace Azure.Security.CodeTransparency
                 }
                 catch (Exception e)
                 {
-                    failures.Add(e);
+                    if (isAuthorized)
+                    {
+                        authorizedFailures.Add(e);
+                    }
+                    else
+                    {
+                        unauthorizedFailures.Add(e);
+                    }
                 }
             }
 
@@ -440,20 +448,25 @@ namespace Azure.Security.CodeTransparency
                 case AuthorizedReceiptBehavior.VerifyAnyMatching:
                     if (validAuthorizedDomainsEncountered.Count == 0)
                     {
-                        failures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
+                        authorizedFailures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
+                    }
+                    else
+                    {
+                        // If at least one authorized receipt is valid, clear authorized failures
+                        authorizedFailures.Clear();
                     }
                     break;
                 case AuthorizedReceiptBehavior.VerifyAllMatching:
                     // All receipts from authorized domains must be valid: i.e., any receipt from an authorized domain that failed adds failure (already captured) -> if any authorized domain had receipt but not all successful? We check failures now.
                     if (authorizedDomainsWithReceipt.Count == 0)
                     {
-                        failures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
+                        authorizedFailures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
                     }
                     foreach (var domain in authorizedDomainsWithReceipt)
                     {
                         if (!validAuthorizedDomainsEncountered.Contains(domain))
                         {
-                            failures.Add(new InvalidOperationException($"A receipt from the required domain '{domain}' failed verification."));
+                            authorizedFailures.Add(new InvalidOperationException($"A receipt from the required domain '{domain}' failed verification."));
                         }
                     }
                     break;
@@ -462,15 +475,20 @@ namespace Azure.Security.CodeTransparency
                     {
                         if (!validAuthorizedDomainsEncountered.Contains(domain))
                         {
-                            failures.Add(new InvalidOperationException($"No valid receipt found for a required domain '{domain}'."));
+                            authorizedFailures.Add(new InvalidOperationException($"No valid receipt found for a required domain '{domain}'."));
                         }
                     }
                     break;
             }
 
-            if (failures.Count > 0)
+            // Combine failures from both lists
+            List<Exception> allFailures = new List<Exception>();
+            allFailures.AddRange(authorizedFailures);
+            allFailures.AddRange(unauthorizedFailures);
+
+            if (allFailures.Count > 0)
             {
-                throw new AggregateException(failures);
+                throw new AggregateException(allFailures);
             }
         }
 
