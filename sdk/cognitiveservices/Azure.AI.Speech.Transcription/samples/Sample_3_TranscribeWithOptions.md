@@ -133,7 +133,7 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 
 ## Transcribe with Diarization Options
 
-To transcribe a file with speaker identification, create a stream from the file, specify the diarization options in the `TranscriptionOptions` and call `TranscribeAsync` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
+To transcribe a file with speaker diarization, create a stream from the file, specify the diarization options in the `TranscriptionOptions` and call `TranscribeAsync` on the `TranscriptionClient` clientlet. This method returns the transcribed phrases and total duration of the file.
 
 If not specified, no speaker information is included in the transcribed phrases.
 
