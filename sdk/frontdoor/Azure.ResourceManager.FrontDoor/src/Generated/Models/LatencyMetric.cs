@@ -78,24 +78,34 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The name of the Latency Metric. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The end time of the Latency Scorecard in UTC. </summary>
+        [WirePath("endDateTimeUTC")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> The metric value of the A endpoint. </summary>
+        [WirePath("aValue")]
         public float? AValue { get; }
         /// <summary> The metric value of the B endpoint. </summary>
+        [WirePath("bValue")]
         public float? BValue { get; }
         /// <summary> The difference in value between endpoint A and B. </summary>
+        [WirePath("delta")]
         public float? Delta { get; }
         /// <summary> The percent difference between endpoint A and B. </summary>
+        [WirePath("deltaPercent")]
         public float? DeltaPercent { get; }
         /// <summary> The lower end of the 95% confidence interval for endpoint A. </summary>
+        [WirePath("aCLower95CI")]
         public float? ACLower95CI { get; }
         /// <summary> The upper end of the 95% confidence interval for endpoint A. </summary>
+        [WirePath("aHUpper95CI")]
         public float? AHUpper95CI { get; }
         /// <summary> The lower end of the 95% confidence interval for endpoint B. </summary>
+        [WirePath("bCLower95CI")]
         public float? BCLower95CI { get; }
         /// <summary> The upper end of the 95% confidence interval for endpoint B. </summary>
+        [WirePath("bUpper95CI")]
         public float? BUpper95CI { get; }
     }
 }

@@ -11,22 +11,30 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Base for session configuration in the response. </summary>
-    public partial class VoiceLiveSessionResponse : VoiceLiveSessionOptions
+    public partial class VoiceLiveSessionResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="VoiceLiveSessionResponse"/>. </summary>
-        internal VoiceLiveSessionResponse()
+        public VoiceLiveSessionResponse()
         {
+            Modalities = new ChangeTrackingList<InteractionModality>();
+            OutputAudioTimestampTypes = new ChangeTrackingList<AudioTimestampType>();
+            Tools = new ChangeTrackingList<VoiceLiveToolDefinition>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLiveSessionResponse"/>. </summary>
         /// <param name="model"> The model for the session. </param>
         /// <param name="modalities"> The modalities to be used in the session. </param>
         /// <param name="animation"> The animation configuration for the session. </param>
-        /// <param name="voice"> Gets or sets the Voice. </param>
+        /// <param name="voice"> The voice configuration for the session. </param>
         /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
         /// <param name="inputAudioSamplingRate">
         /// Input audio sampling rate in Hz. Available values:
+        /// 
         /// - For pcm16: 8000, 16000, 24000
+        /// 
         /// - For g711_alaw/g711_ulaw: 8000
         /// </param>
         /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
@@ -37,20 +45,87 @@ namespace Azure.AI.VoiceLive
         /// <param name="inputAudioTranscription"> Configuration for input audio transcription. </param>
         /// <param name="outputAudioTimestampTypes"> Types of timestamps to include in audio response content. </param>
         /// <param name="tools"> Configuration for tools to be used during the session, if applicable. </param>
-        /// <param name="toolChoice"> Gets or sets the tool choice strategy for response generation. </param>
+        /// <param name="toolChoice"> Specifies which tools the model is allowed to call during the session. </param>
         /// <param name="temperature"> Controls the randomness of the model's output. Range: 0.0 to 1.0. Default is 0.7. </param>
-        /// <param name="maxResponseOutputTokens"> Gets or sets the maximum number of tokens to generate in the response. </param>
-        /// <param name="turnDetection"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="maxResponseOutputTokens"> Maximum number of tokens to generate in the response. Default is unlimited. </param>
         /// <param name="agent"> The agent configuration for the session, if applicable. </param>
         /// <param name="id"> The unique identifier for the session. </param>
-        internal VoiceLiveSessionResponse(string model, IList<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties, RespondingAgentOptions agent, string id) : base(model, modalities, animation, voice, instructions, inputAudioSamplingRate, inputAudioFormat, outputAudioFormat, inputAudioNoiseReduction, inputAudioEchoCancellation, avatar, inputAudioTranscription, outputAudioTimestampTypes, tools, toolChoice, temperature, maxResponseOutputTokens, turnDetection, additionalBinaryDataProperties)
+        /// <param name="turnDetection"> Type of turn detection to use. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VoiceLiveSessionResponse(string model, IList<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, RespondingAgentOptions agent, string id, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Model = model;
+            Modalities = modalities;
+            Animation = animation;
+            Voice = voice;
+            Instructions = instructions;
+            InputAudioSamplingRate = inputAudioSamplingRate;
+            InputAudioFormat = inputAudioFormat;
+            OutputAudioFormat = outputAudioFormat;
+            InputAudioNoiseReduction = inputAudioNoiseReduction;
+            InputAudioEchoCancellation = inputAudioEchoCancellation;
+            Avatar = avatar;
+            InputAudioTranscription = inputAudioTranscription;
+            OutputAudioTimestampTypes = outputAudioTimestampTypes;
+            Tools = tools;
+            ToolChoice = toolChoice;
+            Temperature = temperature;
+            MaxResponseOutputTokens = maxResponseOutputTokens;
             Agent = agent;
             Id = id;
+            _turnDetection = turnDetection;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The model for the session. </summary>
+        public string Model { get; set; }
+
+        /// <summary> The modalities to be used in the session. </summary>
+        public IList<InteractionModality> Modalities { get; }
+
+        /// <summary> The animation configuration for the session. </summary>
+        public AnimationOptions Animation { get; set; }
+
+        /// <summary> Optional instructions to guide the model's behavior throughout the session. </summary>
+        public string Instructions { get; set; }
+
+        /// <summary>
+        /// Input audio sampling rate in Hz. Available values:
+        /// 
+        /// - For pcm16: 8000, 16000, 24000
+        /// 
+        /// - For g711_alaw/g711_ulaw: 8000
+        /// </summary>
+        public int? InputAudioSamplingRate { get; set; }
+
+        /// <summary> Input audio format. Default is 'pcm16'. </summary>
+        public InputAudioFormat? InputAudioFormat { get; set; }
+
+        /// <summary> Output audio format. Default is 'pcm16'. </summary>
+        public OutputAudioFormat? OutputAudioFormat { get; set; }
+
+        /// <summary> Configuration for input audio noise reduction. </summary>
+        public AudioNoiseReduction InputAudioNoiseReduction { get; set; }
+
+        /// <summary> Configuration for echo cancellation during server-side audio processing. </summary>
+        public AudioEchoCancellation InputAudioEchoCancellation { get; set; }
+
+        /// <summary> Configuration for avatar streaming and behavior during the session. </summary>
+        public AvatarConfiguration Avatar { get; set; }
+
+        /// <summary> Configuration for input audio transcription. </summary>
+        public AudioInputTranscriptionOptions InputAudioTranscription { get; set; }
+
+        /// <summary> Types of timestamps to include in audio response content. </summary>
+        public IList<AudioTimestampType> OutputAudioTimestampTypes { get; }
+
+        /// <summary> Configuration for tools to be used during the session, if applicable. </summary>
+        public IList<VoiceLiveToolDefinition> Tools { get; }
+
+        /// <summary> Controls the randomness of the model's output. Range: 0.0 to 1.0. Default is 0.7. </summary>
+        public float? Temperature { get; set; }
+
         /// <summary> The unique identifier for the session. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
     }
 }

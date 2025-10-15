@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -140,6 +141,90 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorCacheConfiguration(queryParameterStripDirective, queryParameters, dynamicCompression, cacheDuration, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryParameterStripDirective), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  queryParameterStripDirective: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueryParameterStripDirective))
+                {
+                    builder.Append("  queryParameterStripDirective: ");
+                    builder.AppendLine($"'{QueryParameterStripDirective.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryParameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  queryParameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueryParameters))
+                {
+                    builder.Append("  queryParameters: ");
+                    if (QueryParameters.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{QueryParameters}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{QueryParameters}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DynamicCompression), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dynamicCompression: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DynamicCompression))
+                {
+                    builder.Append("  dynamicCompression: ");
+                    builder.AppendLine($"'{DynamicCompression.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CacheDuration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cacheDuration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CacheDuration))
+                {
+                    builder.Append("  cacheDuration: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(CacheDuration.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FrontDoorCacheConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -148,6 +233,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorCacheConfiguration)} does not support writing '{options.Format}' format.");
             }

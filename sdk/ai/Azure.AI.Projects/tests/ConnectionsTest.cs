@@ -25,8 +25,8 @@ namespace Azure.AI.Projects.Tests
         [RecordedTest]
         public async Task ConnectionsBasicTest()
         {
-            var connectionName = TestEnvironment.CONNECTIONNAME;
-            var connectionType = TestEnvironment.CONNECTIONTYPE;
+            var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
+            var connectionType = TestEnvironment.STORAGECONNECTIONTYPE;
 
             AIProjectClient projectClient = GetTestClient();
             if (IsAsync)
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects.Tests
         {
             Console.WriteLine("List the properties of all connections:");
             bool isEmpty = true;
-            foreach (ConnectionProperties connection in projectClient.Connections.GetConnections())
+            foreach (AIProjectConnection connection in projectClient.Connections.GetConnections())
             {
                 isEmpty = false;
                 ValidateConnection(connection, false);
@@ -53,7 +53,7 @@ namespace Azure.AI.Projects.Tests
 
             Console.WriteLine("List the properties of all connections of a particular type (e.g., Azure OpenAI connections):");
             isEmpty = true;
-            foreach (ConnectionProperties connection in projectClient.Connections.GetConnections(connectionType: connectionType))
+            foreach (AIProjectConnection connection in projectClient.Connections.GetConnections(connectionType: connectionType))
             {
                 isEmpty = false;
                 ValidateConnection(connection, false, expectedConnectionType: connectionType);
@@ -61,19 +61,19 @@ namespace Azure.AI.Projects.Tests
             Assert.IsFalse(isEmpty, "Expected at least one connection of type to be returned.");
 
             Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-            ConnectionProperties specificConnection = projectClient.Connections.GetConnection(connectionName, includeCredentials: false);
+            AIProjectConnection specificConnection = projectClient.Connections.GetConnection(connectionName, includeCredentials: false);
             ValidateConnection(specificConnection, false, expectedConnectionName: connectionName);
 
             Console.WriteLine("Get the properties of a connection with credentials:");
-            ConnectionProperties specificConnectionCredentials = projectClient.Connections.GetConnection(connectionName, includeCredentials: true);
+            AIProjectConnection specificConnectionCredentials = projectClient.Connections.GetConnection(connectionName, includeCredentials: true);
             ValidateConnection(specificConnectionCredentials, true, expectedConnectionName: connectionName);
 
             Console.WriteLine($"Get the properties of the default connection:");
-            ConnectionProperties defaultConnection = projectClient.Connections.GetDefaultConnection(connectionType: connectionType, includeCredentials: false);
+            AIProjectConnection defaultConnection = projectClient.Connections.GetDefaultConnection(connectionType: connectionType, includeCredentials: false);
             ValidateConnection(defaultConnection, false);
 
             Console.WriteLine($"Get the properties of the default connection with credentials:");
-            ConnectionProperties defaultConnectionCredentials = projectClient.Connections.GetDefaultConnection(connectionType: connectionType, includeCredentials: true);
+            AIProjectConnection defaultConnectionCredentials = projectClient.Connections.GetDefaultConnection(connectionType: connectionType, includeCredentials: true);
             ValidateConnection(defaultConnectionCredentials, true);
         }
 
@@ -81,7 +81,7 @@ namespace Azure.AI.Projects.Tests
         {
             Console.WriteLine("List the properties of all connections:");
             bool isEmpty = true;
-            await foreach (ConnectionProperties connection in projectClient.Connections.GetConnectionsAsync())
+            await foreach (AIProjectConnection connection in projectClient.Connections.GetConnectionsAsync())
             {
                 isEmpty = false;
                 ValidateConnection(connection, false);
@@ -91,7 +91,7 @@ namespace Azure.AI.Projects.Tests
 
             Console.WriteLine("List the properties of all connections of a particular type (e.g., Azure OpenAI connections):");
             isEmpty = true;
-            await foreach (ConnectionProperties connection in projectClient.Connections.GetConnectionsAsync(connectionType: connectionType))
+            await foreach (AIProjectConnection connection in projectClient.Connections.GetConnectionsAsync(connectionType: connectionType))
             {
                 isEmpty = false;
                 ValidateConnection(connection, false, expectedConnectionType: connectionType);
@@ -99,19 +99,19 @@ namespace Azure.AI.Projects.Tests
             Assert.IsFalse(isEmpty, "Expected at least one connection of type to be returned.");
 
             Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-            ConnectionProperties specificConnection = await projectClient.Connections.GetConnectionAsync(connectionName, includeCredentials: false);
+            AIProjectConnection specificConnection = await projectClient.Connections.GetConnectionAsync(connectionName, includeCredentials: false);
             ValidateConnection(specificConnection, false, expectedConnectionName: connectionName);
 
             Console.WriteLine("Get the properties of a connection with credentials:");
-            ConnectionProperties specificConnectionCredentials = await projectClient.Connections.GetConnectionAsync(connectionName, includeCredentials: true);
+            AIProjectConnection specificConnectionCredentials = await projectClient.Connections.GetConnectionAsync(connectionName, includeCredentials: true);
             ValidateConnection(specificConnectionCredentials, true, expectedConnectionName: connectionName);
 
             Console.WriteLine($"Get the properties of the default connection:");
-            ConnectionProperties defaultConnection = await projectClient.Connections.GetDefaultConnectionAsync(connectionType: connectionType, includeCredentials: false);
+            AIProjectConnection defaultConnection = await projectClient.Connections.GetDefaultConnectionAsync(connectionType: connectionType, includeCredentials: false);
             ValidateConnection(defaultConnection, false);
 
             Console.WriteLine($"Get the properties of the default connection with credentials:");
-            ConnectionProperties defaultConnectionCredentials = await projectClient.Connections.GetDefaultConnectionAsync(connectionType: connectionType, includeCredentials: true);
+            AIProjectConnection defaultConnectionCredentials = await projectClient.Connections.GetDefaultConnectionAsync(connectionType: connectionType, includeCredentials: true);
             ValidateConnection(defaultConnectionCredentials, true);
         }
     }
