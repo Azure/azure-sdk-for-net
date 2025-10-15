@@ -3,10 +3,13 @@
 ## 1.2.0-beta.1 (First week of November)
 
 ### Features Added
+No new features added
 
 ### Breaking Changes
+No breaking change
 
 ### Bugs Fixed
+NA
 
 ### Other Changes
 
