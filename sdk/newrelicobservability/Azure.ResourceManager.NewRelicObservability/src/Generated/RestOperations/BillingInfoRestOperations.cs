@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Retrieves marketplace and organization information mapped to the given New Relic monitor resource. </summary>
+        /// <summary> A synchronous resource action. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Retrieves marketplace and organization information mapped to the given New Relic monitor resource. </summary>
+        /// <summary> A synchronous resource action. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>

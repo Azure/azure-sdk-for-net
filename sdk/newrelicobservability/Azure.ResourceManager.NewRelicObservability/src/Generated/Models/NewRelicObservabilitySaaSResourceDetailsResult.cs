@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Marketplace SaaS resource details. </summary>
+    /// <summary>
+    /// Marketplace SaaS resource details.
+    /// Serialized Name: SaaSResourceDetailsResponse
+    /// </summary>
     public partial class NewRelicObservabilitySaaSResourceDetailsResult : ResourceData
     {
         /// <summary>
@@ -57,7 +60,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="saasId"> Id of the Marketplace SaaS Resource. </param>
+        /// <param name="saasId">
+        /// Id of the Marketplace SaaS Resource
+        /// Serialized Name: SaaSResourceDetailsResponse.saasId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicObservabilitySaaSResourceDetailsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string saasId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -65,7 +71,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Id of the Marketplace SaaS Resource. </summary>
+        /// <summary>
+        /// Id of the Marketplace SaaS Resource
+        /// Serialized Name: SaaSResourceDetailsResponse.saasId
+        /// </summary>
         [WirePath("saasId")]
         public string SaasId { get; set; }
     }

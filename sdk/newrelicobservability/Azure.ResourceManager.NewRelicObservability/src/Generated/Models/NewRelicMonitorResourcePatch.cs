@@ -57,14 +57,38 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourcePatch"/>. </summary>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="newRelicAccountProperties"> MarketplaceSubscriptionStatus of the resource. </param>
-        /// <param name="userInfo"> User Info. </param>
-        /// <param name="planData"> Plan details. </param>
-        /// <param name="saaSData"> SaaS details. </param>
-        /// <param name="orgCreationSource"> Source of org creation. </param>
-        /// <param name="accountCreationSource"> Source of account creation. </param>
+        /// <param name="identity">
+        /// The managed service identities assigned to this resource.
+        /// Serialized Name: NewRelicMonitorResourceUpdate.identity
+        /// </param>
+        /// <param name="tags">
+        /// Resource tags.
+        /// Serialized Name: NewRelicMonitorResourceUpdate.tags
+        /// </param>
+        /// <param name="newRelicAccountProperties">
+        /// MarketplaceSubscriptionStatus of the resource
+        /// Serialized Name: NewRelicMonitorResourceUpdate.properties.newRelicAccountProperties
+        /// </param>
+        /// <param name="userInfo">
+        /// User Info
+        /// Serialized Name: NewRelicMonitorResourceUpdate.properties.userInfo
+        /// </param>
+        /// <param name="planData">
+        /// Plan details
+        /// Serialized Name: NewRelicMonitorResourceUpdate.properties.planData
+        /// </param>
+        /// <param name="saaSData">
+        /// SaaS details
+        /// Serialized Name: NewRelicMonitorResourceUpdate.properties.saaSData
+        /// </param>
+        /// <param name="orgCreationSource">
+        /// Source of org creation
+        /// Serialized Name: NewRelicMonitorResourceUpdate.properties.orgCreationSource
+        /// </param>
+        /// <param name="accountCreationSource">
+        /// Source of account creation
+        /// Serialized Name: NewRelicMonitorResourceUpdate.properties.accountCreationSource
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicMonitorResourcePatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, NewRelicAccountProperties newRelicAccountProperties, NewRelicObservabilityUserInfo userInfo, NewRelicPlanDetails planData, NewRelicObservabilitySaaSContent saaSData, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -109,11 +133,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         [WirePath("properties.planData")]
         public NewRelicPlanDetails PlanData { get; set; }
-        /// <summary> SaaS details. </summary>
+        /// <summary>
+        /// SaaS details
+        /// Serialized Name: NewRelicMonitorResourceUpdate.properties.saaSData
+        /// </summary>
         internal NewRelicObservabilitySaaSContent SaaSData { get; set; }
-        /// <summary> SaaS resource id. </summary>
+        /// <summary>
+        /// SaaS resource id
+        /// Serialized Name: SaaSData.saaSResourceId
+        /// </summary>
         [WirePath("properties.saaSData.saaSResourceId")]
-        public string SaaSResourceId
+        public ResourceIdentifier SaaSResourceId
         {
             get => SaaSData is null ? default : SaaSData.SaaSResourceId;
             set
@@ -124,7 +154,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
         }
 
-        /// <summary> Source of org creation. </summary>
+        /// <summary>
+        /// Source of org creation
+        /// Serialized Name: NewRelicMonitorResourceUpdate.properties.orgCreationSource
+        /// </summary>
         [WirePath("properties.orgCreationSource")]
         public NewRelicObservabilityOrgCreationSource? OrgCreationSource { get; set; }
         /// <summary>

@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> SaaS details. </summary>
+    /// <summary>
+    /// SaaS details
+    /// Serialized Name: SaaSData
+    /// </summary>
     public partial class NewRelicObservabilitySaaSContent
     {
         /// <summary>
@@ -51,16 +55,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilitySaaSContent"/>. </summary>
-        /// <param name="saaSResourceId"> SaaS resource id. </param>
+        /// <param name="saaSResourceId">
+        /// SaaS resource id
+        /// Serialized Name: SaaSData.saaSResourceId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicObservabilitySaaSContent(string saaSResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NewRelicObservabilitySaaSContent(ResourceIdentifier saaSResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SaaSResourceId = saaSResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> SaaS resource id. </summary>
+        /// <summary>
+        /// SaaS resource id
+        /// Serialized Name: SaaSData.saaSResourceId
+        /// </summary>
         [WirePath("saaSResourceId")]
-        public string SaaSResourceId { get; set; }
+        public ResourceIdentifier SaaSResourceId { get; set; }
     }
 }

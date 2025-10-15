@@ -252,6 +252,70 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
+        /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/NewRelic.Observability/activateSaaS</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SaaS_ActivateResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNewRelicObservabilitySubscriptionResource.ActivateResourceSaaS(ActivateSaaSParameterContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<NewRelicObservabilitySaaSResourceDetailsResult>> ActivateResourceSaaSAsync(this SubscriptionResource subscriptionResource, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableNewRelicObservabilitySubscriptionResource(subscriptionResource).ActivateResourceSaaSAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/NewRelic.Observability/activateSaaS</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SaaS_ActivateResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNewRelicObservabilitySubscriptionResource.ActivateResourceSaaS(ActivateSaaSParameterContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<NewRelicObservabilitySaaSResourceDetailsResult> ActivateResourceSaaS(this SubscriptionResource subscriptionResource, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNewRelicObservabilitySubscriptionResource(subscriptionResource).ActivateResourceSaaS(content, cancellationToken);
+        }
+
+        /// <summary>
         /// Lists all New Relic monitor resources either within a specific subscription
         /// <list type="bullet">
         /// <item>
@@ -457,70 +521,6 @@ namespace Azure.ResourceManager.NewRelicObservability
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNewRelicObservabilitySubscriptionResource(subscriptionResource).GetNewRelicPlans(accountId, organizationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/NewRelic.Observability/activateSaaS</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SaaS_ActivateResource</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNewRelicObservabilitySubscriptionResource.ActivateResourceSaaS(ActivateSaaSParameterContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The details for ActivateSaaSParameter request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NewRelicObservabilitySaaSResourceDetailsResult>> ActivateResourceSaaSAsync(this SubscriptionResource subscriptionResource, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableNewRelicObservabilitySubscriptionResource(subscriptionResource).ActivateResourceSaaSAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/NewRelic.Observability/activateSaaS</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SaaS_ActivateResource</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNewRelicObservabilitySubscriptionResource.ActivateResourceSaaS(ActivateSaaSParameterContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The details for ActivateSaaSParameter request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<NewRelicObservabilitySaaSResourceDetailsResult> ActivateResourceSaaS(this SubscriptionResource subscriptionResource, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNewRelicObservabilitySubscriptionResource(subscriptionResource).ActivateResourceSaaS(content, cancellationToken);
         }
     }
 }

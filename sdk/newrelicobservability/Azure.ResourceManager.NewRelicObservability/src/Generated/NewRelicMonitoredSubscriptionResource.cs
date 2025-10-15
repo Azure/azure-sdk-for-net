@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Lists all the subscriptions currently being monitored by the NewRelic monitor resource.
+        /// Get a MonitoredSubscriptionProperties
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Lists all the subscriptions currently being monitored by the NewRelic monitor resource.
+        /// Get a MonitoredSubscriptionProperties
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Delete subscriptions being monitored by the New Relic monitor resource, removing their observability and monitoring capabilities
+        /// Delete a MonitoredSubscriptionProperties
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Delete subscriptions being monitored by the New Relic monitor resource, removing their observability and monitoring capabilities
+        /// Delete a MonitoredSubscriptionProperties
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Update subscriptions to be monitored by the New Relic monitor resource, ensuring optimal observability and performance
+        /// Update a MonitoredSubscriptionProperties
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Update subscriptions to be monitored by the New Relic monitor resource, ensuring optimal observability and performance
+        /// Update a MonitoredSubscriptionProperties
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

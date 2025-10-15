@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Add subscriptions to be monitored by the New Relic monitor resource, enabling observability and monitoring.
+        /// Create a MonitoredSubscriptionProperties
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Add subscriptions to be monitored by the New Relic monitor resource, enabling observability and monitoring.
+        /// Create a MonitoredSubscriptionProperties
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Lists all the subscriptions currently being monitored by the NewRelic monitor resource.
+        /// Get a MonitoredSubscriptionProperties
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Lists all the subscriptions currently being monitored by the NewRelic monitor resource.
+        /// Get a MonitoredSubscriptionProperties
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Lists all the subscriptions currently being monitored by the NewRelic monitor resource.
+        /// List MonitoredSubscriptionProperties resources by NewRelicMonitorResource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Lists all the subscriptions currently being monitored by the NewRelic monitor resource.
+        /// List MonitoredSubscriptionProperties resources by NewRelicMonitorResource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

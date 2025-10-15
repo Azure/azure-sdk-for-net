@@ -65,21 +65,66 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <param name="monitoringStatus"> MonitoringStatus of the resource. </param>
-        /// <param name="marketplaceSubscriptionStatus"> NewRelic Organization properties of the resource. </param>
-        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
-        /// <param name="newRelicAccountProperties"> MarketplaceSubscriptionStatus of the resource. </param>
-        /// <param name="userInfo"> User Info. </param>
-        /// <param name="planData"> Plan details. </param>
-        /// <param name="saaSData"> SaaS details. </param>
-        /// <param name="liftrResourceCategory"> Liftr resource category. </param>
-        /// <param name="liftrResourcePreference"> Liftr resource preference. The priority of the resource. </param>
-        /// <param name="orgCreationSource"> Source of org creation. </param>
-        /// <param name="accountCreationSource"> Source of account creation. </param>
-        /// <param name="subscriptionState"> State of the Azure Subscription containing the monitor resource. </param>
-        /// <param name="saaSAzureSubscriptionStatus"> Status of Azure Subscription where Marketplace SaaS is located. </param>
+        /// <param name="identity">
+        /// The managed service identities assigned to this resource.
+        /// Serialized Name: NewRelicMonitorResource.identity
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning State of the resource
+        /// Serialized Name: NewRelicMonitorResource.properties.provisioningState
+        /// </param>
+        /// <param name="monitoringStatus">
+        /// MonitoringStatus of the resource
+        /// Serialized Name: NewRelicMonitorResource.properties.monitoringStatus
+        /// </param>
+        /// <param name="marketplaceSubscriptionStatus">
+        /// NewRelic Organization properties of the resource
+        /// Serialized Name: NewRelicMonitorResource.properties.marketplaceSubscriptionStatus
+        /// </param>
+        /// <param name="marketplaceSubscriptionId">
+        /// Marketplace Subscription Id
+        /// Serialized Name: NewRelicMonitorResource.properties.marketplaceSubscriptionId
+        /// </param>
+        /// <param name="newRelicAccountProperties">
+        /// MarketplaceSubscriptionStatus of the resource
+        /// Serialized Name: NewRelicMonitorResource.properties.newRelicAccountProperties
+        /// </param>
+        /// <param name="userInfo">
+        /// User Info
+        /// Serialized Name: NewRelicMonitorResource.properties.userInfo
+        /// </param>
+        /// <param name="planData">
+        /// Plan details
+        /// Serialized Name: NewRelicMonitorResource.properties.planData
+        /// </param>
+        /// <param name="saaSData">
+        /// SaaS details
+        /// Serialized Name: NewRelicMonitorResource.properties.saaSData
+        /// </param>
+        /// <param name="liftrResourceCategory">
+        /// Liftr resource category
+        /// Serialized Name: NewRelicMonitorResource.properties.liftrResourceCategory
+        /// </param>
+        /// <param name="liftrResourcePreference">
+        /// Liftr resource preference. The priority of the resource.
+        /// Serialized Name: NewRelicMonitorResource.properties.liftrResourcePreference
+        /// </param>
+        /// <param name="orgCreationSource">
+        /// Source of org creation
+        /// Serialized Name: NewRelicMonitorResource.properties.orgCreationSource
+        /// </param>
+        /// <param name="accountCreationSource">
+        /// Source of account creation
+        /// Serialized Name: NewRelicMonitorResource.properties.accountCreationSource
+        /// </param>
+        /// <param name="subscriptionState">
+        /// State of the Azure Subscription containing the monitor resource
+        /// Serialized Name: NewRelicMonitorResource.properties.subscriptionState
+        /// </param>
+        /// <param name="saaSAzureSubscriptionStatus">
+        /// Status of Azure Subscription where Marketplace SaaS is located.
+        /// Serialized Name: NewRelicMonitorResource.properties.saaSAzureSubscriptionStatus
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NewRelicProvisioningState? provisioningState, NewRelicObservabilityMonitoringStatus? monitoringStatus, NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSubscriptionId, NewRelicAccountProperties newRelicAccountProperties, NewRelicObservabilityUserInfo userInfo, NewRelicPlanDetails planData, NewRelicObservabilitySaaSContent saaSData, NewRelicLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource, string subscriptionState, string saaSAzureSubscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -154,11 +199,17 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </summary>
         [WirePath("properties.planData")]
         public NewRelicPlanDetails PlanData { get; set; }
-        /// <summary> SaaS details. </summary>
+        /// <summary>
+        /// SaaS details
+        /// Serialized Name: NewRelicMonitorResource.properties.saaSData
+        /// </summary>
         internal NewRelicObservabilitySaaSContent SaaSData { get; set; }
-        /// <summary> SaaS resource id. </summary>
+        /// <summary>
+        /// SaaS resource id
+        /// Serialized Name: SaaSData.saaSResourceId
+        /// </summary>
         [WirePath("properties.saaSData.saaSResourceId")]
-        public string SaaSResourceId
+        public ResourceIdentifier SaaSResourceId
         {
             get => SaaSData is null ? default : SaaSData.SaaSResourceId;
             set
@@ -169,7 +220,10 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Liftr resource category. </summary>
+        /// <summary>
+        /// Liftr resource category
+        /// Serialized Name: NewRelicMonitorResource.properties.liftrResourceCategory
+        /// </summary>
         [WirePath("properties.liftrResourceCategory")]
         public NewRelicLiftrResourceCategory? LiftrResourceCategory { get; }
         /// <summary>

@@ -812,14 +812,14 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Lists the app service resources currently being monitored by the New Relic resource, helping you understand which app services are under monitoring. </summary>
+        /// <summary> Returns the latest SaaS linked to the newrelic organization of the underlying monitor. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NewRelicLatestLinkedSaaSResult>> LatestLinkedSaaSAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public async Task<Response<NewRelicObservabilityLatestLinkedSaaSResult>> LatestLinkedSaaSAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -831,9 +831,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        NewRelicLatestLinkedSaaSResult value = default;
+                        NewRelicObservabilityLatestLinkedSaaSResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NewRelicLatestLinkedSaaSResult.DeserializeNewRelicLatestLinkedSaaSResult(document.RootElement);
+                        value = NewRelicObservabilityLatestLinkedSaaSResult.DeserializeNewRelicObservabilityLatestLinkedSaaSResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -841,14 +841,14 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Lists the app service resources currently being monitored by the New Relic resource, helping you understand which app services are under monitoring. </summary>
+        /// <summary> Returns the latest SaaS linked to the newrelic organization of the underlying monitor. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NewRelicLatestLinkedSaaSResult> LatestLinkedSaaS(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public Response<NewRelicObservabilityLatestLinkedSaaSResult> LatestLinkedSaaS(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -860,9 +860,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        NewRelicLatestLinkedSaaSResult value = default;
+                        NewRelicObservabilityLatestLinkedSaaSResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NewRelicLatestLinkedSaaSResult.DeserializeNewRelicLatestLinkedSaaSResult(document.RootElement);
+                        value = NewRelicObservabilityLatestLinkedSaaSResult.DeserializeNewRelicObservabilityLatestLinkedSaaSResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        internal RequestUriBuilder CreateLinkSaaSRequestUri(string subscriptionId, string resourceGroupName, string monitorName, NewRelicSaaSDataDetails details)
+        internal RequestUriBuilder CreateLinkSaaSRequestUri(string subscriptionId, string resourceGroupName, string monitorName, NewRelicObservabilitySaaSContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return uri;
         }
 
-        internal HttpMessage CreateLinkSaaSRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicSaaSDataDetails details)
+        internal HttpMessage CreateLinkSaaSRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicObservabilitySaaSContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -903,9 +903,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(details, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -914,18 +914,18 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
-        /// <param name="details"> Link SaaS body parameter. </param>
+        /// <param name="content"> Link SaaS body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> LinkSaaSAsync(string subscriptionId, string resourceGroupName, string monitorName, NewRelicSaaSDataDetails details, CancellationToken cancellationToken = default)
+        public async Task<Response> LinkSaaSAsync(string subscriptionId, string resourceGroupName, string monitorName, NewRelicObservabilitySaaSContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-            Argument.AssertNotNull(details, nameof(details));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateLinkSaaSRequest(subscriptionId, resourceGroupName, monitorName, details);
+            using var message = CreateLinkSaaSRequest(subscriptionId, resourceGroupName, monitorName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -941,18 +941,18 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
-        /// <param name="details"> Link SaaS body parameter. </param>
+        /// <param name="content"> Link SaaS body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response LinkSaaS(string subscriptionId, string resourceGroupName, string monitorName, NewRelicSaaSDataDetails details, CancellationToken cancellationToken = default)
+        public Response LinkSaaS(string subscriptionId, string resourceGroupName, string monitorName, NewRelicObservabilitySaaSContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-            Argument.AssertNotNull(details, nameof(details));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateLinkSaaSRequest(subscriptionId, resourceGroupName, monitorName, details);
+            using var message = CreateLinkSaaSRequest(subscriptionId, resourceGroupName, monitorName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Switches the billing for the New Relic Monitor resource to be billed by Azure Marketplace. </summary>
+        /// <summary> Lists the app service resources currently being monitored by the New Relic resource, helping you understand which app services are under monitoring. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Switches the billing for the New Relic Monitor resource to be billed by Azure Marketplace. </summary>
+        /// <summary> Lists the app service resources currently being monitored by the New Relic resource, helping you understand which app services are under monitoring. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -1168,7 +1168,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        internal RequestUriBuilder CreateRefreshIngestionKeyRequestUri(string subscriptionId, string resourceGroupName, string monitorName)
+        internal RequestUriBuilder CreateListLinkedResourcesRequestUri(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1178,12 +1178,12 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
-            uri.AppendPath("/refreshIngestionKey", false);
+            uri.AppendPath("/listLinkedResources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateRefreshIngestionKeyRequest(string subscriptionId, string resourceGroupName, string monitorName)
+        internal HttpMessage CreateListLinkedResourcesRequest(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1196,7 +1196,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
             uri.AppendPath(monitorName, true);
-            uri.AppendPath("/refreshIngestionKey", false);
+            uri.AppendPath("/listLinkedResources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1204,49 +1204,59 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Refreshes the ingestion key for all monitors linked to the same account associated to the underlying monitor. </summary>
+        /// <summary> Lists all Azure resources that are linked to the same New Relic organization as the specified monitor resource, helping you understand the scope of integration. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RefreshIngestionKeyAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public async Task<Response<LinkedResourceListResponse>> ListLinkedResourcesAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using var message = CreateRefreshIngestionKeyRequest(subscriptionId, resourceGroupName, monitorName);
+            using var message = CreateListLinkedResourcesRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 204:
-                    return message.Response;
+                case 200:
+                    {
+                        LinkedResourceListResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = LinkedResourceListResponse.DeserializeLinkedResourceListResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Refreshes the ingestion key for all monitors linked to the same account associated to the underlying monitor. </summary>
+        /// <summary> Lists all Azure resources that are linked to the same New Relic organization as the specified monitor resource, helping you understand the scope of integration. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RefreshIngestionKey(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public Response<LinkedResourceListResponse> ListLinkedResources(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using var message = CreateRefreshIngestionKeyRequest(subscriptionId, resourceGroupName, monitorName);
+            using var message = CreateListLinkedResourcesRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 204:
-                    return message.Response;
+                case 200:
+                    {
+                        LinkedResourceListResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = LinkedResourceListResponse.DeserializeLinkedResourceListResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1382,7 +1392,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Lists all Azure resources that are linked to the same New Relic organization as the specified monitor resource, helping you understand the scope of integration. </summary>
+        /// <summary> Refreshes the ingestion key for all monitors linked to the same account associated to the underlying monitor. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -1599,7 +1609,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Lists all Azure resources that are linked to the same New Relic organization as the specified monitor resource, helping you understand the scope of integration. </summary>
+        /// <summary> Switches the billing for the New Relic Monitor resource to be billed by Azure Marketplace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -1722,289 +1732,6 @@ namespace Azure.ResourceManager.NewRelicObservability
                         value = NewRelicObservabilityVmExtensionPayload.DeserializeNewRelicObservabilityVmExtensionPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateLatestLinkedSaaSRequestUri(string subscriptionId, string resourceGroupName, string monitorName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
-            uri.AppendPath(monitorName, true);
-            uri.AppendPath("/latestLinkedSaaS", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateLatestLinkedSaaSRequest(string subscriptionId, string resourceGroupName, string monitorName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
-            uri.AppendPath(monitorName, true);
-            uri.AppendPath("/latestLinkedSaaS", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Returns the latest SaaS linked to the newrelic organization of the underlying monitor. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NewRelicObservabilityLatestLinkedSaaSResult>> LatestLinkedSaaSAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-
-            using var message = CreateLatestLinkedSaaSRequest(subscriptionId, resourceGroupName, monitorName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NewRelicObservabilityLatestLinkedSaaSResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NewRelicObservabilityLatestLinkedSaaSResult.DeserializeNewRelicObservabilityLatestLinkedSaaSResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns the latest SaaS linked to the newrelic organization of the underlying monitor. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NewRelicObservabilityLatestLinkedSaaSResult> LatestLinkedSaaS(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-
-            using var message = CreateLatestLinkedSaaSRequest(subscriptionId, resourceGroupName, monitorName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NewRelicObservabilityLatestLinkedSaaSResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NewRelicObservabilityLatestLinkedSaaSResult.DeserializeNewRelicObservabilityLatestLinkedSaaSResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateLinkSaaSRequestUri(string subscriptionId, string resourceGroupName, string monitorName, NewRelicObservabilitySaaSContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
-            uri.AppendPath(monitorName, true);
-            uri.AppendPath("/linkSaaS", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateLinkSaaSRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicObservabilitySaaSContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
-            uri.AppendPath(monitorName, true);
-            uri.AppendPath("/linkSaaS", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Links a new SaaS to the newrelic organization of the underlying monitor. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="content"> Link SaaS body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> LinkSaaSAsync(string subscriptionId, string resourceGroupName, string monitorName, NewRelicObservabilitySaaSContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateLinkSaaSRequest(subscriptionId, resourceGroupName, monitorName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Links a new SaaS to the newrelic organization of the underlying monitor. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="content"> Link SaaS body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response LinkSaaS(string subscriptionId, string resourceGroupName, string monitorName, NewRelicObservabilitySaaSContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateLinkSaaSRequest(subscriptionId, resourceGroupName, monitorName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateResubscribeRequestUri(string subscriptionId, string resourceGroupName, string monitorName, ResubscribeProperties body)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
-            uri.AppendPath(monitorName, true);
-            uri.AppendPath("/resubscribe", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateResubscribeRequest(string subscriptionId, string resourceGroupName, string monitorName, ResubscribeProperties body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
-            uri.AppendPath(monitorName, true);
-            uri.AppendPath("/resubscribe", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
-                request.Content = content;
-            }
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Resubscribes the New Relic Organization of the underline Monitor Resource to be billed by Azure Marketplace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="body"> Resubscribe Properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResubscribeAsync(string subscriptionId, string resourceGroupName, string monitorName, ResubscribeProperties body = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-
-            using var message = CreateResubscribeRequest(subscriptionId, resourceGroupName, monitorName, body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Resubscribes the New Relic Organization of the underline Monitor Resource to be billed by Azure Marketplace. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="body"> Resubscribe Properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Resubscribe(string subscriptionId, string resourceGroupName, string monitorName, ResubscribeProperties body = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
-
-            using var message = CreateResubscribeRequest(subscriptionId, resourceGroupName, monitorName, body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -2364,7 +2091,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Lists all Azure resources that are currently being monitored by the specified New Relic monitor resource, providing insight into the coverage of your observability setup. </summary>
+        /// <summary> Lists all Azure resources that are linked to the same New Relic organization as the specified monitor resource, helping you understand the scope of integration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -2395,7 +2122,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Lists all Azure resources that are currently being monitored by the specified New Relic monitor resource, providing insight into the coverage of your observability setup. </summary>
+        /// <summary> Lists all Azure resources that are linked to the same New Relic organization as the specified monitor resource, helping you understand the scope of integration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -2448,7 +2175,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Lists all Azure resources that are linked to the same New Relic organization as the specified monitor resource, helping you understand the scope of integration. </summary>
+        /// <summary> Lists all Azure resources that are currently being monitored by the specified New Relic monitor resource, providing insight into the coverage of your observability setup. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -2479,7 +2206,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Lists all Azure resources that are linked to the same New Relic organization as the specified monitor resource, helping you understand the scope of integration. </summary>
+        /// <summary> Lists all Azure resources that are currently being monitored by the specified New Relic monitor resource, providing insight into the coverage of your observability setup. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Retrieves the details of the tag rules for a specific New Relic monitor resource, providing insight into its setup and status
+        /// Get a MonitoredSubscriptionProperties
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Retrieves the details of the tag rules for a specific New Relic monitor resource, providing insight into its setup and status
+        /// Get a MonitoredSubscriptionProperties
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Lists all the subscriptions currently being monitored by the NewRelic monitor resource.
+        /// Retrieves the details of the tag rules for a specific New Relic monitor resource, providing insight into its setup and status
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Lists all the subscriptions currently being monitored by the NewRelic monitor resource.
+        /// Retrieves the details of the tag rules for a specific New Relic monitor resource, providing insight into its setup and status
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Lists the app service resources currently being monitored by the New Relic resource, helping you understand which app services are under monitoring
+        /// Returns the latest SaaS linked to the newrelic organization of the underlying monitor.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NewRelicLatestLinkedSaaSResult>> LatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NewRelicObservabilityLatestLinkedSaaSResult>> LatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.LatestLinkedSaaS");
             scope.Start();
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Lists the app service resources currently being monitored by the New Relic resource, helping you understand which app services are under monitoring
+        /// Returns the latest SaaS linked to the newrelic organization of the underlying monitor.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NewRelicLatestLinkedSaaSResult> LatestLinkedSaaS(CancellationToken cancellationToken = default)
+        public virtual Response<NewRelicObservabilityLatestLinkedSaaSResult> LatestLinkedSaaS(CancellationToken cancellationToken = default)
         {
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.LatestLinkedSaaS");
             scope.Start();
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Switches the billing for the New Relic Monitor resource to be billed by Azure Marketplace
+        /// Links a new SaaS to the newrelic organization of the underlying monitor.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -766,19 +766,19 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="details"> Link SaaS body parameter. </param>
+        /// <param name="content"> Link SaaS body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public virtual async Task<ArmOperation<NewRelicMonitorResource>> LinkSaaSAsync(WaitUntil waitUntil, NewRelicSaaSDataDetails details, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NewRelicMonitorResource>> LinkSaaSAsync(WaitUntil waitUntil, NewRelicObservabilitySaaSContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(details, nameof(details));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.LinkSaaS");
             scope.Start();
             try
             {
-                var response = await _newRelicMonitorResourceMonitorsRestClient.LinkSaaSAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, details, cancellationToken).ConfigureAwait(false);
-                var operation = new NewRelicObservabilityArmOperation<NewRelicMonitorResource>(new NewRelicMonitorResourceOperationSource(Client), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateLinkSaaSRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, details).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _newRelicMonitorResourceMonitorsRestClient.LinkSaaSAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NewRelicObservabilityArmOperation<NewRelicMonitorResource>(new NewRelicMonitorResourceOperationSource(Client), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateLinkSaaSRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Switches the billing for the New Relic Monitor resource to be billed by Azure Marketplace
+        /// Links a new SaaS to the newrelic organization of the underlying monitor.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -812,19 +812,19 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="details"> Link SaaS body parameter. </param>
+        /// <param name="content"> Link SaaS body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
-        public virtual ArmOperation<NewRelicMonitorResource> LinkSaaS(WaitUntil waitUntil, NewRelicSaaSDataDetails details, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NewRelicMonitorResource> LinkSaaS(WaitUntil waitUntil, NewRelicObservabilitySaaSContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(details, nameof(details));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.LinkSaaS");
             scope.Start();
             try
             {
-                var response = _newRelicMonitorResourceMonitorsRestClient.LinkSaaS(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, details, cancellationToken);
-                var operation = new NewRelicObservabilityArmOperation<NewRelicMonitorResource>(new NewRelicMonitorResourceOperationSource(Client), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateLinkSaaSRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, details).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _newRelicMonitorResourceMonitorsRestClient.LinkSaaS(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NewRelicObservabilityArmOperation<NewRelicMonitorResource>(new NewRelicMonitorResourceOperationSource(Client), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateLinkSaaSRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -834,6 +834,74 @@ namespace Azure.ResourceManager.NewRelicObservability
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists the app service resources currently being monitored by the New Relic resource, helping you understand which app services are under monitoring
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/listAppServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_ListAppServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The details of the app services get request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NewRelicObservabilityAppServiceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NewRelicObservabilityAppServiceInfo> GetAppServicesAsync(NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListAppServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListAppServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NewRelicObservabilityAppServiceInfo.DeserializeNewRelicObservabilityAppServiceInfo(e), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetAppServices", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the app service resources currently being monitored by the New Relic resource, helping you understand which app services are under monitoring
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/listAppServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_ListAppServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The details of the app services get request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="NewRelicObservabilityAppServiceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NewRelicObservabilityAppServiceInfo> GetAppServices(NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListAppServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListAppServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NewRelicObservabilityAppServiceInfo.DeserializeNewRelicObservabilityAppServiceInfo(e), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetAppServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -905,15 +973,15 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Refreshes the ingestion key for all monitors linked to the same account associated to the underlying monitor.
+        /// Lists all Azure resources that are linked to the same New Relic organization as the specified monitor resource, helping you understand the scope of integration
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/refreshIngestionKey</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/listLinkedResources</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_RefreshIngestionKey</description>
+        /// <description>Monitors_ListLinkedResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -926,32 +994,24 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RefreshIngestionKeyAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubResource> GetLinkedResourcesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.RefreshIngestionKey");
-            scope.Start();
-            try
-            {
-                var response = await _newRelicMonitorResourceMonitorsRestClient.RefreshIngestionKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListLinkedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListLinkedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(e.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNewRelicObservabilityContext.Default), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetLinkedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Refreshes the ingestion key for all monitors linked to the same account associated to the underlying monitor.
+        /// Lists all Azure resources that are linked to the same New Relic organization as the specified monitor resource, helping you understand the scope of integration
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/refreshIngestionKey</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/listLinkedResources</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Monitors_RefreshIngestionKey</description>
+        /// <description>Monitors_ListLinkedResources</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -964,20 +1024,12 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RefreshIngestionKey(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubResource> GetLinkedResources(CancellationToken cancellationToken = default)
         {
-            using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.RefreshIngestionKey");
-            scope.Start();
-            try
-            {
-                var response = _newRelicMonitorResourceMonitorsRestClient.RefreshIngestionKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListLinkedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListLinkedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(e.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNewRelicObservabilityContext.Default), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetLinkedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1041,7 +1093,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Lists all Azure resources that are linked to the same New Relic organization as the specified monitor resource, helping you understand the scope of integration
+        /// Refreshes the ingestion key for all monitors linked to the same account associated to the underlying monitor.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1079,7 +1131,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Lists all Azure resources that are linked to the same New Relic organization as the specified monitor resource, helping you understand the scope of integration
+        /// Refreshes the ingestion key for all monitors linked to the same account associated to the underlying monitor.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1363,261 +1415,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Returns the latest SaaS linked to the newrelic organization of the underlying monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/latestLinkedSaaS</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_LatestLinkedSaaS</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NewRelicObservabilityLatestLinkedSaaSResult>> LatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.LatestLinkedSaaS");
-            scope.Start();
-            try
-            {
-                var response = await _newRelicMonitorResourceMonitorsRestClient.LatestLinkedSaaSAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns the latest SaaS linked to the newrelic organization of the underlying monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/latestLinkedSaaS</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_LatestLinkedSaaS</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NewRelicObservabilityLatestLinkedSaaSResult> LatestLinkedSaaS(CancellationToken cancellationToken = default)
-        {
-            using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.LatestLinkedSaaS");
-            scope.Start();
-            try
-            {
-                var response = _newRelicMonitorResourceMonitorsRestClient.LatestLinkedSaaS(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Links a new SaaS to the newrelic organization of the underlying monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/linkSaaS</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_LinkSaaS</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Link SaaS body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NewRelicMonitorResource>> LinkSaaSAsync(WaitUntil waitUntil, NewRelicObservabilitySaaSContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.LinkSaaS");
-            scope.Start();
-            try
-            {
-                var response = await _newRelicMonitorResourceMonitorsRestClient.LinkSaaSAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NewRelicObservabilityArmOperation<NewRelicMonitorResource>(new NewRelicMonitorResourceOperationSource(Client), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateLinkSaaSRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Links a new SaaS to the newrelic organization of the underlying monitor.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/linkSaaS</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_LinkSaaS</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Link SaaS body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NewRelicMonitorResource> LinkSaaS(WaitUntil waitUntil, NewRelicObservabilitySaaSContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.LinkSaaS");
-            scope.Start();
-            try
-            {
-                var response = _newRelicMonitorResourceMonitorsRestClient.LinkSaaS(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NewRelicObservabilityArmOperation<NewRelicMonitorResource>(new NewRelicMonitorResourceOperationSource(Client), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateLinkSaaSRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Resubscribes the New Relic Organization of the underline Monitor Resource to be billed by Azure Marketplace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/resubscribe</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_Resubscribe</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Resubscribe Properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NewRelicMonitorResource>> ResubscribeAsync(WaitUntil waitUntil, ResubscribeProperties body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.Resubscribe");
-            scope.Start();
-            try
-            {
-                var response = await _newRelicMonitorResourceMonitorsRestClient.ResubscribeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new NewRelicObservabilityArmOperation<NewRelicMonitorResource>(new NewRelicMonitorResourceOperationSource(Client), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateResubscribeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Resubscribes the New Relic Organization of the underline Monitor Resource to be billed by Azure Marketplace
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/resubscribe</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_Resubscribe</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Resubscribe Properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NewRelicMonitorResource> Resubscribe(WaitUntil waitUntil, ResubscribeProperties body = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.Resubscribe");
-            scope.Start();
-            try
-            {
-                var response = _newRelicMonitorResourceMonitorsRestClient.Resubscribe(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new NewRelicObservabilityArmOperation<NewRelicMonitorResource>(new NewRelicMonitorResourceOperationSource(Client), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateResubscribeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves marketplace and organization information mapped to the given New Relic monitor resource
+        /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1651,7 +1449,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// Retrieves marketplace and organization information mapped to the given New Relic monitor resource
+        /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
