@@ -143,17 +143,19 @@ extends:
             $emitterIdentifier = ""
             if (-not [string]::IsNullOrWhiteSpace($emitterPackagePath)) {
               # Resolve emitterPackagePath to absolute path (it's relative to repo root)
+              # EmitterPackagePath is a directory, so append package.json
               $absoluteEmitterPackagePath = Join-Path '$(Build.SourcesDirectory)' $emitterPackagePath
+              $packageJsonPath = Join-Path $absoluteEmitterPackagePath 'package.json'
               
               # Read the package name from package.json
-              if (Test-Path $absoluteEmitterPackagePath) {
+              if (Test-Path $packageJsonPath) {
                 try {
-                  $packageJson = Get-Content $absoluteEmitterPackagePath -Raw | ConvertFrom-Json
+                  $packageJson = Get-Content $packageJsonPath -Raw | ConvertFrom-Json
                   if ($packageJson.name) {
                     $emitterIdentifier = $packageJson.name
                   }
                 } catch {
-                  Write-Host "Warning: Could not read package name from $absoluteEmitterPackagePath"
+                  Write-Host "Warning: Could not read package name from $packageJsonPath"
                 }
               }
               
