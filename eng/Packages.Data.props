@@ -444,7 +444,7 @@
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Algorithms" Version="4.3.0" />
-    <PackageReference Update="System.Security.Cryptography.Cng" Version="4.5.2" />
+    <PackageReference Update="System.Security.Cryptography.Cng" Version="5.0.0" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
     <PackageReference Update="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
