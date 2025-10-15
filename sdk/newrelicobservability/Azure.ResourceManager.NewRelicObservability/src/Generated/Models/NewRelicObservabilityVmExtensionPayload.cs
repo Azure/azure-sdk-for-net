@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Response of payload to be passed while installing VM agent. </summary>
+    /// <summary>
+    /// Response of payload to be passed while installing VM agent.
+    /// Serialized Name: VMExtensionPayload
+    /// </summary>
     public partial class NewRelicObservabilityVmExtensionPayload
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityVmExtensionPayload"/>. </summary>
-        /// <param name="ingestionKey"> Ingestion key of the account. </param>
+        /// <param name="ingestionKey">
+        /// Ingestion key of the account
+        /// Serialized Name: VMExtensionPayload.ingestionKey
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicObservabilityVmExtensionPayload(string ingestionKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Ingestion key of the account. </summary>
+        /// <summary>
+        /// Ingestion key of the account
+        /// Serialized Name: VMExtensionPayload.ingestionKey
+        /// </summary>
         [WirePath("ingestionKey")]
         public string IngestionKey { get; }
     }

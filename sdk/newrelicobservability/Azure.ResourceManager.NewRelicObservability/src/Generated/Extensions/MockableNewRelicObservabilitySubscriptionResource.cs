@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,6 +20,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
     {
         private ClientDiagnostics _accountsClientDiagnostics;
         private AccountsRestOperations _accountsRestClient;
+        private ClientDiagnostics _saaSClientDiagnostics;
+        private SaaSRestOperations _saaSRestClient;
         private ClientDiagnostics _newRelicMonitorResourceMonitorsClientDiagnostics;
         private MonitorsRestOperations _newRelicMonitorResourceMonitorsRestClient;
         private ClientDiagnostics _organizationsClientDiagnostics;
@@ -40,6 +43,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
 
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AccountsRestOperations AccountsRestClient => _accountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SaaSClientDiagnostics => _saaSClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SaaSRestOperations SaaSRestClient => _saaSRestClient ??= new SaaSRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics NewRelicMonitorResourceMonitorsClientDiagnostics => _newRelicMonitorResourceMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", NewRelicMonitorResource.ResourceType.Namespace, Diagnostics);
         private MonitorsRestOperations NewRelicMonitorResourceMonitorsRestClient => _newRelicMonitorResourceMonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NewRelicMonitorResource.ResourceType));
         private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -54,7 +59,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         }
 
         /// <summary>
-        /// List all the existing accounts
+        /// Lists all the New Relic accounts linked to your email address, helping you understand the existing accounts that have been created
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -66,7 +71,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -85,7 +90,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         }
 
         /// <summary>
-        /// List all the existing accounts
+        /// Lists all the New Relic accounts linked to your email address, helping you understand the existing accounts that have been created
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +121,83 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         }
 
         /// <summary>
-        /// List NewRelicMonitorResource resources by subscription ID
+        /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/NewRelic.Observability/activateSaaS</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SaaS_ActivateResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<NewRelicSaaSResourceDetailsResult>> ActivateResourceSaaSAsync(ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = SaaSClientDiagnostics.CreateScope("MockableNewRelicObservabilitySubscriptionResource.ActivateResourceSaaS");
+            scope.Start();
+            try
+            {
+                var response = await SaaSRestClient.ActivateResourceAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/NewRelic.Observability/activateSaaS</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SaaS_ActivateResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<NewRelicSaaSResourceDetailsResult> ActivateResourceSaaS(ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = SaaSClientDiagnostics.CreateScope("MockableNewRelicObservabilitySubscriptionResource.ActivateResourceSaaS");
+            scope.Start();
+            try
+            {
+                var response = SaaSRestClient.ActivateResource(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists all New Relic monitor resources either within a specific subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -128,7 +209,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,7 +227,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         }
 
         /// <summary>
-        /// List NewRelicMonitorResource resources by subscription ID
+        /// Lists all New Relic monitor resources either within a specific subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -158,7 +239,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,7 +257,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         }
 
         /// <summary>
-        /// List all the existing organizations
+        /// Lists all the New Relic organizations linked to your email address, helping you understand the existing organizations that have been created
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -188,7 +269,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,7 +288,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         }
 
         /// <summary>
-        /// List all the existing organizations
+        /// Lists all the New Relic organizations linked to your email address, helping you understand the existing organizations that have been created
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -219,7 +300,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,7 +319,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         }
 
         /// <summary>
-        /// List plans data
+        /// Lists the plans data linked to your organization, providing an overview of the available plans
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -250,7 +331,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,7 +347,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         }
 
         /// <summary>
-        /// List plans data
+        /// Lists the plans data linked to your organization, providing an overview of the available plans
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -278,7 +359,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

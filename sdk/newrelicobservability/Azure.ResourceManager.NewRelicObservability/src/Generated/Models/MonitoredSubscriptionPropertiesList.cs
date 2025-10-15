@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> The MonitoredSubscriptionPropertiesList. </summary>
+    /// <summary>
+    /// Paged collection of MonitoredSubscriptionProperties items
+    /// Serialized Name: MonitoredSubscriptionPropertiesList
+    /// </summary>
     internal partial class MonitoredSubscriptionPropertiesList
     {
         /// <summary>
@@ -46,25 +50,49 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertiesList"/>. </summary>
-        internal MonitoredSubscriptionPropertiesList()
+        /// <param name="value">
+        /// The MonitoredSubscriptionProperties items on this page
+        /// Serialized Name: MonitoredSubscriptionPropertiesList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal MonitoredSubscriptionPropertiesList(IEnumerable<NewRelicMonitoredSubscriptionData> value)
         {
-            Value = new ChangeTrackingList<NewRelicMonitoredSubscriptionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertiesList"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The MonitoredSubscriptionProperties items on this page
+        /// Serialized Name: MonitoredSubscriptionPropertiesList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: MonitoredSubscriptionPropertiesList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredSubscriptionPropertiesList(IReadOnlyList<NewRelicMonitoredSubscriptionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoredSubscriptionPropertiesList(IReadOnlyList<NewRelicMonitoredSubscriptionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertiesList"/> for deserialization. </summary>
+        internal MonitoredSubscriptionPropertiesList()
+        {
+        }
+
+        /// <summary>
+        /// The MonitoredSubscriptionProperties items on this page
+        /// Serialized Name: MonitoredSubscriptionPropertiesList.value
+        /// </summary>
         public IReadOnlyList<NewRelicMonitoredSubscriptionData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public string NextLink { get; }
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: MonitoredSubscriptionPropertiesList.nextLink
+        /// </summary>
+        public Uri NextLink { get; }
     }
 }

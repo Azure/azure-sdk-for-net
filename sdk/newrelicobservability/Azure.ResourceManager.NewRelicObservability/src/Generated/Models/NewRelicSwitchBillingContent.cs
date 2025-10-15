@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Request of a switch billing Operation. </summary>
+    /// <summary>
+    /// Request of a switch billing Operation.
+    /// Serialized Name: SwitchBillingRequest
+    /// </summary>
     public partial class NewRelicSwitchBillingContent
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicSwitchBillingContent"/>. </summary>
-        /// <param name="userEmail"> User Email. </param>
+        /// <param name="userEmail">
+        /// Reusable representation of an email address
+        /// Serialized Name: SwitchBillingRequest.userEmail
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicSwitchBillingContent(string userEmail)
         {
@@ -57,10 +63,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicSwitchBillingContent"/>. </summary>
-        /// <param name="azureResourceId"> Azure resource Id. </param>
-        /// <param name="organizationId"> Organization id. </param>
-        /// <param name="planData"> Plan details. </param>
-        /// <param name="userEmail"> User Email. </param>
+        /// <param name="azureResourceId">
+        /// Azure resource Id
+        /// Serialized Name: SwitchBillingRequest.azureResourceId
+        /// </param>
+        /// <param name="organizationId">
+        /// Organization id
+        /// Serialized Name: SwitchBillingRequest.organizationId
+        /// </param>
+        /// <param name="planData">
+        /// Plan details
+        /// Serialized Name: SwitchBillingRequest.planData
+        /// </param>
+        /// <param name="userEmail">
+        /// Reusable representation of an email address
+        /// Serialized Name: SwitchBillingRequest.userEmail
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicSwitchBillingContent(ResourceIdentifier azureResourceId, string organizationId, NewRelicPlanDetails planData, string userEmail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,16 +94,28 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
         }
 
-        /// <summary> Azure resource Id. </summary>
+        /// <summary>
+        /// Azure resource Id
+        /// Serialized Name: SwitchBillingRequest.azureResourceId
+        /// </summary>
         [WirePath("azureResourceId")]
         public ResourceIdentifier AzureResourceId { get; set; }
-        /// <summary> Organization id. </summary>
+        /// <summary>
+        /// Organization id
+        /// Serialized Name: SwitchBillingRequest.organizationId
+        /// </summary>
         [WirePath("organizationId")]
         public string OrganizationId { get; set; }
-        /// <summary> Plan details. </summary>
+        /// <summary>
+        /// Plan details
+        /// Serialized Name: SwitchBillingRequest.planData
+        /// </summary>
         [WirePath("planData")]
         public NewRelicPlanDetails PlanData { get; set; }
-        /// <summary> User Email. </summary>
+        /// <summary>
+        /// Reusable representation of an email address
+        /// Serialized Name: SwitchBillingRequest.userEmail
+        /// </summary>
         [WirePath("userEmail")]
         public string UserEmail { get; }
     }

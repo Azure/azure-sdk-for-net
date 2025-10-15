@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Connected Partner Resources List Format. </summary>
+    /// <summary>
+    /// Connected Partner Resources List Format
+    /// Serialized Name: ConnectedPartnerResourcesListFormat
+    /// </summary>
     public partial class NewRelicConnectedPartnerResourceInfo
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicConnectedPartnerResourceInfo"/>. </summary>
-        /// <param name="properties"> Connected Partner Resource Properties. </param>
+        /// <param name="properties">
+        /// Connected Partner Resource Properties
+        /// Serialized Name: ConnectedPartnerResourcesListFormat.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicConnectedPartnerResourceInfo(NewRelicConnectedPartnerResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Connected Partner Resource Properties. </summary>
+        /// <summary>
+        /// Connected Partner Resource Properties
+        /// Serialized Name: ConnectedPartnerResourcesListFormat.properties
+        /// </summary>
         [WirePath("properties")]
         public NewRelicConnectedPartnerResourceProperties Properties { get; }
     }

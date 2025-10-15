@@ -47,18 +47,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NewRelicObservabilityTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NewRelicObservabilityTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="NewRelicObservabilityTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NewRelicObservabilityTagRuleResource"/> object. </returns>
-        public virtual NewRelicObservabilityTagRuleResource GetNewRelicObservabilityTagRuleResource(ResourceIdentifier id)
-        {
-            NewRelicObservabilityTagRuleResource.ValidateResourceId(id);
-            return new NewRelicObservabilityTagRuleResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="NewRelicMonitoredSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NewRelicMonitoredSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="NewRelicMonitoredSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -68,6 +56,18 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         {
             NewRelicMonitoredSubscriptionResource.ValidateResourceId(id);
             return new NewRelicMonitoredSubscriptionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NewRelicObservabilityTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NewRelicObservabilityTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="NewRelicObservabilityTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NewRelicObservabilityTagRuleResource"/> object. </returns>
+        public virtual NewRelicObservabilityTagRuleResource GetNewRelicObservabilityTagRuleResource(ResourceIdentifier id)
+        {
+            NewRelicObservabilityTagRuleResource.ValidateResourceId(id);
+            return new NewRelicObservabilityTagRuleResource(Client, id);
         }
     }
 }

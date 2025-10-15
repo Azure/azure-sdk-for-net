@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.NewRelicObservability
     /// <summary>
     /// A class representing the NewRelicObservabilityTagRule data model.
     /// A tag rule belonging to NewRelic account
+    /// Serialized Name: TagRule
     /// </summary>
     public partial class NewRelicObservabilityTagRuleData : ResourceData
     {
@@ -61,9 +62,18 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
-        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <param name="provisioningState">
+        /// Provisioning State of the resource
+        /// Serialized Name: TagRule.properties.provisioningState
+        /// </param>
+        /// <param name="logRules">
+        /// Set of rules for sending logs for the Monitor resource.
+        /// Serialized Name: TagRule.properties.logRules
+        /// </param>
+        /// <param name="metricRules">
+        /// Set of rules for sending metrics for the Monitor resource.
+        /// Serialized Name: TagRule.properties.metricRules
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicObservabilityTagRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NewRelicProvisioningState? provisioningState, NewRelicObservabilityLogRules logRules, NewRelicObservabilityMetricRules metricRules, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,13 +83,22 @@ namespace Azure.ResourceManager.NewRelicObservability
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Provisioning State of the resource. </summary>
+        /// <summary>
+        /// Provisioning State of the resource
+        /// Serialized Name: TagRule.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public NewRelicProvisioningState? ProvisioningState { get; }
-        /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
+        /// <summary>
+        /// Set of rules for sending logs for the Monitor resource.
+        /// Serialized Name: TagRule.properties.logRules
+        /// </summary>
         [WirePath("properties.logRules")]
         public NewRelicObservabilityLogRules LogRules { get; set; }
-        /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
+        /// <summary>
+        /// Set of rules for sending metrics for the Monitor resource.
+        /// Serialized Name: TagRule.properties.metricRules
+        /// </summary>
         [WirePath("properties.metricRules")]
         public NewRelicObservabilityMetricRules MetricRules { get; set; }
     }

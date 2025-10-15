@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Details of VM Resource having NewRelic OneAgent installed. </summary>
+    /// <summary>
+    /// Details of VM Resource having NewRelic OneAgent installed
+    /// Serialized Name: AppServiceInfo
+    /// </summary>
     public partial class NewRelicObservabilityAppServiceInfo
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityAppServiceInfo"/>. </summary>
-        /// <param name="azureResourceId"> Azure App service resource ID. </param>
-        /// <param name="agentVersion"> Version of the NewRelic agent installed on the App service. </param>
-        /// <param name="agentStatus"> Status of the NewRelic agent installed on the App service. </param>
+        /// <param name="azureResourceId">
+        /// Azure App service resource ID
+        /// Serialized Name: AppServiceInfo.azureResourceId
+        /// </param>
+        /// <param name="agentVersion">
+        /// Version of the NewRelic agent installed on the App service.
+        /// Serialized Name: AppServiceInfo.agentVersion
+        /// </param>
+        /// <param name="agentStatus">
+        /// Status of the NewRelic agent installed on the App service.
+        /// Serialized Name: AppServiceInfo.agentStatus
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicObservabilityAppServiceInfo(ResourceIdentifier azureResourceId, string agentVersion, string agentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,13 +76,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Azure App service resource ID. </summary>
+        /// <summary>
+        /// Azure App service resource ID
+        /// Serialized Name: AppServiceInfo.azureResourceId
+        /// </summary>
         [WirePath("azureResourceId")]
         public ResourceIdentifier AzureResourceId { get; }
-        /// <summary> Version of the NewRelic agent installed on the App service. </summary>
+        /// <summary>
+        /// Version of the NewRelic agent installed on the App service.
+        /// Serialized Name: AppServiceInfo.agentVersion
+        /// </summary>
         [WirePath("agentVersion")]
         public string AgentVersion { get; }
-        /// <summary> Status of the NewRelic agent installed on the App service. </summary>
+        /// <summary>
+        /// Status of the NewRelic agent installed on the App service.
+        /// Serialized Name: AppServiceInfo.agentStatus
+        /// </summary>
         [WirePath("agentStatus")]
         public string AgentStatus { get; }
     }

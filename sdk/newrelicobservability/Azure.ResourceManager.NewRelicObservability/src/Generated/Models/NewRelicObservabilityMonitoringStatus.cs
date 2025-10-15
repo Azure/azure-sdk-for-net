@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Flag specifying if the resource monitoring is enabled or disabled. </summary>
+    /// <summary>
+    /// Flag specifying if the resource monitoring is enabled or disabled.
+    /// Serialized Name: MonitoringStatus
+    /// </summary>
     public readonly partial struct NewRelicObservabilityMonitoringStatus : IEquatable<NewRelicObservabilityMonitoringStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string IsEnabledValue = "Enabled";
         private const string IsDisabledValue = "Disabled";
 
-        /// <summary> monitoring is enabled. </summary>
+        /// <summary>
+        /// monitoring is enabled
+        /// Serialized Name: MonitoringStatus.Enabled
+        /// </summary>
         public static NewRelicObservabilityMonitoringStatus IsEnabled { get; } = new NewRelicObservabilityMonitoringStatus(IsEnabledValue);
-        /// <summary> monitoring is disabled. </summary>
+        /// <summary>
+        /// monitoring is disabled
+        /// Serialized Name: MonitoringStatus.Disabled
+        /// </summary>
         public static NewRelicObservabilityMonitoringStatus IsDisabled { get; } = new NewRelicObservabilityMonitoringStatus(IsDisabledValue);
         /// <summary> Determines if two <see cref="NewRelicObservabilityMonitoringStatus"/> values are the same. </summary>
         public static bool operator ==(NewRelicObservabilityMonitoringStatus left, NewRelicObservabilityMonitoringStatus right) => left.Equals(right);

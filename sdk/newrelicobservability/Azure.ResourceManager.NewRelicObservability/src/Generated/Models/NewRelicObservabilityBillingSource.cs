@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Billing source. </summary>
+    /// <summary>
+    /// Billing source
+    /// Serialized Name: BillingSource
+    /// </summary>
     public readonly partial struct NewRelicObservabilityBillingSource : IEquatable<NewRelicObservabilityBillingSource>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string AzureValue = "AZURE";
         private const string NewrelicValue = "NEWRELIC";
 
-        /// <summary> Billing source is Azure. </summary>
+        /// <summary>
+        /// Billing source is Azure
+        /// Serialized Name: BillingSource.AZURE
+        /// </summary>
         public static NewRelicObservabilityBillingSource Azure { get; } = new NewRelicObservabilityBillingSource(AzureValue);
-        /// <summary> NEWRELIC. </summary>
+        /// <summary>
+        /// NEWRELIC
+        /// Serialized Name: BillingSource.NEWRELIC
+        /// </summary>
         public static NewRelicObservabilityBillingSource Newrelic { get; } = new NewRelicObservabilityBillingSource(NewrelicValue);
         /// <summary> Determines if two <see cref="NewRelicObservabilityBillingSource"/> values are the same. </summary>
         public static bool operator ==(NewRelicObservabilityBillingSource left, NewRelicObservabilityBillingSource right) => left.Equals(right);

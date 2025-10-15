@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Request of a Hosts get Operation. </summary>
+    /// <summary>
+    /// Request of a Hosts get Operation.
+    /// Serialized Name: HostsGetRequest
+    /// </summary>
     public partial class NewRelicHostsGetContent
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicHostsGetContent"/>. </summary>
-        /// <param name="userEmail"> User Email. </param>
+        /// <param name="userEmail">
+        /// Reusable representation of an email address
+        /// Serialized Name: HostsGetRequest.userEmail
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicHostsGetContent(string userEmail)
         {
@@ -58,8 +64,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicHostsGetContent"/>. </summary>
-        /// <param name="vmIds"> VM resource IDs. </param>
-        /// <param name="userEmail"> User Email. </param>
+        /// <param name="vmIds">
+        /// VM resource IDs
+        /// Serialized Name: HostsGetRequest.vmIds
+        /// </param>
+        /// <param name="userEmail">
+        /// Reusable representation of an email address
+        /// Serialized Name: HostsGetRequest.userEmail
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicHostsGetContent(IList<ResourceIdentifier> vmIds, string userEmail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,10 +85,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
         }
 
-        /// <summary> VM resource IDs. </summary>
+        /// <summary>
+        /// VM resource IDs
+        /// Serialized Name: HostsGetRequest.vmIds
+        /// </summary>
         [WirePath("vmIds")]
         public IList<ResourceIdentifier> VmIds { get; }
-        /// <summary> User Email. </summary>
+        /// <summary>
+        /// Reusable representation of an email address
+        /// Serialized Name: HostsGetRequest.userEmail
+        /// </summary>
         [WirePath("userEmail")]
         public string UserEmail { get; }
     }

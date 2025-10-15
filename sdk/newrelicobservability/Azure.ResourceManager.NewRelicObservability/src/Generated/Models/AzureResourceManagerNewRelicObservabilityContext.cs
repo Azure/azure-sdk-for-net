@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.NewRelicObservability
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ActivateSaaSParameterContent))]
     [ModelReaderWriterBuildable(typeof(ConnectedPartnerResourcesListResponse))]
     [ModelReaderWriterBuildable(typeof(LinkedResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.NewRelicObservability
     [ModelReaderWriterBuildable(typeof(NewRelicConnectedPartnerResourceInfo))]
     [ModelReaderWriterBuildable(typeof(NewRelicConnectedPartnerResourceProperties))]
     [ModelReaderWriterBuildable(typeof(NewRelicHostsGetContent))]
+    [ModelReaderWriterBuildable(typeof(NewRelicLatestLinkedSaaSResult))]
     [ModelReaderWriterBuildable(typeof(NewRelicMetricsContent))]
     [ModelReaderWriterBuildable(typeof(NewRelicMetricsStatusContent))]
     [ModelReaderWriterBuildable(typeof(NewRelicMetricsStatusResult))]
@@ -63,6 +65,9 @@ namespace Azure.ResourceManager.NewRelicObservability
     [ModelReaderWriterBuildable(typeof(NewRelicPlanDataListResult))]
     [ModelReaderWriterBuildable(typeof(NewRelicPlanDetails))]
     [ModelReaderWriterBuildable(typeof(NewRelicResourceMonitorResult))]
+    [ModelReaderWriterBuildable(typeof(NewRelicResubscribeProperties))]
+    [ModelReaderWriterBuildable(typeof(NewRelicSaaSDataDetails))]
+    [ModelReaderWriterBuildable(typeof(NewRelicSaaSResourceDetailsResult))]
     [ModelReaderWriterBuildable(typeof(NewRelicSingleSignOnProperties))]
     [ModelReaderWriterBuildable(typeof(NewRelicSwitchBillingContent))]
     [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]

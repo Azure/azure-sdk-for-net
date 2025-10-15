@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Response of get metrics status Operation. </summary>
+    /// <summary>
+    /// Response of get metrics status Operation.
+    /// Serialized Name: MetricsStatusResponse
+    /// </summary>
     public partial class NewRelicMetricsStatusResult
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMetricsStatusResult"/>. </summary>
-        /// <param name="azureResourceIds"> Azure resource IDs. </param>
+        /// <param name="azureResourceIds">
+        /// Azure resource IDs
+        /// Serialized Name: MetricsStatusResponse.azureResourceIds
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicMetricsStatusResult(IReadOnlyList<string> azureResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Azure resource IDs. </summary>
+        /// <summary>
+        /// Azure resource IDs
+        /// Serialized Name: MetricsStatusResponse.azureResourceIds
+        /// </summary>
         [WirePath("azureResourceIds")]
         public IReadOnlyList<string> AzureResourceIds { get; }
     }

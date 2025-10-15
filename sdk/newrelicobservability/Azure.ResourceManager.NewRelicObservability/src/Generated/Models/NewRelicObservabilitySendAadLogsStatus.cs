@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Indicates whether AAD logs are being sent. </summary>
+    /// <summary>
+    /// Indicates whether AAD logs are being sent.
+    /// Serialized Name: SendAadLogsStatus
+    /// </summary>
     public readonly partial struct NewRelicObservabilitySendAadLogsStatus : IEquatable<NewRelicObservabilitySendAadLogsStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string IsEnabledValue = "Enabled";
         private const string IsDisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: SendAadLogsStatus.Enabled
+        /// </summary>
         public static NewRelicObservabilitySendAadLogsStatus IsEnabled { get; } = new NewRelicObservabilitySendAadLogsStatus(IsEnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: SendAadLogsStatus.Disabled
+        /// </summary>
         public static NewRelicObservabilitySendAadLogsStatus IsDisabled { get; } = new NewRelicObservabilitySendAadLogsStatus(IsDisabledValue);
         /// <summary> Determines if two <see cref="NewRelicObservabilitySendAadLogsStatus"/> values are the same. </summary>
         public static bool operator ==(NewRelicObservabilitySendAadLogsStatus left, NewRelicObservabilitySendAadLogsStatus right) => left.Equals(right);

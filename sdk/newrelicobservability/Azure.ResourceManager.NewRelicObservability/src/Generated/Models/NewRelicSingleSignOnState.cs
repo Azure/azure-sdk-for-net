@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Various states of the SSO resource. </summary>
+    /// <summary>
+    /// Various states of the SSO resource
+    /// Serialized Name: SingleSignOnStates
+    /// </summary>
     public readonly partial struct NewRelicSingleSignOnState : IEquatable<NewRelicSingleSignOnState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string DisableValue = "Disable";
         private const string ExistingValue = "Existing";
 
-        /// <summary> Initial. </summary>
+        /// <summary>
+        /// Initial
+        /// Serialized Name: SingleSignOnStates.Initial
+        /// </summary>
         public static NewRelicSingleSignOnState Initial { get; } = new NewRelicSingleSignOnState(InitialValue);
-        /// <summary> Enable. </summary>
+        /// <summary>
+        /// Enable
+        /// Serialized Name: SingleSignOnStates.Enable
+        /// </summary>
         public static NewRelicSingleSignOnState Enable { get; } = new NewRelicSingleSignOnState(EnableValue);
-        /// <summary> Disable. </summary>
+        /// <summary>
+        /// Disable
+        /// Serialized Name: SingleSignOnStates.Disable
+        /// </summary>
         public static NewRelicSingleSignOnState Disable { get; } = new NewRelicSingleSignOnState(DisableValue);
-        /// <summary> Existing. </summary>
+        /// <summary>
+        /// Existing
+        /// Serialized Name: SingleSignOnStates.Existing
+        /// </summary>
         public static NewRelicSingleSignOnState Existing { get; } = new NewRelicSingleSignOnState(ExistingValue);
         /// <summary> Determines if two <see cref="NewRelicSingleSignOnState"/> values are the same. </summary>
         public static bool operator ==(NewRelicSingleSignOnState left, NewRelicSingleSignOnState right) => left.Equals(right);

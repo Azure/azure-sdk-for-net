@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> The definition of a filtering tag. Filtering tags are used for capturing resources and include/exclude them from being monitored. </summary>
+    /// <summary>
+    /// The definition of a filtering tag. Filtering tags are used for capturing resources and include/exclude them from being monitored.
+    /// Serialized Name: FilteringTag
+    /// </summary>
     public partial class NewRelicObservabilityFilteringTag
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityFilteringTag"/>. </summary>
-        /// <param name="name"> The name (also known as the key) of the tag. </param>
-        /// <param name="value"> The value of the tag. </param>
-        /// <param name="action"> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </param>
+        /// <param name="name">
+        /// The name (also known as the key) of the tag.
+        /// Serialized Name: FilteringTag.name
+        /// </param>
+        /// <param name="value">
+        /// The value of the tag.
+        /// Serialized Name: FilteringTag.value
+        /// </param>
+        /// <param name="action">
+        /// Valid actions for a filtering tag. Exclusion takes priority over inclusion.
+        /// Serialized Name: FilteringTag.action
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicObservabilityFilteringTag(string name, string value, NewRelicObservabilityTagAction? action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name (also known as the key) of the tag. </summary>
+        /// <summary>
+        /// The name (also known as the key) of the tag.
+        /// Serialized Name: FilteringTag.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> The value of the tag. </summary>
+        /// <summary>
+        /// The value of the tag.
+        /// Serialized Name: FilteringTag.value
+        /// </summary>
         [WirePath("value")]
         public string Value { get; set; }
-        /// <summary> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </summary>
+        /// <summary>
+        /// Valid actions for a filtering tag. Exclusion takes priority over inclusion.
+        /// Serialized Name: FilteringTag.action
+        /// </summary>
         [WirePath("action")]
         public NewRelicObservabilityTagAction? Action { get; set; }
     }

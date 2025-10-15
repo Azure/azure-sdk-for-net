@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Partner Billing details associated with the resource. </summary>
+    /// <summary>
+    /// Partner Billing details associated with the resource.
+    /// Serialized Name: PartnerBillingEntity
+    /// </summary>
     public partial class PartnerBillingEntity
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PartnerBillingEntity"/>. </summary>
-        /// <param name="organizationId"> The New Relic Organization Id. </param>
-        /// <param name="organizationName"> The New Relic Organization Name. </param>
+        /// <param name="organizationId">
+        /// The New Relic Organization Id.
+        /// Serialized Name: PartnerBillingEntity.organizationId
+        /// </param>
+        /// <param name="organizationName">
+        /// The New Relic Organization Name.
+        /// Serialized Name: PartnerBillingEntity.organizationName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PartnerBillingEntity(string organizationId, string organizationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The New Relic Organization Id. </summary>
+        /// <summary>
+        /// The New Relic Organization Id.
+        /// Serialized Name: PartnerBillingEntity.organizationId
+        /// </summary>
         [WirePath("organizationId")]
         public string OrganizationId { get; }
-        /// <summary> The New Relic Organization Name. </summary>
+        /// <summary>
+        /// The New Relic Organization Name.
+        /// Serialized Name: PartnerBillingEntity.organizationName
+        /// </summary>
         [WirePath("organizationName")]
         public string OrganizationName { get; }
     }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Indicates whether subscription logs are being sent. </summary>
+    /// <summary>
+    /// Indicates whether subscription logs are being sent.
+    /// Serialized Name: SendSubscriptionLogsStatus
+    /// </summary>
     public readonly partial struct NewRelicObservabilitySendSubscriptionLogsStatus : IEquatable<NewRelicObservabilitySendSubscriptionLogsStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string IsEnabledValue = "Enabled";
         private const string IsDisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: SendSubscriptionLogsStatus.Enabled
+        /// </summary>
         public static NewRelicObservabilitySendSubscriptionLogsStatus IsEnabled { get; } = new NewRelicObservabilitySendSubscriptionLogsStatus(IsEnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: SendSubscriptionLogsStatus.Disabled
+        /// </summary>
         public static NewRelicObservabilitySendSubscriptionLogsStatus IsDisabled { get; } = new NewRelicObservabilitySendSubscriptionLogsStatus(IsDisabledValue);
         /// <summary> Determines if two <see cref="NewRelicObservabilitySendSubscriptionLogsStatus"/> values are the same. </summary>
         public static bool operator ==(NewRelicObservabilitySendSubscriptionLogsStatus left, NewRelicObservabilitySendSubscriptionLogsStatus right) => left.Equals(right);

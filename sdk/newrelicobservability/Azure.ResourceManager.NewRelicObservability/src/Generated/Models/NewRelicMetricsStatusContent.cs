@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Request of get metrics status Operation. </summary>
+    /// <summary>
+    /// Request of get metrics status Operation.
+    /// Serialized Name: MetricsStatusRequest
+    /// </summary>
     public partial class NewRelicMetricsStatusContent
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMetricsStatusContent"/>. </summary>
-        /// <param name="userEmail"> User Email. </param>
+        /// <param name="userEmail">
+        /// Reusable representation of an email address
+        /// Serialized Name: MetricsStatusRequest.userEmail
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicMetricsStatusContent(string userEmail)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMetricsStatusContent"/>. </summary>
-        /// <param name="azureResourceIds"> Azure resource IDs. </param>
-        /// <param name="userEmail"> User Email. </param>
+        /// <param name="azureResourceIds">
+        /// Azure resource IDs
+        /// Serialized Name: MetricsStatusRequest.azureResourceIds
+        /// </param>
+        /// <param name="userEmail">
+        /// Reusable representation of an email address
+        /// Serialized Name: MetricsStatusRequest.userEmail
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicMetricsStatusContent(IList<string> azureResourceIds, string userEmail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,10 +84,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
         }
 
-        /// <summary> Azure resource IDs. </summary>
+        /// <summary>
+        /// Azure resource IDs
+        /// Serialized Name: MetricsStatusRequest.azureResourceIds
+        /// </summary>
         [WirePath("azureResourceIds")]
         public IList<string> AzureResourceIds { get; }
-        /// <summary> User Email. </summary>
+        /// <summary>
+        /// Reusable representation of an email address
+        /// Serialized Name: MetricsStatusRequest.userEmail
+        /// </summary>
         [WirePath("userEmail")]
         public string UserEmail { get; }
     }

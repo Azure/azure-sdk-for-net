@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> The MonitoredSubscriptionConfigurationName. </summary>
+    /// <summary>
+    /// The MonitoredSubscriptionConfigurationName.
+    /// Serialized Name: ConfigurationName
+    /// </summary>
     public readonly partial struct MonitoredSubscriptionConfigurationName : IEquatable<MonitoredSubscriptionConfigurationName>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         private const string DefaultValue = "default";
 
-        /// <summary> default. </summary>
+        /// <summary>
+        /// default
+        /// Serialized Name: ConfigurationName.default
+        /// </summary>
         public static MonitoredSubscriptionConfigurationName Default { get; } = new MonitoredSubscriptionConfigurationName(DefaultValue);
         /// <summary> Determines if two <see cref="MonitoredSubscriptionConfigurationName"/> values are the same. </summary>
         public static bool operator ==(MonitoredSubscriptionConfigurationName left, MonitoredSubscriptionConfigurationName right) => left.Equals(right);

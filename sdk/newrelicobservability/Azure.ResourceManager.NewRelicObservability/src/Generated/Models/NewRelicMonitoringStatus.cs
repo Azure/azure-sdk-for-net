@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> The state of monitoring. </summary>
+    /// <summary>
+    /// The state of monitoring.
+    /// Serialized Name: Status
+    /// </summary>
     public readonly partial struct NewRelicMonitoringStatus : IEquatable<NewRelicMonitoringStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string FailedValue = "Failed";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: Status.InProgress
+        /// </summary>
         public static NewRelicMonitoringStatus InProgress { get; } = new NewRelicMonitoringStatus(InProgressValue);
-        /// <summary> Active. </summary>
+        /// <summary>
+        /// Active
+        /// Serialized Name: Status.Active
+        /// </summary>
         public static NewRelicMonitoringStatus Active { get; } = new NewRelicMonitoringStatus(ActiveValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: Status.Failed
+        /// </summary>
         public static NewRelicMonitoringStatus Failed { get; } = new NewRelicMonitoringStatus(FailedValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: Status.Deleting
+        /// </summary>
         public static NewRelicMonitoringStatus Deleting { get; } = new NewRelicMonitoringStatus(DeletingValue);
         /// <summary> Determines if two <see cref="NewRelicMonitoringStatus"/> values are the same. </summary>
         public static bool operator ==(NewRelicMonitoringStatus left, NewRelicMonitoringStatus right) => left.Equals(right);

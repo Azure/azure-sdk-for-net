@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> The details of a account resource. </summary>
+    /// <summary>
+    /// The details of a account resource.
+    /// Serialized Name: AccountResource
+    /// </summary>
     public partial class NewRelicAccountResourceData : ResourceData
     {
         /// <summary>
@@ -57,10 +60,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="organizationId"> organization id. </param>
-        /// <param name="accountId"> account id. </param>
-        /// <param name="accountName"> account name. </param>
-        /// <param name="region"> Region where New Relic account is present. </param>
+        /// <param name="organizationId">
+        /// organization id
+        /// Serialized Name: AccountResource.properties.organizationId
+        /// </param>
+        /// <param name="accountId">
+        /// account id
+        /// Serialized Name: AccountResource.properties.accountId
+        /// </param>
+        /// <param name="accountName">
+        /// account name
+        /// Serialized Name: AccountResource.properties.accountName
+        /// </param>
+        /// <param name="region">
+        /// Region where New Relic account is present
+        /// Serialized Name: AccountResource.properties.region
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, AzureLocation? region, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -71,16 +86,28 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> organization id. </summary>
+        /// <summary>
+        /// organization id
+        /// Serialized Name: AccountResource.properties.organizationId
+        /// </summary>
         [WirePath("properties.organizationId")]
         public string OrganizationId { get; set; }
-        /// <summary> account id. </summary>
+        /// <summary>
+        /// account id
+        /// Serialized Name: AccountResource.properties.accountId
+        /// </summary>
         [WirePath("properties.accountId")]
         public string AccountId { get; set; }
-        /// <summary> account name. </summary>
+        /// <summary>
+        /// account name
+        /// Serialized Name: AccountResource.properties.accountName
+        /// </summary>
         [WirePath("properties.accountName")]
         public string AccountName { get; set; }
-        /// <summary> Region where New Relic account is present. </summary>
+        /// <summary>
+        /// Region where New Relic account is present
+        /// Serialized Name: AccountResource.properties.region
+        /// </summary>
         [WirePath("properties.region")]
         public AzureLocation? Region { get; set; }
     }

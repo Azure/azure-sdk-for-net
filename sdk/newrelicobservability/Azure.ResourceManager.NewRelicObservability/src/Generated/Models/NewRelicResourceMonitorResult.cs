@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Details of resource being monitored by NewRelic monitor resource. </summary>
+    /// <summary>
+    /// Details of resource being monitored by NewRelic monitor resource
+    /// Serialized Name: MonitoredResource
+    /// </summary>
     public partial class NewRelicResourceMonitorResult
     {
         /// <summary>
@@ -52,11 +55,26 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicResourceMonitorResult"/>. </summary>
-        /// <param name="id"> The ARM id of the resource. </param>
-        /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to NewRelic. </param>
-        /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
-        /// <param name="sendingLogs"> Flag indicating if resource is sending logs to NewRelic. </param>
-        /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
+        /// <param name="id">
+        /// The ARM id of the resource.
+        /// Serialized Name: MonitoredResource.id
+        /// </param>
+        /// <param name="sendingMetrics">
+        /// Flag indicating if resource is sending metrics to NewRelic.
+        /// Serialized Name: MonitoredResource.sendingMetrics
+        /// </param>
+        /// <param name="reasonForMetricsStatus">
+        /// Reason for why the resource is sending metrics (or why it is not sending).
+        /// Serialized Name: MonitoredResource.reasonForMetricsStatus
+        /// </param>
+        /// <param name="sendingLogs">
+        /// Flag indicating if resource is sending logs to NewRelic.
+        /// Serialized Name: MonitoredResource.sendingLogs
+        /// </param>
+        /// <param name="reasonForLogsStatus">
+        /// Reason for why the resource is sending logs (or why it is not sending).
+        /// Serialized Name: MonitoredResource.reasonForLogsStatus
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicResourceMonitorResult(ResourceIdentifier id, NewRelicObservabilitySendingMetricsStatus? sendingMetrics, string reasonForMetricsStatus, NewRelicObservabilitySendingLogsStatus? sendingLogs, string reasonForLogsStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,19 +86,34 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The ARM id of the resource. </summary>
+        /// <summary>
+        /// The ARM id of the resource.
+        /// Serialized Name: MonitoredResource.id
+        /// </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; }
-        /// <summary> Flag indicating if resource is sending metrics to NewRelic. </summary>
+        /// <summary>
+        /// Flag indicating if resource is sending metrics to NewRelic.
+        /// Serialized Name: MonitoredResource.sendingMetrics
+        /// </summary>
         [WirePath("sendingMetrics")]
         public NewRelicObservabilitySendingMetricsStatus? SendingMetrics { get; }
-        /// <summary> Reason for why the resource is sending metrics (or why it is not sending). </summary>
+        /// <summary>
+        /// Reason for why the resource is sending metrics (or why it is not sending).
+        /// Serialized Name: MonitoredResource.reasonForMetricsStatus
+        /// </summary>
         [WirePath("reasonForMetricsStatus")]
         public string ReasonForMetricsStatus { get; }
-        /// <summary> Flag indicating if resource is sending logs to NewRelic. </summary>
+        /// <summary>
+        /// Flag indicating if resource is sending logs to NewRelic.
+        /// Serialized Name: MonitoredResource.sendingLogs
+        /// </summary>
         [WirePath("sendingLogs")]
         public NewRelicObservabilitySendingLogsStatus? SendingLogs { get; }
-        /// <summary> Reason for why the resource is sending logs (or why it is not sending). </summary>
+        /// <summary>
+        /// Reason for why the resource is sending logs (or why it is not sending).
+        /// Serialized Name: MonitoredResource.reasonForLogsStatus
+        /// </summary>
         [WirePath("reasonForLogsStatus")]
         public string ReasonForLogsStatus { get; }
     }

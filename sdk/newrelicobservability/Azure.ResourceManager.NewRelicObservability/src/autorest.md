@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: Newrelic
 namespace: Azure.ResourceManager.NewRelicObservability
-require: https://github.com/Azure/azure-rest-api-specs/blob/07d286359f828bbc7901e86288a5d62b48ae2052/specification/newrelic/resource-manager/readme.md
-#tag: package-2024-03-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/8eaa76601a7ad84c0b21bdf8050ff61203ecb89c/specification/newrelic/resource-manager/readme.md
+#tag: package-2025-05-01-preview   # before: package-2024-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,8 +20,8 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug:
-#  show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -33,21 +33,12 @@ format-by-name-rules:
 prepend-rp-prefix:
 - AccountCreationSource
 - AccountInfo
-- Agent
 - AppServiceInfo
-- AppServicesGetContent
-- AppServicesListResult
-- BillingCycle
 - BillingSource
-- Endpoint
 - FilteringTag
-- HostsGetContent
 - LogRules
 - MarketplaceSubscriptionStatus
 - MetricRules
-- MetricsContent
-- MetricsStatusContent
-- MetricsStatusResult
 - MonitoringStatus
 - OrganizationInfo
 - OrgCreationSource
@@ -57,8 +48,6 @@ prepend-rp-prefix:
 - SendingMetricsStatus
 - SendMetricsStatus
 - SendSubscriptionLogsStatus
-- SingleSignOnState
-- SwitchBillingContent
 - TagAction
 - TagRuleListResult
 - TagRule
@@ -96,25 +85,13 @@ rename-mapping:
   AccountResource: NewRelicAccountResourceData
   AccountResource.properties.region: -|azure-location
   AccountsListResponse: NewRelicAccountsListResult
-  AgentData.ArcResourceId: -|arm-id
-  AgentData.ArcVmUuid: -|uuid
   AppServicesGetRequest: NewRelicAppServicesGetContent
   AppServicesGetRequest.azureResourceIds: -|arm-id
   AppServiceInfo.azureResourceId: -|arm-id
   AppServicesListResponse: NewRelicAppServicesListResult
   BillingInfoResponse: NewRelicBillingInfoResult
-  AzureStorageBlobContainerEndpointProperties: StorageBlobContainerEndpointProperties
-  AzureStorageBlobContainerNewrelicEndpointProperties.StorageAccountResourceId: -|arm-id
   HostsGetRequest: NewRelicHostsGetContent
   HostsGetRequest.vmIds: -|arm-id
-  JobDefinitionData: NewRelicJobDefinitionData
-  JobRun: NewRelicJobRun
-  JobDefinitionData.AgentResourceId: -|arm-id
-  JobDefinitionData.LatestJobRunResourceId: -|arm-id
-  JobDefinitionData.SourceResourceId: -|arm-id
-  JobDefinitionData.TargetResourceId: -|arm-id
-  JobRunData.AgentResourceId: -|arm-id
-  JobRunData.SourceResourceId: -|arm-id
   LiftrResourceCategories: NewRelicLiftrResourceCategory
   MetricsRequest: NewRelicMetricsContent
   MetricsStatusRequest: NewRelicMetricsStatusContent
@@ -124,10 +101,8 @@ rename-mapping:
   MonitoredResourceListResponse: NewRelicMonitoredResourceListResult
   MonitoringStatus.Disabled: IsDisabled
   MonitoringStatus.Enabled: IsEnabled
-  NewrelicAgentData.LocalIPAddress: -|ip-address
   OrganizationsListResponse: NewRelicOrganizationsListResult
   ProvisioningState: NewRelicProvisioningState
-  Project: NewRelicProject
   PlanDataListResponse: NewRelicPlanDataListResult
   PlanData: NewRelicPlanDetails
   PlanData.billingCycle: NewRelicPlanBillingCycle
@@ -144,7 +119,6 @@ rename-mapping:
   SendSubscriptionLogsStatus.Disabled: IsDisabled
   SendSubscriptionLogsStatus.Enabled: IsEnabled
   SingleSignOnStates: NewRelicSingleSignOnState
-  StorageMover: NewRelicStorageMover
   SwitchBillingRequest: NewRelicSwitchBillingContent
   SwitchBillingRequest.azureResourceId: -|arm-id
   VMInfo.vmId: -|arm-id
@@ -157,10 +131,24 @@ rename-mapping:
   SubscriptionList: NewRelicMonitoredSubscriptionProperties
   MonitoredSubscription: NewRelicMonitoredSubscriptionInfo
   MonitoringTagRulesProperties: NewRelicMonitoringTagRules
+  LatestLinkedSaaSResponse: NewRelicLatestLinkedSaaSResult
+  LatestLinkedSaaSResponse.saaSResourceId: -|arm-id
+  SaaSData: NewRelicSaaSDataDetails
+  SaaSData.saaSResourceId: -|arm-id
+  SaaSResourceDetailsResponse: NewRelicSaaSResourceDetailsResult
+  ResubscribeProperties: NewRelicResubscribeProperties
+  ActivateSaaSParameterRequest.saasGuid: -|uuid
 
 override-operation-name:
   Accounts_List: GetNewRelicAccounts
   Organizations_List: GetNewRelicOrganizations
   Plans_List: GetNewRelicPlans
+
+directive:
+  - from: NewRelic.json 
+    where: $.definitions.MonitoredSubscription
+    transform: >
+      delete $.required;
+    reason: Remove the required attribute to generate a parameterless public constructor.
 
 ```

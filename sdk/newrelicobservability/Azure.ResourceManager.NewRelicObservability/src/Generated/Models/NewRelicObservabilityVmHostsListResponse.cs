@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Response of a list VM Host Operation. </summary>
+    /// <summary>
+    /// Response of a list VM Host Operation.
+    /// Serialized Name: VMHostsListResponse
+    /// </summary>
     internal partial class NewRelicObservabilityVmHostsListResponse
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityVmHostsListResponse"/>. </summary>
-        /// <param name="value"> The VMInfo items on this page. </param>
+        /// <param name="value">
+        /// The VMInfo items on this page
+        /// Serialized Name: VMHostsListResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NewRelicObservabilityVmHostsListResponse(IEnumerable<NewRelicObservabilityVmInfo> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityVmHostsListResponse"/>. </summary>
-        /// <param name="value"> The VMInfo items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The VMInfo items on this page
+        /// Serialized Name: VMHostsListResponse.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: VMHostsListResponse.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicObservabilityVmHostsListResponse(IReadOnlyList<NewRelicObservabilityVmInfo> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
         }
 
-        /// <summary> The VMInfo items on this page. </summary>
+        /// <summary>
+        /// The VMInfo items on this page
+        /// Serialized Name: VMHostsListResponse.value
+        /// </summary>
         public IReadOnlyList<NewRelicObservabilityVmInfo> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: VMHostsListResponse.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

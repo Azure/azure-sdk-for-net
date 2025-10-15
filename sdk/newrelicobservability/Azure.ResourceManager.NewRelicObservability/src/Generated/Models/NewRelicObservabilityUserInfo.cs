@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> User Info of NewRelic Monitor resource. </summary>
+    /// <summary>
+    /// User Info of NewRelic Monitor resource
+    /// Serialized Name: UserInfo
+    /// </summary>
     public partial class NewRelicObservabilityUserInfo
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityUserInfo"/>. </summary>
-        /// <param name="firstName"> First name. </param>
-        /// <param name="lastName"> Last name. </param>
-        /// <param name="emailAddress"> User Email. </param>
-        /// <param name="phoneNumber"> Contact phone number. </param>
-        /// <param name="country"> country if user. </param>
+        /// <param name="firstName">
+        /// First name
+        /// Serialized Name: UserInfo.firstName
+        /// </param>
+        /// <param name="lastName">
+        /// Last name
+        /// Serialized Name: UserInfo.lastName
+        /// </param>
+        /// <param name="emailAddress">
+        /// Reusable representation of an email address
+        /// Serialized Name: UserInfo.emailAddress
+        /// </param>
+        /// <param name="phoneNumber">
+        /// Contact phone number
+        /// Serialized Name: UserInfo.phoneNumber
+        /// </param>
+        /// <param name="country">
+        /// country if user
+        /// Serialized Name: UserInfo.country
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicObservabilityUserInfo(string firstName, string lastName, string emailAddress, string phoneNumber, string country, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,19 +85,34 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> First name. </summary>
+        /// <summary>
+        /// First name
+        /// Serialized Name: UserInfo.firstName
+        /// </summary>
         [WirePath("firstName")]
         public string FirstName { get; set; }
-        /// <summary> Last name. </summary>
+        /// <summary>
+        /// Last name
+        /// Serialized Name: UserInfo.lastName
+        /// </summary>
         [WirePath("lastName")]
         public string LastName { get; set; }
-        /// <summary> User Email. </summary>
+        /// <summary>
+        /// Reusable representation of an email address
+        /// Serialized Name: UserInfo.emailAddress
+        /// </summary>
         [WirePath("emailAddress")]
         public string EmailAddress { get; set; }
-        /// <summary> Contact phone number. </summary>
+        /// <summary>
+        /// Contact phone number
+        /// Serialized Name: UserInfo.phoneNumber
+        /// </summary>
         [WirePath("phoneNumber")]
         public string PhoneNumber { get; set; }
-        /// <summary> country if user. </summary>
+        /// <summary>
+        /// country if user
+        /// Serialized Name: UserInfo.country
+        /// </summary>
         [WirePath("country")]
         public string Country { get; set; }
     }

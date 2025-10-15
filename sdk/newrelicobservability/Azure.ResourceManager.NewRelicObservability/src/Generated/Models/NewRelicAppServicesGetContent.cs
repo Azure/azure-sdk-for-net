@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Request of a app services get Operation. </summary>
+    /// <summary>
+    /// Request of a app services get Operation.
+    /// Serialized Name: AppServicesGetRequest
+    /// </summary>
     public partial class NewRelicAppServicesGetContent
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicAppServicesGetContent"/>. </summary>
-        /// <param name="userEmail"> User Email. </param>
+        /// <param name="userEmail">
+        /// Reusable representation of an email address
+        /// Serialized Name: AppServicesGetRequest.userEmail
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicAppServicesGetContent(string userEmail)
         {
@@ -58,8 +64,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicAppServicesGetContent"/>. </summary>
-        /// <param name="azureResourceIds"> Azure resource IDs. </param>
-        /// <param name="userEmail"> User Email. </param>
+        /// <param name="azureResourceIds">
+        /// Azure resource IDs
+        /// Serialized Name: AppServicesGetRequest.azureResourceIds
+        /// </param>
+        /// <param name="userEmail">
+        /// Reusable representation of an email address
+        /// Serialized Name: AppServicesGetRequest.userEmail
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicAppServicesGetContent(IList<ResourceIdentifier> azureResourceIds, string userEmail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,10 +85,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
         }
 
-        /// <summary> Azure resource IDs. </summary>
+        /// <summary>
+        /// Azure resource IDs
+        /// Serialized Name: AppServicesGetRequest.azureResourceIds
+        /// </summary>
         [WirePath("azureResourceIds")]
         public IList<ResourceIdentifier> AzureResourceIds { get; }
-        /// <summary> User Email. </summary>
+        /// <summary>
+        /// Reusable representation of an email address
+        /// Serialized Name: AppServicesGetRequest.userEmail
+        /// </summary>
         [WirePath("userEmail")]
         public string UserEmail { get; }
     }
