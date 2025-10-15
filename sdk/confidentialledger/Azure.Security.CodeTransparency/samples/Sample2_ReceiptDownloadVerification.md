@@ -22,6 +22,7 @@ The easiest approach is to download both the receipt and the signed statement to
 
 ```C# Snippet:CodeTransparencySample2_GetEntryStatement
 Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
+byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();
 ```
 
 ### Raw receipt
@@ -36,35 +37,25 @@ Response<BinaryData> receipt = await client.GetEntryAsync(entryId);
 
 Verification proves that the signed statement was registered in the immutable ledger for your service. Cryptographic verification requires three things: the original signed statement, the receipt, and the service public key. The public key is available at a well-known service endpoint. Verification runs locally.
 
-The following examples use a default public key resolver to obtain the keys for verification.
+The following examples use a default public key resolver to obtain the keys for verification. The resolver works only with the issuers that are from Azure.
 
 ### Using a transparent statement
 
 The receipt included in the unprotected header of the signed statement contains the service endpoint used to download the public keys.
+You should also provide the expected issuers in `AllowedIssuerDomains` option as otherwise any known issuer becomes implicitly trusted.
 
 ```C# Snippet:CodeTransparencyVerification
 Response<BinaryData> transparentStatementResponse = client.GetEntryStatement(entryId);
 byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();
 try
 {
-    client.RunTransparentStatementVerification(transparentStatementBytes);
-}
-catch (Exception e)
-{
-    Console.WriteLine(e.Message);
-}
-```
-
-### Verify a file without knowing the service endpoint
-
-The receipt contains the issuer information needed to create the client instance. An alternate constructor automatically extracts the issuer URL.
-
-```C# Snippet:CodeTransparencyVerificationUsingTransparentStatementFile
-byte[] transparentStatementBytes = File.ReadAllBytes("transparent_statement.cose");
-try
-{
-    CodeTransparencyClient client = new(transparentStatementBytes);
-    client.RunTransparentStatementVerification(transparentStatementBytes);
+    var verificationOptions = new CodeTransparencyVerificationOptions
+    {
+        AllowedIssuerDomains = new string[] { "<< service name >>.confidential-ledger.azure.com" },
+        AllowedDomainVerificationBehavior = AllowedDomainVerificationBehavior.EachAllowListedDomainMustHaveValidReceipt,
+        NonAllowListedReceiptBehavior = NonAllowListedReceiptBehavior.FailIfPresent
+    };
+    CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
     Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
 }
 catch (Exception e)

@@ -55,16 +55,21 @@ Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
 string entryId = CborUtils.GetStringValueFromCborMapByKey(operationResult.Value.ToArray(), "EntryId");
 Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
 Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
+byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();
 ```
 
 After obtaining the transparent statement, you can distribute it so others can verify its inclusion in the service. The verifier checks that the receipt was issued for the given signature and that its signature was endorsed by the service. Because users might not know which service instance the statement came from, they can extract that information from the receipt to create the client for verification.
 
-```C# Snippet:CodeTransparencyVerificationUsingTransparentStatementFile
-byte[] transparentStatementBytes = File.ReadAllBytes("transparent_statement.cose");
+```C# Snippet:CodeTransparencyVerificationUsingFileBytes
 try
 {
-    CodeTransparencyClient client = new(transparentStatementBytes);
-    client.RunTransparentStatementVerification(transparentStatementBytes);
+    var verificationOptions = new CodeTransparencyVerificationOptions
+    {
+        AllowedIssuerDomains = new string[] { "<< service name >>.confidential-ledger.azure.com" },
+        AllowedDomainVerificationBehavior = AllowedDomainVerificationBehavior.EachAllowListedDomainMustHaveValidReceipt,
+        NonAllowListedReceiptBehavior = NonAllowListedReceiptBehavior.FailIfPresent
+    };
+    CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
     Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
 }
 catch (Exception e)

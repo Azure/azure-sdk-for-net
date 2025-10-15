@@ -116,6 +116,7 @@ namespace Azure.Security.CodeTransparency.Tests
             #endregion Snippet:CodeTransparencySample1_WaitForResult
             #region Snippet:CodeTransparencySample2_GetEntryStatement
             Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
+            byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();
             #endregion Snippet:CodeTransparencySample2_GetEntryStatement
             #endregion Snippet:CodeTransparencyDownloadTransparentStatement
 
@@ -128,28 +129,11 @@ namespace Azure.Security.CodeTransparency.Tests
 #endif
             #endregion Snippet:CodeTransparencySample2_GetRawReceipt
 
-            BinaryData transparentStatement = transparentStatementResponse.Value;
-            byte[] transparentStatementBytes = transparentStatement.ToArray();
             #region Snippet:CodeTransparencySample1_DownloadStatement
 #if SNIPPET
             Response<BinaryData> transparentStatementResponse = client.GetEntryStatement(entryId);
 #endif
             #endregion Snippet:CodeTransparencySample1_DownloadStatement
-            #region Snippet:CodeTransparencyVerificationUsingTransparentStatementFile
-#if SNIPPET
-            byte[] transparentStatementBytes = File.ReadAllBytes("transparent_statement.cose");
-            try
-            {
-                CodeTransparencyClient client = new(transparentStatementBytes);
-                client.RunTransparentStatementVerification(transparentStatementBytes);
-                Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Verification failed: {e.Message}");
-            }
-#endif
-            #endregion Snippet:CodeTransparencyVerificationUsingTransparentStatementFile
         }
 
         [Test]
@@ -190,22 +174,36 @@ namespace Azure.Security.CodeTransparency.Tests
                 Transport = mockTransport,
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
-            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-
-            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
             #region Snippet:CodeTransparencyVerification
+#if !SNIPPET
+            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
+#endif
 #if SNIPPET
             Response<BinaryData> transparentStatementResponse = client.GetEntryStatement(entryId);
             byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();
+#endif
+            #region Snippet:CodeTransparencyVerificationUsingFileBytes
             try
             {
-                client.RunTransparentStatementVerification(transparentStatementBytes);
+                var verificationOptions = new CodeTransparencyVerificationOptions
+                {
+#if !SNIPPET
+                    AllowedIssuerDomains = new string[] { "foo.bar.com" },
+#endif
+#if SNIPPET
+                    AllowedIssuerDomains = new string[] { "<< service name >>.confidential-ledger.azure.com" },
+#endif
+                    AllowedDomainVerificationBehavior = AllowedDomainVerificationBehavior.EachAllowListedDomainMustHaveValidReceipt,
+                    NonAllowListedReceiptBehavior = NonAllowListedReceiptBehavior.FailIfPresent
+                };
+                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
+                Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"Verification failed: {e.Message}");
             }
-#endif
+            #endregion
             #endregion
 #endif
         }
