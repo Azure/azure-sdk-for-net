@@ -19,768 +19,6 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAppServiceModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceCertificateOrderData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="certificates"> State of the Key Vault secret. </param>
-        /// <param name="distinguishedName"> Certificate distinguished name. </param>
-        /// <param name="domainVerificationToken"> Domain verification token. </param>
-        /// <param name="validityInYears"> Duration in years (must be 1). </param>
-        /// <param name="keySize"> Certificate key size. </param>
-        /// <param name="productType"> Certificate product type. </param>
-        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="provisioningState"> Status of certificate order. </param>
-        /// <param name="status"> Current order status. </param>
-        /// <param name="signedCertificate"> Signed certificate. </param>
-        /// <param name="csr"> Last CSR that was created for this order. </param>
-        /// <param name="intermediate"> Intermediate certificate. </param>
-        /// <param name="root"> Root certificate. </param>
-        /// <param name="serialNumber"> Current serial number of the certificate. </param>
-        /// <param name="lastCertificateIssuedOn"> Certificate last issuance time. </param>
-        /// <param name="expireOn"> Certificate expiration time. </param>
-        /// <param name="isPrivateKeyExternal"> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
-        /// <param name="nextAutoRenewTimeStamp"> Time stamp when the certificate would be auto renewed next. </param>
-        /// <param name="contact"> Contact info. </param>
-        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
-        /// <returns> A new <see cref="AppService.AppServiceCertificateOrderData"/> instance for mocking. </returns>
-        public static AppServiceCertificateOrderData AppServiceCertificateOrderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IDictionary<string, AppServiceCertificateProperties> certificates = null, string distinguishedName = null, string domainVerificationToken = null, int? validityInYears = null, int? keySize = null, CertificateProductType? productType = null, bool? isAutoRenew = null, ProvisioningState? provisioningState = null, CertificateOrderStatus? status = null, AppServiceCertificateDetails signedCertificate = null, string csr = null, AppServiceCertificateDetails intermediate = null, AppServiceCertificateDetails root = null, string serialNumber = null, DateTimeOffset? lastCertificateIssuedOn = null, DateTimeOffset? expireOn = null, bool? isPrivateKeyExternal = null, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = null, DateTimeOffset? nextAutoRenewTimeStamp = null, CertificateOrderContact contact = null, string kind = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            certificates ??= new Dictionary<string, AppServiceCertificateProperties>();
-            appServiceCertificateNotRenewableReasons ??= new List<AppServiceCertificateNotRenewableReason>();
-
-            return new AppServiceCertificateOrderData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                certificates,
-                distinguishedName,
-                domainVerificationToken,
-                validityInYears,
-                keySize,
-                productType,
-                isAutoRenew,
-                provisioningState,
-                status,
-                signedCertificate,
-                csr,
-                intermediate,
-                root,
-                serialNumber,
-                lastCertificateIssuedOn,
-                expireOn,
-                isPrivateKeyExternal,
-                appServiceCertificateNotRenewableReasons?.ToList(),
-                nextAutoRenewTimeStamp,
-                contact,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateProperties"/>. </summary>
-        /// <param name="keyVaultId"> Key Vault resource Id. </param>
-        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
-        /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        /// <returns> A new <see cref="Models.AppServiceCertificateProperties"/> instance for mocking. </returns>
-        public static AppServiceCertificateProperties AppServiceCertificateProperties(ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? provisioningState = null)
-        {
-            return new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateDetails"/>. </summary>
-        /// <param name="version"> Certificate Version. </param>
-        /// <param name="serialNumber"> Certificate Serial Number. </param>
-        /// <param name="thumbprintString"> Certificate Thumbprint. </param>
-        /// <param name="subject"> Certificate Subject. </param>
-        /// <param name="notBefore"> Date Certificate is valid from. </param>
-        /// <param name="notAfter"> Date Certificate is valid to. </param>
-        /// <param name="signatureAlgorithm"> Certificate Signature algorithm. </param>
-        /// <param name="issuer"> Certificate Issuer. </param>
-        /// <param name="rawData"> Raw certificate data. </param>
-        /// <returns> A new <see cref="Models.AppServiceCertificateDetails"/> instance for mocking. </returns>
-        public static AppServiceCertificateDetails AppServiceCertificateDetails(int? version = null, string serialNumber = null, string thumbprintString = null, string subject = null, DateTimeOffset? notBefore = null, DateTimeOffset? notAfter = null, string signatureAlgorithm = null, string issuer = null, string rawData = null)
-        {
-            return new AppServiceCertificateDetails(
-                version,
-                serialNumber,
-                thumbprintString,
-                subject,
-                notBefore,
-                notAfter,
-                signatureAlgorithm,
-                issuer,
-                rawData,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CertificateOrderContact"/>. </summary>
-        /// <param name="email"></param>
-        /// <param name="nameFirst"></param>
-        /// <param name="nameLast"></param>
-        /// <param name="phone"></param>
-        /// <returns> A new <see cref="Models.CertificateOrderContact"/> instance for mocking. </returns>
-        public static CertificateOrderContact CertificateOrderContact(string email = null, string nameFirst = null, string nameLast = null, string phone = null)
-        {
-            return new CertificateOrderContact(email, nameFirst, nameLast, phone, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateOrderPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="certificates"> State of the Key Vault secret. </param>
-        /// <param name="distinguishedName"> Certificate distinguished name. </param>
-        /// <param name="domainVerificationToken"> Domain verification token. </param>
-        /// <param name="validityInYears"> Duration in years (must be 1). </param>
-        /// <param name="keySize"> Certificate key size. </param>
-        /// <param name="productType"> Certificate product type. </param>
-        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="provisioningState"> Status of certificate order. </param>
-        /// <param name="status"> Current order status. </param>
-        /// <param name="signedCertificate"> Signed certificate. </param>
-        /// <param name="csr"> Last CSR that was created for this order. </param>
-        /// <param name="intermediate"> Intermediate certificate. </param>
-        /// <param name="root"> Root certificate. </param>
-        /// <param name="serialNumber"> Current serial number of the certificate. </param>
-        /// <param name="lastCertificateIssuanceOn"> Certificate last issuance time. </param>
-        /// <param name="expireOn"> Certificate expiration time. </param>
-        /// <param name="isPrivateKeyExternal"> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
-        /// <param name="nextAutoRenewalTimeStamp"> Time stamp when the certificate would be auto renewed next. </param>
-        /// <param name="contact"> Contact info. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="Models.AppServiceCertificateOrderPatch"/> instance for mocking. </returns>
-        public static AppServiceCertificateOrderPatch AppServiceCertificateOrderPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, AppServiceCertificateProperties> certificates = null, string distinguishedName = null, string domainVerificationToken = null, int? validityInYears = null, int? keySize = null, CertificateProductType? productType = null, bool? isAutoRenew = null, ProvisioningState? provisioningState = null, CertificateOrderStatus? status = null, AppServiceCertificateDetails signedCertificate = null, string csr = null, AppServiceCertificateDetails intermediate = null, AppServiceCertificateDetails root = null, string serialNumber = null, DateTimeOffset? lastCertificateIssuanceOn = null, DateTimeOffset? expireOn = null, bool? isPrivateKeyExternal = null, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = null, DateTimeOffset? nextAutoRenewalTimeStamp = null, CertificateOrderContact contact = null, string kind = null)
-        {
-            certificates ??= new Dictionary<string, AppServiceCertificateProperties>();
-            appServiceCertificateNotRenewableReasons ??= new List<AppServiceCertificateNotRenewableReason>();
-
-            return new AppServiceCertificateOrderPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                certificates,
-                distinguishedName,
-                domainVerificationToken,
-                validityInYears,
-                keySize,
-                productType,
-                isAutoRenew,
-                provisioningState,
-                status,
-                signedCertificate,
-                csr,
-                intermediate,
-                root,
-                serialNumber,
-                lastCertificateIssuanceOn,
-                expireOn,
-                isPrivateKeyExternal,
-                appServiceCertificateNotRenewableReasons?.ToList(),
-                nextAutoRenewalTimeStamp,
-                contact,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceCertificateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="keyVaultId"> Key Vault resource Id. </param>
-        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
-        /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
-        /// <returns> A new <see cref="AppService.AppServiceCertificateData"/> instance for mocking. </returns>
-        public static AppServiceCertificateData AppServiceCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? provisioningState = null, string kind = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new AppServiceCertificateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                keyVaultId,
-                keyVaultSecretName,
-                provisioningState,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificatePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="keyVaultId"> Key Vault resource Id. </param>
-        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
-        /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="Models.AppServiceCertificatePatch"/> instance for mocking. </returns>
-        public static AppServiceCertificatePatch AppServiceCertificatePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? provisioningState = null, string kind = null)
-        {
-            return new AppServiceCertificatePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                keyVaultId,
-                keyVaultSecretName,
-                provisioningState,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReissueCertificateOrderContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="keySize"> Certificate Key Size. </param>
-        /// <param name="delayExistingRevokeInHours"> Delay in hours to revoke existing certificate after the new certificate is issued. </param>
-        /// <param name="csr"> Csr to be used for re-key operation. </param>
-        /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="Models.ReissueCertificateOrderContent"/> instance for mocking. </returns>
-        public static ReissueCertificateOrderContent ReissueCertificateOrderContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? keySize = null, int? delayExistingRevokeInHours = null, string csr = null, bool? isPrivateKeyExternal = null, string kind = null)
-        {
-            return new ReissueCertificateOrderContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                keySize,
-                delayExistingRevokeInHours,
-                csr,
-                isPrivateKeyExternal,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RenewCertificateOrderContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="keySize"> Certificate Key Size. </param>
-        /// <param name="csr"> Csr to be used for re-key operation. </param>
-        /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="Models.RenewCertificateOrderContent"/> instance for mocking. </returns>
-        public static RenewCertificateOrderContent RenewCertificateOrderContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? keySize = null, string csr = null, bool? isPrivateKeyExternal = null, string kind = null)
-        {
-            return new RenewCertificateOrderContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                keySize,
-                csr,
-                isPrivateKeyExternal,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SiteSeal"/>. </summary>
-        /// <param name="html"> HTML snippet. </param>
-        /// <returns> A new <see cref="Models.SiteSeal"/> instance for mocking. </returns>
-        public static SiteSeal SiteSeal(string html = null)
-        {
-            return new SiteSeal(html, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CertificateOrderAction"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="actionType"> Action type. </param>
-        /// <param name="createdOn"> Time at which the certificate action was performed. </param>
-        /// <returns> A new <see cref="Models.CertificateOrderAction"/> instance for mocking. </returns>
-        public static CertificateOrderAction CertificateOrderAction(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CertificateOrderActionType? actionType = null, DateTimeOffset? createdOn = null)
-        {
-            return new CertificateOrderAction(
-                id,
-                name,
-                resourceType,
-                systemData,
-                actionType,
-                createdOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateEmail"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="emailId"> Email id. </param>
-        /// <param name="timeStamp"> Time stamp. </param>
-        /// <returns> A new <see cref="Models.AppServiceCertificateEmail"/> instance for mocking. </returns>
-        public static AppServiceCertificateEmail AppServiceCertificateEmail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string emailId = null, DateTimeOffset? timeStamp = null)
-        {
-            return new AppServiceCertificateEmail(
-                id,
-                name,
-                resourceType,
-                systemData,
-                emailId,
-                timeStamp,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceDetectorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="metadata"> metadata for the detector. </param>
-        /// <param name="dataset"> Data Set. </param>
-        /// <param name="status"> Indicates status of the most severe insight. </param>
-        /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
-        /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.AppServiceDetectorData"/> instance for mocking. </returns>
-        public static AppServiceDetectorData AppServiceDetectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DetectorInfo metadata = null, IEnumerable<DiagnosticDataset> dataset = null, AppServiceStatusInfo status = null, IEnumerable<DataProviderMetadata> dataProvidersMetadata = null, QueryUtterancesResults suggestedUtterances = null, string kind = null)
-        {
-            dataset ??= new List<DiagnosticDataset>();
-            dataProvidersMetadata ??= new List<DataProviderMetadata>();
-
-            return new AppServiceDetectorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                metadata,
-                dataset?.ToList(),
-                status,
-                dataProvidersMetadata?.ToList(),
-                suggestedUtterances,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DetectorInfo"/>. </summary>
-        /// <param name="id"> Id of detector. </param>
-        /// <param name="name"> Name of detector. </param>
-        /// <param name="description"> Short description of the detector and its purpose. </param>
-        /// <param name="author"> Author of the detector. </param>
-        /// <param name="category"> Problem category. This serves for organizing group for detectors. </param>
-        /// <param name="supportTopicList"> List of Support Topics for which this detector is enabled. </param>
-        /// <param name="analysisType"> Analysis Types for which this detector should apply to. </param>
-        /// <param name="detectorType"> Whether this detector is an Analysis Detector or not. </param>
-        /// <param name="score"> Defines score of a detector to power ML based matching. </param>
-        /// <returns> A new <see cref="Models.DetectorInfo"/> instance for mocking. </returns>
-        public static DetectorInfo DetectorInfo(string id = null, string name = null, string description = null, string author = null, string category = null, IEnumerable<DetectorSupportTopic> supportTopicList = null, IEnumerable<string> analysisType = null, DetectorType? detectorType = null, float? score = null)
-        {
-            supportTopicList ??= new List<DetectorSupportTopic>();
-            analysisType ??= new List<string>();
-
-            return new DetectorInfo(
-                id,
-                name,
-                description,
-                author,
-                category,
-                supportTopicList?.ToList(),
-                analysisType?.ToList(),
-                detectorType,
-                score,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DetectorSupportTopic"/>. </summary>
-        /// <param name="id"> Support Topic Id. </param>
-        /// <param name="pesId"> Unique resource Id. </param>
-        /// <returns> A new <see cref="Models.DetectorSupportTopic"/> instance for mocking. </returns>
-        public static DetectorSupportTopic DetectorSupportTopic(string id = null, ResourceIdentifier pesId = null)
-        {
-            return new DetectorSupportTopic(id, pesId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataProviderMetadata"/>. </summary>
-        /// <param name="providerName"></param>
-        /// <param name="propertyBag"> Settings for the data provider. </param>
-        /// <returns> A new <see cref="Models.DataProviderMetadata"/> instance for mocking. </returns>
-        public static DataProviderMetadata DataProviderMetadata(string providerName = null, IEnumerable<DataProviderKeyValuePair> propertyBag = null)
-        {
-            propertyBag ??= new List<DataProviderKeyValuePair>();
-
-            return new DataProviderMetadata(providerName, propertyBag?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataProviderKeyValuePair"/>. </summary>
-        /// <param name="key"></param>
-        /// <param name="value"> Any object. </param>
-        /// <returns> A new <see cref="Models.DataProviderKeyValuePair"/> instance for mocking. </returns>
-        public static DataProviderKeyValuePair DataProviderKeyValuePair(string key = null, BinaryData value = null)
-        {
-            return new DataProviderKeyValuePair(key, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CsmOperationDescription"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="isDataAction"></param>
-        /// <param name="display"> Meta data about operation used for display in portal. </param>
-        /// <param name="origin"></param>
-        /// <param name="csmOperationDescriptionServiceSpecification"> Properties available for a Microsoft.Web resource provider operation. </param>
-        /// <returns> A new <see cref="Models.CsmOperationDescription"/> instance for mocking. </returns>
-        public static CsmOperationDescription CsmOperationDescription(string name = null, bool? isDataAction = null, CsmOperationDisplay display = null, string origin = null, ServiceSpecification csmOperationDescriptionServiceSpecification = null)
-        {
-            return new CsmOperationDescription(
-                name,
-                isDataAction,
-                display,
-                origin,
-                csmOperationDescriptionServiceSpecification != null ? new CsmOperationDescriptionProperties(csmOperationDescriptionServiceSpecification, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CsmOperationDisplay"/>. </summary>
-        /// <param name="provider"></param>
-        /// <param name="resource"></param>
-        /// <param name="operation"></param>
-        /// <param name="description"></param>
-        /// <returns> A new <see cref="Models.CsmOperationDisplay"/> instance for mocking. </returns>
-        public static CsmOperationDisplay CsmOperationDisplay(string provider = null, string resource = null, string operation = null, string description = null)
-        {
-            return new CsmOperationDisplay(provider, resource, operation, description, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceSpecification"/>. </summary>
-        /// <param name="metricSpecifications"></param>
-        /// <param name="logSpecifications"></param>
-        /// <returns> A new <see cref="Models.ServiceSpecification"/> instance for mocking. </returns>
-        public static ServiceSpecification ServiceSpecification(IEnumerable<MetricSpecification> metricSpecifications = null, IEnumerable<LogSpecification> logSpecifications = null)
-        {
-            metricSpecifications ??= new List<MetricSpecification>();
-            logSpecifications ??= new List<LogSpecification>();
-
-            return new ServiceSpecification(metricSpecifications?.ToList(), logSpecifications?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MetricSpecification"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="displayName"></param>
-        /// <param name="displayDescription"></param>
-        /// <param name="unit"></param>
-        /// <param name="aggregationType"></param>
-        /// <param name="isInstanceLevelAggregationSupported"></param>
-        /// <param name="isRegionalMdmAccountEnabled"></param>
-        /// <param name="sourceMdmAccount"></param>
-        /// <param name="sourceMdmNamespace"></param>
-        /// <param name="metricFilterPattern"></param>
-        /// <param name="fillGapWithZero"></param>
-        /// <param name="isInternal"></param>
-        /// <param name="dimensions"></param>
-        /// <param name="category"></param>
-        /// <param name="availabilities"></param>
-        /// <param name="supportedTimeGrainTypes"></param>
-        /// <param name="supportedAggregationTypes"></param>
-        /// <returns> A new <see cref="Models.MetricSpecification"/> instance for mocking. </returns>
-        public static MetricSpecification MetricSpecification(string name = null, string displayName = null, string displayDescription = null, string unit = null, string aggregationType = null, bool? isInstanceLevelAggregationSupported = null, bool? isRegionalMdmAccountEnabled = null, string sourceMdmAccount = null, string sourceMdmNamespace = null, string metricFilterPattern = null, bool? fillGapWithZero = null, bool? isInternal = null, IEnumerable<MetricDimension> dimensions = null, string category = null, IEnumerable<MetricAvailability> availabilities = null, IEnumerable<string> supportedTimeGrainTypes = null, IEnumerable<string> supportedAggregationTypes = null)
-        {
-            dimensions ??= new List<MetricDimension>();
-            availabilities ??= new List<MetricAvailability>();
-            supportedTimeGrainTypes ??= new List<string>();
-            supportedAggregationTypes ??= new List<string>();
-
-            return new MetricSpecification(
-                name,
-                displayName,
-                displayDescription,
-                unit,
-                aggregationType,
-                isInstanceLevelAggregationSupported,
-                isRegionalMdmAccountEnabled,
-                sourceMdmAccount,
-                sourceMdmNamespace,
-                metricFilterPattern,
-                fillGapWithZero,
-                isInternal,
-                dimensions?.ToList(),
-                category,
-                availabilities?.ToList(),
-                supportedTimeGrainTypes?.ToList(),
-                supportedAggregationTypes?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MetricDimension"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="displayName"></param>
-        /// <param name="internalName"></param>
-        /// <param name="isToBeExportedForShoebox"></param>
-        /// <returns> A new <see cref="Models.MetricDimension"/> instance for mocking. </returns>
-        public static MetricDimension MetricDimension(string name = null, string displayName = null, string internalName = null, bool? isToBeExportedForShoebox = null)
-        {
-            return new MetricDimension(name, displayName, internalName, isToBeExportedForShoebox, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MetricAvailability"/>. </summary>
-        /// <param name="timeGrain"></param>
-        /// <param name="blobDuration"></param>
-        /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
-        public static MetricAvailability MetricAvailability(string timeGrain = null, TimeSpan? blobDuration = null)
-        {
-            return new MetricAvailability(timeGrain, blobDuration, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.LogSpecification"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="displayName"></param>
-        /// <param name="blobDuration"></param>
-        /// <param name="logFilterPattern"></param>
-        /// <returns> A new <see cref="Models.LogSpecification"/> instance for mocking. </returns>
-        public static LogSpecification LogSpecification(string name = null, string displayName = null, TimeSpan? blobDuration = null, string logFilterPattern = null)
-        {
-            return new LogSpecification(name, displayName, blobDuration, logFilterPattern, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DomainAvailabilityCheckResult"/>. </summary>
-        /// <param name="name"> Name of the domain. </param>
-        /// <param name="isAvailable"> &lt;code&gt;true&lt;/code&gt; if domain can be purchased using CreateDomain API; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="domainType"> Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything. </param>
-        /// <returns> A new <see cref="Models.DomainAvailabilityCheckResult"/> instance for mocking. </returns>
-        public static DomainAvailabilityCheckResult DomainAvailabilityCheckResult(string name = null, bool? isAvailable = null, AppServiceDomainType? domainType = null)
-        {
-            return new DomainAvailabilityCheckResult(name, isAvailable, domainType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceDomainData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="contactAdmin"> Administrative contact. </param>
-        /// <param name="contactBilling"> Billing contact. </param>
-        /// <param name="contactRegistrant"> Registrant contact. </param>
-        /// <param name="contactTech"> Technical contact. </param>
-        /// <param name="registrationStatus"> Domain registration status. </param>
-        /// <param name="provisioningState"> Domain provisioning state. </param>
-        /// <param name="nameServers"> Name servers. </param>
-        /// <param name="isDomainPrivacyEnabled"> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="createdOn"> Domain creation timestamp. </param>
-        /// <param name="expireOn"> Domain expiration timestamp. </param>
-        /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
-        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isDnsRecordManagementReady">
-        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and
-        ///  it is hosted on name servers Azure has programmatic access to.
-        /// </param>
-        /// <param name="managedHostNames"> All hostnames derived from the domain and assigned to Azure resources. </param>
-        /// <param name="consent"> Legal agreement consent. </param>
-        /// <param name="domainNotRenewableReasons"> Reasons why domain is not renewable. </param>
-        /// <param name="dnsType"> Current DNS type. </param>
-        /// <param name="dnsZoneId"> Azure DNS Zone to use. </param>
-        /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
-        /// <param name="authCode"></param>
-        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
-        /// <returns> A new <see cref="AppService.AppServiceDomainData"/> instance for mocking. </returns>
-        public static AppServiceDomainData AppServiceDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RegistrationContactInfo contactAdmin = null, RegistrationContactInfo contactBilling = null, RegistrationContactInfo contactRegistrant = null, RegistrationContactInfo contactTech = null, AppServiceDomainStatus? registrationStatus = null, ProvisioningState? provisioningState = null, IEnumerable<string> nameServers = null, bool? isDomainPrivacyEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? lastRenewedOn = null, bool? isAutoRenew = null, bool? isDnsRecordManagementReady = null, IEnumerable<AppServiceHostName> managedHostNames = null, DomainPurchaseConsent consent = null, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = null, AppServiceDnsType? dnsType = null, string dnsZoneId = null, AppServiceDnsType? targetDnsType = null, string authCode = null, string kind = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            nameServers ??= new List<string>();
-            managedHostNames ??= new List<AppServiceHostName>();
-            domainNotRenewableReasons ??= new List<DomainNotRenewableReason>();
-
-            return new AppServiceDomainData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                contactAdmin,
-                contactBilling,
-                contactRegistrant,
-                contactTech,
-                registrationStatus,
-                provisioningState,
-                nameServers?.ToList(),
-                isDomainPrivacyEnabled,
-                createdOn,
-                expireOn,
-                lastRenewedOn,
-                isAutoRenew,
-                isDnsRecordManagementReady,
-                managedHostNames?.ToList(),
-                consent,
-                domainNotRenewableReasons?.ToList(),
-                dnsType,
-                dnsZoneId,
-                targetDnsType,
-                authCode,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceHostName"/>. </summary>
-        /// <param name="name"> Name of the hostname. </param>
-        /// <param name="siteNames"> List of apps the hostname is assigned to. This list will have more than one app only if the hostname is pointing to a Traffic Manager. </param>
-        /// <param name="azureResourceName"> Name of the Azure resource the hostname is assigned to. If it is assigned to a Traffic Manager then it will be the Traffic Manager name otherwise it will be the app name. </param>
-        /// <param name="azureResourceType"> Type of the Azure resource the hostname is assigned to. </param>
-        /// <param name="customHostNameDnsRecordType"> Type of the DNS record. </param>
-        /// <param name="hostNameType"> Type of the hostname. </param>
-        /// <returns> A new <see cref="Models.AppServiceHostName"/> instance for mocking. </returns>
-        public static AppServiceHostName AppServiceHostName(string name = null, IEnumerable<string> siteNames = null, string azureResourceName = null, AppServiceResourceType? azureResourceType = null, CustomHostNameDnsRecordType? customHostNameDnsRecordType = null, AppServiceHostNameType? hostNameType = null)
-        {
-            siteNames ??= new List<string>();
-
-            return new AppServiceHostName(
-                name,
-                siteNames?.ToList(),
-                azureResourceName,
-                azureResourceType,
-                customHostNameDnsRecordType,
-                hostNameType,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DomainControlCenterSsoRequestInfo"/>. </summary>
-        /// <param name="uri"> URL where the single sign-on request is to be made. </param>
-        /// <param name="postParameterKey"> Post parameter key. </param>
-        /// <param name="postParameterValue"> Post parameter value. Client should use 'application/x-www-form-urlencoded' encoding for this value. </param>
-        /// <returns> A new <see cref="Models.DomainControlCenterSsoRequestInfo"/> instance for mocking. </returns>
-        public static DomainControlCenterSsoRequestInfo DomainControlCenterSsoRequestInfo(Uri uri = null, string postParameterKey = null, string postParameterValue = null)
-        {
-            return new DomainControlCenterSsoRequestInfo(uri, postParameterKey, postParameterValue, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceDomainPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="contactAdmin"> Administrative contact. </param>
-        /// <param name="contactBilling"> Billing contact. </param>
-        /// <param name="contactRegistrant"> Registrant contact. </param>
-        /// <param name="contactTech"> Technical contact. </param>
-        /// <param name="registrationStatus"> Domain registration status. </param>
-        /// <param name="provisioningState"> Domain provisioning state. </param>
-        /// <param name="nameServers"> Name servers. </param>
-        /// <param name="isDomainPrivacyEnabled"> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="createdOn"> Domain creation timestamp. </param>
-        /// <param name="expireOn"> Domain expiration timestamp. </param>
-        /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
-        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isReadyForDnsRecordManagement">
-        /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and
-        ///  it is hosted on name servers Azure has programmatic access to.
-        /// </param>
-        /// <param name="managedHostNames"> All hostnames derived from the domain and assigned to Azure resources. </param>
-        /// <param name="consent"> Legal agreement consent. </param>
-        /// <param name="domainNotRenewableReasons"> Reasons why domain is not renewable. </param>
-        /// <param name="dnsType"> Current DNS type. </param>
-        /// <param name="dnsZoneId"> Azure DNS Zone to use. </param>
-        /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
-        /// <param name="authCode"></param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="Models.AppServiceDomainPatch"/> instance for mocking. </returns>
-        public static AppServiceDomainPatch AppServiceDomainPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RegistrationContactInfo contactAdmin = null, RegistrationContactInfo contactBilling = null, RegistrationContactInfo contactRegistrant = null, RegistrationContactInfo contactTech = null, AppServiceDomainStatus? registrationStatus = null, ProvisioningState? provisioningState = null, IEnumerable<string> nameServers = null, bool? isDomainPrivacyEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? lastRenewedOn = null, bool? isAutoRenew = null, bool? isReadyForDnsRecordManagement = null, IEnumerable<AppServiceHostName> managedHostNames = null, DomainPurchaseConsent consent = null, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = null, AppServiceDnsType? dnsType = null, string dnsZoneId = null, AppServiceDnsType? targetDnsType = null, string authCode = null, string kind = null)
-        {
-            nameServers ??= new List<string>();
-            managedHostNames ??= new List<AppServiceHostName>();
-            domainNotRenewableReasons ??= new List<DomainNotRenewableReason>();
-
-            return new AppServiceDomainPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                contactAdmin,
-                contactBilling,
-                contactRegistrant,
-                contactTech,
-                registrationStatus,
-                provisioningState,
-                nameServers?.ToList(),
-                isDomainPrivacyEnabled,
-                createdOn,
-                expireOn,
-                lastRenewedOn,
-                isAutoRenew,
-                isReadyForDnsRecordManagement,
-                managedHostNames?.ToList(),
-                consent,
-                domainNotRenewableReasons?.ToList(),
-                dnsType,
-                dnsZoneId,
-                targetDnsType,
-                authCode,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.DomainOwnershipIdentifierData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="ownershipId"> Ownership Id. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.DomainOwnershipIdentifierData"/> instance for mocking. </returns>
-        public static DomainOwnershipIdentifierData DomainOwnershipIdentifierData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string ownershipId = null, string kind = null)
-        {
-            return new DomainOwnershipIdentifierData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                ownershipId,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.TopLevelDomainData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="isDomainPrivacySupported"> If &lt;code&gt;true&lt;/code&gt;, then the top level domain supports domain privacy; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.TopLevelDomainData"/> instance for mocking. </returns>
-        public static TopLevelDomainData TopLevelDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isDomainPrivacySupported = null, string kind = null)
-        {
-            return new TopLevelDomainData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                isDomainPrivacySupported,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TldLegalAgreement"/>. </summary>
-        /// <param name="agreementKey"> Unique identifier for the agreement. </param>
-        /// <param name="title"> Agreement title. </param>
-        /// <param name="content"> Agreement details. </param>
-        /// <param name="uri"> URL where a copy of the agreement details is hosted. </param>
-        /// <returns> A new <see cref="Models.TldLegalAgreement"/> instance for mocking. </returns>
-        public static TldLegalAgreement TldLegalAgreement(string agreementKey = null, string title = null, string content = null, Uri uri = null)
-        {
-            return new TldLegalAgreement(agreementKey, title, content, uri, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1377,6 +615,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Description of a SKU for a scalable resource. </param>
+        /// <param name="identity"> Managed service identity. </param>
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
         /// <param name="status"> App Service plan status. </param>
@@ -1411,11 +650,24 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will attempt to scale asynchronously if there are insufficient workers to scale synchronously.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
         /// </param>
+        /// <param name="planDefaultIdentity"> Identity to use by platform for various features and integrations using managed identity. </param>
+        /// <param name="isCustomMode"> Whether this server farm is in custom mode. </param>
+        /// <param name="registryAdapters"> Registry adapters associated with this App Service plan. </param>
+        /// <param name="installScripts"> Install scripts associated with this App Service plan. </param>
+        /// <param name="virtualNetworkSubnetId"> All network settings for the server farm. </param>
+        /// <param name="storageMounts"> Storage mounts associated with this App Service plan. </param>
+        /// <param name="rdpEnabled">
+        /// If &lt;code&gt;true&lt;/code&gt;, RDP access is enabled for this App Service plan. Only applicable for IsCustomMode ASPs.
+        /// If &lt;code&gt;false&lt;/code&gt;, RDP access is disabled.
+        /// </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.AppServicePlanData"/> instance for mocking. </returns>
-        public static AppServicePlanData AppServicePlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AppServiceSkuDescription sku = null, ExtendedLocation extendedLocation = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, int? numberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpireOn = null, DateTimeOffset? freeOfferExpireOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, bool? isAsyncScalingEnabled = null, string kind = null)
+        public static AppServicePlanData AppServicePlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AppServiceSkuDescription sku = null, ManagedServiceIdentity identity = null, ExtendedLocation extendedLocation = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, int? numberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpireOn = null, DateTimeOffset? freeOfferExpireOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, bool? isAsyncScalingEnabled = null, DefaultIdentity planDefaultIdentity = null, bool? isCustomMode = null, IEnumerable<RegistryAdapter> registryAdapters = null, IEnumerable<InstallScript> installScripts = null, string virtualNetworkSubnetId = null, IEnumerable<StorageMount> storageMounts = null, bool? rdpEnabled = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
+            registryAdapters ??= new List<RegistryAdapter>();
+            installScripts ??= new List<InstallScript>();
+            storageMounts ??= new List<StorageMount>();
 
             return new AppServicePlanData(
                 id,
@@ -1425,6 +677,7 @@ namespace Azure.ResourceManager.AppService.Models
                 tags,
                 location,
                 sku,
+                identity,
                 extendedLocation,
                 workerTierName,
                 status,
@@ -1450,6 +703,13 @@ namespace Azure.ResourceManager.AppService.Models
                 kubeEnvironmentProfile,
                 isZoneRedundant,
                 isAsyncScalingEnabled,
+                planDefaultIdentity,
+                isCustomMode,
+                registryAdapters?.ToList(),
+                installScripts?.ToList(),
+                virtualNetworkSubnetId != null ? new ServerFarmNetworkSettings(virtualNetworkSubnetId, serializedAdditionalRawData: null) : null,
+                storageMounts?.ToList(),
+                rdpEnabled,
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -1947,6 +1207,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="identity"> Managed service identity. </param>
         /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
         /// <param name="status"> App Service plan status. </param>
         /// <param name="subscription"> App Service plan subscription. </param>
@@ -1978,13 +1239,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServicePlanPatch"/> instance for mocking. </returns>
-        public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, int? numberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpirationOn = null, DateTimeOffset? freeOfferExpirationOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, string kind = null)
+        public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, int? numberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpirationOn = null, DateTimeOffset? freeOfferExpirationOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, string kind = null)
         {
             return new AppServicePlanPatch(
                 id,
                 name,
                 resourceType,
                 systemData,
+                identity,
                 workerTierName,
                 status,
                 subscription,
@@ -2010,6 +1272,15 @@ namespace Azure.ResourceManager.AppService.Models
                 isZoneRedundant,
                 kind,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServerFarmRdpDetails"/>. </summary>
+        /// <param name="rdpPassword"> The RDP password for the server farm. </param>
+        /// <param name="rdpPasswordExpiry"> The RDP password expiry date. </param>
+        /// <returns> A new <see cref="Models.ServerFarmRdpDetails"/> instance for mocking. </returns>
+        public static ServerFarmRdpDetails ServerFarmRdpDetails(string rdpPassword = null, DateTimeOffset? rdpPasswordExpiry = null)
+        {
+            return new ServerFarmRdpDetails(rdpPassword, rdpPasswordExpiry, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.HybridConnectionData"/>. </summary>
@@ -2089,6 +1360,32 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 current,
                 maximum,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServerFarmInstanceDetails"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="serverFarmName"> The server farm name. </param>
+        /// <param name="instances"> The list of server farm instances. </param>
+        /// <param name="instanceCount"> The total number of instances. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="Models.ServerFarmInstanceDetails"/> instance for mocking. </returns>
+        public static ServerFarmInstanceDetails ServerFarmInstanceDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverFarmName = null, IEnumerable<ServerFarmInstance> instances = null, int? instanceCount = null, string kind = null)
+        {
+            instances ??= new List<ServerFarmInstance>();
+
+            return new ServerFarmInstanceDetails(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serverFarmName,
+                instances?.ToList(),
+                instanceCount,
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -2371,6 +1668,95 @@ namespace Azure.ResourceManager.AppService.Models
                 geoRegionName,
                 kind,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceDetectorData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="metadata"> metadata for the detector. </param>
+        /// <param name="dataset"> Data Set. </param>
+        /// <param name="status"> Indicates status of the most severe insight. </param>
+        /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
+        /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="AppService.AppServiceDetectorData"/> instance for mocking. </returns>
+        public static AppServiceDetectorData AppServiceDetectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DetectorInfo metadata = null, IEnumerable<DiagnosticDataset> dataset = null, AppServiceStatusInfo status = null, IEnumerable<DataProviderMetadata> dataProvidersMetadata = null, QueryUtterancesResults suggestedUtterances = null, string kind = null)
+        {
+            dataset ??= new List<DiagnosticDataset>();
+            dataProvidersMetadata ??= new List<DataProviderMetadata>();
+
+            return new AppServiceDetectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                metadata,
+                dataset?.ToList(),
+                status,
+                dataProvidersMetadata?.ToList(),
+                suggestedUtterances,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DetectorInfo"/>. </summary>
+        /// <param name="id"> Id of detector. </param>
+        /// <param name="name"> Name of detector. </param>
+        /// <param name="description"> Short description of the detector and its purpose. </param>
+        /// <param name="author"> Author of the detector. </param>
+        /// <param name="category"> Problem category. This serves for organizing group for detectors. </param>
+        /// <param name="supportTopicList"> List of Support Topics for which this detector is enabled. </param>
+        /// <param name="analysisType"> Analysis Types for which this detector should apply to. </param>
+        /// <param name="detectorType"> Whether this detector is an Analysis Detector or not. </param>
+        /// <param name="score"> Defines score of a detector to power ML based matching. </param>
+        /// <returns> A new <see cref="Models.DetectorInfo"/> instance for mocking. </returns>
+        public static DetectorInfo DetectorInfo(string id = null, string name = null, string description = null, string author = null, string category = null, IEnumerable<DetectorSupportTopic> supportTopicList = null, IEnumerable<string> analysisType = null, DetectorType? detectorType = null, float? score = null)
+        {
+            supportTopicList ??= new List<DetectorSupportTopic>();
+            analysisType ??= new List<string>();
+
+            return new DetectorInfo(
+                id,
+                name,
+                description,
+                author,
+                category,
+                supportTopicList?.ToList(),
+                analysisType?.ToList(),
+                detectorType,
+                score,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DetectorSupportTopic"/>. </summary>
+        /// <param name="id"> Support Topic Id. </param>
+        /// <param name="pesId"> Unique resource Id. </param>
+        /// <returns> A new <see cref="Models.DetectorSupportTopic"/> instance for mocking. </returns>
+        public static DetectorSupportTopic DetectorSupportTopic(string id = null, ResourceIdentifier pesId = null)
+        {
+            return new DetectorSupportTopic(id, pesId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataProviderMetadata"/>. </summary>
+        /// <param name="providerName"></param>
+        /// <param name="propertyBag"> Settings for the data provider. </param>
+        /// <returns> A new <see cref="Models.DataProviderMetadata"/> instance for mocking. </returns>
+        public static DataProviderMetadata DataProviderMetadata(string providerName = null, IEnumerable<DataProviderKeyValuePair> propertyBag = null)
+        {
+            propertyBag ??= new List<DataProviderKeyValuePair>();
+
+            return new DataProviderMetadata(providerName, propertyBag?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataProviderKeyValuePair"/>. </summary>
+        /// <param name="key"></param>
+        /// <param name="value"> Any object. </param>
+        /// <returns> A new <see cref="Models.DataProviderKeyValuePair"/> instance for mocking. </returns>
+        public static DataProviderKeyValuePair DataProviderKeyValuePair(string key = null, BinaryData value = null)
+        {
+            return new DataProviderKeyValuePair(key, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.DiagnosticCategoryData"/>. </summary>
@@ -2938,6 +2324,125 @@ namespace Azure.ResourceManager.AppService.Models
                 isAutoUpdate,
                 isEarlyAccess,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CsmOperationDescription"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="isDataAction"></param>
+        /// <param name="display"> Meta data about operation used for display in portal. </param>
+        /// <param name="origin"></param>
+        /// <param name="csmOperationDescriptionServiceSpecification"> Properties available for a Microsoft.Web resource provider operation. </param>
+        /// <returns> A new <see cref="Models.CsmOperationDescription"/> instance for mocking. </returns>
+        public static CsmOperationDescription CsmOperationDescription(string name = null, bool? isDataAction = null, CsmOperationDisplay display = null, string origin = null, ServiceSpecification csmOperationDescriptionServiceSpecification = null)
+        {
+            return new CsmOperationDescription(
+                name,
+                isDataAction,
+                display,
+                origin,
+                csmOperationDescriptionServiceSpecification != null ? new CsmOperationDescriptionProperties(csmOperationDescriptionServiceSpecification, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CsmOperationDisplay"/>. </summary>
+        /// <param name="provider"></param>
+        /// <param name="resource"></param>
+        /// <param name="operation"></param>
+        /// <param name="description"></param>
+        /// <returns> A new <see cref="Models.CsmOperationDisplay"/> instance for mocking. </returns>
+        public static CsmOperationDisplay CsmOperationDisplay(string provider = null, string resource = null, string operation = null, string description = null)
+        {
+            return new CsmOperationDisplay(provider, resource, operation, description, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceSpecification"/>. </summary>
+        /// <param name="metricSpecifications"></param>
+        /// <param name="logSpecifications"></param>
+        /// <returns> A new <see cref="Models.ServiceSpecification"/> instance for mocking. </returns>
+        public static ServiceSpecification ServiceSpecification(IEnumerable<MetricSpecification> metricSpecifications = null, IEnumerable<LogSpecification> logSpecifications = null)
+        {
+            metricSpecifications ??= new List<MetricSpecification>();
+            logSpecifications ??= new List<LogSpecification>();
+
+            return new ServiceSpecification(metricSpecifications?.ToList(), logSpecifications?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MetricSpecification"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="displayName"></param>
+        /// <param name="displayDescription"></param>
+        /// <param name="unit"></param>
+        /// <param name="aggregationType"></param>
+        /// <param name="isInstanceLevelAggregationSupported"></param>
+        /// <param name="isRegionalMdmAccountEnabled"></param>
+        /// <param name="sourceMdmAccount"></param>
+        /// <param name="sourceMdmNamespace"></param>
+        /// <param name="metricFilterPattern"></param>
+        /// <param name="fillGapWithZero"></param>
+        /// <param name="isInternal"></param>
+        /// <param name="dimensions"></param>
+        /// <param name="category"></param>
+        /// <param name="availabilities"></param>
+        /// <param name="supportedTimeGrainTypes"></param>
+        /// <param name="supportedAggregationTypes"></param>
+        /// <returns> A new <see cref="Models.MetricSpecification"/> instance for mocking. </returns>
+        public static MetricSpecification MetricSpecification(string name = null, string displayName = null, string displayDescription = null, string unit = null, string aggregationType = null, bool? isInstanceLevelAggregationSupported = null, bool? isRegionalMdmAccountEnabled = null, string sourceMdmAccount = null, string sourceMdmNamespace = null, string metricFilterPattern = null, bool? fillGapWithZero = null, bool? isInternal = null, IEnumerable<MetricDimension> dimensions = null, string category = null, IEnumerable<MetricAvailability> availabilities = null, IEnumerable<string> supportedTimeGrainTypes = null, IEnumerable<string> supportedAggregationTypes = null)
+        {
+            dimensions ??= new List<MetricDimension>();
+            availabilities ??= new List<MetricAvailability>();
+            supportedTimeGrainTypes ??= new List<string>();
+            supportedAggregationTypes ??= new List<string>();
+
+            return new MetricSpecification(
+                name,
+                displayName,
+                displayDescription,
+                unit,
+                aggregationType,
+                isInstanceLevelAggregationSupported,
+                isRegionalMdmAccountEnabled,
+                sourceMdmAccount,
+                sourceMdmNamespace,
+                metricFilterPattern,
+                fillGapWithZero,
+                isInternal,
+                dimensions?.ToList(),
+                category,
+                availabilities?.ToList(),
+                supportedTimeGrainTypes?.ToList(),
+                supportedAggregationTypes?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MetricDimension"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="displayName"></param>
+        /// <param name="internalName"></param>
+        /// <param name="isToBeExportedForShoebox"></param>
+        /// <returns> A new <see cref="Models.MetricDimension"/> instance for mocking. </returns>
+        public static MetricDimension MetricDimension(string name = null, string displayName = null, string internalName = null, bool? isToBeExportedForShoebox = null)
+        {
+            return new MetricDimension(name, displayName, internalName, isToBeExportedForShoebox, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MetricAvailability"/>. </summary>
+        /// <param name="timeGrain"></param>
+        /// <param name="blobDuration"></param>
+        /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
+        public static MetricAvailability MetricAvailability(string timeGrain = null, TimeSpan? blobDuration = null)
+        {
+            return new MetricAvailability(timeGrain, blobDuration, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LogSpecification"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="displayName"></param>
+        /// <param name="blobDuration"></param>
+        /// <param name="logFilterPattern"></param>
+        /// <returns> A new <see cref="Models.LogSpecification"/> instance for mocking. </returns>
+        public static LogSpecification LogSpecification(string name = null, string displayName = null, TimeSpan? blobDuration = null, string logFilterPattern = null)
+        {
+            return new LogSpecification(name, displayName, blobDuration, logFilterPattern, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceRecommendation"/>. </summary>
@@ -7101,12 +6606,104 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
+        /// <param name="isAsyncScalingEnabled">
+        /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will attempt to scale asynchronously if there are insufficient workers to scale synchronously.
+        /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
+        /// </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.AppServicePlanData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AppServicePlanData AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, bool? isAsyncScalingEnabled, string kind)
+        {
+            return AppServicePlanData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, identity: default, extendedLocation: extendedLocation, workerTierName: workerTierName, status: status, subscription: subscription, hostingEnvironmentProfile: hostingEnvironmentProfile, maximumNumberOfWorkers: maximumNumberOfWorkers, numberOfWorkers: numberOfWorkers, geoRegion: geoRegion, isPerSiteScaling: isPerSiteScaling, isElasticScaleEnabled: isElasticScaleEnabled, maximumElasticWorkerCount: maximumElasticWorkerCount, numberOfSites: numberOfSites, isSpot: isSpot, spotExpireOn: spotExpireOn, freeOfferExpireOn: freeOfferExpireOn, resourceGroup: resourceGroup, isReserved: isReserved, isXenon: isXenon, isHyperV: isHyperV, targetWorkerCount: targetWorkerCount, targetWorkerSizeId: targetWorkerSizeId, provisioningState: provisioningState, kubeEnvironmentProfile: kubeEnvironmentProfile, isZoneRedundant: isZoneRedundant, isAsyncScalingEnabled: isAsyncScalingEnabled, planDefaultIdentity: default, isCustomMode: default, registryAdapters: default, installScripts: default, virtualNetworkSubnetId: default, storageMounts: default, rdpEnabled: default, kind: kind);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.AppService.Models.AppServicePlanPatch" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
+        /// <param name="status"> App Service plan status. </param>
+        /// <param name="subscription"> App Service plan subscription. </param>
+        /// <param name="hostingEnvironmentProfile"> Specification for the App Service Environment to use for the App Service plan. </param>
+        /// <param name="maximumNumberOfWorkers"> Maximum number of instances that can be assigned to this App Service plan. </param>
+        /// <param name="numberOfWorkers"> The number of instances that are assigned to this App Service plan. </param>
+        /// <param name="geoRegion"> Geographical location for the App Service plan. </param>
+        /// <param name="isPerSiteScaling">
+        /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
+        /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
+        /// </param>
+        /// <param name="isElasticScaleEnabled"> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </param>
+        /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
+        /// <param name="numberOfSites"> Number of apps assigned to this App Service plan. </param>
+        /// <param name="isSpot"> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </param>
+        /// <param name="spotExpirationOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
+        /// <param name="freeOfferExpirationOn"> The time when the server farm free offer expires. </param>
+        /// <param name="resourceGroup"> Resource group of the App Service plan. </param>
+        /// <param name="isReserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="isXenon"> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="isHyperV"> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="targetWorkerCount"> Scaling worker count. </param>
+        /// <param name="targetWorkerSizeId"> Scaling worker size ID. </param>
+        /// <param name="provisioningState"> Provisioning state of the App Service Plan. </param>
+        /// <param name="kubeEnvironmentProfile"> Specification for the Kubernetes Environment to use for the App Service plan. </param>
+        /// <param name="isZoneRedundant">
+        /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
+        /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
+        /// </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.Models.AppServicePlanPatch" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationOn, DateTimeOffset? freeOfferExpirationOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, string kind)
+        {
+            return AppServicePlanPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, identity: default, workerTierName: workerTierName, status: status, subscription: subscription, hostingEnvironmentProfile: hostingEnvironmentProfile, maximumNumberOfWorkers: maximumNumberOfWorkers, numberOfWorkers: numberOfWorkers, geoRegion: geoRegion, isPerSiteScaling: isPerSiteScaling, isElasticScaleEnabled: isElasticScaleEnabled, maximumElasticWorkerCount: maximumElasticWorkerCount, numberOfSites: numberOfSites, isSpot: isSpot, spotExpirationOn: spotExpirationOn, freeOfferExpirationOn: freeOfferExpirationOn, resourceGroup: resourceGroup, isReserved: isReserved, isXenon: isXenon, isHyperV: isHyperV, targetWorkerCount: targetWorkerCount, targetWorkerSizeId: targetWorkerSizeId, provisioningState: provisioningState, kubeEnvironmentProfile: kubeEnvironmentProfile, isZoneRedundant: isZoneRedundant, kind: kind);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.AppService.AppServicePlanData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> Description of a SKU for a scalable resource. </param>
+        /// <param name="extendedLocation"> Extended Location. </param>
+        /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
+        /// <param name="status"> App Service plan status. </param>
+        /// <param name="subscription"> App Service plan subscription. </param>
+        /// <param name="hostingEnvironmentProfile"> Specification for the App Service Environment to use for the App Service plan. </param>
+        /// <param name="maximumNumberOfWorkers"> Maximum number of instances that can be assigned to this App Service plan. </param>
+        /// <param name="numberOfWorkers"> The number of instances that are assigned to this App Service plan. </param>
+        /// <param name="geoRegion"> Geographical location for the App Service plan. </param>
+        /// <param name="isPerSiteScaling">
+        /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
+        /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
+        /// </param>
+        /// <param name="isElasticScaleEnabled"> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </param>
+        /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
+        /// <param name="numberOfSites"> Number of apps assigned to this App Service plan. </param>
+        /// <param name="isSpot"> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </param>
+        /// <param name="spotExpireOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
+        /// <param name="freeOfferExpireOn"> The time when the server farm free offer expires. </param>
+        /// <param name="resourceGroup"> Resource group of the App Service plan. </param>
+        /// <param name="isReserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="isXenon"> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="isHyperV"> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="targetWorkerCount"> Scaling worker count. </param>
+        /// <param name="targetWorkerSizeId"> Scaling worker size ID. </param>
+        /// <param name="provisioningState"> Provisioning state of the App Service Plan. </param>
+        /// <param name="kubeEnvironmentProfile"> Specification for the Kubernetes Environment to use for the App Service plan. </param>
+        /// <param name="isZoneRedundant">
+        /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
+        /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
+        /// </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.AppService.AppServicePlanData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServicePlanData AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, string kind)
         {
-            return AppServicePlanData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, extendedLocation: extendedLocation, workerTierName: workerTierName, status: status, subscription: subscription, hostingEnvironmentProfile: hostingEnvironmentProfile, maximumNumberOfWorkers: maximumNumberOfWorkers, numberOfWorkers: numberOfWorkers, geoRegion: geoRegion, isPerSiteScaling: isPerSiteScaling, isElasticScaleEnabled: isElasticScaleEnabled, maximumElasticWorkerCount: maximumElasticWorkerCount, numberOfSites: numberOfSites, isSpot: isSpot, spotExpireOn: spotExpireOn, freeOfferExpireOn: freeOfferExpireOn, resourceGroup: resourceGroup, isReserved: isReserved, isXenon: isXenon, isHyperV: isHyperV, targetWorkerCount: targetWorkerCount, targetWorkerSizeId: targetWorkerSizeId, provisioningState: provisioningState, kubeEnvironmentProfile: kubeEnvironmentProfile, isZoneRedundant: isZoneRedundant, isAsyncScalingEnabled: default, kind: kind);
+            return AppServicePlanData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, identity: default, extendedLocation: extendedLocation, workerTierName: workerTierName, status: status, subscription: subscription, hostingEnvironmentProfile: hostingEnvironmentProfile, maximumNumberOfWorkers: maximumNumberOfWorkers, numberOfWorkers: numberOfWorkers, geoRegion: geoRegion, isPerSiteScaling: isPerSiteScaling, isElasticScaleEnabled: isElasticScaleEnabled, maximumElasticWorkerCount: maximumElasticWorkerCount, numberOfSites: numberOfSites, isSpot: isSpot, spotExpireOn: spotExpireOn, freeOfferExpireOn: freeOfferExpireOn, resourceGroup: resourceGroup, isReserved: isReserved, isXenon: isXenon, isHyperV: isHyperV, targetWorkerCount: targetWorkerCount, targetWorkerSizeId: targetWorkerSizeId, provisioningState: provisioningState, kubeEnvironmentProfile: kubeEnvironmentProfile, isZoneRedundant: isZoneRedundant, isAsyncScalingEnabled: default, planDefaultIdentity: default, isCustomMode: default, registryAdapters: default, installScripts: default, virtualNetworkSubnetId: default, storageMounts: default, rdpEnabled: default, kind: kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.AppService.Models.SiteConfigProperties" />. </summary>

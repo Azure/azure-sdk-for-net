@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         private readonly ClientDiagnostics _appServiceSourceControlClientDiagnostics;
-        private readonly WebSiteManagementRestOperations _appServiceSourceControlRestClient;
+        private readonly AppServiceManagementRestOperations _appServiceSourceControlRestClient;
         private readonly AppServiceSourceControlData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
         {
             _appServiceSourceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string appServiceSourceControlApiVersion);
-            _appServiceSourceControlRestClient = new WebSiteManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceSourceControlApiVersion);
+            _appServiceSourceControlRestClient = new AppServiceManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceSourceControlApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
