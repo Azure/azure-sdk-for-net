@@ -28,7 +28,7 @@ namespace Azure.Security.CodeTransparency
     public partial class CodeTransparencyClient
     {
         /// <summary>
-        /// Expected tree algorithm value in the receipt.
+        /// Prefix for receipts with unknown/unrecognized issuers.
         /// </summary>
         public static readonly string UnknownIssuerPrefix = "unknown-issuer";
 
@@ -119,7 +119,7 @@ namespace Azure.Security.CodeTransparency
 
             if (!coseSign1Message.ProtectedHeaders.TryGetValue(new CoseHeaderLabel(CcfReceipt.CoseReceiptCwtMapLabel), out CoseHeaderValue cwtMap))
             {
-                throw new InvalidOperationException("CWT-MAP not found in receipt.");
+                throw new InvalidOperationException("CWT Claims map not found in receipt.");
             }
             string issuer = CborUtils.GetStringValueFromCborMapByKey(cwtMap.EncodedValue.ToArray(), CcfReceipt.CoseReceiptCwtIssLabel);
             if (string.IsNullOrEmpty(issuer))
