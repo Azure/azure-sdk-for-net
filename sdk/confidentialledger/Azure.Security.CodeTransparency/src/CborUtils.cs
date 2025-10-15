@@ -9,7 +9,7 @@ namespace Azure.Security.CodeTransparency
 {
     /// <summary>
     /// Utility methods for reading simple string values from CBOR-encoded maps used within
-    /// Code Transparency receipts and responses. Methods are defensive: on invalid input, key
+    /// Signing Transparency receipts and responses. Methods are defensive: on invalid input, key
     /// absence, or unexpected CBOR shapes they return an empty string instead of throwing,
     /// allowing callers to decide whether absence is an error condition.
     /// </summary>

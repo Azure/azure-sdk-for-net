@@ -15,12 +15,12 @@ namespace Azure.Security.CodeTransparency.Receipt
 {
     /// <summary>
     /// CcfReceiptVerifier class contains the methods to verify the CCF SCITT receipt
-    /// integrity and the inclusion in the Code Transparency Service. The verification
+    /// integrity and the inclusion in the Signing Transparency Service. The verification
     /// requires the receipt, the COSE_Sign1 envelope and the service certificate. The
-    /// COSE_Sign1 envelope is the payload that was submitted to the Code Transparency
-    /// Service. The receipt is a cryptographic proof issued by the Code Transparency
+    /// COSE_Sign1 envelope is the payload that was submitted to the Signing Transparency
+    /// Service. The receipt is a cryptographic proof issued by the Signing Transparency
     /// Service after the successful submission of the signature. The service certificate
-    /// is the public key of the Code Transparency Service that was used to endorse the
+    /// is the public key of the Signing Transparency Service that was used to endorse the
     /// receipt.
     /// The receipt can also be embedded in the COSE_Sign1 envelope.
     /// </summary>
