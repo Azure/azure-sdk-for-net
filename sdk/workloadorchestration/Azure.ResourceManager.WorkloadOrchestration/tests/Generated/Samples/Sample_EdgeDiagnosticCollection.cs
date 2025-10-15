@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.WorkloadOrchestration.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Samples
@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DiagnosticsCreateOrUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Diagnostics_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "Diagnostic_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Diagnostics_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "Diagnostics_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,10 +43,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             string diagnosticName = "testname";
             EdgeDiagnosticData data = new EdgeDiagnosticData(new AzureLocation("ouwfvnokjvivmjzqpupwrbsmls"))
             {
-                ExtendedLocation = new ExtendedLocation
-                {
-                    Name = "szjrwimeqyiue",
-                },
+                ExtendedLocation = new AzureResourceManagerCommonTypesExtendedLocation("szjrwimeqyiue", ExtendedLocationType.EdgeZone),
                 Tags =
 {
 ["key4304"] = "mdrwpsdrcicagvximokxrrp"
@@ -66,8 +63,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DiagnosticsGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Diagnostics_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Diagnostic_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Diagnostics_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Diagnostics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -99,8 +96,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DiagnosticsListByResourceGroupMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Diagnostics_ListByResourceGroup_MaximumSet_Gen.json
-            // this example is just showing the usage of "Diagnostic_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Diagnostics_ListByResourceGroup_MaximumSet_Gen.json
+            // this example is just showing the usage of "Diagnostics_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -134,8 +131,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_DiagnosticsGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Diagnostics_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Diagnostic_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Diagnostics_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Diagnostics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -163,8 +160,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DiagnosticsGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Diagnostics_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Diagnostic_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Diagnostics_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Diagnostics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SolutionTemplatesCreateOrUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SolutionTemplates_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionTemplate_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplates_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionTemplates_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             string solutionTemplateName = "testname";
             EdgeSolutionTemplateData data = new EdgeSolutionTemplateData(new AzureLocation("zheaaqvadewftnctxzpinrgeproqs"))
             {
-                Properties = new EdgeSolutionTemplateProperties("psrftehgzngcdlccivhjmwsmiz", new string[] { "dfoyxbbknrhvlunhmuyyt" })
+                Properties = new SolutionTemplateProperties("psrftehgzngcdlccivhjmwsmiz", new string[] { "dfoyxbbknrhvlunhmuyyt" })
                 {
-                    State = EdgeResourceState.Active,
-                    IsExternalValidationEnabled = true,
+                    State = ResourceState.Active,
+                    EnableExternalValidation = true,
                 },
                 Tags =
 {
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SolutionTemplatesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SolutionTemplates_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionTemplate_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplates_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionTemplates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SolutionTemplatesListByResourceGroupMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SolutionTemplates_ListByResourceGroup_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionTemplate_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplates_ListByResourceGroup_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionTemplates_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SolutionTemplatesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SolutionTemplates_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionTemplate_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplates_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionTemplates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SolutionTemplatesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SolutionTemplates_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionTemplate_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplates_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionTemplates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

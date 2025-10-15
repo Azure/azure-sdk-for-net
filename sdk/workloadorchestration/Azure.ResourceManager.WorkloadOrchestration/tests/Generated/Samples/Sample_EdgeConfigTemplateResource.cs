@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfigTemplatesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/ConfigTemplates_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "ConfigTemplate_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/ConfigTemplates_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "ConfigTemplates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ConfigTemplatesDeleteMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/ConfigTemplates_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "ConfigTemplate_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/ConfigTemplates_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "ConfigTemplates_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ConfigTemplatesUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/ConfigTemplates_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "ConfigTemplate_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/ConfigTemplates_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "ConfigTemplates_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateVersion_ConfigTemplatesCreateVersionMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/ConfigTemplates_CreateVersion_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/ConfigTemplates_CreateVersion_MaximumSet_Gen.json
             // this example is just showing the usage of "ConfigTemplates_CreateVersion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             // invoke the operation
             ConfigTemplateVersionWithUpdateType body = new ConfigTemplateVersionWithUpdateType(new EdgeConfigTemplateVersionData
             {
-                Properties = new EdgeConfigTemplateVersionProperties("rgricnhvcbqykc"),
+                Properties = new ConfigTemplateVersionProperties("rgricnhvcbqykc"),
             })
             {
-                UpdateType = EdgeUpdateType.Major,
+                UpdateType = UpdateType.Major,
                 Version = "1.0.0",
             };
             ArmOperation<EdgeConfigTemplateVersionResource> lro = await edgeConfigTemplate.CreateVersionAsync(WaitUntil.Completed, body);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RemoveVersion_ConfigTemplatesRemoveVersionMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/ConfigTemplates_RemoveVersion_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/ConfigTemplates_RemoveVersion_MaximumSet_Gen.json
             // this example is just showing the usage of "ConfigTemplates_RemoveVersion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeConfigTemplateResource edgeConfigTemplate = client.GetEdgeConfigTemplateResource(edgeConfigTemplateResourceId);
 
             // invoke the operation
-            EdgeVersionContent content = new EdgeVersionContent("ghtvdzgmzncaifrnuumg");
-            RemoveVersionResult result = await edgeConfigTemplate.RemoveVersionAsync(content);
+            WorkloadOrchestrationVersionContent content = new WorkloadOrchestrationVersionContent("ghtvdzgmzncaifrnuumg");
+            WorkloadOrchestrationRemoveVersionResult result = await edgeConfigTemplate.RemoveVersionAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SchemasCreateOrUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Schemas_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "Schema_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Schemas_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "Schemas_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             string schemaName = "testname";
             EdgeSchemaData data = new EdgeSchemaData(new AzureLocation("alvi"))
             {
-                Properties = new EdgeSchemaProperties(),
+                Properties = new SchemaProperties(),
                 Tags =
 {
 ["key7017"] = "rdynaxxagwjzubehiz"
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SchemasGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Schemas_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Schema_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Schemas_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Schemas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SchemasListByResourceGroupMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Schemas_ListByResourceGroup_MaximumSet_Gen.json
-            // this example is just showing the usage of "Schema_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Schemas_ListByResourceGroup_MaximumSet_Gen.json
+            // this example is just showing the usage of "Schemas_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SchemasGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Schemas_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Schema_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Schemas_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Schemas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SchemasGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Schemas_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Schema_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Schemas_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Schemas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

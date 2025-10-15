@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SchemaVersionsGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SchemaVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SchemaVersion_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SchemaVersions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SchemaVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_SchemaVersionsDeleteMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SchemaVersions_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "SchemaVersion_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SchemaVersions_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "SchemaVersions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_SchemaVersionsUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SchemaVersions_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "SchemaVersion_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SchemaVersions_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "SchemaVersions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeSchemaVersionResource edgeSchemaVersion = client.GetEdgeSchemaVersionResource(edgeSchemaVersionResourceId);
 
             // invoke the operation
-            EdgeSchemaVersionData data = new EdgeSchemaVersionData
+            EdgeSchemaVersionPatch patch = new EdgeSchemaVersionPatch
             {
-                Properties = new EdgeSchemaVersionProperties("muezi"),
+                SchemaVersionPropertiesUpdateValue = "muezi",
             };
-            EdgeSchemaVersionResource result = await edgeSchemaVersion.UpdateAsync(data);
+            EdgeSchemaVersionResource result = await edgeSchemaVersion.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
