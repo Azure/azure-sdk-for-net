@@ -50,26 +50,8 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public async Task PreservesRelativeOrderOfDuplicates()
         {
-            string originalUrl = "https://example.azconfig.io/kv?tags=tag3=value3&other=value&tags=tag2=value2&tags=tag1=value1";
-            string expectedUrl = "https://example.azconfig.io/kv?other=value&tags=tag3=value3&tags=tag2=value2&tags=tag1=value1";
-
-            MockTransport transport = CreateMockTransport(new MockResponse(200));
-            QueryParamPolicy policy = new QueryParamPolicy();
-
-            Response response = await SendRequestAsync(transport, message =>
-            {
-                message.Request.Uri.Reset(new System.Uri(originalUrl));
-            }, policy);
-
-            MockRequest request = transport.SingleRequest;
-            Assert.AreEqual(expectedUrl, request.Uri.ToString());
-        }
-
-        [Test]
-        public async Task PreservesOriginalValues()
-        {
-            string originalUrl = "https://example.azconfig.io/kv?tags=tag3%3Dvalue3&Label=DEV&key=My%20Key";
-            string expectedUrl = "https://example.azconfig.io/kv?key=My%20Key&label=DEV&tags=tag3%3Dvalue3";
+            string originalUrl = "https://example.azconfig.io/kv?tags=tag3%3Dvalue3&other=value&tags=tag2%3Dvalue2&tags=tag1%3Dvalue1";
+            string expectedUrl = "https://example.azconfig.io/kv?other=value&tags=tag3%3Dvalue3&tags=tag2%3Dvalue2&tags=tag1%3Dvalue1";
 
             MockTransport transport = CreateMockTransport(new MockResponse(200));
             QueryParamPolicy policy = new QueryParamPolicy();

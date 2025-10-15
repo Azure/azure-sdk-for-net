@@ -1,22 +1,32 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Web;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Data.AppConfiguration
 {
     internal class QueryParamPolicy : HttpPipelineSynchronousPolicy
     {
+        private class QueryParameterEntry
+        {
+            public string LowerName { get; set; }
+            public string Value { get; set; }
+            public int Index { get; set; }
+        }
+
         public override void OnSendingRequest(HttpMessage message)
         {
             try
             {
-                string originalUrl = message.Request.Uri.ToString();
-                string queryString = message.Request.Uri.Query;
+                Uri originalUri = message.Request.Uri.ToUri();
+                string queryString = originalUri.Query;
 
                 // If no query string, nothing to normalize
                 if (string.IsNullOrEmpty(queryString))
@@ -24,39 +34,36 @@ namespace Azure.Data.AppConfiguration
                     return;
                 }
 
-                // Remove leading '?' if present
+                // Remove leading '?'
                 if (queryString.StartsWith("?"))
                 {
                     queryString = queryString.Substring(1);
                 }
 
-                // Separate out any hash fragment so we can keep it verbatim
-                int hashIndex = originalUrl.IndexOf('#');
-                string beforeHash = hashIndex >= 0 ? originalUrl.Substring(0, hashIndex) : originalUrl;
-                string hashFrag = hashIndex >= 0 ? originalUrl.Substring(hashIndex) : "";
-
-                string baseUrl = beforeHash.Substring(0, beforeHash.IndexOf('?'));
-
-                // We don't use HttpUtility.ParseQueryString as it will process the values
-                // https://learn.microsoft.com/en-us/dotnet/api/system.web.httputility.parsequerystring
-                IEnumerable<string> segments = queryString.Split('&').Where(s => s.Length > 0);
-
-                List<QueryParameterEntry> entries = segments.Select((seg, i) =>
+                List<QueryParameterEntry> segments = new List<QueryParameterEntry>();
+                NameValueCollection paramsCollection = HttpUtility.ParseQueryString(queryString);
+                // URL encoded characters are decoded and multiple occurrences of the same query string parameter are listed as a single entry with a comma separating each value.
+                // See the remark section: https://learn.microsoft.com/en-us/dotnet/api/system.web.httputility.parsequerystring
+                foreach (var key in paramsCollection.AllKeys)
                 {
-                    int eq = seg.IndexOf('=');
-                    string rawName = eq == -1 ? seg : seg.Substring(0, eq);
-                    string value = eq == -1 ? null : seg.Substring(eq + 1);
-                    return new QueryParameterEntry
+                    if (!string.IsNullOrEmpty(key))
                     {
-                        RawName = rawName,
-                        LowerName = rawName.ToLowerInvariant(),
-                        Value = value,
-                        Index = i
-                    };
-                }).ToList();
+                        var values = paramsCollection.GetValues(key);
+                        foreach (var val in values)
+                        {
+                            segments.Add(new QueryParameterEntry
+                            {
+                                LowerName = key.ToLower(),
+                                Value = val == null ? string.Empty : Uri.EscapeDataString(val),
+                                Index = segments.Count
+                            });
+                        }
+                    }
+                }
 
+                // List<T>.Sort method is not stable. See the remark section: https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort
                 // Sort by lowercase name, preserving relative order for duplicates
-                entries.Sort((a, b) =>
+                segments.Sort((a, b) =>
                 {
                     var nameComparison = string.Compare(a.LowerName, b.LowerName, StringComparison.Ordinal);
                     if (nameComparison != 0)
@@ -64,29 +71,19 @@ namespace Azure.Data.AppConfiguration
                     return a.Index.CompareTo(b.Index); // stability for duplicates
                 });
 
-                var normalizedQuery = string.Join("&", entries.Select(e =>
-                    e.Value != null ? $"{e.LowerName}={e.Value}" : e.LowerName));
+                var normalizedQuery = string.Join("&", segments.Select(e => $"{e.LowerName}={e.Value}"));
 
-                var newUrl = $"{baseUrl}{(normalizedQuery.Length > 0 ? "?" + normalizedQuery : "")}{hashFrag}";
+                var newUrl = $"{originalUri.Scheme}://{originalUri.Host}{originalUri.AbsolutePath}{(normalizedQuery.Length > 0 ? "?" + normalizedQuery : "")}{originalUri.Fragment}";
 
-                // Only update if changed (optional, but nice to avoid surprising downstream logic)
-                if (newUrl != originalUrl)
+                if (newUrl != message.Request.Uri.ToString())
                 {
                     message.Request.Uri.Reset(new Uri(newUrl));
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // If anything goes wrong, fall back to sending the original request
+                System.Diagnostics.Debug.WriteLine($"QueryParamPolicy failed to normalize the request query parameters: {ex}");
             }
-        }
-
-        private class QueryParameterEntry
-        {
-            public string RawName { get; set; }
-            public string LowerName { get; set; }
-            public string Value { get; set; }
-            public int Index { get; set; }
         }
     }
 }
