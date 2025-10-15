@@ -83,8 +83,8 @@ namespace Azure.Security.CodeTransparency
     public sealed partial class CodeTransparencyVerificationOptions
     {
         public CodeTransparencyVerificationOptions() { }
-        public Azure.Security.CodeTransparency.AuthorizedReceiptBehavior AuthorizedReceiptBehavior { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AuthorizedDomains { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.AuthorizedReceiptBehavior AuthorizedReceiptBehavior { get { throw null; } set { } }
         public Azure.Security.CodeTransparency.UnauthorizedReceiptBehavior UnauthorizedReceiptBehavior { get { throw null; } set { } }
     }
     public partial class JsonWebKey : System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JsonWebKey>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JsonWebKey>
@@ -125,12 +125,6 @@ namespace Azure.Security.CodeTransparency
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum UnauthorizedReceiptBehavior
-    {
-        VerifyAll = 0,
-        Ignore = 1,
-        FailIfPresent = 2,
-    }
     public static partial class SecurityCodeTransparencyModelFactory
     {
         public static Azure.Security.CodeTransparency.JsonWebKey JsonWebKey(string alg = null, string crv = null, string d = null, string dp = null, string dq = null, string e = null, string k = null, string kid = null, string kty = null, string n = null, string p = null, string q = null, string qi = null, string use = null, string x = null, System.Collections.Generic.IEnumerable<string> x5c = null, string y = null) { throw null; }
@@ -142,6 +136,12 @@ namespace Azure.Security.CodeTransparency
         public System.DateTime CreatedAt { get { throw null; } }
         public string TlsCertificatePem { get { throw null; } }
         public System.Security.Cryptography.X509Certificates.X509Certificate2 GetCertificate() { throw null; }
+    }
+    public enum UnauthorizedReceiptBehavior
+    {
+        VerifyAll = 0,
+        IgnoreAll = 1,
+        FailIfPresent = 2,
     }
 }
 namespace Azure.Security.CodeTransparency.Receipt
