@@ -98,7 +98,7 @@ public abstract partial class Specification : ModelBase
         // Create the assembly dir
         string? path = GetNamespacePath();
         Directory.CreateDirectory(path);
-        File.WriteAllText(Path.Combine(path, "Changelog.md"),
+        File.WriteAllText(Path.Combine(path, "CHANGELOG.md"),
             $"""
                 # Release History
 
@@ -110,7 +110,7 @@ public abstract partial class Specification : ModelBase
                 """);
         File.WriteAllText(Path.Combine(path, "README.md"),
             $"""
-                # {Namespace} client library for .NET
+                # {Namespace!.Split('.')} client library for .NET
 
                 {Namespace} simplifies declarative resource provisioning in .NET.
 
