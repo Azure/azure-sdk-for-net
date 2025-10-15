@@ -18,7 +18,7 @@ Pre-requisites:
 
 ## Step: Generate SDKs
 **Goal**: Generate SDKs
-**Message to user**: "SDK generation will take approximately 15-20 minutes. Currently SDK is generated using Azure DevOps pipeline and it supports SDK generation from merged API spec or API spec pull request in https://github.com/Azure/azure-rest-api-specs repository only."
+**Message to user**: "SDK generation will take approximately 15-20 minutes. Currently, SDKs are generated using the Azure DevOps pipeline. SDK generation is supported only from a merged API spec or from an API spec pull request in the https://github.com/Azure/azure-rest-api-specs repository."
 **Actions**:
 1. Identify whether TypeSpec is for Management Plane or Data Plane based on project structure and files. tspconfig.yaml file contains `resource-manager` for management plane and `data-plane` for data plane as resource provider.
   - Execute the SDK generation pipeline with the following required parameters for all languages:
@@ -33,7 +33,7 @@ Pre-requisites:
 2. Monitor pipeline status after 15 minutes and provide updates. If pipeline is in progress, inform user that it may take additional time and check the status later.
 3. Display generated SDK PR links when available. If pipeline fails, inform user with error details and suggest to check pipeline logs for more information.
 4. If SDK pull request is available for all languages, ask user to review generated SDK pull request and mark them as ready for review when they are ready to get them reviewed and merged.
-5. IF SDK pull request was created for test purposes, inform user to close the test SDK pull request.
+5. If SDK pull request was created for test purposes, inform user to close the test SDK pull request.
 **Success Criteria**: SDK generation pipeline initiated and SDKs generated
 
 ## Step: SDK release plan
@@ -63,7 +63,7 @@ Pre-requisites:
    - If no, inform user: "You can release the SDK package later using the prompt `release <package name> for  <language>`" and end the workflow.
 2. Get SDK pull request status for all languages.
 3. Inform user that it needs to check SDK PR status. If any SDK pull request is not merged, inform user: "Please merge all SDK pull requests before releasing the package.". Show a summary of SDK PR status for all languages.
-4. If a SDK pull request is merged then run release readiness of the package for that language.
+4. If an SDK pull request is merged then run release readiness of the package for that language.
 5. Inform user if a language is ready for release and prompt user for a confirmation to proceed with the release.
 6. If user confirms, run the tool to release the SDK package.
 7. Inform user to approve the package release using release pipeline. Warn user that package will be published to public registries once approved.
