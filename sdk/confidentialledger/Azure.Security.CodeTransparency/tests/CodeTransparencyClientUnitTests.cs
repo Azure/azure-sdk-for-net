@@ -492,7 +492,7 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
-        public void VerifyTransparentStatement_NonAllowListedReceiptBehavior_FailIfPresent()
+        public void VerifyTransparentStatement_UnauthorizedReceiptBehavior_FailIfPresent()
         {
 #if NET462
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
@@ -501,17 +501,17 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AllowedIssuerDomains = new string[] { "wetrustsomethingelse.com" },
-                NonAllowListedReceiptBehavior = NonAllowListedReceiptBehavior.FailIfPresent
+                AuthorizedDomains = new string[] { "wetrustsomethingelse.com" },
+                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
             };
 
             var exception = Assert.Throws<InvalidOperationException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions));
-            Assert.AreEqual("Receipt issuer 'foo.bar.com' is not in the allowed domain list.", exception.Message);
+            Assert.AreEqual("Receipt issuer 'foo.bar.com' is not in the authorized domain list.", exception.Message);
 #endif
         }
 
         [Test]
-        public void VerifyTransparentStatement_AllowedIssuerDomains_not_found()
+        public void VerifyTransparentStatement_AuthorizedDomains_not_found()
         {
 #if NET462
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
@@ -520,17 +520,17 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AllowedIssuerDomains = new string[] { "wetrustsomethingelse.com" },
-                NonAllowListedReceiptBehavior = NonAllowListedReceiptBehavior.Ignore
+                AuthorizedDomains = new string[] { "wetrustsomethingelse.com" },
+                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.IgnoreAll
             };
 
             var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions));
-            StringAssert.Contains("No valid receipts found for any allowed issuer domain.", exception.Message);
+            StringAssert.Contains("No valid receipts found for any authorized issuer domain.", exception.Message);
 #endif
         }
 
         [Test]
-        public void VerifyTransparentStatement_EachAllowListedDomainMustHaveValidReceipt_fails()
+        public void VerifyTransparentStatement_RequireAll_fails()
         {
 #if NET462
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
@@ -555,9 +555,9 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AllowedIssuerDomains = new string[] { "foo.bar.com", "wetrustsomethingelse.com" },
-                AllowedDomainVerificationBehavior = AllowedDomainVerificationBehavior.EachAllowListedDomainMustHaveValidReceipt,
-                NonAllowListedReceiptBehavior = NonAllowListedReceiptBehavior.Ignore
+                AuthorizedDomains = new string[] { "foo.bar.com", "wetrustsomethingelse.com" },
+                AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
+                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.IgnoreAll
             };
 
             var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
@@ -566,7 +566,7 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
-        public void VerifyTransparentStatement_AnyAllowedDomainPresentAndValid_succeeds()
+        public void VerifyTransparentStatement_VerifyAnyMatching_succeeds()
         {
 #if NET462
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
@@ -591,9 +591,9 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AllowedIssuerDomains = new string[] { "foo.bar.com", "doesnotexist.com" },
-                AllowedDomainVerificationBehavior = AllowedDomainVerificationBehavior.AnyAllowedDomainPresentAndValid,
-                NonAllowListedReceiptBehavior = NonAllowListedReceiptBehavior.Ignore
+                AuthorizedDomains = new string[] { "foo.bar.com", "doesnotexist.com" },
+                AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.VerifyAnyMatching,
+                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.IgnoreAll
             };
 
             Assert.DoesNotThrow(() =>

@@ -295,9 +295,9 @@ namespace Azure.Security.CodeTransparency
         {
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AllowedIssuerDomains = new string[] { _endpoint.Host },
-                AllowedDomainVerificationBehavior = AllowedDomainVerificationBehavior.EachAllowListedDomainMustHaveValidReceipt,
-                NonAllowListedReceiptBehavior = NonAllowListedReceiptBehavior.FailIfPresent
+                AuthorizedDomains = new string[] { _endpoint.Host },
+                AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
+                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
             };
             VerifyTransparentStatement(transparentStatementCoseSign1Bytes, verificationOptions);
         }
@@ -320,14 +320,14 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary>
-        /// Verify the receipt integrity against the COSE_Sign1 envelope and (optionally) enforce issuer domain allow-list rules.
+        /// Verify the receipt integrity against the COSE_Sign1 envelope and (optionally) enforce issuer domain authorized-list rules.
         /// It will create an instance of CodeTransparencyClient for each issuer domain encountered in the verification process.
         /// </summary>
         /// <param name="transparentStatementCoseSign1Bytes">Receipt cbor or Cose_Sign1 (with an embedded receipt) bytes.</param>
-        /// <param name="verificationOptions">Optional verification options. If null or if <see cref="CodeTransparencyVerificationOptions.AllowedIssuerDomains"/> is empty, all receipts are verified (original behavior).</param>
+        /// <param name="verificationOptions">Optional verification options. If null or if <see cref="CodeTransparencyVerificationOptions.AuthorizedDomains"/> is empty, all receipts are verified (original behavior).</param>
         /// <param name="clientOptions"> The options for configuring the client instances that download public keys required for verification. </param>
         /// <exception cref="InvalidOperationException">
-        /// Thrown when: no receipts exist; allow-list is provided and no receipt matches any allowed domain; a disallowed receipt exists while <see cref="NonAllowListedReceiptBehavior.FailIfPresent"/> is selected.
+        /// Thrown when: no receipts exist; authorized-list is provided and no receipt matches any authorized domain; a unauthorized receipt exists while <see cref="UnauthorizedReceiptBehavior.FailIfPresent"/> is selected.
         /// </exception>
         /// <exception cref="AggregateException">Thrown containing individual failures encountered during verification.</exception>
         public static void VerifyTransparentStatement(byte[] transparentStatementCoseSign1Bytes, CodeTransparencyVerificationOptions verificationOptions = default, CodeTransparencyClientOptions clientOptions = default)
@@ -344,72 +344,60 @@ namespace Azure.Security.CodeTransparency
 
             Dictionary<string, CodeTransparencyClient> clientInstances = new Dictionary<string, CodeTransparencyClient>();
 
-            // Prepare allow list state. If no allow list provided, implicitly allow all detected issuer domains encountered in receipts.
-            var configuredAllowList = verificationOptions?.AllowedIssuerDomains ?? Array.Empty<string>();
-            bool userProvidedAllowList = configuredAllowList.Count > 0;
-            HashSet<string> allowListNormalized = new(StringComparer.OrdinalIgnoreCase);
-            if (userProvidedAllowList)
+            // Prepare authorized list state. If no authorized list provided, implicitly authorized all detected issuer domains encountered in receipts.
+            var configuredAuthorizedList = verificationOptions?.AuthorizedDomains ?? Array.Empty<string>();
+            bool userProvidedAuthorizedList = configuredAuthorizedList.Count > 0;
+            HashSet<string> authorizedListNormalized = new(StringComparer.OrdinalIgnoreCase);
+            if (userProvidedAuthorizedList)
             {
-                foreach (var domain in configuredAllowList)
+                foreach (var domain in configuredAuthorizedList)
                 {
                     if (!string.IsNullOrWhiteSpace(domain) && !domain.StartsWith(UnknownIssuerPrefix))
                     {
-                        allowListNormalized.Add(domain.Trim());
-                    }
-                }
-            }
-            else
-            {
-                // Implicit allow list derived from receipts
-                foreach ((string issuer, byte[] receiptBytes) in receiptList)
-                {
-                    // Skip unknown issuers for implicit allow list
-                    if (!issuer.StartsWith(UnknownIssuerPrefix))
-                    {
-                        allowListNormalized.Add(issuer);
+                        authorizedListNormalized.Add(domain.Trim());
                     }
                 }
             }
 
             // Tracking for behaviors
-            HashSet<string> validAllowedDomainsEncountered = new(StringComparer.OrdinalIgnoreCase);
-            HashSet<string> allowedDomainsWithReceipt = new(StringComparer.OrdinalIgnoreCase);
+            HashSet<string> validAuthorizedDomainsEncountered = new(StringComparer.OrdinalIgnoreCase);
+            HashSet<string> authorizedDomainsWithReceipt = new(StringComparer.OrdinalIgnoreCase);
 
-            // Early failure if we must fail on presence of non-allow-listed receipts
-            if (verificationOptions.NonAllowListedReceiptBehavior == NonAllowListedReceiptBehavior.FailIfPresent)
+            // Early failure if we must fail on presence of unauthorized receipts
+            if (verificationOptions.UnauthorizedReceiptBehavior == UnauthorizedReceiptBehavior.FailIfPresent)
             {
                 foreach ((string issuer, byte[] receiptBytes) in receiptList)
                 {
-                    if (!allowListNormalized.Contains(issuer))
+                    if (!authorizedListNormalized.Contains(issuer))
                     {
-                        throw new InvalidOperationException($"Receipt issuer '{issuer}' is not in the allowed domain list.");
+                        throw new InvalidOperationException($"Receipt issuer '{issuer}' is not in the authorized domain list.");
                     }
                 }
             }
 
             foreach ((string issuer, byte[] receiptBytes) in receiptList)
             {
-                bool isAllowedIssuer = allowListNormalized.Contains(issuer);
-                if (isAllowedIssuer)
+                bool isAuthorized = authorizedListNormalized.Contains(issuer);
+                if (isAuthorized)
                 {
-                    allowedDomainsWithReceipt.Add(issuer);
+                    authorizedDomainsWithReceipt.Add(issuer);
                 }
 
                 // Determine if this receipt should be verified
                 bool shouldVerify;
-                if (isAllowedIssuer)
+                if (isAuthorized)
                 {
-                    // Always verify receipts from allowed issuers; enforcement comes later.
+                    // Always verify receipts from authorized issuers; enforcement comes later.
                     shouldVerify = true;
                 }
                 else
                 {
-                    // Non-allow-listed receipts handled per options
-                    shouldVerify = verificationOptions?.NonAllowListedReceiptBehavior switch
+                    // Unauthorized receipts handled per options
+                    shouldVerify = verificationOptions?.UnauthorizedReceiptBehavior switch
                     {
-                        NonAllowListedReceiptBehavior.Verify => true,
-                        NonAllowListedReceiptBehavior.Ignore => false,
-                        NonAllowListedReceiptBehavior.FailIfPresent => false, // already handled in early phase
+                        UnauthorizedReceiptBehavior.VerifyAll => true,
+                        UnauthorizedReceiptBehavior.IgnoreAll => false,
+                        UnauthorizedReceiptBehavior.FailIfPresent => false, // already handled in early phase
                         _ => true
                     };
                 }
@@ -435,9 +423,9 @@ namespace Azure.Security.CodeTransparency
                     }
                     clientInstance.RunTransparentStatementVerification(transparentStatementCoseSign1Bytes, receiptBytes);
 
-                    if (isAllowedIssuer)
+                    if (isAuthorized)
                     {
-                        validAllowedDomainsEncountered.Add(issuer);
+                        validAuthorizedDomainsEncountered.Add(issuer);
                     }
                 }
                 catch (Exception e)
@@ -446,29 +434,33 @@ namespace Azure.Security.CodeTransparency
                 }
             }
 
-            // Post-processing based on allowed domain verification behavior (only applies to user-provided allow list)
-            switch (verificationOptions.AllowedDomainVerificationBehavior)
+            // Post-processing based on authorized domain verification behavior (only applies to user-provided authorized list)
+            switch (verificationOptions.AuthorizedReceiptBehavior)
             {
-                case AllowedDomainVerificationBehavior.AnyAllowedDomainPresentAndValid:
-                    if (validAllowedDomainsEncountered.Count == 0)
+                case AuthorizedReceiptBehavior.VerifyAnyMatching:
+                    if (validAuthorizedDomainsEncountered.Count == 0)
                     {
-                        failures.Add(new InvalidOperationException("No valid receipts found for any allowed issuer domain."));
+                        failures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
                     }
                     break;
-                case AllowedDomainVerificationBehavior.AllAllowListedReceiptsMustBeValid:
-                    // All receipts from allowed domains must be valid: i.e., any receipt from an allowed domain that failed adds failure (already captured) -> if any allowed domain had receipt but not all successful? We check failures now.
-                    foreach (var domain in allowedDomainsWithReceipt)
+                case AuthorizedReceiptBehavior.VerifyAllMatching:
+                    // All receipts from authorized domains must be valid: i.e., any receipt from an authorized domain that failed adds failure (already captured) -> if any authorized domain had receipt but not all successful? We check failures now.
+                    if (authorizedDomainsWithReceipt.Count == 0)
                     {
-                        if (!validAllowedDomainsEncountered.Contains(domain))
+                        failures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
+                    }
+                    foreach (var domain in authorizedDomainsWithReceipt)
+                    {
+                        if (!validAuthorizedDomainsEncountered.Contains(domain))
                         {
                             failures.Add(new InvalidOperationException($"A receipt from the required domain '{domain}' failed verification."));
                         }
                     }
                     break;
-                case AllowedDomainVerificationBehavior.EachAllowListedDomainMustHaveValidReceipt:
-                    foreach (var domain in allowListNormalized)
+                case AuthorizedReceiptBehavior.RequireAll:
+                    foreach (var domain in authorizedListNormalized)
                     {
-                        if (!validAllowedDomainsEncountered.Contains(domain))
+                        if (!validAuthorizedDomainsEncountered.Contains(domain))
                         {
                             failures.Add(new InvalidOperationException($"No valid receipt found for a required domain '{domain}'."));
                         }

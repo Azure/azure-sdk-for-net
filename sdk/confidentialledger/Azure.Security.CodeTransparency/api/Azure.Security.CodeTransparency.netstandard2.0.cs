@@ -1,10 +1,10 @@
 namespace Azure.Security.CodeTransparency
 {
-    public enum AllowedDomainVerificationBehavior
+    public enum AuthorizedReceiptBehavior
     {
-        AnyAllowedDomainPresentAndValid = 0,
-        AllAllowListedReceiptsMustBeValid = 1,
-        EachAllowListedDomainMustHaveValidReceipt = 2,
+        VerifyAnyMatching = 0,
+        VerifyAllMatching = 1,
+        RequireAll = 2,
     }
     public partial class AzureSecurityCodeTransparencyContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
@@ -83,9 +83,9 @@ namespace Azure.Security.CodeTransparency
     public sealed partial class CodeTransparencyVerificationOptions
     {
         public CodeTransparencyVerificationOptions() { }
-        public Azure.Security.CodeTransparency.AllowedDomainVerificationBehavior AllowedDomainVerificationBehavior { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> AllowedIssuerDomains { get { throw null; } set { } }
-        public Azure.Security.CodeTransparency.NonAllowListedReceiptBehavior NonAllowListedReceiptBehavior { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.AuthorizedReceiptBehavior AuthorizedReceiptBehavior { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> AuthorizedDomains { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.UnauthorizedReceiptBehavior UnauthorizedReceiptBehavior { get { throw null; } set { } }
     }
     public partial class JsonWebKey : System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JsonWebKey>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JsonWebKey>
     {
@@ -125,9 +125,9 @@ namespace Azure.Security.CodeTransparency
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum NonAllowListedReceiptBehavior
+    public enum UnauthorizedReceiptBehavior
     {
-        Verify = 0,
+        VerifyAll = 0,
         Ignore = 1,
         FailIfPresent = 2,
     }

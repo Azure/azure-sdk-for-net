@@ -188,13 +188,13 @@ namespace Azure.Security.CodeTransparency.Tests
                 var verificationOptions = new CodeTransparencyVerificationOptions
                 {
 #if !SNIPPET
-                    AllowedIssuerDomains = new string[] { "foo.bar.com" },
+                    AuthorizedDomains = new string[] { "foo.bar.com" },
 #endif
 #if SNIPPET
-                    AllowedIssuerDomains = new string[] { "<< service name >>.confidential-ledger.azure.com" },
+                    AuthorizedDomains = new string[] { "<< service name >>.confidential-ledger.azure.com" },
 #endif
-                    AllowedDomainVerificationBehavior = AllowedDomainVerificationBehavior.EachAllowListedDomainMustHaveValidReceipt,
-                    NonAllowListedReceiptBehavior = NonAllowListedReceiptBehavior.FailIfPresent
+                    AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
+                    UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
                 };
                 CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
                 Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");

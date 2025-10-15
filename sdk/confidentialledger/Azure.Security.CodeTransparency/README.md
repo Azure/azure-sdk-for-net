@@ -65,9 +65,9 @@ try
 {
     var verificationOptions = new CodeTransparencyVerificationOptions
     {
-        AllowedIssuerDomains = new string[] { "<< service name >>.confidential-ledger.azure.com" },
-        AllowedDomainVerificationBehavior = AllowedDomainVerificationBehavior.EachAllowListedDomainMustHaveValidReceipt,
-        NonAllowListedReceiptBehavior = NonAllowListedReceiptBehavior.FailIfPresent
+        AuthorizedDomains = new string[] { "<< service name >>.confidential-ledger.azure.com" },
+        AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
+        UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
     };
     CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
     Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");

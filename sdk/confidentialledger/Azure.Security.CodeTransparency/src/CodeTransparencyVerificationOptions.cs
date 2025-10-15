@@ -7,38 +7,38 @@ using System.Collections.Generic;
 namespace Azure.Security.CodeTransparency
 {
     /// <summary>
-    /// Specifies how receipts whose issuer domains ARE in the allow list should be enforced.
+    /// Specifies how receipts whose issuer domains ARE in the authorized list should be enforced.
     /// </summary>
-    public enum AllowedDomainVerificationBehavior
+    public enum AuthorizedReceiptBehavior
     {
         /// <summary>
-        /// At least one receipt from any allowed domain must be present and valid (previous behavior when allow list provided).
+        /// At least one receipt from any authorized domain must be present and valid.
         /// </summary>
-        AnyAllowedDomainPresentAndValid = 0,
+        VerifyAnyMatching = 0,
         /// <summary>
-        /// ALL receipts whose issuer is in the allow list MUST pass verification. Receipts not in the allow list are treated according to <see cref="CodeTransparencyVerificationOptions.NonAllowListedReceiptBehavior"/>.
+        /// ALL receipts whose issuer is in the authorized list MUST pass verification. Receipts not in the authorized list are treated according to <see cref="CodeTransparencyVerificationOptions.UnauthorizedReceiptBehavior"/>.
         /// </summary>
-        AllAllowListedReceiptsMustBeValid = 1,
+        VerifyAllMatching = 1,
         /// <summary>
-        /// There MUST be at least one valid receipt for EACH domain in the allow list (coverage requirement). If a domain has no receipt or only invalid receipts, verification fails.
+        /// There MUST be at least one valid receipt for EACH domain in the authorized list (coverage requirement). If a domain has no receipt or only invalid receipts, verification fails.
         /// </summary>
-        EachAllowListedDomainMustHaveValidReceipt = 2
+        RequireAll = 2
     }
     /// <summary>
-    /// Specifies behaviors for receipts whose issuer domains are not contained in <see cref="CodeTransparencyVerificationOptions.AllowedIssuerDomains"/>.
+    /// Specifies behaviors for receipts whose issuer domains are not contained in <see cref="CodeTransparencyVerificationOptions.AuthorizedDomains"/>.
     /// </summary>
-    public enum NonAllowListedReceiptBehavior
+    public enum UnauthorizedReceiptBehavior
     {
         /// <summary>
-        /// Verify receipts even if their issuer domain is not in the allow list.
+        /// Verify receipts even if their issuer domain is not in the authorized list.
         /// </summary>
-        Verify = 0,
+        VerifyAll = 0,
         /// <summary>
-        /// Ignore (skip verifying) receipts whose issuer domain is not in the allow list.
+        /// Ignore (skip verifying) receipts whose issuer domain is not in the authorized list.
         /// </summary>
-        Ignore = 1,
+        IgnoreAll = 1,
         /// <summary>
-        /// Fail verification immediately if any receipt exists whose issuer domain is not in the allow list.
+        /// Fail verification immediately if any receipt exists whose issuer domain is not in the authorized list.
         /// </summary>
         FailIfPresent = 2
     }
@@ -56,21 +56,21 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary>
-        /// Gets or sets an allow list of issuer domains. If provided and not empty, at least one receipt must be issued by one of these domains.
+        /// Gets or sets an authorized list of issuer domains. If provided and not empty, at least one receipt must be issued by one of these domains.
         /// Domains are matched case-insensitively.
         /// </summary>
-        public IList<string> AllowedIssuerDomains { get; set; } = new List<string>();
+        public IList<string> AuthorizedDomains { get; set; } = new List<string>();
 
         /// <summary>
-        /// Gets or sets the behavior for receipts whose issuer domain is not in <see cref="AllowedIssuerDomains"/>.
-        /// Defaults to <see cref="NonAllowListedReceiptBehavior.Verify"/> to preserve current behavior.
+        /// Gets or sets the behavior for receipts whose issuer domain is not in <see cref="AuthorizedDomains"/>.
+        /// Defaults to <see cref="UnauthorizedReceiptBehavior.VerifyAll"/> to preserve current behavior.
         /// </summary>
-        public NonAllowListedReceiptBehavior NonAllowListedReceiptBehavior { get; set; } = NonAllowListedReceiptBehavior.Verify;
+        public UnauthorizedReceiptBehavior UnauthorizedReceiptBehavior { get; set; } = UnauthorizedReceiptBehavior.FailIfPresent;
 
         /// <summary>
-        /// Gets or sets the enforcement behavior for receipts whose issuer domain IS contained in <see cref="AllowedIssuerDomains"/>.
-        /// Defaults to <see cref="AllowedDomainVerificationBehavior.AnyAllowedDomainPresentAndValid"/>.
+        /// Gets or sets the enforcement behavior for receipts whose issuer domain IS contained in <see cref="AuthorizedDomains"/>.
+        /// Defaults to <see cref="AuthorizedReceiptBehavior.VerifyAllMatching"/>.
         /// </summary>
-        public AllowedDomainVerificationBehavior AllowedDomainVerificationBehavior { get; set; } = AllowedDomainVerificationBehavior.AnyAllowedDomainPresentAndValid;
+        public AuthorizedReceiptBehavior AuthorizedReceiptBehavior { get; set; } = AuthorizedReceiptBehavior.VerifyAllMatching;
     }
 }

@@ -42,7 +42,7 @@ The following examples use a default public key resolver to obtain the keys for 
 ### Using a transparent statement
 
 The receipt included in the unprotected header of the signed statement contains the service endpoint used to download the public keys.
-You should also provide the expected issuers in `AllowedIssuerDomains` option as otherwise any known issuer becomes implicitly trusted.
+You should also provide the expected issuers in `AuthorizedDomains` option as otherwise any known issuer becomes implicitly trusted.
 
 ```C# Snippet:CodeTransparencyVerification
 Response<BinaryData> transparentStatementResponse = client.GetEntryStatement(entryId);
@@ -51,9 +51,9 @@ try
 {
     var verificationOptions = new CodeTransparencyVerificationOptions
     {
-        AllowedIssuerDomains = new string[] { "<< service name >>.confidential-ledger.azure.com" },
-        AllowedDomainVerificationBehavior = AllowedDomainVerificationBehavior.EachAllowListedDomainMustHaveValidReceipt,
-        NonAllowListedReceiptBehavior = NonAllowListedReceiptBehavior.FailIfPresent
+        AuthorizedDomains = new string[] { "<< service name >>.confidential-ledger.azure.com" },
+        AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
+        UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
     };
     CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
     Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
