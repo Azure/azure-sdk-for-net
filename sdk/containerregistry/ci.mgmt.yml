@@ -22,7 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ContainerRegistry
       safeName: AzureResourceManagerContainerRegistry
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.ContainerRegistry
-      ExpectedWarningsFilepath: None
