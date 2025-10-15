@@ -2,16 +2,16 @@
 
 ## Summary
 
-- Total libraries: 414
-- Management Plane (Swagger): 164
+- Total libraries: 416
+- Management Plane (Swagger): 165
 - Management Plane (TSP-Old): 46
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 14
 - Management Plane (TypeSpec - @typespec/http-client-csharp): 0
 - Management Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 0
-- Data Plane (Swagger): 115
-- Data Plane (TSP-Old): 26
-- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 8
+- Data Plane (Swagger): 119
+- Data Plane (TSP-Old): 22
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 10
 - Data Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 0
 - Data Plane (TypeSpec - @typespec/http-client-csharp): 2
 - Data Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 1
@@ -20,7 +20,7 @@
 
 ## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 8
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 10
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -31,6 +31,8 @@ TypeSpec with @azure-typespec/http-client-csharp generator is detected by the pr
 | healthdataaiservices | Azure.Health.Deidentification | sdk/healthdataaiservices/Azure.Health.Deidentification |
 | keyvault | Azure.Security.KeyVault.Administration | sdk/keyvault/Azure.Security.KeyVault.Administration |
 | monitor | Azure.Monitor.Ingestion | sdk/monitor/Azure.Monitor.Ingestion |
+| monitor | Azure.Monitor.Query.Logs | sdk/monitor/Azure.Monitor.Query.Logs |
+| monitor | Azure.Monitor.Query.Metrics | sdk/monitor/Azure.Monitor.Query.Metrics |
 | schemaregistry | Azure.Data.SchemaRegistry | sdk/schemaregistry/Azure.Data.SchemaRegistry |
 
 
@@ -55,11 +57,10 @@ TypeSpec with Unknown TypeSpec Generator: eng/emitter-package.json generator is 
 
 ## Data Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 26
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 22
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
-| ai | Azure.AI.Inference | sdk/ai/Azure.AI.Inference |
 | anomalydetector | Azure.AI.AnomalyDetector | sdk/anomalydetector/Azure.AI.AnomalyDetector |
 | batch | Azure.Compute.Batch | sdk/batch/Azure.Compute.Batch |
 | cognitivelanguage | Azure.AI.Language.Conversations | sdk/cognitivelanguage/Azure.AI.Language.Conversations |
@@ -75,12 +76,9 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | documentintelligence | Azure.AI.DocumentIntelligence | sdk/documentintelligence/Azure.AI.DocumentIntelligence |
 | easm | Azure.Analytics.Defender.Easm | sdk/easm/Azure.Analytics.Defender.Easm |
 | face | Azure.AI.Vision.Face | sdk/face/Azure.AI.Vision.Face |
-| healthinsights | Azure.Health.Insights.CancerProfiling | sdk/healthinsights/Azure.Health.Insights.CancerProfiling |
-| healthinsights | Azure.Health.Insights.ClinicalMatching | sdk/healthinsights/Azure.Health.Insights.ClinicalMatching |
 | healthinsights | Azure.Health.Insights.RadiologyInsights | sdk/healthinsights/Azure.Health.Insights.RadiologyInsights |
 | loadtestservice | Azure.Developer.LoadTesting | sdk/loadtestservice/Azure.Developer.LoadTesting |
 | onlineexperimentation | Azure.Analytics.OnlineExperimentation | sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation |
-| openai | Azure.AI.OpenAI.Assistants | sdk/openai/Azure.AI.OpenAI.Assistants |
 | purview | Azure.Analytics.Purview.DataMap | sdk/purview/Azure.Analytics.Purview.DataMap |
 | translation | Azure.AI.Translation.Document | sdk/translation/Azure.AI.Translation.Document |
 | translation | Azure.AI.Translation.Text | sdk/translation/Azure.AI.Translation.Text |
@@ -89,11 +87,12 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 
 ## Data Plane Libraries using Swagger
 
-Total: 115
+Total: 119
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
 | agrifood | Azure.Verticals.AgriFood.Farming | sdk/agrifood/Azure.Verticals.AgriFood.Farming |
+| ai | Azure.AI.Inference | sdk/ai/Azure.AI.Inference |
 | attestation | Azure.Security.Attestation | sdk/attestation/Azure.Security.Attestation |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering | sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering |
 | cognitiveservices | AnomalyDetector | sdk/cognitiveservices/AnomalyDetector |
@@ -137,6 +136,8 @@ Total: 115
 | digitaltwins | Azure.DigitalTwins.Core | sdk/digitaltwins/Azure.DigitalTwins.Core |
 | eventgrid | Azure.Messaging.EventGrid | sdk/eventgrid/Azure.Messaging.EventGrid |
 | formrecognizer | Azure.AI.FormRecognizer | sdk/formrecognizer/Azure.AI.FormRecognizer |
+| healthinsights | Azure.Health.Insights.CancerProfiling | sdk/healthinsights/Azure.Health.Insights.CancerProfiling |
+| healthinsights | Azure.Health.Insights.ClinicalMatching | sdk/healthinsights/Azure.Health.Insights.ClinicalMatching |
 | iot | Azure.IoT.Hub.Service | sdk/iot/Azure.IoT.Hub.Service |
 | loadtestservice | Azure.Developer.Playwright | sdk/loadtestservice/Azure.Developer.Playwright |
 | maps | Azure.Maps.Common | sdk/maps/Azure.Maps.Common |
@@ -152,6 +153,7 @@ Total: 115
 | monitor | Azure.Monitor.OpenTelemetry.LiveMetrics | sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics |
 | monitor | Azure.Monitor.Query | sdk/monitor/Azure.Monitor.Query |
 | objectanchors | Azure.MixedReality.ObjectAnchors.Conversion | sdk/objectanchors/Azure.MixedReality.ObjectAnchors.Conversion |
+| openai | Azure.AI.OpenAI.Assistants | sdk/openai/Azure.AI.OpenAI.Assistants |
 | personalizer | Azure.AI.Personalizer | sdk/personalizer/Azure.AI.Personalizer |
 | provisioning | Azure.Provisioning | sdk/provisioning/Azure.Provisioning |
 | provisioning | Azure.Provisioning.AppConfiguration | sdk/provisioning/Azure.Provisioning.AppConfiguration |

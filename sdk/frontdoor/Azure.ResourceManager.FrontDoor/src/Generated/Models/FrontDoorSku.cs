@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Name of the pricing tier. </summary>
+        [WirePath("name")]
         public FrontDoorSkuName? Name { get; set; }
     }
 }
