@@ -1497,7 +1497,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NewRelicObservabilityLatestLinkedSaaSResponseResult>> LatestLinkedSaaSAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public async Task<Response<NewRelicObservabilityLatestLinkedSaaSResult>> LatestLinkedSaaSAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1509,9 +1509,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        NewRelicObservabilityLatestLinkedSaaSResponseResult value = default;
+                        NewRelicObservabilityLatestLinkedSaaSResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NewRelicObservabilityLatestLinkedSaaSResponseResult.DeserializeNewRelicObservabilityLatestLinkedSaaSResponseResult(document.RootElement);
+                        value = NewRelicObservabilityLatestLinkedSaaSResult.DeserializeNewRelicObservabilityLatestLinkedSaaSResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1526,7 +1526,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NewRelicObservabilityLatestLinkedSaaSResponseResult> LatestLinkedSaaS(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public Response<NewRelicObservabilityLatestLinkedSaaSResult> LatestLinkedSaaS(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1538,9 +1538,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        NewRelicObservabilityLatestLinkedSaaSResponseResult value = default;
+                        NewRelicObservabilityLatestLinkedSaaSResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NewRelicObservabilityLatestLinkedSaaSResponseResult.DeserializeNewRelicObservabilityLatestLinkedSaaSResponseResult(document.RootElement);
+                        value = NewRelicObservabilityLatestLinkedSaaSResult.DeserializeNewRelicObservabilityLatestLinkedSaaSResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

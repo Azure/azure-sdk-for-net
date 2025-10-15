@@ -1182,7 +1182,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NewRelicObservabilityLatestLinkedSaaSResponseResult>> LatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NewRelicObservabilityLatestLinkedSaaSResult>> LatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.LatestLinkedSaaS");
             scope.Start();
@@ -1220,7 +1220,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NewRelicObservabilityLatestLinkedSaaSResponseResult> LatestLinkedSaaS(CancellationToken cancellationToken = default)
+        public virtual Response<NewRelicObservabilityLatestLinkedSaaSResult> LatestLinkedSaaS(CancellationToken cancellationToken = default)
         {
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.LatestLinkedSaaS");
             scope.Start();

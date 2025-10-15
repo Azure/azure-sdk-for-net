@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicObservabilitySaaSResourceDetailsResponseResult : IUtf8JsonSerializable, IJsonModel<NewRelicObservabilitySaaSResourceDetailsResponseResult>
+    public partial class NewRelicObservabilitySaaSResourceDetailsResult : IUtf8JsonSerializable, IJsonModel<NewRelicObservabilitySaaSResourceDetailsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicObservabilitySaaSResourceDetailsResponseResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicObservabilitySaaSResourceDetailsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NewRelicObservabilitySaaSResourceDetailsResponseResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NewRelicObservabilitySaaSResourceDetailsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicObservabilitySaaSResourceDetailsResponseResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicObservabilitySaaSResourceDetailsResult)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
         }
 
-        NewRelicObservabilitySaaSResourceDetailsResponseResult IJsonModel<NewRelicObservabilitySaaSResourceDetailsResponseResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NewRelicObservabilitySaaSResourceDetailsResult IJsonModel<NewRelicObservabilitySaaSResourceDetailsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicObservabilitySaaSResourceDetailsResponseResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicObservabilitySaaSResourceDetailsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNewRelicObservabilitySaaSResourceDetailsResponseResult(document.RootElement, options);
+            return DeserializeNewRelicObservabilitySaaSResourceDetailsResult(document.RootElement, options);
         }
 
-        internal static NewRelicObservabilitySaaSResourceDetailsResponseResult DeserializeNewRelicObservabilitySaaSResourceDetailsResponseResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NewRelicObservabilitySaaSResourceDetailsResult DeserializeNewRelicObservabilitySaaSResourceDetailsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NewRelicObservabilitySaaSResourceDetailsResponseResult(
+            return new NewRelicObservabilitySaaSResourceDetailsResult(
                 id,
                 name,
                 type,
@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResponseResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -219,26 +219,26 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicObservabilitySaaSResourceDetailsResponseResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicObservabilitySaaSResourceDetailsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NewRelicObservabilitySaaSResourceDetailsResponseResult IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResponseResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NewRelicObservabilitySaaSResourceDetailsResult IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNewRelicObservabilitySaaSResourceDetailsResponseResult(document.RootElement, options);
+                        return DeserializeNewRelicObservabilitySaaSResourceDetailsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicObservabilitySaaSResourceDetailsResponseResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicObservabilitySaaSResourceDetailsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResponseResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NewRelicObservabilitySaaSResourceDetailsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

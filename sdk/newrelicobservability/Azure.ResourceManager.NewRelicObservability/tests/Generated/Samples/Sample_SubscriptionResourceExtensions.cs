@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
 
             // invoke the operation
             ActivateSaaSParameterContent content = new ActivateSaaSParameterContent("00000000-0000-0000-0000-000005430000", "publisherId");
-            NewRelicObservabilitySaaSResourceDetailsResponseResult result = await subscriptionResource.ActivateResourceSaaSAsync(content);
+            NewRelicObservabilitySaaSResourceDetailsResult result = await subscriptionResource.ActivateResourceSaaSAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

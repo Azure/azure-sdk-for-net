@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details for ActivateSaaSParameter request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NewRelicObservabilitySaaSResourceDetailsResponseResult>> ActivateResourceSaaSAsync(this SubscriptionResource subscriptionResource, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<NewRelicObservabilitySaaSResourceDetailsResult>> ActivateResourceSaaSAsync(this SubscriptionResource subscriptionResource, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details for ActivateSaaSParameter request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<NewRelicObservabilitySaaSResourceDetailsResponseResult> ActivateResourceSaaS(this SubscriptionResource subscriptionResource, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        public static Response<NewRelicObservabilitySaaSResourceDetailsResult> ActivateResourceSaaS(this SubscriptionResource subscriptionResource, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

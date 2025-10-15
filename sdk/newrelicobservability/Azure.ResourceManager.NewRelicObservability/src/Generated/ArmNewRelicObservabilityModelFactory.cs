@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NewRelicObservabilitySaaSResourceDetailsResponseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicObservabilitySaaSResourceDetailsResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="saasId"> Id of the Marketplace SaaS Resource. </param>
-        /// <returns> A new <see cref="Models.NewRelicObservabilitySaaSResourceDetailsResponseResult"/> instance for mocking. </returns>
-        public static NewRelicObservabilitySaaSResourceDetailsResponseResult NewRelicObservabilitySaaSResourceDetailsResponseResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string saasId = null)
+        /// <returns> A new <see cref="Models.NewRelicObservabilitySaaSResourceDetailsResult"/> instance for mocking. </returns>
+        public static NewRelicObservabilitySaaSResourceDetailsResult NewRelicObservabilitySaaSResourceDetailsResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string saasId = null)
         {
-            return new NewRelicObservabilitySaaSResourceDetailsResponseResult(
+            return new NewRelicObservabilitySaaSResourceDetailsResult(
                 id,
                 name,
                 resourceType,
@@ -376,13 +376,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityVmExtensionPayload(ingestionKey, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NewRelicObservabilityLatestLinkedSaaSResponseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicObservabilityLatestLinkedSaaSResult"/>. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
-        /// <returns> A new <see cref="Models.NewRelicObservabilityLatestLinkedSaaSResponseResult"/> instance for mocking. </returns>
-        public static NewRelicObservabilityLatestLinkedSaaSResponseResult NewRelicObservabilityLatestLinkedSaaSResponseResult(string saaSResourceId = null, bool? isHiddenSaaS = null)
+        /// <returns> A new <see cref="Models.NewRelicObservabilityLatestLinkedSaaSResult"/> instance for mocking. </returns>
+        public static NewRelicObservabilityLatestLinkedSaaSResult NewRelicObservabilityLatestLinkedSaaSResult(string saaSResourceId = null, bool? isHiddenSaaS = null)
         {
-            return new NewRelicObservabilityLatestLinkedSaaSResponseResult(saaSResourceId, isHiddenSaaS, serializedAdditionalRawData: null);
+            return new NewRelicObservabilityLatestLinkedSaaSResult(saaSResourceId, isHiddenSaaS, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData" />. </summary>

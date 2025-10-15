@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            NewRelicObservabilityLatestLinkedSaaSResponseResult result = await newRelicMonitorResource.LatestLinkedSaaSAsync();
+            NewRelicObservabilityLatestLinkedSaaSResult result = await newRelicMonitorResource.LatestLinkedSaaSAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            NewRelicObservabilityLatestLinkedSaaSResponseResult result = await newRelicMonitorResource.LatestLinkedSaaSAsync();
+            NewRelicObservabilityLatestLinkedSaaSResult result = await newRelicMonitorResource.LatestLinkedSaaSAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

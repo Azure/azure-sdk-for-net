@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Marketplace SaaS resource details. </summary>
-    public partial class NewRelicObservabilitySaaSResourceDetailsResponseResult : ResourceData
+    public partial class NewRelicObservabilitySaaSResourceDetailsResult : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilitySaaSResourceDetailsResponseResult"/>. </summary>
-        public NewRelicObservabilitySaaSResourceDetailsResponseResult()
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilitySaaSResourceDetailsResult"/>. </summary>
+        public NewRelicObservabilitySaaSResourceDetailsResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilitySaaSResourceDetailsResponseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilitySaaSResourceDetailsResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="saasId"> Id of the Marketplace SaaS Resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicObservabilitySaaSResourceDetailsResponseResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string saasId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NewRelicObservabilitySaaSResourceDetailsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string saasId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SaasId = saasId;
             _serializedAdditionalRawData = serializedAdditionalRawData;

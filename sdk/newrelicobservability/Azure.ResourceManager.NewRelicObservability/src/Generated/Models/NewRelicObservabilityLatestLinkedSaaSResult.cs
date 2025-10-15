@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Response of get latest linked SaaS resource operation. </summary>
-    public partial class NewRelicObservabilityLatestLinkedSaaSResponseResult
+    public partial class NewRelicObservabilityLatestLinkedSaaSResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityLatestLinkedSaaSResponseResult"/>. </summary>
-        internal NewRelicObservabilityLatestLinkedSaaSResponseResult()
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityLatestLinkedSaaSResult"/>. </summary>
+        internal NewRelicObservabilityLatestLinkedSaaSResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityLatestLinkedSaaSResponseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityLatestLinkedSaaSResult"/>. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicObservabilityLatestLinkedSaaSResponseResult(string saaSResourceId, bool? isHiddenSaaS, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NewRelicObservabilityLatestLinkedSaaSResult(string saaSResourceId, bool? isHiddenSaaS, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SaaSResourceId = saaSResourceId;
             IsHiddenSaaS = isHiddenSaaS;
