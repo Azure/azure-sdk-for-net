@@ -200,7 +200,7 @@ jobs:
               ${{ var.key }}: ${{ var.value }}
 
       - ${{ else }}:
-        - psws: >
+        - pwsh: >
             ./eng/scripts/runwithdevopslogging.ps1
             dotnet test eng/service.proj
             --framework $(TestTargetFramework)
