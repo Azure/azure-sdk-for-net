@@ -364,7 +364,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.6" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" Version="2.3.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.1.4" />
-    <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.3.0" />
     <PackageReference Update="Microsoft.Azure.Core.Spatial" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Devices" Version="1.38.2" />
