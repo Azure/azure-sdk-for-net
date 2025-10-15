@@ -205,7 +205,7 @@ namespace Azure.AI.Agents.Persistent
                             case SubmitToolApprovalUpdate stau:
                                 ruUpdate.Contents.Add(new McpServerToolApprovalRequestContent(
                                     JsonSerializer.Serialize([stau.Value.Id, stau.ToolCallId], AgentsChatClientJsonContext.Default.StringArray),
-                                    new McpServerToolCallContent(stau.ToolCallId, stau.Name, "<server_name>") // Server name isn't provided in the update.
+                                    new McpServerToolCallContent(stau.ToolCallId, stau.Name, stau.ServerLabel)
                                     {
                                         Arguments = JsonSerializer.Deserialize(stau.Arguments, AgentsChatClientJsonContext.Default.IReadOnlyDictionaryStringObject)!,
                                     }));
