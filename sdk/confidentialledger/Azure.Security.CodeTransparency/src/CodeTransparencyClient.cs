@@ -30,7 +30,7 @@ namespace Azure.Security.CodeTransparency
         /// <summary>
         /// Prefix for receipts with unknown/unrecognized issuers.
         /// </summary>
-        public static readonly string UnknownIssuerPrefix = "unknown-issuer";
+        public static readonly string UnknownIssuerPrefix = "__unknown-issuer::";
 
         /// <summary>
         /// Initializes a new instance of CodeTransparencyClient. The client will download its own
