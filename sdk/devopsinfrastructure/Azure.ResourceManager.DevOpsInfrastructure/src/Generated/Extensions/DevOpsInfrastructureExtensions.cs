@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// </list>
         /// <item>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// </list>
         /// <item>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -286,6 +286,78 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         }
 
         /// <summary>
+        /// Checks that the pool name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pools_CheckDevOpsPoolNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.CheckDevOpsPoolNameAvailability(CheckNameAvailability,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="body"> The CheckAvailability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
+        public static async Task<Response<DevOpsCheckNameAvailabilityResult>> CheckDevOpsPoolNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailability body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).CheckDevOpsPoolNameAvailabilityAsync(body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks that the pool name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pools_CheckDevOpsPoolNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.CheckDevOpsPoolNameAvailability(CheckNameAvailability,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="body"> The CheckAvailability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
+        public static Response<DevOpsCheckNameAvailabilityResult> CheckDevOpsPoolNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailability body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).CheckDevOpsPoolNameAvailability(body, cancellationToken);
+        }
+
+        /// <summary>
         /// List ResourceSku resources by subscription ID
         /// <list type="bullet">
         /// <item>
@@ -298,7 +370,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// </list>
         /// <item>
@@ -332,7 +404,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// </list>
         /// <item>
@@ -366,7 +438,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// </list>
         /// <item>
@@ -399,7 +471,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// </list>
         /// <item>
