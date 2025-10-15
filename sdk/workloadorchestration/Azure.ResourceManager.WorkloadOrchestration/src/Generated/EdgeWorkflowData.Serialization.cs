@@ -12,7 +12,6 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadOrchestration.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
@@ -47,12 +46,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
+                writer.WriteObjectValue(ExtendedLocation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
         }
 
@@ -76,9 +75,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 return null;
             }
-            EdgeWorkflowProperties properties = default;
-            ExtendedLocation extendedLocation = default;
-            ETag? etag = default;
+            WorkflowProperties properties = default;
+            AzureResourceManagerCommonTypesExtendedLocation extendedLocation = default;
+            string etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         continue;
                     }
-                    properties = EdgeWorkflowProperties.DeserializeEdgeWorkflowProperties(property.Value, options);
+                    properties = WorkflowProperties.DeserializeWorkflowProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -102,16 +101,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         continue;
                     }
-                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerWorkloadOrchestrationContext.Default);
+                    extendedLocation = AzureResourceManagerCommonTypesExtendedLocation.DeserializeAzureResourceManagerCommonTypesExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))

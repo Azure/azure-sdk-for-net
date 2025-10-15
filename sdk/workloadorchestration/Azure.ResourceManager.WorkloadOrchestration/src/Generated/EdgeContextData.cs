@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeContextData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EdgeContextProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal EdgeContextData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContextProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public EdgeContextProperties Properties { get; set; }
+        public ContextProperties Properties { get; set; }
     }
 }

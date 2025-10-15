@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_Get</description>
+        /// <description>SolutionTemplateVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_Get</description>
+        /// <description>SolutionTemplateVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Get</description>
+        /// <description>SolutionTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Get</description>
+        /// <description>SolutionTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Delete</description>
+        /// <description>SolutionTemplates_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeSolutionTemplateSolutionTemplatesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, _edgeSolutionTemplateSolutionTemplatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, _edgeSolutionTemplateSolutionTemplatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Delete</description>
+        /// <description>SolutionTemplates_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeSolutionTemplateSolutionTemplatesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, _edgeSolutionTemplateSolutionTemplatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, _edgeSolutionTemplateSolutionTemplatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Update</description>
+        /// <description>SolutionTemplates_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Update</description>
+        /// <description>SolutionTemplates_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeSolutionTemplateVersionResource>> CreateVersionAsync(WaitUntil waitUntil, EdgeSolutionTemplateVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeSolutionTemplateVersionResource>> CreateVersionAsync(WaitUntil waitUntil, SolutionTemplateVersionWithUpdateType body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<EdgeSolutionTemplateVersionResource> CreateVersion(WaitUntil waitUntil, EdgeSolutionTemplateVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeSolutionTemplateVersionResource> CreateVersion(WaitUntil waitUntil, SolutionTemplateVersionWithUpdateType body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> RemoveVersionAsync(WaitUntil waitUntil, EdgeVersionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RemoveVersionAsync(WaitUntil waitUntil, WorkloadOrchestrationVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeSolutionTemplateSolutionTemplatesRestClient.RemoveVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, _edgeSolutionTemplateSolutionTemplatesRestClient.CreateRemoveVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, _edgeSolutionTemplateSolutionTemplatesRestClient.CreateRemoveVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation RemoveVersion(WaitUntil waitUntil, EdgeVersionContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RemoveVersion(WaitUntil waitUntil, WorkloadOrchestrationVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeSolutionTemplateSolutionTemplatesRestClient.RemoveVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, _edgeSolutionTemplateSolutionTemplatesRestClient.CreateRemoveVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateSolutionTemplatesClientDiagnostics, Pipeline, _edgeSolutionTemplateSolutionTemplatesRestClient.CreateRemoveVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Get</description>
+        /// <description>SolutionTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Get</description>
+        /// <description>SolutionTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Get</description>
+        /// <description>SolutionTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Get</description>
+        /// <description>SolutionTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Get</description>
+        /// <description>SolutionTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Get</description>
+        /// <description>SolutionTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
         }
 
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 return null;
             }
-            EdgeDynamicSchemaProperties properties = default;
-            ETag? etag = default;
+            DynamicSchemaProperties properties = default;
+            string etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -86,16 +86,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         continue;
                     }
-                    properties = EdgeDynamicSchemaProperties.DeserializeEdgeDynamicSchemaProperties(property.Value, options);
+                    properties = DynamicSchemaProperties.DeserializeDynamicSchemaProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))

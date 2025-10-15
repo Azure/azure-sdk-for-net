@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.WorkloadOrchestration.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Get</description>
+        /// <description>SchemaVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Get</description>
+        /// <description>SchemaVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Delete</description>
+        /// <description>SchemaVersions_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeSchemaVersionSchemaVersionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSchemaVersionSchemaVersionsClientDiagnostics, Pipeline, _edgeSchemaVersionSchemaVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeSchemaVersionSchemaVersionsClientDiagnostics, Pipeline, _edgeSchemaVersionSchemaVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -219,7 +220,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Delete</description>
+        /// <description>SchemaVersions_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeSchemaVersionSchemaVersionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSchemaVersionSchemaVersionsClientDiagnostics, Pipeline, _edgeSchemaVersionSchemaVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeSchemaVersionSchemaVersionsClientDiagnostics, Pipeline, _edgeSchemaVersionSchemaVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Update</description>
+        /// <description>SchemaVersions_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -273,18 +274,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<EdgeSchemaVersionResource>> UpdateAsync(EdgeSchemaVersionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<EdgeSchemaVersionResource>> UpdateAsync(EdgeSchemaVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _edgeSchemaVersionSchemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionResource.Update");
             scope.Start();
             try
             {
-                var response = await _edgeSchemaVersionSchemaVersionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _edgeSchemaVersionSchemaVersionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new EdgeSchemaVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Update</description>
+        /// <description>SchemaVersions_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -315,18 +316,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<EdgeSchemaVersionResource> Update(EdgeSchemaVersionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<EdgeSchemaVersionResource> Update(EdgeSchemaVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _edgeSchemaVersionSchemaVersionsClientDiagnostics.CreateScope("EdgeSchemaVersionResource.Update");
             scope.Start();
             try
             {
-                var response = _edgeSchemaVersionSchemaVersionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var response = _edgeSchemaVersionSchemaVersionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new EdgeSchemaVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

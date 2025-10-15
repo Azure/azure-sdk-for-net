@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InstanceHistory_Get</description>
+        /// <description>InstanceHistories_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InstanceHistory_Get</description>
+        /// <description>InstanceHistories_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

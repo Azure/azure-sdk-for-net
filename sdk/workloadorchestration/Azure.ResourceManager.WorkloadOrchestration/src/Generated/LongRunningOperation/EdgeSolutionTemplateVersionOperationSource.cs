@@ -25,38 +25,48 @@ namespace Azure.ResourceManager.WorkloadOrchestration
 
         EdgeSolutionTemplateVersionResource IOperationSource<EdgeSolutionTemplateVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            // Parse the operation status response to extract the actual resource ID
-            var resourceId = ExtractResourceIdFromOperationResponse(response);
-            return new EdgeSolutionTemplateVersionResource(_client, resourceId);
+            // Parse the response as operation status first
+            using var document = JsonDocument.Parse(response.Content);
+            var root = document.RootElement;
+            
+            // Check if this is an operation status response with actual resource info
+            if (root.TryGetProperty("properties", out var properties) && 
+                properties.TryGetProperty("solutionTemplateVersionId", out var versionIdElement))
+            {
+                var actualResourceId = versionIdElement.GetString();
+                
+                // Get the actual resource using the correct ID
+                var resourceIdentifier = new ResourceIdentifier(actualResourceId);
+                var actualResource = _client.GetEdgeSolutionTemplateVersionResource(resourceIdentifier);
+                return actualResource.Get(cancellationToken).Value;
+            }
+            
+            // If it's not an operation status, try to parse as normal resource data
+            var data = ModelReaderWriter.Read<EdgeSolutionTemplateVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
+            return new EdgeSolutionTemplateVersionResource(_client, data);
         }
 
         async ValueTask<EdgeSolutionTemplateVersionResource> IOperationSource<EdgeSolutionTemplateVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            // Parse the operation status response to extract the actual resource ID
-            var resourceId = ExtractResourceIdFromOperationResponse(response);
-            return await Task.FromResult(new EdgeSolutionTemplateVersionResource(_client, resourceId)).ConfigureAwait(false);
-        }
-
-        private ResourceIdentifier ExtractResourceIdFromOperationResponse(Response response)
-        {
+            // Parse the response as operation status first
             using var document = JsonDocument.Parse(response.Content);
             var root = document.RootElement;
             
-            // Try to get the resource ID from properties.solutionTemplateVersionId
+            // Check if this is an operation status response with actual resource info
             if (root.TryGetProperty("properties", out var properties) && 
-                properties.TryGetProperty("solutionTemplateVersionId", out var solutionTemplateVersionId))
+                properties.TryGetProperty("solutionTemplateVersionId", out var versionIdElement))
             {
-                return new ResourceIdentifier(solutionTemplateVersionId.GetString());
+                var actualResourceId = versionIdElement.GetString();
+                
+                // Get the actual resource using the correct ID
+                var resourceIdentifier = new ResourceIdentifier(actualResourceId);
+                var actualResource = _client.GetEdgeSolutionTemplateVersionResource(resourceIdentifier);
+                return await actualResource.GetAsync(cancellationToken).ConfigureAwait(false);
             }
             
-            // Fallback to resourceId if available
-            if (root.TryGetProperty("resourceId", out var resourceId))
-            {
-                return new ResourceIdentifier(resourceId.GetString());
-            }
-            
-            // If neither is available, throw an exception
-            throw new InvalidOperationException("Unable to extract resource ID from operation response. Expected 'properties.solutionTemplateVersionId' or 'resourceId' field.");
+            // If it's not an operation status, try to parse as normal resource data
+            var data = ModelReaderWriter.Read<EdgeSolutionTemplateVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
+            return await Task.FromResult(new EdgeSolutionTemplateVersionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

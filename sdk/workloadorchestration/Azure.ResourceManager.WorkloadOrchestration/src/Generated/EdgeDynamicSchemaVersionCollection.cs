@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_CreateOrUpdate</description>
+        /// <description>DynamicSchemaVersions_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaVersionResource>(new EdgeDynamicSchemaVersionOperationSource(Client), _edgeDynamicSchemaVersionDynamicSchemaVersionsClientDiagnostics, Pipeline, _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaVersionResource>(new EdgeDynamicSchemaVersionOperationSource(Client), _edgeDynamicSchemaVersionDynamicSchemaVersionsClientDiagnostics, Pipeline, _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_CreateOrUpdate</description>
+        /// <description>DynamicSchemaVersions_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, data, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaVersionResource>(new EdgeDynamicSchemaVersionOperationSource(Client), _edgeDynamicSchemaVersionDynamicSchemaVersionsClientDiagnostics, Pipeline, _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaVersionResource>(new EdgeDynamicSchemaVersionOperationSource(Client), _edgeDynamicSchemaVersionDynamicSchemaVersionsClientDiagnostics, Pipeline, _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_Get</description>
+        /// <description>DynamicSchemaVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_Get</description>
+        /// <description>DynamicSchemaVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_ListByDynamicSchema</description>
+        /// <description>DynamicSchemaVersions_ListByDynamicSchema</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_ListByDynamicSchema</description>
+        /// <description>DynamicSchemaVersions_ListByDynamicSchema</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_Get</description>
+        /// <description>DynamicSchemaVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_Get</description>
+        /// <description>DynamicSchemaVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_Get</description>
+        /// <description>DynamicSchemaVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_Get</description>
+        /// <description>DynamicSchemaVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

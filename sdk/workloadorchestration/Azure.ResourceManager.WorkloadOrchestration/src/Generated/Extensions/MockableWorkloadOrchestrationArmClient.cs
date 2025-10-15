@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <description>Jobs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
+        /// <description>Jobs_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaReference_Get</description>
+        /// <description>SchemaReferences_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaReference_Get</description>
+        /// <description>SchemaReferences_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -182,54 +182,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EdgeDynamicSchemaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeDynamicSchemaResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDynamicSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeDynamicSchemaResource"/> object. </returns>
-        public virtual EdgeDynamicSchemaResource GetEdgeDynamicSchemaResource(ResourceIdentifier id)
-        {
-            EdgeDynamicSchemaResource.ValidateResourceId(id);
-            return new EdgeDynamicSchemaResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeSchemaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSchemaResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeSchemaResource"/> object. </returns>
-        public virtual EdgeSchemaResource GetEdgeSchemaResource(ResourceIdentifier id)
-        {
-            EdgeSchemaResource.ValidateResourceId(id);
-            return new EdgeSchemaResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeSchemaVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSchemaVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSchemaVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeSchemaVersionResource"/> object. </returns>
-        public virtual EdgeSchemaVersionResource GetEdgeSchemaVersionResource(ResourceIdentifier id)
-        {
-            EdgeSchemaVersionResource.ValidateResourceId(id);
-            return new EdgeSchemaVersionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeSolutionVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSolutionVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeSolutionVersionResource"/> object. </returns>
-        public virtual EdgeSolutionVersionResource GetEdgeSolutionVersionResource(ResourceIdentifier id)
-        {
-            EdgeSolutionVersionResource.ValidateResourceId(id);
-            return new EdgeSolutionVersionResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing an <see cref="EdgeJobResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EdgeJobResource.CreateResourceIdentifier" /> to create an <see cref="EdgeJobResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -239,30 +191,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         {
             EdgeJobResource.ValidateResourceId(id);
             return new EdgeJobResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeTargetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeTargetResource.CreateResourceIdentifier" /> to create an <see cref="EdgeTargetResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeTargetResource"/> object. </returns>
-        public virtual EdgeTargetResource GetEdgeTargetResource(ResourceIdentifier id)
-        {
-            EdgeTargetResource.ValidateResourceId(id);
-            return new EdgeTargetResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeDynamicSchemaVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeDynamicSchemaVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDynamicSchemaVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeDynamicSchemaVersionResource"/> object. </returns>
-        public virtual EdgeDynamicSchemaVersionResource GetEdgeDynamicSchemaVersionResource(ResourceIdentifier id)
-        {
-            EdgeDynamicSchemaVersionResource.ValidateResourceId(id);
-            return new EdgeDynamicSchemaVersionResource(Client, id);
         }
 
         /// <summary>
@@ -278,27 +206,51 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EdgeSolutionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSolutionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="EdgeConfigTemplateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeConfigTemplateResource.CreateResourceIdentifier" /> to create an <see cref="EdgeConfigTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeSolutionResource"/> object. </returns>
-        public virtual EdgeSolutionResource GetEdgeSolutionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeConfigTemplateResource"/> object. </returns>
+        public virtual EdgeConfigTemplateResource GetEdgeConfigTemplateResource(ResourceIdentifier id)
         {
-            EdgeSolutionResource.ValidateResourceId(id);
-            return new EdgeSolutionResource(Client, id);
+            EdgeConfigTemplateResource.ValidateResourceId(id);
+            return new EdgeConfigTemplateResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EdgeSolutionTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSolutionTemplateVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionTemplateVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="EdgeContextResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeContextResource.CreateResourceIdentifier" /> to create an <see cref="EdgeContextResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeSolutionTemplateVersionResource"/> object. </returns>
-        public virtual EdgeSolutionTemplateVersionResource GetEdgeSolutionTemplateVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeContextResource"/> object. </returns>
+        public virtual EdgeContextResource GetEdgeContextResource(ResourceIdentifier id)
         {
-            EdgeSolutionTemplateVersionResource.ValidateResourceId(id);
-            return new EdgeSolutionTemplateVersionResource(Client, id);
+            EdgeContextResource.ValidateResourceId(id);
+            return new EdgeContextResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EdgeDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeDiagnosticResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeDiagnosticResource"/> object. </returns>
+        public virtual EdgeDiagnosticResource GetEdgeDiagnosticResource(ResourceIdentifier id)
+        {
+            EdgeDiagnosticResource.ValidateResourceId(id);
+            return new EdgeDiagnosticResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EdgeSchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSchemaResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeSchemaResource"/> object. </returns>
+        public virtual EdgeSchemaResource GetEdgeSchemaResource(ResourceIdentifier id)
+        {
+            EdgeSchemaResource.ValidateResourceId(id);
+            return new EdgeSchemaResource(Client, id);
         }
 
         /// <summary>
@@ -314,39 +266,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EdgeDeploymentInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeDeploymentInstanceResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDeploymentInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="EdgeTargetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeTargetResource.CreateResourceIdentifier" /> to create an <see cref="EdgeTargetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeDeploymentInstanceResource"/> object. </returns>
-        public virtual EdgeDeploymentInstanceResource GetEdgeDeploymentInstanceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeTargetResource"/> object. </returns>
+        public virtual EdgeTargetResource GetEdgeTargetResource(ResourceIdentifier id)
         {
-            EdgeDeploymentInstanceResource.ValidateResourceId(id);
-            return new EdgeDeploymentInstanceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeDeploymentInstanceHistoryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeDeploymentInstanceHistoryResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDeploymentInstanceHistoryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeDeploymentInstanceHistoryResource"/> object. </returns>
-        public virtual EdgeDeploymentInstanceHistoryResource GetEdgeDeploymentInstanceHistoryResource(ResourceIdentifier id)
-        {
-            EdgeDeploymentInstanceHistoryResource.ValidateResourceId(id);
-            return new EdgeDeploymentInstanceHistoryResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeConfigTemplateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeConfigTemplateResource.CreateResourceIdentifier" /> to create an <see cref="EdgeConfigTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeConfigTemplateResource"/> object. </returns>
-        public virtual EdgeConfigTemplateResource GetEdgeConfigTemplateResource(ResourceIdentifier id)
-        {
-            EdgeConfigTemplateResource.ValidateResourceId(id);
-            return new EdgeConfigTemplateResource(Client, id);
+            EdgeTargetResource.ValidateResourceId(id);
+            return new EdgeTargetResource(Client, id);
         }
 
         /// <summary>
@@ -359,6 +287,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         {
             EdgeConfigTemplateVersionResource.ValidateResourceId(id);
             return new EdgeConfigTemplateVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EdgeSiteReferenceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSiteReferenceResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSiteReferenceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeSiteReferenceResource"/> object. </returns>
+        public virtual EdgeSiteReferenceResource GetEdgeSiteReferenceResource(ResourceIdentifier id)
+        {
+            EdgeSiteReferenceResource.ValidateResourceId(id);
+            return new EdgeSiteReferenceResource(Client, id);
         }
 
         /// <summary>
@@ -398,39 +338,99 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EdgeDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeDiagnosticResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="EdgeDynamicSchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeDynamicSchemaResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDynamicSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeDiagnosticResource"/> object. </returns>
-        public virtual EdgeDiagnosticResource GetEdgeDiagnosticResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeDynamicSchemaResource"/> object. </returns>
+        public virtual EdgeDynamicSchemaResource GetEdgeDynamicSchemaResource(ResourceIdentifier id)
         {
-            EdgeDiagnosticResource.ValidateResourceId(id);
-            return new EdgeDiagnosticResource(Client, id);
+            EdgeDynamicSchemaResource.ValidateResourceId(id);
+            return new EdgeDynamicSchemaResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EdgeContextResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeContextResource.CreateResourceIdentifier" /> to create an <see cref="EdgeContextResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="EdgeDynamicSchemaVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeDynamicSchemaVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDynamicSchemaVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeContextResource"/> object. </returns>
-        public virtual EdgeContextResource GetEdgeContextResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeDynamicSchemaVersionResource"/> object. </returns>
+        public virtual EdgeDynamicSchemaVersionResource GetEdgeDynamicSchemaVersionResource(ResourceIdentifier id)
         {
-            EdgeContextResource.ValidateResourceId(id);
-            return new EdgeContextResource(Client, id);
+            EdgeDynamicSchemaVersionResource.ValidateResourceId(id);
+            return new EdgeDynamicSchemaVersionResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EdgeSiteReferenceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSiteReferenceResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSiteReferenceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="EdgeSchemaVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSchemaVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSchemaVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeSiteReferenceResource"/> object. </returns>
-        public virtual EdgeSiteReferenceResource GetEdgeSiteReferenceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeSchemaVersionResource"/> object. </returns>
+        public virtual EdgeSchemaVersionResource GetEdgeSchemaVersionResource(ResourceIdentifier id)
         {
-            EdgeSiteReferenceResource.ValidateResourceId(id);
-            return new EdgeSiteReferenceResource(Client, id);
+            EdgeSchemaVersionResource.ValidateResourceId(id);
+            return new EdgeSchemaVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EdgeSolutionTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSolutionTemplateVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionTemplateVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeSolutionTemplateVersionResource"/> object. </returns>
+        public virtual EdgeSolutionTemplateVersionResource GetEdgeSolutionTemplateVersionResource(ResourceIdentifier id)
+        {
+            EdgeSolutionTemplateVersionResource.ValidateResourceId(id);
+            return new EdgeSolutionTemplateVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EdgeSolutionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSolutionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeSolutionResource"/> object. </returns>
+        public virtual EdgeSolutionResource GetEdgeSolutionResource(ResourceIdentifier id)
+        {
+            EdgeSolutionResource.ValidateResourceId(id);
+            return new EdgeSolutionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EdgeDeploymentInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeDeploymentInstanceResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDeploymentInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeDeploymentInstanceResource"/> object. </returns>
+        public virtual EdgeDeploymentInstanceResource GetEdgeDeploymentInstanceResource(ResourceIdentifier id)
+        {
+            EdgeDeploymentInstanceResource.ValidateResourceId(id);
+            return new EdgeDeploymentInstanceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EdgeDeploymentInstanceHistoryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeDeploymentInstanceHistoryResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDeploymentInstanceHistoryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeDeploymentInstanceHistoryResource"/> object. </returns>
+        public virtual EdgeDeploymentInstanceHistoryResource GetEdgeDeploymentInstanceHistoryResource(ResourceIdentifier id)
+        {
+            EdgeDeploymentInstanceHistoryResource.ValidateResourceId(id);
+            return new EdgeDeploymentInstanceHistoryResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EdgeSolutionVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSolutionVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeSolutionVersionResource"/> object. </returns>
+        public virtual EdgeSolutionVersionResource GetEdgeSolutionVersionResource(ResourceIdentifier id)
+        {
+            EdgeSolutionVersionResource.ValidateResourceId(id);
+            return new EdgeSolutionVersionResource(Client, id);
         }
     }
 }

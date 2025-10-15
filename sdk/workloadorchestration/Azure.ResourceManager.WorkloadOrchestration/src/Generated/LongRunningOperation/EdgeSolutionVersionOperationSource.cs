@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,74 +25,56 @@ namespace Azure.ResourceManager.WorkloadOrchestration
 
         EdgeSolutionVersionResource IOperationSource<EdgeSolutionVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = System.Text.Json.JsonDocument.Parse(response.Content);
+            // Parse the response as operation status first
+            using var document = JsonDocument.Parse(response.Content);
             var root = document.RootElement;
             
-            // Check if this is a completed operation response with nested EdgeSolutionVersionData
-            if (root.TryGetProperty("properties", out var propertiesElement))
+            // Check if this is an operation status response with actual resource info
+            if (root.TryGetProperty("properties", out var properties))
             {
-                // Check if properties contains the actual EdgeSolutionVersionData structure
-                if (propertiesElement.TryGetProperty("properties", out var nestedPropertiesElement))
+                // The actual resource data is nested in properties.properties with an "id" field
+                if (properties.TryGetProperty("properties", out var nestedProperties) &&
+                    nestedProperties.TryGetProperty("id", out var actualResourceIdElement))
                 {
-                    var nestedData = EdgeSolutionVersionData.DeserializeEdgeSolutionVersionData(propertiesElement, ModelReaderWriterOptions.Json);
-                    return new EdgeSolutionVersionResource(_client, nestedData);
-                }
-                
-                // If it's just an operation status response, extract resourceId and create a resource reference
-                if (root.TryGetProperty("resourceId", out var resourceIdElement))
-                {
-                    var resourceId = new ResourceIdentifier(resourceIdElement.GetString());
-                    return new EdgeSolutionVersionResource(_client, resourceId);
+                    var actualResourceId = actualResourceIdElement.GetString();
+                    
+                    // Get the actual resource using the correct ID
+                    var resourceIdentifier = new ResourceIdentifier(actualResourceId);
+                    var actualResource = _client.GetEdgeSolutionVersionResource(resourceIdentifier);
+                    return actualResource.Get(cancellationToken).Value;
                 }
             }
             
-            // Fallback to original behavior if structure is different
-            try
-            {
-                var fallbackData = ModelReaderWriter.Read<EdgeSolutionVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
-                return new EdgeSolutionVersionResource(_client, fallbackData);
-            }
-            catch
-            {
-                // If all else fails, return null - the operation should handle this gracefully
-                return null;
-            }
+            // If it's not an operation status, try to parse as normal resource data
+            var data = ModelReaderWriter.Read<EdgeSolutionVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
+            return new EdgeSolutionVersionResource(_client, data);
         }
 
         async ValueTask<EdgeSolutionVersionResource> IOperationSource<EdgeSolutionVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = System.Text.Json.JsonDocument.Parse(response.Content);
+            // Parse the response as operation status first
+            using var document = JsonDocument.Parse(response.Content);
             var root = document.RootElement;
             
-            // Check if this is a completed operation response with nested EdgeSolutionVersionData
-            if (root.TryGetProperty("properties", out var propertiesElement))
+            // Check if this is an operation status response with actual resource info
+            if (root.TryGetProperty("properties", out var properties))
             {
-                // Check if properties contains the actual EdgeSolutionVersionData structure
-                if (propertiesElement.TryGetProperty("properties", out var nestedPropertiesElement))
+                // The actual resource data is nested in properties.properties with an "id" field
+                if (properties.TryGetProperty("properties", out var nestedProperties) &&
+                    nestedProperties.TryGetProperty("id", out var actualResourceIdElement))
                 {
-                    var nestedData = EdgeSolutionVersionData.DeserializeEdgeSolutionVersionData(propertiesElement, ModelReaderWriterOptions.Json);
-                    return await Task.FromResult(new EdgeSolutionVersionResource(_client, nestedData)).ConfigureAwait(false);
-                }
-                
-                // If it's just an operation status response, extract resourceId and create a resource reference
-                if (root.TryGetProperty("resourceId", out var resourceIdElement))
-                {
-                    var resourceId = new ResourceIdentifier(resourceIdElement.GetString());
-                    return await Task.FromResult(new EdgeSolutionVersionResource(_client, resourceId)).ConfigureAwait(false);
+                    var actualResourceId = actualResourceIdElement.GetString();
+                    
+                    // Get the actual resource using the correct ID
+                    var resourceIdentifier = new ResourceIdentifier(actualResourceId);
+                    var actualResource = _client.GetEdgeSolutionVersionResource(resourceIdentifier);
+                    return await actualResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 }
             }
             
-            // Fallback to original behavior if structure is different
-            try
-            {
-                var fallbackData = ModelReaderWriter.Read<EdgeSolutionVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
-                return await Task.FromResult(new EdgeSolutionVersionResource(_client, fallbackData)).ConfigureAwait(false);
-            }
-            catch
-            {
-                // If all else fails, return null - the operation should handle this gracefully
-                return await Task.FromResult<EdgeSolutionVersionResource>(null).ConfigureAwait(false);
-            }
+            // If it's not an operation status, try to parse as normal resource data
+            var data = ModelReaderWriter.Read<EdgeSolutionVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
+            return await Task.FromResult(new EdgeSolutionVersionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

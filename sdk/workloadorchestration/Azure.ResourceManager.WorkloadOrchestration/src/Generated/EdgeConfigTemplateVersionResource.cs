@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplateVersion_Get</description>
+        /// <description>ConfigTemplateVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplateVersion_Get</description>
+        /// <description>ConfigTemplateVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

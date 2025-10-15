@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 return null;
             }
-            EdgeSiteReferenceProperties properties = default;
+            SiteReferenceProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         continue;
                     }
-                    properties = EdgeSiteReferenceProperties.DeserializeEdgeSiteReferenceProperties(property.Value, options);
+                    properties = SiteReferenceProperties.DeserializeSiteReferenceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

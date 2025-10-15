@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EdgeJobData"/>. </summary>
-        internal EdgeJobData()
+        public EdgeJobData()
         {
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EdgeJobProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EdgeJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobProperties properties, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = etag;
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public EdgeJobProperties Properties { get; }
+        public JobProperties Properties { get; set; }
         /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
-        public ETag? ETag { get; }
+        public string ETag { get; }
     }
 }
