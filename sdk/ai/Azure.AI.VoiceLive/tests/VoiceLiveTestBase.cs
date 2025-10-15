@@ -13,6 +13,7 @@ using Azure.AI.VoiceLive.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.AI.VoiceLive.Tests
@@ -27,7 +28,9 @@ namespace Azure.AI.VoiceLive.Tests
     {
         private readonly List<VoiceLiveSession> _sessions = new List<VoiceLiveSession>();
         private HashSet<string> _eventIDs = new HashSet<string>();
-        protected VoiceLiveClient? Client { get; private set; }
+
+        protected string AudioPath = string.Empty;
+
         protected TimeSpan DefaultTimeout => TestEnvironment.DefaultTimeout;
 
         public VoiceLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Live)
@@ -38,19 +41,31 @@ namespace Azure.AI.VoiceLive.Tests
         [SetUp]
         public virtual void Setup()
         {
-            var endpoint = new Uri(TestEnvironment.Endpoint);
+            var root = VoiceLiveTestEnvironment.RepositoryRoot;
+            var assetsPath = base.AssetsJsonPath;
 
-            // Use API key if available, otherwise Azure AD
-            if (!string.IsNullOrEmpty(TestEnvironment.ApiKey))
+            var assetsJson = JsonDocument.Parse(File.ReadAllText(assetsPath));
+
+            var tag = assetsJson.RootElement.GetProperty("Tag");
+
+            var tagString = tag.ToString();
+
+            string crumb = string.Empty;
+
+            foreach (var breadcrumb in Directory.EnumerateFiles(Path.Combine(root, ".assets", "breadcrumb")))
             {
-                var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-                Client = new VoiceLiveClient(endpoint, credential);
+                var contents = File.ReadAllText(breadcrumb);
+                var splitContents = contents.Trim().Split(';');
+                if (3 == splitContents.Length && splitContents[2] == tagString)
+                {
+                    crumb = splitContents[1];
+                    break;
+                }
             }
-            else
-            {
-                var credential = new DefaultAzureCredential();
-                Client = new VoiceLiveClient(endpoint, credential);
-            }
+
+            var assetsContentPath = Path.Combine(root, ".assets", crumb, "net", "sdk", "ai", "Azure.AI.VoiceLive");
+
+            AudioPath = Path.Combine(assetsContentPath, "audio");
         }
 
         [TearDown]
@@ -78,12 +93,21 @@ namespace Azure.AI.VoiceLive.Tests
                 new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey), options);
         }
 
+        internal TestableVoiceLiveSession GetTestableSession(VoiceLiveClient client)
+        {
+            var testEndpoint = TestEnvironment.Endpoint.Replace("https:", "wss:").Replace("http:", "ws:");
+
+            return string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
+                new TestableVoiceLiveSession(client, new Uri(testEndpoint), new DefaultAzureCredential(true)) :
+                new TestableVoiceLiveSession(client, new Uri(testEndpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+        }
+
         /// <summary>
         /// Loads test audio from the test data directory.
         /// </summary>
         protected byte[] LoadTestAudio(string filename)
         {
-            var path = Path.Combine(TestEnvironment.TestAudioPath, filename);
+            var path = Path.Combine(AudioPath, filename);
             Assert.True(File.Exists(path), $"Test audio file not found: {path}");
 
             var data = File.ReadAllBytes(path);
