@@ -15,5 +15,55 @@ public class FrontDoorSpecification() :
         {
             r.Name = "FrontDoorResource";
         });
+        AddNameRequirements<FrontDoorResource>(
+            max: 64,
+            min: 5,
+            lower: true,
+            upper: true,
+            digits: true,
+            hyphen: true,
+            underscore: false,
+            period: false,
+            parens: false);
+        AddNameRequirements<FrontDoorExperimentResource>(
+            max: int.MaxValue,
+            min: 1,
+            lower: true,
+            upper: true,
+            digits: true,
+            hyphen: true,
+            underscore: true,
+            period: true,
+            parens: true);
+        AddNameRequirements<FrontDoorRulesEngineResource>(
+            max: 90,
+            min: 1,
+            lower: true,
+            upper: true,
+            digits: true,
+            hyphen: true,
+            underscore: false,
+            period: false,
+            parens: false);
+        AddNameRequirements<FrontDoorNetworkExperimentProfileResource>(
+            max: int.MaxValue,
+            min: 1,
+            lower: true,
+            upper: true,
+            digits: true,
+            hyphen: true,
+            underscore: true,
+            period: true,
+            parens: true);
+        AddNameRequirements<FrontDoorWebApplicationFirewallPolicyResource>(
+            max: 128,
+            min: 1,
+            lower: true,
+            upper: true,
+            digits: true,
+            hyphen: true,
+            underscore: true,
+            period: true,
+            parens: true);
     }
 }
