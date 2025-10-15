@@ -11,6 +11,11 @@
 - Added support for uploading data with the new Content parameter on ShareFileClient.Create() and .CreateAsync().
 - Added support for the PropertySemantics parameter on ShareFileClient.Create(), .CreateAsync(), ShareDirectoryClient.Create(), and .CreateAsync().
 
+## 12.24.0 (2025-10-13)
+
+### Features Added
+- Includes all features from 12.24.0-beta.1
+
 ## 12.23.0 (2025-07-14)
 
 ### Features Added

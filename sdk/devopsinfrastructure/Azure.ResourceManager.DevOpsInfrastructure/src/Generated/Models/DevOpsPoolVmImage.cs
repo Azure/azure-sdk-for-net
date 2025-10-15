@@ -56,13 +56,17 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="wellKnownImageName"> The image to use from a well-known set of images made available to customers. </param>
         /// <param name="aliases"> List of aliases to reference the image by. </param>
         /// <param name="buffer"> The percentage of the buffer to be allocated to this image. </param>
+        /// <param name="ephemeralType"> The ephemeral type of the image. </param>
+        /// <param name="isEphemeral"> Read only. Determines if the image is ephemeral. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsPoolVmImage(string resourceId, string wellKnownImageName, IList<string> aliases, string buffer, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevOpsPoolVmImage(string resourceId, string wellKnownImageName, IList<string> aliases, string buffer, DevOpsEphemeralType? ephemeralType, bool? isEphemeral, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             WellKnownImageName = wellKnownImageName;
             Aliases = aliases;
             Buffer = buffer;
+            EphemeralType = ephemeralType;
+            IsEphemeral = isEphemeral;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,5 +78,9 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public IList<string> Aliases { get; }
         /// <summary> The percentage of the buffer to be allocated to this image. </summary>
         public string Buffer { get; set; }
+        /// <summary> The ephemeral type of the image. </summary>
+        public DevOpsEphemeralType? EphemeralType { get; set; }
+        /// <summary> Read only. Determines if the image is ephemeral. </summary>
+        public bool? IsEphemeral { get; }
     }
 }

@@ -26,15 +26,17 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> Initializes a new instance of <see cref="ExportResourceGroupTerraform"/>. </summary>
         /// <param name="type"> The parameter type. </param>
-        /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
-        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
-        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
-        /// <param name="azureResourcesToExclude"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
-        /// <param name="terraformResourcesToExclude"> Exclude resources from being exported based on the Terraform resource type. </param>
+        /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
+        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
+        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
+        /// <param name="includeRoleAssignment"> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </param>
+        /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
+        /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
+        /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
-        /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
-        internal ExportResourceGroupTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceGroupName, string namePattern) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, azureResourcesToExclude, terraformResourcesToExclude, serializedAdditionalRawData)
+        /// <param name="namePattern"> The id prefix for the exported Terraform resources. Defaults to `res-`. </param>
+        internal ExportResourceGroupTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceGroupName, string namePattern) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, includeRoleAssignment, includeManagedResource, azureResourcesToExclude, terraformResourcesToExclude, serializedAdditionalRawData)
         {
             ResourceGroupName = resourceGroupName;
             NamePattern = namePattern;
@@ -48,7 +50,7 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> The name of the resource group to be exported. </summary>
         public string ResourceGroupName { get; }
-        /// <summary> The name pattern of the Terraform resources. </summary>
+        /// <summary> The id prefix for the exported Terraform resources. Defaults to `res-`. </summary>
         public string NamePattern { get; set; }
     }
 }

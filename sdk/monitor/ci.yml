@@ -47,11 +47,3 @@ extends:
       safeName: AzureMonitorQuery
     - name: Azure.Monitor.Ingestion
       safeName: AzureMonitorIngestion
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Monitor.OpenTelemetry.Exporter
-      ExpectedWarningsFilepath: None
-    - ArtifactName: Azure.Monitor.Ingestion
-      ExpectedWarningsFilepath: None
-    - ArtifactName: Azure.Monitor.Query
-      ExpectedWarningsFilepath: None
