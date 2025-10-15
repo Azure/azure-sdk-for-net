@@ -14,9 +14,20 @@ public class BasicLiveFrontDoorTests(bool async)
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.network/front-door-create-basic/main.bicep")]
     [LiveOnly]
-    public async Task CreateKeyVaultAndSecret()
+    public async Task CreateBasicFrontDoor()
     {
         await using Trycep test = BasicFrontDoorTests.CreateBasicFrontDoorTest();
+        await test.SetupLiveCalls(this)
+            .Lint()
+            .ValidateAsync();
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.network/front-door-create-redirect/main.bicep")]
+    [LiveOnly]
+    public async Task CreateFrontDoorRedirect()
+    {
+        await using Trycep test = BasicFrontDoorTests.CreateFrontDoorRedirectTest();
         await test.SetupLiveCalls(this)
             .Lint()
             .ValidateAsync();
