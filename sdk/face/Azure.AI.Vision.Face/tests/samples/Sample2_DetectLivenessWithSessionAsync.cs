@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Vision.Face.Samples
@@ -18,8 +17,8 @@ namespace Azure.AI.Vision.Face.Samples
 
             #region Snippet:CreateLivenessSessionAsync
             var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
-                SendResultsToClient = true,
                 DeviceCorrelationId = Guid.NewGuid().ToString(),
+                UserCorrelationId = Guid.NewGuid().ToString(),
             };
 
             var createResponse = await sessionClient.CreateLivenessSessionAsync(createContent);
@@ -46,41 +45,11 @@ namespace Azure.AI.Vision.Face.Samples
             #region Snippet:GetLivenessSessionResultAsync
             var getResultResponse = await sessionClient.GetLivenessSessionResultAsync(sessionId);
             var sessionResult = getResultResponse.Value;
-            Console.WriteLine($"Id: {sessionResult.Id}");
-            Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
-            Console.WriteLine($"SessionExpired: {sessionResult.SessionExpired}");
-            Console.WriteLine($"DeviceCorrelationId: {sessionResult.DeviceCorrelationId}");
-            Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
+            Console.WriteLine($"Id: {sessionResult.SessionId}");
             Console.WriteLine($"Status: {sessionResult.Status}");
-            Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
-            if (sessionResult.Result != null) {
-                WriteLivenessSessionAuditEntry(sessionResult.Result);
-            }
-            #endregion
-
-            #region Snippet:GetLivenessSessionAuditEntriesAsync
-            var getAuditEntriesResponse = await sessionClient.GetLivenessSessionAuditEntriesAsync(sessionId);
-            foreach (var auditEntry in getAuditEntriesResponse.Value)
+            if (sessionResult.Results != null)
             {
-                WriteLivenessSessionAuditEntry(auditEntry);
-            }
-            #endregion
-        }
-
-        public async Task ListDetectLivenessSessionsAsync()
-        {
-            var sessionClient = CreateSessionClient();
-
-            #region Snippet:GetLivenessSessionsAsync
-            var listResponse = await sessionClient.GetLivenessSessionsAsync();
-            foreach (var session in listResponse.Value)
-            {
-                Console.WriteLine($"SessionId: {session.Id}");
-                Console.WriteLine($"CreatedDateTime: {session.CreatedDateTime}");
-                Console.WriteLine($"SessionExpired: {session.SessionExpired}");
-                Console.WriteLine($"DeviceCorrelationId: {session.DeviceCorrelationId}");
-                Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {session.AuthTokenTimeToLiveInSeconds}");
-                Console.WriteLine($"SessionStartDateTime: {session.SessionStartDateTime}");
+                WriteLivenessSessionResults(sessionResult.Results);
             }
             #endregion
         }

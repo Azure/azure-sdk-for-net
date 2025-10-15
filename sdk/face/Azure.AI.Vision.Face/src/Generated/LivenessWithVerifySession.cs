@@ -46,36 +46,38 @@ namespace Azure.AI.Vision.Face
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LivenessWithVerifySession"/>. </summary>
-        /// <param name="createdDateTime"> DateTime when this session was created. </param>
-        /// <param name="sessionExpired"> Whether or not the session is expired. </param>
+        /// <param name="authToken"> Bearer token to provide authentication for the Vision SDK running on a client application. This Bearer token has limited permissions to perform only the required action and expires after the TTL time. It is also auditable. </param>
         /// <param name="status"> The current status of the session. </param>
-        internal LivenessWithVerifySession(DateTimeOffset createdDateTime, bool sessionExpired, FaceSessionStatus status)
+        /// <param name="results"> The results of the liveness with verify session. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authToken"/> or <paramref name="results"/> is null. </exception>
+        internal LivenessWithVerifySession(string authToken, OperationState status, LivenessWithVerifySessionResults results)
         {
-            CreatedDateTime = createdDateTime;
-            SessionExpired = sessionExpired;
+            Argument.AssertNotNull(authToken, nameof(authToken));
+            Argument.AssertNotNull(results, nameof(results));
+
+            AuthToken = authToken;
             Status = status;
+            Results = results;
         }
 
         /// <summary> Initializes a new instance of <see cref="LivenessWithVerifySession"/>. </summary>
-        /// <param name="id"> The unique ID to reference this session. </param>
-        /// <param name="createdDateTime"> DateTime when this session was created. </param>
-        /// <param name="sessionStartDateTime"> DateTime when this session was started by the client. </param>
-        /// <param name="sessionExpired"> Whether or not the session is expired. </param>
-        /// <param name="deviceCorrelationId"> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </param>
-        /// <param name="authTokenTimeToLiveInSeconds"> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </param>
+        /// <param name="sessionId"> The unique ID to reference this session. </param>
+        /// <param name="authToken"> Bearer token to provide authentication for the Vision SDK running on a client application. This Bearer token has limited permissions to perform only the required action and expires after the TTL time. It is also auditable. </param>
         /// <param name="status"> The current status of the session. </param>
-        /// <param name="result"> The latest session audit result only populated if status == 'ResultAvailable'. </param>
+        /// <param name="modelVersion"> The model version used for liveness classification. This is an optional parameter, and if this is not specified, then the latest supported model version will be chosen. </param>
+        /// <param name="isAbuseMonitoringEnabled"> Denotes if the abuse monitoring feature was enabled during this session. </param>
+        /// <param name="expectedClientIpAddress"> The expected IP address or CIDR block of the client that runs the liveness check. </param>
+        /// <param name="results"> The results of the liveness with verify session. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LivenessWithVerifySession(string id, DateTimeOffset createdDateTime, DateTimeOffset? sessionStartDateTime, bool sessionExpired, string deviceCorrelationId, int? authTokenTimeToLiveInSeconds, FaceSessionStatus status, LivenessSessionAuditEntry result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LivenessWithVerifySession(string sessionId, string authToken, OperationState status, LivenessModel? modelVersion, bool isAbuseMonitoringEnabled, string expectedClientIpAddress, LivenessWithVerifySessionResults results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            CreatedDateTime = createdDateTime;
-            SessionStartDateTime = sessionStartDateTime;
-            SessionExpired = sessionExpired;
-            DeviceCorrelationId = deviceCorrelationId;
-            AuthTokenTimeToLiveInSeconds = authTokenTimeToLiveInSeconds;
+            SessionId = sessionId;
+            AuthToken = authToken;
             Status = status;
-            Result = result;
+            ModelVersion = modelVersion;
+            IsAbuseMonitoringEnabled = isAbuseMonitoringEnabled;
+            ExpectedClientIpAddress = expectedClientIpAddress;
+            Results = results;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -85,20 +87,16 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> The unique ID to reference this session. </summary>
-        public string Id { get; }
-        /// <summary> DateTime when this session was created. </summary>
-        public DateTimeOffset CreatedDateTime { get; }
-        /// <summary> DateTime when this session was started by the client. </summary>
-        public DateTimeOffset? SessionStartDateTime { get; }
-        /// <summary> Whether or not the session is expired. </summary>
-        public bool SessionExpired { get; }
-        /// <summary> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </summary>
-        public string DeviceCorrelationId { get; }
-        /// <summary> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </summary>
-        public int? AuthTokenTimeToLiveInSeconds { get; }
+        public string SessionId { get; }
+        /// <summary> Bearer token to provide authentication for the Vision SDK running on a client application. This Bearer token has limited permissions to perform only the required action and expires after the TTL time. It is also auditable. </summary>
+        public string AuthToken { get; }
         /// <summary> The current status of the session. </summary>
-        public FaceSessionStatus Status { get; }
-        /// <summary> The latest session audit result only populated if status == 'ResultAvailable'. </summary>
-        public LivenessSessionAuditEntry Result { get; }
+        public OperationState Status { get; }
+        /// <summary> The model version used for liveness classification. This is an optional parameter, and if this is not specified, then the latest supported model version will be chosen. </summary>
+        public LivenessModel? ModelVersion { get; }
+        /// <summary> The expected IP address or CIDR block of the client that runs the liveness check. </summary>
+        public string ExpectedClientIpAddress { get; }
+        /// <summary> The results of the liveness with verify session. </summary>
+        public LivenessWithVerifySessionResults Results { get; }
     }
 }

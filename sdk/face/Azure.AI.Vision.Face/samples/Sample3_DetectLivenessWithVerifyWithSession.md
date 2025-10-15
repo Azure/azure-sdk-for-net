@@ -29,20 +29,24 @@ var sessionClient = new FaceSessionClient(endpoint, credential);
 Before you can detect liveness in a face, you need to create a liveness detection session with Azure AI Face Service. The service creates a liveness-session and responds back with a session-authorization-token.
 
 ```C# Snippet:CreateLivenessWithVerifySession
-var parameters = new CreateLivenessWithVerifySessionContent(LivenessOperationMode.Passive) {
-    SendResultsToClient = true,
+using var fileStream = new FileStream(FaceTestConstant.LocalSampleImage, FileMode.Open, FileAccess.Read);
+var parameters = new CreateLivenessWithVerifySessionContent(LivenessOperationMode.Passive, fileStream)
+{
     DeviceCorrelationId = Guid.NewGuid().ToString(),
 };
 
-using var fileStream = new FileStream(FaceTestConstant.LocalSampleImage, FileMode.Open, FileAccess.Read);
-
-var createResponse = sessionClient.CreateLivenessWithVerifySession(parameters, fileStream);
+var createResponse = sessionClient.CreateLivenessWithVerifySession(parameters);
 
 var sessionId = createResponse.Value.SessionId;
 Console.WriteLine($"Session created, SessionId: {sessionId}");
 Console.WriteLine($"AuthToken: {createResponse.Value.AuthToken}");
-Console.WriteLine($"VerifyImage.FaceRectangle: {createResponse.Value.VerifyImage.FaceRectangle.Top}, {createResponse.Value.VerifyImage.FaceRectangle.Left}, {createResponse.Value.VerifyImage.FaceRectangle.Width}, {createResponse.Value.VerifyImage.FaceRectangle.Height}");
-Console.WriteLine($"VerifyImage.QualityForRecognition: {createResponse.Value.VerifyImage.QualityForRecognition}");
+var results = createResponse.Value.Results;
+if (results.VerifyReferences.Count > 0)
+{
+    var verifyReference = results.VerifyReferences[0];
+    Console.WriteLine($"VerifyImage.FaceRectangle: {verifyReference.FaceRectangle.Top}, {verifyReference.FaceRectangle.Left}, {verifyReference.FaceRectangle.Width}, {verifyReference.FaceRectangle.Height}");
+    Console.WriteLine($"VerifyImage.QualityForRecognition: {verifyReference.QualityForRecognition}");
+}
 ```
 
 ## 3. Pass the AuthToken to client device
@@ -61,74 +65,63 @@ After you've performed liveness detection with verification , you can retrieve t
 ```C# Snippet:GetLivenessWithVerifySessionResult
 var getResultResponse = sessionClient.GetLivenessWithVerifySessionResult(sessionId);
 var sessionResult = getResultResponse.Value;
-Console.WriteLine($"Id: {sessionResult.Id}");
-Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
-Console.WriteLine($"SessionExpired: {sessionResult.SessionExpired}");
-Console.WriteLine($"DeviceCorrelationId: {sessionResult.DeviceCorrelationId}");
-Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
+Console.WriteLine($"Id: {sessionResult.SessionId}");
 Console.WriteLine($"Status: {sessionResult.Status}");
-Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
-if (sessionResult.Result != null) {
-    WriteLivenessWithVerifySessionAuditEntry(sessionResult.Result);
+if (sessionResult.Results != null)
+{
+    WriteLivenessWithVerifySessionResults(sessionResult.Results);
 }
 ```
 
-```C# Snippet:WriteLivenessWithVerifySessionAuditEntry
-public void WriteLivenessWithVerifySessionAuditEntry(LivenessSessionAuditEntry auditEntry)
+```C# Snippet:WriteLivenessWithVerifySessionResults
+public void WriteLivenessWithVerifySessionResults(LivenessWithVerifySessionResults results)
 {
-    Console.WriteLine($"Id: {auditEntry.Id}");
-    Console.WriteLine($"SessionId: {auditEntry.SessionId}");
-    Console.WriteLine($"RequestId: {auditEntry.RequestId}");
-    Console.WriteLine($"ClientRequestId: {auditEntry.ClientRequestId}");
-    Console.WriteLine($"ReceivedDateTime: {auditEntry.ReceivedDateTime}");
-    Console.WriteLine($"Digest: {auditEntry.Digest}");
+    if (results.Attempts?.Count == 0)
+    {
+        Console.WriteLine("No attempts found in the session results.");
+        return;
+    }
 
-    Console.WriteLine($"    Request Url: {auditEntry.Request.Url}");
-    Console.WriteLine($"    Request Method: {auditEntry.Request.Method}");
-    Console.WriteLine($"    Request ContentLength: {auditEntry.Request.ContentLength}");
-    Console.WriteLine($"    Request ContentType: {auditEntry.Request.ContentType}");
-    Console.WriteLine($"    Request UserAgent: {auditEntry.Request.UserAgent}");
+    var firstAttempt = results.Attempts[0];
+    Console.WriteLine($"Attempt ID: {firstAttempt.AttemptId}");
+    Console.WriteLine($"Attempt Status: {firstAttempt.AttemptStatus}");
 
-    Console.WriteLine($"    Response StatusCode: {auditEntry.Response.StatusCode}");
-    Console.WriteLine($"    Response LatencyInMilliseconds: {auditEntry.Response.LatencyInMilliseconds}");
-    Console.WriteLine($"        Response Body LivenessDecision: {auditEntry.Response.Body.LivenessDecision}");
-    Console.WriteLine($"        Response Body ModelVersionUsed: {auditEntry.Response.Body.ModelVersionUsed}");
-    Console.WriteLine($"        Response Body Target FaceRectangle: {auditEntry.Response.Body.Target.FaceRectangle.Top}, {auditEntry.Response.Body.Target.FaceRectangle.Left}, {auditEntry.Response.Body.Target.FaceRectangle.Width}, {auditEntry.Response.Body.Target.FaceRectangle.Height}");
-    Console.WriteLine($"        Response Body Target FileName: {auditEntry.Response.Body.Target.FileName}");
-    Console.WriteLine($"        Response Body Target TimeOffsetWithinFile: {auditEntry.Response.Body.Target.TimeOffsetWithinFile}");
-    Console.WriteLine($"        Response Body Target FaceImageType: {auditEntry.Response.Body.Target.ImageType}");
+    if (firstAttempt.Result != null)
+    {
+        var result = firstAttempt.Result;
+        Console.WriteLine($"    Liveness Decision: {result.LivenessDecision}");
+        Console.WriteLine($"    Digest: {result.Digest}");
+        Console.WriteLine($"    Session Image ID: {result.SessionImageId}");
 
-    Console.WriteLine($"        Response Body VerifyResult IsIdentical: {auditEntry.Response.Body.VerifyResult.IsIdentical}");
-    Console.WriteLine($"        Response Body VerifyResult MatchConfidence: {auditEntry.Response.Body.VerifyResult.MatchConfidence}");
-    Console.WriteLine($"        Response Body VerifyResult VerifyImage.FaceRectangle: {auditEntry.Response.Body.VerifyResult.VerifyImage.FaceRectangle.Top}, {auditEntry.Response.Body.VerifyResult.VerifyImage.FaceRectangle.Left}, {auditEntry.Response.Body.VerifyResult.VerifyImage.FaceRectangle.Width}, {auditEntry.Response.Body.VerifyResult.VerifyImage.FaceRectangle.Height}");
-    Console.WriteLine($"        Response Body VerifyResult VerifyImage.QualityForRecognition: {auditEntry.Response.Body.VerifyResult.VerifyImage.QualityForRecognition}");
-}
-```
+        if (result.Targets?.Color?.FaceRectangle != null)
+        {
+            var faceRect = result.Targets.Color.FaceRectangle;
+            Console.WriteLine($"    Target Face Rectangle: Top={faceRect.Top}, Left={faceRect.Left}, Width={faceRect.Width}, Height={faceRect.Height}");
+        }
 
-If there are multiple liveness calls, you can retrieve the result by getting liveness audit entries.
+        if (result.VerifyResult != null)
+        {
+            Console.WriteLine($"    Verify Result IsIdentical: {result.VerifyResult.IsIdentical}");
+            Console.WriteLine($"    Verify Result MatchConfidence: {result.VerifyResult.MatchConfidence}");
+        }
 
-```C# Snippet:GetLivenessWithVerifySessionAuditEntries
-var getAuditEntriesResponse = sessionClient.GetLivenessWithVerifySessionAuditEntries(sessionId);
-foreach (var auditEntry in getAuditEntriesResponse.Value)
-{
-    WriteLivenessWithVerifySessionAuditEntry(auditEntry);
-}
-```
+        Console.WriteLine($"    Verify Image Hash: {result.VerifyImageHash}");
+    }
 
-## List all liveness sessions
+    if (results.VerifyReferences != null && results.VerifyReferences.Count > 0)
+    {
+        var verifyRef = results.VerifyReferences[0];
+        if (verifyRef.FaceRectangle != null)
+        {
+            Console.WriteLine($"    Verify Reference Face Rectangle: Top={verifyRef.FaceRectangle.Top}, Left={verifyRef.FaceRectangle.Left}, Width={verifyRef.FaceRectangle.Width}, Height={verifyRef.FaceRectangle.Height}");
+        }
+        Console.WriteLine($"    Verify Reference Quality For Recognition: {verifyRef.QualityForRecognition}");
+    }
 
-All existing sessions can be listed by sending a request to the service.
-
-```C# Snippet:GetLivenessWithVerifySessions
-var listResponse = sessionClient.GetLivenessWithVerifySessions();
-foreach (var session in listResponse.Value)
-{
-    Console.WriteLine($"SessionId: {session.Id}");
-    Console.WriteLine($"CreatedDateTime: {session.CreatedDateTime}");
-    Console.WriteLine($"SessionExpired: {session.SessionExpired}");
-    Console.WriteLine($"DeviceCorrelationId: {session.DeviceCorrelationId}");
-    Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {session.AuthTokenTimeToLiveInSeconds}");
-    Console.WriteLine($"SessionStartDateTime: {session.SessionStartDateTime}");
+    if (firstAttempt.ClientInformation != null && firstAttempt.ClientInformation.Count > 0)
+    {
+        Console.WriteLine($"    Client Information Count: {firstAttempt.ClientInformation.Count}");
+    }
 }
 ```
 

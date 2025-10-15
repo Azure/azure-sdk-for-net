@@ -30,8 +30,8 @@ Before you can detect liveness in a face, you need to create a liveness detectio
 
 ```C# Snippet:CreateLivenessSession
 var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
-    SendResultsToClient = true,
     DeviceCorrelationId = Guid.NewGuid().ToString(),
+    UserCorrelationId = Guid.NewGuid().ToString(),
 };
 
 var createResponse = sessionClient.CreateLivenessSession(createContent);
@@ -56,69 +56,45 @@ After you've performed liveness detection, you can retrieve the result by provid
 ```C# Snippet:GetLivenessSessionResult
 var getResultResponse = sessionClient.GetLivenessSessionResult(sessionId);
 var sessionResult = getResultResponse.Value;
-Console.WriteLine($"Id: {sessionResult.Id}");
-Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
-Console.WriteLine($"SessionExpired: {sessionResult.SessionExpired}");
-Console.WriteLine($"DeviceCorrelationId: {sessionResult.DeviceCorrelationId}");
-Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
+Console.WriteLine($"Id: {sessionResult.SessionId}");
 Console.WriteLine($"Status: {sessionResult.Status}");
-Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
-if (sessionResult.Result != null) {
-    WriteLivenessSessionAuditEntry(sessionResult.Result);
+if (sessionResult.Results != null)
+{
+    WriteLivenessSessionResults(sessionResult.Results);
 }
 ```
 
-```C# Snippet:WriteLivenessSessionAuditEntry
-public void WriteLivenessSessionAuditEntry(LivenessSessionAuditEntry auditEntry)
+```C# Snippet:WriteLivenessSessionResults
+public void WriteLivenessSessionResults(LivenessSessionResults results)
 {
-    Console.WriteLine($"Id: {auditEntry.Id}");
-    Console.WriteLine($"SessionId: {auditEntry.SessionId}");
-    Console.WriteLine($"RequestId: {auditEntry.RequestId}");
-    Console.WriteLine($"ClientRequestId: {auditEntry.ClientRequestId}");
-    Console.WriteLine($"ReceivedDateTime: {auditEntry.ReceivedDateTime}");
-    Console.WriteLine($"Digest: {auditEntry.Digest}");
+    if (results.Attempts == null || results.Attempts.Count == 0)
+    {
+        Console.WriteLine("No attempts found in the session results.");
+        return;
+    }
 
-    Console.WriteLine($"    Request Url: {auditEntry.Request.Url}");
-    Console.WriteLine($"    Request Method: {auditEntry.Request.Method}");
-    Console.WriteLine($"    Request ContentLength: {auditEntry.Request.ContentLength}");
-    Console.WriteLine($"    Request ContentType: {auditEntry.Request.ContentType}");
-    Console.WriteLine($"    Request UserAgent: {auditEntry.Request.UserAgent}");
+    var firstAttempt = results.Attempts[0];
+    Console.WriteLine($"Attempt ID: {firstAttempt.AttemptId}");
+    Console.WriteLine($"Attempt Status: {firstAttempt.AttemptStatus}");
 
-    Console.WriteLine($"    Response StatusCode: {auditEntry.Response.StatusCode}");
-    Console.WriteLine($"    Response LatencyInMilliseconds: {auditEntry.Response.LatencyInMilliseconds}");
-    Console.WriteLine($"        Response Body LivenessDecision: {auditEntry.Response.Body.LivenessDecision}");
-    Console.WriteLine($"        Response Body ModelVersionUsed: {auditEntry.Response.Body.ModelVersionUsed}");
-    Console.WriteLine($"        Response Body Target FaceRectangle: {auditEntry.Response.Body.Target.FaceRectangle.Top}, {auditEntry.Response.Body.Target.FaceRectangle.Left}, {auditEntry.Response.Body.Target.FaceRectangle.Width}, {auditEntry.Response.Body.Target.FaceRectangle.Height}");
-    Console.WriteLine($"        Response Body Target FileName: {auditEntry.Response.Body.Target.FileName}");
-    Console.WriteLine($"        Response Body Target TimeOffsetWithinFile: {auditEntry.Response.Body.Target.TimeOffsetWithinFile}");
-    Console.WriteLine($"        Response Body Target FaceImageType: {auditEntry.Response.Body.Target.ImageType}");
-}
-```
+    if (firstAttempt.Result != null)
+    {
+        var result = firstAttempt.Result;
+        Console.WriteLine($"    Liveness Decision: {result.LivenessDecision}");
+        Console.WriteLine($"    Digest: {result.Digest}");
+        Console.WriteLine($"    Session Image ID: {result.SessionImageId}");
 
-If there are multiple liveness calls, you can retrieve the result by getting liveness audit entries.
+        if (result.Targets?.Color?.FaceRectangle != null)
+        {
+            var faceRect = result.Targets.Color.FaceRectangle;
+            Console.WriteLine($"    Face Rectangle: Top={faceRect.Top}, Left={faceRect.Left}, Width={faceRect.Width}, Height={faceRect.Height}");
+        }
+    }
 
-```C# Snippet:GetLivenessSessionAuditEntries
-var getAuditEntriesResponse = sessionClient.GetLivenessSessionAuditEntries(sessionId);
-foreach (var auditEntry in getAuditEntriesResponse.Value)
-{
-    WriteLivenessSessionAuditEntry(auditEntry);
-}
-```
-
-## List all liveness sessions
-
-All existing sessions can be listed by sending a request to the service.
-
-```C# Snippet:GetLivenessSessions
-var listResponse = sessionClient.GetLivenessSessions();
-foreach (var session in listResponse.Value)
-{
-    Console.WriteLine($"SessionId: {session.Id}");
-    Console.WriteLine($"CreatedDateTime: {session.CreatedDateTime}");
-    Console.WriteLine($"SessionExpired: {session.SessionExpired}");
-    Console.WriteLine($"DeviceCorrelationId: {session.DeviceCorrelationId}");
-    Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {session.AuthTokenTimeToLiveInSeconds}");
-    Console.WriteLine($"SessionStartDateTime: {session.SessionStartDateTime}");
+    if (firstAttempt.ClientInformation != null && firstAttempt.ClientInformation.Count > 0)
+    {
+        Console.WriteLine($"    Client Information Count: {firstAttempt.ClientInformation.Count}");
+    }
 }
 ```
 

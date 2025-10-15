@@ -54,22 +54,28 @@ namespace Azure.AI.Vision.Face
 
         /// <summary> Initializes a new instance of <see cref="CreateLivenessSessionContent"/>. </summary>
         /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
-        /// <param name="sendResultsToClient"> Whether or not to allow a '200 - Success' response body to be sent to the client, which may be undesirable for security reasons. Default is false, clients will receive a '204 - NoContent' empty body response. Regardless of selection, calling Session GetResult will always contain a response body enabling business logic to be implemented. </param>
         /// <param name="deviceCorrelationIdSetInClient"> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </param>
         /// <param name="enableSessionImage"> Whether or not store the session image. </param>
-        /// <param name="livenessSingleModalModel"> The model version used for liveness classification. This is an optional parameter, and if this is not specified, then the latest supported model version will be chosen. </param>
+        /// <param name="livenessModelVersion"> The model version used for liveness classification. This is an optional parameter, and if this is not specified, then the latest supported model version will be chosen. </param>
         /// <param name="deviceCorrelationId"> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </param>
         /// <param name="authTokenTimeToLiveInSeconds"> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </param>
+        /// <param name="numberOfClientAttemptsAllowed"> The number of times a client can attempt a liveness check using the same authToken. Default value is 1. Maximum value is 3. </param>
+        /// <param name="userCorrelationId"> Unique Guid per each end-user. This is to provide rate limiting and anti-hammering. If 'userCorrelationIdSetInClient' is true in this request, this 'userCorrelationId' must be null. </param>
+        /// <param name="userCorrelationIdSetInClient"> Whether or not to allow client to set their own 'userCorrelationId' via the Vision SDK. Default is false, and 'userCorrelationId' must be set in this request body. </param>
+        /// <param name="expectedClientIpAddress"> Specify the expected IP address or CIDR block of the client that runs the liveness check. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateLivenessSessionContent(LivenessOperationMode livenessOperationMode, bool? sendResultsToClient, bool? deviceCorrelationIdSetInClient, bool? enableSessionImage, LivenessModel? livenessSingleModalModel, string deviceCorrelationId, int? authTokenTimeToLiveInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateLivenessSessionContent(LivenessOperationMode livenessOperationMode, bool? deviceCorrelationIdSetInClient, bool? enableSessionImage, LivenessModel? livenessModelVersion, string deviceCorrelationId, int? authTokenTimeToLiveInSeconds, int numberOfClientAttemptsAllowed, string userCorrelationId, bool? userCorrelationIdSetInClient, string expectedClientIpAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LivenessOperationMode = livenessOperationMode;
-            SendResultsToClient = sendResultsToClient;
             DeviceCorrelationIdSetInClient = deviceCorrelationIdSetInClient;
             EnableSessionImage = enableSessionImage;
-            LivenessSingleModalModel = livenessSingleModalModel;
+            LivenessModelVersion = livenessModelVersion;
             DeviceCorrelationId = deviceCorrelationId;
             AuthTokenTimeToLiveInSeconds = authTokenTimeToLiveInSeconds;
+            NumberOfClientAttemptsAllowed = numberOfClientAttemptsAllowed;
+            UserCorrelationId = userCorrelationId;
+            UserCorrelationIdSetInClient = userCorrelationIdSetInClient;
+            ExpectedClientIpAddress = expectedClientIpAddress;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -80,17 +86,21 @@ namespace Azure.AI.Vision.Face
 
         /// <summary> Type of liveness mode the client should follow. </summary>
         public LivenessOperationMode LivenessOperationMode { get; }
-        /// <summary> Whether or not to allow a '200 - Success' response body to be sent to the client, which may be undesirable for security reasons. Default is false, clients will receive a '204 - NoContent' empty body response. Regardless of selection, calling Session GetResult will always contain a response body enabling business logic to be implemented. </summary>
-        public bool? SendResultsToClient { get; set; }
         /// <summary> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </summary>
         public bool? DeviceCorrelationIdSetInClient { get; set; }
         /// <summary> Whether or not store the session image. </summary>
         public bool? EnableSessionImage { get; set; }
         /// <summary> The model version used for liveness classification. This is an optional parameter, and if this is not specified, then the latest supported model version will be chosen. </summary>
-        public LivenessModel? LivenessSingleModalModel { get; set; }
+        public LivenessModel? LivenessModelVersion { get; set; }
         /// <summary> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </summary>
         public string DeviceCorrelationId { get; set; }
         /// <summary> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </summary>
         public int? AuthTokenTimeToLiveInSeconds { get; set; }
+        /// <summary> Unique Guid per each end-user. This is to provide rate limiting and anti-hammering. If 'userCorrelationIdSetInClient' is true in this request, this 'userCorrelationId' must be null. </summary>
+        public string UserCorrelationId { get; set; }
+        /// <summary> Whether or not to allow client to set their own 'userCorrelationId' via the Vision SDK. Default is false, and 'userCorrelationId' must be set in this request body. </summary>
+        public bool? UserCorrelationIdSetInClient { get; set; }
+        /// <summary> Specify the expected IP address or CIDR block of the client that runs the liveness check. </summary>
+        public string ExpectedClientIpAddress { get; set; }
     }
 }

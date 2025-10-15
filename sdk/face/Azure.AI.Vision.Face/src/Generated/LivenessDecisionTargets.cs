@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Vision.Face
 {
-    /// <summary> The face verification output. </summary>
-    public partial class LivenessWithVerifyOutputs
+    /// <summary> The targets used for liveness classification. </summary>
+    public partial class LivenessDecisionTargets
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,31 @@ namespace Azure.AI.Vision.Face
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyOutputs"/>. </summary>
-        /// <param name="matchConfidence"> The target face liveness face and comparison image face verification confidence. </param>
-        /// <param name="isIdentical"> Whether the target liveness face and comparison image face match. </param>
-        internal LivenessWithVerifyOutputs(float matchConfidence, bool isIdentical)
+        /// <summary> Initializes a new instance of <see cref="LivenessDecisionTargets"/>. </summary>
+        /// <param name="color"> The target from color image used for liveness classification. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="color"/> is null. </exception>
+        internal LivenessDecisionTargets(LivenessColorDecisionTarget color)
         {
-            MatchConfidence = matchConfidence;
-            IsIdentical = isIdentical;
+            Argument.AssertNotNull(color, nameof(color));
+
+            Color = color;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyOutputs"/>. </summary>
-        /// <param name="matchConfidence"> The target face liveness face and comparison image face verification confidence. </param>
-        /// <param name="isIdentical"> Whether the target liveness face and comparison image face match. </param>
+        /// <summary> Initializes a new instance of <see cref="LivenessDecisionTargets"/>. </summary>
+        /// <param name="color"> The target from color image used for liveness classification. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LivenessWithVerifyOutputs(float matchConfidence, bool isIdentical, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LivenessDecisionTargets(LivenessColorDecisionTarget color, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MatchConfidence = matchConfidence;
-            IsIdentical = isIdentical;
+            Color = color;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyOutputs"/> for deserialization. </summary>
-        internal LivenessWithVerifyOutputs()
+        /// <summary> Initializes a new instance of <see cref="LivenessDecisionTargets"/> for deserialization. </summary>
+        internal LivenessDecisionTargets()
         {
         }
 
-        /// <summary> The target face liveness face and comparison image face verification confidence. </summary>
-        public float MatchConfidence { get; }
-        /// <summary> Whether the target liveness face and comparison image face match. </summary>
-        public bool IsIdentical { get; }
+        /// <summary> The target from color image used for liveness classification. </summary>
+        public LivenessColorDecisionTarget Color { get; }
     }
 }
