@@ -87,20 +87,13 @@ namespace Azure.Security.CodeTransparency
             cborReader.ReadStartMap();
             while (cborReader.PeekState() != CborReaderState.EndMap)
             {
-                CborReaderState keyState = cborReader.PeekState();
-
                 int? currentIntKey = null;
-                switch (keyState)
+                switch (cborReader.PeekState())
                 {
                     case CborReaderState.UnsignedInteger:
                     case CborReaderState.NegativeInteger:
                         currentIntKey = cborReader.ReadInt32();
                         break;
-                    case CborReaderState.TextString:
-                        // Different key type (string) - consume and skip its value
-                        cborReader.ReadTextString();
-                        cborReader.SkipValue();
-                        continue;
                     default:
                         // Unsupported key type - skip key and its value
                         cborReader.SkipValue();
