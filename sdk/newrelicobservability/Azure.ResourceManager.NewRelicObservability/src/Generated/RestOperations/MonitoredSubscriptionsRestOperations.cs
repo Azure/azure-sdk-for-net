@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> List MonitoredSubscriptionProperties resources by NewRelicMonitorResource. </summary>
+        /// <summary> Lists all the subscriptions currently being monitored by the NewRelic monitor resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> List MonitoredSubscriptionProperties resources by NewRelicMonitorResource. </summary>
+        /// <summary> Lists all the subscriptions currently being monitored by the NewRelic monitor resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Get a MonitoredSubscriptionProperties. </summary>
+        /// <summary> Lists all the subscriptions currently being monitored by the NewRelic monitor resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Get a MonitoredSubscriptionProperties. </summary>
+        /// <summary> Lists all the subscriptions currently being monitored by the NewRelic monitor resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Create a MonitoredSubscriptionProperties. </summary>
+        /// <summary> Add subscriptions to be monitored by the New Relic monitor resource, enabling observability and monitoring. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Create a MonitoredSubscriptionProperties. </summary>
+        /// <summary> Add subscriptions to be monitored by the New Relic monitor resource, enabling observability and monitoring. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Update a MonitoredSubscriptionProperties. </summary>
+        /// <summary> Update subscriptions to be monitored by the New Relic monitor resource, ensuring optimal observability and performance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Update a MonitoredSubscriptionProperties. </summary>
+        /// <summary> Update subscriptions to be monitored by the New Relic monitor resource, ensuring optimal observability and performance. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Delete a MonitoredSubscriptionProperties. </summary>
+        /// <summary> Delete subscriptions being monitored by the New Relic monitor resource, removing their observability and monitoring capabilities. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Delete a MonitoredSubscriptionProperties. </summary>
+        /// <summary> Delete subscriptions being monitored by the New Relic monitor resource, removing their observability and monitoring capabilities. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> List MonitoredSubscriptionProperties resources by NewRelicMonitorResource. </summary>
+        /// <summary> Lists all the subscriptions currently being monitored by the NewRelic monitor resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> List MonitoredSubscriptionProperties resources by NewRelicMonitorResource. </summary>
+        /// <summary> Lists all the subscriptions currently being monitored by the NewRelic monitor resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

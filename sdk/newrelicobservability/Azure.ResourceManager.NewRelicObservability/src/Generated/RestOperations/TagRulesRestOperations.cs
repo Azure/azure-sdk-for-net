@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Updates the tag rules for a specific New Relic monitor resource, allowing you to modify the rules that control which Azure resources are monitored. </summary>
+        /// <summary> Deletes a tag rule set for a given New Relic monitor resource, removing fine-grained control over observability based on resource tags. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Updates the tag rules for a specific New Relic monitor resource, allowing you to modify the rules that control which Azure resources are monitored. </summary>
+        /// <summary> Deletes a tag rule set for a given New Relic monitor resource, removing fine-grained control over observability based on resource tags. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Deletes a tag rule set for a given New Relic monitor resource, removing fine-grained control over observability based on resource tags. </summary>
+        /// <summary> Updates the tag rules for a specific New Relic monitor resource, allowing you to modify the rules that control which Azure resources are monitored. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Deletes a tag rule set for a given New Relic monitor resource, removing fine-grained control over observability based on resource tags. </summary>
+        /// <summary> Updates the tag rules for a specific New Relic monitor resource, allowing you to modify the rules that control which Azure resources are monitored. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>

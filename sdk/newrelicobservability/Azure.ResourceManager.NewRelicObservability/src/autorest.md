@@ -131,13 +131,13 @@ rename-mapping:
   SubscriptionList: NewRelicMonitoredSubscriptionProperties
   MonitoredSubscription: NewRelicMonitoredSubscriptionInfo
   MonitoringTagRulesProperties: NewRelicMonitoringTagRules
-  LatestLinkedSaaSResponse: NewRelicLatestLinkedSaaSResult
   LatestLinkedSaaSResponse.saaSResourceId: -|arm-id
-  SaaSData: NewRelicSaaSDataDetails
   SaaSData.saaSResourceId: -|arm-id
-  SaaSResourceDetailsResponse: NewRelicSaaSResourceDetailsResult
   ResubscribeProperties: NewRelicResubscribeProperties
   ActivateSaaSParameterRequest.saasGuid: -|uuid
+  LatestLinkedSaaSResponse: NewRelicObservabilityLatestLinkedSaaSResult
+  SaaSResourceDetailsResponse: NewRelicObservabilitySaaSResourceDetailsResult
+  SaaSData: NewRelicObservabilitySaaSInfo
 
 override-operation-name:
   Accounts_List: GetNewRelicAccounts

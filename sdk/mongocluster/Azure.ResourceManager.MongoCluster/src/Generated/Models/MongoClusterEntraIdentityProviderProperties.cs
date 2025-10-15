@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The storage properties of the cluster. This includes the data storage size and scaling applied to servers in the cluster. </summary>
-    internal partial class StorageProperties
+    /// <summary> Microsoft Entra ID provider properties. </summary>
+    public partial class MongoClusterEntraIdentityProviderProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,28 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StorageProperties"/>. </summary>
-        public StorageProperties()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterEntraIdentityProviderProperties"/>. </summary>
+        /// <param name="principalType"> The principal type of the user. </param>
+        public MongoClusterEntraIdentityProviderProperties(MongoClusterEntraPrincipalType principalType)
         {
+            PrincipalType = principalType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageProperties"/>. </summary>
-        /// <param name="sizeGb"> The size of the data disk assigned to each server. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterEntraIdentityProviderProperties"/>. </summary>
+        /// <param name="principalType"> The principal type of the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageProperties(long? sizeGb, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterEntraIdentityProviderProperties(MongoClusterEntraPrincipalType principalType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SizeGb = sizeGb;
+            PrincipalType = principalType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The size of the data disk assigned to each server. </summary>
-        public long? SizeGb { get; set; }
+        /// <summary> Initializes a new instance of <see cref="MongoClusterEntraIdentityProviderProperties"/> for deserialization. </summary>
+        internal MongoClusterEntraIdentityProviderProperties()
+        {
+        }
+
+        /// <summary> The principal type of the user. </summary>
+        public MongoClusterEntraPrincipalType PrincipalType { get; set; }
     }
 }

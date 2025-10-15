@@ -42,6 +42,8 @@ namespace Azure.ResourceManager.Terraform.Models
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -106,6 +108,7 @@ namespace Azure.ResourceManager.Terraform.Models
             }
             TerraformExportResult properties = default;
             TerraformResourceProvisioningState status = default;
+            string id = default;
             string name = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
@@ -127,6 +130,11 @@ namespace Azure.ResourceManager.Terraform.Models
                 if (property.NameEquals("status"u8))
                 {
                     status = new TerraformResourceProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -179,6 +187,7 @@ namespace Azure.ResourceManager.Terraform.Models
             return new TerraformOperationStatus(
                 properties,
                 status,
+                id,
                 name,
                 startTime,
                 endTime,

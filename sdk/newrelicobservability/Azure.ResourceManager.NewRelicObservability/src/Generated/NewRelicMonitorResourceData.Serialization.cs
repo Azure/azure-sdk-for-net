@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             NewRelicAccountProperties newRelicAccountProperties = default;
             NewRelicObservabilityUserInfo userInfo = default;
             NewRelicPlanDetails planData = default;
-            NewRelicSaaSDataDetails saaSData = default;
+            NewRelicObservabilitySaaSContent saaSData = default;
             NewRelicLiftrResourceCategory? liftrResourceCategory = default;
             int? liftrResourcePreference = default;
             NewRelicObservabilityOrgCreationSource? orgCreationSource = default;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            saaSData = NewRelicSaaSDataDetails.DeserializeNewRelicSaaSDataDetails(property0.Value, options);
+                            saaSData = NewRelicObservabilitySaaSContent.DeserializeNewRelicObservabilitySaaSContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("liftrResourceCategory"u8))

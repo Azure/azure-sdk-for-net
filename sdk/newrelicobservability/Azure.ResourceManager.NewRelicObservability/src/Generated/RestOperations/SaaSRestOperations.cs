@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.NewRelicObservability
 
         /// <summary> Resolve the token to get the SaaS resource ID and activate the SaaS resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The details for ActivateSaaSParameter request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NewRelicSaaSResourceDetailsResult>> ActivateResourceAsync(string subscriptionId, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<NewRelicObservabilitySaaSResourceDetailsResult>> ActivateResourceAsync(string subscriptionId, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        NewRelicSaaSResourceDetailsResult value = default;
+                        NewRelicObservabilitySaaSResourceDetailsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NewRelicSaaSResourceDetailsResult.DeserializeNewRelicSaaSResourceDetailsResult(document.RootElement);
+                        value = NewRelicObservabilitySaaSResourceDetailsResult.DeserializeNewRelicObservabilitySaaSResourceDetailsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.NewRelicObservability
 
         /// <summary> Resolve the token to get the SaaS resource ID and activate the SaaS resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The details for ActivateSaaSParameter request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NewRelicSaaSResourceDetailsResult> ActivateResource(string subscriptionId, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        public Response<NewRelicObservabilitySaaSResourceDetailsResult> ActivateResource(string subscriptionId, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 case 200:
                     {
-                        NewRelicSaaSResourceDetailsResult value = default;
+                        NewRelicObservabilitySaaSResourceDetailsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NewRelicSaaSResourceDetailsResult.DeserializeNewRelicSaaSResourceDetailsResult(document.RootElement);
+                        value = NewRelicObservabilitySaaSResourceDetailsResult.DeserializeNewRelicObservabilitySaaSResourceDetailsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

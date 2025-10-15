@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Guid saasGuid = default;
+            string saasGuid = default;
             string publisherId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 if (property.NameEquals("saasGuid"u8))
                 {
-                    saasGuid = property.Value.GetGuid();
+                    saasGuid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("publisherId"u8))

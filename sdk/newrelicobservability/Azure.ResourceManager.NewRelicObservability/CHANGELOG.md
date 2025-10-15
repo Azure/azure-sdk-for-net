@@ -1,16 +1,21 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2025-11-05)
 
 ### Features Added
-
-- Update api version to 2025-05-01-preview.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+Updating the api-version to "2025-05-01-preview"
+
 ### Other Changes
+
+- Fixed model naming compliance issues by renaming models that violated Azure SDK guidelines:
+  - Renamed `SaaSData` to `NewRelicObservabilitySaaSInfo`
+  - Renamed `SaaSResourceDetailsResponse` to `NewRelicObservabilitySaaSResourceDetailsResult`
+  - Renamed `LatestLinkedSaaSResponse` to `NewRelicObservabilityLatestLinkedSaaSResult`
 
 ## 1.1.1 (2025-03-11)
 

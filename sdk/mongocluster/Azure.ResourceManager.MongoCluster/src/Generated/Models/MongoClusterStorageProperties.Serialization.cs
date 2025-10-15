@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    internal partial class StorageProperties : IUtf8JsonSerializable, IJsonModel<StorageProperties>
+    public partial class MongoClusterStorageProperties : IUtf8JsonSerializable, IJsonModel<MongoClusterStorageProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterStorageProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StorageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoClusterStorageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,21 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterStorageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterStorageProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(SizeGb))
             {
                 writer.WritePropertyName("sizeGb"u8);
                 writer.WriteNumberValue(SizeGb.Value);
+            }
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,19 +61,19 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
         }
 
-        StorageProperties IJsonModel<StorageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoClusterStorageProperties IJsonModel<MongoClusterStorageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterStorageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterStorageProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageProperties(document.RootElement, options);
+            return DeserializeMongoClusterStorageProperties(document.RootElement, options);
         }
 
-        internal static StorageProperties DeserializeStorageProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoClusterStorageProperties DeserializeMongoClusterStorageProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 return null;
             }
             long? sizeGb = default;
+            MongoClusterStorageType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,44 +96,53 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     sizeGb = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new MongoClusterStorageType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageProperties(sizeGb, serializedAdditionalRawData);
+            return new MongoClusterStorageProperties(sizeGb, type, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<StorageProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoClusterStorageProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterStorageProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoClusterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StorageProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterStorageProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StorageProperties IPersistableModel<StorageProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoClusterStorageProperties IPersistableModel<MongoClusterStorageProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterStorageProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeStorageProperties(document.RootElement, options);
+                        return DeserializeMongoClusterStorageProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterStorageProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StorageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoClusterStorageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

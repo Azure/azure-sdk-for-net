@@ -54,34 +54,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceSaaSInfo"/>. </summary>
-        /// <param name="marketplaceSubscriptionId">
-        /// Marketplace Subscription Id. This is a GUID-formatted string.
-        /// Serialized Name: MarketplaceSaaSInfo.marketplaceSubscriptionId
-        /// </param>
-        /// <param name="marketplaceSubscriptionName">
-        /// Marketplace Subscription Details: SAAS Name
-        /// Serialized Name: MarketplaceSaaSInfo.marketplaceSubscriptionName
-        /// </param>
-        /// <param name="marketplaceResourceId">
-        /// Marketplace Subscription Details: Resource URI
-        /// Serialized Name: MarketplaceSaaSInfo.marketplaceResourceId
-        /// </param>
-        /// <param name="marketplaceStatus">
-        /// Marketplace Subscription Details: SaaS Subscription Status
-        /// Serialized Name: MarketplaceSaaSInfo.marketplaceStatus
-        /// </param>
-        /// <param name="billedAzureSubscriptionId">
-        /// The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into.
-        /// Serialized Name: MarketplaceSaaSInfo.billedAzureSubscriptionId
-        /// </param>
-        /// <param name="publisherId">
-        /// Publisher Id of the Marketplace offer.
-        /// Serialized Name: MarketplaceSaaSInfo.publisherId
-        /// </param>
-        /// <param name="offerId">
-        /// Offer Id of the Marketplace offer,
-        /// Serialized Name: MarketplaceSaaSInfo.offerId
-        /// </param>
+        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. This is a GUID-formatted string. </param>
+        /// <param name="marketplaceSubscriptionName"> Marketplace Subscription Details: SAAS Name. </param>
+        /// <param name="marketplaceResourceId"> Marketplace Subscription Details: Resource URI. </param>
+        /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
+        /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
+        /// <param name="publisherId"> Publisher Id of the Marketplace offer. </param>
+        /// <param name="offerId"> Offer Id of the Marketplace offer,. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceSubscriptionName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId, string publisherId, string offerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -125,16 +104,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         [WirePath("billedAzureSubscriptionId")]
         public string BilledAzureSubscriptionId { get; }
-        /// <summary>
-        /// Publisher Id of the Marketplace offer.
-        /// Serialized Name: MarketplaceSaaSInfo.publisherId
-        /// </summary>
+        /// <summary> Publisher Id of the Marketplace offer. </summary>
         [WirePath("publisherId")]
         public string PublisherId { get; }
-        /// <summary>
-        /// Offer Id of the Marketplace offer,
-        /// Serialized Name: MarketplaceSaaSInfo.offerId
-        /// </summary>
+        /// <summary> Offer Id of the Marketplace offer,. </summary>
         [WirePath("offerId")]
         public string OfferId { get; }
     }

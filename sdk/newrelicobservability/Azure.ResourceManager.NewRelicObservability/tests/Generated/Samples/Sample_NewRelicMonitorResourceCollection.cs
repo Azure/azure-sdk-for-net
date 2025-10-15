@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                     PlanDetails = "tbbiaga",
                     EffectiveOn = DateTimeOffset.Parse("2022-12-05T14:11:37.786Z"),
                 },
-                SaaSResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/Microsoft.SaaS/resources/abcd"),
+                SaaSResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/Microsoft.SaaS/resources/abcd",
                 OrgCreationSource = NewRelicObservabilityOrgCreationSource.Liftr,
                 AccountCreationSource = NewRelicObservabilityAccountCreationSource.Liftr,
                 SubscriptionState = "Suspended",

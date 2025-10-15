@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             NewRelicAccountProperties newRelicAccountProperties = default;
             NewRelicObservabilityUserInfo userInfo = default;
             NewRelicPlanDetails planData = default;
-            NewRelicSaaSDataDetails saaSData = default;
+            NewRelicObservabilitySaaSContent saaSData = default;
             NewRelicObservabilityOrgCreationSource? orgCreationSource = default;
             NewRelicObservabilityAccountCreationSource? accountCreationSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            saaSData = NewRelicSaaSDataDetails.DeserializeNewRelicSaaSDataDetails(property0.Value, options);
+                            saaSData = NewRelicObservabilitySaaSContent.DeserializeNewRelicObservabilitySaaSContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("orgCreationSource"u8))
