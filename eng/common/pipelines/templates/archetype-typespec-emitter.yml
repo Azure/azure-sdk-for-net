@@ -161,6 +161,7 @@ extends:
               
               # If we still don't have an identifier, fall back to filename
               if ([string]::IsNullOrWhiteSpace($emitterIdentifier)) {
+                Write-Host "Warning: Could not read emitter name from package.json, falling back to package path"
                 $emitterIdentifier = [System.IO.Path]::GetFileNameWithoutExtension($emitterPackagePath)
               }
               
