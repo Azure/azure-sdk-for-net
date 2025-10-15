@@ -24,8 +24,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="MongoCluster.MongoClusterData"/> instance for mocking. </returns>
-        public static MongoClusterData MongoClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MongoClusterProperties properties = null)
+        public static MongoClusterData MongoClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MongoClusterProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 tags,
                 location,
                 properties,
+                identity,
                 serializedAdditionalRawData: null);
         }
 
@@ -51,19 +53,23 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="clusterStatus"> The status of the mongo cluster. </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this mongo cluster. </param>
         /// <param name="highAvailabilityTargetMode"> The high availability properties of the mongo cluster. </param>
-        /// <param name="storageSizeGb"> The storage properties of the mongo cluster. </param>
+        /// <param name="storage"> The storage properties of the mongo cluster. </param>
         /// <param name="shardingShardCount"> The sharding properties of the mongo cluster. </param>
         /// <param name="computeTier"> The compute properties of the mongo cluster. </param>
         /// <param name="backupEarliestRestoreTime"> The backup properties of the mongo cluster. </param>
+        /// <param name="dataApiMode"> The Data API properties of the mongo cluster. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="previewFeatures"> List of private endpoint connections. </param>
         /// <param name="replica"> The replication properties for the mongo cluster. </param>
         /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
+        /// <param name="authConfigAllowedModes"> The authentication configuration for the cluster. </param>
+        /// <param name="customerManagedKeyEncryption"> The encryption configuration for the cluster. Depends on identity being configured. </param>
         /// <returns> A new <see cref="Models.MongoClusterProperties"/> instance for mocking. </returns>
-        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = null, MongoClusterRestoreContent restoreParameters = null, MongoClusterReplicaContent replicaParameters = null, MongoClusterAdministratorProperties administrator = null, string serverVersion = null, string connectionString = null, MongoClusterProvisioningState? provisioningState = null, MongoClusterStatus? clusterStatus = null, MongoClusterPublicNetworkAccess? publicNetworkAccess = null, HighAvailabilityMode? highAvailabilityTargetMode = null, long? storageSizeGb = null, int? shardingShardCount = null, string computeTier = null, string backupEarliestRestoreTime = null, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = null, IEnumerable<MongoClusterPreviewFeature> previewFeatures = null, MongoClusterReplicationProperties replica = null, string infrastructureVersion = null)
+        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = null, MongoClusterRestoreContent restoreParameters = null, MongoClusterReplicaContent replicaParameters = null, MongoClusterAdministratorProperties administrator = null, string serverVersion = null, string connectionString = null, MongoClusterProvisioningState? provisioningState = null, MongoClusterStatus? clusterStatus = null, MongoClusterPublicNetworkAccess? publicNetworkAccess = null, HighAvailabilityMode? highAvailabilityTargetMode = null, MongoClusterStorageProperties storage = null, int? shardingShardCount = null, string computeTier = null, string backupEarliestRestoreTime = null, MongoClusterDataApiMode? dataApiMode = null, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = null, IEnumerable<MongoClusterPreviewFeature> previewFeatures = null, MongoClusterReplicationProperties replica = null, string infrastructureVersion = null, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = null, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = null)
         {
             privateEndpointConnections ??= new List<MongoClusterPrivateEndpointConnection>();
             previewFeatures ??= new List<MongoClusterPreviewFeature>();
+            authConfigAllowedModes ??= new List<MongoClusterAuthenticationMode>();
 
             return new MongoClusterProperties(
                 createMode,
@@ -76,14 +82,17 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 clusterStatus,
                 publicNetworkAccess,
                 highAvailabilityTargetMode != null ? new HighAvailabilityProperties(highAvailabilityTargetMode, serializedAdditionalRawData: null) : null,
-                storageSizeGb != null ? new StorageProperties(storageSizeGb, serializedAdditionalRawData: null) : null,
+                storage,
                 shardingShardCount != null ? new ShardingProperties(shardingShardCount, serializedAdditionalRawData: null) : null,
                 computeTier != null ? new ComputeProperties(computeTier, serializedAdditionalRawData: null) : null,
                 backupEarliestRestoreTime != null ? new BackupProperties(backupEarliestRestoreTime, serializedAdditionalRawData: null) : null,
+                dataApiMode != null ? new DataApiProperties(dataApiMode, serializedAdditionalRawData: null) : null,
                 privateEndpointConnections?.ToList(),
                 previewFeatures?.ToList(),
                 replica,
                 infrastructureVersion,
+                authConfigAllowedModes != null ? new AuthConfigProperties(authConfigAllowedModes?.ToList(), serializedAdditionalRawData: null) : null,
+                customerManagedKeyEncryption != null ? new EncryptionProperties(customerManagedKeyEncryption, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
@@ -260,6 +269,40 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 systemData,
                 properties,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoCluster.MongoClusterUserData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MongoCluster.MongoClusterUserData"/> instance for mocking. </returns>
+        public static MongoClusterUserData MongoClusterUserData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MongoClusterUserProperties properties = null)
+        {
+            return new MongoClusterUserData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterUserProperties"/>. </summary>
+        /// <param name="provisioningState"> The provisioning state of the user. </param>
+        /// <param name="identityProvider">
+        /// The user's identity provider definition.
+        /// Please note <see cref="MongoClusterIdentityProvider"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MongoClusterEntraIdentityProvider"/>.
+        /// </param>
+        /// <param name="roles"> Database roles that are assigned to the user. </param>
+        /// <returns> A new <see cref="Models.MongoClusterUserProperties"/> instance for mocking. </returns>
+        public static MongoClusterUserProperties MongoClusterUserProperties(MongoClusterProvisioningState? provisioningState = null, MongoClusterIdentityProvider identityProvider = null, IEnumerable<MongoClusterDatabaseRole> roles = null)
+        {
+            roles ??= new List<MongoClusterDatabaseRole>();
+
+            return new MongoClusterUserProperties(provisioningState, identityProvider, roles?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

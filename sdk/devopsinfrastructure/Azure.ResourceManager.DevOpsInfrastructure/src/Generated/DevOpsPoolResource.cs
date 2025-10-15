@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,6 +352,90 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         }
 
         /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}/resources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pools_DeleteResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="details"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        public virtual async Task<Response> DeleteResourcesAsync(DevOpsDeleteResourcesDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(details, nameof(details));
+
+            using var scope = _devOpsPoolPoolsClientDiagnostics.CreateScope("DevOpsPoolResource.DeleteResources");
+            scope.Start();
+            try
+            {
+                var response = await _devOpsPoolPoolsRestClient.DeleteResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, details, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevOpsInfrastructure/pools/{poolName}/resources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pools_DeleteResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevOpsPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="details"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        public virtual Response DeleteResources(DevOpsDeleteResourcesDetails details, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(details, nameof(details));
+
+            using var scope = _devOpsPoolPoolsClientDiagnostics.CreateScope("DevOpsPoolResource.DeleteResources");
+            scope.Start();
+            try
+            {
+                var response = _devOpsPoolPoolsRestClient.DeleteResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, details, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// List ResourceDetailsObject resources by Pool
         /// <list type="bullet">
         /// <item>
@@ -364,7 +448,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -390,7 +474,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,7 +500,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -478,7 +562,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -540,7 +624,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -597,7 +681,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -654,7 +738,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -714,7 +798,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-19</description>
+        /// <description>2025-09-20</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

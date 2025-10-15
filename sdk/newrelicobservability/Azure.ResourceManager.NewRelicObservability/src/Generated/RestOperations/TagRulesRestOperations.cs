@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01";
+            _apiVersion = apiVersion ?? "2025-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> List TagRule resources by NewRelicMonitorResource. </summary>
+        /// <summary> Lists all tag rules associated with a specific New Relic monitor resource, helping you manage and audit the rules that control resource monitoring. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> List TagRule resources by NewRelicMonitorResource. </summary>
+        /// <summary> Lists all tag rules associated with a specific New Relic monitor resource, helping you manage and audit the rules that control resource monitoring. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Get a TagRule. </summary>
+        /// <summary> Retrieves the details of the tag rules for a specific New Relic monitor resource, providing insight into its setup and status. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Get a TagRule. </summary>
+        /// <summary> Retrieves the details of the tag rules for a specific New Relic monitor resource, providing insight into its setup and status. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Create a TagRule. </summary>
+        /// <summary> Creates a new set of tag rules for a specific New Relic monitor resource, determining which Azure resources are monitored based on their tags. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Create a TagRule. </summary>
+        /// <summary> Creates a new set of tag rules for a specific New Relic monitor resource, determining which Azure resources are monitored based on their tags. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Delete a TagRule. </summary>
+        /// <summary> Deletes a tag rule set for a given New Relic monitor resource, removing fine-grained control over observability based on resource tags. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Delete a TagRule. </summary>
+        /// <summary> Deletes a tag rule set for a given New Relic monitor resource, removing fine-grained control over observability based on resource tags. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> Update a TagRule. </summary>
+        /// <summary> Updates the tag rules for a specific New Relic monitor resource, allowing you to modify the rules that control which Azure resources are monitored. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> Update a TagRule. </summary>
+        /// <summary> Updates the tag rules for a specific New Relic monitor resource, allowing you to modify the rules that control which Azure resources are monitored. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        /// <summary> List TagRule resources by NewRelicMonitorResource. </summary>
+        /// <summary> Lists all tag rules associated with a specific New Relic monitor resource, helping you manage and audit the rules that control resource monitoring. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        /// <summary> List TagRule resources by NewRelicMonitorResource. </summary>
+        /// <summary> Lists all tag rules associated with a specific New Relic monitor resource, helping you manage and audit the rules that control resource monitoring. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

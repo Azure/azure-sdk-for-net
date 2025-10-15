@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_FleetsGet()
         {
-            // Generated from example definition: 2024-11-01/Fleets_Get.json
+            // Generated from example definition: 2025-07-01-preview/Fleets_Get.json
             // this example is just showing the usage of "Fleet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
             // for more information of creating ComputeFleetResource, please refer to the document of ComputeFleetResource
             string subscriptionId = "1DC2F28C-A625-4B0E-9748-9885A3C9E9EB";
             string resourceGroupName = "rgazurefleet";
-            string fleetName = "testFleet";
+            string fleetName = "myFleet";
             ResourceIdentifier computeFleetResourceId = ComputeFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             ComputeFleetResource computeFleet = client.GetComputeFleetResource(computeFleetResourceId);
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_FleetsDelete()
         {
-            // Generated from example definition: 2024-11-01/Fleets_Delete.json
+            // Generated from example definition: 2025-07-01-preview/Fleets_Delete.json
             // this example is just showing the usage of "Fleet_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_FleetsUpdate()
         {
-            // Generated from example definition: 2024-11-01/Fleets_Update.json
+            // Generated from example definition: 2025-07-01-preview/Fleets_Update.json
             // this example is just showing the usage of "Fleet_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
             // for more information of creating ComputeFleetResource, please refer to the document of ComputeFleetResource
             string subscriptionId = "1DC2F28C-A625-4B0E-9748-9885A3C9E9EB";
             string resourceGroupName = "rgazurefleet";
-            string fleetName = "testFleet";
+            string fleetName = "myFleet";
             ResourceIdentifier computeFleetResourceId = ComputeFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             ComputeFleetResource computeFleet = client.GetComputeFleetResource(computeFleetResourceId);
 
@@ -106,9 +106,13 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
                 },
                 Properties = new ComputeFleetProperties(new ComputeFleetVmSizeProfile[]
             {
-new ComputeFleetVmSizeProfile("Standard_d1_v2")
+new ComputeFleetVmSizeProfile("Standard_D1_v2")
 {
-Rank = 19225,
+Rank = 0,
+},
+new ComputeFleetVmSizeProfile("Standard_D2_v2")
+{
+Rank = 1,
 }
             }, new ComputeFleetComputeProfile(new ComputeFleetVmProfile
             {
@@ -400,6 +404,11 @@ IsAutomaticUpgradeEnabled = true,
             {
                 ComputeApiVersion = "2023-07-01",
                 PlatformFaultDomainCount = 1,
+                AdditionalVirtualMachineCapabilities = new AdditionalCapabilities
+                {
+                    IsUltraSSDEnabled = true,
+                    IsHibernationEnabled = true,
+                },
             })
                 {
                     SpotPriorityProfile = new SpotPriorityProfile
@@ -415,8 +424,358 @@ IsAutomaticUpgradeEnabled = true,
                     {
                         Capacity = 20,
                         MinCapacity = 10,
-                        AllocationStrategy = RegularPriorityAllocationStrategy.LowestPrice,
+                        AllocationStrategy = RegularPriorityAllocationStrategy.Prioritized,
                     },
+                    VmAttributes = new ComputeFleetVmAttributes(new ComputeFleetVmAttributeMinMaxInteger
+                    {
+                        Min = 2,
+                        Max = 4,
+                    }, new ComputeFleetVmAttributeMinMaxDouble
+                    {
+                        Min = 2,
+                        Max = 4,
+                    })
+                    {
+                        MemoryInGiBPerVCpu = new ComputeFleetVmAttributeMinMaxDouble
+                        {
+                            Min = 2,
+                            Max = 4,
+                        },
+                        LocalStorageSupport = ComputeFleetVmAttributeSupport.Excluded,
+                        LocalStorageInGiB = new ComputeFleetVmAttributeMinMaxDouble
+                        {
+                            Min = 2,
+                            Max = 4,
+                        },
+                        LocalStorageDiskTypes = { LocalStorageDiskType.HDD },
+                        DataDiskCount = new ComputeFleetVmAttributeMinMaxInteger
+                        {
+                            Min = 2,
+                            Max = 4,
+                        },
+                        NetworkInterfaceCount = new ComputeFleetVmAttributeMinMaxInteger
+                        {
+                            Min = 2,
+                            Max = 4,
+                        },
+                        NetworkBandwidthInMbps = new ComputeFleetVmAttributeMinMaxDouble
+                        {
+                            Min = 2,
+                            Max = 4,
+                        },
+                        RdmaSupport = ComputeFleetVmAttributeSupport.Excluded,
+                        RdmaNetworkInterfaceCount = new ComputeFleetVmAttributeMinMaxInteger
+                        {
+                            Min = 2,
+                            Max = 4,
+                        },
+                        AcceleratorSupport = ComputeFleetVmAttributeSupport.Excluded,
+                        AcceleratorManufacturers = { AcceleratorManufacturer.AMD },
+                        AcceleratorTypes = { AcceleratorType.GPU },
+                        AcceleratorCount = new ComputeFleetVmAttributeMinMaxInteger
+                        {
+                            Min = 2,
+                            Max = 4,
+                        },
+                        VmCategories = { ComputeFleetVmCategory.GeneralPurpose },
+                        ArchitectureTypes = { ArchitectureType.ARM64 },
+                        CpuManufacturers = { CpuManufacturer.Intel },
+                        BurstableSupport = ComputeFleetVmAttributeSupport.Excluded,
+                        ExcludedVmSizes = { "Standard_A1" },
+                    },
+                    AdditionalLocationsLocationProfiles = {new LocationProfile(new AzureLocation("v"))
+{
+VirtualMachineProfileOverride = new ComputeFleetVmProfile
+{
+OSProfile = new ComputeFleetVmssOSProfile
+{
+ComputerNamePrefix = "tec",
+AdminUsername = "xdgnnqymtamdyqxy",
+AdminPassword = "<a-password-goes-here>",
+CustomData = "whcielwnerogvbxnbia",
+WindowsConfiguration = new ComputeFleetWindowsConfiguration
+{
+IsVmAgentProvisioned = true,
+IsAutomaticUpdatesEnabled = true,
+TimeZone = "ktf",
+AdditionalUnattendContent = {new WindowsSetupAdditionalInformation
+{
+PassName = WindowsSetupAdditionalInformationPassName.OobeSystem,
+ComponentName = WindowsSetupAdditionalInformationComponentName.MicrosoftWindowsShellSetup,
+SettingName = AdditionalInformationSettingName.AutoLogon,
+Content = "xcigofrcurxdwx",
+}},
+PatchSettings = new ComputeFleetVmGuestPatchSettings
+{
+PatchMode = ComputeFleetWindowsVmGuestPatchMode.Manual,
+IsHotPatchingEnabled = true,
+AssessmentMode = ComputeFleetWindowsPatchAssessmentMode.ImageDefault,
+AutomaticByPlatformSettings = new ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings
+{
+RebootSetting = ComputeFleetWindowsVmGuestPatchAutomaticByPlatformRebootSetting.Unknown,
+IsBypassPlatformSafetyChecksOnUserScheduleEnabled = true,
+},
+},
+WinRMListeners = {new ComputeFleetWinRMListener
+{
+Protocol = ComputeFleetProtocolType.Http,
+CertificateUri = new Uri("https://microsoft.com/apzd"),
+}},
+IsVmAgentPlatformUpdatesEnabled = true,
+},
+LinuxConfiguration = new ComputeFleetLinuxConfiguration
+{
+IsPasswordAuthenticationDisabled = true,
+SshPublicKeys = {new ComputeFleetSshPublicKey
+{
+Path = "ebeglujkldnntlpmazrg",
+KeyData = "vmgnwtwjcodavmu",
+}},
+IsVmAgentProvisioned = true,
+PatchSettings = new ComputeFleetLinuxPatchSettings
+{
+PatchMode = ComputeFleetLinuxVmGuestPatchMode.ImageDefault,
+AssessmentMode = ComputeFleetLinuxPatchAssessmentMode.ImageDefault,
+AutomaticByPlatformSettings = new ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings
+{
+RebootSetting = ComputeFleetLinuxVmGuestPatchAutomaticByPlatformRebootSetting.Unknown,
+IsBypassPlatformSafetyChecksOnUserScheduleEnabled = true,
+},
+},
+IsVmAgentPlatformUpdatesEnabled = true,
+},
+Secrets = {new ComputeFleetVaultSecretGroup
+{
+SourceVaultId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}"),
+VaultCertificates = {new ComputeFleetVaultCertificate
+{
+CertificateUri = new Uri("https://microsoft.com/a"),
+CertificateStore = "yycyfwpymjtwzza",
+}},
+}},
+AreExtensionOperationsAllowed = true,
+IsGuestProvisionSignalRequired = true,
+},
+StorageProfile = new ComputeFleetVmssStorageProfile
+{
+ImageReference = new ComputeFleetImageReference
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageName}/versions/{versionName}"),
+Publisher = "mqxgwbiyjzmxavhbkd",
+Offer = "isxgumkarlkomp",
+Sku = "eojmppqcrnpmxirtp",
+Version = "wvpcqefgtmqdgltiuz",
+SharedGalleryImageId = "kmkgihoxwlawuuhcinfirktdwkmx",
+CommunityGalleryImageId = "vlqe",
+},
+OSDisk = new ComputeFleetVmssOSDisk(ComputeFleetDiskCreateOptionType.FromImage)
+{
+Name = "dt",
+Caching = ComputeFleetCachingType.None,
+IsWriteAcceleratorEnabled = true,
+DiffDiskSettings = new ComputeFleetDiffDiskSettings
+{
+Option = ComputeFleetDiffDiskOption.Local,
+Placement = ComputeFleetDiffDiskPlacement.CacheDisk,
+},
+DiskSizeGB = 9,
+OSType = ComputeFleetOperatingSystemType.Windows,
+ImageUri = new Uri("https://microsoft.com/a"),
+VhdContainers = {"kdagj"},
+ManagedDisk = new ComputeFleetVmssManagedDisk
+{
+StorageAccountType = ComputeFleetStorageAccountType.StandardLrs,
+DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}"),
+SecurityProfile = new ComputeFleetVmDiskSecurityProfile
+{
+SecurityEncryptionType = ComputeFleetSecurityEncryptionType.VmGuestStateOnly,
+DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}"),
+},
+},
+DeleteOption = ComputeFleetDiskDeleteOptionType.Delete,
+},
+DataDisks = {new ComputeFleetVmssDataDisk(6, ComputeFleetDiskCreateOptionType.FromImage)
+{
+Name = "mhljivkyryuomrapmmxx",
+Caching = ComputeFleetCachingType.None,
+IsWriteAcceleratorEnabled = true,
+DiskSizeGB = 9,
+ManagedDisk = new ComputeFleetVmssManagedDisk
+{
+StorageAccountType = ComputeFleetStorageAccountType.StandardLrs,
+DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}"),
+SecurityProfile = new ComputeFleetVmDiskSecurityProfile
+{
+SecurityEncryptionType = ComputeFleetSecurityEncryptionType.VmGuestStateOnly,
+DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}"),
+},
+},
+DiskIopsReadWrite = 24L,
+DiskMbpsReadWrite = 4L,
+DeleteOption = ComputeFleetDiskDeleteOptionType.Delete,
+}},
+DiskControllerType = ComputeFleetDiskControllerType.Scsi,
+},
+NetworkProfile = new ComputeFleetVmssNetworkProfile
+{
+HealthProbeId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}"),
+NetworkInterfaceConfigurations = {new ComputeFleetVmssNetworkConfiguration("gpunpcdsdphgspvgwwbnk")
+{
+Properties = new ComputeFleetVmssNetworkConfigurationProperties(new ComputeFleetVmssIPConfiguration[]
+{
+new ComputeFleetVmssIPConfiguration("fweiphgkyhbcsbfjmxzczkpg")
+{
+Properties = new ComputeFleetVmssIPConfigurationProperties
+{
+SubnetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}"),
+IsPrimary = true,
+PublicIPAddressConfiguration = new ComputeFleetVmssPublicIPAddressConfiguration("dvnoamqjyshquvtmf")
+{
+Properties = new ComputeFleetVmssPublicIPAddressConfigurationProperties
+{
+IdleTimeoutInMinutes = 1,
+DnsSettings = new ComputeFleetVmssPublicIPAddressDnsSettings("ayofnb")
+{
+DomainNameLabelScope = ComputeFleetDomainNameLabelScopeType.TenantReuse,
+},
+IPTags = {new ComputeFleetVmssIPTag
+{
+IPTagType = "zqpznczmc",
+Tag = "ugnfzikniqjisffrbvryavenhmtd",
+}},
+PublicIPPrefixId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}"),
+PublicIPAddressVersion = ComputeFleetIPVersion.IPv4,
+DeleteOption = ComputeFleetVmDeleteOption.Delete,
+},
+Sku = new ComputeFleetPublicIPAddressSku
+{
+Name = ComputeFleetPublicIPAddressSkuName.Basic,
+Tier = ComputeFleetPublicIPAddressSkuTier.Regional,
+},
+},
+PrivateIPAddressVersion = ComputeFleetIPVersion.IPv4,
+ApplicationGatewayBackendAddressPools = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/backendAddressPools/{backendAddressPoolName}"),
+}},
+ApplicationSecurityGroups = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}"),
+}},
+LoadBalancerBackendAddressPools = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}"),
+}},
+LoadBalancerInboundNatPools = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatPools/{inboundNatPoolName}"),
+}},
+},
+}
+})
+{
+IsPrimary = true,
+IsAcceleratedNetworkingEnabled = true,
+IsTcpStateTrackingDisabled = true,
+IsFpgaEnabled = true,
+NetworkSecurityGroupId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}"),
+DnsServers = {"sjpmlu"},
+IsIPForwardingEnabled = true,
+DeleteOption = ComputeFleetVmDeleteOption.Delete,
+AuxiliaryMode = ComputeFleetNetworkInterfaceAuxiliaryMode.None,
+AuxiliarySku = ComputeFleetNetworkInterfaceAuxiliarySku.None,
+},
+}},
+NetworkApiVersion = ComputeFleetNetworkApiVersion.V20201101,
+},
+SecurityProfile = new ComputeFleetSecurityProfile
+{
+UefiSettings = new ComputeFleetUefiSettings
+{
+IsSecureBootEnabled = true,
+IsVTpmEnabled = true,
+},
+IsEncryptionAtHostEnabled = true,
+SecurityType = ComputeFleetSecurityType.TrustedLaunch,
+UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{userAssignedIdentityName}"),
+ProxyAgentSettings = new ComputeFleetProxyAgentSettings
+{
+IsEnabled = true,
+Mode = ProxyAgentExecuteMode.Audit,
+KeyIncarnationId = 6,
+},
+},
+BootDiagnostics = new ComputeFleetBootDiagnostics
+{
+IsEnabled = true,
+StorageUri = new Uri("https://microsoft.com/a"),
+},
+ExtensionProfile = new ComputeFleetVmssExtensionProfile
+{
+Extensions = {new ComputeFleetVmssExtension
+{
+Name = "oredyuufsd",
+Properties = new ComputeFleetVmssExtensionProperties
+{
+ForceUpdateTag = "muglieujh",
+Publisher = "ccbiyfuveemaaopgxbjpm",
+ExtensionType = "yorumzkbfpxnrdwgczwwaeaxmda",
+TypeHandlerVersion = "nlnqbmgzwubbc",
+ShouldAutoUpgradeMinorVersion = true,
+IsAutomaticUpgradeEnabled = true,
+Settings = {},
+ProtectedSettings = {},
+ProvisionAfterExtensions = {"xuefrutmgzsxrpjjayvy"},
+IsSuppressFailuresEnabled = true,
+ProtectedSettingsFromKeyVault = new ComputeFleetKeyVaultSecretReference(new Uri("https://microsoft.com/a"), new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}"),
+}),
+},
+}},
+ExtensionsTimeBudget = "trluxrynunvdnukztblhbnsubr",
+},
+LicenseType = "ginsqshzwimjteiyfxhnjxfrcaat",
+ScheduledEventsProfile = new ComputeFleetScheduledEventsProfile
+{
+TerminateNotificationProfile = new ComputeFleetTerminateNotificationProfile
+{
+NotBeforeTimeout = "plbazenobaeueixatewbey",
+IsEnabled = true,
+},
+OSImageNotificationProfile = new ComputeFleetOSImageNotificationProfile
+{
+NotBeforeTimeout = "ednjvcedpjmczw",
+IsEnabled = true,
+},
+},
+UserData = "zekdr",
+CapacityReservationGroupId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}"),
+GalleryApplications = {new ComputeFleetVmGalleryApplication(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{applicationName}/versions/{versionName}"))
+{
+Tags = "eomzidad",
+Order = 22,
+ConfigurationReference = "zdqfcpvt",
+IsTreatFailureAsDeploymentFailureEnabled = true,
+IsAutomaticUpgradeEnabled = true,
+}},
+HardwareVmSizeProperties = new ComputeFleetVmSizeProperties
+{
+VCPUsAvailable = 8,
+VCPUsPerCore = 17,
+},
+ServiceArtifactReferenceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactsName}/vmArtifactsProfiles/{vmArtifactsProfileName}"),
+SecurityPostureReference = new ComputeFleetSecurityPostureReference
+{
+Id = "/CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest",
+ExcludeExtensions = {"ragwgzswxzzz"},
+IsOverridable = true,
+},
+},
+}},
+                    Mode = ComputeFleetMode.Managed,
+                    CapacityType = ComputeFleetCapacityType.Vm,
+                    ZoneAllocationPolicy = new ComputeFleetZoneAllocationPolicy(ComputeFleetZoneDistributionStrategy.BestEffortSingleZone),
                 },
             };
             ArmOperation<ComputeFleetResource> lro = await computeFleet.UpdateAsync(WaitUntil.Completed, patch);
@@ -433,7 +792,7 @@ IsAutomaticUpgradeEnabled = true,
         [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualMachineScaleSets_FleetsListVirtualMachineScaleSets()
         {
-            // Generated from example definition: 2024-11-01/Fleets_ListVirtualMachineScaleSets.json
+            // Generated from example definition: 2025-07-01-preview/Fleets_ListVirtualMachineScaleSets.json
             // this example is just showing the usage of "VirtualMachineScaleSet_ListVirtualMachineScaleSets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -454,6 +813,62 @@ IsAutomaticUpgradeEnabled = true,
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetVirtualMachines_FleetsListVirtualMachinesMaximumSet()
+        {
+            // Generated from example definition: 2025-07-01-preview/Fleets_ListVirtualMachines.json
+            // this example is just showing the usage of "VirtualMachine_ListVirtualMachines" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ComputeFleetResource created on azure
+            // for more information of creating ComputeFleetResource, please refer to the document of ComputeFleetResource
+            string subscriptionId = "3453D930-6DDF-4466-B3B3-E1AEE9BD448C";
+            string resourceGroupName = "rgazurefleet";
+            string name = "myFleet";
+            ResourceIdentifier computeFleetResourceId = ComputeFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            ComputeFleetResource computeFleet = client.GetComputeFleetResource(computeFleetResourceId);
+
+            // invoke the operation and iterate over the result
+            string skipToken = "hydepbmwuypaprlphcdecsz";
+            await foreach (ComputeFleetVirtualMachine item in computeFleet.GetVirtualMachinesAsync(skipToken: skipToken))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Cancel_FleetsCancel()
+        {
+            // Generated from example definition: 2025-07-01-preview/Fleets_Cancel.json
+            // this example is just showing the usage of "Fleets_Cancel" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ComputeFleetResource created on azure
+            // for more information of creating ComputeFleetResource, please refer to the document of ComputeFleetResource
+            string subscriptionId = "3453D930-6DDF-4466-B3B3-E1AEE9BD448C";
+            string resourceGroupName = "rgazurefleet";
+            string fleetName = "myFleet";
+            ResourceIdentifier computeFleetResourceId = ComputeFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
+            ComputeFleetResource computeFleet = client.GetComputeFleetResource(computeFleetResourceId);
+
+            // invoke the operation
+            await computeFleet.CancelAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }

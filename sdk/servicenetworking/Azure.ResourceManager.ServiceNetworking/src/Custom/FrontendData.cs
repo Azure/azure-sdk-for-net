@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         internal TrafficControllerFrontendData ToTrafficControllerFrontendData()
         {
-            return new TrafficControllerFrontendData(Id, Name, ResourceType, SystemData, Tags, Location, Fqdn, ProvisioningState.ToString(), _serializedAdditionalRawData);
+            return new TrafficControllerFrontendData(Id, Name, ResourceType, SystemData, Tags, Location, Fqdn, null, ProvisioningState.HasValue ? (ServiceNetworkingProvisioningState?)Enum.Parse(typeof(ServiceNetworkingProvisioningState), ProvisioningState.Value.ToString()) : null, _serializedAdditionalRawData);
         }
 
         /// <summary> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </summary>

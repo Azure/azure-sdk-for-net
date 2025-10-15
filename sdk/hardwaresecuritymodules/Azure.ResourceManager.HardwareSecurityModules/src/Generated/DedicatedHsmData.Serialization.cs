@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
 
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Zones))
@@ -50,8 +52,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
         }
 
         DedicatedHsmData IJsonModel<DedicatedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 return null;
             }
+            DedicatedHsmProperties properties = default;
             DedicatedHsmSku sku = default;
             IList<string> zones = default;
-            DedicatedHsmProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -87,6 +87,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = DedicatedHsmProperties.DeserializeDedicatedHsmProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("sku"u8))
                 {
                     sku = DedicatedHsmSku.DeserializeDedicatedHsmSku(property.Value, options);
@@ -104,11 +109,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                         array.Add(item.GetString());
                     }
                     zones = array;
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    properties = DedicatedHsmProperties.DeserializeDedicatedHsmProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 sku,
                 zones ?? new ChangeTrackingList<string>(),
-                properties,
                 serializedAdditionalRawData);
         }
 

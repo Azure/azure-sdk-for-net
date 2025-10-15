@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.ComputeFleet
     [ModelReaderWriterBuildable(typeof(ComputeFleetVaultCertificate))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetVaultSecretGroup))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetVirtualHardDisk))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVirtualMachine))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetVmAttributeMinMaxDouble))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetVmAttributeMinMaxInteger))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetVmAttributes))]
@@ -83,6 +84,7 @@ namespace Azure.ResourceManager.ComputeFleet
     [ModelReaderWriterBuildable(typeof(ComputeFleetWindowsConfiguration))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetWinRMListener))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetZoneAllocationPolicy))]
     [ModelReaderWriterBuildable(typeof(FleetListResult))]
     [ModelReaderWriterBuildable(typeof(LocationProfile))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
@@ -91,10 +93,12 @@ namespace Azure.ResourceManager.ComputeFleet
     [ModelReaderWriterBuildable(typeof(SpotPriorityProfile))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(VirtualMachineListResult))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetListResult))]
     [ModelReaderWriterBuildable(typeof(WindowsSetupAdditionalInformation))]
     [ModelReaderWriterBuildable(typeof(WinRMConfiguration))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
+    [ModelReaderWriterBuildable(typeof(ZonePreference))]
     public partial class AzureResourceManagerComputeFleetContext : ModelReaderWriterContext
     {
     }

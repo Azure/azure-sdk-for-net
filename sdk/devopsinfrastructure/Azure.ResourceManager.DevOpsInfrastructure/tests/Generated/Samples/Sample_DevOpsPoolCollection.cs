@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PoolsCreateOrUpdate()
         {
-            // Generated from example definition: 2024-10-19/CreateOrUpdatePool.json
+            // Generated from example definition: 2025-09-20/CreateOrUpdatePool.json
             // this example is just showing the usage of "Pool_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,13 +46,30 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
                 Properties = new DevOpsPoolProperties(10, new DevOpsAzureOrganizationProfile(new DevOpsOrganization[]
             {
 new DevOpsOrganization(new Uri("https://mseng.visualstudio.com"))
+{
+OpenAccess = true,
+}
             }), new DevOpsStatelessAgentProfile(), new DevOpsVmssFabricProfile(new DevOpsAzureSku("Standard_D4ads_v5"), new DevOpsPoolVmImage[]
             {
 new DevOpsPoolVmImage
 {
 ResourceId = "/MicrosoftWindowsServer/WindowsServer/2019-Datacenter/latest",
+EphemeralType = DevOpsEphemeralType.Automatic,
 }
-            }), "/subscriptions/222e81d0-cf38-4dab-baa5-289bf16baaa4/resourceGroups/rg-1es-devcenter/providers/Microsoft.DevCenter/projects/1ES")
+            })
+            {
+                OSProfile = new DevOpsOSProfile
+                {
+                    SecretsManagementSettings = new SecretsManagementSettings(new Uri[] { new Uri("https://abc.vault.azure.net/secrets/one") }, false)
+                    {
+                        CertificateStoreName = CertificateStoreNameOption.Root,
+                    },
+                },
+                NetworkProfile = new DevOpsNetworkProfile("/subscriptions/a2e95d27-c161-4b61-bda4-11512c14c2c2/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet")
+                {
+                    StaticIPAddressCount = 2,
+                },
+            }, "/subscriptions/222e81d0-cf38-4dab-baa5-289bf16baaa4/resourceGroups/rg-1es-devcenter/providers/Microsoft.DevCenter/projects/1ES")
                 {
                     ProvisioningState = DevOpsInfrastructureProvisioningState.Succeeded,
                 },
@@ -71,7 +88,7 @@ ResourceId = "/MicrosoftWindowsServer/WindowsServer/2019-Datacenter/latest",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PoolsGet()
         {
-            // Generated from example definition: 2024-10-19/GetPool.json
+            // Generated from example definition: 2025-09-20/GetPool.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,7 +121,7 @@ ResourceId = "/MicrosoftWindowsServer/WindowsServer/2019-Datacenter/latest",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_PoolsListByResourceGroup()
         {
-            // Generated from example definition: 2024-10-19/ListPoolsBySubscriptionAndResourceGroup.json
+            // Generated from example definition: 2025-09-20/ListPoolsBySubscriptionAndResourceGroup.json
             // this example is just showing the usage of "Pool_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,7 +156,7 @@ ResourceId = "/MicrosoftWindowsServer/WindowsServer/2019-Datacenter/latest",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_PoolsGet()
         {
-            // Generated from example definition: 2024-10-19/GetPool.json
+            // Generated from example definition: 2025-09-20/GetPool.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -168,7 +185,7 @@ ResourceId = "/MicrosoftWindowsServer/WindowsServer/2019-Datacenter/latest",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PoolsGet()
         {
-            // Generated from example definition: 2024-10-19/GetPool.json
+            // Generated from example definition: 2025-09-20/GetPool.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

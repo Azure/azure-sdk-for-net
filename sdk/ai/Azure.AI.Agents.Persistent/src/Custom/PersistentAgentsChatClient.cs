@@ -400,9 +400,7 @@ namespace Azure.AI.Agents.Persistent
                                     }
                                 }
 
-                                MCPToolResource mcpResource = mcpTool.Headers is { } headers ?
-                                    new(mcpTool.ServerName, headers) :
-                                    new(mcpTool.ServerName);
+                                MCPToolResource mcpResource = new(mcpTool.ServerName); // TODO: this should also handle auth tokens
 
                                 switch (mcpTool.ApprovalMode)
                                 {
@@ -454,6 +452,7 @@ namespace Azure.AI.Agents.Persistent
                                 BinaryData.FromString($$"""{"type": "function", "function": {"name": "{{functionName}}"} }""") :
                                 BinaryData.FromString("required");
                             break;
+
                         case AutoChatToolMode:
                             runOptions.ToolChoice = BinaryData.FromString("\"auto\"");
                             break;

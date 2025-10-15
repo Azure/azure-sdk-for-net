@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         }
 
         /// <summary>
-        /// Get a NewRelicMonitorResource
+        /// Retrieves the properties and configuration details of a specific New Relic monitor resource, providing insight into its setup and status
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         }
 
         /// <summary>
-        /// Get a NewRelicMonitorResource
+        /// Retrieves the properties and configuration details of a specific New Relic monitor resource, providing insight into its setup and status
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

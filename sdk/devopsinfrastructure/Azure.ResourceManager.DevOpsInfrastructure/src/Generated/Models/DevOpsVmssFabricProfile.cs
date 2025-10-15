@@ -67,12 +67,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <summary> The storage profile of the machines in the pool. </summary>
         public DevOpsStorageProfile StorageProfile { get; set; }
         /// <summary> The network profile of the machines in the pool. </summary>
-        internal DevOpsNetworkProfile NetworkProfile { get; set; }
-        /// <summary> The subnet id on which to put all machines created in the pool. </summary>
-        public string NetworkSubnetId
-        {
-            get => NetworkProfile is null ? default : NetworkProfile.SubnetId;
-            set => NetworkProfile = new DevOpsNetworkProfile(value);
-        }
+        public DevOpsNetworkProfile NetworkProfile { get; set; }
     }
 }

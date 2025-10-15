@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="newRelicAccountProperties"> MarketplaceSubscriptionStatus of the resource. </param>
         /// <param name="userInfo"> User Info. </param>
         /// <param name="planData"> Plan details. </param>
+        /// <param name="saaSData"> SaaS details. </param>
         /// <param name="liftrResourceCategory"> Liftr resource category. </param>
         /// <param name="liftrResourcePreference"> Liftr resource preference. The priority of the resource. </param>
         /// <param name="orgCreationSource"> Source of org creation. </param>
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="subscriptionState"> State of the Azure Subscription containing the monitor resource. </param>
         /// <param name="saaSAzureSubscriptionStatus"> Status of Azure Subscription where Marketplace SaaS is located. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NewRelicProvisioningState? provisioningState, NewRelicObservabilityMonitoringStatus? monitoringStatus, NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSubscriptionId, NewRelicAccountProperties newRelicAccountProperties, NewRelicObservabilityUserInfo userInfo, NewRelicPlanDetails planData, NewRelicLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource, string subscriptionState, string saaSAzureSubscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NewRelicMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NewRelicProvisioningState? provisioningState, NewRelicObservabilityMonitoringStatus? monitoringStatus, NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSubscriptionId, NewRelicAccountProperties newRelicAccountProperties, NewRelicObservabilityUserInfo userInfo, NewRelicPlanDetails planData, NewRelicObservabilitySaaSContent saaSData, NewRelicLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource, string subscriptionState, string saaSAzureSubscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             NewRelicAccountProperties = newRelicAccountProperties;
             UserInfo = userInfo;
             PlanData = planData;
+            SaaSData = saaSData;
             LiftrResourceCategory = liftrResourceCategory;
             LiftrResourcePreference = liftrResourcePreference;
             OrgCreationSource = orgCreationSource;
@@ -127,6 +129,21 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <summary> Plan details. </summary>
         [WirePath("properties.planData")]
         public NewRelicPlanDetails PlanData { get; set; }
+        /// <summary> SaaS details. </summary>
+        internal NewRelicObservabilitySaaSContent SaaSData { get; set; }
+        /// <summary> SaaS resource id. </summary>
+        [WirePath("properties.saaSData.saaSResourceId")]
+        public string SaaSResourceId
+        {
+            get => SaaSData is null ? default : SaaSData.SaaSResourceId;
+            set
+            {
+                if (SaaSData is null)
+                    SaaSData = new NewRelicObservabilitySaaSContent();
+                SaaSData.SaaSResourceId = value;
+            }
+        }
+
         /// <summary> Liftr resource category. </summary>
         [WirePath("properties.liftrResourceCategory")]
         public NewRelicLiftrResourceCategory? LiftrResourceCategory { get; }

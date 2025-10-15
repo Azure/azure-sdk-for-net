@@ -84,14 +84,7 @@ namespace Azure.ResourceManager.Grafana
         /// <summary> Properties specific to the grafana resource. </summary>
         public ManagedGrafanaProperties Properties { get; set; }
         /// <summary> The Sku of the grafana resource. </summary>
-        internal ManagedGrafanaSku Sku { get; set; }
-        /// <summary> The name of the SKU. </summary>
-        public string SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set => Sku = new ManagedGrafanaSku(value);
-        }
-
+        public ManagedGrafanaSku Sku { get; set; }
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }

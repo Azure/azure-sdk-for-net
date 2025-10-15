@@ -235,5 +235,670 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 etag,
                 serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryNamespaceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceData"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceData DeviceRegistryNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DeviceRegistryNamespaceProperties properties = null, ManagedServiceIdentity identity = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DeviceRegistryNamespaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                identity,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryNamespaceProperties"/>. </summary>
+        /// <param name="uuid"> Globally unique, immutable, non-reusable ID. </param>
+        /// <param name="messagingEndpoints"> Assigned and unassigned messaging endpoints. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceProperties"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceProperties DeviceRegistryNamespaceProperties(string uuid = null, IDictionary<string, MessagingEndpoint> messagingEndpoints = null, DeviceRegistryProvisioningState? provisioningState = null)
+        {
+            messagingEndpoints ??= new Dictionary<string, MessagingEndpoint>();
+
+            return new DeviceRegistryNamespaceProperties(uuid, messagingEndpoints != null ? new Messaging(messagingEndpoints, serializedAdditionalRawData: null) : null, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryErrorDetails"/>. </summary>
+        /// <param name="code"> Multi-part error code for classification and root causing of errors (ex: 400.200.100.432). </param>
+        /// <param name="message"> Human-readable helpful error message to provide additional context for error (ex: “Authentication method not supported”). </param>
+        /// <param name="info"> Human-readable helpful detailed text context for debugging (ex: “The following mechanisms are supported...”). </param>
+        /// <param name="correlationId"> Unique identifier for the transaction to aid in debugging. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryErrorDetails"/> instance for mocking. </returns>
+        public static DeviceRegistryErrorDetails DeviceRegistryErrorDetails(string code = null, string message = null, string info = null, string correlationId = null)
+        {
+            return new DeviceRegistryErrorDetails(code, message, info, correlationId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryNamespaceAssetData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceAssetData"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceAssetData DeviceRegistryNamespaceAssetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DeviceRegistryNamespaceAssetProperties properties = null, DeviceRegistryExtendedLocation extendedLocation = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DeviceRegistryNamespaceAssetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                extendedLocation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryNamespaceAssetProperties"/>. </summary>
+        /// <param name="uuid"> Globally unique, immutable, non-reusable ID. </param>
+        /// <param name="enabled"> Enabled/disabled status of the asset. </param>
+        /// <param name="externalAssetId"> Asset ID provided by the customer. </param>
+        /// <param name="displayName"> Human-readable display name. </param>
+        /// <param name="description"> Human-readable description of the asset. </param>
+        /// <param name="deviceRef"> Reference to the device that provides data for this asset. Must provide device name &amp; endpoint on the device to use. </param>
+        /// <param name="assetTypeRefs"> URIs or type definition IDs. </param>
+        /// <param name="version"> An integer that is incremented each time the resource is modified. </param>
+        /// <param name="lastTransitionOn"> A timestamp (in UTC) that is updated each time the resource is modified. </param>
+        /// <param name="manufacturer"> Asset manufacturer. </param>
+        /// <param name="manufacturerUri"> Asset manufacturer URI. </param>
+        /// <param name="model"> Asset model. </param>
+        /// <param name="productCode"> Asset product code. </param>
+        /// <param name="hardwareRevision"> Asset hardware revision number. </param>
+        /// <param name="softwareRevision"> Asset software revision number. </param>
+        /// <param name="documentationUri"> Asset documentation reference. </param>
+        /// <param name="serialNumber"> Asset serial number. </param>
+        /// <param name="attributes"> A set of key-value pairs that contain custom attributes set by the customer. </param>
+        /// <param name="discoveredAssetRefs"> Reference to a list of discovered assets. Populated only if the asset has been created from discovery flow. Discovered asset names must be provided. </param>
+        /// <param name="defaultDatasetsConfiguration"> Stringified JSON that contains connector-specific default configuration for all datasets. Each dataset can have its own configuration that overrides the default settings here. </param>
+        /// <param name="defaultEventsConfiguration"> Stringified JSON that contains connector-specific default configuration for all events. Each event can have its own configuration that overrides the default settings here. </param>
+        /// <param name="defaultStreamsConfiguration"> Stringified JSON that contains connector-specific default configuration for all streams. Each stream can have its own configuration that overrides the default settings here. </param>
+        /// <param name="defaultManagementGroupsConfiguration"> Stringified JSON that contains connector-specific default configuration for all management groups. Each management group can have its own configuration that overrides the default settings here. </param>
+        /// <param name="defaultDatasetsDestinations">
+        /// Default destinations for a dataset.
+        /// Please note <see cref="DatasetDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DatasetBrokerStateStoreDestination"/>, <see cref="DatasetMqttDestination"/> and <see cref="DatasetStorageDestination"/>.
+        /// </param>
+        /// <param name="defaultEventsDestinations">
+        /// Default destinations for an event.
+        /// Please note <see cref="EventDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="EventMqttDestination"/> and <see cref="EventStorageDestination"/>.
+        /// </param>
+        /// <param name="defaultStreamsDestinations">
+        /// Default destinations for a stream.
+        /// Please note <see cref="StreamDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="StreamMqttDestination"/> and <see cref="StreamStorageDestination"/>.
+        /// </param>
+        /// <param name="datasets"> Array of datasets that are part of the asset. Each dataset describes the data points that make up the set. </param>
+        /// <param name="eventGroups"> Array of event groups that are part of the asset. Each event group can have per-event group configuration. </param>
+        /// <param name="streams"> Array of streams that are part of the asset. Each stream can have a per-stream configuration. </param>
+        /// <param name="managementGroups"> Array of management groups that are part of the asset. Each management group can have a per-group configuration. </param>
+        /// <param name="status"> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceAssetProperties"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceAssetProperties DeviceRegistryNamespaceAssetProperties(string uuid = null, bool? enabled = null, string externalAssetId = null, string displayName = null, string description = null, DeviceRef deviceRef = null, IEnumerable<string> assetTypeRefs = null, long? version = null, DateTimeOffset? lastTransitionOn = null, string manufacturer = null, string manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, string documentationUri = null, string serialNumber = null, IDictionary<string, BinaryData> attributes = null, IEnumerable<string> discoveredAssetRefs = null, string defaultDatasetsConfiguration = null, string defaultEventsConfiguration = null, string defaultStreamsConfiguration = null, string defaultManagementGroupsConfiguration = null, IEnumerable<DatasetDestination> defaultDatasetsDestinations = null, IEnumerable<EventDestination> defaultEventsDestinations = null, IEnumerable<StreamDestination> defaultStreamsDestinations = null, IEnumerable<NamespaceDataset> datasets = null, IEnumerable<NamespaceEventGroup> eventGroups = null, IEnumerable<NamespaceStream> streams = null, IEnumerable<ManagementGroup> managementGroups = null, DeviceRegistryNamespaceAssetStatus status = null, DeviceRegistryProvisioningState? provisioningState = null)
+        {
+            assetTypeRefs ??= new List<string>();
+            attributes ??= new Dictionary<string, BinaryData>();
+            discoveredAssetRefs ??= new List<string>();
+            defaultDatasetsDestinations ??= new List<DatasetDestination>();
+            defaultEventsDestinations ??= new List<EventDestination>();
+            defaultStreamsDestinations ??= new List<StreamDestination>();
+            datasets ??= new List<NamespaceDataset>();
+            eventGroups ??= new List<NamespaceEventGroup>();
+            streams ??= new List<NamespaceStream>();
+            managementGroups ??= new List<ManagementGroup>();
+
+            return new DeviceRegistryNamespaceAssetProperties(
+                uuid,
+                enabled,
+                externalAssetId,
+                displayName,
+                description,
+                deviceRef,
+                assetTypeRefs?.ToList(),
+                version,
+                lastTransitionOn,
+                manufacturer,
+                manufacturerUri,
+                model,
+                productCode,
+                hardwareRevision,
+                softwareRevision,
+                documentationUri,
+                serialNumber,
+                attributes,
+                discoveredAssetRefs?.ToList(),
+                defaultDatasetsConfiguration,
+                defaultEventsConfiguration,
+                defaultStreamsConfiguration,
+                defaultManagementGroupsConfiguration,
+                defaultDatasetsDestinations?.ToList(),
+                defaultEventsDestinations?.ToList(),
+                defaultStreamsDestinations?.ToList(),
+                datasets?.ToList(),
+                eventGroups?.ToList(),
+                streams?.ToList(),
+                managementGroups?.ToList(),
+                status,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryNamespaceAssetStatus"/>. </summary>
+        /// <param name="config"> Defines the asset status config properties. </param>
+        /// <param name="datasets"> Array of dataset statuses that describe the status of each dataset. </param>
+        /// <param name="eventGroups"> Array of event group statuses that describe the status of each event group. </param>
+        /// <param name="streams"> Array of stream statuses that describe the status of each stream. </param>
+        /// <param name="managementGroups"> Array of management group statuses that describe the status of each management group. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceAssetStatus"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceAssetStatus DeviceRegistryNamespaceAssetStatus(DeviceRegistryStatusConfig config = null, IEnumerable<DeviceRegistryNamespaceAssetStatusDataset> datasets = null, IEnumerable<DeviceRegistryNamespaceAssetStatusEventGroup> eventGroups = null, IEnumerable<DeviceRegistryNamespaceAssetStatusStream> streams = null, IEnumerable<DeviceRegistryNamespaceAssetStatusManagementGroup> managementGroups = null)
+        {
+            datasets ??= new List<DeviceRegistryNamespaceAssetStatusDataset>();
+            eventGroups ??= new List<DeviceRegistryNamespaceAssetStatusEventGroup>();
+            streams ??= new List<DeviceRegistryNamespaceAssetStatusStream>();
+            managementGroups ??= new List<DeviceRegistryNamespaceAssetStatusManagementGroup>();
+
+            return new DeviceRegistryNamespaceAssetStatus(
+                config,
+                datasets?.ToList(),
+                eventGroups?.ToList(),
+                streams?.ToList(),
+                managementGroups?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryStatusConfig"/>. </summary>
+        /// <param name="version"> A read-only incremental counter indicating the number of times the configuration has been modified from the perspective of the current actual (edge) state of the CRD. Edge would be the only writer of this value and would sync back up to the cloud. In steady state, this should equal version. </param>
+        /// <param name="lastTransitionOn"> A read-only timestamp indicating the last time the configuration has been modified from the perspective of the current actual (edge) state of the CRD. Edge would be the only writer of this value and would sync back up to the cloud. </param>
+        /// <param name="error"> Object to transfer and persist errors that originate from the edge. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryStatusConfig"/> instance for mocking. </returns>
+        public static DeviceRegistryStatusConfig DeviceRegistryStatusConfig(long? version = null, DateTimeOffset? lastTransitionOn = null, DeviceRegistryStatusError error = null)
+        {
+            return new DeviceRegistryStatusConfig(version, lastTransitionOn, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryStatusError"/>. </summary>
+        /// <param name="code"> Error code for classification of errors (ex: '400', '404', '500', etc.). </param>
+        /// <param name="message"> Human-readable helpful error message to provide additional context for error (e.g.,: “Capability ID 'foo' does not exist”). </param>
+        /// <param name="details"> Array of error details that describe the status of each error. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryStatusError"/> instance for mocking. </returns>
+        public static DeviceRegistryStatusError DeviceRegistryStatusError(string code = null, string message = null, IEnumerable<DeviceRegistryErrorDetails> details = null)
+        {
+            details ??= new List<DeviceRegistryErrorDetails>();
+
+            return new DeviceRegistryStatusError(code, message, details?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryNamespaceAssetStatusDataset"/>. </summary>
+        /// <param name="name"> The name of the dataset. Must be unique within the status.datasets array. This name is used to correlate between the spec and status dataset information. </param>
+        /// <param name="messageSchemaReference"> The message schema reference object. </param>
+        /// <param name="error"> Object to transfer and persist errors that originate from the edge. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceAssetStatusDataset"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceAssetStatusDataset DeviceRegistryNamespaceAssetStatusDataset(string name = null, DeviceRegistryNamespaceMessageSchemaReference messageSchemaReference = null, DeviceRegistryStatusError error = null)
+        {
+            return new DeviceRegistryNamespaceAssetStatusDataset(name, messageSchemaReference, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryNamespaceMessageSchemaReference"/>. </summary>
+        /// <param name="schemaRegistryNamespace"> The message schema registry namespace. </param>
+        /// <param name="schemaName"> The message schema name. </param>
+        /// <param name="schemaVersion"> The message schema version. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceMessageSchemaReference"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceMessageSchemaReference DeviceRegistryNamespaceMessageSchemaReference(string schemaRegistryNamespace = null, string schemaName = null, string schemaVersion = null)
+        {
+            return new DeviceRegistryNamespaceMessageSchemaReference(schemaRegistryNamespace, schemaName, schemaVersion, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryNamespaceAssetStatusEventGroup"/>. </summary>
+        /// <param name="name"> The name of the event group. Must be unique within the status.eventGroups array. This name is used to correlate between the spec and status event group information. </param>
+        /// <param name="events"> Array of event statuses that describe the status of each event in the event group. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceAssetStatusEventGroup"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceAssetStatusEventGroup DeviceRegistryNamespaceAssetStatusEventGroup(string name = null, IEnumerable<DeviceRegistryNamespaceAssetStatusEvent> events = null)
+        {
+            events ??= new List<DeviceRegistryNamespaceAssetStatusEvent>();
+
+            return new DeviceRegistryNamespaceAssetStatusEventGroup(name, events?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryNamespaceAssetStatusEvent"/>. </summary>
+        /// <param name="name"> The name of the event. Must be unique within the status.events array. This name is used to correlate between the spec and status event information. </param>
+        /// <param name="messageSchemaReference"> The message schema reference object. </param>
+        /// <param name="error"> Object to transfer and persist errors that originate from the edge. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceAssetStatusEvent"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceAssetStatusEvent DeviceRegistryNamespaceAssetStatusEvent(string name = null, DeviceRegistryNamespaceMessageSchemaReference messageSchemaReference = null, DeviceRegistryStatusError error = null)
+        {
+            return new DeviceRegistryNamespaceAssetStatusEvent(name, messageSchemaReference, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryNamespaceAssetStatusStream"/>. </summary>
+        /// <param name="name"> The name of the stream. Must be unique within the status.streams array. This name is used to correlate between the spec and status event information. </param>
+        /// <param name="messageSchemaReference"> The message schema reference object. </param>
+        /// <param name="error"> Object to transfer and persist errors that originate from the edge. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceAssetStatusStream"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceAssetStatusStream DeviceRegistryNamespaceAssetStatusStream(string name = null, DeviceRegistryNamespaceMessageSchemaReference messageSchemaReference = null, DeviceRegistryStatusError error = null)
+        {
+            return new DeviceRegistryNamespaceAssetStatusStream(name, messageSchemaReference, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryNamespaceAssetStatusManagementGroup"/>. </summary>
+        /// <param name="name"> The name of the management group. Must be unique within the status.managementGroups array. This name is used to correlate between the spec and status event information. </param>
+        /// <param name="actions"> Array of action statuses that describe the status of each action. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceAssetStatusManagementGroup"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceAssetStatusManagementGroup DeviceRegistryNamespaceAssetStatusManagementGroup(string name = null, IEnumerable<DeviceRegistryNamespaceAssetStatusManagementAction> actions = null)
+        {
+            actions ??= new List<DeviceRegistryNamespaceAssetStatusManagementAction>();
+
+            return new DeviceRegistryNamespaceAssetStatusManagementGroup(name, actions?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryNamespaceAssetStatusManagementAction"/>. </summary>
+        /// <param name="name"> The name of the action. Must be unique within the status.actions array. This name is used to correlate between the spec and status event information. </param>
+        /// <param name="requestMessageSchemaReference"> The request message schema reference object for the action. </param>
+        /// <param name="responseMessageSchemaReference"> The response message schema reference object for the action. </param>
+        /// <param name="error"> Object to transfer and persist errors that originate from the edge. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceAssetStatusManagementAction"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceAssetStatusManagementAction DeviceRegistryNamespaceAssetStatusManagementAction(string name = null, DeviceRegistryNamespaceMessageSchemaReference requestMessageSchemaReference = null, DeviceRegistryNamespaceMessageSchemaReference responseMessageSchemaReference = null, DeviceRegistryStatusError error = null)
+        {
+            return new DeviceRegistryNamespaceAssetStatusManagementAction(name, requestMessageSchemaReference, responseMessageSchemaReference, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryNamespaceDeviceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="etag"> Resource Tag. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceDeviceData"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceDeviceData DeviceRegistryNamespaceDeviceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DeviceRegistryNamespaceDeviceProperties properties = null, string etag = null, DeviceRegistryExtendedLocation extendedLocation = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DeviceRegistryNamespaceDeviceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                etag,
+                extendedLocation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryNamespaceDeviceProperties"/>. </summary>
+        /// <param name="uuid"> A unique identifier for the device. </param>
+        /// <param name="enabled"> Indicates if the resource is enabled or not. </param>
+        /// <param name="externalDeviceId"> The Device ID provided by the customer. </param>
+        /// <param name="discoveredDeviceRef"> Reference to a device. Populated only if the device had been created from discovery flow. Discovered device name must be provided. </param>
+        /// <param name="manufacturer"> Device manufacturer. </param>
+        /// <param name="model"> Device model. </param>
+        /// <param name="operatingSystem"> Device operating system. </param>
+        /// <param name="operatingSystemVersion"> Device operating system version. </param>
+        /// <param name="endpoints"> Property bag containing the device's unassigned and assigned endpoints. </param>
+        /// <param name="attributes"> A set of key-value pairs that contain custom attributes set by the customer. </param>
+        /// <param name="status"> Device status updates. </param>
+        /// <param name="version"> An integer that is incremented each time the resource is modified. </param>
+        /// <param name="lastTransitionOn"> A timestamp (in UTC) that is updated each time the resource is modified. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceDeviceProperties"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceDeviceProperties DeviceRegistryNamespaceDeviceProperties(string uuid = null, bool? enabled = null, string externalDeviceId = null, string discoveredDeviceRef = null, string manufacturer = null, string model = null, string operatingSystem = null, string operatingSystemVersion = null, MessagingEndpoints endpoints = null, IDictionary<string, BinaryData> attributes = null, DeviceStatus status = null, long? version = null, DateTimeOffset? lastTransitionOn = null, DeviceRegistryProvisioningState? provisioningState = null)
+        {
+            attributes ??= new Dictionary<string, BinaryData>();
+
+            return new DeviceRegistryNamespaceDeviceProperties(
+                uuid,
+                enabled,
+                externalDeviceId,
+                discoveredDeviceRef,
+                manufacturer,
+                model,
+                operatingSystem,
+                operatingSystemVersion,
+                endpoints,
+                attributes,
+                status,
+                version,
+                lastTransitionOn,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceStatus"/>. </summary>
+        /// <param name="config"> Defines the device status config properties. </param>
+        /// <param name="endpointsInbound"> Defines the device status for inbound/outbound endpoints. </param>
+        /// <returns> A new <see cref="Models.DeviceStatus"/> instance for mocking. </returns>
+        public static DeviceStatus DeviceStatus(DeviceRegistryStatusConfig config = null, IReadOnlyDictionary<string, DeviceStatusEndpoint> endpointsInbound = null)
+        {
+            endpointsInbound ??= new Dictionary<string, DeviceStatusEndpoint>();
+
+            return new DeviceStatus(config, endpointsInbound != null ? new DeviceStatusEndpoints(endpointsInbound, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceStatusEndpoint"/>. </summary>
+        /// <param name="error"> Defines the error related to this endpoint. </param>
+        /// <returns> A new <see cref="Models.DeviceStatusEndpoint"/> instance for mocking. </returns>
+        public static DeviceStatusEndpoint DeviceStatusEndpoint(DeviceRegistryStatusError error = null)
+        {
+            return new DeviceStatusEndpoint(error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryNamespaceDiscoveredAssetData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceDiscoveredAssetData"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceDiscoveredAssetData DeviceRegistryNamespaceDiscoveredAssetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DeviceRegistryNamespaceDiscoveredAssetProperties properties = null, DeviceRegistryExtendedLocation extendedLocation = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DeviceRegistryNamespaceDiscoveredAssetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                extendedLocation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryNamespaceDiscoveredAssetProperties"/>. </summary>
+        /// <param name="deviceRef"> Reference to the device that provides data for this asset. Must provide device name &amp; endpoint on the device to use. </param>
+        /// <param name="displayName"> Human-readable display name. </param>
+        /// <param name="assetTypeRefs"> URIs or type definition IDs. </param>
+        /// <param name="description"> Human-readable description of the asset. </param>
+        /// <param name="discoveryId"> Identifier used to detect changes in the asset. </param>
+        /// <param name="externalAssetId"> Asset ID provided by the customer. </param>
+        /// <param name="version"> An integer that is incremented each time the resource is modified. </param>
+        /// <param name="manufacturer"> Asset manufacturer. </param>
+        /// <param name="manufacturerUri"> Asset manufacturer URI. </param>
+        /// <param name="model"> Asset model. </param>
+        /// <param name="productCode"> Asset product code. </param>
+        /// <param name="hardwareRevision"> Asset hardware revision number. </param>
+        /// <param name="softwareRevision"> Asset software revision number. </param>
+        /// <param name="documentationUri"> Asset documentation reference. </param>
+        /// <param name="serialNumber"> Asset serial number. </param>
+        /// <param name="attributes"> A set of key-value pairs that contain custom attributes. </param>
+        /// <param name="defaultDatasetsConfiguration"> Stringified JSON that contains connector-specific default configuration for all datasets. Each dataset can have its own configuration that overrides the default settings here. </param>
+        /// <param name="defaultEventsConfiguration"> Stringified JSON that contains connector-specific default configuration for all events. Each event can have its own configuration that overrides the default settings here. </param>
+        /// <param name="defaultStreamsConfiguration"> Stringified JSON that contains connector-specific default configuration for all streams. Each stream can have its own configuration that overrides the default settings here. </param>
+        /// <param name="defaultManagementGroupsConfiguration"> Stringified JSON that contains connector-specific default configuration for all management groups. Each management group can have its own configuration that overrides the default settings here. </param>
+        /// <param name="defaultDatasetsDestinations">
+        /// Default destinations for a dataset.
+        /// Please note <see cref="DatasetDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DatasetBrokerStateStoreDestination"/>, <see cref="DatasetMqttDestination"/> and <see cref="DatasetStorageDestination"/>.
+        /// </param>
+        /// <param name="defaultEventsDestinations">
+        /// Default destinations for an event.
+        /// Please note <see cref="EventDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="EventMqttDestination"/> and <see cref="EventStorageDestination"/>.
+        /// </param>
+        /// <param name="defaultStreamsDestinations">
+        /// Default destinations for a stream.
+        /// Please note <see cref="StreamDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="StreamMqttDestination"/> and <see cref="StreamStorageDestination"/>.
+        /// </param>
+        /// <param name="datasets"> Array of datasets that are part of the asset. Each dataset spec describes the data points that make up the set. </param>
+        /// <param name="eventGroups"> Array of event groups that are part of the asset. Each event group can have per-event group configuration. </param>
+        /// <param name="streams"> Array of streams that are part of the asset. Each stream can have a per-stream configuration. </param>
+        /// <param name="managementGroups"> Array of management groups that are part of the asset. Each management group can have a per-group configuration. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceDiscoveredAssetProperties"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceDiscoveredAssetProperties DeviceRegistryNamespaceDiscoveredAssetProperties(DeviceRef deviceRef = null, string displayName = null, IEnumerable<string> assetTypeRefs = null, string description = null, string discoveryId = null, string externalAssetId = null, long version = default, string manufacturer = null, string manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, string documentationUri = null, string serialNumber = null, IDictionary<string, BinaryData> attributes = null, string defaultDatasetsConfiguration = null, string defaultEventsConfiguration = null, string defaultStreamsConfiguration = null, string defaultManagementGroupsConfiguration = null, IEnumerable<DatasetDestination> defaultDatasetsDestinations = null, IEnumerable<EventDestination> defaultEventsDestinations = null, IEnumerable<StreamDestination> defaultStreamsDestinations = null, IEnumerable<NamespaceDiscoveredDataset> datasets = null, IEnumerable<NamespaceDiscoveredEventGroup> eventGroups = null, IEnumerable<NamespaceDiscoveredStream> streams = null, IEnumerable<NamespaceDiscoveredManagementGroup> managementGroups = null, DeviceRegistryProvisioningState? provisioningState = null)
+        {
+            assetTypeRefs ??= new List<string>();
+            attributes ??= new Dictionary<string, BinaryData>();
+            defaultDatasetsDestinations ??= new List<DatasetDestination>();
+            defaultEventsDestinations ??= new List<EventDestination>();
+            defaultStreamsDestinations ??= new List<StreamDestination>();
+            datasets ??= new List<NamespaceDiscoveredDataset>();
+            eventGroups ??= new List<NamespaceDiscoveredEventGroup>();
+            streams ??= new List<NamespaceDiscoveredStream>();
+            managementGroups ??= new List<NamespaceDiscoveredManagementGroup>();
+
+            return new DeviceRegistryNamespaceDiscoveredAssetProperties(
+                deviceRef,
+                displayName,
+                assetTypeRefs?.ToList(),
+                description,
+                discoveryId,
+                externalAssetId,
+                version,
+                manufacturer,
+                manufacturerUri,
+                model,
+                productCode,
+                hardwareRevision,
+                softwareRevision,
+                documentationUri,
+                serialNumber,
+                attributes,
+                defaultDatasetsConfiguration,
+                defaultEventsConfiguration,
+                defaultStreamsConfiguration,
+                defaultManagementGroupsConfiguration,
+                defaultDatasetsDestinations?.ToList(),
+                defaultEventsDestinations?.ToList(),
+                defaultStreamsDestinations?.ToList(),
+                datasets?.ToList(),
+                eventGroups?.ToList(),
+                streams?.ToList(),
+                managementGroups?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryNamespaceDiscoveredDeviceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceDiscoveredDeviceData"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceDiscoveredDeviceData DeviceRegistryNamespaceDiscoveredDeviceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DeviceRegistryNamespaceDiscoveredDeviceProperties properties = null, DeviceRegistryExtendedLocation extendedLocation = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DeviceRegistryNamespaceDiscoveredDeviceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                extendedLocation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryNamespaceDiscoveredDeviceProperties"/>. </summary>
+        /// <param name="externalDeviceId"> A device ID that represents the device in a system external to Azure. Unique within scope of an Azure tenant. </param>
+        /// <param name="endpoints"> Endpoints for discovered devices. </param>
+        /// <param name="manufacturer"> Device manufacturer. </param>
+        /// <param name="model"> Device model. </param>
+        /// <param name="operatingSystem"> Device operating system name. </param>
+        /// <param name="operatingSystemVersion"> Device operating system version. </param>
+        /// <param name="attributes"> A set of key-value pairs that contain custom attributes. </param>
+        /// <param name="discoveryId"> Identifier used to detect changes in the discovered device. </param>
+        /// <param name="version"> An integer that is incremented each time the resource is modified. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceDiscoveredDeviceProperties"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceDiscoveredDeviceProperties DeviceRegistryNamespaceDiscoveredDeviceProperties(string externalDeviceId = null, DiscoveredMessagingEndpoints endpoints = null, string manufacturer = null, string model = null, string operatingSystem = null, string operatingSystemVersion = null, IDictionary<string, BinaryData> attributes = null, string discoveryId = null, long version = default, DeviceRegistryProvisioningState? provisioningState = null)
+        {
+            attributes ??= new Dictionary<string, BinaryData>();
+
+            return new DeviceRegistryNamespaceDiscoveredDeviceProperties(
+                externalDeviceId,
+                endpoints,
+                manufacturer,
+                model,
+                operatingSystem,
+                operatingSystemVersion,
+                attributes,
+                discoveryId,
+                version,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistrySchemaRegistryData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistrySchemaRegistryData"/> instance for mocking. </returns>
+        public static DeviceRegistrySchemaRegistryData DeviceRegistrySchemaRegistryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DeviceRegistrySchemaRegistryProperties properties = null, ManagedServiceIdentity identity = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DeviceRegistrySchemaRegistryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                identity,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistrySchemaRegistryProperties"/>. </summary>
+        /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
+        /// <param name="namespace"> Schema registry namespace. Uniquely identifies a schema registry within a tenant. </param>
+        /// <param name="displayName"> Human-readable display name. </param>
+        /// <param name="description"> Human-readable description of the schema registry. </param>
+        /// <param name="storageAccountContainerUri"> The Storage Account's Container URL where schemas will be stored. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistrySchemaRegistryProperties"/> instance for mocking. </returns>
+        public static DeviceRegistrySchemaRegistryProperties DeviceRegistrySchemaRegistryProperties(string uuid = null, string @namespace = null, string displayName = null, string description = null, Uri storageAccountContainerUri = null, DeviceRegistryProvisioningState? provisioningState = null)
+        {
+            return new DeviceRegistrySchemaRegistryProperties(
+                uuid,
+                @namespace,
+                displayName,
+                description,
+                storageAccountContainerUri,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistrySchemaData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistrySchemaData"/> instance for mocking. </returns>
+        public static DeviceRegistrySchemaData DeviceRegistrySchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeviceRegistrySchemaProperties properties = null)
+        {
+            return new DeviceRegistrySchemaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistrySchemaProperties"/>. </summary>
+        /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
+        /// <param name="displayName"> Human-readable display name. </param>
+        /// <param name="description"> Human-readable description of the schema. </param>
+        /// <param name="format"> Format of the schema. </param>
+        /// <param name="schemaType"> Type of the schema. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="tags"> Schema tags. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistrySchemaProperties"/> instance for mocking. </returns>
+        public static DeviceRegistrySchemaProperties DeviceRegistrySchemaProperties(string uuid = null, string displayName = null, string description = null, DeviceRegistrySchemaFormat format = default, DeviceRegistrySchemaType schemaType = default, DeviceRegistryProvisioningState? provisioningState = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DeviceRegistrySchemaProperties(
+                uuid,
+                displayName,
+                description,
+                format,
+                schemaType,
+                provisioningState,
+                tags,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistrySchemaVersionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistrySchemaVersionData"/> instance for mocking. </returns>
+        public static DeviceRegistrySchemaVersionData DeviceRegistrySchemaVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeviceRegistrySchemaVersionProperties properties = null)
+        {
+            return new DeviceRegistrySchemaVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistrySchemaVersionProperties"/>. </summary>
+        /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
+        /// <param name="description"> Human-readable description of the schema. </param>
+        /// <param name="schemaContent"> Schema content. </param>
+        /// <param name="hash"> Hash of the schema content. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistrySchemaVersionProperties"/> instance for mocking. </returns>
+        public static DeviceRegistrySchemaVersionProperties DeviceRegistrySchemaVersionProperties(string uuid = null, string description = null, string schemaContent = null, string hash = null, DeviceRegistryProvisioningState? provisioningState = null)
+        {
+            return new DeviceRegistrySchemaVersionProperties(
+                uuid,
+                description,
+                schemaContent,
+                hash,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
     }
 }

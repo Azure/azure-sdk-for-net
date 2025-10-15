@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -61,17 +60,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         }
 
         /// <summary> Security Policy Configuration. </summary>
-        internal SecurityPolicyConfigurations SecurityPolicyConfigurations { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier WafSecurityPolicyId
-        {
-            get => SecurityPolicyConfigurations is null ? default : SecurityPolicyConfigurations.WafSecurityPolicyId;
-            set
-            {
-                if (SecurityPolicyConfigurations is null)
-                    SecurityPolicyConfigurations = new SecurityPolicyConfigurations();
-                SecurityPolicyConfigurations.WafSecurityPolicyId = value;
-            }
-        }
+        public SecurityPolicyConfigurations SecurityPolicyConfigurations { get; set; }
     }
 }

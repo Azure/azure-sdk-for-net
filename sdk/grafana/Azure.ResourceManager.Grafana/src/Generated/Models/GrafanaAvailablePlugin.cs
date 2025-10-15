@@ -53,11 +53,15 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> Initializes a new instance of <see cref="GrafanaAvailablePlugin"/>. </summary>
         /// <param name="pluginId"> Grafana plugin id. </param>
         /// <param name="name"> Grafana plugin display name. </param>
+        /// <param name="type"> Grafana plugin type. </param>
+        /// <param name="author"> Grafana plugin author/publisher name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GrafanaAvailablePlugin(string pluginId, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GrafanaAvailablePlugin(string pluginId, string name, string type, string author, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PluginId = pluginId;
             Name = name;
+            Type = type;
+            Author = author;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +69,9 @@ namespace Azure.ResourceManager.Grafana.Models
         public string PluginId { get; }
         /// <summary> Grafana plugin display name. </summary>
         public string Name { get; }
+        /// <summary> Grafana plugin type. </summary>
+        public string Type { get; }
+        /// <summary> Grafana plugin author/publisher name. </summary>
+        public string Author { get; }
     }
 }

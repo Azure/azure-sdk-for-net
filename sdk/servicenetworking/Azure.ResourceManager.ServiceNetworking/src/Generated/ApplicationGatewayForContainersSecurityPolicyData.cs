@@ -66,13 +66,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="policyType"> Type of the Traffic Controller Security Policy. </param>
-        /// <param name="wafPolicy"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
+        /// <param name="wafPolicy"> Web Application Firewall Policy of the Traffic Controller Security Policy. Single Security Policy can have only one policy type set. </param>
+        /// <param name="ipAccessRulesPolicy"> Ip Access Policy of the Traffic Controller Security Policy. Single Security Policy can have only one policy type set. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayForContainersSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ApplicationGatewayForContainersSecurityPolicyType? policyType, WritableSubResource wafPolicy, ServiceNetworkingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ApplicationGatewayForContainersSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ApplicationGatewayForContainersSecurityPolicyType? policyType, WritableSubResource wafPolicy, IPAccessRulesPolicy ipAccessRulesPolicy, ServiceNetworkingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PolicyType = policyType;
             WafPolicy = wafPolicy;
+            IPAccessRulesPolicy = ipAccessRulesPolicy;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -84,7 +86,7 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         /// <summary> Type of the Traffic Controller Security Policy. </summary>
         public ApplicationGatewayForContainersSecurityPolicyType? PolicyType { get; }
-        /// <summary> Web Application Firewall Policy of the Traffic Controller Security Policy. </summary>
+        /// <summary> Web Application Firewall Policy of the Traffic Controller Security Policy. Single Security Policy can have only one policy type set. </summary>
         internal WritableSubResource WafPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier WafPolicyId
@@ -95,6 +97,19 @@ namespace Azure.ResourceManager.ServiceNetworking
                 if (WafPolicy is null)
                     WafPolicy = new WritableSubResource();
                 WafPolicy.Id = value;
+            }
+        }
+
+        /// <summary> Ip Access Policy of the Traffic Controller Security Policy. Single Security Policy can have only one policy type set. </summary>
+        internal IPAccessRulesPolicy IPAccessRulesPolicy { get; set; }
+        /// <summary> Ip Access Policy Rules List. </summary>
+        public IList<ServiceNetworkingIPAccessRule> Rules
+        {
+            get
+            {
+                if (IPAccessRulesPolicy is null)
+                    IPAccessRulesPolicy = new IPAccessRulesPolicy();
+                return IPAccessRulesPolicy.Rules;
             }
         }
 
