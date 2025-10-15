@@ -2,7 +2,7 @@
 
 <!-- cspell:ignore cose merkle scitt -->
 
-`Azure.Security.CodeTransparency` is based on a managed service that complies with a [draft SCITT RFC][SCITT_ARCHITECTURE_RFC]. It allows countersigning [COSE signature envelopes][COSE_RFC]. Countersignatures are recorded and signed in an immutable Merkle tree for auditing purposes, and a [receipt][SCITT_RECEIPT_RFC] is issued.
+`Azure.Security.CodeTransparency` is based on a managed service that complies with a [draft SCITT RFC][SCITT_ARCHITECTURE_RFC]. The service stores [COSE signature envelopes][COSE_RFC] in the Merkle tree and issues signed inclusion proofs as [receipts][SCITT_RECEIPT_RFC].
 
 - [OSS server application source code][Service_source_code]
 
