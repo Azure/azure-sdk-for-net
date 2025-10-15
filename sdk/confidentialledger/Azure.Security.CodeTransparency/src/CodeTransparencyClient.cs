@@ -334,7 +334,7 @@ namespace Azure.Security.CodeTransparency
         {
             verificationOptions ??= new CodeTransparencyVerificationOptions();
 
-            List<Exception> failures = [];
+            List<Exception> failures = new List<Exception>();
 
             List<(string, byte[])> receiptList = GetReceiptsFromTransparentStatementStatic(transparentStatementCoseSign1Bytes);
             if (receiptList.Count == 0)
@@ -342,7 +342,7 @@ namespace Azure.Security.CodeTransparency
                 throw new InvalidOperationException("No receipts found in the transparent statement.");
             }
 
-            Dictionary<string, CodeTransparencyClient> clientInstances = [];
+            Dictionary<string, CodeTransparencyClient> clientInstances = new Dictionary<string, CodeTransparencyClient>();
 
             // Prepare allow list state. If no allow list provided, implicitly allow all detected issuer domains encountered in receipts.
             var configuredAllowList = verificationOptions?.AllowedIssuerDomains ?? Array.Empty<string>();

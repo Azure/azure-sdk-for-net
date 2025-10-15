@@ -438,8 +438,7 @@ namespace Azure.Security.CodeTransparency.Tests
         public void VerifyTransparentStatement_InvalidCurve_InvalidOperationException()
         {
 #if NET462
-            Assert.Ignore("JsonWebKey to ECDsa is n
-            ot supported on net462.");
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
 #else
             var content = new MockResponse(200);
             content.SetContent("{\"keys\":" +
