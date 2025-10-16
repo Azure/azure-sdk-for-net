@@ -6,11 +6,11 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
@@ -84,7 +84,7 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(Models.ZooRecommendation))]
     [ModelReaderWriterBuildable(typeof(ZooResource))]
     [ModelReaderWriterBuildable(typeof(ZooUpdateProperties))]
-    public partial class MgmtTypeSpecContext : ModelReaderWriterContext
+    public partial class AzureGeneratorMgmtTypeSpecTestsContext : ModelReaderWriterContext
     {
     }
 }

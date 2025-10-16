@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text.Json;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal static partial class ModelSerializationExtensions
     {

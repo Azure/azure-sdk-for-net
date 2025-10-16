@@ -10,38 +10,38 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Mocking;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using MgmtTypeSpec.Mocking;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    /// <summary> A class to add extension methods to MgmtTypeSpec. </summary>
-    public static partial class MgmtTypeSpecExtensions
+    /// <summary> A class to add extension methods to Azure.Generator.MgmtTypeSpec.Tests. </summary>
+    public static partial class AzureGeneratorMgmtTypeSpecTestsExtensions
     {
         /// <param name="client"></param>
-        private static MockableMgmtTypeSpecArmClient GetMockableMgmtTypeSpecArmClient(ArmClient client)
+        private static MockableAzureGeneratorMgmtTypeSpecTestsArmClient GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableMgmtTypeSpecArmClient(client0, ResourceIdentifier.Root));
+            return client.GetCachedClient(client0 => new MockableAzureGeneratorMgmtTypeSpecTestsArmClient(client0, ResourceIdentifier.Root));
         }
 
         /// <param name="resourceGroupResource"></param>
-        private static MockableMgmtTypeSpecResourceGroupResource GetMockableMgmtTypeSpecResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroupResource.GetCachedClient(client => new MockableMgmtTypeSpecResourceGroupResource(client, resourceGroupResource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(client, resourceGroupResource.Id));
         }
 
         /// <param name="subscriptionResource"></param>
-        private static MockableMgmtTypeSpecSubscriptionResource GetMockableMgmtTypeSpecSubscriptionResource(SubscriptionResource subscriptionResource)
+        private static MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return subscriptionResource.GetCachedClient(client => new MockableMgmtTypeSpecSubscriptionResource(client, subscriptionResource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <param name="tenantResource"></param>
-        private static MockableMgmtTypeSpecTenantResource GetMockableMgmtTypeSpecTenantResource(TenantResource tenantResource)
+        private static MockableAzureGeneratorMgmtTypeSpecTestsTenantResource GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(TenantResource tenantResource)
         {
-            return tenantResource.GetCachedClient(client => new MockableMgmtTypeSpecTenantResource(client, tenantResource.Id));
+            return tenantResource.GetCachedClient(client => new MockableAzureGeneratorMgmtTypeSpecTestsTenantResource(client, tenantResource.Id));
         }
 
         /// <summary> Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -53,7 +53,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetFooResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetFooResource(id);
         }
 
         /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -65,7 +65,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetFooSettingsResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetFooSettingsResource(id);
         }
 
         /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -77,7 +77,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetBarResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetBarResource(id);
         }
 
         /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -89,7 +89,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetBarSettingsResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetBarSettingsResource(id);
         }
 
         /// <summary> Gets an object representing a <see cref="BarQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -101,7 +101,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetBarQuotaResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetBarQuotaResource(id);
         }
 
         /// <summary> Gets an object representing a <see cref="BazResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -113,7 +113,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetBazResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetBazResource(id);
         }
 
         /// <summary> Gets an object representing a <see cref="ZooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -125,7 +125,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetZooResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetZooResource(id);
         }
 
         /// <summary> Gets an object representing a <see cref="EndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -137,7 +137,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetEndpointResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEndpointResource(id);
         }
 
         /// <summary> Gets a collection of <see cref="EndpointResourceCollection"/> objects within the specified scope. </summary>
@@ -149,7 +149,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetEndpointResources(scope);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEndpointResources(scope);
         }
 
         /// <summary> Gets the endpoint to the resource. </summary>
@@ -163,7 +163,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetEndpointResource(scope, endpointName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEndpointResource(scope, endpointName, cancellationToken);
         }
 
         /// <summary> Gets the endpoint to the resource. </summary>
@@ -177,7 +177,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableMgmtTypeSpecArmClient(client).GetEndpointResourceAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEndpointResourceAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="SelfHelpResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -189,7 +189,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetSelfHelpResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResource(id);
         }
 
         /// <summary> Gets a collection of <see cref="SelfHelpResourceCollection"/> objects within the specified scope. </summary>
@@ -201,7 +201,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetSelfHelpResources(scope);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResources(scope);
         }
 
         /// <summary> Get a SelfHelpResource. </summary>
@@ -215,7 +215,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetSelfHelpResource(scope, selfHelpName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResource(scope, selfHelpName, cancellationToken);
         }
 
         /// <summary> Get a SelfHelpResource. </summary>
@@ -229,7 +229,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableMgmtTypeSpecArmClient(client).GetSelfHelpResourceAsync(scope, selfHelpName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSelfHelpResourceAsync(scope, selfHelpName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="PlaywrightQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -241,7 +241,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetPlaywrightQuotaResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetPlaywrightQuotaResource(id);
         }
 
         /// <summary> Gets an object representing a <see cref="JobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -253,7 +253,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetJobResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetJobResource(id);
         }
 
         /// <summary> Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -265,7 +265,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetHciVmInstanceResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetHciVmInstanceResource(id);
         }
 
         /// <summary> Gets an object representing a <see cref="HciVmInstanceResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
@@ -277,7 +277,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetHciVmInstance(scope);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetHciVmInstance(scope);
         }
 
         /// <summary> Gets an object representing a <see cref="GroupQuotaSubscriptionRequestStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -289,7 +289,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMgmtTypeSpecArmClient(client).GetGroupQuotaSubscriptionRequestStatusResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetGroupQuotaSubscriptionRequestStatusResource(id);
         }
 
         /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>
@@ -300,7 +300,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFoos();
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFoos();
         }
 
         /// <summary> Get a Foo. </summary>
@@ -313,7 +313,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFooAsync(fooName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFooAsync(fooName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Foo. </summary>
@@ -326,7 +326,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFoo(fooName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFoo(fooName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>. </summary>
@@ -337,7 +337,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFooSettings();
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFooSettings();
         }
 
         /// <summary> Gets a collection of Bazs in the <see cref="ResourceGroupResource"/>. </summary>
@@ -348,7 +348,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetBazs();
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetBazs();
         }
 
         /// <summary> Get a Baz. </summary>
@@ -361,7 +361,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetBazAsync(bazName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetBazAsync(bazName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Baz. </summary>
@@ -374,7 +374,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetBaz(bazName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetBaz(bazName, cancellationToken);
         }
 
         /// <summary> Gets a collection of Zoos in the <see cref="ResourceGroupResource"/>. </summary>
@@ -385,7 +385,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetZoos();
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetZoos();
         }
 
         /// <summary> Get a Zoo. </summary>
@@ -398,7 +398,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetZooAsync(zooName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetZooAsync(zooName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Zoo. </summary>
@@ -411,7 +411,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetZoo(zooName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetZoo(zooName, cancellationToken);
         }
 
         /// <summary> Gets a collection of JobResources in the <see cref="ResourceGroupResource"/>. </summary>
@@ -422,7 +422,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetJobResources();
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetJobResources();
         }
 
         /// <summary> Gets information about the specified job. </summary>
@@ -436,7 +436,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetJobResourceAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetJobResourceAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets information about the specified job. </summary>
@@ -450,7 +450,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetJobResource(jobName, expand, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetJobResource(jobName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>. </summary>
@@ -462,7 +462,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetPlaywrightQuotas(location);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetPlaywrightQuotas(location);
         }
 
         /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
@@ -476,7 +476,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetPlaywrightQuotaAsync(location, playwrightQuotaName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetPlaywrightQuotaAsync(location, playwrightQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
@@ -490,7 +490,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetPlaywrightQuota(location, playwrightQuotaName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetPlaywrightQuota(location, playwrightQuotaName, cancellationToken);
         }
 
         /// <summary> List Foo resources by subscription ID. </summary>
@@ -502,7 +502,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetFoosAsync(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetFoosAsync(cancellationToken);
         }
 
         /// <summary> List Foo resources by subscription ID. </summary>
@@ -514,7 +514,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetFoos(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetFoos(cancellationToken);
         }
 
         /// <summary> List Baz resources by subscription ID. </summary>
@@ -526,7 +526,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetBazsAsync(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetBazsAsync(cancellationToken);
         }
 
         /// <summary> List Baz resources by subscription ID. </summary>
@@ -538,7 +538,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetBazs(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetBazs(cancellationToken);
         }
 
         /// <summary> List Zoo resources by subscription ID. </summary>
@@ -550,7 +550,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetZoosAsync(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetZoosAsync(cancellationToken);
         }
 
         /// <summary> List Zoo resources by subscription ID. </summary>
@@ -562,7 +562,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetZoos(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetZoos(cancellationToken);
         }
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
@@ -575,7 +575,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
@@ -588,7 +588,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).PreviewActions(location, content, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActions(location, content, cancellationToken);
         }
 
         /// <summary> Gets a collection of GroupQuotaSubscriptionRequestStatuses in the <see cref="TenantResource"/>. </summary>
@@ -600,7 +600,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableMgmtTypeSpecTenantResource(tenantResource).GetGroupQuotaSubscriptionRequestStatuses(managementGroupId);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetGroupQuotaSubscriptionRequestStatuses(managementGroupId);
         }
 
         /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
@@ -614,7 +614,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableMgmtTypeSpecTenantResource(tenantResource).GetGroupQuotaSubscriptionRequestStatusAsync(managementGroupId, requestId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetGroupQuotaSubscriptionRequestStatusAsync(managementGroupId, requestId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get API to check the status of a subscriptionIds request by requestId.  Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status. </summary>
@@ -628,7 +628,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableMgmtTypeSpecTenantResource(tenantResource).GetGroupQuotaSubscriptionRequestStatus(managementGroupId, requestId, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetGroupQuotaSubscriptionRequestStatus(managementGroupId, requestId, cancellationToken);
         }
 
         /// <summary> Starts a failed runtime resource. </summary>
@@ -639,7 +639,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableMgmtTypeSpecTenantResource(tenantResource).StartFailedServerlessRuntimeAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).StartFailedServerlessRuntimeAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Starts a failed runtime resource. </summary>
@@ -650,7 +650,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableMgmtTypeSpecTenantResource(tenantResource).StartFailedServerlessRuntime(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).StartFailedServerlessRuntime(cancellationToken);
         }
     }
 }

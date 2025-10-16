@@ -11,31 +11,31 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using MgmtTypeSpec;
 
-namespace MgmtTypeSpec.Mocking
+namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
-    public partial class MockableMgmtTypeSpecTenantResource : ArmResource
+    public partial class MockableAzureGeneratorMgmtTypeSpecTestsTenantResource : ArmResource
     {
         private ClientDiagnostics _privateLinksClientDiagnostics;
         private PrivateLinks _privateLinksRestClient;
 
-        /// <summary> Initializes a new instance of MockableMgmtTypeSpecTenantResource for mocking. </summary>
-        protected MockableMgmtTypeSpecTenantResource()
+        /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsTenantResource for mocking. </summary>
+        protected MockableAzureGeneratorMgmtTypeSpecTestsTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableMgmtTypeSpecTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableMgmtTypeSpecTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableAzureGeneratorMgmtTypeSpecTestsTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
@@ -79,7 +79,7 @@ namespace MgmtTypeSpec.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> StartFailedServerlessRuntimeAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = PrivateLinksClientDiagnostics.CreateScope("MockableMgmtTypeSpecTenantResource.StartFailedServerlessRuntime");
+            using DiagnosticScope scope = PrivateLinksClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.StartFailedServerlessRuntime");
             scope.Start();
             try
             {
@@ -102,7 +102,7 @@ namespace MgmtTypeSpec.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response StartFailedServerlessRuntime(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = PrivateLinksClientDiagnostics.CreateScope("MockableMgmtTypeSpecTenantResource.StartFailedServerlessRuntime");
+            using DiagnosticScope scope = PrivateLinksClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.StartFailedServerlessRuntime");
             scope.Start();
             try
             {

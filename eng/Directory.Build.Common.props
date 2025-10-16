@@ -12,6 +12,7 @@
 
     <!-- Client in this context is any library that is following the new Azure SDK guidelines -->
     <IsGeneratorLibrary Condition="'$(IsGeneratorLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator'))">true</IsGeneratorLibrary>
+    <IsGeneratorLibraryGenerationTest Condition="'$(IsGeneratorLibraryGenerationTest)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator')) and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsGeneratorLibraryGenerationTest>
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
     <IncludeAutorestDependency Condition="'$(IncludeAutorestDependency)' != 'false' and '$(IsClientLibrary)' == 'true'">true</IncludeAutorestDependency>
     <IsFunctionsLibrary Condition="'$(IsFunctionsLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.'))">true</IsFunctionsLibrary>
@@ -26,7 +27,7 @@
     <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true' and '$(IsSourceGenerator)' != 'true'">true</IsShippingClientLibrary>
     <TestFrameworkSupportFiles>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core.TestFramework/src/Shared/*.cs</TestFrameworkSupportFiles>
 
-    <IncludeOperationsSharedSource Condition="'$(IncludeOperationsSharedSource)' == '' and '$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsPerfProject)' != 'true'">true</IncludeOperationsSharedSource>
+    <IncludeOperationsSharedSource Condition="'$(IncludeOperationsSharedSource)' == '' and ('$(IsMgmtLibrary)' == 'true' or '$(IsGeneratorLibraryGenerationTest)' == 'true') and '$(IsTestProject)' != 'true' and '$(IsPerfProject)' != 'true'">true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <!-- Setup default project properties -->
@@ -166,7 +167,7 @@
     <RequiredTargetFrameworks Condition="'$(BuildSnippets)' == 'true'">net9.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">
+  <ItemGroup Condition="('$(IsMgmtSubLibrary)' == 'true' or '$(IsGeneratorLibraryGenerationTest)' == 'true') and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">
     <PackageReference Include="Azure.ResourceManager" />
   </ItemGroup>
 

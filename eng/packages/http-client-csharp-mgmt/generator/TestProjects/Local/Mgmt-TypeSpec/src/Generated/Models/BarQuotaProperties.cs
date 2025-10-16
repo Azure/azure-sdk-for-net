@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The BarQuotaProperties. </summary>
     internal partial class BarQuotaProperties
