@@ -10,6 +10,7 @@
     <NoWarn>AZC0015;AZC0007</NoWarn>
     <IsTestProject>false</IsTestProject>
     <IsPackable>true</IsPackable>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>

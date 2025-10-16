@@ -19,6 +19,7 @@
      AZC0004;
     </NoWarn>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->

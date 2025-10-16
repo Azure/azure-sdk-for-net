@@ -21,7 +21,7 @@ namespace MgmtTypeSpec
     /// <summary>
     /// A class representing a PlaywrightQuota along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PlaywrightQuotaResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetPlaywrightQuotas method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetAllPlaywrightQuota method.
     /// </summary>
     public partial class PlaywrightQuotaResource : ArmResource
     {

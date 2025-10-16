@@ -15,6 +15,7 @@
       AZC0035; <!-- Missing model factory methods.  #51230-->
     </NoWarn>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
