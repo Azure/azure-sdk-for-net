@@ -142,9 +142,11 @@ public class BicepDictionary<T> :
         {
             throw new InvalidOperationException($"Cannot Remove from {_self?.PropertyName}, the dictionary is an expression or output only");
         }
-        var removedItem = _values[key];
-        // maintain the self reference for the removed item
-        RemoveSelfForItem(removedItem);
+        if (_values.TryGetValue(key, out var removedItem))
+        {
+            // maintain the self reference for the removed item if the item exists
+            RemoveSelfForItem(removedItem);
+        }
         return _values.Remove(key);
     }
 
