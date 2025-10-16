@@ -747,7 +747,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="isRoomsCall"> Is the calling event a room call. </param>
         /// <param name="endedBy"> The communication identifier of the user who was disconnected. </param>
         /// <param name="reason"> The reason for ending the call. </param>
-        /// <param name="callDuration"> Duration of the call. </param>
+        /// <param name="callDuration"> Duration of the call in seconds. </param>
         /// <returns> A new <see cref="SystemEvents.AcsCallEndedEventData"/> instance for mocking. </returns>
         public static AcsCallEndedEventData AcsCallEndedEventData(AcsCallParticipantProperties startedBy = default, string serverCallId = default, AcsCallGroupProperties @group = default, AcsCallRoomProperties room = default, bool? isTwoParty = default, string correlationId = default, bool? isRoomsCall = default, AcsCallEndedByProperties endedBy = default, AcsCallEndReasonProperties reason = default, TimeSpan? callDuration = default)
         {
@@ -1223,7 +1223,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
         /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
-        /// <param name="properties"> Gets the properties of the chat thread created with user event. </param>
+        /// <param name="properties"> The thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/> instance for mocking. </returns>
@@ -1263,7 +1263,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
         /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
-        /// <param name="properties"> Gets the properties of the chat thread created event. </param>
+        /// <param name="properties"> The thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedEventData"/> instance for mocking. </returns>
@@ -1336,7 +1336,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
         /// <param name="metadata"> The thread metadata. </param>
-        /// <param name="properties"> The properties of the chat thread that were updated for the user. </param>
+        /// <param name="properties"> The updated thread properties. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData"/> instance for mocking. </returns>
         public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = default, string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel editedByCommunicationIdentifier = default, DateTimeOffset? editTime = default, IReadOnlyDictionary<string, string> metadata = default, IReadOnlyDictionary<string, object> properties = default)
         {
@@ -1363,7 +1363,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="version"> The version of the thread. </param>
         /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
-        /// <param name="properties"> Gets the properties of the chat thread updated event. </param>
+        /// <param name="properties"> The updated thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/> instance for mocking. </returns>
         public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = default, string threadId = default, DateTimeOffset? createTime = default, long? version = default, CommunicationIdentifierModel editedByCommunicationIdentifier = default, DateTimeOffset? editTime = default, IReadOnlyDictionary<string, object> properties = default, IReadOnlyDictionary<string, string> metadata = default)
@@ -1750,7 +1750,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="key"> Router Job Worker Selector Key. </param>
         /// <param name="operator"> Router Job Worker Selector Label Operator. </param>
         /// <param name="labelValue"> Router Job Worker Selector Value. </param>
-        /// <param name="ttlSeconds"></param>
+        /// <param name="ttlSeconds"> Router Job Worker Selector Time to Live in Seconds. </param>
         /// <param name="selectorState"> Router Job Worker Selector State. </param>
         /// <param name="expirationTime"> Router Job Worker Selector Expiration Time. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerSelector"/> instance for mocking. </returns>
@@ -4415,7 +4415,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="resourceType"> the type of the resource for which the event is being emitted. </param>
         /// <param name="location"> the location of the resource for which the event is being emitted. </param>
         /// <param name="resourceTags"> the tags on the resource for which the event is being emitted. </param>
-        /// <param name="properties"> The properties of the resource for which the event is being emitted. </param>
+        /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceUpdatedDetails"/> instance for mocking. </returns>
         public static ResourceNotificationsResourceUpdatedDetails ResourceNotificationsResourceUpdatedDetails(string id = default, string name = default, string resourceType = default, string location = default, IReadOnlyDictionary<string, string> resourceTags = default, IReadOnlyDictionary<string, object> properties = default)
         {
@@ -4471,9 +4471,9 @@ namespace Azure.Messaging.EventGrid
         /// Describes the schema of the properties under resource info which are common
         /// across all ARN system topic delete events
         /// </summary>
-        /// <param name="resource"> Resource for which the event is being emitted. </param>
-        /// <param name="name"></param>
-        /// <param name="type"></param>
+        /// <param name="resource"> id of the resource for which the event is being emitted. </param>
+        /// <param name="name"> name of the resource for which the event is being emitted. </param>
+        /// <param name="type"> the type of the resource for which the event is being emitted. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceDeletedDetails"/> instance for mocking. </returns>
         public static ResourceNotificationsResourceDeletedDetails ResourceNotificationsResourceDeletedDetails(ResourceIdentifier resource = default, string name = default, string @type = default)
         {

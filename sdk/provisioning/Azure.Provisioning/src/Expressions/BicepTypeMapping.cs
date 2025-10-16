@@ -40,9 +40,9 @@ internal static class BicepTypeMapping
         type == typeof(ResourceIdentifier) ? "string" :
         type == typeof(ResourceType) ? "string" :
         type == typeof(AzureLocation) ? "string" :
-        type.IsSubclassOf(typeof(Enum)) ? "string" :
-        type.IsSubclassOf(typeof(System.Collections.IEnumerable)) ? "array" :
-        type.IsSubclassOf(typeof(System.Collections.IDictionary)) ? "object" :
+        typeof(Enum).IsAssignableFrom(type) ? "string" :
+        typeof(System.Collections.IDictionary).IsAssignableFrom(type) ? "object" :
+        typeof(System.Collections.IEnumerable).IsAssignableFrom(type) ? "array" :
         null;
 
     /// <summary>

@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    internal partial class ToolChoiceFunctionObject : IJsonModel<ToolChoiceFunctionObject>
+    internal partial class ToolChoiceFunctionObject : ToolChoiceObject, IJsonModel<ToolChoiceFunctionObject>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunctionObject"/> for deserialization. </summary>
         internal ToolChoiceFunctionObject()
@@ -38,8 +38,8 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(ToolChoiceFunctionObject)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue(Function, options);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -69,7 +69,7 @@ namespace Azure.AI.VoiceLive
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ToolChoiceFunctionObjectFunction function = default;
+            string name = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -77,9 +77,9 @@ namespace Azure.AI.VoiceLive
                     @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("function"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    function = ToolChoiceFunctionObjectFunction.DeserializeToolChoiceFunctionObjectFunction(prop.Value, options);
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -87,7 +87,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ToolChoiceFunctionObject(@type, additionalBinaryDataProperties, function);
+            return new ToolChoiceFunctionObject(@type, additionalBinaryDataProperties, name);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

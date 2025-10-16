@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Details for a cancelled response. </summary>
-    public partial class ResponseCancelledDetails : IJsonModel<ResponseCancelledDetails>
+    public partial class ResponseCancelledDetails : ResponseStatusDetails, IJsonModel<ResponseCancelledDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseCancelledDetails"/> for deserialization. </summary>
         internal ResponseCancelledDetails()
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("reason"u8);
-            writer.WriteStringValue(Reason.ToSerialString());
+            writer.WriteStringValue(Reason.ToString());
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -68,19 +68,19 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "cancelled";
+            SessionResponseStatus @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResponseCancelledDetailsReason reason = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new SessionResponseStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))
                 {
-                    reason = prop.Value.GetString().ToResponseCancelledDetailsReason();
+                    reason = new ResponseCancelledDetailsReason(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

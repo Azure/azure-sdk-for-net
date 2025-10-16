@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <summary> Initializes a new instance of <see cref="RetentionPolicyListResult"/>. </summary>
         /// <param name="value"> The RetentionPolicy items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RetentionPolicyListResult(IEnumerable<DurableTaskRetentionPolicyData> value)
+        internal RetentionPolicyListResult(IEnumerable<RetentionPolicyData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="value"> The RetentionPolicy items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RetentionPolicyListResult(IReadOnlyList<DurableTaskRetentionPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RetentionPolicyListResult(IReadOnlyList<RetentionPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DurableTask.Models
         }
 
         /// <summary> The RetentionPolicy items on this page. </summary>
-        public IReadOnlyList<DurableTaskRetentionPolicyData> Value { get; }
+        public IReadOnlyList<RetentionPolicyData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.Devices.DeviceDisconnected event. </summary>
     [JsonConverter(typeof(IotHubDeviceDisconnectedEventDataConverter))]
-    public partial class IotHubDeviceDisconnectedEventData : IJsonModel<IotHubDeviceDisconnectedEventData>
+    public partial class IotHubDeviceDisconnectedEventData : DeviceConnectionStateEventProperties, IJsonModel<IotHubDeviceDisconnectedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceDisconnectedEventData"/> for deserialization. </summary>
         internal IotHubDeviceDisconnectedEventData()

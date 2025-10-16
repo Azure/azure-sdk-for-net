@@ -46,13 +46,6 @@ namespace Azure.AI.VoiceLive
             ItemId = itemId;
         }
 
-        /// <summary>
-        /// Milliseconds since the session started when speech stopped. This will
-        /// correspond to the end of audio sent to the model, and thus includes the
-        /// `min_silence_duration_ms` configured in the Session.
-        /// </summary>
-        public int AudioEndMs { get; }
-
         /// <summary> The ID of the user message item that will be created. </summary>
         public string ItemId { get; }
     }

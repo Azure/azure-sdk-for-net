@@ -6,97 +6,59 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.InformaticaDataManagement;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableInformaticaDataManagementSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _informaticaOrganizationOrganizationsClientDiagnostics;
-        private OrganizationsRestOperations _informaticaOrganizationOrganizationsRestClient;
+        private ClientDiagnostics _organizationsClientDiagnostics;
+        private Organizations _organizationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableInformaticaDataManagementSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableInformaticaDataManagementSubscriptionResource for mocking. </summary>
         protected MockableInformaticaDataManagementSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableInformaticaDataManagementSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableInformaticaDataManagementSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableInformaticaDataManagementSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics InformaticaOrganizationOrganizationsClientDiagnostics => _informaticaOrganizationOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement", InformaticaOrganizationResource.ResourceType.Namespace, Diagnostics);
-        private OrganizationsRestOperations InformaticaOrganizationOrganizationsRestClient => _informaticaOrganizationOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(InformaticaOrganizationResource.ResourceType));
+        private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2024-05-08");
 
-        /// <summary>
-        /// List InformaticaOrganizationResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Informatica.DataManagement/organizations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformaticaOrganizationResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List InformaticaOrganizationResource resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InformaticaOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="InformaticaOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InformaticaOrganizationResource> GetInformaticaOrganizationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => InformaticaOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformaticaOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InformaticaOrganizationResource(Client, InformaticaOrganizationData.DeserializeInformaticaOrganizationData(e)), InformaticaOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context), data => new InformaticaOrganizationResource(Client, data));
         }
 
-        /// <summary>
-        /// List InformaticaOrganizationResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Informatica.DataManagement/organizations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InformaticaOrganizationResource_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InformaticaOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List InformaticaOrganizationResource resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InformaticaOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InformaticaOrganizationResource> GetInformaticaOrganizations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => InformaticaOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformaticaOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InformaticaOrganizationResource(Client, InformaticaOrganizationData.DeserializeInformaticaOrganizationData(e)), InformaticaOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context), data => new InformaticaOrganizationResource(Client, data));
         }
     }
 }
