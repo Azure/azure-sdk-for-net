@@ -1,5 +1,8 @@
 # Azure Inference client library for .NET
 
+> [!NOTE]
+> The `Azure.AI.Inference` library is now deprecated. Going forward, the official `OpenAI` library is the successor to this package. For more details, see [the migration guide](MIGRATION.md).
+
 The client library (in preview) does inference, including chat completions, for AI models deployed by [Azure AI Foundry](https://ai.azure.com) and [Azure Machine Learning Studio](https://ml.azure.com/). It supports Serverless API endpoints and Managed Compute endpoints (formerly known as Managed Online Endpoints). The client library makes services calls using REST API version `2024-05-01-preview`, as documented in [Azure AI Model Inference API](https://learn.microsoft.com/azure/ai-studio/reference/reference-model-inference-api). For more information see [Overview: Deploy AI models in Azure AI Foundry portal](https://learn.microsoft.com/azure/ai-studio/concepts/deployments-overview).
 
 Use the model inference client library to:
