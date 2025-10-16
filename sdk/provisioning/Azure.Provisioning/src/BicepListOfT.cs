@@ -109,7 +109,7 @@ public class BicepList<T> :
                     return _values[index];
                 }
                 // the index is out of range, we put a value factory as the literal value of this bicep value
-                // this would blow up when we try to compile it later, but it would be fine if we convert it to an expression
+                // this will throw an exception when evaluated or compiled, but is still usable for building a reference expression
                 return new BicepValue<T>(GetItemSelf(index), () => _values[index].Value);
             }
         }
