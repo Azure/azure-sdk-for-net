@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class BareMetalMachineRunDataExtractsContent : IUtf8JsonSerializable, IJsonModel<BareMetalMachineRunDataExtractsContent>
+    public partial class BareMetalMachineRunDataExtractsParameters : IUtf8JsonSerializable, IJsonModel<BareMetalMachineRunDataExtractsParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BareMetalMachineRunDataExtractsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BareMetalMachineRunDataExtractsParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BareMetalMachineRunDataExtractsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BareMetalMachineRunDataExtractsParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsParameters)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("commands"u8);
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        BareMetalMachineRunDataExtractsContent IJsonModel<BareMetalMachineRunDataExtractsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BareMetalMachineRunDataExtractsParameters IJsonModel<BareMetalMachineRunDataExtractsParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBareMetalMachineRunDataExtractsContent(document.RootElement, options);
+            return DeserializeBareMetalMachineRunDataExtractsParameters(document.RootElement, options);
         }
 
-        internal static BareMetalMachineRunDataExtractsContent DeserializeBareMetalMachineRunDataExtractsContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BareMetalMachineRunDataExtractsParameters DeserializeBareMetalMachineRunDataExtractsParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BareMetalMachineRunDataExtractsContent(commands, limitTimeSeconds, serializedAdditionalRawData);
+            return new BareMetalMachineRunDataExtractsParameters(commands, limitTimeSeconds, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BareMetalMachineRunDataExtractsContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BareMetalMachineRunDataExtractsParameters>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsParameters>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BareMetalMachineRunDataExtractsContent IPersistableModel<BareMetalMachineRunDataExtractsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BareMetalMachineRunDataExtractsParameters IPersistableModel<BareMetalMachineRunDataExtractsParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsParameters>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBareMetalMachineRunDataExtractsContent(document.RootElement, options);
+                        return DeserializeBareMetalMachineRunDataExtractsParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BareMetalMachineRunDataExtractsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BareMetalMachineRunDataExtractsParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
