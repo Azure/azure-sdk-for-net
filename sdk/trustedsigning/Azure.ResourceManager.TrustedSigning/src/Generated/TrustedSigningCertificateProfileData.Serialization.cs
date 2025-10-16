@@ -10,16 +10,18 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TrustedSigning.Models;
 
 namespace Azure.ResourceManager.TrustedSigning
 {
-    public partial class TrustedSigningCertificateProfileData : IUtf8JsonSerializable, IJsonModel<TrustedSigningCertificateProfileData>
+    /// <summary> Certificate profile resource. </summary>
+    public partial class TrustedSigningCertificateProfileData : ResourceData, IJsonModel<TrustedSigningCertificateProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrustedSigningCertificateProfileData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrustedSigningCertificateProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,374 +33,114 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TrustedSigningCertificateProfileData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ProfileType))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("profileType"u8);
-                writer.WriteStringValue(ProfileType.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(CommonName))
-            {
-                writer.WritePropertyName("commonName"u8);
-                writer.WriteStringValue(CommonName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Organization))
-            {
-                writer.WritePropertyName("organization"u8);
-                writer.WriteStringValue(Organization);
-            }
-            if (options.Format != "W" && Optional.IsDefined(OrganizationUnit))
-            {
-                writer.WritePropertyName("organizationUnit"u8);
-                writer.WriteStringValue(OrganizationUnit);
-            }
-            if (options.Format != "W" && Optional.IsDefined(StreetAddress))
-            {
-                writer.WritePropertyName("streetAddress"u8);
-                writer.WriteStringValue(StreetAddress);
-            }
-            if (Optional.IsDefined(IncludeStreetAddress))
-            {
-                writer.WritePropertyName("includeStreetAddress"u8);
-                writer.WriteBooleanValue(IncludeStreetAddress.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(City))
-            {
-                writer.WritePropertyName("city"u8);
-                writer.WriteStringValue(City);
-            }
-            if (Optional.IsDefined(IncludeCity))
-            {
-                writer.WritePropertyName("includeCity"u8);
-                writer.WriteBooleanValue(IncludeCity.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State);
-            }
-            if (Optional.IsDefined(IncludeState))
-            {
-                writer.WritePropertyName("includeState"u8);
-                writer.WriteBooleanValue(IncludeState.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Country))
-            {
-                writer.WritePropertyName("country"u8);
-                writer.WriteStringValue(Country);
-            }
-            if (Optional.IsDefined(IncludeCountry))
-            {
-                writer.WritePropertyName("includeCountry"u8);
-                writer.WriteBooleanValue(IncludeCountry.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PostalCode))
-            {
-                writer.WritePropertyName("postalCode"u8);
-                writer.WriteStringValue(PostalCode);
-            }
-            if (Optional.IsDefined(IncludePostalCode))
-            {
-                writer.WritePropertyName("includePostalCode"u8);
-                writer.WriteBooleanValue(IncludePostalCode.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(EnhancedKeyUsage))
-            {
-                writer.WritePropertyName("enhancedKeyUsage"u8);
-                writer.WriteStringValue(EnhancedKeyUsage);
-            }
-            if (Optional.IsDefined(IdentityValidationId))
-            {
-                writer.WritePropertyName("identityValidationId"u8);
-                writer.WriteStringValue(IdentityValidationId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Certificates))
-            {
-                writer.WritePropertyName("certificates"u8);
-                writer.WriteStartArray();
-                foreach (var item in Certificates)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        TrustedSigningCertificateProfileData IJsonModel<TrustedSigningCertificateProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrustedSigningCertificateProfileData IJsonModel<TrustedSigningCertificateProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TrustedSigningCertificateProfileData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TrustedSigningCertificateProfileData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTrustedSigningCertificateProfileData(document.RootElement, options);
         }
 
-        internal static TrustedSigningCertificateProfileData DeserializeTrustedSigningCertificateProfileData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TrustedSigningCertificateProfileData DeserializeTrustedSigningCertificateProfileData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            CertificateProfileType? profileType = default;
-            string commonName = default;
-            string organization = default;
-            string organizationUnit = default;
-            string streetAddress = default;
-            bool? includeStreetAddress = default;
-            string city = default;
-            bool? includeCity = default;
-            string state = default;
-            bool? includeState = default;
-            string country = default;
-            bool? includeCountry = default;
-            string postalCode = default;
-            bool? includePostalCode = default;
-            string enhancedKeyUsage = default;
-            string identityValidationId = default;
-            TrustedSigningProvisioningState? provisioningState = default;
-            CertificateProfileStatus? status = default;
-            IReadOnlyList<TrustedSigningCertificate> certificates = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            CertificateProfileProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerTrustedSigningContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("profileType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            profileType = new CertificateProfileType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("commonName"u8))
-                        {
-                            commonName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("organization"u8))
-                        {
-                            organization = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("organizationUnit"u8))
-                        {
-                            organizationUnit = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("streetAddress"u8))
-                        {
-                            streetAddress = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("includeStreetAddress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            includeStreetAddress = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("city"u8))
-                        {
-                            city = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("includeCity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            includeCity = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("state"u8))
-                        {
-                            state = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("includeState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            includeState = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("country"u8))
-                        {
-                            country = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("includeCountry"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            includeCountry = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("postalCode"u8))
-                        {
-                            postalCode = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("includePostalCode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            includePostalCode = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enhancedKeyUsage"u8))
-                        {
-                            enhancedKeyUsage = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("identityValidationId"u8))
-                        {
-                            identityValidationId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new TrustedSigningProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            status = new CertificateProfileStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("certificates"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<TrustedSigningCertificate> array = new List<TrustedSigningCertificate>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(TrustedSigningCertificate.DeserializeTrustedSigningCertificate(item, options));
-                            }
-                            certificates = array;
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerTrustedSigningContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = CertificateProfileProperties.DeserializeCertificateProfileProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TrustedSigningCertificateProfileData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                profileType,
-                commonName,
-                organization,
-                organizationUnit,
-                streetAddress,
-                includeStreetAddress,
-                city,
-                includeCity,
-                state,
-                includeState,
-                country,
-                includeCountry,
-                postalCode,
-                includePostalCode,
-                enhancedKeyUsage,
-                identityValidationId,
-                provisioningState,
-                status,
-                certificates ?? new ChangeTrackingList<TrustedSigningCertificate>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
 
-        BinaryData IPersistableModel<TrustedSigningCertificateProfileData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TrustedSigningCertificateProfileData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -408,15 +150,20 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        TrustedSigningCertificateProfileData IPersistableModel<TrustedSigningCertificateProfileData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrustedSigningCertificateProfileData IPersistableModel<TrustedSigningCertificateProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrustedSigningCertificateProfileData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTrustedSigningCertificateProfileData(document.RootElement, options);
                     }
                 default:
@@ -424,6 +171,27 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TrustedSigningCertificateProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="trustedSigningCertificateProfileData"> The <see cref="TrustedSigningCertificateProfileData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TrustedSigningCertificateProfileData trustedSigningCertificateProfileData)
+        {
+            if (trustedSigningCertificateProfileData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(trustedSigningCertificateProfileData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="TrustedSigningCertificateProfileData"/> from. </param>
+        internal static TrustedSigningCertificateProfileData FromResponse(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeTrustedSigningCertificateProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

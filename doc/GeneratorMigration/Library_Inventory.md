@@ -3,10 +3,10 @@
 ## Summary
 
 - Total libraries: 416
-- Management Plane (Swagger): 165
+- Management Plane (Swagger): 164
 - Management Plane (TSP-Old): 46
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
-- Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 13
+- Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 14
 - Management Plane (TypeSpec - @typespec/http-client-csharp): 0
 - Management Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 0
 - Data Plane (Swagger): 119
@@ -214,7 +214,7 @@ Total: 119
 
 ## Management Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp-mgmt)
 
-TypeSpec with @azure-typespec/http-client-csharp-mgmt generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp-mgmt, or through special handling for specific libraries. Total: 13
+TypeSpec with @azure-typespec/http-client-csharp-mgmt generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp-mgmt, or through special handling for specific libraries. Total: 14
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -230,6 +230,7 @@ TypeSpec with @azure-typespec/http-client-csharp-mgmt generator is detected by t
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot |
 | storageactions | Azure.ResourceManager.StorageActions | sdk/storageactions/Azure.ResourceManager.StorageActions |
 | storagediscovery | Azure.ResourceManager.StorageDiscovery | sdk/storagediscovery/Azure.ResourceManager.StorageDiscovery |
+| trustedsigning | Azure.ResourceManager.TrustedSigning | sdk/trustedsigning/Azure.ResourceManager.TrustedSigning |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases |
 
 
@@ -289,7 +290,7 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 
 ## Management Plane Libraries using Swagger
 
-Total: 165
+Total: 164
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -452,7 +453,6 @@ Total: 165
 | support | Azure.ResourceManager.Support | sdk/support/Azure.ResourceManager.Support |
 | synapse | Azure.ResourceManager.Synapse | sdk/synapse/Azure.ResourceManager.Synapse |
 | trafficmanager | Azure.ResourceManager.TrafficManager | sdk/trafficmanager/Azure.ResourceManager.TrafficManager |
-| trustedsigning | Azure.ResourceManager.TrustedSigning | sdk/trustedsigning/Azure.ResourceManager.TrustedSigning |
 | voiceservices | Azure.ResourceManager.VoiceServices | sdk/voiceservices/Azure.ResourceManager.VoiceServices |
 | webpubsub | Azure.ResourceManager.WebPubSub | sdk/webpubsub/Azure.ResourceManager.WebPubSub |
 | websites | Azure.ResourceManager.AppService | sdk/websites/Azure.ResourceManager.AppService |
