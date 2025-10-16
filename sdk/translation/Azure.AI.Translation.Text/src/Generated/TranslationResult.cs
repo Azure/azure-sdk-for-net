@@ -47,21 +47,21 @@ namespace Azure.AI.Translation.Text
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TranslationResult"/>. </summary>
-        /// <param name="values"> Array of the translated text elements. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
-        internal TranslationResult(IEnumerable<TranslatedTextItem> values)
+        /// <param name="value"> Array of the translated text elements. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal TranslationResult(IEnumerable<TranslatedTextItem> value)
         {
-            Argument.AssertNotNull(values, nameof(values));
+            Argument.AssertNotNull(value, nameof(value));
 
-            Values = values.ToList();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="TranslationResult"/>. </summary>
-        /// <param name="values"> Array of the translated text elements. </param>
+        /// <param name="value"> Array of the translated text elements. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationResult(IReadOnlyList<TranslatedTextItem> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslationResult(IReadOnlyList<TranslatedTextItem> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Values = values;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,6 +71,6 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> Array of the translated text elements. </summary>
-        public IReadOnlyList<TranslatedTextItem> Values { get; }
+        public IReadOnlyList<TranslatedTextItem> Value { get; }
     }
 }

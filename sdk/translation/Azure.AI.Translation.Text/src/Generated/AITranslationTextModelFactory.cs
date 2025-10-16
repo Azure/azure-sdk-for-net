@@ -198,13 +198,13 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TranslationResult"/>. </summary>
-        /// <param name="values"> Array of the translated text elements. </param>
+        /// <param name="value"> Array of the translated text elements. </param>
         /// <returns> A new <see cref="Text.TranslationResult"/> instance for mocking. </returns>
-        public static TranslationResult TranslationResult(IEnumerable<TranslatedTextItem> values = null)
+        public static TranslationResult TranslationResult(IEnumerable<TranslatedTextItem> value = null)
         {
-            values ??= new List<TranslatedTextItem>();
+            value ??= new List<TranslatedTextItem>();
 
-            return new TranslationResult(values?.ToList(), serializedAdditionalRawData: null);
+            return new TranslationResult(value?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TranslatedTextItem"/>. </summary>
@@ -256,13 +256,13 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TransliterateResult"/>. </summary>
-        /// <param name="values"> Array of transliterated texts. </param>
+        /// <param name="value"> Array of transliterated texts. </param>
         /// <returns> A new <see cref="Text.TransliterateResult"/> instance for mocking. </returns>
-        public static TransliterateResult TransliterateResult(IEnumerable<TransliteratedText> values = null)
+        public static TransliterateResult TransliterateResult(IEnumerable<TransliteratedText> value = null)
         {
-            values ??= new List<TransliteratedText>();
+            value ??= new List<TransliteratedText>();
 
-            return new TransliterateResult(values?.ToList(), serializedAdditionalRawData: null);
+            return new TransliterateResult(value?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TransliteratedText"/>. </summary>
