@@ -156,8 +156,9 @@ namespace Azure.Generator.Management.Providers
             {
                 // we have the collection, we are not a singleton resource
                 var pluralOfResourceName = ResourceName.Pluralize();
+                var methodName = BuildFactoryMethodName();
                 return new MethodSignature(
-                    $"Get{pluralOfResourceName}",
+                    methodName,
                     $"Gets a collection of {pluralOfResourceName} in the {TypeOfParentResource:C}",
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                     ResourceCollection.Type,
@@ -177,6 +178,19 @@ namespace Azure.Generator.Management.Providers
                     []
                     );
             }
+        }
+
+        // TODO: Temporary workaround for recent breaking changes in converting Playwright service.
+        // This special-casing will be replaced by a generalized naming strategy in a follow-up PR.
+        private string BuildFactoryMethodName()
+        {
+            var pluralOfResourceName = ResourceName.Pluralize();
+            var methodName = $"Get{pluralOfResourceName}";
+            if (pluralOfResourceName.EndsWith("Quotas"))
+            {
+                methodName = $"GetAll{ResourceName}";
+            }
+            return methodName;
         }
 
         protected override FieldProvider[] BuildFields()
