@@ -6,6 +6,8 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -267,11 +269,10 @@ public class Sample_AzureOpenAI_FineTuning_Refactored : SamplesBase<AIProjectsTe
     public async Task FineTuningGetJobAsync()
     {
         var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var jobId = "ftjob-da72c7361831470d93de08ffe8c46296";
+        var jobId = "ftjob-7b4fcf3b4c7940cd90445d6f99790dc9";
         
         var (fineTuningClient, _, _) = await GetClientsAsync(endpoint);
         
-        // NOTE: GetJobAsync(jobId) returns 404 on Azure - base class uses wrong URL format
         Console.WriteLine($"\nRetrieving job: {jobId}");
         FineTuningJob job = await fineTuningClient.GetJobAsync(jobId);
         Console.WriteLine($"✅ Job ID: {job.JobId}, Status: {job.Status}");
@@ -330,18 +331,19 @@ public class Sample_AzureOpenAI_FineTuning_Refactored : SamplesBase<AIProjectsTe
     public async Task FineTuningDeleteJobAsync()
     {
         var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var jobId = "ftjob-68d43662c2be4fc1b0bd07ebf1c8e067";
+        var jobId = "ftjob-97f963db426045a491369d57f7bc3720";
         
         var (fineTuningClient, _, _) = await GetClientsAsync(endpoint);
         
         Console.WriteLine($"\nDeleting job: {jobId}");
         FineTuningJob jobToDelete = await GetJobByIdAsync(fineTuningClient, jobId);
+        var azureJob = (Azure.AI.OpenAI.FineTuning.AzureFineTuningJob)jobToDelete;
         
 #pragma warning disable AOAI001
-        await ((Azure.AI.OpenAI.FineTuning.AzureFineTuningJob)jobToDelete).DeleteJobAsync(jobId, null);
+        await azureJob.DeleteJobAsync(jobToDelete.JobId);
 #pragma warning restore AOAI001
         
-        Console.WriteLine($"✅ Job deleted: {jobId}");
+        Console.WriteLine($"✅ Job deleted successfully");
     }
 
     [Test]
