@@ -160,7 +160,7 @@ public class Sample_AzureOpenAI_FineTuning_Consolidated : SamplesBase<AIProjects
 
     [Test]
     [AsyncOnly]
-    public async Task FineTuning_DirectPreferenceOptimization_FullLifecycleAsync()
+    public async Task FineTuning_DirectPreferenceOptimizationAsync()
     {
         var endpoint = TestEnvironment.PROJECTENDPOINT;
         var dataDirectory = GetDataDirectory();
@@ -268,7 +268,7 @@ public class Sample_AzureOpenAI_FineTuning_Consolidated : SamplesBase<AIProjects
 
     [Test]
     [AsyncOnly]
-    public async Task FineTuning_ReinforcementLearning_FullLifecycleAsync()
+    public async Task FineTuning_ReinforcementLearningAsync()
     {
         var endpoint = TestEnvironment.PROJECTENDPOINT;
         var dataDirectory = GetDataDirectory();
