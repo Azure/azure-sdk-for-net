@@ -224,8 +224,8 @@ using RequestContent content = RequestContent.Create(new
 Response response = await client.TranslateAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("language").ToString());
-Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("language").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("text").ToString());
 ]]></code>
 This sample shows how to call TranslateAsync and parse the result.
 <code><![CDATA[
@@ -252,8 +252,8 @@ using RequestContent content = RequestContent.Create(new
 Response response = await client.TranslateAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("language").ToString());
-Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("language").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("text").ToString());
 ]]></code></example>
     </member>
     <member name="Translate(RequestContent,string,RequestContext)">
@@ -303,8 +303,8 @@ using RequestContent content = RequestContent.Create(new
 Response response = client.Translate(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("language").ToString());
-Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("language").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("text").ToString());
 ]]></code>
 This sample shows how to call Translate and parse the result.
 <code><![CDATA[
@@ -331,8 +331,8 @@ using RequestContent content = RequestContent.Create(new
 Response response = client.Translate(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("language").ToString());
-Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("language").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("text").ToString());
 ]]></code></example>
     </member>
   </members>

@@ -34,9 +34,9 @@ namespace Azure.AI.Translation.Text
                 throw new FormatException($"The model {nameof(TranslationResult)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("values"u8);
+            writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (var item in Values)
+            foreach (var item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -78,19 +78,19 @@ namespace Azure.AI.Translation.Text
             {
                 return null;
             }
-            IReadOnlyList<TranslatedTextItem> values = default;
+            IReadOnlyList<TranslatedTextItem> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("values"u8))
+                if (property.NameEquals("value"u8))
                 {
                     List<TranslatedTextItem> array = new List<TranslatedTextItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(TranslatedTextItem.DeserializeTranslatedTextItem(item, options));
                     }
-                    values = array;
+                    value = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,7 +99,7 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TranslationResult(values, serializedAdditionalRawData);
+            return new TranslationResult(value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TranslationResult>.Write(ModelReaderWriterOptions options)

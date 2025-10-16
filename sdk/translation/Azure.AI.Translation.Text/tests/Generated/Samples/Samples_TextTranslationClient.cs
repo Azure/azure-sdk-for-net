@@ -155,8 +155,8 @@ target = "Vyzkoušejte si to.",
             Response response = client.Translate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("language").ToString());
-            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("language").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("text").ToString());
         }
 
         [Test]
@@ -206,8 +206,8 @@ target = "Vyzkoušejte si to.",
             Response response = await client.TranslateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("language").ToString());
-            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("language").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("text").ToString());
         }
 
         [Test]
@@ -305,8 +305,8 @@ language = "cs",
             Response response = client.Translate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("language").ToString());
-            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("language").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("text").ToString());
         }
 
         [Test]
@@ -336,8 +336,8 @@ language = "cs",
             Response response = await client.TranslateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("language").ToString());
-            Console.WriteLine(result.GetProperty("values")[0].GetProperty("translations")[0].GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("language").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("text").ToString());
         }
 
         [Test]

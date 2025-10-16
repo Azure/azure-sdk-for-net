@@ -47,21 +47,21 @@ namespace Azure.AI.Translation.Text
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TransliterateResult"/>. </summary>
-        /// <param name="values"> Array of transliterated texts. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
-        internal TransliterateResult(IEnumerable<TransliteratedText> values)
+        /// <param name="value"> Array of transliterated texts. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal TransliterateResult(IEnumerable<TransliteratedText> value)
         {
-            Argument.AssertNotNull(values, nameof(values));
+            Argument.AssertNotNull(value, nameof(value));
 
-            Values = values.ToList();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="TransliterateResult"/>. </summary>
-        /// <param name="values"> Array of transliterated texts. </param>
+        /// <param name="value"> Array of transliterated texts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TransliterateResult(IReadOnlyList<TransliteratedText> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TransliterateResult(IReadOnlyList<TransliteratedText> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Values = values;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,6 +71,6 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> Array of transliterated texts. </summary>
-        public IReadOnlyList<TransliteratedText> Values { get; }
+        public IReadOnlyList<TransliteratedText> Value { get; }
     }
 }
