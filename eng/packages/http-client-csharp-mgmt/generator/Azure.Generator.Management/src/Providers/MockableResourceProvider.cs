@@ -12,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
@@ -193,8 +194,29 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var method in _nonResourceMethods)
             {
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
+                // Process both async and sync method variants
+                var methodsToProcess = new[] {
+                    BuildServiceMethod(method.InputMethod, method.InputClient, true),
+                    BuildServiceMethod(method.InputMethod, method.InputClient, false)
+                };
+                foreach (var m in methodsToProcess)
+                {
+                    methods.Add(m);
+                    var updated = false;
+                    foreach (var p in m.Signature.Parameters)
+                    {
+                        if (p.Location == ParameterLocation.Body && p.Type.IsModelType())
+                        {
+                            p.Update(name: "content");
+                            updated = true;
+                        }
+                    }
+                    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
+                    if (updated)
+                    {
+                        m.Update(signature: m.Signature);
+                    }
+                }
             }
 
             return [.. methods];
@@ -209,7 +231,7 @@ namespace Azure.Generator.Management.Providers
                     New.Instance(
                         resource.Type,
                         This.As<ArmResource>().Client(),
-                        BuildSingletonResourceIdentifier(resource.ResourceTypeValue, resource.SingletonResourceName!)));
+                        BuildSingletonResourceIdentifier(This.As<ArmResource>().Id(), resource.ResourceTypeValue, resource.SingletonResourceName!)));
                 yield return new MethodProvider(
                     resourceMethodSignature,
                     bodyStatement,
@@ -280,7 +302,7 @@ namespace Azure.Generator.Management.Providers
             };
         }
 
-        private static ValueExpression BuildSingletonResourceIdentifier(string resourceType, string resourceName)
+        public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)
         {
             var segments = resourceType.Split('/');
             if (segments.Length < 2)
@@ -299,7 +321,7 @@ namespace Azure.Generator.Management.Providers
                     $"Tuple singleton resource type is not implemented yet.");
                 return Null.CastTo(typeof(ResourceIdentifier));
             }
-            return This.As<ArmResource>().Id().AppendProviderResource(Literal(segments[0]), Literal(segments[1]), Literal(resourceName));
+            return resourceId.AppendProviderResource(Literal(segments[0]), Literal(segments[1]), Literal(resourceName));
         }
     }
 }

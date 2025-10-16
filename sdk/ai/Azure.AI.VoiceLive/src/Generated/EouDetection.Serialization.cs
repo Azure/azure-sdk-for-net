@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Top-level union for end-of-utterance (EOU) semantic detection configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticDetection"/>, <see cref="AzureSemanticDetectionEn"/>, and <see cref="AzureSemanticDetectionMultilingual"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticEouDetection"/>, <see cref="AzureSemanticEouDetectionEn"/>, and <see cref="AzureSemanticEouDetectionMultilingual"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEouDetection))]
     public abstract partial class EouDetection : IJsonModel<EouDetection>
@@ -42,7 +42,7 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(EouDetection)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("model"u8);
-            writer.WriteStringValue(Model.ToSerialString());
+            writer.WriteStringValue(Model.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -90,11 +90,11 @@ namespace Azure.AI.VoiceLive
                 switch (discriminator.GetString())
                 {
                     case "semantic_detection_v1":
-                        return AzureSemanticDetection.DeserializeAzureSemanticDetection(element, options);
+                        return AzureSemanticEouDetection.DeserializeAzureSemanticEouDetection(element, options);
                     case "semantic_detection_v1_en":
-                        return AzureSemanticDetectionEn.DeserializeAzureSemanticDetectionEn(element, options);
+                        return AzureSemanticEouDetectionEn.DeserializeAzureSemanticEouDetectionEn(element, options);
                     case "semantic_detection_v1_multilingual":
-                        return AzureSemanticDetectionMultilingual.DeserializeAzureSemanticDetectionMultilingual(element, options);
+                        return AzureSemanticEouDetectionMultilingual.DeserializeAzureSemanticEouDetectionMultilingual(element, options);
                 }
             }
             return UnknownEouDetection.DeserializeUnknownEouDetection(element, options);

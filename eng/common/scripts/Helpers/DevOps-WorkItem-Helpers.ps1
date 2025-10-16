@@ -1016,7 +1016,6 @@ function UpdateValidationStatus($pkgvalidationDetails, $BuildDefinition, $Pipeli
     return $true
 }
 
-
 function Get-LanguageDevOpsName($LanguageShort)
 {
     switch ($LanguageShort.ToLower()) 
@@ -1085,12 +1084,15 @@ function Update-PullRequestInReleasePlan($releasePlanWorkItemId, $pullRequestUrl
     }
 
     $fields = @()
-    $fields += "`"SDKPullRequestFor$($devopsFieldLanguage)=$pullRequestUrl`""
+    if ($pullRequestUrl)
+    {
+        $fields += "`"SDKPullRequestFor$($devopsFieldLanguage)=$pullRequestUrl`""
+    }
     $fields += "`"SDKPullRequestStatusFor$($devopsFieldLanguage)=$status`""
 
-    Write-Host "Updating Release Plan [$releasePlanWorkItemId] with Pull Request URL for language [$languageName]."
+    Write-Host "Updating release plan [$releasePlanWorkItemId] with pull request details for language [$languageName]."
     $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
-    Write-Host "Updated Pull Request URL [$pullRequestUrl] for [$languageName] in Release Plan [$releasePlanWorkItemId]"
+    Write-Host "Updated pull request details for [$languageName] in release plan [$releasePlanWorkItemId]"
 }
 
 function Get-ReleasePlan-Link($releasePlanWorkItemId)
@@ -1110,4 +1112,73 @@ function Get-ReleasePlan-Link($releasePlanWorkItemId)
       return $null
   }
   return $workItem["fields"]
+}
+
+function Get-ReleasePlansForCPEXAttestation()
+{
+  $fields = @()
+  $fields += "Custom.ProductServiceTreeID"
+  $fields += "Custom.ReleasePlanType"
+  $fields += "Custom.ProductType"
+  $fields += "Custom.DataScope"
+  $fields += "Custom.MgmtScope"
+  $fields += "Custom.ProductName"
+
+  $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+
+  $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.WorkItemType] = 'Release Plan'"
+  $query += " AND [System.State] = 'Finished'"
+  $query += " AND [Custom.AttestationStatus] IN ('', 'Pending')"
+  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
+  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
+  $query += " AND [System.Tags] NOT CONTAINS 'non-APEX tracking'"
+  $query += " AND [System.Tags] NOT CONTAINS 'out of scope APEX'"
+  $query += " AND [System.Tags] NOT CONTAINS 'APEX out of scope'"
+  $query += " AND [System.Tags] NOT CONTAINS 'validate APEX out of scope'"
+  $query += " AND [Custom.ProductServiceTreeID] <> ''"
+  $query += " AND [Custom.ProductLifecycle] <> ''"
+  $query += " AND [Custom.ProductType] IN ('Feature', 'Offering', 'Sku')"
+
+  $workItems = Invoke-Query $fields $query
+  return $workItems
+}
+
+function Get-TriagesForCPEXAttestation()
+{
+  $fields = @()
+  $fields += "Custom.ProductServiceTreeID"
+  $fields += "Custom.ProductType"
+  $fields += "Custom.ProductLifecycle"
+  $fields += "Custom.DataScope"
+  $fields += "Custom.MgmtScope"
+  $fields += "Custom.DataplaneAttestationStatus"
+  $fields += "Custom.ManagementPlaneAttestationStatus"
+  $fields += "Custom.ProductName"
+
+  $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+
+  $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.WorkItemType] = 'Triage'"
+  $query += " AND ([Custom.DataplaneAttestationStatus] IN ('', 'Pending') OR [Custom.ManagementPlaneAttestationStatus] IN ('', 'Pending'))"
+  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
+  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
+  $query += " AND [System.Tags] NOT CONTAINS 'non-APEX tracking'"
+  $query += " AND [System.Tags] NOT CONTAINS 'out of scope APEX'"
+  $query += " AND [System.Tags] NOT CONTAINS 'APEX out of scope'"
+  $query += " AND [System.Tags] NOT CONTAINS 'validate APEX out of scope'"
+  $query += " AND [Custom.ProductServiceTreeID] <> ''"
+  $query += " AND [Custom.ProductLifecycle] <> ''"
+  $query += " AND [Custom.ProductType] IN ('Feature', 'Offering', 'Sku')"
+
+  $workItems = Invoke-Query $fields $query
+  return $workItems 
+}
+
+function Update-AttestationStatusInWorkItem($workItemId, $fieldName, $status)
+{
+  $fields = "`"${fieldName}=${status}`""
+
+  Write-Host "Updating Work Item [$workItemId] with status [$status] for field [$fieldName]."
+  $workItem = UpdateWorkItem -id $workItemId -fields $fields
+  Write-Host "Updated attestation status for [$fieldName] in Work Item [$workItemId]"
+  return $true
 }

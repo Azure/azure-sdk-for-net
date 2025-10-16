@@ -13,6 +13,7 @@ namespace Azure.AI.Translation.Document
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(BatchOptions))]
     [ModelReaderWriterBuildable(typeof(DocumentFilter))]
     [ModelReaderWriterBuildable(typeof(DocumentStatusResult))]
     [ModelReaderWriterBuildable(typeof(DocumentTranslateContent))]

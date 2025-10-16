@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Health.Deidentification
 {
@@ -16,18 +15,6 @@ namespace Azure.Health.Deidentification
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="TaggedPhiEntities"/>. </summary>
-        /// <param name="encoding"> The encoding type used for all entities in this group. </param>
-        /// <param name="entities"> List of PHI entities using the specified encoding. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entities"/> is null. </exception>
-        public TaggedPhiEntities(TextEncodingType encoding, IEnumerable<SimplePhiEntity> entities)
-        {
-            Argument.AssertNotNull(entities, nameof(entities));
-
-            Encoding = encoding;
-            Entities = entities.ToList();
-        }
 
         /// <summary> Initializes a new instance of <see cref="TaggedPhiEntities"/>. </summary>
         /// <param name="encoding"> The encoding type used for all entities in this group. </param>

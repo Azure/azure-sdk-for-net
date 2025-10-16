@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.Foundations;
@@ -21,12 +22,12 @@ namespace Azure.AI.Projects
         /// <param name="isDefault"> Whether the connection is tagged as the default connection of its type. </param>
         /// <param name="credentials"> The credentials used by the connection. </param>
         /// <param name="metadata"> Metadata of the connection. </param>
-        /// <returns> A new <see cref="Projects.ConnectionProperties"/> instance for mocking. </returns>
-        public static ConnectionProperties ConnectionProperties(string name = default, string id = default, ConnectionType @type = default, string target = default, bool isDefault = default, BaseCredentials credentials = default, IReadOnlyDictionary<string, string> metadata = default)
+        /// <returns> A new <see cref="Projects.AIProjectConnection"/> instance for mocking. </returns>
+        public static AIProjectConnection AIProjectConnection(string name = default, string id = default, ConnectionType @type = default, string target = default, bool isDefault = default, AIProjectConnectionBaseCredential credentials = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ConnectionProperties(
+            return new AIProjectConnection(
                 name,
                 id,
                 @type,
@@ -39,46 +40,46 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// A base class for connection credentials
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ApiKeyCredentials"/>, <see cref="EntraIDCredentials"/>, <see cref="CustomCredential"/>, <see cref="SASCredentials"/>, and <see cref="NoAuthenticationCredentials"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AIProjectConnectionApiKeyCredential"/>, <see cref="Projects.AIProjectConnectionEntraIdCredential"/>, <see cref="Projects.AIProjectConnectionCustomCredential"/>, <see cref="Projects.AIProjectConnectionSasCredential"/>, and <see cref="Projects.NoAuthenticationCredentials"/>.
         /// </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
-        /// <returns> A new <see cref="Projects.BaseCredentials"/> instance for mocking. </returns>
-        public static BaseCredentials BaseCredentials(string @type = default)
+        /// <returns> A new <see cref="Projects.AIProjectConnectionBaseCredential"/> instance for mocking. </returns>
+        public static AIProjectConnectionBaseCredential AIProjectConnectionBaseCredential(string @type = default)
         {
-            return new UnknownBaseCredentials(new CredentialType(@type), additionalBinaryDataProperties: null);
+            return new UnknownAIProjectConnectionBaseCredential(new CredentialType(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> API Key Credential definition. </summary>
         /// <param name="apiKey"> API Key. </param>
-        /// <returns> A new <see cref="Projects.ApiKeyCredentials"/> instance for mocking. </returns>
-        public static ApiKeyCredentials ApiKeyCredentials(string apiKey = default)
+        /// <returns> A new <see cref="Projects.AIProjectConnectionApiKeyCredential"/> instance for mocking. </returns>
+        public static AIProjectConnectionApiKeyCredential AIProjectConnectionApiKeyCredential(string apiKey = default)
         {
-            return new ApiKeyCredentials(CredentialType.ApiKey, additionalBinaryDataProperties: null, apiKey);
+            return new AIProjectConnectionApiKeyCredential(CredentialType.ApiKey, additionalBinaryDataProperties: null, apiKey);
         }
 
         /// <summary> Entra ID credential definition. </summary>
-        /// <returns> A new <see cref="Projects.EntraIDCredentials"/> instance for mocking. </returns>
-        public static EntraIDCredentials EntraIDCredentials()
+        /// <returns> A new <see cref="Projects.AIProjectConnectionEntraIdCredential"/> instance for mocking. </returns>
+        public static AIProjectConnectionEntraIdCredential AIProjectConnectionEntraIdCredential()
         {
-            return new EntraIDCredentials(CredentialType.EntraId, additionalBinaryDataProperties: null);
+            return new AIProjectConnectionEntraIdCredential(CredentialType.EntraId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Custom credential definition. </summary>
-        /// <param name="keys"> The credential type. </param>
-        /// <returns> A new <see cref="Projects.CustomCredential"/> instance for mocking. </returns>
-        public static CustomCredential CustomCredential(IReadOnlyDictionary<string, string> keys = default)
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Projects.AIProjectConnectionCustomCredential"/> instance for mocking. </returns>
+        public static AIProjectConnectionCustomCredential AIProjectConnectionCustomCredential(IReadOnlyDictionary<string, string> additionalProperties = default)
         {
-            keys ??= new ChangeTrackingDictionary<string, string>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CustomCredential(CredentialType.Custom, additionalBinaryDataProperties: null, keys);
+            return new AIProjectConnectionCustomCredential(CredentialType.Custom, additionalBinaryDataProperties: null, additionalProperties);
         }
 
         /// <summary> Shared Access Signature (SAS) credential definition. </summary>
         /// <param name="sasToken"> SAS token. </param>
-        /// <returns> A new <see cref="Projects.SASCredentials"/> instance for mocking. </returns>
-        public static SASCredentials SASCredentials(string sasToken = default)
+        /// <returns> A new <see cref="Projects.AIProjectConnectionSasCredential"/> instance for mocking. </returns>
+        public static AIProjectConnectionSasCredential AIProjectConnectionSasCredential(string sasToken = default)
         {
-            return new SASCredentials(CredentialType.SAS, additionalBinaryDataProperties: null, sasToken);
+            return new AIProjectConnectionSasCredential(CredentialType.SAS, additionalBinaryDataProperties: null, sasToken);
         }
 
         /// <summary> Credentials that do not require authentication. </summary>
@@ -88,223 +89,11 @@ namespace Azure.AI.Projects
             return new NoAuthenticationCredentials(CredentialType.None, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Evaluation Definition. </summary>
-        /// <param name="name"> Identifier of the evaluation. </param>
-        /// <param name="data"> Data for evaluation. </param>
-        /// <param name="displayName"> Display Name for evaluation. It helps to find the evaluation easily in AI Foundry. It does not need to be unique. </param>
-        /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
-        /// <param name="status"> Status of the evaluation. It is set by service and is read-only. </param>
-        /// <param name="tags"> Evaluation's tags. Unlike properties, tags are fully mutable. </param>
-        /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
-        /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
-        /// <param name="target"> Specifies the type and configuration of the entity used for this evaluation. </param>
-        /// <returns> A new <see cref="Projects.Evaluation"/> instance for mocking. </returns>
-        public static Evaluation Evaluation(string name = default, InputData data = default, string displayName = default, string description = default, string status = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, IDictionary<string, EvaluatorConfiguration> evaluators = default, EvaluationTarget target = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            evaluators ??= new ChangeTrackingDictionary<string, EvaluatorConfiguration>();
-
-            return new Evaluation(
-                name,
-                data,
-                displayName,
-                description,
-                status,
-                tags,
-                properties,
-                evaluators,
-                target,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Abstract data class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InputDataset"/>.
-        /// </summary>
-        /// <param name="type"> Type of the data. </param>
-        /// <returns> A new <see cref="Projects.InputData"/> instance for mocking. </returns>
-        public static InputData InputData(string @type = default)
-        {
-            return new UnknownInputData(@type, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Dataset as source for evaluation. </summary>
-        /// <param name="id"> Evaluation input data. </param>
-        /// <returns> A new <see cref="Projects.InputDataset"/> instance for mocking. </returns>
-        public static InputDataset InputDataset(string id = default)
-        {
-            return new InputDataset("dataset", additionalBinaryDataProperties: null, id);
-        }
-
-        /// <summary> Evaluator Configuration. </summary>
-        /// <param name="id"> Identifier of the evaluator. </param>
-        /// <param name="initParams"> Initialization parameters of the evaluator. </param>
-        /// <param name="dataMapping"> Data parameters of the evaluator. </param>
-        /// <returns> A new <see cref="Projects.EvaluatorConfiguration"/> instance for mocking. </returns>
-        public static EvaluatorConfiguration EvaluatorConfiguration(string id = default, IDictionary<string, BinaryData> initParams = default, IDictionary<string, string> dataMapping = default)
-        {
-            initParams ??= new ChangeTrackingDictionary<string, BinaryData>();
-            dataMapping ??= new ChangeTrackingDictionary<string, string>();
-
-            return new EvaluatorConfiguration(id, initParams, dataMapping, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Abstract base model for defining evaluation targets.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ModelResponseGenerationTarget"/>.
-        /// </summary>
-        /// <param name="type"> Discriminator that defines the type of the evaluation target. </param>
-        /// <returns> A new <see cref="Projects.EvaluationTarget"/> instance for mocking. </returns>
-        public static EvaluationTarget EvaluationTarget(string @type = default)
-        {
-            return new UnknownEvaluationTarget(new EvaluationTargetType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Evaluation target for generating responses using a given model and dataset. </summary>
-        /// <param name="baseMessages"> A list of messages comprising the conversation so far. </param>
-        /// <param name="modelDeploymentName"> The model deployment to be evaluated. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
-        /// <param name="modelParams"> Optional parameters passed to the model for evaluation. </param>
-        /// <returns> A new <see cref="Projects.ModelResponseGenerationTarget"/> instance for mocking. </returns>
-        public static ModelResponseGenerationTarget ModelResponseGenerationTarget(IEnumerable<Message> baseMessages = default, string modelDeploymentName = default, IDictionary<string, BinaryData> modelParams = default)
-        {
-            baseMessages ??= new ChangeTrackingList<Message>();
-            modelParams ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new ModelResponseGenerationTarget(EvaluationTargetType.ModelResponseGeneration, additionalBinaryDataProperties: null, baseMessages.ToList(), modelDeploymentName, modelParams);
-        }
-
-        /// <summary>
-        /// Abstract base model representing a single message in a conversation.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SystemMessage"/>, <see cref="DeveloperMessage"/>, <see cref="UserMessage"/>, and <see cref="AssistantMessage"/>.
-        /// </summary>
-        /// <param name="role"> The role of the message author. Known values: 'system', 'assistant', 'developer', 'user'. </param>
-        /// <returns> A new <see cref="Projects.Message"/> instance for mocking. </returns>
-        public static Message Message(string role = default)
-        {
-            return new UnknownMessage(new MessageRole(role), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A message authored by the system to guide model behavior. </summary>
-        /// <param name="content"> Plain text instructions provided by the system to steer model behavior. </param>
-        /// <returns> A new <see cref="Projects.SystemMessage"/> instance for mocking. </returns>
-        public static SystemMessage SystemMessage(string content = default)
-        {
-            return new SystemMessage(MessageRole.System, additionalBinaryDataProperties: null, content);
-        }
-
-        /// <summary> A message authored by a developer to guide the model during evaluation. </summary>
-        /// <param name="content"> Content provided by a developer to guide model behavior in an evaluation context. </param>
-        /// <returns> A new <see cref="Projects.DeveloperMessage"/> instance for mocking. </returns>
-        public static DeveloperMessage DeveloperMessage(string content = default)
-        {
-            return new DeveloperMessage(MessageRole.Developer, additionalBinaryDataProperties: null, content);
-        }
-
-        /// <summary> A message authored by the end user as input to the model. </summary>
-        /// <param name="content"> Input content or question provided by the end user. </param>
-        /// <returns> A new <see cref="Projects.UserMessage"/> instance for mocking. </returns>
-        public static UserMessage UserMessage(string content = default)
-        {
-            return new UserMessage(MessageRole.User, additionalBinaryDataProperties: null, content);
-        }
-
-        /// <summary> A message generated by the assistant in response to previous messages. </summary>
-        /// <param name="content"> Response content generated by the assistant. </param>
-        /// <returns> A new <see cref="Projects.AssistantMessage"/> instance for mocking. </returns>
-        public static AssistantMessage AssistantMessage(string content = default)
-        {
-            return new AssistantMessage(MessageRole.Assistant, additionalBinaryDataProperties: null, content);
-        }
-
-        /// <summary> Evaluation request for agent run. </summary>
-        /// <param name="runId"> Identifier of the agent run. </param>
-        /// <param name="threadId"> Identifier of the agent thread. This field is mandatory currently, but it will be optional in the future. </param>
-        /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
-        /// <param name="samplingConfiguration"> Sampling configuration for the evaluation. </param>
-        /// <param name="redactionConfiguration"> Redaction configuration for the evaluation. </param>
-        /// <param name="appInsightsConnectionString"> Pass the AppInsights connection string to the agent evaluation for the evaluation results and the errors logs. </param>
-        /// <returns> A new <see cref="Projects.AgentEvaluationRequest"/> instance for mocking. </returns>
-        public static AgentEvaluationRequest AgentEvaluationRequest(string runId = default, string threadId = default, IDictionary<string, EvaluatorConfiguration> evaluators = default, AgentEvaluationSamplingConfiguration samplingConfiguration = default, AgentEvaluationRedactionConfiguration redactionConfiguration = default, string appInsightsConnectionString = default)
-        {
-            evaluators ??= new ChangeTrackingDictionary<string, EvaluatorConfiguration>();
-
-            return new AgentEvaluationRequest(
-                runId,
-                threadId,
-                evaluators,
-                samplingConfiguration,
-                redactionConfiguration,
-                appInsightsConnectionString,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Definition for sampling strategy. </summary>
-        /// <param name="name"> Name of the sampling strategy. </param>
-        /// <param name="samplingPercent"> Percentage of sampling per hour (0-100). </param>
-        /// <param name="maxRequestRate"> Maximum request rate per hour (0 to 1000). </param>
-        /// <returns> A new <see cref="Projects.AgentEvaluationSamplingConfiguration"/> instance for mocking. </returns>
-        public static AgentEvaluationSamplingConfiguration AgentEvaluationSamplingConfiguration(string name = default, float samplingPercent = default, float maxRequestRate = default)
-        {
-            return new AgentEvaluationSamplingConfiguration(name, samplingPercent, maxRequestRate, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The redaction configuration will allow the user to control what is redacted. </summary>
-        /// <param name="redactScoreProperties"> Redact score properties. If not specified, the default is to redact in production. </param>
-        /// <returns> A new <see cref="Projects.AgentEvaluationRedactionConfiguration"/> instance for mocking. </returns>
-        public static AgentEvaluationRedactionConfiguration AgentEvaluationRedactionConfiguration(bool? redactScoreProperties = default)
-        {
-            return new AgentEvaluationRedactionConfiguration(redactScoreProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Evaluation response for agent evaluation run. </summary>
-        /// <param name="id"> Identifier of the agent evaluation run. </param>
-        /// <param name="status"> Status of the agent evaluation. Options: Running, Completed, Failed. </param>
-        /// <param name="error"> The reason of the request failure for the long running process, if applicable. </param>
-        /// <param name="result"> The agent evaluation result. </param>
-        /// <returns> A new <see cref="Projects.AgentEvaluation"/> instance for mocking. </returns>
-        public static AgentEvaluation AgentEvaluation(string id = default, string status = default, string error = default, IEnumerable<AgentEvaluationResult> result = default)
-        {
-            result ??= new ChangeTrackingList<AgentEvaluationResult>();
-
-            return new AgentEvaluation(id, status, error, result.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Result for the agent evaluation evaluator run. </summary>
-        /// <param name="evaluator"> Evaluator's name. This is the name of the evaluator that was used to evaluate the agent's completion. </param>
-        /// <param name="evaluatorId"> Identifier of the evaluator. </param>
-        /// <param name="score"> Score of the given evaluator. No restriction on range. </param>
-        /// <param name="status"> Status of the evaluator result. Options: Running, Completed, Failed, NotApplicable. </param>
-        /// <param name="reason"> Reasoning for the evaluation result. </param>
-        /// <param name="version"> Version of the evaluator that was used to evaluate the agent's completion. </param>
-        /// <param name="threadId"> The unique identifier of the thread. </param>
-        /// <param name="runId"> The unique identifier of the run. </param>
-        /// <param name="error"> A string explaining why there was an error, if applicable. </param>
-        /// <param name="additionalDetails"> Additional properties relevant to the evaluator. These will differ between evaluators. </param>
-        /// <returns> A new <see cref="Projects.AgentEvaluationResult"/> instance for mocking. </returns>
-        public static AgentEvaluationResult AgentEvaluationResult(string evaluator = default, string evaluatorId = default, float score = default, string status = default, string reason = default, string version = default, string threadId = default, string runId = default, string error = default, IDictionary<string, string> additionalDetails = default)
-        {
-            additionalDetails ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AgentEvaluationResult(
-                evaluator,
-                evaluatorId,
-                score,
-                status,
-                reason,
-                version,
-                threadId,
-                runId,
-                error,
-                additionalDetails,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary>
         /// DatasetVersion Definition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileDatasetVersion"/> and <see cref="FolderDatasetVersion"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.FileDataset"/> and <see cref="Projects.FolderDataset"/>.
         /// </summary>
-        /// <param name="dataUri"></param>
+        /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <param name="type"> Dataset type. </param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
         /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
@@ -313,12 +102,12 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <returns> A new <see cref="Projects.DatasetVersion"/> instance for mocking. </returns>
-        public static DatasetVersion DatasetVersion(Uri dataUri = default, string @type = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Projects.AIProjectDataset"/> instance for mocking. </returns>
+        public static AIProjectDataset AIProjectDataset(Uri dataUri = default, string @type = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new UnknownDatasetVersion(
+            return new UnknownAIProjectDataset(
                 dataUri,
                 new DatasetType(@type),
                 isReference,
@@ -332,7 +121,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> FileDatasetVersion Definition. </summary>
-        /// <param name="dataUri"></param>
+        /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
         /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
@@ -340,12 +129,12 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <returns> A new <see cref="Projects.FileDatasetVersion"/> instance for mocking. </returns>
-        public static FileDatasetVersion FileDatasetVersion(Uri dataUri = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Projects.FileDataset"/> instance for mocking. </returns>
+        public static FileDataset FileDataset(Uri dataUri = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FileDatasetVersion(
+            return new FileDataset(
                 dataUri,
                 DatasetType.UriFile,
                 isReference,
@@ -359,7 +148,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> FileDatasetVersion Definition. </summary>
-        /// <param name="dataUri"></param>
+        /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
         /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
@@ -367,12 +156,12 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <returns> A new <see cref="Projects.FolderDatasetVersion"/> instance for mocking. </returns>
-        public static FolderDatasetVersion FolderDatasetVersion(Uri dataUri = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Projects.FolderDataset"/> instance for mocking. </returns>
+        public static FolderDataset FolderDataset(Uri dataUri = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FolderDatasetVersion(
+            return new FolderDataset(
                 dataUri,
                 DatasetType.UriFolder,
                 isReference,
@@ -388,54 +177,51 @@ namespace Azure.AI.Projects
         /// <summary> Represents a request for a pending upload. </summary>
         /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
         /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
-        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
         /// <returns> A new <see cref="Projects.PendingUploadConfiguration"/> instance for mocking. </returns>
-        public static PendingUploadConfiguration PendingUploadConfiguration(string pendingUploadId = default, string connectionName = default, PendingUploadType pendingUploadType = default)
+        public static PendingUploadConfiguration PendingUploadConfiguration(string pendingUploadId = default, string connectionName = default)
         {
-            return new PendingUploadConfiguration(pendingUploadId, connectionName, pendingUploadType, additionalBinaryDataProperties: null);
+            return new PendingUploadConfiguration(pendingUploadId, connectionName, "BlobReference", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the response for a pending upload request. </summary>
         /// <param name="blobReference"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
         /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
-        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
         /// <returns> A new <see cref="Projects.PendingUploadResult"/> instance for mocking. </returns>
-        public static PendingUploadResult PendingUploadResult(BlobReference blobReference = default, string pendingUploadId = default, string version = default, PendingUploadType pendingUploadType = default)
+        public static PendingUploadResult PendingUploadResult(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default)
         {
-            return new PendingUploadResult(blobReference, pendingUploadId, version, pendingUploadType, additionalBinaryDataProperties: null);
+            return new PendingUploadResult(blobReference, pendingUploadId, version, "BlobReference", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Blob reference details. </summary>
-        /// <param name="blobUri"></param>
+        /// <param name="blobUri"> Blob URI path for client to upload data. Example: https://blob.windows.core.net/Container/Path. </param>
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
-        /// <returns> A new <see cref="Projects.BlobReference"/> instance for mocking. </returns>
-        public static BlobReference BlobReference(Uri blobUri = default, string storageAccountArmId = default, BlobReferenceSasCredential credential = default)
+        /// <returns> A new <see cref="Projects.AIProjectBlobReference"/> instance for mocking. </returns>
+        public static AIProjectBlobReference AIProjectBlobReference(Uri blobUri = default, string storageAccountArmId = default, BlobReferenceSasCredential credential = default)
         {
-            return new BlobReference(blobUri, storageAccountArmId, credential, additionalBinaryDataProperties: null);
+            return new AIProjectBlobReference(blobUri, storageAccountArmId, credential, additionalBinaryDataProperties: null);
         }
 
         /// <summary> SAS Credential definition. </summary>
-        /// <param name="sasUri"></param>
-        /// <param name="type"> Type of credential. </param>
+        /// <param name="sasUri"> SAS uri. </param>
         /// <returns> A new <see cref="Projects.BlobReferenceSasCredential"/> instance for mocking. </returns>
-        public static BlobReferenceSasCredential BlobReferenceSasCredential(Uri sasUri = default, string @type = default)
+        public static BlobReferenceSasCredential BlobReferenceSasCredential(Uri sasUri = default)
         {
-            return new BlobReferenceSasCredential(sasUri, @type, additionalBinaryDataProperties: null);
+            return new BlobReferenceSasCredential(sasUri, "SAS", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a reference to a blob for consumption. </summary>
         /// <param name="blobReference"> Credential info to access the storage account. </param>
         /// <returns> A new <see cref="Projects.DatasetCredential"/> instance for mocking. </returns>
-        public static DatasetCredential DatasetCredential(BlobReference blobReference = default)
+        public static DatasetCredential DatasetCredential(AIProjectBlobReference blobReference = default)
         {
             return new DatasetCredential(blobReference, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Index resource Definition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAISearchIndex"/>, <see cref="ManagedAzureAISearchIndex"/>, and <see cref="CosmosDBIndex"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureAISearchIndex"/>, <see cref="Projects.ManagedAzureAISearchIndex"/>, and <see cref="Projects.AIProjectCosmosDBIndex"/>.
         /// </summary>
         /// <param name="type"> Type of index. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
@@ -443,12 +229,12 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <returns> A new <see cref="Projects.SearchIndex"/> instance for mocking. </returns>
-        public static SearchIndex SearchIndex(string @type = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Projects.AIProjectIndex"/> instance for mocking. </returns>
+        public static AIProjectIndex AIProjectIndex(string @type = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new UnknownSearchIndex(
+            return new UnknownAIProjectIndex(
                 new IndexType(@type),
                 id,
                 name,
@@ -468,7 +254,7 @@ namespace Azure.AI.Projects
         /// <param name="indexName"> Name of index in Azure AI Search resource to attach. </param>
         /// <param name="fieldMapping"> Field mapping configuration. </param>
         /// <returns> A new <see cref="Projects.AzureAISearchIndex"/> instance for mocking. </returns>
-        public static AzureAISearchIndex AzureAISearchIndex(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, string connectionName = default, string indexName = default, FieldMapping fieldMapping = default)
+        public static AzureAISearchIndex AzureAISearchIndex(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, string connectionName = default, string indexName = default, AIProjectIndexFieldMapping fieldMapping = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -492,14 +278,14 @@ namespace Azure.AI.Projects
         /// <param name="urlField"> Field containing the url of the document. </param>
         /// <param name="vectorFields"> List of fields with vector content. </param>
         /// <param name="metadataFields"> List of fields with metadata content. </param>
-        /// <returns> A new <see cref="Projects.FieldMapping"/> instance for mocking. </returns>
-        public static FieldMapping FieldMapping(IEnumerable<string> contentFields = default, string filepathField = default, string titleField = default, string urlField = default, IEnumerable<string> vectorFields = default, IEnumerable<string> metadataFields = default)
+        /// <returns> A new <see cref="Projects.AIProjectIndexFieldMapping"/> instance for mocking. </returns>
+        public static AIProjectIndexFieldMapping AIProjectIndexFieldMapping(IEnumerable<string> contentFields = default, string filepathField = default, string titleField = default, string urlField = default, IEnumerable<string> vectorFields = default, IEnumerable<string> metadataFields = default)
         {
             contentFields ??= new ChangeTrackingList<string>();
             vectorFields ??= new ChangeTrackingList<string>();
             metadataFields ??= new ChangeTrackingList<string>();
 
-            return new FieldMapping(
+            return new AIProjectIndexFieldMapping(
                 contentFields.ToList(),
                 filepathField,
                 titleField,
@@ -543,12 +329,12 @@ namespace Azure.AI.Projects
         /// <param name="containerName"> Name of CosmosDB Container. </param>
         /// <param name="embeddingConfiguration"> Embedding model configuration. </param>
         /// <param name="fieldMapping"> Field mapping configuration. </param>
-        /// <returns> A new <see cref="Projects.CosmosDBIndex"/> instance for mocking. </returns>
-        public static CosmosDBIndex CosmosDBIndex(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, string connectionName = default, string databaseName = default, string containerName = default, EmbeddingConfiguration embeddingConfiguration = default, FieldMapping fieldMapping = default)
+        /// <returns> A new <see cref="Projects.AIProjectCosmosDBIndex"/> instance for mocking. </returns>
+        public static AIProjectCosmosDBIndex AIProjectCosmosDBIndex(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, string connectionName = default, string databaseName = default, string containerName = default, EmbeddingConfiguration embeddingConfiguration = default, AIProjectIndexFieldMapping fieldMapping = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CosmosDBIndex(
+            return new AIProjectCosmosDBIndex(
                 IndexType.CosmosDB,
                 id,
                 name,
@@ -574,14 +360,14 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Model Deployment Definition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ModelDeployment"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ModelDeployment"/>.
         /// </summary>
         /// <param name="type"> The type of the deployment. </param>
         /// <param name="name"> Name of the deployment. </param>
-        /// <returns> A new <see cref="Projects.AssetDeployment"/> instance for mocking. </returns>
-        public static AssetDeployment AssetDeployment(string @type = default, string name = default)
+        /// <returns> A new <see cref="Projects.AIProjectDeployment"/> instance for mocking. </returns>
+        public static AIProjectDeployment AIProjectDeployment(string @type = default, string name = default)
         {
-            return new UnknownAssetDeployment(new DeploymentType(@type), name, additionalBinaryDataProperties: null);
+            return new UnknownAIProjectDeployment(new AIProjectDeploymentType(@type), name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Model Deployment Definition. </summary>
@@ -598,7 +384,7 @@ namespace Azure.AI.Projects
             capabilities ??= new ChangeTrackingDictionary<string, string>();
 
             return new ModelDeployment(
-                DeploymentType.ModelDeployment,
+                AIProjectDeploymentType.ModelDeployment,
                 name,
                 additionalBinaryDataProperties: null,
                 modelName,
@@ -627,58 +413,37 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Red team details. </summary>
-        /// <param name="name"> Identifier of the red team run. </param>
-        /// <param name="displayName"> Name of the red-team run. </param>
-        /// <param name="numTurns"> Number of simulation rounds. </param>
-        /// <param name="attackStrategies"> List of attack strategies or nested lists of attack strategies. </param>
-        /// <param name="simulationOnly"> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </param>
-        /// <param name="riskCategories"> List of risk categories to generate attack objectives for. </param>
-        /// <param name="applicationScenario"> Application scenario for the red team operation, to generate scenario specific attacks. </param>
-        /// <param name="tags"> Red team's tags. Unlike properties, tags are fully mutable. </param>
-        /// <param name="properties"> Red team's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
-        /// <param name="status"> Status of the red-team. It is set by service and is read-only. </param>
-        /// <param name="target"> Target configuration for the red-team run. </param>
-        /// <returns> A new <see cref="Projects.RedTeam"/> instance for mocking. </returns>
-        public static RedTeam RedTeam(string name = default, string displayName = default, int? numTurns = default, IEnumerable<AttackStrategy> attackStrategies = default, bool? simulationOnly = default, IEnumerable<RiskCategory> riskCategories = default, string applicationScenario = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string status = default, TargetConfig target = default)
+        /// <summary> Represents a request for a pending upload. </summary>
+        /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
+        /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
+        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
+        /// <returns> A new <see cref="Projects.PendingUploadConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PendingUploadConfiguration PendingUploadConfiguration(string pendingUploadId, string connectionName, PendingUploadType pendingUploadType)
         {
-            attackStrategies ??= new ChangeTrackingList<AttackStrategy>();
-            riskCategories ??= new ChangeTrackingList<RiskCategory>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            properties ??= new ChangeTrackingDictionary<string, string>();
-
-            return new RedTeam(
-                name,
-                displayName,
-                numTurns,
-                attackStrategies.ToList(),
-                simulationOnly,
-                riskCategories.ToList(),
-                applicationScenario,
-                tags,
-                properties,
-                status,
-                target,
-                additionalBinaryDataProperties: null);
+            return new PendingUploadConfiguration(pendingUploadId, connectionName, pendingUploadType, additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// Abstract class for target configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureOpenAIModelConfiguration"/>.
-        /// </summary>
-        /// <param name="type"> Type of the model configuration. </param>
-        /// <returns> A new <see cref="Projects.TargetConfig"/> instance for mocking. </returns>
-        public static TargetConfig TargetConfig(string @type = default)
+        /// <summary> Represents the response for a pending upload request. </summary>
+        /// <param name="blobReference"> Container-level read, write, list SAS. </param>
+        /// <param name="pendingUploadId"> ID for this upload request. </param>
+        /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
+        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
+        /// <returns> A new <see cref="Projects.PendingUploadResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PendingUploadResult PendingUploadResult(AIProjectBlobReference blobReference, string pendingUploadId, string version, PendingUploadType pendingUploadType)
         {
-            return new UnknownTargetConfig(@type, additionalBinaryDataProperties: null);
+            return new PendingUploadResult(blobReference, pendingUploadId, version, pendingUploadType, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Azure OpenAI model configuration. The API version would be selected by the service for querying the model. </summary>
-        /// <param name="modelDeploymentName"> Deployment name for AOAI model. Example: gpt-4o if in AIServices or connection based `connection_name/deployment_name` (e.g. `my-aoai-connection/gpt-4o`). </param>
-        /// <returns> A new <see cref="Projects.AzureOpenAIModelConfiguration"/> instance for mocking. </returns>
-        public static AzureOpenAIModelConfiguration AzureOpenAIModelConfiguration(string modelDeploymentName = default)
+        /// <summary> SAS Credential definition. </summary>
+        /// <param name="sasUri"></param>
+        /// <param name="type"> Type of credential. </param>
+        /// <returns> A new <see cref="Projects.BlobReferenceSasCredential"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobReferenceSasCredential BlobReferenceSasCredential(Uri sasUri, string @type)
         {
-            return new AzureOpenAIModelConfiguration("AzureOpenAIModel", additionalBinaryDataProperties: null, modelDeploymentName);
+            return new BlobReferenceSasCredential(sasUri, @type, additionalBinaryDataProperties: null);
         }
     }
 }

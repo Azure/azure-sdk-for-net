@@ -26,16 +26,14 @@ namespace Azure.AI.VoiceLive.Tests
         [TestCase]
         public async Task BadModelName()
         {
-            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var vlc = GetLiveClient();
 
             var voice = new AzureStandardVoice("en-US-AriaNeural");
 
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "invalidModelName",
-                InputAudioFormat = AudioFormat.Pcm16,
+                InputAudioFormat = InputAudioFormat.Pcm16,
                 Voice = voice
             };
 
@@ -51,16 +49,14 @@ namespace Azure.AI.VoiceLive.Tests
         [TestCase]
         public async Task BadVoiceName()
         {
-            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var vlc = GetLiveClient();
 
             var voice = new AzureStandardVoice("NotARealVoice");
 
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "gpt-4o",
-                InputAudioFormat = AudioFormat.Pcm16,
+                InputAudioFormat = InputAudioFormat.Pcm16,
                 Voice = voice
             };
 
@@ -82,7 +78,7 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "gpt-4o",
-                InputAudioFormat = AudioFormat.Pcm16,
+                InputAudioFormat = InputAudioFormat.Pcm16,
             };
             Assert.ThrowsAsync(typeof(WebSocketException), () => vlc.StartSessionAsync(options, TimeoutToken));
         }

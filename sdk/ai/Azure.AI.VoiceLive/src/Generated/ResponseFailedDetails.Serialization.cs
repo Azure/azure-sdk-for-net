@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Details for a failed response. </summary>
-    public partial class ResponseFailedDetails : IJsonModel<ResponseFailedDetails>
+    public partial class ResponseFailedDetails : ResponseStatusDetails, IJsonModel<ResponseFailedDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFailedDetails"/> for deserialization. </summary>
         internal ResponseFailedDetails()
@@ -75,14 +75,14 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "failed";
+            SessionResponseStatus @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BinaryData error = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new SessionResponseStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))

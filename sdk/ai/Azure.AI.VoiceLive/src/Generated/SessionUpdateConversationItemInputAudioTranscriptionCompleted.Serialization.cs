@@ -18,13 +18,12 @@ namespace Azure.AI.VoiceLive
     /// committed by the client or server (in `server_vad` mode). Transcription runs
     /// asynchronously with Response creation, so this event may come before or after
     /// the Response events.
-    /// 
     /// VoiceLive API models accept audio natively, and thus input transcription is a
     /// separate process run on a separate ASR (Automatic Speech Recognition) model.
     /// The transcript may diverge somewhat from the model's interpretation, and
     /// should be treated as a rough guide.
     /// </summary>
-    public partial class SessionUpdateConversationItemInputAudioTranscriptionCompleted : IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionCompleted>
+    public partial class SessionUpdateConversationItemInputAudioTranscriptionCompleted : SessionUpdate, IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionCompleted>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemInputAudioTranscriptionCompleted"/> for deserialization. </summary>
         internal SessionUpdateConversationItemInputAudioTranscriptionCompleted()

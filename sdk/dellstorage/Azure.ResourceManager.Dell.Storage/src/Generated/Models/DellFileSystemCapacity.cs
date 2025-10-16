@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Dell.Storage.Models
     /// <summary> Capacity for a Resource. </summary>
     public partial class DellFileSystemCapacity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DellFileSystemCapacity"/>. </summary>
         public DellFileSystemCapacity()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="max"> Maximum Capacity. </param>
         /// <param name="incremental"> Units to be increased. </param>
         /// <param name="current"> Current Capacity of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DellFileSystemCapacity(string min, string max, string incremental, string current, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DellFileSystemCapacity(string min, string max, string incremental, string current, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Min = min;
             Max = max;
             Incremental = incremental;
             Current = current;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Minimum Capacity. </summary>
         public string Min { get; set; }
+
         /// <summary> Maximum Capacity. </summary>
         public string Max { get; set; }
+
         /// <summary> Units to be increased. </summary>
         public string Incremental { get; set; }
+
         /// <summary> Current Capacity of the resource. </summary>
         public string Current { get; set; }
     }

@@ -6,6 +6,7 @@
 		<!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
 		<ApiCompatVersion>1.1.0</ApiCompatVersion>
 		<Description>Triggers for Azure AD Authentication event custom extensions. Lets you focus on your business logic.</Description>
+		<AotCompatOptOut>true</AotCompatOptOut>
 	</PropertyGroup>
 
 	<ItemGroup>

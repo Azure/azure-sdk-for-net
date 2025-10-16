@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="resourceType"> the type of the resource for which the event is being emitted. </param>
         /// <param name="location"> the location of the resource for which the event is being emitted. </param>
         /// <param name="resourceTags"> the tags on the resource for which the event is being emitted. </param>
-        /// <param name="properties"> The properties of the resource for which the event is being emitted. </param>
+        /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ResourceNotificationsResourceUpdatedDetails(string id, string name, string resourceType, string location, IReadOnlyDictionary<string, string> resourceTags, IReadOnlyDictionary<string, object> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {

@@ -63,6 +63,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(LocationInfo))
+            {
+                writer.WritePropertyName("locationInfo"u8);
+                writer.WriteStartArray();
+                foreach (var item in LocationInfo)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
@@ -125,6 +135,7 @@ namespace Azure.ResourceManager.Storage.Models
             string resourceType = default;
             StorageKind? kind = default;
             IReadOnlyList<string> locations = default;
+            IReadOnlyList<StorageSkuLocationInfo> locationInfo = default;
             IReadOnlyList<StorageSkuCapability> capabilities = default;
             IReadOnlyList<StorageSkuRestriction> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -173,6 +184,20 @@ namespace Azure.ResourceManager.Storage.Models
                     locations = array;
                     continue;
                 }
+                if (property.NameEquals("locationInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<StorageSkuLocationInfo> array = new List<StorageSkuLocationInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(StorageSkuLocationInfo.DeserializeStorageSkuLocationInfo(item, options));
+                    }
+                    locationInfo = array;
+                    continue;
+                }
                 if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -213,6 +238,7 @@ namespace Azure.ResourceManager.Storage.Models
                 resourceType,
                 kind,
                 locations ?? new ChangeTrackingList<string>(),
+                locationInfo ?? new ChangeTrackingList<StorageSkuLocationInfo>(),
                 capabilities ?? new ChangeTrackingList<StorageSkuCapability>(),
                 restrictions ?? new ChangeTrackingList<StorageSkuRestriction>(),
                 serializedAdditionalRawData);
@@ -324,6 +350,29 @@ namespace Azure.ResourceManager.Storage.Models
                             {
                                 builder.AppendLine($"    '{item}'");
                             }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocationInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  locationInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LocationInfo))
+                {
+                    if (LocationInfo.Any())
+                    {
+                        builder.Append("  locationInfo: ");
+                        builder.AppendLine("[");
+                        foreach (var item in LocationInfo)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  locationInfo: ");
                         }
                         builder.AppendLine("  ]");
                     }

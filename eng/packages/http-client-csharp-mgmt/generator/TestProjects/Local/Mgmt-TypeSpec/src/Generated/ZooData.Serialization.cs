@@ -19,7 +19,7 @@ using MgmtTypeSpec.Models;
 namespace MgmtTypeSpec
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class ZooData : IJsonModel<ZooData>
+    public partial class ZooData : TrackedResourceData, IJsonModel<ZooData>
     {
         /// <summary> Initializes a new instance of <see cref="ZooData"/> for deserialization. </summary>
         internal ZooData()

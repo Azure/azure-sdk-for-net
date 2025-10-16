@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.InformaticaDataManagement;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
-    public partial class InformaticaRuntimeResourceFetchMetadata : IUtf8JsonSerializable, IJsonModel<InformaticaRuntimeResourceFetchMetadata>
+    /// <summary> Informatica runtime resource metadata as received via the informatica fetch all runtime environments API. </summary>
+    public partial class InformaticaRuntimeResourceFetchMetadata : IJsonModel<InformaticaRuntimeResourceFetchMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InformaticaRuntimeResourceFetchMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="InformaticaRuntimeResourceFetchMetadata"/> for deserialization. </summary>
+        internal InformaticaRuntimeResourceFetchMetadata()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InformaticaRuntimeResourceFetchMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InformaticaRuntimeResourceFetchMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaRuntimeResourceFetchMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InformaticaRuntimeResourceFetchMetadata)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("createdTime"u8);
@@ -61,15 +66,15 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,22 +83,27 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
         }
 
-        InformaticaRuntimeResourceFetchMetadata IJsonModel<InformaticaRuntimeResourceFetchMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformaticaRuntimeResourceFetchMetadata IJsonModel<InformaticaRuntimeResourceFetchMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InformaticaRuntimeResourceFetchMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InformaticaRuntimeResourceFetchMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaRuntimeResourceFetchMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InformaticaRuntimeResourceFetchMetadata)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInformaticaRuntimeResourceFetchMetadata(document.RootElement, options);
         }
 
-        internal static InformaticaRuntimeResourceFetchMetadata DeserializeInformaticaRuntimeResourceFetchMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InformaticaRuntimeResourceFetchMetadata DeserializeInformaticaRuntimeResourceFetchMetadata(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,82 +114,80 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             string createdBy = default;
             string updatedBy = default;
             string id = default;
-            InformaticaRuntimeType type = default;
+            InformaticaRuntimeType runtimeType = default;
             string status = default;
             string statusLocalized = default;
             string statusMessage = default;
             InformaticaServerlessFetchConfigProperties serverlessConfigProperties = default;
             string description = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdTime"u8))
+                if (prop.NameEquals("createdTime"u8))
                 {
-                    createdTime = property.Value.GetString();
+                    createdTime = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("updatedTime"u8))
+                if (prop.NameEquals("updatedTime"u8))
                 {
-                    updatedTime = property.Value.GetString();
+                    updatedTime = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdBy"u8))
+                if (prop.NameEquals("createdBy"u8))
                 {
-                    createdBy = property.Value.GetString();
+                    createdBy = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("updatedBy"u8))
+                if (prop.NameEquals("updatedBy"u8))
                 {
-                    updatedBy = property.Value.GetString();
+                    updatedBy = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = new InformaticaRuntimeType(property.Value.GetString());
+                    runtimeType = new InformaticaRuntimeType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusLocalized"u8))
+                if (prop.NameEquals("statusLocalized"u8))
                 {
-                    statusLocalized = property.Value.GetString();
+                    statusLocalized = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusMessage"u8))
+                if (prop.NameEquals("statusMessage"u8))
                 {
-                    statusMessage = property.Value.GetString();
+                    statusMessage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverlessConfigProperties"u8))
+                if (prop.NameEquals("serverlessConfigProperties"u8))
                 {
-                    serverlessConfigProperties = InformaticaServerlessFetchConfigProperties.DeserializeInformaticaServerlessFetchConfigProperties(property.Value, options);
+                    serverlessConfigProperties = InformaticaServerlessFetchConfigProperties.DeserializeInformaticaServerlessFetchConfigProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new InformaticaRuntimeResourceFetchMetadata(
                 name,
                 createdTime,
@@ -187,19 +195,22 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 createdBy,
                 updatedBy,
                 id,
-                type,
+                runtimeType,
                 status,
                 statusLocalized,
                 statusMessage,
                 serverlessConfigProperties,
                 description,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<InformaticaRuntimeResourceFetchMetadata>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InformaticaRuntimeResourceFetchMetadata>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InformaticaRuntimeResourceFetchMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaRuntimeResourceFetchMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -209,15 +220,20 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
         }
 
-        InformaticaRuntimeResourceFetchMetadata IPersistableModel<InformaticaRuntimeResourceFetchMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InformaticaRuntimeResourceFetchMetadata>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformaticaRuntimeResourceFetchMetadata IPersistableModel<InformaticaRuntimeResourceFetchMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InformaticaRuntimeResourceFetchMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaRuntimeResourceFetchMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeInformaticaRuntimeResourceFetchMetadata(document.RootElement, options);
                     }
                 default:
@@ -225,6 +241,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InformaticaRuntimeResourceFetchMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

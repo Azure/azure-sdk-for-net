@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     /// <summary>
     /// A class representing the AutonomousDatabase data model.
-    /// Autonomous Database  resource model.
+    /// Autonomous Database resource model.
     /// </summary>
     public partial class AutonomousDatabaseData : TrackedResourceData
     {

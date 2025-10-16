@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using NUnit.Framework;
 
@@ -231,6 +232,65 @@ namespace Azure.Provisioning.Tests.Primitives
                             }
                           }
                         }
+                      }
+                    }
+                    """);
+        }
+
+        [Test]
+        public async Task ValidateConstructFromBicepExpression_LowLevelApi()
+        {
+            await using var test = new Trycep();
+            test.Define(
+                ctx =>
+                {
+                    Infrastructure infra = new();
+                    ProvisioningParameter useConfig = new(nameof(useConfig), typeof(bool))
+                    {
+                        Value = true
+                    };
+                    infra.Add(useConfig);
+                    StorageAccount storageAccount = new(nameof(storageAccount), "2024-01-01")
+                    {
+                        Location = AzureLocation.CentralUS,
+                        StorageTier = StorageTier.Standard,
+                        IsEnabled = true,
+                        AllowPublicAccess = false,
+                        MaxConnections = 100,
+                    };
+                    // we would like to assign an expression to `storageAccount.StorageConfiguration`.
+                    // but now we cannot do it in the normal way until this issue was fixed: https://github.com/Azure/azure-sdk-for-net/issues/52300
+                    var config = (IBicepValue)storageAccount.StorageConfiguration;
+                    IBicepValue configValue = new StorageConfiguration
+                    {
+                        BackupRetentionDays = 30,
+                        MaxRetryAttempts = 3,
+                        EnableEncryption = true
+                    };
+                    config.Expression = new ConditionalExpression(
+                        new IdentifierExpression(useConfig.BicepIdentifier),
+                        configValue.Compile(),
+                        new NullLiteralExpression());
+                    infra.Add(storageAccount);
+                    return infra;
+                })
+                .Compare(
+                    """
+                    param useConfig bool = true
+
+                    resource storageAccount 'Test.Provider/storageAccounts@2024-01-01' = {
+                      name: take('storageaccount${uniqueString(resourceGroup().id)}', 24)
+                      location: 'centralus'
+                      properties: {
+                        tier: 'Standard'
+                        isEnabled: true
+                        allowPublicAccess: false
+                        maxConnections: 100
+                        storageConfiguration: useConfig ? {
+                          backupRetentionDays: 30
+                          maxRetryAttempts: 3
+                          enableEncryption: true
+                        } : null
                       }
                     }
                     """);

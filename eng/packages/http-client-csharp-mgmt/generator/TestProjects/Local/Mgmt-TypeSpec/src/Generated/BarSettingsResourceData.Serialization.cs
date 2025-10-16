@@ -18,7 +18,7 @@ using MgmtTypeSpec.Models;
 namespace MgmtTypeSpec
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class BarSettingsResourceData : IJsonModel<BarSettingsResourceData>
+    public partial class BarSettingsResourceData : ResourceData, IJsonModel<BarSettingsResourceData>
     {
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/> for deserialization. </summary>
         internal BarSettingsResourceData()
@@ -75,6 +75,8 @@ namespace MgmtTypeSpec
                 writer.WritePropertyName("optionalFlattenProperty"u8);
                 writer.WriteObjectValue(OptionalFlattenProperty, options);
             }
+            writer.WritePropertyName("discriminatorProperty"u8);
+            writer.WriteObjectValue(DiscriminatorProperty, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -113,6 +115,7 @@ namespace MgmtTypeSpec
             BarQuotaProperties anotherProperty = default;
             BarNestedQuotaProperties flattenedNestedProperty = default;
             OptionalFlattenPropertyType optionalFlattenProperty = default;
+            LimitJsonObject discriminatorProperty = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -201,6 +204,11 @@ namespace MgmtTypeSpec
                     optionalFlattenProperty = OptionalFlattenPropertyType.DeserializeOptionalFlattenPropertyType(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("discriminatorProperty"u8))
+                {
+                    discriminatorProperty = LimitJsonObject.DeserializeLimitJsonObject(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -217,7 +225,8 @@ namespace MgmtTypeSpec
                 @property,
                 anotherProperty,
                 flattenedNestedProperty,
-                optionalFlattenProperty);
+                optionalFlattenProperty,
+                discriminatorProperty);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

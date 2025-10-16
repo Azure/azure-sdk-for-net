@@ -43,7 +43,6 @@ namespace Azure.AI.VoiceLive
         private const string ResponseAudioDoneValue = "response.audio.done";
         private const string ResponseAnimationBlendshapesDeltaValue = "response.animation_blendshapes.delta";
         private const string ResponseAnimationBlendshapesDoneValue = "response.animation_blendshapes.done";
-        private const string ResponseEmotionHypothesisValue = "response.emotion_hypothesis";
         private const string ResponseAudioTimestampDeltaValue = "response.audio_timestamp.delta";
         private const string ResponseAudioTimestampDoneValue = "response.audio_timestamp.done";
         private const string ResponseAnimationVisemeDeltaValue = "response.animation_viseme.delta";
@@ -147,9 +146,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the ResponseAnimationBlendshapesDone. </summary>
         public static ServerEventType ResponseAnimationBlendshapesDone { get; } = new ServerEventType(ResponseAnimationBlendshapesDoneValue);
-
-        /// <summary> Gets the ResponseEmotionHypothesis. </summary>
-        public static ServerEventType ResponseEmotionHypothesis { get; } = new ServerEventType(ResponseEmotionHypothesisValue);
 
         /// <summary> Gets the ResponseAudioTimestampDelta. </summary>
         public static ServerEventType ResponseAudioTimestampDelta { get; } = new ServerEventType(ResponseAudioTimestampDeltaValue);

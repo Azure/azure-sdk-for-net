@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ScriptExecutionCancelled event. </summary>
     [JsonConverter(typeof(AvsScriptExecutionCancelledEventDataConverter))]
-    public partial class AvsScriptExecutionCancelledEventData : IJsonModel<AvsScriptExecutionCancelledEventData>
+    public partial class AvsScriptExecutionCancelledEventData : AvsScriptExecutionEventData, IJsonModel<AvsScriptExecutionCancelledEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionCancelledEventData"/> for deserialization. </summary>
         internal AvsScriptExecutionCancelledEventData()

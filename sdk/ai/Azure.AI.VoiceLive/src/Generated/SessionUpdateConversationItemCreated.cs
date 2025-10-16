@@ -12,14 +12,14 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Returned when a conversation item is created. There are several scenarios that produce this event:
-    ///   - The server is generating a Response, which if successful will produce
-    ///     either one or two Items, which will be of type `message`
-    ///     (role `assistant`) or type `function_call`.
-    ///   - The input audio buffer has been committed, either by the client or the
-    ///     server (in `server_vad` mode). The server will take the content of the
-    ///     input audio buffer and add it to a new user message Item.
-    ///   - The client has sent a `conversation.item.create` event to add a new Item
-    ///     to the Conversation.
+    /// - The server is generating a Response, which if successful will produce
+    /// either one or two Items, which will be of type `message`
+    /// (role `assistant`) or type `function_call`.
+    /// - The input audio buffer has been committed, either by the client or the
+    /// server (in `server_vad` mode). The server will take the content of the
+    /// input audio buffer and add it to a new user message Item.
+    /// - The client has sent a `conversation.item.create` event to add a new Item
+    /// to the Conversation.
     /// </summary>
     public partial class SessionUpdateConversationItemCreated : SessionUpdate
     {
@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive
         /// client to understand the order of the conversation.
         /// </param>
         /// <param name="item"></param>
-        internal SessionUpdateConversationItemCreated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, ResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateConversationItemCreated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, SessionResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             PreviousItemId = previousItemId;
             Item = item;
@@ -50,6 +50,6 @@ namespace Azure.AI.VoiceLive
         public string PreviousItemId { get; }
 
         /// <summary> Gets the Item. </summary>
-        public ResponseItem Item { get; }
+        public SessionResponseItem Item { get; }
     }
 }

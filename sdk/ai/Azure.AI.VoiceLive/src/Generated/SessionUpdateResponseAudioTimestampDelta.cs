@@ -68,12 +68,6 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets the ContentIndex. </summary>
         public int ContentIndex { get; }
 
-        /// <summary> Gets the AudioOffsetMs. </summary>
-        public int AudioOffsetMs { get; }
-
-        /// <summary> Gets the AudioDurationMs. </summary>
-        public int AudioDurationMs { get; }
-
         /// <summary> Gets the Text. </summary>
         public string Text { get; }
 

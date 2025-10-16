@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ReachabilityAnalysisRunsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public ReachabilityAnalysisRunsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            _apiVersion = apiVersion ?? "2024-07-01";
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2024-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
