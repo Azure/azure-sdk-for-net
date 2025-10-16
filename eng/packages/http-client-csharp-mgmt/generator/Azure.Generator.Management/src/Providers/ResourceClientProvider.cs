@@ -185,15 +185,15 @@ namespace Azure.Generator.Management.Providers
         private string BuildFactoryMethodName()
         {
             var ResourceNamesHavingIrregularPlural = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "PlaywrightQuota", "PlaywrightWorkspaceQuota" };
-            var pluralOfResourceName = ResourceName.Pluralize();
-            var methodName = $"Get{pluralOfResourceName}";
 
             if (ResourceNamesHavingIrregularPlural.Contains(ResourceName))
             {
-                methodName = $"GetAll{ResourceName}";
+                return $"GetAll{ResourceName}";
             }
-
-            return methodName;
+            else
+            {
+                return $"Get{ResourceName.Pluralize()}";
+            }
         }
 
         protected override FieldProvider[] BuildFields()
