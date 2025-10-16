@@ -227,6 +227,20 @@ namespace Azure.Storage.Sas
             return sb.ToString();
         }
 
+        internal static List<string> ConvertRequestDictToKeyList(Dictionary<string, List<string>> dict)
+        {
+            if (dict == null)
+            {
+                return null;
+            }
+            List<string> list = new List<string>();
+            foreach (var kvp in dict)
+            {
+                list.Add(kvp.Key);
+            }
+            return list;
+        }
+
         /// <summary>
         /// Helper method to add query param key value pairs to StringBuilder
         /// </summary>

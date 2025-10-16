@@ -400,18 +400,14 @@ namespace Azure.Storage.Blobs.Test
 
             Dictionary<string, List<string>> requestHeaders = new Dictionary<string, List<string>>()
             {
-                //{ "empty headerValue", new List<string>{ "" } }, // this gets ignored when sending the header
-                //{ "", new List<string>{ "empty headerName" } }, // this gets ignored
                 { "foo", new List<string>{ "bar" } },
+                { "company", new List<string>{ "msft" } },
                 //{ "city", new List<string>{ "redmond", "atlanta" } },
                 //{ "state", new List<string>{ "washington", "georgia" } }
             };
 
             Dictionary<string, List<string>> requestQueryParameters = new Dictionary<string, List<string>>()
             {
-                //{ "empty queryParamValue", new List<string>{ "" } },
-                //{ "null queryParamValue", new List<string>{ null } },
-                //{ "", new List<string>{ "empty queryParamName" } },
                 { "firstName", new List<string>{ "john", "Tim" } },
                 { "lastName", new List<string>{ "Smith", "jones" } },
                 { "abra", new List<string>{ "cadabra" } }
@@ -517,6 +513,59 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 identitySasBlob.GetPropertiesAsync(),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ContainerIdentitySAS_RoundRobin()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            Dictionary<string, List<string>> requestHeaders = new Dictionary<string, List<string>>()
+            {
+                { "foo", new List<string>{ "bar" } },
+                { "city", new List<string>{ "redmond", "atlanta" } },
+                { "state", new List<string>{ "washington", "georgia" } }
+            };
+
+            Dictionary<string, List<string>> requestQueryParameters = new Dictionary<string, List<string>>()
+            {
+                { "firstName", new List<string>{ "john", "Tim" } },
+                { "lastName", new List<string>{ "Smith", "jones" } },
+                { "abra", new List<string>{ "cadabra" } }
+            };
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                BlobContainerName = test.Container.Name,
+                RequestHeaders = requestHeaders,
+                RequestQueryParameters = requestQueryParameters
+            };
+
+            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            BlobUriBuilder originalBlobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = blobSasQueryParameters
+            };
+
+            BlobUriBuilder roundRobinBlobUriBuilder = new BlobUriBuilder(originalBlobUriBuilder.ToUri());
+
+            var originalUri = originalBlobUriBuilder.ToUri();
+            var roundRobinUri = roundRobinBlobUriBuilder.ToUri();
+            Assert.AreEqual(originalBlobUriBuilder.ToUri(), roundRobinBlobUriBuilder.ToUri());
+            Assert.AreEqual(originalBlobUriBuilder.Sas.ToString(), roundRobinBlobUriBuilder.Sas.ToString());
         }
 
         [RecordedTest]

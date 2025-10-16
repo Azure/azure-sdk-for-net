@@ -101,10 +101,10 @@ namespace Azure.Storage.Sas
         private string _delegatedUserObjectId;
 
         // srh
-        private Dictionary<string, List<string>> _requestHeaders;
+        private List<string> _requestHeaders;
 
         // srq
-        private Dictionary<string, List<string>> _requestQueryParameters;
+        private List<string> _requestQueryParameters;
 
         /// <summary>
         /// Gets the storage service version to use to authenticate requests
@@ -259,16 +259,16 @@ namespace Azure.Storage.Sas
         public string DelegatedUserObjectId => _delegatedUserObjectId ?? string.Empty;
 
         /// <summary>
-        /// Custom Request Headers to include in the SAS. Any usage of the SAS must
-        /// include these headers and values in the request. A header may have multiple values.
+        /// Custom Request Header names to include in the SAS. Any usage of the SAS must
+        /// include these header names in the request.
         /// </summary>
-        public Dictionary<string, List<string>> RequestHeaders => _requestHeaders ?? null;
+        public List<string> RequestHeaders => _requestHeaders ?? null;
 
         /// <summary>
-        /// Custom Request Query Parameters to include in the SAS. Any usage of the SAS must
-        /// include these query parameters and values in the request. A query parameter may have multiple values.
+        /// Custom Request Query Parameter names to include in the SAS. Any usage of the SAS must
+        /// include these query parameter names in the request.
         /// </summary>
-        public Dictionary<string, List<string>> RequestQueryParameters => _requestQueryParameters ?? null;
+        public List<string> RequestQueryParameters => _requestQueryParameters ?? null;
 
         /// <summary>
         /// Gets the string-to-sign, a unique string constructed from the
@@ -374,10 +374,10 @@ namespace Azure.Storage.Sas
                         _delegatedUserObjectId = kv.Value;
                         break;
                     case Constants.Sas.Parameters.RequestHeadersUpper:
-                        _requestHeaders = ParseKeyValueString(kv.Value);
+                        _requestHeaders = ParseStringToList(kv.Value);
                         break;
                     case Constants.Sas.Parameters.RequestQueryParametersUpper:
-                        _requestQueryParameters = ParseKeyValueString(kv.Value);
+                        _requestQueryParameters = ParseStringToList(kv.Value);
                         break;
 
                     // We didn't recognize the query parameter
@@ -420,8 +420,8 @@ namespace Azure.Storage.Sas
             int? directoryDepth = default,
             string encryptionScope = default,
             string delegatedUserObjectId = default,
-            Dictionary<string, List<string>> requestHeaders = default,
-            Dictionary<string, List<string>> requestQueryParameter = default)
+            List<string> requestHeaders = default,
+            List<string> requestQueryParameter = default)
         {
             _version = version;
             _services = (services, services?.ToPermissionsString());
@@ -689,8 +689,8 @@ namespace Azure.Storage.Sas
             int? directoryDepth = default,
             string encryptionScope = default,
             string delegatedUserObjectId = default,
-            Dictionary<string, List<string>> requestHeaders = default,
-            Dictionary<string, List<string>> requestQueryParameter = default) =>
+            List<string> requestHeaders = default,
+            List<string> requestQueryParameter = default) =>
             new SasQueryParameters(
                 version: version,
                 services: services,
@@ -1032,29 +1032,23 @@ namespace Azure.Storage.Sas
 
             if (RequestHeaders != null && RequestHeaders.Count > 0)
             {
-                Dictionary<string, List<string>> encodedRequestHeaders = RequestHeaders
-                    .Where(kvp => !string.IsNullOrEmpty(kvp.Key))
-                    .ToDictionary(
-                        kvp => WebUtility.UrlEncode(kvp.Key),
-                        kvp => kvp.Value?.Select(WebUtility.UrlEncode).ToList()
-                    );
-                if (encodedRequestHeaders.Count > 0)
+                // remove empty entries
+                List<string> filteredRequestHeaders = RequestHeaders
+                    .Where(entry => !string.IsNullOrEmpty(entry))
+                    .ToList();
+                if (filteredRequestHeaders.Count > 0)
                 {
-                    stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.RequestHeaders, RequestDictToSasQueryParameterString(encodedRequestHeaders));
+                    stringBuilder.AppendQueryParameter(
+                        Constants.Sas.Parameters.RequestHeaders,
+                        ListToEncodedSasQueryParameterString(filteredRequestHeaders));
                 }
             }
 
             if (RequestQueryParameters != null && RequestQueryParameters.Count > 0)
             {
-                Dictionary<string, List<string>> encodedQueryParameters = RequestQueryParameters
-                    .ToDictionary(
-                        kvp => WebUtility.UrlEncode(kvp.Key),
-                        kvp => kvp.Value?.Select(WebUtility.UrlEncode).ToList()
-                    );
-                if (encodedQueryParameters.Count > 0)
-                {
-                    stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.RequestQueryParameters, RequestDictToSasQueryParameterString(encodedQueryParameters));
-                }
+                stringBuilder.AppendQueryParameter(
+                    Constants.Sas.Parameters.RequestQueryParameters,
+                    ListToEncodedSasQueryParameterString(RequestQueryParameters));
             }
 
             if (!string.IsNullOrWhiteSpace(Signature))
@@ -1073,33 +1067,18 @@ namespace Azure.Storage.Sas
             return DateTimeOffset.ParseExact(dateTimeString, s_sasTimeFormats, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
         }
 
-        private string RequestDictToSasQueryParameterString(Dictionary<string, List<string>> dict)
+        private string ListToEncodedSasQueryParameterString(List<string> list)
         {
-            return dict == null || dict.Count == 0
+            return list == null || list.Count == 0
                 ? string.Empty
-                : string.Join(",", dict.Keys);
+                : string.Join(",", list.Select(WebUtility.UrlEncode));
         }
 
-        private Dictionary<string, List<string>> ParseKeyValueString(string input)
+        private List<string> ParseStringToList(string listString)
         {
-            var dict = new Dictionary<string, List<string>>();
-            if (string.IsNullOrWhiteSpace(input))
-                return dict;
-
-            foreach (var pair in input.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                var kvp = pair.Split(new[] { '=' }, 2);
-                var key = kvp[0];
-                var value = kvp.Length > 1 ? kvp[1] : null;
-
-                if (!dict.TryGetValue(key, out var list))
-                {
-                    list = new List<string>();
-                    dict[key] = list;
-                }
-                list.Add(value);
-            }
-            return dict;
+            return string.IsNullOrEmpty(listString)
+                ? null
+                : listString.Split(new char[] { ',' }).ToList();
         }
 
         private static readonly string[] s_sasTimeFormats = {

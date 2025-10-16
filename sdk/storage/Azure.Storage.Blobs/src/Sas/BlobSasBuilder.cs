@@ -505,8 +505,8 @@ namespace Azure.Storage.Sas
                 correlationId: CorrelationId,
                 encryptionScope: EncryptionScope,
                 delegatedUserObjectId: DelegatedUserObjectId,
-                requestHeader: RequestHeaders,
-                requestQueryParameter: RequestQueryParameters);
+                requestHeaders: SasExtensions.ConvertRequestDictToKeyList(RequestHeaders),
+                requestQueryParameters: SasExtensions.ConvertRequestDictToKeyList(RequestQueryParameters));
             return p;
         }
 
