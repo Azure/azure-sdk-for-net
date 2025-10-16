@@ -188,6 +188,45 @@ namespace Azure.Storage.Sas
             // "yyyy-MM-ddTHH:mm:ssZ"
             (time == new DateTimeOffset()) ? "" : time.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
 
+        internal static string FormatRequestHeadersForSasSigning(Dictionary<string, List<string>> requestHeaders)
+        {
+            if (requestHeaders == null || requestHeaders.Count == 0)
+            {
+                return null;
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach (var entry in requestHeaders)
+            {
+                if (!string.IsNullOrEmpty(entry.Key))
+                {
+                    sb
+                    .Append(entry.Key)
+                    .Append(':')
+                    .Append(string.Join(",", entry.Value))
+                    .Append('\n');
+                }
+            }
+            return sb.ToString();
+        }
+
+        internal static string FormatRequestQueryParametersForSasSigning(Dictionary<string, List<string>> requestQueryParameters)
+        {
+            if (requestQueryParameters == null || requestQueryParameters.Count == 0)
+            {
+                return null;
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach (var entry in requestQueryParameters)
+            {
+                sb
+                .Append('\n')
+                .Append(entry.Key)
+                .Append(':')
+                .Append(string.Join(",", entry.Value));
+            }
+            return sb.ToString();
+        }
+
         /// <summary>
         /// Helper method to add query param key value pairs to StringBuilder
         /// </summary>

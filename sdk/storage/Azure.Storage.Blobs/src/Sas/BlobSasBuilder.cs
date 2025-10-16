@@ -190,6 +190,18 @@ namespace Azure.Storage.Sas
         public string DelegatedUserObjectId { get; set; }
 
         /// <summary>
+        /// Optional. Custom Request Headers to include in the SAS. Any usage of the SAS must
+        /// include these headers and values in the request. A header may have multiple values.
+        /// </summary>
+        public Dictionary<string, List<string>> RequestHeaders { get; set; }
+
+        /// <summary>
+        /// Optional. Custom Request Query Parameters to include in the SAS. Any usage of the SAS must
+        /// include these query parameters and values in the request. A query parameter may have multiple values.
+        /// </summary>
+        public Dictionary<string, List<string>> RequestQueryParameters { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
         /// class.
         /// </summary>
@@ -462,6 +474,7 @@ namespace Azure.Storage.Sas
             EnsureState();
 
             stringToSign = ToStringToSign(userDelegationKey, accountName);
+            Console.WriteLine($"StringToSign = \n{stringToSign}\nEND");
 
             string signature = SasExtensions.ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
@@ -491,7 +504,9 @@ namespace Azure.Storage.Sas
                 authorizedAadObjectId: PreauthorizedAgentObjectId,
                 correlationId: CorrelationId,
                 encryptionScope: EncryptionScope,
-                delegatedUserObjectId: DelegatedUserObjectId);
+                delegatedUserObjectId: DelegatedUserObjectId,
+                requestHeader: RequestHeaders,
+                requestQueryParameter: RequestQueryParameters);
             return p;
         }
 
@@ -501,6 +516,10 @@ namespace Azure.Storage.Sas
             string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
             string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
             string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+            string canonicalizedSignedRequestHeaders = SasExtensions.FormatRequestHeadersForSasSigning(RequestHeaders);
+            string canonicalizedSignedRequestQueryParameters = SasExtensions.FormatRequestQueryParametersForSasSigning(RequestQueryParameters);
+            Console.WriteLine($"canonicalizedSignedRequestHeaders = {canonicalizedSignedRequestHeaders}");
+            Console.WriteLine($"canonicalizedSignedRequestQueryParameters = {canonicalizedSignedRequestQueryParameters}");
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             return string.Join("\n",
@@ -525,6 +544,8 @@ namespace Azure.Storage.Sas
                     Resource,
                     Snapshot ?? BlobVersionId,
                     EncryptionScope,
+                    canonicalizedSignedRequestHeaders,
+                    canonicalizedSignedRequestQueryParameters,
                     CacheControl,
                     ContentDisposition,
                     ContentEncoding,

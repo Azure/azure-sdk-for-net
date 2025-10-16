@@ -382,6 +382,92 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
+        public async Task ContainerIdentitySAS_RequestHeadersAndQueryParameters()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            Dictionary<string, List<string>> requestHeaders = new Dictionary<string, List<string>>()
+            {
+                //{ "empty headerValue", new List<string>{ "" } }, // this gets ignored when sending the header
+                //{ "", new List<string>{ "empty headerName" } }, // this gets ignored
+                { "foo", new List<string>{ "bar" } },
+                //{ "city", new List<string>{ "redmond", "atlanta" } },
+                //{ "state", new List<string>{ "washington", "georgia" } }
+            };
+
+            Dictionary<string, List<string>> requestQueryParameters = new Dictionary<string, List<string>>()
+            {
+                //{ "empty queryParamValue", new List<string>{ "" } },
+                //{ "null queryParamValue", new List<string>{ null } },
+                //{ "", new List<string>{ "empty queryParamName" } },
+                { "firstName", new List<string>{ "john", "Tim" } },
+                { "lastName", new List<string>{ "Smith", "jones" } },
+                { "abra", new List<string>{ "cadabra" } }
+            };
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                BlobContainerName = test.Container.Name,
+                RequestHeaders = requestHeaders,
+                RequestQueryParameters = requestQueryParameters
+            };
+
+            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = blobSasQueryParameters
+            };
+
+            CustomRequestHeadersAndQueryParametersPolicy customRequestPolicy = new CustomRequestHeadersAndQueryParametersPolicy();
+            // Send the request headers based on 'requestHeaders' Dictionary
+            foreach (var header in requestHeaders)
+            {
+                if (!string.IsNullOrEmpty(header.Key))
+                {
+                    foreach (string value in header.Value)
+                    {
+                        customRequestPolicy.AddRequestHeader(header.Key, value);
+                    }
+                }
+            }
+
+            // Send the query parameters based on 'requestQueryParameters' Dictionary
+            foreach (var param in requestQueryParameters)
+            {
+                if (param.Key != null)
+                {
+                    foreach (string value in param.Value)
+                    {
+                        customRequestPolicy.AddQueryParameter(param.Key, value);
+                    }
+                }
+            }
+
+            BlobClientOptions blobClientOptions = GetOptions();
+            blobClientOptions.AddPolicy(customRequestPolicy, HttpPipelinePosition.PerCall);
+            BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), TestEnvironment.Credential, blobClientOptions));
+
+            // Act
+            Response<BlobProperties> response = await identitySasBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task AccountSas_AllPermissions()
         {
