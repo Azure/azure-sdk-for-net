@@ -885,14 +885,35 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
 
-                    // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                        content,
-                        validationOptions,
-                        async,
-                        cancellationToken).ConfigureAwait(false);
-
-                    content = content?.WithNoDispose().WithProgress(progressHandler);
+                    ContentHasher.GetHashResult hashResult = null;
+                    long contentLength = (content?.Length - content?.Position) ?? 0;
+                    long? structuredContentLength = default;
+                    string structuredBodyType = null;
+                    if (content != null &&
+                        validationOptions != null &&
+                        validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
+                        ClientSideEncryption == null) // don't allow feature combination
+                    {
+                        // report progress in terms of caller bytes, not encoded bytes
+                        structuredContentLength = contentLength;
+                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
+                        content = content.WithNoDispose().WithProgress(progressHandler);
+                        content = new StructuredMessageEncodingStream(
+                            content,
+                            Constants.StructuredMessage.DefaultSegmentContentLength,
+                            StructuredMessage.Flags.StorageCrc64);
+                        contentLength = content.Length - content.Position;
+                    }
+                    else
+                    {
+                        // compute hash BEFORE attaching progress handler
+                        hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                            content,
+                            validationOptions,
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                        content = content.WithNoDispose().WithProgress(progressHandler);
+                    }
 
                     ResponseWithHeaders<BlockBlobUploadHeaders> response;
 
@@ -931,6 +952,8 @@ namespace Azure.Storage.Blobs.Specialized
                             legalHold: legalHold,
                             transactionalContentMD5: hashResult?.MD5AsArray,
                             transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -963,6 +986,8 @@ namespace Azure.Storage.Blobs.Specialized
                             legalHold: legalHold,
                             transactionalContentMD5: hashResult?.MD5AsArray,
                             transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1330,14 +1355,39 @@ namespace Azure.Storage.Blobs.Specialized
 
                     Errors.VerifyStreamPosition(content, nameof(content));
 
-                    // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                        content,
-                        validationOptions,
-                        async,
-                        cancellationToken).ConfigureAwait(false);
-
-                    content = content.WithNoDispose().WithProgress(progressHandler);
+                    ContentHasher.GetHashResult hashResult = null;
+                    long contentLength = (content?.Length - content?.Position) ?? 0;
+                    long? structuredContentLength = default;
+                    string structuredBodyType = null;
+                    if (validationOptions != null &&
+                        validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
+                        ClientSideEncryption == null) // don't allow feature combination
+                    {
+                        // report progress in terms of caller bytes, not encoded bytes
+                        structuredContentLength = contentLength;
+                        contentLength = (content?.Length - content?.Position) ?? 0;
+                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
+                        content = content.WithNoDispose().WithProgress(progressHandler);
+                        content = validationOptions.PrecalculatedChecksum.IsEmpty
+                            ? new StructuredMessageEncodingStream(
+                                content,
+                                Constants.StructuredMessage.DefaultSegmentContentLength,
+                                StructuredMessage.Flags.StorageCrc64)
+                            : new StructuredMessagePrecalculatedCrcWrapperStream(
+                                content,
+                                validationOptions.PrecalculatedChecksum.Span);
+                        contentLength = (content?.Length - content?.Position) ?? 0;
+                    }
+                    else
+                    {
+                        // compute hash BEFORE attaching progress handler
+                        hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                            content,
+                            validationOptions,
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                        content = content.WithNoDispose().WithProgress(progressHandler);
+                    }
 
                     ResponseWithHeaders<BlockBlobStageBlockHeaders> response;
 
@@ -1345,7 +1395,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = await BlockBlobRestClient.StageBlockAsync(
                             blockId: base64BlockId,
-                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            contentLength: contentLength,
                             body: content,
                             transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
                             transactionalContentMD5: hashResult?.MD5AsArray,
@@ -1354,6 +1404,8 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1361,7 +1413,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = BlockBlobRestClient.StageBlock(
                             blockId: base64BlockId,
-                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            contentLength: contentLength,
                             body: content,
                             transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
                             transactionalContentMD5: hashResult?.MD5AsArray,
@@ -1370,6 +1422,8 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2886,7 +2940,7 @@ namespace Azure.Storage.Blobs.Specialized
                     immutabilityPolicy: default,
                     legalHold: default,
                     progressHandler: default,
-                    transferValidationOverride: default,
+                    transferValidationOverride: new() { ChecksumAlgorithm = StorageChecksumAlgorithm.None },
                     operationName: default,
                     async: async,
                     cancellationToken: cancellationToken)

@@ -677,6 +677,15 @@ namespace Azure.Storage
             internal static readonly int[] PathStylePorts = { 10000, 10001, 10002, 10003, 10004, 10100, 10101, 10102, 10103, 10104, 11000, 11001, 11002, 11003, 11004, 11100, 11101, 11102, 11103, 11104 };
         }
 
+        internal static class StructuredMessage
+        {
+            public const string StructuredMessageHeader = "x-ms-structured-body";
+            public const string StructuredContentLength = "x-ms-structured-content-length";
+            public const string CrcStructuredMessage = "XSM/1.0; properties=crc64";
+            public const int DefaultSegmentContentLength = 4 * MB;
+            public const int MaxDownloadCrcWithHeader = 4 * MB;
+        }
+
         internal static class ClientSideEncryption
         {
             public const string HttpMessagePropertyKeyV1 = "Azure.Storage.StorageTelemetryPolicy.ClientSideEncryption.V1";
