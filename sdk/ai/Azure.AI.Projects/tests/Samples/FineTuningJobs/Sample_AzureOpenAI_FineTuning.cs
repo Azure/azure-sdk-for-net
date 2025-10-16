@@ -100,7 +100,7 @@ public class Sample_AzureOpenAI_FineTuning_Refactored : SamplesBase<AIProjectsTe
 
     [Test]
     [AsyncOnly]
-    public async Task FineTuningCreateJobAsync()
+    public async Task FineTuningCreateJobWithSupervisedLearningAsync()
     {
         var endpoint = TestEnvironment.PROJECTENDPOINT;
         var dataDirectory = GetDataDirectory();
@@ -257,7 +257,9 @@ public class Sample_AzureOpenAI_FineTuning_Refactored : SamplesBase<AIProjectsTe
             waitUntilCompleted: false,
             new() 
             { 
-                TrainingMethod = FineTuningTrainingMethod.CreateDirectPreferenceOptimization(),
+                TrainingMethod = FineTuningTrainingMethod.CreateDirectPreferenceOptimization(epochCount: 3,  // Number of training epochs
+                    batchSize: 4,                // Batch size for training
+                    learningRate: 0.0001),
                 ValidationFile = validationFile.Id
             });
 
@@ -313,7 +315,9 @@ public class Sample_AzureOpenAI_FineTuning_Refactored : SamplesBase<AIProjectsTe
             waitUntilCompleted: false,
             new() 
             { 
-                TrainingMethod = FineTuningTrainingMethod.CreateSupervised(),
+                TrainingMethod = FineTuningTrainingMethod.CreateSupervised(epochCount: 3,  // Number of training epochsbatchSize: 4,                // Batch size for training
+                    batchSize: 4,                // Batch size for training
+                    learningRate: 0.0001),
                 ValidationFile = validationFile.Id
             });
         
@@ -340,7 +344,7 @@ public class Sample_AzureOpenAI_FineTuning_Refactored : SamplesBase<AIProjectsTe
         var azureJob = (Azure.AI.OpenAI.FineTuning.AzureFineTuningJob)jobToDelete;
         
 #pragma warning disable AOAI001
-        await azureJob.DeleteJobAsync(jobToDelete.JobId);
+        await azureJob.DeleteJobAsync(jobToDelete.JobId, options: null);
 #pragma warning restore AOAI001
         
         Console.WriteLine($"✅ Job deleted successfully");
