@@ -67,7 +67,7 @@ namespace Azure.AI.Vision.Face.Samples
         #region Snippet:WriteLivenessWithVerifySessionResults
         public void WriteLivenessWithVerifySessionResults(LivenessWithVerifySessionResults results)
         {
-            if (results.Attempts?.Count == 0)
+            if (results.Attempts == null || results.Attempts.Count == 0)
             {
                 Console.WriteLine("No attempts found in the session results.");
                 return;
