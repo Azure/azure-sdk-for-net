@@ -292,6 +292,11 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("accountMigrationInProgress"u8);
                 writer.WriteBooleanValue(IsAccountMigrationInProgress.Value);
             }
+            if (Optional.IsDefined(GeoPriorityReplicationStatus))
+            {
+                writer.WritePropertyName("geoPriorityReplicationStatus"u8);
+                writer.WriteObjectValue(GeoPriorityReplicationStatus, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -369,6 +374,7 @@ namespace Azure.ResourceManager.Storage
             StorageDnsEndpointType? dnsEndpointType = default;
             bool? isSkuConversionBlocked = default;
             bool? accountMigrationInProgress = default;
+            GeoPriorityReplicationStatus geoPriorityReplicationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -867,6 +873,15 @@ namespace Azure.ResourceManager.Storage
                             accountMigrationInProgress = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("geoPriorityReplicationStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            geoPriorityReplicationStatus = GeoPriorityReplicationStatus.DeserializeGeoPriorityReplicationStatus(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -931,6 +946,7 @@ namespace Azure.ResourceManager.Storage
                 dnsEndpointType,
                 isSkuConversionBlocked,
                 accountMigrationInProgress,
+                geoPriorityReplicationStatus,
                 serializedAdditionalRawData);
         }
 
@@ -1823,6 +1839,26 @@ namespace Azure.ResourceManager.Storage
                     builder.Append("    accountMigrationInProgress: ");
                     var boolValue = IsAccountMigrationInProgress.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsBlobEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    geoPriorityReplicationStatus: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      geoPriorityReplicationStatus: {");
+                builder.Append("        isBlobEnabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(GeoPriorityReplicationStatus))
+                {
+                    builder.Append("    geoPriorityReplicationStatus: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, GeoPriorityReplicationStatus, options, 4, false, "    geoPriorityReplicationStatus: ");
                 }
             }
 
