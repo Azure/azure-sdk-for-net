@@ -60,6 +60,16 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("transfers"u8);
                 writer.WriteStringValue(Transfers.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(Remediations))
+            {
+                writer.WritePropertyName("remediations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Remediations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -101,6 +111,7 @@ namespace Azure.Analytics.Defender.Easm
             string externalId = default;
             IDictionary<string, bool> labels = default;
             AssetUpdateTransfers? transfers = default;
+            IList<ObservationRemediationItem> remediations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,13 +153,33 @@ namespace Azure.Analytics.Defender.Easm
                     transfers = new AssetUpdateTransfers(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("remediations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ObservationRemediationItem> array = new List<ObservationRemediationItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ObservationRemediationItem.DeserializeObservationRemediationItem(item, options));
+                    }
+                    remediations = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssetUpdatePayload(state, externalId, labels ?? new ChangeTrackingDictionary<string, bool>(), transfers, serializedAdditionalRawData);
+            return new AssetUpdatePayload(
+                state,
+                externalId,
+                labels ?? new ChangeTrackingDictionary<string, bool>(),
+                transfers,
+                remediations ?? new ChangeTrackingList<ObservationRemediationItem>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssetUpdatePayload>.Write(ModelReaderWriterOptions options)
