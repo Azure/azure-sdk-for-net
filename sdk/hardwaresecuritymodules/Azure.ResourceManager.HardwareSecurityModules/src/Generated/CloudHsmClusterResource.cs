@@ -800,7 +800,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         public virtual AsyncPageable<CloudHsmClusterPrivateLinkData> GetCloudHsmClusterPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CloudHsmClusterPrivateLinkData.DeserializeCloudHsmClusterPrivateLinkData(e), _cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CloudHsmClusterPrivateLinkData.DeserializeCloudHsmClusterPrivateLinkData(e), _cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -825,7 +826,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         public virtual Pageable<CloudHsmClusterPrivateLinkData> GetCloudHsmClusterPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CloudHsmClusterPrivateLinkData.DeserializeCloudHsmClusterPrivateLinkData(e), _cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CloudHsmClusterPrivateLinkData.DeserializeCloudHsmClusterPrivateLinkData(e), _cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

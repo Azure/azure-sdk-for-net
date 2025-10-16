@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     SetHttpDependencyPropertiesAndDependencyName(activity, ref activityTagsProcessor.MappedTags, isNewSchemaVersion, out dependencyName);
                     break;
                 case OperationType.Db:
-                    SetDbDependencyProperties(ref activityTagsProcessor.MappedTags);
+                    SetDbDependencyProperties(ref activityTagsProcessor.MappedTags, isNewSchemaVersion);
                     break;
                 case OperationType.Messaging:
                     SetMessagingDependencyProperties(activity, ref activityTagsProcessor.MappedTags);
@@ -86,11 +86,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             ResultCode = resultCode?.Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength) ?? "0";
         }
 
-        private void SetDbDependencyProperties(ref AzMonList dbTagObjects)
+        private void SetDbDependencyProperties(ref AzMonList dbTagObjects, bool isNewSchemaVersion)
         {
-            var dbAttributeTagObjects = AzMonList.GetTagValues(ref dbTagObjects, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
+            string statementAttributeKey;
+            string statementSystemKey;
+            if (isNewSchemaVersion)
+            {
+                statementAttributeKey = SemanticConventions.AttributeDbQueryText;
+                statementSystemKey = SemanticConventions.AttributeDbSystemName;
+            }
+            else
+            {
+                statementAttributeKey = SemanticConventions.AttributeDbStatement;
+                statementSystemKey = SemanticConventions.AttributeDbSystem;
+            }
+            var dbAttributeTagObjects = AzMonList.GetTagValues(ref dbTagObjects, statementAttributeKey, statementSystemKey);
             Data = dbAttributeTagObjects[0]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
-            var (DbName, DbTarget) = dbTagObjects.GetDbDependencyTargetAndName();
+            var (DbName, DbTarget) = dbTagObjects.GetDbDependencyTargetAndName(isNewSchemaVersion);
             Target = DbTarget?.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
             Type = AzMonListExtensions.s_dbSystems.Contains(dbAttributeTagObjects[1]?.ToString()) ? "SQL" : dbAttributeTagObjects[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
 
