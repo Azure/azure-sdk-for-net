@@ -34,15 +34,20 @@ namespace Azure.ResourceManager.Elastic.Models
                 throw new FormatException($"The model {nameof(ElasticOpenAIIntegrationProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(OpenAIResourceId))
+            if (Optional.IsDefined(OpenAIResourceId))
             {
                 writer.WritePropertyName("openAIResourceId"u8);
                 writer.WriteStringValue(OpenAIResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OpenAIResourceEndpoint))
+            if (Optional.IsDefined(OpenAIResourceEndpoint))
             {
                 writer.WritePropertyName("openAIResourceEndpoint"u8);
                 writer.WriteStringValue(OpenAIResourceEndpoint);
+            }
+            if (Optional.IsDefined(OpenAIConnectorId))
+            {
+                writer.WritePropertyName("openAIConnectorId"u8);
+                writer.WriteStringValue(OpenAIConnectorId);
             }
             if (Optional.IsDefined(Key))
             {
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.Elastic.Models
             }
             ResourceIdentifier openAIResourceId = default;
             string openAIResourceEndpoint = default;
+            string openAIConnectorId = default;
             string key = default;
             DateTimeOffset? lastRefreshAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -111,6 +117,11 @@ namespace Azure.ResourceManager.Elastic.Models
                 if (property.NameEquals("openAIResourceEndpoint"u8))
                 {
                     openAIResourceEndpoint = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("openAIConnectorId"u8))
+                {
+                    openAIConnectorId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("key"u8))
@@ -133,7 +144,13 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticOpenAIIntegrationProperties(openAIResourceId, openAIResourceEndpoint, key, lastRefreshAt, serializedAdditionalRawData);
+            return new ElasticOpenAIIntegrationProperties(
+                openAIResourceId,
+                openAIResourceEndpoint,
+                openAIConnectorId,
+                key,
+                lastRefreshAt,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticOpenAIIntegrationProperties>.Write(ModelReaderWriterOptions options)

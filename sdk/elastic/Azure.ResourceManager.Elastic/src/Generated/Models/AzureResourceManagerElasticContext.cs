@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Elastic.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Elastic
 {
@@ -60,13 +59,20 @@ namespace Azure.ResourceManager.Elastic
     [ModelReaderWriterBuildable(typeof(ElasticVmResourceInfo))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceSaaSInfo))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceSaaSInfoMarketplaceSubscription))]
     [ModelReaderWriterBuildable(typeof(MonitoredResourceInfo))]
     [ModelReaderWriterBuildable(typeof(MonitoredResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscription))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionList))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertiesList))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertyData))]
+    [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertyResource))]
     [ModelReaderWriterBuildable(typeof(MonitoringTagRulesListResponse))]
+    [ModelReaderWriterBuildable(typeof(MonitorResourceProjectDetails))]
     [ModelReaderWriterBuildable(typeof(OpenAIIntegrationRPModelListResponse))]
     [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(ResubscribeProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpgradableVersionListResult))]
     [ModelReaderWriterBuildable(typeof(VmCollectionContent))]

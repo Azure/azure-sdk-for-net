@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Elastic
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01";
+            _apiVersion = apiVersion ?? "2025-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        /// <summary> List of upgradable versions for a given monitor resource. </summary>
+        /// <summary> List all upgradable versions for your Elastic monitor resource, helping you plan and execute upgrades. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        /// <summary> List of upgradable versions for a given monitor resource. </summary>
+        /// <summary> List all upgradable versions for your Elastic monitor resource, helping you plan and execute upgrades. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
