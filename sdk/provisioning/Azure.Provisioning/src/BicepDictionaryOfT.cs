@@ -107,8 +107,9 @@ public class BicepDictionary<T> :
             {
                 return value;
             }
-            // the key does not exist, we put a value factory as the literal value of this bicep value
-            // this would blow up when we try to compile it later, but it would be fine if we convert it to an expression
+            // The key does not exist; we put a value factory as the literal value of this Bicep value.
+            // If the value factory is evaluated before the key is added, it will throw a KeyNotFoundException.
+            // This is valid for generating a reference expression, but will fail if the value is accessed before being added.
             return new BicepValue<T>(GetItemSelf(key), () => _values[key].Value);
         }
         set
