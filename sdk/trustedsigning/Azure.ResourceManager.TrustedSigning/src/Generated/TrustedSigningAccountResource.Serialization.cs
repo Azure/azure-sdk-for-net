@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.TrustedSigning
 {
+    /// <summary></summary>
     public partial class TrustedSigningAccountResource : IJsonModel<TrustedSigningAccountData>
     {
-        private static TrustedSigningAccountData s_dataDeserializationInstance;
-        private static TrustedSigningAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<TrustedSigningAccountData> s_dataDeserializationInstance;
 
+        private static IJsonModel<TrustedSigningAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TrustedSigningAccountData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrustedSigningAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrustedSigningAccountData>)Data).Write(writer, options);
 
-        TrustedSigningAccountData IJsonModel<TrustedSigningAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrustedSigningAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrustedSigningAccountData IJsonModel<TrustedSigningAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TrustedSigningAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrustedSigningAccountData>(Data, options, AzureResourceManagerTrustedSigningContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TrustedSigningAccountData IPersistableModel<TrustedSigningAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrustedSigningAccountData>(data, options, AzureResourceManagerTrustedSigningContext.Default);
 
-        string IPersistableModel<TrustedSigningAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrustedSigningAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TrustedSigningAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

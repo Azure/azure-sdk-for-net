@@ -100,116 +100,6 @@ namespace Azure.AI.ContentSafety
             _apiVersion = options.Version;
         }
 
-        /// <summary> Analyze Text. </summary>
-        /// <param name="options"> The text analysis request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <remarks> A synchronous API for the analysis of potentially harmful text content. Currently, it supports four categories: Hate, SelfHarm, Sexual, and Violence. </remarks>
-        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeTextAsync(AnalyzeTextOptions,CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeTextResult>> AnalyzeTextAsync(AnalyzeTextOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            using RequestContent content = options.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AnalyzeTextAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeTextResult.FromResponse(response), response);
-        }
-
-        /// <summary> Analyze Text. </summary>
-        /// <param name="options"> The text analysis request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <remarks> A synchronous API for the analysis of potentially harmful text content. Currently, it supports four categories: Hate, SelfHarm, Sexual, and Violence. </remarks>
-        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeText(AnalyzeTextOptions,CancellationToken)']/*" />
-        public virtual Response<AnalyzeTextResult> AnalyzeText(AnalyzeTextOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            using RequestContent content = options.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AnalyzeText(content, context);
-            return Response.FromValue(AnalyzeTextResult.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Analyze Text
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="AnalyzeTextAsync(AnalyzeTextOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeTextAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> AnalyzeTextAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.AnalyzeText");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateAnalyzeTextRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Analyze Text
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="AnalyzeText(AnalyzeTextOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeText(RequestContent,RequestContext)']/*" />
-        public virtual Response AnalyzeText(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.AnalyzeText");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateAnalyzeTextRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Analyze Image. </summary>
         /// <param name="options"> The image analysis request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -320,6 +210,353 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        /// <summary> Analyze Text. </summary>
+        /// <param name="options"> The text analysis request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <remarks> A synchronous API for the analysis of potentially harmful text content. Currently, it supports four categories: Hate, SelfHarm, Sexual, and Violence. </remarks>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeTextAsync(AnalyzeTextOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<AnalyzeTextResult>> AnalyzeTextAsync(AnalyzeTextOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AnalyzeTextAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(AnalyzeTextResult.FromResponse(response), response);
+        }
+
+        /// <summary> Analyze Text. </summary>
+        /// <param name="options"> The text analysis request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <remarks> A synchronous API for the analysis of potentially harmful text content. Currently, it supports four categories: Hate, SelfHarm, Sexual, and Violence. </remarks>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeText(AnalyzeTextOptions,CancellationToken)']/*" />
+        public virtual Response<AnalyzeTextResult> AnalyzeText(AnalyzeTextOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AnalyzeText(content, context);
+            return Response.FromValue(AnalyzeTextResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Analyze Text
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AnalyzeTextAsync(AnalyzeTextOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeTextAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> AnalyzeTextAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.AnalyzeText");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAnalyzeTextRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Analyze Text
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AnalyzeText(AnalyzeTextOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='AnalyzeText(RequestContent,RequestContext)']/*" />
+        public virtual Response AnalyzeText(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.AnalyzeText");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAnalyzeTextRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Detect Protected Material for Text. </summary>
+        /// <param name="options"> The request body to be detected, which may contain protected material. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <remarks> A synchronous API for detecting protected material in the given text. </remarks>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='DetectTextProtectedMaterialAsync(DetectTextProtectedMaterialOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<DetectTextProtectedMaterialResult>> DetectTextProtectedMaterialAsync(DetectTextProtectedMaterialOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await DetectTextProtectedMaterialAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(DetectTextProtectedMaterialResult.FromResponse(response), response);
+        }
+
+        /// <summary> Detect Protected Material for Text. </summary>
+        /// <param name="options"> The request body to be detected, which may contain protected material. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <remarks> A synchronous API for detecting protected material in the given text. </remarks>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='DetectTextProtectedMaterial(DetectTextProtectedMaterialOptions,CancellationToken)']/*" />
+        public virtual Response<DetectTextProtectedMaterialResult> DetectTextProtectedMaterial(DetectTextProtectedMaterialOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = DetectTextProtectedMaterial(content, context);
+            return Response.FromValue(DetectTextProtectedMaterialResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Detect Protected Material for Text
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectTextProtectedMaterialAsync(DetectTextProtectedMaterialOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='DetectTextProtectedMaterialAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> DetectTextProtectedMaterialAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.DetectTextProtectedMaterial");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDetectTextProtectedMaterialRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Detect Protected Material for Text
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectTextProtectedMaterial(DetectTextProtectedMaterialOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='DetectTextProtectedMaterial(RequestContent,RequestContext)']/*" />
+        public virtual Response DetectTextProtectedMaterial(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.DetectTextProtectedMaterial");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDetectTextProtectedMaterialRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Shield Prompt. </summary>
+        /// <param name="options"> The request body to be detected, which may contain direct or indirect injection attacks. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <remarks> A synchronous API for shielding prompt from direct and indirect injection attacks. </remarks>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='ShieldPromptAsync(ShieldPromptOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<ShieldPromptResult>> ShieldPromptAsync(ShieldPromptOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await ShieldPromptAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(ShieldPromptResult.FromResponse(response), response);
+        }
+
+        /// <summary> Shield Prompt. </summary>
+        /// <param name="options"> The request body to be detected, which may contain direct or indirect injection attacks. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <remarks> A synchronous API for shielding prompt from direct and indirect injection attacks. </remarks>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='ShieldPrompt(ShieldPromptOptions,CancellationToken)']/*" />
+        public virtual Response<ShieldPromptResult> ShieldPrompt(ShieldPromptOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = ShieldPrompt(content, context);
+            return Response.FromValue(ShieldPromptResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Shield Prompt
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ShieldPromptAsync(ShieldPromptOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='ShieldPromptAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> ShieldPromptAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.ShieldPrompt");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateShieldPromptRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Shield Prompt
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ShieldPrompt(ShieldPromptOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='ShieldPrompt(RequestContent,RequestContext)']/*" />
+        public virtual Response ShieldPrompt(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.ShieldPrompt");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateShieldPromptRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateAnalyzeImageRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/image:analyze", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateAnalyzeTextRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -337,7 +574,7 @@ namespace Azure.AI.ContentSafety
             return message;
         }
 
-        internal HttpMessage CreateAnalyzeImageRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateDetectTextProtectedMaterialRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -345,7 +582,24 @@ namespace Azure.AI.ContentSafety
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/contentsafety", false);
-            uri.AppendPath("/image:analyze", false);
+            uri.AppendPath("/text:detectProtectedMaterial", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateShieldPromptRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/text:shieldPrompt", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

@@ -83,6 +83,7 @@ namespace Azure.AI.Agents.Persistent
                     case "bing_grounding": return BingGroundingToolDefinition.DeserializeBingGroundingToolDefinition(element, options);
                     case "browser_automation": return BrowserAutomationToolDefinition.DeserializeBrowserAutomationToolDefinition(element, options);
                     case "code_interpreter": return CodeInterpreterToolDefinition.DeserializeCodeInterpreterToolDefinition(element, options);
+                    case "computer_use_preview": return ComputerUseToolDefinition.DeserializeComputerUseToolDefinition(element, options);
                     case "connected_agent": return ConnectedAgentToolDefinition.DeserializeConnectedAgentToolDefinition(element, options);
                     case "deep_research": return DeepResearchToolDefinition.DeserializeDeepResearchToolDefinition(element, options);
                     case "fabric_dataagent": return MicrosoftFabricToolDefinition.DeserializeMicrosoftFabricToolDefinition(element, options);
