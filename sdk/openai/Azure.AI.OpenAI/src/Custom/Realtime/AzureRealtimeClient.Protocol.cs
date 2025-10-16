@@ -16,36 +16,22 @@ internal partial class AzureRealtimeClient : RealtimeClient
 {
     /// <summary>
     /// <para>[Protocol Method]</para>
-    /// Creates a new realtime conversation operation instance, establishing a connection with the /realtime endpoint.
-    /// </summary>
-    /// <param name="deploymentName"></param>
-    /// <param name="options"></param>
-    /// <returns></returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override Task<RealtimeSession> StartConversationSessionAsync(string deploymentName, RequestOptions options)
-        => StartSessionAsync(deploymentName, intent: null, options: options);
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override Task<RealtimeSession> StartTranscriptionSessionAsync(RequestOptions options)
-        => StartSessionAsync(deploymentName: null, intent: "transcription", options: options);
-
-    /// <summary>
-    /// <para>[Protocol Method]</para>
     /// Creates a new realtime operation instance, establishing a connection with the /realtime endpoint.
     /// </summary>
     /// <param name="deploymentName"></param>
     /// <param name="intent"></param>
     /// <param name="options"></param>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override async Task<RealtimeSession> StartSessionAsync(string deploymentName, string intent, RequestOptions options)
+    public override async Task<RealtimeSession> StartSessionAsync(string deploymentName, string intent, RealtimeSessionOptions options = null, CancellationToken cancellationToken = default)
     {
         RealtimeSession provisionalOperation = _tokenCredential is not null
-            ? new AzureRealtimeSession(this, BuildSessionEndpoint(deploymentName, intent), _tokenCredential, _tokenAuthorizationScopes, _userAgent, _defaultHeaders)
-            : new AzureRealtimeSession(this, BuildSessionEndpoint(deploymentName, intent), _credential, _userAgent, _defaultHeaders);
+            ? new AzureRealtimeSession(this, BuildSessionEndpoint(deploymentName, intent), _tokenCredential, _tokenAuthorizationScopes, _userAgent, deploymentName, intent)
+            : new AzureRealtimeSession(this, BuildSessionEndpoint(deploymentName, intent), _credential, _userAgent, deploymentName, intent);
         try
         {
-            await provisionalOperation.ConnectAsync(options).ConfigureAwait(false);
+            await provisionalOperation.ConnectAsync(options?.QueryString, options?.Headers).ConfigureAwait(false);
             RealtimeSession result = provisionalOperation;
             provisionalOperation = null;
             return result;

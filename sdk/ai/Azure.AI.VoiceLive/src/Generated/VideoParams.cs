@@ -43,9 +43,6 @@ namespace Azure.AI.VoiceLive
         /// <summary> Bitrate in bits per second (e.g., 2000000 for 2 Mbps). </summary>
         public int? Bitrate { get; set; }
 
-        /// <summary> Codec to use for encoding. Currently only 'h264' is supported. </summary>
-        public string Codec { get; set; }
-
         /// <summary> Optional cropping settings for the video stream. </summary>
         public VideoCrop Crop { get; set; }
 
