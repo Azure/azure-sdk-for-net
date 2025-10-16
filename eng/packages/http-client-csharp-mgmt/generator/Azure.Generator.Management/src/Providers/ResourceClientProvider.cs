@@ -192,7 +192,7 @@ namespace Azure.Generator.Management.Providers
                 if (ResourceName.ToLower().EndsWith(irregularPlural))
                 {
                     methodName = $"GetAll{ResourceName}";
-                    return methodName;
+                    break;
                 }
             }
 
