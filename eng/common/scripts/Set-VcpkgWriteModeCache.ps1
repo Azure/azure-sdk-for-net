@@ -12,7 +12,7 @@ $vcpkgBinarySourceSas = New-AzStorageContainerSASToken `
   -Name $StorageContainerName `
   -Permission "rwcl" `
   -Context $ctx `
-  -ExpiryTime (Get-Date).AddHours(1)
+  -ExpiryTime (Get-Date).AddHours(3)
 
 # Ensure redaction of SAS tokens in logs
 Write-Host "##vso[task.setvariable variable=VCPKG_BINARY_SAS_TOKEN;issecret=true;]$vcpkgBinarySourceSas"
