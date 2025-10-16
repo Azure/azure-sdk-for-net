@@ -9,6 +9,12 @@ This release is the first stable release of the Trusted Signing Management clien
 - Upgraded api-version to 2025-10-13.
 - Make `Azure.ResourceManager.TrustedSigning` AOT-compatible.
 
+## 1.0.0-beta.2 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+- 
 ## 1.0.0-beta.1 (2024-04-27)
 
 ### General New Features
