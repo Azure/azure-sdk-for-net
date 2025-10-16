@@ -167,7 +167,9 @@ function CreateUpdatePackageWorkItem($pkgInfo)
 function ProcessPackage($packageInfo)
 {
     # Read package property file and identify all packages to process
-    Write-Host "Processing artifact: $($packageInfo.Name)"
+    # $packageInfo.Name is the package name published to package managers, e.g. @azure/azure-template
+    # $packageInfo.ArtifactName is the name can be used in path and file names, e.g. azure-template  
+    Write-Host "Processing artifact: $($packageInfo.ArtifactName)"
     Write-Host "Is Release Build: $IsReleaseBuild"
     $pkgName = $packageInfo.Name
     $changeLogPath = $packageInfo.ChangeLogPath
@@ -197,7 +199,7 @@ function ProcessPackage($packageInfo)
     if ($packageInfo.PSObject.Members.Name -contains "Group") {
         $groupId = $packageInfo.Group
         if ($groupId){
-            $fullPackageName = "${groupId}:${$packageInfo.ArtifactName}"
+            $fullPackageName = "${groupId}:${packageInfo.ArtifactName}"
         }
     }
 
@@ -216,7 +218,7 @@ function ProcessPackage($packageInfo)
     Write-Host "Output: $($output)"
 
     # Create json token file in artifact path
-    $tokenFile = Join-Path $ArtifactPath "$pkgName-Validation.json"
+    $tokenFile = Join-Path $ArtifactPath "$($packageInfo.ArtifactName)-Validation.json"
     $output | Out-File -FilePath $tokenFile -Encoding utf8
 
     # Create DevOps work item
