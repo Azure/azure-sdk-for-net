@@ -62,6 +62,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestGetResponseAsync()
         {
+            if (!IsAsync)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             using IDisposable _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgentsChatClient chatClient = new(client, _agentId, _threadId);
@@ -222,6 +224,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestSubmitToolOutputs()
         {
+            if (!IsAsync)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             using IDisposable _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             FunctionToolDefinition tool = new(
@@ -281,6 +285,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestChatOptionsTools()
         {
+            if (!IsAsync)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             using IDisposable _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
 

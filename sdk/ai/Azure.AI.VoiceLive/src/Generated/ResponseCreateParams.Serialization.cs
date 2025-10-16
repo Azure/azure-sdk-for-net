@@ -67,7 +67,7 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("modalities"u8);
                 writer.WriteStartArray();
-                foreach (InputModality item in Modalities)
+                foreach (InteractionModality item in Modalities)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -173,10 +173,10 @@ namespace Azure.AI.VoiceLive
             bool? cancelPrevious = default;
             IList<ConversationRequestItem> appendInputItems = default;
             IList<ConversationRequestItem> inputItems = default;
-            IList<InputModality> modalities = default;
+            IList<InteractionModality> modalities = default;
             string instructions = default;
             BinaryData voice = default;
-            AudioFormat? outputAudioFormat = default;
+            OutputAudioFormat? outputAudioFormat = default;
             IList<VoiceLiveToolDefinition> tools = default;
             string toolChoice = default;
             float? temperature = default;
@@ -236,10 +236,10 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    List<InputModality> array = new List<InputModality>();
+                    List<InteractionModality> array = new List<InteractionModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new InputModality(item.GetString()));
+                        array.Add(new InteractionModality(item.GetString()));
                     }
                     modalities = array;
                     continue;
@@ -264,7 +264,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    outputAudioFormat = new AudioFormat(prop.Value.GetString());
+                    outputAudioFormat = new OutputAudioFormat(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tools"u8))
@@ -314,7 +314,7 @@ namespace Azure.AI.VoiceLive
                 cancelPrevious,
                 appendInputItems ?? new ChangeTrackingList<ConversationRequestItem>(),
                 inputItems ?? new ChangeTrackingList<ConversationRequestItem>(),
-                modalities ?? new ChangeTrackingList<InputModality>(),
+                modalities ?? new ChangeTrackingList<InteractionModality>(),
                 instructions,
                 voice,
                 outputAudioFormat,

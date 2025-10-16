@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.TrustedSigning.Models
     public readonly partial struct CertificateProfileType : IEquatable<CertificateProfileType>
     {
         private readonly string _value;
+        /// <summary> Used for signing files which are distributed publicly. </summary>
+        private const string PublicTrustValue = "PublicTrust";
+        /// <summary> Used for signing files which are distributed internally within organization or group boundary. </summary>
+        private const string PrivateTrustValue = "PrivateTrust";
+        /// <summary> Used for signing CI policy files. </summary>
+        private const string PrivateTrustCIPolicyValue = "PrivateTrustCIPolicy";
+        /// <summary> Used for signing files which are run in secure vbs enclave. </summary>
+        private const string VbsEnclaveValue = "VBSEnclave";
+        /// <summary> Used for signing files for testing purpose. </summary>
+        private const string PublicTrustTestValue = "PublicTrustTest";
 
         /// <summary> Initializes a new instance of <see cref="CertificateProfileType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CertificateProfileType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PublicTrustValue = "PublicTrust";
-        private const string PrivateTrustValue = "PrivateTrust";
-        private const string PrivateTrustCIPolicyValue = "PrivateTrustCIPolicy";
-        private const string VbsEnclaveValue = "VBSEnclave";
-        private const string PublicTrustTestValue = "PublicTrustTest";
+            _value = value;
+        }
 
         /// <summary> Used for signing files which are distributed publicly. </summary>
         public static CertificateProfileType PublicTrust { get; } = new CertificateProfileType(PublicTrustValue);
+
         /// <summary> Used for signing files which are distributed internally within organization or group boundary. </summary>
         public static CertificateProfileType PrivateTrust { get; } = new CertificateProfileType(PrivateTrustValue);
+
         /// <summary> Used for signing CI policy files. </summary>
         public static CertificateProfileType PrivateTrustCIPolicy { get; } = new CertificateProfileType(PrivateTrustCIPolicyValue);
+
         /// <summary> Used for signing files which are run in secure vbs enclave. </summary>
         public static CertificateProfileType VbsEnclave { get; } = new CertificateProfileType(VbsEnclaveValue);
+
         /// <summary> Used for signing files for testing purpose. </summary>
         public static CertificateProfileType PublicTrustTest { get; } = new CertificateProfileType(PublicTrustTestValue);
+
         /// <summary> Determines if two <see cref="CertificateProfileType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CertificateProfileType left, CertificateProfileType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CertificateProfileType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CertificateProfileType left, CertificateProfileType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CertificateProfileType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CertificateProfileType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CertificateProfileType(string value) => new CertificateProfileType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CertificateProfileType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CertificateProfileType?(string value) => value == null ? null : new CertificateProfileType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CertificateProfileType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CertificateProfileType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

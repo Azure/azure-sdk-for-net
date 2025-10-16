@@ -385,7 +385,7 @@ namespace Azure.Health.Deidentification
     }
     public partial class TaggedPhiEntities : System.ClientModel.Primitives.IJsonModel<Azure.Health.Deidentification.TaggedPhiEntities>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Deidentification.TaggedPhiEntities>
     {
-        public TaggedPhiEntities(Azure.Health.Deidentification.TextEncodingType encoding, System.Collections.Generic.IEnumerable<Azure.Health.Deidentification.SimplePhiEntity> entities) { }
+        public TaggedPhiEntities(System.Collections.Generic.IEnumerable<Azure.Health.Deidentification.SimplePhiEntity> entities) { }
         public Azure.Health.Deidentification.TextEncodingType Encoding { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Health.Deidentification.SimplePhiEntity> Entities { get { throw null; } }
         protected virtual Azure.Health.Deidentification.TaggedPhiEntities JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

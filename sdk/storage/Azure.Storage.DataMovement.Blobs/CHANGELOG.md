@@ -7,6 +7,12 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Resolved memory leak issue with `CancellationTokenSource` usage not being properly disposed, namely in the following areas:
+    - `TransferOperation` disposes the `CancellationTokenSource` after transfer reaches a `Completed` or `Paused` state
+    - `TransferManager` uses a `CancellationTokenSource` also does not link the`CancellationToken` passed to it's methods
+    - Removed usage of `CancellationTokenSource` from handling the chunking of large transfers. This only affects transfers that cannot be completed in one request.
+- Fixed bug where cached referenced `TransferOperation`s from the `TransferManager` were not being cleared on dispose.
+- Fixed bug where referenced `TransferOperation` from the transfers stored in the `TransferManager` after they reach a `Completed` or `Paused` state where not being removed.
 
 ### Other Changes
 

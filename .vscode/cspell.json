@@ -153,6 +153,7 @@
     "referer",
     "renormalize",
     "retriable",
+    "scme",
     "serp",
     "servfail",
     "setsas",
@@ -453,6 +454,7 @@
     {
       "filename": "**/sdk/containerapps/**/*",
       "words": [
+        "agentic",
         "dapr",
         "grpc",
         "proto"
@@ -639,7 +641,10 @@
         "cnames",
         "easm",
         "nxdomain",
-        "whois"
+        "whois",
+        "cisa",
+        "cves",
+        "remediations"
       ]
     },
     {
@@ -1118,6 +1123,7 @@
         "dbnodeocid",
         "dbserverocid",
         "dbsystemshapename",
+        "dbversionsname",
         "dnsprivateviewocid",
         "ecpu",
         "exadata",

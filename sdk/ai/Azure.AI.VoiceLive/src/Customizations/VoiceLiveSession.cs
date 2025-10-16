@@ -27,7 +27,7 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets the underlying WebSocket connection.
         /// </summary>
-        public WebSocket WebSocket { get; protected set; }
+        internal WebSocket WebSocket { get; set; }
 
         private readonly VoiceLiveClient _parentClient;
         private readonly Uri _endpoint;
@@ -140,60 +140,6 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// Transmits audio data from a stream, ending the client turn once the stream is complete.
-        /// </summary>
-        /// <param name="audio">The audio stream to transmit.</param>
-        /// <param name="cancellationToken">An optional cancellation token.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="audio"/> is null.</exception>
-        /// <exception cref="InvalidOperationException">Thrown when another audio stream is already being sent.</exception>
-        public virtual void SendInputAudio(Stream audio, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(audio, nameof(audio));
-            ThrowIfDisposed();
-
-            using (_audioSendSemaphore.AutoReleaseWait(cancellationToken))
-            {
-                if (_isSendingAudioStream)
-                {
-                    throw new InvalidOperationException("Only one stream of audio may be sent at once.");
-                }
-                _isSendingAudioStream = true;
-            }
-
-            byte[] buffer = null;
-            try
-            {
-                buffer = ArrayPool<byte>.Shared.Rent(1024 * 16);
-                while (true)
-                {
-                    int bytesRead = audio.Read(buffer, 0, buffer.Length);
-                    if (bytesRead == 0)
-                    {
-                        break;
-                    }
-
-                    ReadOnlyMemory<byte> audioMemory = buffer.AsMemory(0, bytesRead);
-                    BinaryData audioData = BinaryData.FromBytes(audioMemory);
-                    string base64Audio = Convert.ToBase64String(audioData.ToArray());
-                    ClientEventInputAudioBufferAppend appendCommand = new(base64Audio);
-                    BinaryData requestData = BinaryData.FromObjectAsJson(appendCommand);
-                    SendCommand(requestData, cancellationToken);
-                }
-            }
-            finally
-            {
-                if (buffer is not null)
-                {
-                    ArrayPool<byte>.Shared.Return(buffer);
-                }
-                using (_audioSendSemaphore.AutoReleaseWait(cancellationToken))
-                {
-                    _isSendingAudioStream = false;
-                }
-            }
-        }
-
-        /// <summary>
         /// Sends a command to the service asynchronously.
         /// </summary>
         /// <param name="command">The command to send.</param>
@@ -207,21 +153,6 @@ namespace Azure.AI.VoiceLive
 
             var data = ((IPersistableModel<ClientEvent>)command).Write(ModelReaderWriterOptions.Json);
             await SendCommandAsync(data, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Sends a command to the service.
-        /// </summary>
-        /// <param name="command">The command to send.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="command"/> is null.</exception>
-        internal virtual void SendCommand(ClientEvent command, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(command, nameof(command));
-            ThrowIfDisposed();
-
-            BinaryData data = BinaryData.FromObjectAsJson(command);
-            SendCommand(data, cancellationToken);
         }
 
         /// <summary>
@@ -274,20 +205,6 @@ namespace Azure.AI.VoiceLive
             await SendCommandAsync(BinaryData.FromStream(ms), cancellationToken).ConfigureAwait(false);
         }
 
-#pragma warning disable AZC0107 // Client methods should return approved types
-        /// <summary>
-        /// Sends raw data to the service.
-        /// </summary>
-        /// <param name="data">The data to send.</param>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="data"/> is null.</exception>
-        public virtual void SendCommand(BinaryData data, CancellationToken cancellationToken = default)
-        {
-            // ClientWebSocket does not include a synchronous Send()
-            SendCommandAsync(data, cancellationToken).EnsureCompleted();
-        }
-#pragma warning restore AZC0107
-
         /// <summary>
         /// Receives updates from the service asynchronously.
         /// </summary>
@@ -306,16 +223,6 @@ namespace Azure.AI.VoiceLive
             {
                 yield return message;
             }
-        }
-
-        /// <summary>
-        /// Receives updates from the service.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>An enumerable of binary data messages.</returns>
-        public virtual IEnumerable<BinaryData> ReceiveUpdates(CancellationToken cancellationToken = default)
-        {
-            throw new NotSupportedException("Synchronous enumeration of WebSocket messages is not supported. Use ReceiveUpdatesAsync instead.");
         }
 
         /// <inheritdoc/>

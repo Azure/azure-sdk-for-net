@@ -27,17 +27,24 @@ namespace MgmtTypeSpec.Models
             return new FooPreviewAction(action, result, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="serviceUri"> the service url. </param>
+        /// <param name="something"> something. </param>
+        /// <param name="boolValue"> boolean value. </param>
+        /// <param name="floatValue"> float value. </param>
+        /// <param name="doubleValue"> double value. </param>
+        /// <param name="prop1"> Gets the Prop1. </param>
+        /// <param name="prop2"> Gets the Prop2. </param>
+        /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <param name="extendedLocation"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/> or <paramref name="prop1"/> is null. </exception>
         /// <returns> A new <see cref="MgmtTypeSpec.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FooProperties properties = default, ExtendedLocation extendedLocation = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IList<string> prop1 = default, IList<int> prop2 = default, FooProperties nestedPropertyProperties = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -49,8 +56,43 @@ namespace MgmtTypeSpec.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties,
+                serviceUri is null || something is null || boolValue is null || floatValue is null || doubleValue is null || prop1 is null || prop2 is null || nestedPropertyProperties is null ? default : new FooProperties(
+                    serviceUri,
+                    something,
+                    boolValue,
+                    floatValue,
+                    doubleValue,
+                    prop1,
+                    prop2,
+                    new NestedFooModel(nestedPropertyProperties, new Dictionary<string, BinaryData>()),
+                    new Dictionary<string, BinaryData>()),
                 extendedLocation);
+        }
+
+        /// <param name="serviceUri"> the service url. </param>
+        /// <param name="something"> something. </param>
+        /// <param name="boolValue"> boolean value. </param>
+        /// <param name="floatValue"> float value. </param>
+        /// <param name="doubleValue"> double value. </param>
+        /// <param name="prop1"></param>
+        /// <param name="prop2"></param>
+        /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
+        /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
+        public static FooProperties FooProperties(Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default)
+        {
+            prop1 ??= new ChangeTrackingList<string>();
+            prop2 ??= new ChangeTrackingList<int>();
+
+            return new FooProperties(
+                serviceUri,
+                something,
+                boolValue,
+                floatValue,
+                doubleValue,
+                prop1.ToList(),
+                prop2.ToList(),
+                nestedPropertyProperties is null ? default : new NestedFooModel(nestedPropertyProperties, new Dictionary<string, BinaryData>()),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
@@ -119,9 +161,10 @@ namespace MgmtTypeSpec.Models
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets or sets the Prop2. </param>
         /// <param name="optionalFlattenPropertyRandomCollectionProp"> Gets the RandomCollectionProp. </param>
+        /// <param name="discriminatorProperty"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/>, <paramref name="middleProp2"/> or <paramref name="prop1"/> is null. </exception>
         /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IList<string> prop1 = default, int? prop2 = default, IList<string> optionalFlattenPropertyRandomCollectionProp = default)
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IList<string> prop1 = default, int? prop2 = default, IList<string> optionalFlattenPropertyRandomCollectionProp = default, LimitJsonObject discriminatorProperty = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -138,12 +181,13 @@ namespace MgmtTypeSpec.Models
                 innerProp1 is null || innerProp2 is null || middleProp1 is null || middleProp2 is null || prop1 is null || prop2 is null ? default : new BarNestedQuotaProperties(
                     innerProp1,
                     innerProp2,
-                    null,
+                    new Dictionary<string, BinaryData>(),
                     middleProp1.Value,
                     middleProp2,
                     prop1,
                     prop2.Value),
-                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType(optionalFlattenPropertyRandomCollectionProp, new Dictionary<string, BinaryData>()));
+                optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType(optionalFlattenPropertyRandomCollectionProp, new Dictionary<string, BinaryData>()),
+                discriminatorProperty);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -320,11 +364,93 @@ namespace MgmtTypeSpec.Models
         /// <param name="jobName"> Gets or sets the JobName. </param>
         /// <param name="tags"></param>
         /// <returns> A new <see cref="Models.JobResourcePatch"/> instance for mocking. </returns>
-        public static JobResourcePatch JobResourcePatch(string jobName, IDictionary<string, string> tags = default)
+        public static JobResourcePatch JobResourcePatch(string jobName = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new JobResourcePatch(jobName is null ? default : new JobProperties(jobName, new Dictionary<string, BinaryData>()), tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="hciVmInstanceSku"> Gets the Sku. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.HciVmInstanceData"/> instance for mocking. </returns>
+        public static HciVmInstanceData HciVmInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string hciVmInstanceSku = default)
+        {
+            return new HciVmInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                hciVmInstanceSku is null ? default : new HciVmInstanceProperties(hciVmInstanceSku, new Dictionary<string, BinaryData>()));
+        }
+
+        /// <summary> The new quota limit request status. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.GroupQuotaSubscriptionRequestStatusData"/> instance for mocking. </returns>
+        public static GroupQuotaSubscriptionRequestStatusData GroupQuotaSubscriptionRequestStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GroupQuotaLimitProperties properties = default)
+        {
+            return new GroupQuotaSubscriptionRequestStatusData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <param name="resourceName"> The resource name, such as SKU name. </param>
+        /// <param name="limit"> The current Group Quota Limit at the parentId level. </param>
+        /// <param name="comment"> Any comment related to quota request. </param>
+        /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
+        /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
+        /// <param name="allocatedToSubscriptionsValue"> List of Group Quota Limit allocated to subscriptions. </param>
+        /// <returns> A new <see cref="Models.GroupQuotaLimitProperties"/> instance for mocking. </returns>
+        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = default, long? limit = default, string comment = default, string unit = default, long? availableLimit = default, IList<AllocatedToSubscription> allocatedToSubscriptionsValue = default)
+        {
+            return new GroupQuotaLimitProperties(
+                resourceName,
+                limit,
+                comment,
+                unit,
+                availableLimit,
+                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue, new Dictionary<string, BinaryData>()),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="resourceName"> The resource name, such as SKU name. </param>
+        /// <param name="limit"> The current Group Quota Limit at the parentId level. </param>
+        /// <param name="comment"> Any comment related to quota request. </param>
+        /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
+        /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
+        /// <param name="allocatedToSubscriptionsValue"> List of Group Quota Limit allocated to subscriptions. </param>
+        /// <returns> A new <see cref="Models.GroupQuotaDetails"/> instance for mocking. </returns>
+        public static GroupQuotaDetails GroupQuotaDetails(string resourceName = default, long? limit = default, string comment = default, string unit = default, long? availableLimit = default, IList<AllocatedToSubscription> allocatedToSubscriptionsValue = default)
+        {
+            return new GroupQuotaDetails(
+                resourceName,
+                limit,
+                comment,
+                unit,
+                availableLimit,
+                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue, new Dictionary<string, BinaryData>()),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> SubscriptionIds and quota allocated to subscriptions from the GroupQuota. </summary>
+        /// <param name="subscriptionId"> An Azure subscriptionId. </param>
+        /// <param name="quotaAllocated"> The amount of quota allocated to this subscriptionId from the GroupQuotasEntity. </param>
+        /// <returns> A new <see cref="Models.AllocatedToSubscription"/> instance for mocking. </returns>
+        public static AllocatedToSubscription AllocatedToSubscription(string subscriptionId = default, long? quotaAllocated = default)
+        {
+            return new AllocatedToSubscription(subscriptionId, quotaAllocated, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ZooRecommendation. </summary>

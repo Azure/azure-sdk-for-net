@@ -111,3 +111,15 @@ function LogJobFailure() {
   }
   # No equivalent for GitHub Actions.  Failure is only determined by nonzero exit code.
 }
+
+function ProcessMsBuildLogLine($line) {
+  if (Test-SupportsDevOpsLogging) {
+    if ($line -like "*: warning*") {
+      return ("##vso[task.LogIssue type=warning;]$line" -replace "`n", "%0D%0A")
+    }
+    elseif ($line -like "*: error*") {
+      return ("##vso[task.LogIssue type=error;]$line" -replace "`n", "%0D%0A")
+    }
+  }
+  return $line
+}

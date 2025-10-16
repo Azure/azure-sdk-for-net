@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 else
                 {
-                    StorageTaskData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageTaskData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 else
                 {
-                    StorageTaskData current = Get(cancellationToken).Value.Data;
+                    StorageTaskData current = Get(cancellationToken: cancellationToken).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 else
                 {
-                    StorageTaskData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageTaskData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<StorageTaskResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 else
                 {
-                    StorageTaskData current = Get(cancellationToken).Value.Data;
+                    StorageTaskData current = Get(cancellationToken: cancellationToken).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<StorageTaskResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 else
                 {
-                    StorageTaskData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    StorageTaskData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 else
                 {
-                    StorageTaskData current = Get(cancellationToken).Value.Data;
+                    StorageTaskData current = Get(cancellationToken: cancellationToken).Value.Data;
                     StorageTaskPatch patch = new StorageTaskPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {

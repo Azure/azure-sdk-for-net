@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageCache.Models;
 using NUnit.Framework;
 
@@ -18,6 +17,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task GetStorageCacheSkus()
         {
             AsyncPageable<StorageCacheSku> pagedList = this.DefaultSubscription.GetStorageCacheSkusAsync();
@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task GetStorageCacheUsages()
         {
             AsyncPageable<StorageCacheUsage> pagedList = this.DefaultSubscription.GetStorageCacheUsagesAsync(this.DefaultLocation);
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task GetUsageModels()
         {
             AsyncPageable<StorageCacheUsageModel> pagedList = this.DefaultSubscription.GetUsageModelsAsync();
@@ -60,6 +62,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Skip test as the StorageCache service is end-of-lifed.")]
         public async Task GetStorageCaches()
         {
             var scr = await this.CreateOrUpdateStorageCache();

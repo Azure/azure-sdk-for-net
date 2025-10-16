@@ -18,7 +18,7 @@ namespace Azure.AI.VoiceLive
     /// This provides a unified interface for OpenAI voices, complementing the
     /// existing string-based OAIVoice for backward compatibility.
     /// </summary>
-    public partial class OpenAIVoice : IJsonModel<OpenAIVoice>
+    public partial class OpenAIVoice : VoiceProvider, IJsonModel<OpenAIVoice>
     {
         /// <summary> Initializes a new instance of <see cref="OpenAIVoice"/> for deserialization. </summary>
         internal OpenAIVoice()

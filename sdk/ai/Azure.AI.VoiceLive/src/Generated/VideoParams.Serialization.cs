@@ -53,6 +53,16 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution, options);
             }
+            if (Optional.IsDefined(Background))
+            {
+                writer.WritePropertyName("background"u8);
+                writer.WriteObjectValue(Background, options);
+            }
+            if (Optional.IsDefined(GopSize))
+            {
+                writer.WritePropertyName("gop_size"u8);
+                writer.WriteNumberValue(GopSize.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -99,6 +109,8 @@ namespace Azure.AI.VoiceLive
             string codec = default;
             VideoCrop crop = default;
             VideoResolution resolution = default;
+            VideoBackground background = default;
+            int? gopSize = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +146,37 @@ namespace Azure.AI.VoiceLive
                     resolution = VideoResolution.DeserializeVideoResolution(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("background"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    background = VideoBackground.DeserializeVideoBackground(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("gop_size"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gopSize = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VideoParams(bitrate, codec, crop, resolution, additionalBinaryDataProperties);
+            return new VideoParams(
+                bitrate,
+                codec,
+                crop,
+                resolution,
+                background,
+                gopSize,
+                additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

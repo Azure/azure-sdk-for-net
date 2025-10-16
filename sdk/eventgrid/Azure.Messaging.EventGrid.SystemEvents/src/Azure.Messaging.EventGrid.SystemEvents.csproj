@@ -14,6 +14,7 @@
       $(NoWarn);
       AZC0034; <!-- Cannot reuse type names; expected due to system event type forwarding. -->
     </NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
