@@ -252,7 +252,7 @@ namespace Azure.AI.ContentUnderstanding
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeAnalyzeResult(document.RootElement.GetProperty("result").GetProperty("result"), ModelSerializationExtensions.WireOptions);
+            return DeserializeAnalyzeResult(document.RootElement.GetProperty("result"), ModelSerializationExtensions.WireOptions);
         }
     }
 }
