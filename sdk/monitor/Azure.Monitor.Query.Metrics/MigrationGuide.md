@@ -208,4 +208,4 @@ foreach (MetricsQueryResult value in metricsQueryResults.Values)
 More examples can be found in the [Azure Monitor Query Metrics samples][metrics-samples].
 
 <!-- Links -->
-[metrics-samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query.Metrics/src/README.md#examples
+[metrics-samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query.Metrics/README.md#examples
