@@ -19,11 +19,11 @@ using OpenAI.FineTuning;
 
 namespace Azure.AI.Projects.Tests;
 
-public class Sample_AzureOpenAI_FineTuning_Refactored : SamplesBase<AIProjectsTestEnvironment>
+public class Sample_AzureOpenAI_FineTuning_Consolidated : SamplesBase<AIProjectsTestEnvironment>
 {
     private string GetDataDirectory()
     {
-        var testDirectory = Path.GetDirectoryName(typeof(Sample_AzureOpenAI_FineTuning_Refactored).Assembly.Location);
+        var testDirectory = Path.GetDirectoryName(typeof(Sample_AzureOpenAI_FineTuning_Consolidated).Assembly.Location);
         while (testDirectory != null && !Directory.Exists(Path.Combine(testDirectory, "sdk")))
         {
             testDirectory = Path.GetDirectoryName(testDirectory);
@@ -51,56 +51,9 @@ public class Sample_AzureOpenAI_FineTuning_Refactored : SamplesBase<AIProjectsTe
         return (azureOpenAIClient.GetFineTuningClient(), azureOpenAIClient.GetOpenAIFileClient(), azureOpenAIClient);
     }
 
-    private async Task<FineTuningJob> GetJobByIdAsync(FineTuningClient client, string jobId)
-    {
-        await foreach (FineTuningJob job in client.GetJobsAsync())
-        {
-            if (job.JobId == jobId)
-            {
-                return job;
-            }
-        }
-        throw new InvalidOperationException($"Job {jobId} not found");
-    }
-
     [Test]
     [AsyncOnly]
-    public async Task FineTuningUploadFileAsync()
-    {
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var dataDirectory = GetDataDirectory();
-        var trainingFilePath = Path.Combine(dataDirectory, "training_set.jsonl");
-
-        var (_, fileClient, _) = await GetClientsAsync(endpoint);
-
-        Console.WriteLine($"\nUploading file: training_set.jsonl");
-        OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
-            BinaryData.FromBytes(File.ReadAllBytes(trainingFilePath)),
-            "training_set.jsonl",
-            FileUploadPurpose.FineTune);
-
-        Console.WriteLine($"✅ Upload successful! File ID: {uploadedFile.Id}");
-    }
-
-    [Test]
-    [AsyncOnly]
-    public async Task FineTuningListJobsAsync()
-    {
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var (fineTuningClient, _, _) = await GetClientsAsync(endpoint);
-
-        Console.WriteLine("\nListing fine-tuning jobs:");
-        int count = 0;
-        await foreach (FineTuningJob job in fineTuningClient.GetJobsAsync(options: new() { PageSize = 10 }))
-        {
-            Console.WriteLine($"- Job ID: {job.JobId}, Status: {job.Status}");
-            if (++count >= 5) break;
-        }
-    }
-
-    [Test]
-    [AsyncOnly]
-    public async Task FineTuningCreateJobWithSupervisedLearningAsync()
+    public async Task FineTuning_SupervisedLearningAsync()
     {
         var endpoint = TestEnvironment.PROJECTENDPOINT;
         var dataDirectory = GetDataDirectory();
@@ -109,12 +62,13 @@ public class Sample_AzureOpenAI_FineTuning_Refactored : SamplesBase<AIProjectsTe
 
         var (fineTuningClient, fileClient, _) = await GetClientsAsync(endpoint);
 
-        Console.WriteLine("\nUploading training file...");
+        // Step 1: Upload training and validation files
+        Console.WriteLine("\n=== Step 1: Uploading Files ===");
+        Console.WriteLine("Uploading training file...");
         OpenAIFile trainingFile = await fileClient.UploadFileAsync(
             BinaryData.FromBytes(File.ReadAllBytes(trainingFilePath)),
             "training_set.jsonl",
             FileUploadPurpose.FineTune);
-
         Console.WriteLine($"✅ Training file uploaded: {trainingFile.Id}");
         
         Console.WriteLine("Uploading validation file...");
@@ -122,42 +76,214 @@ public class Sample_AzureOpenAI_FineTuning_Refactored : SamplesBase<AIProjectsTe
             BinaryData.FromBytes(File.ReadAllBytes(validationFilePath)),
             "validation_set.jsonl",
             FileUploadPurpose.FineTune);
-        
         Console.WriteLine($"✅ Validation file uploaded: {validationFile.Id}");
         Console.WriteLine("Waiting for file import...");
         await Task.Delay(5000);
 
-        Console.WriteLine("\nCreating fine-tuning job...");
+        // Step 2: Create fine-tuning job with Supervised Learning
+        Console.WriteLine("\n=== Step 2: Creating Fine-Tuning Job ===");
         FineTuningJob createdJob = await fineTuningClient.FineTuneAsync(
             "gpt-4o-mini-2024-07-18",
             trainingFile.Id,
             waitUntilCompleted: false,
             new() 
             { 
-                TrainingMethod = FineTuningTrainingMethod.CreateSupervised(),
+                TrainingMethod = FineTuningTrainingMethod.CreateSupervised(
+                    epochCount: 3,
+                    batchSize: 4,
+                    learningRate: 0.0001),
                 ValidationFile = validationFile.Id
             });
-
         Console.WriteLine($"✅ Job created! Job ID: {createdJob.JobId}, Status: {createdJob.Status}");
+
+        // Step 3: Get the job by ID
+        Console.WriteLine("\n=== Step 3: Getting Job by ID ===");
+        FineTuningJob retrievedJob = await fineTuningClient.GetJobAsync(createdJob.JobId);
+        Console.WriteLine($"✅ Job retrieved: {retrievedJob.JobId}, Status: {retrievedJob.Status}");
+
+        // Step 4: List all jobs
+        Console.WriteLine("\n=== Step 4: Listing All Jobs ===");
+        int jobCount = 0;
+        await foreach (FineTuningJob job in fineTuningClient.GetJobsAsync(options: new() { PageSize = 5 }))
+        {
+            Console.WriteLine($"- Job ID: {job.JobId}, Status: {job.Status}");
+            if (++jobCount >= 5) break;
+        }
+        Console.WriteLine($"✅ Listed {jobCount} job(s)");
+
+        // Step 5: List checkpoints (only available after job reaches terminal state)
+        Console.WriteLine("\n=== Step 5: Listing Checkpoints ===");
+        if (retrievedJob.Status == FineTuningStatus.Succeeded || 
+            retrievedJob.Status == FineTuningStatus.Failed ||
+            retrievedJob.Status == FineTuningStatus.Cancelled)
+        {
+            int checkpointCount = 0;
+            await foreach (FineTuningCheckpoint checkpoint in retrievedJob.GetCheckpointsAsync())
+            {
+                Console.WriteLine($"Checkpoint {++checkpointCount}: ID={checkpoint.Id}, Step={checkpoint.StepNumber}");
+                if (checkpointCount >= 5) break;
+            }
+            Console.WriteLine($"✅ Listed {checkpointCount} checkpoint(s)");
+        }
+        else
+        {
+            Console.WriteLine($"⚠️  Job is in '{retrievedJob.Status}' state. Checkpoints only available after job completes.");
+        }
+
+        // Step 6: List events
+        Console.WriteLine("\n=== Step 6: Listing Events ===");
+        int eventCount = 0;
+        await foreach (FineTuningEvent evt in retrievedJob.GetEventsAsync(new GetEventsOptions() { PageSize = 10 }))
+        {
+            Console.WriteLine($"Event {++eventCount}: {evt.Level} - {evt.Message}");
+            if (eventCount >= 5) break;
+        }
+        Console.WriteLine($"✅ Listed {eventCount} event(s)");
+
+        // Step 7: Cancel the job
+        Console.WriteLine("\n=== Step 7: Cancelling Job ===");
+        FineTuningJob jobToCancel = await fineTuningClient.GetJobAsync(createdJob.JobId);
+        await jobToCancel.CancelAndUpdateAsync();
+        Console.WriteLine($"✅ Job cancelled! Status: {jobToCancel.Status}");
+
+        // Step 8: Delete the job
+        Console.WriteLine("\n=== Step 8: Deleting Job ===");
+        FineTuningJob jobToDelete = await fineTuningClient.GetJobAsync(createdJob.JobId);
+        var azureJob = (Azure.AI.OpenAI.FineTuning.AzureFineTuningJob)jobToDelete;
+        
+#pragma warning disable AOAI001
+        await azureJob.DeleteJobAsync(jobToDelete.JobId, options: null);
+#pragma warning restore AOAI001
+        
+        Console.WriteLine($"✅ Job deleted successfully");
     }
 
     [Test]
     [AsyncOnly]
-    public async Task FineTuningCreateJobWithReinforcementLearningAsync()
+    public async Task FineTuning_DirectPreferenceOptimization_FullLifecycleAsync()
+    {
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var dataDirectory = GetDataDirectory();
+        var trainingFilePath = Path.Combine(dataDirectory, "dpo_training_set.jsonl");
+        var validationFilePath = Path.Combine(dataDirectory, "dpo_validation_set.jsonl");
+
+        var (fineTuningClient, fileClient, _) = await GetClientsAsync(endpoint);
+
+        // Step 1: Upload training and validation files
+        Console.WriteLine("\n=== Step 1: Uploading Files for DPO ===");
+        Console.WriteLine("Uploading training file...");
+        OpenAIFile trainingFile = await fileClient.UploadFileAsync(
+            BinaryData.FromBytes(File.ReadAllBytes(trainingFilePath)),
+            "dpo_training_set.jsonl",
+            FileUploadPurpose.FineTune);
+        Console.WriteLine($"✅ Training file uploaded: {trainingFile.Id}");
+        
+        Console.WriteLine("Uploading validation file...");
+        OpenAIFile validationFile = await fileClient.UploadFileAsync(
+            BinaryData.FromBytes(File.ReadAllBytes(validationFilePath)),
+            "dpo_validation_set.jsonl",
+            FileUploadPurpose.FineTune);
+        Console.WriteLine($"✅ Validation file uploaded: {validationFile.Id}");
+        Console.WriteLine("Waiting for file import...");
+        await Task.Delay(5000);
+
+        // Step 2: Create fine-tuning job with DPO
+        Console.WriteLine("\n=== Step 2: Creating Fine-Tuning Job with DPO ===");
+        FineTuningJob createdJob = await fineTuningClient.FineTuneAsync(
+            "gpt-4o-2024-08-06",
+            trainingFile.Id,
+            waitUntilCompleted: false,
+            new() 
+            { 
+                TrainingMethod = FineTuningTrainingMethod.CreateDirectPreferenceOptimization(
+                    epochCount: 3,
+                    batchSize: 4,
+                    learningRate: 0.0001),
+                ValidationFile = validationFile.Id
+            });
+        Console.WriteLine($"✅ Job created! Job ID: {createdJob.JobId}, Status: {createdJob.Status}");
+
+        // Step 3: Get the job by ID
+        Console.WriteLine("\n=== Step 3: Getting Job by ID ===");
+        FineTuningJob retrievedJob = await fineTuningClient.GetJobAsync(createdJob.JobId);
+        Console.WriteLine($"✅ Job retrieved: {retrievedJob.JobId}, Status: {retrievedJob.Status}");
+
+        // Step 4: List all jobs
+        Console.WriteLine("\n=== Step 4: Listing All Jobs ===");
+        int jobCount = 0;
+        await foreach (FineTuningJob job in fineTuningClient.GetJobsAsync(options: new() { PageSize = 5 }))
+        {
+            Console.WriteLine($"- Job ID: {job.JobId}, Status: {job.Status}");
+            if (++jobCount >= 5) break;
+        }
+        Console.WriteLine($"✅ Listed {jobCount} job(s)");
+
+        // Step 5: List checkpoints (only available after job reaches terminal state)
+        Console.WriteLine("\n=== Step 5: Listing Checkpoints ===");
+        if (retrievedJob.Status == FineTuningStatus.Succeeded || 
+            retrievedJob.Status == FineTuningStatus.Failed ||
+            retrievedJob.Status == FineTuningStatus.Cancelled)
+        {
+            int checkpointCount = 0;
+            await foreach (FineTuningCheckpoint checkpoint in retrievedJob.GetCheckpointsAsync())
+            {
+                Console.WriteLine($"Checkpoint {++checkpointCount}: ID={checkpoint.Id}, Step={checkpoint.StepNumber}");
+                if (checkpointCount >= 5) break;
+            }
+            Console.WriteLine($"✅ Listed {checkpointCount} checkpoint(s)");
+        }
+        else
+        {
+            Console.WriteLine($"⚠️  Job is in '{retrievedJob.Status}' state. Checkpoints only available after job completes.");
+        }
+
+        // Step 6: List events
+        Console.WriteLine("\n=== Step 6: Listing Events ===");
+        int eventCount = 0;
+        await foreach (FineTuningEvent evt in retrievedJob.GetEventsAsync(new GetEventsOptions() { PageSize = 10 }))
+        {
+            Console.WriteLine($"Event {++eventCount}: {evt.Level} - {evt.Message}");
+            if (eventCount >= 5) break;
+        }
+        Console.WriteLine($"✅ Listed {eventCount} event(s)");
+
+        // Step 7: Cancel the job
+        Console.WriteLine("\n=== Step 7: Cancelling Job ===");
+        FineTuningJob jobToCancel = await fineTuningClient.GetJobAsync(createdJob.JobId);
+        await jobToCancel.CancelAndUpdateAsync();
+        Console.WriteLine($"✅ Job cancelled! Status: {jobToCancel.Status}");
+
+        // Step 8: Delete the job
+        Console.WriteLine("\n=== Step 8: Deleting Job ===");
+        FineTuningJob jobToDelete = await fineTuningClient.GetJobAsync(createdJob.JobId);
+        var azureJob = (Azure.AI.OpenAI.FineTuning.AzureFineTuningJob)jobToDelete;
+        
+#pragma warning disable AOAI001
+        await azureJob.DeleteJobAsync(jobToDelete.JobId, options: null);
+#pragma warning restore AOAI001
+        
+        Console.WriteLine($"✅ Job deleted successfully");
+        Console.WriteLine("\n=== DPO Full Lifecycle Complete ===");
+    }
+
+    [Test]
+    [AsyncOnly]
+    public async Task FineTuning_ReinforcementLearning_FullLifecycleAsync()
     {
         var endpoint = TestEnvironment.PROJECTENDPOINT;
         var dataDirectory = GetDataDirectory();
         var trainingFilePath = Path.Combine(dataDirectory, "countdown_train_100.jsonl");
         var validationFilePath = Path.Combine(dataDirectory, "countdown_valid_50.jsonl");
-    
+
         var (fineTuningClient, fileClient, _) = await GetClientsAsync(endpoint);
-    
-        Console.WriteLine("\nUploading training file for reinforcement learning...");
+
+        // Step 1: Upload training and validation files
+        Console.WriteLine("\n=== Step 1: Uploading Files for Reinforcement Learning ===");
+        Console.WriteLine("Uploading training file...");
         OpenAIFile trainingFile = await fileClient.UploadFileAsync(
             BinaryData.FromBytes(File.ReadAllBytes(trainingFilePath)),
             "countdown_train_100.jsonl",
             FileUploadPurpose.FineTune);
-    
         Console.WriteLine($"✅ Training file uploaded: {trainingFile.Id}");
         
         Console.WriteLine("Uploading validation file...");
@@ -165,12 +291,12 @@ public class Sample_AzureOpenAI_FineTuning_Refactored : SamplesBase<AIProjectsTe
             BinaryData.FromBytes(File.ReadAllBytes(validationFilePath)),
             "countdown_valid_50.jsonl",
             FileUploadPurpose.FineTune);
-        
         Console.WriteLine($"✅ Validation file uploaded: {validationFile.Id}");
         Console.WriteLine("Waiting for file import...");
         await Task.Delay(5000);
 
-        Console.WriteLine("\nCreating fine-tuning job with Reinforcement Learning...");
+        // Step 2: Create fine-tuning job with Reinforcement Learning
+        Console.WriteLine("\n=== Step 2: Creating Fine-Tuning Job with Reinforcement Learning ===");
         
         // Build the JSON request manually since RL APIs are internal
         var requestJson = new
@@ -215,132 +341,61 @@ public class Sample_AzureOpenAI_FineTuning_Refactored : SamplesBase<AIProjectsTe
         BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
         
         FineTuningJob createdJob = await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: false, options: null);
-        
-        Console.WriteLine($"✅ Job created with RL! Job ID: {createdJob.JobId}, Status: {createdJob.Status}");
-    }
+        Console.WriteLine($"✅ Job created! Job ID: {createdJob.JobId}, Status: {createdJob.Status}");
 
-    [Test]
-    [AsyncOnly]
-    public async Task FineTuningCreateJobWithDpoAsync()
-    {
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var dataDirectory = GetDataDirectory();
-        var trainingFilePath = Path.Combine(dataDirectory, "dpo_training_set.jsonl");
-        var validationFilePath = Path.Combine(dataDirectory, "dpo_validation_set.jsonl");
+        // Step 3: Get the job by ID
+        Console.WriteLine("\n=== Step 3: Getting Job by ID ===");
+        FineTuningJob retrievedJob = await fineTuningClient.GetJobAsync(createdJob.JobId);
+        Console.WriteLine($"✅ Job retrieved: {retrievedJob.JobId}, Status: {retrievedJob.Status}");
 
-        var (fineTuningClient, fileClient, _) = await GetClientsAsync(endpoint);
-        
-        Console.WriteLine("\nUploading training file for DPO...");
-        OpenAIFile trainingFile = await fileClient.UploadFileAsync(
-            BinaryData.FromBytes(File.ReadAllBytes(trainingFilePath)),
-            "dpo_training_set.jsonl",
-            FileUploadPurpose.FineTune);
-        
-        Console.WriteLine($"✅ Training file uploaded: {trainingFile.Id}");
-        
-        Console.WriteLine("Uploading validation file for DPO...");
-        OpenAIFile validationFile = await fileClient.UploadFileAsync(
-            BinaryData.FromBytes(File.ReadAllBytes(validationFilePath)),
-            "dpo_validation_set.jsonl",
-            FileUploadPurpose.FineTune);
-        
-        Console.WriteLine($"✅ Validation file uploaded: {validationFile.Id}");
-        Console.WriteLine("Waiting for file import...");
-        await Task.Delay(5000);
+        // Step 4: List all jobs
+        Console.WriteLine("\n=== Step 4: Listing All Jobs ===");
+        int jobCount = 0;
+        await foreach (FineTuningJob job in fineTuningClient.GetJobsAsync(options: new() { PageSize = 5 }))
+        {
+            Console.WriteLine($"- Job ID: {job.JobId}, Status: {job.Status}");
+            if (++jobCount >= 5) break;
+        }
+        Console.WriteLine($"✅ Listed {jobCount} job(s)");
 
-        Console.WriteLine("\nCreating fine-tuning job with Direct Preference Optimization...");
-        
-        // DPO is only supported by gpt-4o (not gpt-4o-mini)
-        FineTuningJob createdJob = await fineTuningClient.FineTuneAsync(
-            "gpt-4o-2024-08-06",
-            trainingFile.Id,
-            waitUntilCompleted: false,
-            new() 
-            { 
-                TrainingMethod = FineTuningTrainingMethod.CreateDirectPreferenceOptimization(epochCount: 3,  // Number of training epochs
-                    batchSize: 4,                // Batch size for training
-                    learningRate: 0.0001),
-                ValidationFile = validationFile.Id
-            });
+        // Step 5: List checkpoints (only available after job reaches terminal state)
+        Console.WriteLine("\n=== Step 5: Listing Checkpoints ===");
+        if (retrievedJob.Status == FineTuningStatus.Succeeded || 
+            retrievedJob.Status == FineTuningStatus.Failed ||
+            retrievedJob.Status == FineTuningStatus.Cancelled)
+        {
+            int checkpointCount = 0;
+            await foreach (FineTuningCheckpoint checkpoint in retrievedJob.GetCheckpointsAsync())
+            {
+                Console.WriteLine($"Checkpoint {++checkpointCount}: ID={checkpoint.Id}, Step={checkpoint.StepNumber}");
+                if (checkpointCount >= 5) break;
+            }
+            Console.WriteLine($"✅ Listed {checkpointCount} checkpoint(s)");
+        }
+        else
+        {
+            Console.WriteLine($"⚠️  Job is in '{retrievedJob.Status}' state. Checkpoints only available after job completes.");
+        }
 
-        Console.WriteLine($"✅ Job created with DPO! Job ID: {createdJob.JobId}, Status: {createdJob.Status}");
-    }
+        // Step 6: List events
+        Console.WriteLine("\n=== Step 6: Listing Events ===");
+        int eventCount = 0;
+        await foreach (FineTuningEvent evt in retrievedJob.GetEventsAsync(new GetEventsOptions() { PageSize = 10 }))
+        {
+            Console.WriteLine($"Event {++eventCount}: {evt.Level} - {evt.Message}");
+            if (eventCount >= 5) break;
+        }
+        Console.WriteLine($"✅ Listed {eventCount} event(s)");
 
-    [Test]
-    [AsyncOnly]
-    public async Task FineTuningGetJobAsync()
-    {
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var jobId = "ftjob-7b4fcf3b4c7940cd90445d6f99790dc9";
-        
-        var (fineTuningClient, _, _) = await GetClientsAsync(endpoint);
-        
-        Console.WriteLine($"\nRetrieving job: {jobId}");
-        FineTuningJob job = await fineTuningClient.GetJobAsync(jobId);
-        Console.WriteLine($"✅ Job ID: {job.JobId}, Status: {job.Status}");
-    }
-
-    [Test]
-    [AsyncOnly]
-    public async Task FineTuningCancelJobAsync()
-    {
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var dataDirectory = GetDataDirectory();
-        var trainingFilePath = Path.Combine(dataDirectory, "training_set.jsonl");
-        var validationFilePath = Path.Combine(dataDirectory, "validation_set.jsonl");
-
-        var (fineTuningClient, fileClient, _) = await GetClientsAsync(endpoint);
-        
-        Console.WriteLine("\nUploading training file...");
-        OpenAIFile trainingFile = await fileClient.UploadFileAsync(
-            BinaryData.FromBytes(File.ReadAllBytes(trainingFilePath)),
-            "training_set.jsonl",
-            FileUploadPurpose.FineTune);
-        
-        Console.WriteLine($"✅ Training file uploaded: {trainingFile.Id}");
-        
-        Console.WriteLine("Uploading validation file...");
-        OpenAIFile validationFile = await fileClient.UploadFileAsync(
-            BinaryData.FromBytes(File.ReadAllBytes(validationFilePath)),
-            "validation_set.jsonl",
-            FileUploadPurpose.FineTune);
-        
-        Console.WriteLine($"✅ Validation file uploaded: {validationFile.Id}");
-        await Task.Delay(5000);
-        
-        Console.WriteLine("\nCreating job to cancel...");
-        FineTuningJob createdJob = await fineTuningClient.FineTuneAsync(
-            "gpt-4o-mini-2024-07-18",
-            trainingFile.Id,
-            waitUntilCompleted: false,
-            new() 
-            { 
-                TrainingMethod = FineTuningTrainingMethod.CreateSupervised(epochCount: 3,  // Number of training epochsbatchSize: 4,                // Batch size for training
-                    batchSize: 4,                // Batch size for training
-                    learningRate: 0.0001),
-                ValidationFile = validationFile.Id
-            });
-        
-        Console.WriteLine($"✅ Job created: {createdJob.JobId}");
-        Console.WriteLine($"\nCancelling job...");
-        
-        FineTuningJob jobToCancel = await GetJobByIdAsync(fineTuningClient, createdJob.JobId);
+        // Step 7: Cancel the job
+        Console.WriteLine("\n=== Step 7: Cancelling Job ===");
+        FineTuningJob jobToCancel = await fineTuningClient.GetJobAsync(createdJob.JobId);
         await jobToCancel.CancelAndUpdateAsync();
-        
         Console.WriteLine($"✅ Job cancelled! Status: {jobToCancel.Status}");
-    }
 
-    [Test]
-    [AsyncOnly]
-    public async Task FineTuningDeleteJobAsync()
-    {
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var jobId = "ftjob-97f963db426045a491369d57f7bc3720";
-        
-        var (fineTuningClient, _, _) = await GetClientsAsync(endpoint);
-        
-        Console.WriteLine($"\nDeleting job: {jobId}");
-        FineTuningJob jobToDelete = await GetJobByIdAsync(fineTuningClient, jobId);
+        // Step 8: Delete the job
+        Console.WriteLine("\n=== Step 8: Deleting Job ===");
+        FineTuningJob jobToDelete = await fineTuningClient.GetJobAsync(createdJob.JobId);
         var azureJob = (Azure.AI.OpenAI.FineTuning.AzureFineTuningJob)jobToDelete;
         
 #pragma warning disable AOAI001
@@ -348,47 +403,6 @@ public class Sample_AzureOpenAI_FineTuning_Refactored : SamplesBase<AIProjectsTe
 #pragma warning restore AOAI001
         
         Console.WriteLine($"✅ Job deleted successfully");
-    }
-
-    [Test]
-    [AsyncOnly]
-    public async Task FineTuningListCheckpointsAsync()
-    {
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var jobId = "ftjob-2730abd7e1574603bde2161a96d6645d";
-        
-        var (fineTuningClient, _, _) = await GetClientsAsync(endpoint);
-        
-        Console.WriteLine($"\nListing checkpoints for job: {jobId}");
-        FineTuningJob job = await GetJobByIdAsync(fineTuningClient, jobId);
-
-        int count = 0;
-        await foreach (FineTuningCheckpoint checkpoint in job.GetCheckpointsAsync())
-        {
-            Console.WriteLine($"Checkpoint {++count}: ID={checkpoint.Id}, Step={checkpoint.StepNumber}");
-            if (count >= 5) break;
-        }
-        Console.WriteLine($"✅ Listed {count} checkpoint(s)");
-    }
-
-    [Test]
-    [AsyncOnly]
-    public async Task FineTuningListEventsAsync()
-    {
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var jobId = "ftjob-2730abd7e1574603bde2161a96d6645d";
-        
-        var (fineTuningClient, _, _) = await GetClientsAsync(endpoint);
-        
-        Console.WriteLine($"\nListing events for job: {jobId}");
-        FineTuningJob job = await GetJobByIdAsync(fineTuningClient, jobId);
-
-        int count = 0;
-        await foreach (FineTuningEvent evt in job.GetEventsAsync(new GetEventsOptions() { PageSize = 10 }))
-        {
-            Console.WriteLine($"Event {++count}: {evt.Level} - {evt.Message}");
-            if (count >= 5) break;
-        }
-        Console.WriteLine($"✅ Listed {count} event(s)");
+        Console.WriteLine("\n=== Reinforcement Learning Full Lifecycle Complete ===");
     }
 }
