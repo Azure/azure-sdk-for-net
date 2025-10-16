@@ -196,12 +196,13 @@ function ProcessPackage($packageInfo)
 
     # If there's a groupId that means this is Java and pkgName = GroupId+ArtifactName
     # but the VerifyAPIReview requires GroupId:ArtifactName
+    Write-Host "Package name before checking groupId: $fullPackageName"
     if ($packageInfo.PSObject.Members.Name -contains "Group") {
-        $groupId = $packageInfo.Group        
-        Write-Debug "groupId: $groupId"
-        Write-Debug "artifactname: $($packageInfo.ArtifactName)"
+        $groupId = $packageInfo.Group
+        Write-Host "groupId: $groupId"
+        Write-Host "artifactname: $($packageInfo.ArtifactName)"
         if ($groupId){
-            $fullPackageName = "${groupId}:${$packageInfo.ArtifactName}"
+            $fullPackageName = "${groupId}:$($packageInfo.ArtifactName)"
         }
     }
 
