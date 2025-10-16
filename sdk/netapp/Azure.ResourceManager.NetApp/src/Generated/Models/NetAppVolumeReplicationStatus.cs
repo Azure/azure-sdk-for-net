@@ -69,8 +69,6 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Replication health check. </summary>
         public bool? IsHealthy { get; }
-        /// <summary> Status of the mirror relationship. </summary>
-        public NetAppRelationshipStatus? RelationshipStatus { get; }
         /// <summary> The status of the replication. </summary>
         public NetAppMirrorState? MirrorState { get; }
         /// <summary> The progress of the replication. </summary>

@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/4d3d0a372b8680b55640240fa14690f360f4e954/specification/netapp/resource-manager/readme.md
-tag: package-2025-06-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/51c2fd53bfed275d78bc3078440b8b81cdf13335/specification/netapp/resource-manager/readme.md
+#tag: package-preview-2025-07-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -76,6 +76,7 @@ override-operation-name:
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/quotaLimits/{quotaLimitName}
 
 prepend-rp-prefix:
   - Backup
@@ -201,7 +202,7 @@ rename-mapping:
   QuotaAvailabilityRequest: NetAppQuotaAvailabilityContent
   InAvailabilityReasonType: NetAppNameUnavailableReason
   Snapshot: NetAppVolumeSnapshot
-  SubscriptionQuotaItem: NetAppSubscriptionQuotaItem
+  QuotaItem: NetAppSubscriptionQuotaItem
   SubvolumeInfo: NetAppSubvolumeInfo
   Replication: NetAppVolumeReplication
   BackupStatus: NetAppVolumeBackupStatus
@@ -211,7 +212,7 @@ rename-mapping:
   BreakReplicationRequest: NetAppVolumeBreakReplicationContent
   DailySchedule: SnapshotPolicyDailySchedule
   EnableSubvolumes: EnableNetAppSubvolume
-  EncryptionType: CapacityPoolEncryptionType
+  PoolPropertiesEncryptionType: CapacityPoolEncryptionType
   ExportPolicyRule: NetAppVolumeExportPolicyRule
   HourlySchedule: SnapshotPolicyHourlySchedule
   MonthlySchedule: SnapshotPolicyMonthlySchedule
@@ -258,6 +259,9 @@ rename-mapping:
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
+  VolumeBackupRelationshipStatus: NetAppRelationshipStatus
+  VolumeRestoreRelationshipStatus: NetAppRelationshipStatus
+  Bucket: NetAppBucket
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
@@ -268,5 +272,8 @@ list-exception:
 directive:
   # remove this operation because the Snapshots_Update defines an empty object-
   - remove-operation: Snapshots_Update
-
+  - from: swagger-document
+    where: $.definitions.NetAppProvisioningState
+    transform: >
+      $["x-ms-enum"].modelAsString = false;
 ```
