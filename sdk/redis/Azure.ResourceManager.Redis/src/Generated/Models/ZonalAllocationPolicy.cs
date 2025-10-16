@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Redis.Models
         private const string UserDefinedValue = "UserDefined";
         private const string NoZonesValue = "NoZones";
 
-        /// <summary> Automatic. </summary>
+        /// <summary> The zones for the cache will be selected automatically based on availability and capacity. *. </summary>
         public static ZonalAllocationPolicy Automatic { get; } = new ZonalAllocationPolicy(AutomaticValue);
-        /// <summary> UserDefined. </summary>
+        /// <summary> UserDefined means the zones for the cache are manually configured using the 'zones' property, and can not be automatically selected. *. </summary>
         public static ZonalAllocationPolicy UserDefined { get; } = new ZonalAllocationPolicy(UserDefinedValue);
-        /// <summary> NoZones. </summary>
+        /// <summary> The cache will not use multiple availability zones. *. </summary>
         public static ZonalAllocationPolicy NoZones { get; } = new ZonalAllocationPolicy(NoZonesValue);
         /// <summary> Determines if two <see cref="ZonalAllocationPolicy"/> values are the same. </summary>
         public static bool operator ==(ZonalAllocationPolicy left, ZonalAllocationPolicy right) => left.Equals(right);
