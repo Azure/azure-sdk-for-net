@@ -121,7 +121,7 @@ public abstract partial class Specification : ModelBase
                 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
                 ```dotnetcli
-                dotnet add package {Namespace}
+                dotnet add package {Namespace} --prerelease
                 ```
 
                 ### Prerequisites
