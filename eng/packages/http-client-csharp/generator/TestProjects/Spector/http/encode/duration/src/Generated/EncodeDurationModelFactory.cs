@@ -23,6 +23,14 @@ namespace Encode.Duration
 
         public static Float64SecondsDurationProperty Float64SecondsDurationProperty(TimeSpan value = default) => throw null;
 
+        public static Int32MillisecondsDurationProperty Int32MillisecondsDurationProperty(TimeSpan value = default) => throw null;
+
+        public static FloatMillisecondsDurationProperty FloatMillisecondsDurationProperty(TimeSpan value = default) => throw null;
+
+        public static Float64MillisecondsDurationProperty Float64MillisecondsDurationProperty(TimeSpan value = default) => throw null;
+
         public static FloatSecondsDurationArrayProperty FloatSecondsDurationArrayProperty(IEnumerable<TimeSpan> value = default) => throw null;
+
+        public static FloatMillisecondsDurationArrayProperty FloatMillisecondsDurationArrayProperty(IEnumerable<TimeSpan> value = default) => throw null;
     }
 }
