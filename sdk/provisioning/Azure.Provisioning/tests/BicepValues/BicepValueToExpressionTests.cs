@@ -210,6 +210,23 @@ namespace Azure.Provisioning.Tests.BicepValues
         }
 
         [Test]
+        public void ValidateModelListProperty_ItemModelProperties_FromModelInstance()
+        {
+            var resource = new TestResource("test");
+            var modelInstance = new TestModel() { Name = "model1" };
+            resource.Models.Add(modelInstance);
+
+            var name = modelInstance.Name;
+            TestHelpers.AssertExpression("'model1'", name);
+            TestHelpers.AssertExpression("test.models[0].name", name.ToBicepExpression());
+
+            // validates the expression would change if the list is updated
+            resource.Models.Insert(0, new TestModel() { Name = "model0" });
+            // now the `modelInstance` is at index 1
+            TestHelpers.AssertExpression("test.models[1].name", name.ToBicepExpression());
+        }
+
+        [Test]
         public void ValidateOutputListProperty_Empty()
         {
             var resource = new TestResource("test");
@@ -596,6 +613,12 @@ namespace Azure.Provisioning.Tests.BicepValues
                 set { Initialize(); _withoutValue!.Assign(value); }
             }
 
+            private BicepValue<string>? _outputValue;
+            public BicepValue<string> OutputValue
+            {
+                get { Initialize(); return _outputValue!; }
+            }
+
             private BicepList<string>? _list;
             public BicepList<string> List
             {
@@ -639,6 +662,7 @@ namespace Azure.Provisioning.Tests.BicepValues
                 base.DefineProvisionableProperties();
                 _withValue = DefineProperty<string>("WithValue", ["withValue"]);
                 _withoutValue = DefineProperty<string>("WithoutValue", ["withoutValue"]);
+                _outputValue = DefineProperty<string>("OutputValue", ["outputValue"], isOutput: true);
                 _list = DefineListProperty<string>("List", ["list"]);
                 _outputList = DefineListProperty<string>("OutputList", ["outputList"], isOutput: true);
                 _models = DefineListProperty<TestModel>("Models", ["models"]);
