@@ -462,7 +462,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetAllPlaywrightQuota(location);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetAllPlaywrightQuota(location);
         }
 
         /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
