@@ -12,5 +12,6 @@
 Initial Release
       ]]>
 		</PackageReleaseNotes>
+		<AotCompatOptOut>true</AotCompatOptOut>
 	</PropertyGroup>
 </Project>
