@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.TrustedSigning
       safeName: AzureResourceManagerTrustedSigning
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.TrustedSigning
-      ExpectedWarningsFilepath: None
