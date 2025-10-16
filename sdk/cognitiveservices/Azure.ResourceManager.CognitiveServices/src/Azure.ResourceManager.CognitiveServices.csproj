@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Version>1.5.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.6.0</ApiCompatVersion>
+    <ApiCompatVersion>1.5.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.CognitiveServices</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.CognitiveServices.</Description>
     <PackageTags>azure;management;arm;resource manager;cognitiveservices</PackageTags>
