@@ -1,5 +1,5 @@
 
-. ${PSScriptRoot}\..\SemVer.ps1
+. (Join-Path $PSScriptRoot .. SemVer.ps1)
 
 $ReleaseDevOpsOrgParameters =  @("--organization", "https://dev.azure.com/azure-sdk")
 $ReleaseDevOpsCommonParameters =  $ReleaseDevOpsOrgParameters + @("--output", "json")
