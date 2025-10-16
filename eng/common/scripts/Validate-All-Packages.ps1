@@ -199,8 +199,6 @@ function ProcessPackage($packageInfo)
     Write-Host "Package name before checking groupId: $fullPackageName"
     if ($packageInfo.PSObject.Members.Name -contains "Group") {
         $groupId = $packageInfo.Group
-        Write-Host "groupId: $groupId"
-        Write-Host "artifactname: $($packageInfo.ArtifactName)"
         if ($groupId){
             $fullPackageName = "${groupId}:$($packageInfo.ArtifactName)"
         }
