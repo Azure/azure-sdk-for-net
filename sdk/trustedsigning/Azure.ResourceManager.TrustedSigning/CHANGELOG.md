@@ -14,7 +14,7 @@ This release is the first stable release of the Trusted Signing Management clien
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-- 
+
 ## 1.0.0-beta.1 (2024-04-27)
 
 ### General New Features
