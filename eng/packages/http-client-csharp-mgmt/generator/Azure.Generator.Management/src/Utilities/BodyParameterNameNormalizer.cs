@@ -6,16 +6,14 @@ using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator.Management.Utilities
 {
-    internal static class BodyParameterNormalizer
+    internal static class BodyParameterNameNormalizer
     {
-        private static readonly string[] ContentTypeSuffixes = ["Content", "Parameters", "Request", "Options", "Info", "Input"];
-
         /// <summary>
         /// Gets the normalized parameter name for body parameters.
         /// </summary>
         /// <param name="parameter">The parameter to normalize.</param>
         /// <returns>The normalized parameter name, or null if no normalization is needed.</returns>
-        public static string? GetNormalizedParameterName(ParameterProvider parameter)
+        public static string? GetNormalizedParameterNameForNonResourceMethod(ParameterProvider parameter)
         {
             if (parameter.Location != ParameterLocation.Body || !parameter.Type.IsModelType())
             {
@@ -49,25 +47,16 @@ namespace Azure.Generator.Management.Utilities
             }
 
             // Check if type name ends with any content suffixes - return "content"
-            if (EndsWithContentSuffix(typeName))
-            {
-                return "content";
-            }
-
-            return parameter.Name;
-        }
-
-        private static bool EndsWithContentSuffix(string typeName)
-        {
-            foreach (var suffix in ContentTypeSuffixes)
+            string[] contentTypeSuffixes = ["Content", "Parameters", "Request", "Options", "Info", "Input"];
+            foreach (var suffix in contentTypeSuffixes)
             {
                 if (typeName.EndsWith(suffix, System.StringComparison.Ordinal))
                 {
-                    return true;
+                    return "content";
                 }
             }
 
-            return false;
+            return parameter.Name;
         }
     }
 }
