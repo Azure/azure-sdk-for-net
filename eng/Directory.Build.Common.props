@@ -109,6 +109,7 @@
     <GenerateAPIListing Condition="'$(GenerateAPIListing)' == '' AND '$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">true</EnableSourceLink>
     <DefineConstants Condition="'$(BuildSnippets)' == 'true'">$(DefineConstants);SNIPPET</DefineConstants>
+    <AotCompatOptOut>false</AotCompatOptOut>
     <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == '$(LtsTargetFramework)'">netstandard2.0</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
@@ -162,7 +163,7 @@
     <!-- Also test net462 on Windows. net461 is out of support as of 4/2022 and is not supported in version 4.4.x and beyond of NUnit3TestAdapter. -->
     <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);net462</RequiredTargetFrameworks>
     <!-- But only build snippets for the latest. -->
-    <RequiredTargetFrameworks Condition="'$(BuildSnippets)' == 'true'">net9.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(BuildSnippets)' == 'true'">$(LtsTargetFramework)</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">

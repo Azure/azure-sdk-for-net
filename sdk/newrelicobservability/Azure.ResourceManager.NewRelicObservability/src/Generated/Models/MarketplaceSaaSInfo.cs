@@ -56,14 +56,18 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="marketplaceResourceId"> Marketplace Subscription Details: Resource URI. </param>
         /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
         /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
+        /// <param name="publisherId"> Publisher Id of the Marketplace offer. </param>
+        /// <param name="offerId"> Offer Id of the Marketplace offer,. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceSubscriptionName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceSubscriptionName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId, string publisherId, string offerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
             MarketplaceSubscriptionName = marketplaceSubscriptionName;
             MarketplaceResourceId = marketplaceResourceId;
             MarketplaceStatus = marketplaceStatus;
             BilledAzureSubscriptionId = billedAzureSubscriptionId;
+            PublisherId = publisherId;
+            OfferId = offerId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,5 +86,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </summary>
         [WirePath("billedAzureSubscriptionId")]
         public string BilledAzureSubscriptionId { get; }
+        /// <summary> Publisher Id of the Marketplace offer. </summary>
+        [WirePath("publisherId")]
+        public string PublisherId { get; }
+        /// <summary> Offer Id of the Marketplace offer,. </summary>
+        [WirePath("offerId")]
+        public string OfferId { get; }
     }
 }

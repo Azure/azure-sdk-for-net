@@ -11,11 +11,15 @@ using Encode.Duration._Property;
 namespace Encode.Duration
 {
     [ModelReaderWriterBuildable(typeof(DefaultDurationProperty))]
-    [ModelReaderWriterBuildable(typeof(ISO8601DurationProperty))]
-    [ModelReaderWriterBuildable(typeof(Int32SecondsDurationProperty))]
-    [ModelReaderWriterBuildable(typeof(FloatSecondsDurationProperty))]
+    [ModelReaderWriterBuildable(typeof(Float64MillisecondsDurationProperty))]
     [ModelReaderWriterBuildable(typeof(Float64SecondsDurationProperty))]
+    [ModelReaderWriterBuildable(typeof(FloatMillisecondsDurationArrayProperty))]
+    [ModelReaderWriterBuildable(typeof(FloatMillisecondsDurationProperty))]
     [ModelReaderWriterBuildable(typeof(FloatSecondsDurationArrayProperty))]
+    [ModelReaderWriterBuildable(typeof(FloatSecondsDurationProperty))]
+    [ModelReaderWriterBuildable(typeof(Int32MillisecondsDurationProperty))]
+    [ModelReaderWriterBuildable(typeof(Int32SecondsDurationProperty))]
+    [ModelReaderWriterBuildable(typeof(ISO8601DurationProperty))]
     public partial class EncodeDurationContext : ModelReaderWriterContext
     {
     }

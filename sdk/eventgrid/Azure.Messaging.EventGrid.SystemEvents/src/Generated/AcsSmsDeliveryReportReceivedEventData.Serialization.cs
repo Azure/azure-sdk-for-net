@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.SMSDeliveryReportReceived event. </summary>
     [JsonConverter(typeof(AcsSmsDeliveryReportReceivedEventDataConverter))]
-    public partial class AcsSmsDeliveryReportReceivedEventData : IJsonModel<AcsSmsDeliveryReportReceivedEventData>
+    public partial class AcsSmsDeliveryReportReceivedEventData : AcsSmsEventBaseProperties, IJsonModel<AcsSmsDeliveryReportReceivedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/> for deserialization. </summary>
         internal AcsSmsDeliveryReportReceivedEventData()

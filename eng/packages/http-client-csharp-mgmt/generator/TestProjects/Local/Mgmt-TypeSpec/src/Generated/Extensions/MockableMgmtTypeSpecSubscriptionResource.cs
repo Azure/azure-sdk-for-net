@@ -21,10 +21,14 @@ namespace MgmtTypeSpec.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableMgmtTypeSpecSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _foosClientDiagnostics;
+        private Foos _foosRestClient;
+        private ClientDiagnostics _bazsClientDiagnostics;
+        private Bazs _bazsRestClient;
         private ClientDiagnostics _zoosClientDiagnostics;
         private Zoos _zoosRestClient;
-        private ClientDiagnostics _fooTasksClientDiagnostics;
-        private FooTasks _fooTasksRestClient;
+        private ClientDiagnostics _mgmtTypeSpecClientClientDiagnostics;
+        private MgmtTypeSpecClient _mgmtTypeSpecClientRestClient;
 
         /// <summary> Initializes a new instance of MockableMgmtTypeSpecSubscriptionResource for mocking. </summary>
         protected MockableMgmtTypeSpecSubscriptionResource()
@@ -38,13 +42,97 @@ namespace MgmtTypeSpec.Mocking
         {
         }
 
+        private ClientDiagnostics FoosClientDiagnostics => _foosClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Foos FoosRestClient => _foosRestClient ??= new Foos(FoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
+        private ClientDiagnostics BazsClientDiagnostics => _bazsClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Bazs BazsRestClient => _bazsRestClient ??= new Bazs(BazsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
         private ClientDiagnostics ZoosClientDiagnostics => _zoosClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Zoos ZoosRestClient => _zoosRestClient ??= new Zoos(ZoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
-        private ClientDiagnostics FooTasksClientDiagnostics => _fooTasksClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics MgmtTypeSpecClientClientDiagnostics => _mgmtTypeSpecClientClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FooTasks FooTasksRestClient => _fooTasksRestClient ??= new FooTasks(FooTasksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private MgmtTypeSpecClient MgmtTypeSpecClientRestClient => _mgmtTypeSpecClientRestClient ??= new MgmtTypeSpecClient(MgmtTypeSpecClientClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
+        /// <summary> Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
+        public virtual PlaywrightQuotaCollection GetAllPlaywrightQuota(AzureLocation location)
+        {
+            return GetCachedClient(client => new PlaywrightQuotaCollection(client, Id, location));
+        }
+
+        /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PlaywrightQuotaResource>> GetPlaywrightQuotaAsync(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        {
+            return await GetAllPlaywrightQuota(location).GetAsync(playwrightQuotaName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<PlaywrightQuotaResource> GetPlaywrightQuota(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        {
+            return GetAllPlaywrightQuota(location).Get(playwrightQuotaName, cancellationToken);
+        }
+
+        /// <summary> List Foo resources by subscription ID. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FooResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FooResource> GetFoosAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<FooData, FooResource>(new FoosGetBySubscriptionAsyncCollectionResultOfT(FoosRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FooResource(Client, data));
+        }
+
+        /// <summary> List Foo resources by subscription ID. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FooResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FooResource> GetFoos(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<FooData, FooResource>(new FoosGetBySubscriptionCollectionResultOfT(FoosRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FooResource(Client, data));
+        }
+
+        /// <summary> List Baz resources by subscription ID. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BazResource> GetBazsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BazData, BazResource>(new BazsGetBySubscriptionAsyncCollectionResultOfT(BazsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new BazResource(Client, data));
+        }
+
+        /// <summary> List Baz resources by subscription ID. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BazResource> GetBazs(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BazData, BazResource>(new BazsGetBySubscriptionCollectionResultOfT(BazsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new BazResource(Client, data));
+        }
 
         /// <summary> List Zoo resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -72,14 +160,14 @@ namespace MgmtTypeSpec.Mocking
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>
-        /// <param name="body"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<FooPreviewAction>> PreviewActionsAsync(AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<FooPreviewAction>> PreviewActionsAsync(AzureLocation location, FooPreviewAction content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
+            using DiagnosticScope scope = MgmtTypeSpecClientClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
             scope.Start();
             try
             {
@@ -87,7 +175,7 @@ namespace MgmtTypeSpec.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
+                HttpMessage message = MgmtTypeSpecClientRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
@@ -105,14 +193,14 @@ namespace MgmtTypeSpec.Mocking
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>
-        /// <param name="body"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<FooPreviewAction> PreviewActions(AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<FooPreviewAction> PreviewActions(AzureLocation location, FooPreviewAction content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FooTasksClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
+            using DiagnosticScope scope = MgmtTypeSpecClientClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
             scope.Start();
             try
             {
@@ -120,7 +208,7 @@ namespace MgmtTypeSpec.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FooTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(body), context);
+                HttpMessage message = MgmtTypeSpecClientRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, FooPreviewAction.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooPreviewAction> response = Response.FromValue(FooPreviewAction.FromResponse(result), result);
                 if (response.Value == null)

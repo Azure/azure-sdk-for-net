@@ -18,7 +18,7 @@ using MgmtTypeSpec.Models;
 namespace MgmtTypeSpec
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class BarData : IJsonModel<BarData>
+    public partial class BarData : TrackedResourceData, IJsonModel<BarData>
     {
         /// <summary> Initializes a new instance of <see cref="BarData"/> for deserialization. </summary>
         internal BarData()
@@ -82,7 +82,7 @@ namespace MgmtTypeSpec
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation location = default;
             BarProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace MgmtTypeSpec
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

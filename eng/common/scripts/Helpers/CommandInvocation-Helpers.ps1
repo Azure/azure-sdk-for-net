@@ -1,4 +1,6 @@
-function Invoke-LoggedCommand
+. $PSScriptRoot/../logging.ps1
+
+function Invoke-LoggedMsbuildCommand
 {
     [CmdletBinding()]
     param
@@ -8,12 +10,26 @@ function Invoke-LoggedCommand
         [switch] $GroupOutput,
         [int[]] $AllowedExitCodes = @(0)
     )
+    return Invoke-LoggedCommand $Command -ExecutePath $ExecutePath -GroupOutput:$GroupOutput -AllowedExitCodes $AllowedExitCodes -OutputProcessor { param($line) ProcessMsBuildLogLine $line }
 
-    $pipelineBuild = !!$env:TF_BUILD
+}
+
+function Invoke-LoggedCommand
+{
+    [CmdletBinding()]
+    param
+    (
+        [string] $Command,
+        [string] $ExecutePath,
+        [switch] $GroupOutput,
+        [int[]] $AllowedExitCodes = @(0),
+        [scriptblock] $OutputProcessor
+    )
+
     $startTime = Get-Date
 
-    if($pipelineBuild -and $GroupOutput) {
-        Write-Host "##[group]$Command"
+    if($GroupOutput) {
+        LogGroupStart $Command
     } else {
         Write-Host "> $Command"
     }
@@ -22,20 +38,29 @@ function Invoke-LoggedCommand
       Push-Location $ExecutePath
     }
 
+    if (!$OutputProcessor) {
+      $OutputProcessor = { param($line) $line }
+    }
+
     try {
-      Invoke-Expression $Command
+      Invoke-Expression $Command | Foreach-Object { & $OutputProcessor $_ }
 
       $duration = (Get-Date) - $startTime
 
-      if($pipelineBuild -and $GroupOutput) {
-        Write-Host "##[endgroup]"
+      if($GroupOutput) {
+        LogGroupEnd
       }
 
       if($LastExitCode -notin $AllowedExitCodes)
       {
-          if($pipelineBuild) {
-              Write-Error "##[error]Command failed to execute ($duration): $Command`n"
-          } else {
+          LogError "Command failed to execute ($duration): $Command`n"
+
+          # This fix reproduces behavior that existed before 
+          # https://github.com/Azure/azure-sdk-tools/pull/12235 
+          # Before that change, if a command failed Write-Error was always 
+          # invoked in the failure case. Today, LogError only does Write-Error
+          # when running locally (not in a CI environment)
+          if ((Test-SupportsDevOpsLogging) -or (Test-SupportsGitHubLogging)) {
               Write-Error "Command failed to execute ($duration): $Command`n"
           }
       }

@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AgriculturePlatform;
 
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
-    public partial class AgricultureSolution : IUtf8JsonSerializable, IJsonModel<AgricultureSolution>
+    /// <summary> Installed data manager for Agriculture solution detail. </summary>
+    public partial class AgricultureSolution : IJsonModel<AgricultureSolution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgricultureSolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AgricultureSolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgricultureSolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureSolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AgricultureSolution)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ApplicationName))
             {
                 writer.WritePropertyName("applicationName"u8);
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +81,27 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             }
         }
 
-        AgricultureSolution IJsonModel<AgricultureSolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AgricultureSolution IJsonModel<AgricultureSolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AgricultureSolution JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgricultureSolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureSolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AgricultureSolution)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAgricultureSolution(document.RootElement, options);
         }
 
-        internal static AgricultureSolution DeserializeAgricultureSolution(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AgricultureSolution DeserializeAgricultureSolution(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,46 +112,44 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             string saasSubscriptionId = default;
             string saasSubscriptionName = default;
             string planId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("applicationName"u8))
+                if (prop.NameEquals("applicationName"u8))
                 {
-                    applicationName = property.Value.GetString();
+                    applicationName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("partnerId"u8))
+                if (prop.NameEquals("partnerId"u8))
                 {
-                    partnerId = property.Value.GetString();
+                    partnerId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("marketPlacePublisherId"u8))
+                if (prop.NameEquals("marketPlacePublisherId"u8))
                 {
-                    marketPlacePublisherId = property.Value.GetString();
+                    marketPlacePublisherId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("saasSubscriptionId"u8))
+                if (prop.NameEquals("saasSubscriptionId"u8))
                 {
-                    saasSubscriptionId = property.Value.GetString();
+                    saasSubscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("saasSubscriptionName"u8))
+                if (prop.NameEquals("saasSubscriptionName"u8))
                 {
-                    saasSubscriptionName = property.Value.GetString();
+                    saasSubscriptionName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("planId"u8))
+                if (prop.NameEquals("planId"u8))
                 {
-                    planId = property.Value.GetString();
+                    planId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AgricultureSolution(
                 applicationName,
                 partnerId,
@@ -154,13 +157,16 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 saasSubscriptionId,
                 saasSubscriptionName,
                 planId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AgricultureSolution>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AgricultureSolution>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AgricultureSolution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureSolution>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -170,15 +176,20 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             }
         }
 
-        AgricultureSolution IPersistableModel<AgricultureSolution>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AgricultureSolution>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AgricultureSolution IPersistableModel<AgricultureSolution>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AgricultureSolution PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureSolution>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAgricultureSolution(document.RootElement, options);
                     }
                 default:
@@ -186,6 +197,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AgricultureSolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

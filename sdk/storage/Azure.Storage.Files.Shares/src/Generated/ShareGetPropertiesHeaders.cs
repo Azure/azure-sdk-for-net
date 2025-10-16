@@ -69,5 +69,7 @@ namespace Azure.Storage.Files.Shares
         public DateTimeOffset? NextAllowedProvisionedIopsDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-iops-downgrade-time", out DateTimeOffset? value) ? value : null;
         /// <summary> Returns the current share next allowed provisioned bandwidth downgrade time. </summary>
         public DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeTime => _response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-bandwidth-downgrade-time", out DateTimeOffset? value) ? value : null;
+        /// <summary> Specifies whether granting of new directory leases for directories present in a share is enabled(allowed) or disabled(blocked).  Header is only returned for a SMB Share. </summary>
+        public bool? EnableSmbDirectoryLease => _response.Headers.TryGetValue("x-ms-enable-smb-directory-lease", out bool? value) ? value : null;
     }
 }

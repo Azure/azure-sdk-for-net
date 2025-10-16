@@ -48,31 +48,18 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="AddressValidationOutput"/>. </summary>
         internal AddressValidationOutput()
         {
-            AlternateAddresses = new ChangeTrackingList<DataBoxShippingAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AddressValidationOutput"/>. </summary>
-        /// <param name="validationType"> Identifies the type of validation response. </param>
-        /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="validationStatus"> The address validation status. </param>
-        /// <param name="alternateAddresses"> List of alternate addresses. </param>
+        /// <param name="properties"> The address validation properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AddressValidationOutput(DataBoxValidationInputDiscriminator? validationType, ResponseError error, AddressValidationStatus? validationStatus, IReadOnlyList<DataBoxShippingAddress> alternateAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AddressValidationOutput(AddressValidationResult properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ValidationType = validationType;
-            Error = error;
-            ValidationStatus = validationStatus;
-            AlternateAddresses = alternateAddresses;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Identifies the type of validation response. </summary>
-        internal DataBoxValidationInputDiscriminator? ValidationType { get; set; }
-        /// <summary> Error code and message of validation response. </summary>
-        public ResponseError Error { get; }
-        /// <summary> The address validation status. </summary>
-        public AddressValidationStatus? ValidationStatus { get; }
-        /// <summary> List of alternate addresses. </summary>
-        public IReadOnlyList<DataBoxShippingAddress> AlternateAddresses { get; }
+        /// <summary> The address validation properties. </summary>
+        public AddressValidationResult Properties { get; }
     }
 }

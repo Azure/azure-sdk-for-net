@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.CallStarted event. </summary>
     [JsonConverter(typeof(AcsCallStartedEventDataConverter))]
-    public partial class AcsCallStartedEventData : IJsonModel<AcsCallStartedEventData>
+    public partial class AcsCallStartedEventData : AcsCallingEventProperties, IJsonModel<AcsCallStartedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsCallStartedEventData"/> for deserialization. </summary>
         internal AcsCallStartedEventData()
