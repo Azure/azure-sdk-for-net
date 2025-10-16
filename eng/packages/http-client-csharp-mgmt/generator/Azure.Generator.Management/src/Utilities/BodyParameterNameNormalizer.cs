@@ -8,6 +8,8 @@ namespace Azure.Generator.Management.Utilities
 {
     internal static class BodyParameterNameNormalizer
     {
+        private static readonly string[] ContentTypeSuffixes = ["Content", "Parameters", "Request", "Options", "Info", "Input"];
+
         /// <summary>
         /// Gets the normalized parameter name for body parameters.
         /// </summary>
@@ -47,8 +49,7 @@ namespace Azure.Generator.Management.Utilities
             }
 
             // Check if type name ends with any content suffixes - return "content"
-            string[] contentTypeSuffixes = ["Content", "Parameters", "Request", "Options", "Info", "Input"];
-            foreach (var suffix in contentTypeSuffixes)
+            foreach (var suffix in ContentTypeSuffixes)
             {
                 if (typeName.EndsWith(suffix, System.StringComparison.Ordinal))
                 {
