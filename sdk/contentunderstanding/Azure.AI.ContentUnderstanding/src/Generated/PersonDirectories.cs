@@ -536,18 +536,16 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="personDirectoryId"> The unique identifier of the person directory. </param>
         /// <param name="tags"> Tags associated with the person. </param>
         /// <param name="faceIds"> List of faces associated with the person. </param>
-        /// <param name="personId"> The unique identifier of the person. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="personDirectoryId"/> or <paramref name="personId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="personDirectoryId"/> or <paramref name="personId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="personDirectoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="personDirectoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersonDirectoryPerson> AddPerson(string personDirectoryId, IDictionary<string, string> tags = default, IEnumerable<string> faceIds = default, string personId, CancellationToken cancellationToken = default)
+        public virtual Response<PersonDirectoryPerson> AddPerson(string personDirectoryId, IDictionary<string, string> tags = default, IEnumerable<string> faceIds = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personDirectoryId, nameof(personDirectoryId));
-            Argument.AssertNotNullOrEmpty(personId, nameof(personId));
 
             AddPersonRequest spreadModel = new AddPersonRequest(tags, faceIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = this.AddPerson(personDirectoryId, spreadModel, personId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.AddPerson(personDirectoryId, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((PersonDirectoryPerson)result, result);
         }
 
@@ -555,18 +553,16 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="personDirectoryId"> The unique identifier of the person directory. </param>
         /// <param name="tags"> Tags associated with the person. </param>
         /// <param name="faceIds"> List of faces associated with the person. </param>
-        /// <param name="personId"> The unique identifier of the person. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="personDirectoryId"/> or <paramref name="personId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="personDirectoryId"/> or <paramref name="personId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="personDirectoryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="personDirectoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersonDirectoryPerson>> AddPersonAsync(string personDirectoryId, IDictionary<string, string> tags = default, IEnumerable<string> faceIds = default, string personId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersonDirectoryPerson>> AddPersonAsync(string personDirectoryId, IDictionary<string, string> tags = default, IEnumerable<string> faceIds = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personDirectoryId, nameof(personDirectoryId));
-            Argument.AssertNotNullOrEmpty(personId, nameof(personId));
 
             AddPersonRequest spreadModel = new AddPersonRequest(tags, faceIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
-            Response result = await this.AddPersonAsync(personDirectoryId, spreadModel, personId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.AddPersonAsync(personDirectoryId, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((PersonDirectoryPerson)result, result);
         }
 

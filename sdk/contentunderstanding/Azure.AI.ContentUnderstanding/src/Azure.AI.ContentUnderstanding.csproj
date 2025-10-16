@@ -6,6 +6,9 @@
     <PackageTags>Azure ContentUnderstanding</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <!-- Suppress AZC0034: ContentUnderstanding is the successor to FormRecognizer/DocumentIntelligence and is not intended to be used alongside them -->
+    <!-- Suppress AZC0012: "Faces" is a specific term in this domain context -->
+    <NoWarn>$(NoWarn);AZC0034;AZC0012</NoWarn>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
