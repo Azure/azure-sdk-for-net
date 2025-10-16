@@ -199,7 +199,7 @@ namespace Azure.Data.AppConfiguration
         private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
         {
             return HttpPipelineBuilder.Build(options,
-                new HttpPipelinePolicy[] { new CustomHeadersPolicy() },
+                new HttpPipelinePolicy[] { new CustomHeadersPolicy(), new QueryParamPolicy() },
                 new HttpPipelinePolicy[] { authenticationPolicy, syncTokenPolicy },
                 new ResponseClassifier());
         }
