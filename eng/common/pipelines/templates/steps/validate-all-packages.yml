@@ -33,7 +33,7 @@ steps:
             -ConfigFileDir '${{ parameters.ConfigFileDir }}' `
             -BuildDefinition $(System.CollectionUri)$(System.TeamProject)/_build?definitionId=$(System.DefinitionId) `
             -PipelineUrl $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId) `
-            -IsReleaseBuild $$(SetAsReleaseBuild) `
+            -IsReleaseBuild $(SetAsReleaseBuild) `
             -PackageInfoFiles ('${{ convertToJson(parameters.PackageInfoFiles) }}' | ConvertFrom-Json -NoEnumerate)
         workingDirectory: $(Pipeline.Workspace)
       displayName: Validate packages and update work items
