@@ -458,11 +458,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
-        public static PlaywrightQuotaCollection GetPlaywrightQuotas(this SubscriptionResource subscriptionResource, AzureLocation location)
+        public static PlaywrightQuotaCollection GetAllPlaywrightQuota(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetPlaywrightQuotas(location);
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetAllPlaywrightQuota(location);
         }
 
         /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>

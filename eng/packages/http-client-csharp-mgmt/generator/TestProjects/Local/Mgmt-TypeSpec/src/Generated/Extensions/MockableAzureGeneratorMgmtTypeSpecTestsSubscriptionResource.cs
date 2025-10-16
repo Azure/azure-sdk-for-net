@@ -61,7 +61,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <summary> Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
-        public virtual PlaywrightQuotaCollection GetPlaywrightQuotas(AzureLocation location)
+        public virtual PlaywrightQuotaCollection GetAllPlaywrightQuota(AzureLocation location)
         {
             return GetCachedClient(client => new PlaywrightQuotaCollection(client, Id, location));
         }
@@ -73,7 +73,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PlaywrightQuotaResource>> GetPlaywrightQuotaAsync(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
-            return await GetPlaywrightQuotas(location).GetAsync(playwrightQuotaName, cancellationToken).ConfigureAwait(false);
+            return await GetAllPlaywrightQuota(location).GetAsync(playwrightQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
@@ -83,7 +83,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         [ForwardsClientCalls]
         public virtual Response<PlaywrightQuotaResource> GetPlaywrightQuota(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
-            return GetPlaywrightQuotas(location).Get(playwrightQuotaName, cancellationToken);
+            return GetAllPlaywrightQuota(location).Get(playwrightQuotaName, cancellationToken);
         }
 
         /// <summary> List Foo resources by subscription ID. </summary>
