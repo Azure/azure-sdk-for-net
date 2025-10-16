@@ -25,8 +25,8 @@ Param (
 
 Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
-. ${PSScriptRoot}\Helpers\ApiView-Helpers.ps1
-. ${PSScriptRoot}\Helpers\DevOps-WorkItem-Helpers.ps1
+. (Join-Path $PSScriptRoot Helpers\ApiView-Helpers.ps1)
+. (Join-Path $PSScriptRoot Helpers\DevOps-WorkItem-Helpers.ps1)
 
 # Function to validate change log
 function ValidateChangeLog($changeLogPath, $versionString, $validationStatus)
