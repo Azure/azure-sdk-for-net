@@ -184,16 +184,13 @@ namespace Azure.Generator.Management.Providers
         // This special-casing will be replaced by a generalized naming strategy in a follow-up PR.
         private string BuildFactoryMethodName()
         {
-            var nounsHavingIrregularPlural = new[] { "quota" };
+            var ResourceNamesHavingIrregularPlural = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "PlaywrightQuota", "PlaywrightWorkspaceQuota" };
             var pluralOfResourceName = ResourceName.Pluralize();
             var methodName = $"Get{pluralOfResourceName}";
-            foreach (var irregularPlural in nounsHavingIrregularPlural)
+
+            if (ResourceNamesHavingIrregularPlural.Contains(ResourceName))
             {
-                if (ResourceName.ToLower().EndsWith(irregularPlural))
-                {
-                    methodName = $"GetAll{ResourceName}";
-                    break;
-                }
+                methodName = $"GetAll{ResourceName}";
             }
 
             return methodName;
