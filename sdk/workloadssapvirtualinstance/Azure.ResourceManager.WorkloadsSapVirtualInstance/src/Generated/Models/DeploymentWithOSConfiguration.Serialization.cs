@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    public partial class DeploymentWithOSConfiguration : IUtf8JsonSerializable, IJsonModel<DeploymentWithOSConfiguration>
+    /// <summary> Deployment along with OS Configuration. </summary>
+    internal partial class DeploymentWithOSConfiguration : IJsonModel<DeploymentWithOSConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentWithOSConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeploymentWithOSConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AppLocation))
             {
@@ -50,102 +51,108 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 writer.WritePropertyName("softwareConfiguration"u8);
                 writer.WriteObjectValue(SoftwareConfiguration, options);
             }
-            if (Optional.IsDefined(OSSapConfiguration))
+            if (Optional.IsDefined(OsSapConfiguration))
             {
                 writer.WritePropertyName("osSapConfiguration"u8);
-                writer.WriteObjectValue(OSSapConfiguration, options);
+                writer.WriteObjectValue(OsSapConfiguration, options);
             }
         }
 
-        DeploymentWithOSConfiguration IJsonModel<DeploymentWithOSConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentWithOSConfiguration IJsonModel<DeploymentWithOSConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeploymentWithOSConfiguration)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SapConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeploymentWithOSConfiguration(document.RootElement, options);
         }
 
-        internal static DeploymentWithOSConfiguration DeserializeDeploymentWithOSConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeploymentWithOSConfiguration DeserializeDeploymentWithOSConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            SapConfigurationType configurationType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AzureLocation? appLocation = default;
             InfrastructureConfiguration infrastructureConfiguration = default;
             SapSoftwareConfiguration softwareConfiguration = default;
-            OSSapConfiguration osSapConfiguration = default;
-            SapConfigurationType configurationType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            OsSapConfiguration osSapConfiguration = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("appLocation"u8))
+                if (prop.NameEquals("configurationType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    configurationType = new SapConfigurationType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("appLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    appLocation = new AzureLocation(property.Value.GetString());
+                    appLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("infrastructureConfiguration"u8))
+                if (prop.NameEquals("infrastructureConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    infrastructureConfiguration = InfrastructureConfiguration.DeserializeInfrastructureConfiguration(property.Value, options);
+                    infrastructureConfiguration = InfrastructureConfiguration.DeserializeInfrastructureConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("softwareConfiguration"u8))
+                if (prop.NameEquals("softwareConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(property.Value, options);
+                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("osSapConfiguration"u8))
+                if (prop.NameEquals("osSapConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osSapConfiguration = OSSapConfiguration.DeserializeOSSapConfiguration(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("configurationType"u8))
-                {
-                    configurationType = new SapConfigurationType(property.Value.GetString());
+                    osSapConfiguration = OsSapConfiguration.DeserializeOsSapConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DeploymentWithOSConfiguration(
                 configurationType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 appLocation,
                 infrastructureConfiguration,
                 softwareConfiguration,
                 osSapConfiguration);
         }
 
-        BinaryData IPersistableModel<DeploymentWithOSConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeploymentWithOSConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -155,15 +162,20 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        DeploymentWithOSConfiguration IPersistableModel<DeploymentWithOSConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentWithOSConfiguration IPersistableModel<DeploymentWithOSConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeploymentWithOSConfiguration)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SapConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeploymentWithOSConfiguration(document.RootElement, options);
                     }
                 default:
@@ -171,6 +183,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeploymentWithOSConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

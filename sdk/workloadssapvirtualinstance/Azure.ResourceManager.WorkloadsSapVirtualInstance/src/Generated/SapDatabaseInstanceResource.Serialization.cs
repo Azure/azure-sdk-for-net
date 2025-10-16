@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
+    /// <summary></summary>
     public partial class SapDatabaseInstanceResource : IJsonModel<SapDatabaseInstanceData>
     {
-        private static SapDatabaseInstanceData s_dataDeserializationInstance;
-        private static SapDatabaseInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SapDatabaseInstanceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SapDatabaseInstanceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SapDatabaseInstanceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapDatabaseInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SapDatabaseInstanceData>)Data).Write(writer, options);
 
-        SapDatabaseInstanceData IJsonModel<SapDatabaseInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapDatabaseInstanceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapDatabaseInstanceData IJsonModel<SapDatabaseInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SapDatabaseInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SapDatabaseInstanceData>(Data, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SapDatabaseInstanceData IPersistableModel<SapDatabaseInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapDatabaseInstanceData>(data, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
 
-        string IPersistableModel<SapDatabaseInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapDatabaseInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SapDatabaseInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

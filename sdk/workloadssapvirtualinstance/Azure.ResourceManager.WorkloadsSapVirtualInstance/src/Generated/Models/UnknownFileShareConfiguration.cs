@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    /// <summary> Unknown version of FileShareConfiguration. </summary>
     internal partial class UnknownFileShareConfiguration : FileShareConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFileShareConfiguration"/>. </summary>
         /// <param name="configurationType"> The type of file share config, eg: Mount/CreateAndMount/Skip. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownFileShareConfiguration(FileShareConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(configurationType, serializedAdditionalRawData)
-        {
-            ConfigurationType = configurationType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownFileShareConfiguration"/> for deserialization. </summary>
-        internal UnknownFileShareConfiguration()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownFileShareConfiguration(FileShareConfigurationType configurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(configurationType != default ? configurationType : "unknown", additionalBinaryDataProperties)
         {
         }
     }
