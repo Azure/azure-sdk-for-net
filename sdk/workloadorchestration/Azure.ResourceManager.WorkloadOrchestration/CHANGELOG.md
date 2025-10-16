@@ -1,5 +1,14 @@
 # Release History
 
+## 2.0.0 (2025-10-16)
+
+### Features Added
+- Upgraded package version to 2.0.0.
+- Updated generated code to the latest version.
+
+### Breaking Changes
+- This version contains breaking changes to the public API surface.
+
 ## 1.1.0 (2025-10-14)
 
 ### Features Added
