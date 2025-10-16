@@ -64,6 +64,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             _edgeSolutionVersionSolutionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string edgeSolutionVersionSolutionVersionsApiVersion);
             _edgeSolutionVersionSolutionVersionsRestClient = new SolutionVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSolutionVersionSolutionVersionsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
