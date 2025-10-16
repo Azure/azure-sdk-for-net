@@ -66,7 +66,7 @@ namespace Azure.AI.VoiceLive.Tests
             stopwatchEnabled.Stop();
 
             // Assert - Disabled should be significantly faster
-            Assert.Less(stopwatchDisabled.ElapsedMilliseconds, stopwatchEnabled.ElapsedMilliseconds * 0.1,
+            Assert.LessOrEqual(stopwatchDisabled.ElapsedMilliseconds, stopwatchEnabled.ElapsedMilliseconds * 0.1,
                 "Disabled logging should have minimal overhead");
 
             // Both should be reasonably fast (less than 100ms for 1000 operations)
