@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            TrustedSigningAccountNameAvailabilityContent content = new TrustedSigningAccountNameAvailabilityContent(default, "sample-account");
+            TrustedSigningAccountNameAvailabilityContent content = new TrustedSigningAccountNameAvailabilityContent(new ResourceType("Microsoft.CodeSigning/codeSigningAccounts"), "sample-account");
             TrustedSigningAccountNameAvailabilityResult result = await subscriptionResource.CheckTrustedSigningAccountNameAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");

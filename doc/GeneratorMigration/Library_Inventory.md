@@ -3,7 +3,7 @@
 ## Summary
 
 - Total libraries: 416
-- Management Plane (Swagger): 165
+- Management Plane (Swagger): 164
 - Management Plane (TSP-Old): 46
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 14
