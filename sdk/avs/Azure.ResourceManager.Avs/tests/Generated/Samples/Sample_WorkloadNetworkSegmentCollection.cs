@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WorkloadNetworksCreateSegments()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_CreateSegments.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_CreateSegments.json
             // this example is just showing the usage of "WorkloadNetworkSegment_CreateSegments" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetSegment()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetSegment.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_GetSegment.json
             // this example is just showing the usage of "WorkloadNetworkSegment_GetSegment" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_WorkloadNetworksListSegments()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_ListSegments.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_ListSegments.json
             // this example is just showing the usage of "WorkloadNetworkSegment_ListSegments" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_WorkloadNetworksGetSegment()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetSegment.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_GetSegment.json
             // this example is just showing the usage of "WorkloadNetworkSegment_GetSegment" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_WorkloadNetworksGetSegment()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetSegment.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_GetSegment.json
             // this example is just showing the usage of "WorkloadNetworkSegment_GetSegment" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

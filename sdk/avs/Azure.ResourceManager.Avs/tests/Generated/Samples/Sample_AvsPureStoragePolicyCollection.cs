@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PureStoragePoliciesCreateOrUpdate()
         {
-            // Generated from example definition: 2024-09-01/PureStoragePolicies_CreateOrUpdate.json
+            // Generated from example definition: 2025-09-01/PureStoragePolicies_CreateOrUpdate.json
             // this example is just showing the usage of "PureStoragePolicy_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PureStoragePoliciesGet()
         {
-            // Generated from example definition: 2024-09-01/PureStoragePolicies_Get.json
+            // Generated from example definition: 2025-09-01/PureStoragePolicies_Get.json
             // this example is just showing the usage of "PureStoragePolicy_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_PureStoragePoliciesList()
         {
-            // Generated from example definition: 2024-09-01/PureStoragePolicies_List.json
+            // Generated from example definition: 2025-09-01/PureStoragePolicies_List.json
             // this example is just showing the usage of "PureStoragePolicy_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_PureStoragePoliciesGet()
         {
-            // Generated from example definition: 2024-09-01/PureStoragePolicies_Get.json
+            // Generated from example definition: 2025-09-01/PureStoragePolicies_Get.json
             // this example is just showing the usage of "PureStoragePolicy_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PureStoragePoliciesGet()
         {
-            // Generated from example definition: 2024-09-01/PureStoragePolicies_Get.json
+            // Generated from example definition: 2025-09-01/PureStoragePolicies_Get.json
             // this example is just showing the usage of "PureStoragePolicy_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
