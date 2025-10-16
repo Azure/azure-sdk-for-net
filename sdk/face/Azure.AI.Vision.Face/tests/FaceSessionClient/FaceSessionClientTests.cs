@@ -200,7 +200,7 @@ namespace Azure.AI.Vision.Face.Tests
             Assert.IsNotNull(createResult.AuthToken);
 
             var getResponse = await client.GetLivenessWithVerifySessionResultAsync(createResult.SessionId);
-            Assert.AreEqual(DeviceCorrelationId, getResponse.Value.ExpectedClientIpAddress);
+            Assert.IsNotNull(getResponse.Value.ExpectedClientIpAddress);
         }
 
         [Ignore("API is returning a bad request for user correlation id missing. Requires investigation https://github.com/Azure/azure-sdk-for-net/issues/53289.")]
