@@ -231,7 +231,7 @@ namespace Azure.Provisioning.Tests.BicepValues
         {
             var resource = new TestResource("test");
             var outputList = resource.OutputList;
-            TestHelpers.AssertExpression("[]", outputList); // TODO -- should this throw? or just like right now we return an empty list?
+            TestHelpers.AssertExpression("[]", outputList); // TODO -- Here it should print an expression to align the behavior that output property would compile into an expression automatically.
             TestHelpers.AssertExpression("test.outputList", outputList.ToBicepExpression());
         }
 
@@ -303,7 +303,8 @@ namespace Azure.Provisioning.Tests.BicepValues
                 Properties = new TestProperties()
             };
             var nestedOutputList = resource.Properties.OutputList;
-            TestHelpers.AssertExpression("[]", nestedOutputList); // TODO -- should this throw? or just like right now we return an empty list?
+            var outputProperty = resource.OutputValue;
+            TestHelpers.AssertExpression("[]", nestedOutputList); // TODO -- Here it should print an expression to align the behavior that output property would compile into an expression automatically.
             TestHelpers.AssertExpression("test.properties.outputList", nestedOutputList.ToBicepExpression());
         }
 
@@ -367,7 +368,7 @@ namespace Azure.Provisioning.Tests.BicepValues
         {
             var resource = new TestResource("test");
             var outputDict = resource.OutputDictionary;
-            TestHelpers.AssertExpression("{ }", outputDict); // TODO -- should this throw? or just like right now we return an empty dictionary?
+            TestHelpers.AssertExpression("{ }", outputDict); // TODO -- Here it should print an expression to align the behavior that output property would compile into an expression automatically.
             TestHelpers.AssertExpression("test.outputDictionary", outputDict.ToBicepExpression());
         }
 
@@ -439,7 +440,7 @@ namespace Azure.Provisioning.Tests.BicepValues
                 Properties = new TestProperties()
             };
             var nestedOutputDict = resource.Properties.OutputDictionary;
-            TestHelpers.AssertExpression("{ }", nestedOutputDict); // TODO -- should this throw? or just like right now we return an empty dictionary?
+            TestHelpers.AssertExpression("{ }", nestedOutputDict); // TODO -- Here it should print an expression to align the behavior that output property would compile into an expression automatically.
             TestHelpers.AssertExpression("test.properties.outputDictionary", nestedOutputDict.ToBicepExpression());
         }
 
