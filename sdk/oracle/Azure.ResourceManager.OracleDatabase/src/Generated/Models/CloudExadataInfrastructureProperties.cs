@@ -96,8 +96,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="databaseServerType"> The database server model type of the cloud Exadata infrastructure resource. </param>
         /// <param name="storageServerType"> The storage server model type of the cloud Exadata infrastructure resource. </param>
         /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
+        /// <param name="exascaleConfig"> The exascale config details for the cloud Exadata infrastructure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudExadataInfrastructureProperties(IReadOnlyList<DefinedFileSystemConfiguration> definedFileSystemConfiguration, string exadataInfraOcid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, OracleDatabaseMaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<OracleCustomerContact> customerContacts, OracleDatabaseProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDBNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, string lastMaintenanceRunOcid, string nextMaintenanceRunOcid, string monthlyDBServerVersion, string monthlyStorageServerVersion, string databaseServerType, string storageServerType, OracleDatabaseComputeModel? computeModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudExadataInfrastructureProperties(IReadOnlyList<DefinedFileSystemConfiguration> definedFileSystemConfiguration, string exadataInfraOcid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, OracleDatabaseMaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<OracleCustomerContact> customerContacts, OracleDatabaseProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDBNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, string lastMaintenanceRunOcid, string nextMaintenanceRunOcid, string monthlyDBServerVersion, string monthlyStorageServerVersion, string databaseServerType, string storageServerType, OracleDatabaseComputeModel? computeModel, ExascaleConfigDetails exascaleConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefinedFileSystemConfiguration = definedFileSystemConfiguration;
             ExadataInfraOcid = exadataInfraOcid;
@@ -134,6 +135,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DatabaseServerType = databaseServerType;
             StorageServerType = storageServerType;
             ComputeModel = computeModel;
+            ExascaleConfig = exascaleConfig;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -212,5 +214,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string StorageServerType { get; set; }
         /// <summary> The compute model of the Exadata Infrastructure. </summary>
         public OracleDatabaseComputeModel? ComputeModel { get; }
+        /// <summary> The exascale config details for the cloud Exadata infrastructure. </summary>
+        public ExascaleConfigDetails ExascaleConfig { get; }
     }
 }

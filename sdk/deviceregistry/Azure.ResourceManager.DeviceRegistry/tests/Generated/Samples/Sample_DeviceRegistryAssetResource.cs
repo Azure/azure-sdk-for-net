@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAsset()
         {
-            // Generated from example definition: 2024-11-01/Get_Asset.json
+            // Generated from example definition: 2025-10-01/Get_Asset.json
             // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAssetWithSyncStatus()
         {
-            // Generated from example definition: 2024-11-01/Get_Asset_With_SyncStatus.json
+            // Generated from example definition: 2025-10-01/Get_Asset_With_SyncStatus.json
             // this example is just showing the usage of "Asset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAsset()
         {
-            // Generated from example definition: 2024-11-01/Delete_Asset.json
+            // Generated from example definition: 2025-10-01/Delete_Asset.json
             // this example is just showing the usage of "Asset_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAsset()
         {
-            // Generated from example definition: 2024-11-01/Update_Asset.json
+            // Generated from example definition: 2025-10-01/Update_Asset.json
             // this example is just showing the usage of "Asset_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

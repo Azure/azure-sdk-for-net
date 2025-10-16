@@ -863,10 +863,6 @@ namespace BasicTypeSpec
         /// <summary> body parameter without body decorator. </summary>
         /// <param name="name"> name of the ThingModel. </param>
         /// <param name="requiredUnion"> required Union. </param>
-        /// <param name="requiredLiteralString"> required literal string. </param>
-        /// <param name="requiredLiteralInt"> required literal int. </param>
-        /// <param name="requiredLiteralFloat"> required literal float. </param>
-        /// <param name="requiredLiteralBool"> required literal bool. </param>
         /// <param name="requiredBadDescription"> description with xml &lt;|endoftext|&gt;. </param>
         /// <param name="requiredNullableList"> required nullable collection. </param>
         /// <param name="optionalLiteralString"> optional literal string. </param>
@@ -875,23 +871,22 @@ namespace BasicTypeSpec
         /// <param name="optionalLiteralBool"> optional literal bool. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/>, <paramref name="requiredLiteralString"/> or <paramref name="requiredBadDescription"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="requiredBadDescription"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThingModel> AnonymousBody(string name, BinaryData requiredUnion, string requiredLiteralString, int requiredLiteralInt, float requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, string optionalLiteralString = default, int? optionalLiteralInt = default, float? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
+        public virtual Response<ThingModel> AnonymousBody(string name, BinaryData requiredUnion, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
-            Argument.AssertNotNull(requiredLiteralString, nameof(requiredLiteralString));
             Argument.AssertNotNullOrEmpty(requiredBadDescription, nameof(requiredBadDescription));
 
             ThingModel spreadModel = new ThingModel(
                 name,
                 requiredUnion,
-                requiredLiteralString,
-                requiredLiteralInt,
-                requiredLiteralFloat,
-                requiredLiteralBool,
+                "accept",
+                123,
+                1.23F,
+                false,
                 optionalLiteralString,
                 optionalLiteralInt,
                 optionalLiteralFloat,
@@ -907,10 +902,6 @@ namespace BasicTypeSpec
         /// <summary> body parameter without body decorator. </summary>
         /// <param name="name"> name of the ThingModel. </param>
         /// <param name="requiredUnion"> required Union. </param>
-        /// <param name="requiredLiteralString"> required literal string. </param>
-        /// <param name="requiredLiteralInt"> required literal int. </param>
-        /// <param name="requiredLiteralFloat"> required literal float. </param>
-        /// <param name="requiredLiteralBool"> required literal bool. </param>
         /// <param name="requiredBadDescription"> description with xml &lt;|endoftext|&gt;. </param>
         /// <param name="requiredNullableList"> required nullable collection. </param>
         /// <param name="optionalLiteralString"> optional literal string. </param>
@@ -919,23 +910,22 @@ namespace BasicTypeSpec
         /// <param name="optionalLiteralBool"> optional literal bool. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/>, <paramref name="requiredLiteralString"/> or <paramref name="requiredBadDescription"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="requiredBadDescription"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ThingModel>> AnonymousBodyAsync(string name, BinaryData requiredUnion, string requiredLiteralString, int requiredLiteralInt, float requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, string optionalLiteralString = default, int? optionalLiteralInt = default, float? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThingModel>> AnonymousBodyAsync(string name, BinaryData requiredUnion, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
-            Argument.AssertNotNull(requiredLiteralString, nameof(requiredLiteralString));
             Argument.AssertNotNullOrEmpty(requiredBadDescription, nameof(requiredBadDescription));
 
             ThingModel spreadModel = new ThingModel(
                 name,
                 requiredUnion,
-                requiredLiteralString,
-                requiredLiteralInt,
-                requiredLiteralFloat,
-                requiredLiteralBool,
+                "accept",
+                123,
+                1.23F,
+                false,
                 optionalLiteralString,
                 optionalLiteralInt,
                 optionalLiteralFloat,
@@ -2186,6 +2176,70 @@ namespace BasicTypeSpec
         public virtual async Task<Response> ConditionalRequestDateAsync(RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
             return await ConditionalRequestDateAsync(requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] A sample operation with multipart request
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response MultipartRequest(RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.MultipartRequest");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateMultipartRequestRequest(content, contentType, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] A sample operation with multipart request
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> MultipartRequestAsync(RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.MultipartRequest");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateMultipartRequestRequest(content, contentType, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

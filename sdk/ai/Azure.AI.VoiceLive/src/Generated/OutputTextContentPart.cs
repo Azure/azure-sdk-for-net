@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="OutputTextContentPart"/>. </summary>
         /// <param name="text"> The text content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public OutputTextContentPart(string text) : base("text")
+        public OutputTextContentPart(string text) : base(ContentPartType.Text)
         {
             Argument.AssertNotNull(text, nameof(text));
 
@@ -27,7 +27,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"> The type of the content part. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text content. </param>
-        internal OutputTextContentPart(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
+        internal OutputTextContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
         }
