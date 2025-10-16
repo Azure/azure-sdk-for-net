@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -47,6 +48,14 @@ namespace Azure.Storage.Test
             public string KeyService { get; } = "KeyService";
             public string KeyVersion { get; } = "KeyVersion";
             public string DelegatedObjectId { get; } = "DelegatedOid";
+            public Dictionary<string, List<string>> RequestHeaders { get; } = new Dictionary<string, List<string>>()
+            {
+                { "foo", new List<string>{ "bar" } }
+            };
+            public Dictionary<string, List<string>> RequestQueryParameters { get; } = new Dictionary<string, List<string>>()
+            {
+                { "hello", new List<string>{ "world" } }
+            };
             public string KeyValue { get; } = Convert.ToBase64String(Encoding.UTF8.GetBytes("value"));
             public SasProtocol Protocol { get; } = SasProtocol.Https;
 

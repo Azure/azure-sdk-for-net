@@ -400,17 +400,18 @@ namespace Azure.Storage.Blobs.Test
 
             Dictionary<string, List<string>> requestHeaders = new Dictionary<string, List<string>>()
             {
-                //{ "a", new List<string>{ "1" } },
-                //{ "b", new List<string>{ "2" } },
-                { "", new List<string>{ "empty header" } },
+                //{ "empty headerValue", new List<string>{ "" } }, // this gets ignored when sending the header
+                //{ "", new List<string>{ "empty headerName" } }, // this gets ignored
                 { "foo", new List<string>{ "bar" } },
                 { "city", new List<string>{ "redmond", "atlanta" } },
-                { "state", new List<string>{ "washington", "georgia" } }
+                //{ "state", new List<string>{ "washington", "georgia" } }
             };
 
             Dictionary<string, List<string>> requestQueryParameters = new Dictionary<string, List<string>>()
             {
-                { "", new List<string>{ "empty query parameter" } },
+                //{ "empty queryParamValue", new List<string>{ "" } },
+                //{ "null queryParamValue", new List<string>{ null } },
+                //{ "", new List<string>{ "empty queryParamName" } },
                 { "firstName", new List<string>{ "john", "Tim" } },
                 { "lastName", new List<string>{ "Smith", "jones" } },
                 { "abra", new List<string>{ "cadabra" } }
@@ -430,23 +431,33 @@ namespace Azure.Storage.Blobs.Test
                 Sas = blobSasQueryParameters
             };
 
-            BlobClientOptions blobClientOptions = GetOptions();
-
+            CustomRequestHeadersAndQueryParametersPolicy customRequestPolicy = new CustomRequestHeadersAndQueryParametersPolicy();
             // Send the request headers based on 'requestHeaders' Dictionary
             foreach (var header in requestHeaders)
             {
-                foreach (string value in header.Value)
+                if (!string.IsNullOrEmpty(header.Key))
                 {
-                    if (string.IsNullOrEmpty(header.Key))
+                    foreach (string value in header.Value)
                     {
-                        // Skip empty headers, they are not valid
-                        continue;
+                        customRequestPolicy.AddRequestHeader(header.Key, value);
                     }
-                    CustomRequestHeadersAndQueryParametersPolicy customRequestPolicy = new CustomRequestHeadersAndQueryParametersPolicy(header.Key);
-                    customRequestPolicy.SetRequestHeaderValue(value);
-                    blobClientOptions.AddPolicy(customRequestPolicy, HttpPipelinePosition.PerCall);
                 }
             }
+
+            // Send the query parameters based on 'requestQueryParameters' Dictionary
+            foreach (var param in requestQueryParameters)
+            {
+                if (param.Key != null)
+                {
+                    foreach (string value in param.Value)
+                    {
+                        customRequestPolicy.AddQueryParameter(param.Key, value);
+                    }
+                }
+            }
+
+            BlobClientOptions blobClientOptions = GetOptions();
+            blobClientOptions.AddPolicy(customRequestPolicy, HttpPipelinePosition.PerCall);
             BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), TestEnvironment.Credential, blobClientOptions));
 
             // Act

@@ -516,8 +516,8 @@ namespace Azure.Storage.Sas
             string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
             string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
             string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
-            string canonicalizedSignedRequestHeaders = GetCanonicalRequestHeadersStringToSign();
-            string canonicalizedSignedRequestQueryParameters = GetCanonicalRequestQueryParametersStringToSign();
+            string canonicalizedSignedRequestHeaders = SasExtensions.FormatRequestHeadersForSasSigning(RequestHeaders);
+            string canonicalizedSignedRequestQueryParameters = SasExtensions.FormatRequestQueryParametersForSasSigning(RequestQueryParameters);
             Console.WriteLine($"canonicalizedSignedRequestHeaders = {canonicalizedSignedRequestHeaders}");
             Console.WriteLine($"canonicalizedSignedRequestQueryParameters = {canonicalizedSignedRequestQueryParameters}");
 
@@ -612,48 +612,6 @@ namespace Azure.Storage.Sas
             }
 
             Version = SasQueryParametersInternals.DefaultSasVersionInternal;
-        }
-
-        private string GetCanonicalRequestHeadersStringToSign()
-        {
-            if (RequestHeaders == null || RequestHeaders.Count == 0)
-            {
-                return null;
-            }
-            StringBuilder sb = new StringBuilder();
-            foreach (var entry in RequestHeaders)
-            {
-                if (!string.IsNullOrEmpty(entry.Key))
-                {
-                    sb
-                    .Append(entry.Key)
-                    .Append(':')
-                    .Append(string.Join(",", entry.Value))
-                    .Append('\n');
-                }
-            }
-            return sb.ToString();
-        }
-
-        private string GetCanonicalRequestQueryParametersStringToSign()
-        {
-            if (RequestQueryParameters == null || RequestQueryParameters.Count == 0)
-            {
-                return null;
-            }
-            StringBuilder sb = new StringBuilder();
-            foreach (var entry in RequestQueryParameters)
-            {
-                if (!string.IsNullOrEmpty(entry.Key))
-                {
-                    sb
-                    .Append('\n')
-                    .Append(entry.Key)
-                    .Append(':')
-                    .Append(string.Join(",", entry.Value));
-                }
-            }
-            return sb.ToString();
         }
 
         /// <summary>

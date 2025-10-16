@@ -1047,7 +1047,6 @@ namespace Azure.Storage.Sas
             if (RequestQueryParameters != null && RequestQueryParameters.Count > 0)
             {
                 Dictionary<string, List<string>> encodedQueryParameters = RequestQueryParameters
-                    .Where(kvp => !string.IsNullOrEmpty(kvp.Key))
                     .ToDictionary(
                         kvp => WebUtility.UrlEncode(kvp.Key),
                         kvp => kvp.Value?.Select(WebUtility.UrlEncode).ToList()
