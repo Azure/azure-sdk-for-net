@@ -1,0 +1,49 @@
+{
+  "AzureContentUnderstanding": {
+    "Endpoint": "https://your-resource-name.services.ai.azure.com/",
+    "Key": ""
+  }
+}
+
+// Azure Content Understanding Service Configuration
+// Copy this file to appsettings.json and update with your actual values
+//
+// This is a SHARED configuration file for all samples in this directory.
+// Place your credentials here to use across all samples.
+//
+// Location: samples/appsettings.json (shared across all samples)
+// Alternative: Each sample can have its own appsettings.json which will override this shared file
+//
+// Your Azure Content Understanding service endpoint
+// Example: https://your-resource-name.services.ai.azure.com/
+// If you need help to create one, please see the Prerequisites section in:
+//   https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=document#prerequisites
+//
+// Authentication Options:
+// Option 1: Use Azure Key (FOR TESTING ONLY - Less secure)
+// Set the "Key" value if you want to use key-based authentication
+// WARNING: Keys are less secure and should only be used for testing/development
+// Leave empty to use DefaultAzureCredential (recommended)
+//
+// Option 2: Use DefaultAzureCredential (RECOMMENDED for production and development)
+// If "Key" is empty, all samples will use DefaultAzureCredential
+//
+// Most common development scenario:
+//   1. Install Azure CLI: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+//   2. Login: az login
+//   3. Run any sample (no additional configuration needed)
+//
+// This also supports:
+//   - Environment variables (AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_TENANT_ID)
+//   - Managed Identity (for Azure-hosted applications)
+//   - Visual Studio Code authentication
+//   - Azure PowerShell authentication
+// For more info: https://learn.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme#defaultazurecredential
+//
+// Configuration Priority (later overrides earlier):
+// 1. samples/appsettings.json (this file - shared)
+// 2. SampleName/appsettings.json (sample-specific overrides)
+// 3. Environment variables:
+//    - AZURE_CONTENT_UNDERSTANDING_ENDPOINT
+//    - AZURE_CONTENT_UNDERSTANDING_KEY
+

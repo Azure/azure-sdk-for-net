@@ -1,0 +1,6 @@
+# Shared configuration files (may contain sensitive information)
+appsettings.json
+
+# Output directories
+output/
+
