@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.StorageDiscovery
     [ModelReaderWriterBuildable(typeof(StorageDiscoveryWorkspaceData))]
     [ModelReaderWriterBuildable(typeof(StorageDiscoveryWorkspaceListResult))]
     [ModelReaderWriterBuildable(typeof(StorageDiscoveryWorkspacePatch))]
+    [ModelReaderWriterBuildable(typeof(StorageDiscoveryWorkspacePatchProperties))]
     [ModelReaderWriterBuildable(typeof(StorageDiscoveryWorkspaceProperties))]
-    [ModelReaderWriterBuildable(typeof(StorageDiscoveryWorkspacePropertiesUpdate))]
     [ModelReaderWriterBuildable(typeof(StorageDiscoveryWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerStorageDiscoveryContext : ModelReaderWriterContext

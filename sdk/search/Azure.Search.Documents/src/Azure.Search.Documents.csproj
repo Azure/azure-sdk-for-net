@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Search.Documents client library</AssemblyTitle>
-    <Version>11.7.0-beta.8</Version>
+    <Version>11.8.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>11.6.1</ApiCompatVersion>
+    <ApiCompatVersion>11.7.0</ApiCompatVersion>
     <Description>
       This is the Azure Cognitive Search client library for developing .NET
       applications with rich search experiences.  It enables you to query your
@@ -17,8 +17,8 @@
     <NoWarn>
      $(NoWarn);
      AZC0004;
-     AZC0035; <!-- Missing model factory methods.  #51224-->
     </NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->
@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Threading.Channels" />
   </ItemGroup>
 

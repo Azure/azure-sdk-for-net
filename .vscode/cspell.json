@@ -642,7 +642,10 @@
         "cnames",
         "easm",
         "nxdomain",
-        "whois"
+        "whois",
+        "cisa",
+        "cves",
+        "remediations"
       ]
     },
     {
