@@ -7,48 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Defines the status of a guest agent installation. </summary>
     public partial class GuestAgentInstallStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GuestAgentInstallStatus"/>. </summary>
         public GuestAgentInstallStatus()
         {
-            ErrorDetails = new ChangeTrackingList<ResponseError>();
+            ErrorDetails = new ChangeTrackingList<ErrorDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestAgentInstallStatus"/>. </summary>
@@ -57,26 +29,30 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="lastStatusChangedOn"> The time of the last status change. </param>
         /// <param name="agentVersion"> The hybrid machine agent full version. </param>
         /// <param name="errorDetails"> Details about the error state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GuestAgentInstallStatus(string vmUuid, HybridMachineAgentInstallationStatusType? status, DateTimeOffset? lastStatusChangedOn, string agentVersion, IReadOnlyList<ResponseError> errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GuestAgentInstallStatus(string vmUuid, HybridMachineAgentInstallationStatusType? status, DateTimeOffset? lastStatusChangedOn, string agentVersion, IReadOnlyList<ErrorDetail> errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmUuid = vmUuid;
             Status = status;
             LastStatusChangedOn = lastStatusChangedOn;
             AgentVersion = agentVersion;
             ErrorDetails = errorDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the VM's unique SMBIOS ID. </summary>
         public string VmUuid { get; }
+
         /// <summary> The installation status of the hybrid machine agent installation. </summary>
         public HybridMachineAgentInstallationStatusType? Status { get; }
+
         /// <summary> The time of the last status change. </summary>
         public DateTimeOffset? LastStatusChangedOn { get; }
+
         /// <summary> The hybrid machine agent full version. </summary>
         public string AgentVersion { get; }
+
         /// <summary> Details about the error state. </summary>
-        public IReadOnlyList<ResponseError> ErrorDetails { get; }
+        public IReadOnlyList<ErrorDetail> ErrorDetails { get; }
     }
 }

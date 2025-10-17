@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    public partial class HciVmInstanceHardwareProfile : IUtf8JsonSerializable, IJsonModel<HciVmInstanceHardwareProfile>
+    /// <summary> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </summary>
+    public partial class HciVmInstanceHardwareProfile : IJsonModel<HciVmInstanceHardwareProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciVmInstanceHardwareProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmInstanceHardwareProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciVmInstanceHardwareProfile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
@@ -58,21 +58,21 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 writer.WritePropertyName("virtualMachineGPUs"u8);
                 writer.WriteStartArray();
-                foreach (var item in VirtualMachineGPUs)
+                foreach (HciVmInstanceHardwareProfileGpuConfiguration item in VirtualMachineGPUs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,79 +81,83 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
-        HciVmInstanceHardwareProfile IJsonModel<HciVmInstanceHardwareProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmInstanceHardwareProfile IJsonModel<HciVmInstanceHardwareProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmInstanceHardwareProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciVmInstanceHardwareProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciVmInstanceHardwareProfile(document.RootElement, options);
         }
 
-        internal static HciVmInstanceHardwareProfile DeserializeHciVmInstanceHardwareProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HciVmInstanceHardwareProfile DeserializeHciVmInstanceHardwareProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             HciVmSize? vmSize = default;
             int? processors = default;
-            long? memoryMB = default;
+            long? memoryInMB = default;
             HciVmInstanceHardwareProfileDynamicMemoryConfiguration dynamicMemoryConfig = default;
             IList<HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("vmSize"u8))
+                if (prop.NameEquals("vmSize"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vmSize = new HciVmSize(property.Value.GetString());
+                    vmSize = new HciVmSize(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("processors"u8))
+                if (prop.NameEquals("processors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    processors = property.Value.GetInt32();
+                    processors = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("memoryMB"u8))
+                if (prop.NameEquals("memoryMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryMB = property.Value.GetInt64();
+                    memoryInMB = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("dynamicMemoryConfig"u8))
+                if (prop.NameEquals("dynamicMemoryConfig"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dynamicMemoryConfig = HciVmInstanceHardwareProfileDynamicMemoryConfiguration.DeserializeHciVmInstanceHardwareProfileDynamicMemoryConfiguration(property.Value, options);
+                    dynamicMemoryConfig = HciVmInstanceHardwareProfileDynamicMemoryConfiguration.DeserializeHciVmInstanceHardwareProfileDynamicMemoryConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("virtualMachineGPUs"u8))
+                if (prop.NameEquals("virtualMachineGPUs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<HciVmInstanceHardwareProfileGpuConfiguration> array = new List<HciVmInstanceHardwareProfileGpuConfiguration>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(HciVmInstanceHardwareProfileGpuConfiguration.DeserializeHciVmInstanceHardwareProfileGpuConfiguration(item, options));
                     }
@@ -162,23 +166,25 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HciVmInstanceHardwareProfile(
                 vmSize,
                 processors,
-                memoryMB,
+                memoryInMB,
                 dynamicMemoryConfig,
                 virtualMachineGPUs ?? new ChangeTrackingList<HciVmInstanceHardwareProfileGpuConfiguration>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<HciVmInstanceHardwareProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HciVmInstanceHardwareProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -188,15 +194,20 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
-        HciVmInstanceHardwareProfile IPersistableModel<HciVmInstanceHardwareProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmInstanceHardwareProfile IPersistableModel<HciVmInstanceHardwareProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmInstanceHardwareProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHciVmInstanceHardwareProfile(document.RootElement, options);
                     }
                 default:
@@ -204,6 +215,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciVmInstanceHardwareProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

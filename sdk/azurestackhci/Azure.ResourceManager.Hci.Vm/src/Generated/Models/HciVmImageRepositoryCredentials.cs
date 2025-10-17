@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> The credentials used to login to the image repository that has access to the specified image. </summary>
     public partial class HciVmImageRepositoryCredentials
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmImageRepositoryCredentials"/>. </summary>
         /// <param name="username"> Username for accessing image repository. </param>
@@ -61,21 +33,17 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="HciVmImageRepositoryCredentials"/>. </summary>
         /// <param name="username"> Username for accessing image repository. </param>
         /// <param name="password"> Password for accessing image repository. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmImageRepositoryCredentials(string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmImageRepositoryCredentials(string username, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Username = username;
             Password = password;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HciVmImageRepositoryCredentials"/> for deserialization. </summary>
-        internal HciVmImageRepositoryCredentials()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Username for accessing image repository. </summary>
         public string Username { get; set; }
+
         /// <summary> Password for accessing image repository. </summary>
         public string Password { get; set; }
     }
