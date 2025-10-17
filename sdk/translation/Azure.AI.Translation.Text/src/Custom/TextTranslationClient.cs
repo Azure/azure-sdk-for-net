@@ -905,7 +905,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(requestBody, nameof(requestBody));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await TransliterateAsync(language, fromScript, toScript, RequestContentHelper.FromEnumerable(requestBody), clientTraceId, context).ConfigureAwait(false);
+            Response response = await TransliterateAsync(language, fromScript, toScript, RequestContentHelper.FromEnumerable(requestBody), GetClientTraceId(clientTraceId), context).ConfigureAwait(false);
             IReadOnlyList<TransliteratedText> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             List<TransliteratedText> array = new List<TransliteratedText>();
@@ -943,7 +943,7 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(requestBody, nameof(requestBody));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Transliterate(language, fromScript, toScript, RequestContentHelper.FromEnumerable(requestBody), clientTraceId, context);
+            Response response = Transliterate(language, fromScript, toScript, RequestContentHelper.FromEnumerable(requestBody), GetClientTraceId(clientTraceId), context);
             IReadOnlyList<TransliteratedText> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
             List<TransliteratedText> array = new List<TransliteratedText>();
@@ -975,7 +975,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual async Task<Response> TransliterateAsync(string language, string fromScript, string toScript, RequestContent content, Guid clientTraceId = default, RequestContext context = null)
+        internal virtual async Task<Response> TransliterateAsync(string language, string fromScript, string toScript, RequestContent content, string clientTraceId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -986,7 +986,7 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, GetClientTraceId(clientTraceId), context);
+                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, clientTraceId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1016,7 +1016,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual Response Transliterate(string language, string fromScript, string toScript, RequestContent content, Guid clientTraceId = default, RequestContext context = null)
+        internal virtual Response Transliterate(string language, string fromScript, string toScript, RequestContent content, string clientTraceId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -1027,7 +1027,7 @@ namespace Azure.AI.Translation.Text
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, GetClientTraceId(clientTraceId), context);
+                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, clientTraceId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
