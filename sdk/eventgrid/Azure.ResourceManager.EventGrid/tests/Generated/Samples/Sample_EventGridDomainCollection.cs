@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DomainsCreateOrUpdate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-04-01-preview/examples/Domains_CreateOrUpdate.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-07-15-preview/examples/Domains_CreateOrUpdate.json
             // this example is just showing the usage of "Domains_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,7 +73,7 @@ Action = EventGridIPActionType.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DomainsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-04-01-preview/examples/Domains_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-07-15-preview/examples/Domains_Get.json
             // this example is just showing the usage of "Domains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +106,7 @@ Action = EventGridIPActionType.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DomainsListByResourceGroup()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-04-01-preview/examples/Domains_ListByResourceGroup.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-07-15-preview/examples/Domains_ListByResourceGroup.json
             // this example is just showing the usage of "Domains_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -141,7 +141,7 @@ Action = EventGridIPActionType.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_DomainsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-04-01-preview/examples/Domains_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-07-15-preview/examples/Domains_Get.json
             // this example is just showing the usage of "Domains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +170,7 @@ Action = EventGridIPActionType.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DomainsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-04-01-preview/examples/Domains_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2025-07-15-preview/examples/Domains_Get.json
             // this example is just showing the usage of "Domains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
