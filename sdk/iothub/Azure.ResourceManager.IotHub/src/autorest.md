@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: IotHub
 namespace: Azure.ResourceManager.IotHub
-require: https://github.com/Azure/azure-rest-api-specs/blob/624dbc769880e5676ae8bb20d3c82ebd1783c64a/specification/iothub/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/72cee8dc40fe3bc4b7956c87f269f5a363411913/specification/iothub/resource-manager/Microsoft.Devices/IoTHub/readme.md
 #tag: package-2023-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotHub
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-30";
+            _apiVersion = apiVersion ?? "2025-08-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.IotHub
             return message;
         }
 
-        /// <summary> Create or update the metadata of an Iot hub. The usual pattern to modify a property is to retrieve the IoT hub metadata and security metadata, and then combine them with the modified values in a new body to update the IoT hub. If certain properties are missing in the JSON, updating IoT Hub may cause these values to fallback to default, which may lead to unexpected behavior. </summary>
+        /// <summary> Create or update the metadata of an Iot hub. The usual pattern to modify a property is to retrieve the IoT hub metadata and security metadata, and then combine them with the modified values in a new body to update the IoT hub. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        /// <summary> Create or update the metadata of an Iot hub. The usual pattern to modify a property is to retrieve the IoT hub metadata and security metadata, and then combine them with the modified values in a new body to update the IoT hub. If certain properties are missing in the JSON, updating IoT Hub may cause these values to fallback to default, which may lead to unexpected behavior. </summary>
+        /// <summary> Create or update the metadata of an Iot hub. The usual pattern to modify a property is to retrieve the IoT hub metadata and security metadata, and then combine them with the modified values in a new body to update the IoT hub. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
