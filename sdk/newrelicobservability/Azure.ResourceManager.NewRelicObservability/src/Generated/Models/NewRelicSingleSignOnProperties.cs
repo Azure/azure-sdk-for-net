@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Single sign on Info of the NewRelic account
-    /// Serialized Name: NewRelicSingleSignOnProperties
-    /// </summary>
+    /// <summary> Single sign on Info of the NewRelic account. </summary>
     public partial class NewRelicSingleSignOnProperties
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicSingleSignOnProperties"/>. </summary>
-        /// <param name="singleSignOnState">
-        /// Single sign-on state
-        /// Serialized Name: NewRelicSingleSignOnProperties.singleSignOnState
-        /// </param>
-        /// <param name="enterpriseAppId">
-        /// The Id of the Enterprise App used for Single sign-on.
-        /// Serialized Name: NewRelicSingleSignOnProperties.enterpriseAppId
-        /// </param>
-        /// <param name="singleSignOnUri">
-        /// The login URL specific to this NewRelic Organization
-        /// Serialized Name: NewRelicSingleSignOnProperties.singleSignOnUrl
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state
-        /// Serialized Name: NewRelicSingleSignOnProperties.provisioningState
-        /// </param>
+        /// <param name="singleSignOnState"> Single sign-on state. </param>
+        /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign-on. </param>
+        /// <param name="singleSignOnUri"> The login URL specific to this NewRelic Organization. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicSingleSignOnProperties(NewRelicSingleSignOnState? singleSignOnState, string enterpriseAppId, Uri singleSignOnUri, NewRelicProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,28 +65,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Single sign-on state
-        /// Serialized Name: NewRelicSingleSignOnProperties.singleSignOnState
-        /// </summary>
+        /// <summary> Single sign-on state. </summary>
         [WirePath("singleSignOnState")]
         public NewRelicSingleSignOnState? SingleSignOnState { get; set; }
-        /// <summary>
-        /// The Id of the Enterprise App used for Single sign-on.
-        /// Serialized Name: NewRelicSingleSignOnProperties.enterpriseAppId
-        /// </summary>
+        /// <summary> The Id of the Enterprise App used for Single sign-on. </summary>
         [WirePath("enterpriseAppId")]
         public string EnterpriseAppId { get; set; }
-        /// <summary>
-        /// The login URL specific to this NewRelic Organization
-        /// Serialized Name: NewRelicSingleSignOnProperties.singleSignOnUrl
-        /// </summary>
+        /// <summary> The login URL specific to this NewRelic Organization. </summary>
         [WirePath("singleSignOnUrl")]
         public Uri SingleSignOnUri { get; set; }
-        /// <summary>
-        /// Provisioning state
-        /// Serialized Name: NewRelicSingleSignOnProperties.provisioningState
-        /// </summary>
+        /// <summary> Provisioning state. </summary>
         [WirePath("provisioningState")]
         public NewRelicProvisioningState? ProvisioningState { get; set; }
     }

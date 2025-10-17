@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Flag specifying the Marketplace Subscription Status of the resource. If payment is not made in time, the resource will go in Suspended state.
-    /// Serialized Name: MarketplaceSubscriptionStatus
-    /// </summary>
+    /// <summary> Flag specifying the Marketplace Subscription Status of the resource. If payment is not made in time, the resource will go in Suspended state. </summary>
     public readonly partial struct NewRelicObservabilityMarketplaceSubscriptionStatus : IEquatable<NewRelicObservabilityMarketplaceSubscriptionStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string ActiveValue = "Active";
         private const string SuspendedValue = "Suspended";
 
-        /// <summary>
-        /// monitoring is enabled
-        /// Serialized Name: MarketplaceSubscriptionStatus.Active
-        /// </summary>
+        /// <summary> monitoring is enabled. </summary>
         public static NewRelicObservabilityMarketplaceSubscriptionStatus Active { get; } = new NewRelicObservabilityMarketplaceSubscriptionStatus(ActiveValue);
-        /// <summary>
-        /// monitoring is disabled
-        /// Serialized Name: MarketplaceSubscriptionStatus.Suspended
-        /// </summary>
+        /// <summary> monitoring is disabled. </summary>
         public static NewRelicObservabilityMarketplaceSubscriptionStatus Suspended { get; } = new NewRelicObservabilityMarketplaceSubscriptionStatus(SuspendedValue);
         /// <summary> Determines if two <see cref="NewRelicObservabilityMarketplaceSubscriptionStatus"/> values are the same. </summary>
         public static bool operator ==(NewRelicObservabilityMarketplaceSubscriptionStatus left, NewRelicObservabilityMarketplaceSubscriptionStatus right) => left.Equals(right);

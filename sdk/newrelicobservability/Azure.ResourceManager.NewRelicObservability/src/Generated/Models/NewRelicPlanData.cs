@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// The details of a PlanData resource.
-    /// Serialized Name: PlanDataResource
-    /// </summary>
+    /// <summary> The details of a PlanData resource. </summary>
     public partial class NewRelicPlanData : ResourceData
     {
         /// <summary>
@@ -60,18 +57,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="planData">
-        /// Plan details
-        /// Serialized Name: PlanDataResource.properties.planData
-        /// </param>
-        /// <param name="orgCreationSource">
-        /// Source of org creation
-        /// Serialized Name: PlanDataResource.properties.orgCreationSource
-        /// </param>
-        /// <param name="accountCreationSource">
-        /// Source of account creation
-        /// Serialized Name: PlanDataResource.properties.accountCreationSource
-        /// </param>
+        /// <param name="planData"> Plan details. </param>
+        /// <param name="orgCreationSource"> Source of org creation. </param>
+        /// <param name="accountCreationSource"> Source of account creation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NewRelicPlanDetails planData, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -81,22 +69,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Plan details
-        /// Serialized Name: PlanDataResource.properties.planData
-        /// </summary>
+        /// <summary> Plan details. </summary>
         [WirePath("properties.planData")]
         public NewRelicPlanDetails PlanData { get; set; }
-        /// <summary>
-        /// Source of org creation
-        /// Serialized Name: PlanDataResource.properties.orgCreationSource
-        /// </summary>
+        /// <summary> Source of org creation. </summary>
         [WirePath("properties.orgCreationSource")]
         public NewRelicObservabilityOrgCreationSource? OrgCreationSource { get; set; }
-        /// <summary>
-        /// Source of account creation
-        /// Serialized Name: PlanDataResource.properties.accountCreationSource
-        /// </summary>
+        /// <summary> Source of account creation. </summary>
         [WirePath("properties.accountCreationSource")]
         public NewRelicObservabilityAccountCreationSource? AccountCreationSource { get; set; }
     }

@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Response of a list app services Operation.
-    /// Serialized Name: AppServicesListResponse
-    /// </summary>
+    /// <summary> Response of a list app services Operation. </summary>
     internal partial class NewRelicAppServicesListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicAppServicesListResult"/>. </summary>
-        /// <param name="value">
-        /// The AppServiceInfo items on this page
-        /// Serialized Name: AppServicesListResponse.value
-        /// </param>
+        /// <param name="value"> The AppServiceInfo items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NewRelicAppServicesListResult(IEnumerable<NewRelicObservabilityAppServiceInfo> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicAppServicesListResult"/>. </summary>
-        /// <param name="value">
-        /// The AppServiceInfo items on this page
-        /// Serialized Name: AppServicesListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: AppServicesListResponse.nextLink
-        /// </param>
+        /// <param name="value"> The AppServiceInfo items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicAppServicesListResult(IReadOnlyList<NewRelicObservabilityAppServiceInfo> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
         }
 
-        /// <summary>
-        /// The AppServiceInfo items on this page
-        /// Serialized Name: AppServicesListResponse.value
-        /// </summary>
+        /// <summary> The AppServiceInfo items on this page. </summary>
         public IReadOnlyList<NewRelicObservabilityAppServiceInfo> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: AppServicesListResponse.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

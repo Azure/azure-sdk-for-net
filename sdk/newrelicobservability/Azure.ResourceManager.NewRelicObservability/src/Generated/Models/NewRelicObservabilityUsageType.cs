@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Different usage type like PAYG/COMMITTED
-    /// Serialized Name: UsageType
-    /// </summary>
+    /// <summary> Different usage type like PAYG/COMMITTED. </summary>
     public readonly partial struct NewRelicObservabilityUsageType : IEquatable<NewRelicObservabilityUsageType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string PaygValue = "PAYG";
         private const string CommittedValue = "COMMITTED";
 
-        /// <summary>
-        /// Usage type is PAYG
-        /// Serialized Name: UsageType.PAYG
-        /// </summary>
+        /// <summary> Usage type is PAYG. </summary>
         public static NewRelicObservabilityUsageType Payg { get; } = new NewRelicObservabilityUsageType(PaygValue);
-        /// <summary>
-        /// Usage type is COMMITTED
-        /// Serialized Name: UsageType.COMMITTED
-        /// </summary>
+        /// <summary> Usage type is COMMITTED. </summary>
         public static NewRelicObservabilityUsageType Committed { get; } = new NewRelicObservabilityUsageType(CommittedValue);
         /// <summary> Determines if two <see cref="NewRelicObservabilityUsageType"/> values are the same. </summary>
         public static bool operator ==(NewRelicObservabilityUsageType left, NewRelicObservabilityUsageType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Marketplace Subscription and Organization details to which resource gets billed into.
-    /// Serialized Name: BillingInfoResponse
-    /// </summary>
+    /// <summary> Marketplace Subscription and Organization details to which resource gets billed into. </summary>
     public partial class NewRelicBillingInfoResult
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicBillingInfoResult"/>. </summary>
-        /// <param name="marketplaceSaasInfo">
-        /// Marketplace Subscription details
-        /// Serialized Name: BillingInfoResponse.marketplaceSaasInfo
-        /// </param>
-        /// <param name="partnerBillingEntity">
-        /// Partner Billing Entity details: Organization Info
-        /// Serialized Name: BillingInfoResponse.partnerBillingEntity
-        /// </param>
+        /// <param name="marketplaceSaasInfo"> Marketplace Subscription details. </param>
+        /// <param name="partnerBillingEntity"> Partner Billing Entity details: Organization Info. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicBillingInfoResult(MarketplaceSaaSInfo marketplaceSaasInfo, PartnerBillingEntity partnerBillingEntity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Marketplace Subscription details
-        /// Serialized Name: BillingInfoResponse.marketplaceSaasInfo
-        /// </summary>
+        /// <summary> Marketplace Subscription details. </summary>
         [WirePath("marketplaceSaasInfo")]
         public MarketplaceSaaSInfo MarketplaceSaasInfo { get; }
-        /// <summary>
-        /// Partner Billing Entity details: Organization Info
-        /// Serialized Name: BillingInfoResponse.partnerBillingEntity
-        /// </summary>
+        /// <summary> Partner Billing Entity details: Organization Info. </summary>
         [WirePath("partnerBillingEntity")]
         public PartnerBillingEntity PartnerBillingEntity { get; }
     }

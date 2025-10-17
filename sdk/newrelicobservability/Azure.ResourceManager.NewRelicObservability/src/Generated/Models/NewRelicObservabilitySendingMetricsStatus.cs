@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Indicates whether metrics are being sent.
-    /// Serialized Name: SendingMetricsStatus
-    /// </summary>
+    /// <summary> Indicates whether metrics are being sent. </summary>
     public readonly partial struct NewRelicObservabilitySendingMetricsStatus : IEquatable<NewRelicObservabilitySendingMetricsStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string IsEnabledValue = "Enabled";
         private const string IsDisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: SendingMetricsStatus.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static NewRelicObservabilitySendingMetricsStatus IsEnabled { get; } = new NewRelicObservabilitySendingMetricsStatus(IsEnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: SendingMetricsStatus.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static NewRelicObservabilitySendingMetricsStatus IsDisabled { get; } = new NewRelicObservabilitySendingMetricsStatus(IsDisabledValue);
         /// <summary> Determines if two <see cref="NewRelicObservabilitySendingMetricsStatus"/> values are the same. </summary>
         public static bool operator ==(NewRelicObservabilitySendingMetricsStatus left, NewRelicObservabilitySendingMetricsStatus right) => left.Equals(right);

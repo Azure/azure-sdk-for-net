@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Liftr Resource category.
-    /// Serialized Name: LiftrResourceCategories
-    /// </summary>
+    /// <summary> Liftr Resource category. </summary>
     public readonly partial struct NewRelicLiftrResourceCategory : IEquatable<NewRelicLiftrResourceCategory>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string UnknownValue = "Unknown";
         private const string MonitorLogsValue = "MonitorLogs";
 
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: LiftrResourceCategories.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         public static NewRelicLiftrResourceCategory Unknown { get; } = new NewRelicLiftrResourceCategory(UnknownValue);
-        /// <summary>
-        /// MonitorLogs
-        /// Serialized Name: LiftrResourceCategories.MonitorLogs
-        /// </summary>
+        /// <summary> MonitorLogs. </summary>
         public static NewRelicLiftrResourceCategory MonitorLogs { get; } = new NewRelicLiftrResourceCategory(MonitorLogsValue);
         /// <summary> Determines if two <see cref="NewRelicLiftrResourceCategory"/> values are the same. </summary>
         public static bool operator ==(NewRelicLiftrResourceCategory left, NewRelicLiftrResourceCategory right) => left.Equals(right);

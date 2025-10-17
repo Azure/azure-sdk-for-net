@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// The operation for the patch on the resource.
-    /// Serialized Name: PatchOperation
-    /// </summary>
+    /// <summary> The operation for the patch on the resource. </summary>
     public readonly partial struct MonitoredSubscriptionPatchOperation : IEquatable<MonitoredSubscriptionPatchOperation>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string DeleteCompleteValue = "DeleteComplete";
         private const string ActiveValue = "Active";
 
-        /// <summary>
-        /// AddBegin
-        /// Serialized Name: PatchOperation.AddBegin
-        /// </summary>
+        /// <summary> AddBegin. </summary>
         public static MonitoredSubscriptionPatchOperation AddBegin { get; } = new MonitoredSubscriptionPatchOperation(AddBeginValue);
-        /// <summary>
-        /// AddComplete
-        /// Serialized Name: PatchOperation.AddComplete
-        /// </summary>
+        /// <summary> AddComplete. </summary>
         public static MonitoredSubscriptionPatchOperation AddComplete { get; } = new MonitoredSubscriptionPatchOperation(AddCompleteValue);
-        /// <summary>
-        /// DeleteBegin
-        /// Serialized Name: PatchOperation.DeleteBegin
-        /// </summary>
+        /// <summary> DeleteBegin. </summary>
         public static MonitoredSubscriptionPatchOperation DeleteBegin { get; } = new MonitoredSubscriptionPatchOperation(DeleteBeginValue);
-        /// <summary>
-        /// DeleteComplete
-        /// Serialized Name: PatchOperation.DeleteComplete
-        /// </summary>
+        /// <summary> DeleteComplete. </summary>
         public static MonitoredSubscriptionPatchOperation DeleteComplete { get; } = new MonitoredSubscriptionPatchOperation(DeleteCompleteValue);
-        /// <summary>
-        /// Active
-        /// Serialized Name: PatchOperation.Active
-        /// </summary>
+        /// <summary> Active. </summary>
         public static MonitoredSubscriptionPatchOperation Active { get; } = new MonitoredSubscriptionPatchOperation(ActiveValue);
         /// <summary> Determines if two <see cref="MonitoredSubscriptionPatchOperation"/> values are the same. </summary>
         public static bool operator ==(MonitoredSubscriptionPatchOperation left, MonitoredSubscriptionPatchOperation right) => left.Equals(right);

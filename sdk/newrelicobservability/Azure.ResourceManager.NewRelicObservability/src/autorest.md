@@ -20,8 +20,8 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-mgmt-debug:
-  show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -143,12 +143,5 @@ override-operation-name:
   Accounts_List: GetNewRelicAccounts
   Organizations_List: GetNewRelicOrganizations
   Plans_List: GetNewRelicPlans
-
-directive:
-  - from: NewRelic.json 
-    where: $.definitions.MonitoredSubscription
-    transform: >
-      delete $.required;
-    reason: Remove the required attribute to generate a parameterless public constructor.
 
 ```

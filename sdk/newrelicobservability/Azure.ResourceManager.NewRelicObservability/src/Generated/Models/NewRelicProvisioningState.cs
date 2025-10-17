@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Provisioning State of the Monitor resource
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> Provisioning State of the Monitor resource. </summary>
     public readonly partial struct NewRelicProvisioningState : IEquatable<NewRelicProvisioningState>
     {
         private readonly string _value;
@@ -35,50 +32,23 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string DeletedValue = "Deleted";
         private const string NotSpecifiedValue = "NotSpecified";
 
-        /// <summary>
-        /// Monitor resource creation request accepted
-        /// Serialized Name: ProvisioningState.Accepted
-        /// </summary>
+        /// <summary> Monitor resource creation request accepted. </summary>
         public static NewRelicProvisioningState Accepted { get; } = new NewRelicProvisioningState(AcceptedValue);
-        /// <summary>
-        /// Monitor resource creation started
-        /// Serialized Name: ProvisioningState.Creating
-        /// </summary>
+        /// <summary> Monitor resource creation started. </summary>
         public static NewRelicProvisioningState Creating { get; } = new NewRelicProvisioningState(CreatingValue);
-        /// <summary>
-        /// Monitor resource is being updated
-        /// Serialized Name: ProvisioningState.Updating
-        /// </summary>
+        /// <summary> Monitor resource is being updated. </summary>
         public static NewRelicProvisioningState Updating { get; } = new NewRelicProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Monitor resource deletion started
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Monitor resource deletion started. </summary>
         public static NewRelicProvisioningState Deleting { get; } = new NewRelicProvisioningState(DeletingValue);
-        /// <summary>
-        /// Monitor resource creation successful
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Monitor resource creation successful. </summary>
         public static NewRelicProvisioningState Succeeded { get; } = new NewRelicProvisioningState(SucceededValue);
-        /// <summary>
-        /// Monitor resource creation failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Monitor resource creation failed. </summary>
         public static NewRelicProvisioningState Failed { get; } = new NewRelicProvisioningState(FailedValue);
-        /// <summary>
-        /// Monitor resource creation canceled
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Monitor resource creation canceled. </summary>
         public static NewRelicProvisioningState Canceled { get; } = new NewRelicProvisioningState(CanceledValue);
-        /// <summary>
-        /// Monitor resource is deleted
-        /// Serialized Name: ProvisioningState.Deleted
-        /// </summary>
+        /// <summary> Monitor resource is deleted. </summary>
         public static NewRelicProvisioningState Deleted { get; } = new NewRelicProvisioningState(DeletedValue);
-        /// <summary>
-        /// Monitor resource state is unknown
-        /// Serialized Name: ProvisioningState.NotSpecified
-        /// </summary>
+        /// <summary> Monitor resource state is unknown. </summary>
         public static NewRelicProvisioningState NotSpecified { get; } = new NewRelicProvisioningState(NotSpecifiedValue);
         /// <summary> Determines if two <see cref="NewRelicProvisioningState"/> values are the same. </summary>
         public static bool operator ==(NewRelicProvisioningState left, NewRelicProvisioningState right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Source of Account creation
-    /// Serialized Name: AccountCreationSource
-    /// </summary>
+    /// <summary> Source of Account creation. </summary>
     public readonly partial struct NewRelicObservabilityAccountCreationSource : IEquatable<NewRelicObservabilityAccountCreationSource>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string LiftrValue = "LIFTR";
         private const string NewrelicValue = "NEWRELIC";
 
-        /// <summary>
-        /// Account is created from LIFTR
-        /// Serialized Name: AccountCreationSource.LIFTR
-        /// </summary>
+        /// <summary> Account is created from LIFTR. </summary>
         public static NewRelicObservabilityAccountCreationSource Liftr { get; } = new NewRelicObservabilityAccountCreationSource(LiftrValue);
-        /// <summary>
-        /// Account is created from NEWRELIC
-        /// Serialized Name: AccountCreationSource.NEWRELIC
-        /// </summary>
+        /// <summary> Account is created from NEWRELIC. </summary>
         public static NewRelicObservabilityAccountCreationSource Newrelic { get; } = new NewRelicObservabilityAccountCreationSource(NewrelicValue);
         /// <summary> Determines if two <see cref="NewRelicObservabilityAccountCreationSource"/> values are the same. </summary>
         public static bool operator ==(NewRelicObservabilityAccountCreationSource left, NewRelicObservabilityAccountCreationSource right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Properties of the NewRelic account
-    /// Serialized Name: NewRelicAccountProperties
-    /// </summary>
+    /// <summary> Properties of the NewRelic account. </summary>
     public partial class NewRelicAccountProperties
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicAccountProperties"/>. </summary>
-        /// <param name="userId">
-        /// User id
-        /// Serialized Name: NewRelicAccountProperties.userId
-        /// </param>
-        /// <param name="accountInfo">
-        /// NewRelic Account Information
-        /// Serialized Name: NewRelicAccountProperties.accountInfo
-        /// </param>
-        /// <param name="organizationInfo">
-        /// NewRelic Organization Information
-        /// Serialized Name: NewRelicAccountProperties.organizationInfo
-        /// </param>
-        /// <param name="singleSignOnProperties">
-        /// date when plan was applied
-        /// Serialized Name: NewRelicAccountProperties.singleSignOnProperties
-        /// </param>
+        /// <param name="userId"> User id. </param>
+        /// <param name="accountInfo"> NewRelic Account Information. </param>
+        /// <param name="organizationInfo"> NewRelic Organization Information. </param>
+        /// <param name="singleSignOnProperties"> date when plan was applied. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicAccountProperties(string userId, NewRelicObservabilityAccountInfo accountInfo, NewRelicObservabilityOrganizationInfo organizationInfo, NewRelicSingleSignOnProperties singleSignOnProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,27 +65,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// User id
-        /// Serialized Name: NewRelicAccountProperties.userId
-        /// </summary>
+        /// <summary> User id. </summary>
         [WirePath("userId")]
         public string UserId { get; set; }
-        /// <summary>
-        /// NewRelic Account Information
-        /// Serialized Name: NewRelicAccountProperties.accountInfo
-        /// </summary>
+        /// <summary> NewRelic Account Information. </summary>
         [WirePath("accountInfo")]
         public NewRelicObservabilityAccountInfo AccountInfo { get; set; }
-        /// <summary>
-        /// NewRelic Organization Information
-        /// Serialized Name: NewRelicAccountProperties.organizationInfo
-        /// </summary>
+        /// <summary> NewRelic Organization Information. </summary>
         internal NewRelicObservabilityOrganizationInfo OrganizationInfo { get; set; }
-        /// <summary>
-        /// Organization id
-        /// Serialized Name: OrganizationInfo.organizationId
-        /// </summary>
+        /// <summary> Organization id. </summary>
         [WirePath("organizationInfo.organizationId")]
         public string OrganizationId
         {
@@ -113,10 +86,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
         }
 
-        /// <summary>
-        /// date when plan was applied
-        /// Serialized Name: NewRelicAccountProperties.singleSignOnProperties
-        /// </summary>
+        /// <summary> date when plan was applied. </summary>
         [WirePath("singleSignOnProperties")]
         public NewRelicSingleSignOnProperties SingleSignOnProperties { get; set; }
     }

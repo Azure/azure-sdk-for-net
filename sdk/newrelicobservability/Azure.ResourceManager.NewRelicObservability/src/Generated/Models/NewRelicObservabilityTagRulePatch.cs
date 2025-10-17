@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// The type used for update operations of the TagRule.
-    /// Serialized Name: TagRuleUpdate
-    /// </summary>
+    /// <summary> The type used for update operations of the TagRule. </summary>
     public partial class NewRelicObservabilityTagRulePatch
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagRulePatch"/>. </summary>
-        /// <param name="logRules">
-        /// Set of rules for sending logs for the Monitor resource.
-        /// Serialized Name: TagRuleUpdate.properties.logRules
-        /// </param>
-        /// <param name="metricRules">
-        /// Set of rules for sending metrics for the Monitor resource.
-        /// Serialized Name: TagRuleUpdate.properties.metricRules
-        /// </param>
+        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
+        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicObservabilityTagRulePatch(NewRelicObservabilityLogRules logRules, NewRelicObservabilityMetricRules metricRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Set of rules for sending logs for the Monitor resource.
-        /// Serialized Name: TagRuleUpdate.properties.logRules
-        /// </summary>
+        /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
         [WirePath("properties.logRules")]
         public NewRelicObservabilityLogRules LogRules { get; set; }
-        /// <summary>
-        /// Set of rules for sending metrics for the Monitor resource.
-        /// Serialized Name: TagRuleUpdate.properties.metricRules
-        /// </summary>
+        /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
         [WirePath("properties.metricRules")]
         public NewRelicObservabilityMetricRules MetricRules { get; set; }
     }

@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Response of get all organizations Operation.
-    /// Serialized Name: OrganizationsListResponse
-    /// </summary>
+    /// <summary> Response of get all organizations Operation. </summary>
     internal partial class NewRelicOrganizationsListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicOrganizationsListResult"/>. </summary>
-        /// <param name="value">
-        /// The OrganizationResource items on this page
-        /// Serialized Name: OrganizationsListResponse.value
-        /// </param>
+        /// <param name="value"> The OrganizationResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NewRelicOrganizationsListResult(IEnumerable<NewRelicOrganizationResourceData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicOrganizationsListResult"/>. </summary>
-        /// <param name="value">
-        /// The OrganizationResource items on this page
-        /// Serialized Name: OrganizationsListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: OrganizationsListResponse.nextLink
-        /// </param>
+        /// <param name="value"> The OrganizationResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicOrganizationsListResult(IReadOnlyList<NewRelicOrganizationResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
         }
 
-        /// <summary>
-        /// The OrganizationResource items on this page
-        /// Serialized Name: OrganizationsListResponse.value
-        /// </summary>
+        /// <summary> The OrganizationResource items on this page. </summary>
         public IReadOnlyList<NewRelicOrganizationResourceData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: OrganizationsListResponse.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

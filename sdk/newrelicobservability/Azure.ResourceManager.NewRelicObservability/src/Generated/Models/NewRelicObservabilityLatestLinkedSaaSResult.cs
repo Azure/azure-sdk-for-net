@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Response of get latest linked SaaS resource operation
-    /// Serialized Name: LatestLinkedSaaSResponse
-    /// </summary>
+    /// <summary> Response of get latest linked SaaS resource operation. </summary>
     public partial class NewRelicObservabilityLatestLinkedSaaSResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityLatestLinkedSaaSResult"/>. </summary>
-        /// <param name="saaSResourceId">
-        /// SaaS resource id
-        /// Serialized Name: LatestLinkedSaaSResponse.saaSResourceId
-        /// </param>
-        /// <param name="isHiddenSaaS">
-        /// Flag indicating if the SaaS resource is hidden
-        /// Serialized Name: LatestLinkedSaaSResponse.isHiddenSaaS
-        /// </param>
+        /// <param name="saaSResourceId"> SaaS resource id. </param>
+        /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicObservabilityLatestLinkedSaaSResult(ResourceIdentifier saaSResourceId, bool? isHiddenSaaS, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// SaaS resource id
-        /// Serialized Name: LatestLinkedSaaSResponse.saaSResourceId
-        /// </summary>
+        /// <summary> SaaS resource id. </summary>
         [WirePath("saaSResourceId")]
         public ResourceIdentifier SaaSResourceId { get; }
-        /// <summary>
-        /// Flag indicating if the SaaS resource is hidden
-        /// Serialized Name: LatestLinkedSaaSResponse.isHiddenSaaS
-        /// </summary>
+        /// <summary> Flag indicating if the SaaS resource is hidden. </summary>
         [WirePath("isHiddenSaaS")]
         public bool? IsHiddenSaaS { get; }
     }

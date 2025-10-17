@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// SaaS guid &amp; PublishedId for Activate and Validate SaaS Resource
-    /// Serialized Name: ActivateSaaSParameterRequest
-    /// </summary>
+    /// <summary> SaaS guid &amp; PublishedId for Activate and Validate SaaS Resource. </summary>
     public partial class ActivateSaaSParameterContent
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterContent"/>. </summary>
-        /// <param name="saasGuid">
-        /// SaaS guid for Activate and Validate SaaS Resource
-        /// Serialized Name: ActivateSaaSParameterRequest.saasGuid
-        /// </param>
-        /// <param name="publisherId">
-        /// Publisher Id for NewRelic resource
-        /// Serialized Name: ActivateSaaSParameterRequest.publisherId
-        /// </param>
+        /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
+        /// <param name="publisherId"> Publisher Id for NewRelic resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/> is null. </exception>
         public ActivateSaaSParameterContent(Guid saasGuid, string publisherId)
         {
@@ -67,14 +58,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterContent"/>. </summary>
-        /// <param name="saasGuid">
-        /// SaaS guid for Activate and Validate SaaS Resource
-        /// Serialized Name: ActivateSaaSParameterRequest.saasGuid
-        /// </param>
-        /// <param name="publisherId">
-        /// Publisher Id for NewRelic resource
-        /// Serialized Name: ActivateSaaSParameterRequest.publisherId
-        /// </param>
+        /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
+        /// <param name="publisherId"> Publisher Id for NewRelic resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ActivateSaaSParameterContent(Guid saasGuid, string publisherId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -88,16 +73,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
         }
 
-        /// <summary>
-        /// SaaS guid for Activate and Validate SaaS Resource
-        /// Serialized Name: ActivateSaaSParameterRequest.saasGuid
-        /// </summary>
+        /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
         [WirePath("saasGuid")]
         public Guid SaasGuid { get; }
-        /// <summary>
-        /// Publisher Id for NewRelic resource
-        /// Serialized Name: ActivateSaaSParameterRequest.publisherId
-        /// </summary>
+        /// <summary> Publisher Id for NewRelic resource. </summary>
         [WirePath("publisherId")]
         public string PublisherId { get; }
     }

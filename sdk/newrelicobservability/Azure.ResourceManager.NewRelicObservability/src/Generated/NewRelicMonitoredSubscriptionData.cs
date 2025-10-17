@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.NewRelicObservability
     /// <summary>
     /// A class representing the NewRelicMonitoredSubscription data model.
     /// The request to update subscriptions needed to be monitored by the NewRelic monitor resource.
-    /// Serialized Name: MonitoredSubscriptionProperties
     /// </summary>
     public partial class NewRelicMonitoredSubscriptionData : ResourceData
     {
@@ -62,10 +61,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The request to update subscriptions needed to be monitored by the NewRelic monitor resource.
-        /// Serialized Name: MonitoredSubscriptionProperties.properties
-        /// </param>
+        /// <param name="properties"> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicMonitoredSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NewRelicMonitoredSubscriptionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,10 +69,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The request to update subscriptions needed to be monitored by the NewRelic monitor resource.
-        /// Serialized Name: MonitoredSubscriptionProperties.properties
-        /// </summary>
+        /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
         [WirePath("properties")]
         public NewRelicMonitoredSubscriptionProperties Properties { get; set; }
     }

@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// The details of a Organization resource.
-    /// Serialized Name: OrganizationResource
-    /// </summary>
+    /// <summary> The details of a Organization resource. </summary>
     public partial class NewRelicOrganizationResourceData : ResourceData
     {
         /// <summary>
@@ -60,18 +57,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="organizationId">
-        /// organization id
-        /// Serialized Name: OrganizationResource.properties.organizationId
-        /// </param>
-        /// <param name="organizationName">
-        /// organization name
-        /// Serialized Name: OrganizationResource.properties.organizationName
-        /// </param>
-        /// <param name="billingSource">
-        /// Billing source
-        /// Serialized Name: OrganizationResource.properties.billingSource
-        /// </param>
+        /// <param name="organizationId"> organization id. </param>
+        /// <param name="organizationName"> organization name. </param>
+        /// <param name="billingSource"> Billing source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicOrganizationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string organizationName, NewRelicObservabilityBillingSource? billingSource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -81,22 +69,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// organization id
-        /// Serialized Name: OrganizationResource.properties.organizationId
-        /// </summary>
+        /// <summary> organization id. </summary>
         [WirePath("properties.organizationId")]
         public string OrganizationId { get; set; }
-        /// <summary>
-        /// organization name
-        /// Serialized Name: OrganizationResource.properties.organizationName
-        /// </summary>
+        /// <summary> organization name. </summary>
         [WirePath("properties.organizationName")]
         public string OrganizationName { get; set; }
-        /// <summary>
-        /// Billing source
-        /// Serialized Name: OrganizationResource.properties.billingSource
-        /// </summary>
+        /// <summary> Billing source. </summary>
         [WirePath("properties.billingSource")]
         public NewRelicObservabilityBillingSource? BillingSource { get; set; }
     }

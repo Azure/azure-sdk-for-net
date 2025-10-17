@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// The response of a NewRelicMonitorResource list operation.
-    /// Serialized Name: NewRelicMonitorResourceListResult
-    /// </summary>
+    /// <summary> The response of a NewRelicMonitorResource list operation. </summary>
     internal partial class NewRelicMonitorResourceListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourceListResult"/>. </summary>
-        /// <param name="value">
-        /// The NewRelicMonitorResource items on this page
-        /// Serialized Name: NewRelicMonitorResourceListResult.value
-        /// </param>
+        /// <param name="value"> The NewRelicMonitorResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NewRelicMonitorResourceListResult(IEnumerable<NewRelicMonitorResourceData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourceListResult"/>. </summary>
-        /// <param name="value">
-        /// The NewRelicMonitorResource items on this page
-        /// Serialized Name: NewRelicMonitorResourceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: NewRelicMonitorResourceListResult.nextLink
-        /// </param>
+        /// <param name="value"> The NewRelicMonitorResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicMonitorResourceListResult(IReadOnlyList<NewRelicMonitorResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
         }
 
-        /// <summary>
-        /// The NewRelicMonitorResource items on this page
-        /// Serialized Name: NewRelicMonitorResourceListResult.value
-        /// </summary>
+        /// <summary> The NewRelicMonitorResource items on this page. </summary>
         public IReadOnlyList<NewRelicMonitorResourceData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: NewRelicMonitorResourceListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

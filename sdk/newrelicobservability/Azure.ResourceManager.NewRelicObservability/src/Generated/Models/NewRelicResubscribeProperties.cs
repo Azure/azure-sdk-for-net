@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Resubscribe Properties
-    /// Serialized Name: ResubscribeProperties
-    /// </summary>
+    /// <summary> Resubscribe Properties. </summary>
     public partial class NewRelicResubscribeProperties
     {
         /// <summary>
@@ -54,34 +51,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicResubscribeProperties"/>. </summary>
-        /// <param name="planId">
-        /// Newly selected plan Id to create the new Marketplace subscription for Resubscribe
-        /// Serialized Name: ResubscribeProperties.planId
-        /// </param>
-        /// <param name="termId">
-        /// Newly selected term Id to create the new Marketplace subscription for Resubscribe
-        /// Serialized Name: ResubscribeProperties.termId
-        /// </param>
-        /// <param name="subscriptionId">
-        /// Newly selected Azure Subscription Id in which the new Marketplace subscription will be created for Resubscribe
-        /// Serialized Name: ResubscribeProperties.subscriptionId
-        /// </param>
-        /// <param name="resourceGroup">
-        /// Newly selected Azure resource group in which the new Marketplace subscription will be created for Resubscribe
-        /// Serialized Name: ResubscribeProperties.resourceGroup
-        /// </param>
-        /// <param name="organizationId">
-        /// Organization Id of the NewRelic Organization that needs to be resubscribed
-        /// Serialized Name: ResubscribeProperties.organizationId
-        /// </param>
-        /// <param name="publisherId">
-        /// Publisher Id of the NewRelic offer that needs to be resubscribed
-        /// Serialized Name: ResubscribeProperties.publisherId
-        /// </param>
-        /// <param name="offerId">
-        /// Offer Id of the NewRelic offer that needs to be resubscribed
-        /// Serialized Name: ResubscribeProperties.offerId
-        /// </param>
+        /// <param name="planId"> Newly selected plan Id to create the new Marketplace subscription for Resubscribe. </param>
+        /// <param name="termId"> Newly selected term Id to create the new Marketplace subscription for Resubscribe. </param>
+        /// <param name="subscriptionId"> Newly selected Azure Subscription Id in which the new Marketplace subscription will be created for Resubscribe. </param>
+        /// <param name="resourceGroup"> Newly selected Azure resource group in which the new Marketplace subscription will be created for Resubscribe. </param>
+        /// <param name="organizationId"> Organization Id of the NewRelic Organization that needs to be resubscribed. </param>
+        /// <param name="publisherId"> Publisher Id of the NewRelic offer that needs to be resubscribed. </param>
+        /// <param name="offerId"> Offer Id of the NewRelic offer that needs to be resubscribed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicResubscribeProperties(string planId, string termId, string subscriptionId, string resourceGroup, string organizationId, string publisherId, string offerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -95,46 +71,25 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Newly selected plan Id to create the new Marketplace subscription for Resubscribe
-        /// Serialized Name: ResubscribeProperties.planId
-        /// </summary>
+        /// <summary> Newly selected plan Id to create the new Marketplace subscription for Resubscribe. </summary>
         [WirePath("planId")]
         public string PlanId { get; set; }
-        /// <summary>
-        /// Newly selected term Id to create the new Marketplace subscription for Resubscribe
-        /// Serialized Name: ResubscribeProperties.termId
-        /// </summary>
+        /// <summary> Newly selected term Id to create the new Marketplace subscription for Resubscribe. </summary>
         [WirePath("termId")]
         public string TermId { get; set; }
-        /// <summary>
-        /// Newly selected Azure Subscription Id in which the new Marketplace subscription will be created for Resubscribe
-        /// Serialized Name: ResubscribeProperties.subscriptionId
-        /// </summary>
+        /// <summary> Newly selected Azure Subscription Id in which the new Marketplace subscription will be created for Resubscribe. </summary>
         [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
-        /// <summary>
-        /// Newly selected Azure resource group in which the new Marketplace subscription will be created for Resubscribe
-        /// Serialized Name: ResubscribeProperties.resourceGroup
-        /// </summary>
+        /// <summary> Newly selected Azure resource group in which the new Marketplace subscription will be created for Resubscribe. </summary>
         [WirePath("resourceGroup")]
         public string ResourceGroup { get; set; }
-        /// <summary>
-        /// Organization Id of the NewRelic Organization that needs to be resubscribed
-        /// Serialized Name: ResubscribeProperties.organizationId
-        /// </summary>
+        /// <summary> Organization Id of the NewRelic Organization that needs to be resubscribed. </summary>
         [WirePath("organizationId")]
         public string OrganizationId { get; set; }
-        /// <summary>
-        /// Publisher Id of the NewRelic offer that needs to be resubscribed
-        /// Serialized Name: ResubscribeProperties.publisherId
-        /// </summary>
+        /// <summary> Publisher Id of the NewRelic offer that needs to be resubscribed. </summary>
         [WirePath("publisherId")]
         public string PublisherId { get; set; }
-        /// <summary>
-        /// Offer Id of the NewRelic offer that needs to be resubscribed
-        /// Serialized Name: ResubscribeProperties.offerId
-        /// </summary>
+        /// <summary> Offer Id of the NewRelic offer that needs to be resubscribed. </summary>
         [WirePath("offerId")]
         public string OfferId { get; set; }
     }

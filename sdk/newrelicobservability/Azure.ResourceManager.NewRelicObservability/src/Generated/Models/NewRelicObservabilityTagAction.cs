@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Valid actions for a filtering tag. Exclusion takes priority over inclusion.
-    /// Serialized Name: TagAction
-    /// </summary>
+    /// <summary> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </summary>
     public readonly partial struct NewRelicObservabilityTagAction : IEquatable<NewRelicObservabilityTagAction>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private const string IncludeValue = "Include";
         private const string ExcludeValue = "Exclude";
 
-        /// <summary>
-        /// Include
-        /// Serialized Name: TagAction.Include
-        /// </summary>
+        /// <summary> Include. </summary>
         public static NewRelicObservabilityTagAction Include { get; } = new NewRelicObservabilityTagAction(IncludeValue);
-        /// <summary>
-        /// Exclude
-        /// Serialized Name: TagAction.Exclude
-        /// </summary>
+        /// <summary> Exclude. </summary>
         public static NewRelicObservabilityTagAction Exclude { get; } = new NewRelicObservabilityTagAction(ExcludeValue);
         /// <summary> Determines if two <see cref="NewRelicObservabilityTagAction"/> values are the same. </summary>
         public static bool operator ==(NewRelicObservabilityTagAction left, NewRelicObservabilityTagAction right) => left.Equals(right);

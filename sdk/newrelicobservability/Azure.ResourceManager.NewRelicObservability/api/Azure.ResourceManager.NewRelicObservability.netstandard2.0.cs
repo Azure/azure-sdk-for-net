@@ -502,6 +502,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public partial class NewRelicMonitoredSubscriptionInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoredSubscriptionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoredSubscriptionInfo>
     {
         public NewRelicMonitoredSubscriptionInfo() { }
+        public NewRelicMonitoredSubscriptionInfo(string subscriptionId) { }
         public string Error { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoringStatus? Status { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }

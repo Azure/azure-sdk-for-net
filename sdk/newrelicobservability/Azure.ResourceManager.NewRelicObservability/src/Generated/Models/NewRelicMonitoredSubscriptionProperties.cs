@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// The request to update subscriptions needed to be monitored by the NewRelic monitor resource.
-    /// Serialized Name: SubscriptionList
-    /// </summary>
+    /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
     public partial class NewRelicMonitoredSubscriptionProperties
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitoredSubscriptionProperties"/>. </summary>
-        /// <param name="patchOperation">
-        /// The operation for the patch on the resource.
-        /// Serialized Name: SubscriptionList.patchOperation
-        /// </param>
-        /// <param name="monitoredSubscriptionList">
-        /// List of subscriptions and the state of the monitoring.
-        /// Serialized Name: SubscriptionList.monitoredSubscriptionList
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning State of the resource
-        /// Serialized Name: SubscriptionList.provisioningState
-        /// </param>
+        /// <param name="patchOperation"> The operation for the patch on the resource. </param>
+        /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicMonitoredSubscriptionProperties(MonitoredSubscriptionPatchOperation? patchOperation, IList<NewRelicMonitoredSubscriptionInfo> monitoredSubscriptionList, NewRelicProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,22 +64,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The operation for the patch on the resource.
-        /// Serialized Name: SubscriptionList.patchOperation
-        /// </summary>
+        /// <summary> The operation for the patch on the resource. </summary>
         [WirePath("patchOperation")]
         public MonitoredSubscriptionPatchOperation? PatchOperation { get; set; }
-        /// <summary>
-        /// List of subscriptions and the state of the monitoring.
-        /// Serialized Name: SubscriptionList.monitoredSubscriptionList
-        /// </summary>
+        /// <summary> List of subscriptions and the state of the monitoring. </summary>
         [WirePath("monitoredSubscriptionList")]
         public IList<NewRelicMonitoredSubscriptionInfo> MonitoredSubscriptionList { get; }
-        /// <summary>
-        /// Provisioning State of the resource
-        /// Serialized Name: SubscriptionList.provisioningState
-        /// </summary>
+        /// <summary> Provisioning State of the resource. </summary>
         [WirePath("provisioningState")]
         public NewRelicProvisioningState? ProvisioningState { get; }
     }

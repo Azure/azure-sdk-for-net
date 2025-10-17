@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Response of a list operation.
-    /// Serialized Name: LinkedResourceListResponse
-    /// </summary>
+    /// <summary> Response of a list operation. </summary>
     internal partial class LinkedResourceListResponse
     {
         /// <summary>
@@ -51,10 +48,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/>. </summary>
-        /// <param name="value">
-        /// The LinkedResource items on this page
-        /// Serialized Name: LinkedResourceListResponse.value
-        /// </param>
+        /// <param name="value"> The LinkedResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LinkedResourceListResponse(IEnumerable<SubResource> value)
         {
@@ -64,14 +58,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/>. </summary>
-        /// <param name="value">
-        /// The LinkedResource items on this page
-        /// Serialized Name: LinkedResourceListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: LinkedResourceListResponse.nextLink
-        /// </param>
+        /// <param name="value"> The LinkedResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LinkedResourceListResponse(IReadOnlyList<SubResource> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,15 +73,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
         }
 
-        /// <summary>
-        /// The LinkedResource items on this page
-        /// Serialized Name: LinkedResourceListResponse.value
-        /// </summary>
+        /// <summary> The LinkedResource items on this page. </summary>
         public IReadOnlyList<SubResource> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: LinkedResourceListResponse.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

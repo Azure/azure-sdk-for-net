@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Plan data of NewRelic Monitor resource
-    /// Serialized Name: PlanData
-    /// </summary>
+    /// <summary> Plan data of NewRelic Monitor resource. </summary>
     public partial class NewRelicPlanDetails
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicPlanDetails"/>. </summary>
-        /// <param name="usageType">
-        /// Different usage type like PAYG/COMMITTED. this could be enum
-        /// Serialized Name: PlanData.usageType
-        /// </param>
-        /// <param name="newRelicPlanBillingCycle">
-        /// Different billing cycles like Monthly/Weekly.
-        /// Serialized Name: PlanData.billingCycle
-        /// </param>
-        /// <param name="planDetails">
-        /// plan id as published by NewRelic
-        /// Serialized Name: PlanData.planDetails
-        /// </param>
-        /// <param name="effectiveOn">
-        /// date when plan was applied
-        /// Serialized Name: PlanData.effectiveDate
-        /// </param>
+        /// <param name="usageType"> Different usage type like PAYG/COMMITTED. this could be enum. </param>
+        /// <param name="newRelicPlanBillingCycle"> Different billing cycles like Monthly/Weekly. </param>
+        /// <param name="planDetails"> plan id as published by NewRelic. </param>
+        /// <param name="effectiveOn"> date when plan was applied. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicPlanDetails(NewRelicObservabilityUsageType? usageType, string newRelicPlanBillingCycle, string planDetails, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,28 +65,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Different usage type like PAYG/COMMITTED. this could be enum
-        /// Serialized Name: PlanData.usageType
-        /// </summary>
+        /// <summary> Different usage type like PAYG/COMMITTED. this could be enum. </summary>
         [WirePath("usageType")]
         public NewRelicObservabilityUsageType? UsageType { get; set; }
-        /// <summary>
-        /// Different billing cycles like Monthly/Weekly.
-        /// Serialized Name: PlanData.billingCycle
-        /// </summary>
+        /// <summary> Different billing cycles like Monthly/Weekly. </summary>
         [WirePath("billingCycle")]
         public string NewRelicPlanBillingCycle { get; set; }
-        /// <summary>
-        /// plan id as published by NewRelic
-        /// Serialized Name: PlanData.planDetails
-        /// </summary>
+        /// <summary> plan id as published by NewRelic. </summary>
         [WirePath("planDetails")]
         public string PlanDetails { get; set; }
-        /// <summary>
-        /// date when plan was applied
-        /// Serialized Name: PlanData.effectiveDate
-        /// </summary>
+        /// <summary> date when plan was applied. </summary>
         [WirePath("effectiveDate")]
         public DateTimeOffset? EffectiveOn { get; set; }
     }

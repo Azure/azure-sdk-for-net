@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// Organization Info of the NewRelic account
-    /// Serialized Name: OrganizationInfo
-    /// </summary>
+    /// <summary> Organization Info of the NewRelic account. </summary>
     internal partial class NewRelicObservabilityOrganizationInfo
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityOrganizationInfo"/>. </summary>
-        /// <param name="organizationId">
-        /// Organization id
-        /// Serialized Name: OrganizationInfo.organizationId
-        /// </param>
+        /// <param name="organizationId"> Organization id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicObservabilityOrganizationInfo(string organizationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Organization id
-        /// Serialized Name: OrganizationInfo.organizationId
-        /// </summary>
+        /// <summary> Organization id. </summary>
         [WirePath("organizationId")]
         public string OrganizationId { get; set; }
     }

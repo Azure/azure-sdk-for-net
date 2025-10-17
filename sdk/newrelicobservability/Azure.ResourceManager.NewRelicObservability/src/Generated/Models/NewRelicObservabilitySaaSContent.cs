@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// SaaS details
-    /// Serialized Name: SaaSData
-    /// </summary>
+    /// <summary> SaaS details. </summary>
     public partial class NewRelicObservabilitySaaSContent
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilitySaaSContent"/>. </summary>
-        /// <param name="saaSResourceId">
-        /// SaaS resource id
-        /// Serialized Name: SaaSData.saaSResourceId
-        /// </param>
+        /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicObservabilitySaaSContent(ResourceIdentifier saaSResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// SaaS resource id
-        /// Serialized Name: SaaSData.saaSResourceId
-        /// </summary>
+        /// <summary> SaaS resource id. </summary>
         [WirePath("saaSResourceId")]
         public ResourceIdentifier SaaSResourceId { get; set; }
     }

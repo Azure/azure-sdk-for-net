@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary>
-    /// The list of subscriptions and it's monitoring status by current NewRelic monitor.
-    /// Serialized Name: MonitoredSubscription
-    /// </summary>
+    /// <summary> The list of subscriptions and it's monitoring status by current NewRelic monitor. </summary>
     public partial class NewRelicMonitoredSubscriptionInfo
     {
         /// <summary>
@@ -49,27 +46,20 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitoredSubscriptionInfo"/>. </summary>
-        public NewRelicMonitoredSubscriptionInfo()
+        /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        public NewRelicMonitoredSubscriptionInfo(string subscriptionId)
         {
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
+
+            SubscriptionId = subscriptionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitoredSubscriptionInfo"/>. </summary>
-        /// <param name="subscriptionId">
-        /// The subscriptionId to be monitored.
-        /// Serialized Name: MonitoredSubscription.subscriptionId
-        /// </param>
-        /// <param name="status">
-        /// The state of monitoring.
-        /// Serialized Name: MonitoredSubscription.status
-        /// </param>
-        /// <param name="error">
-        /// The reason of not monitoring the subscription.
-        /// Serialized Name: MonitoredSubscription.error
-        /// </param>
-        /// <param name="tagRules">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: MonitoredSubscription.tagRules
-        /// </param>
+        /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
+        /// <param name="status"> The state of monitoring. </param>
+        /// <param name="error"> The reason of not monitoring the subscription. </param>
+        /// <param name="tagRules"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicMonitoredSubscriptionInfo(string subscriptionId, NewRelicMonitoringStatus? status, string error, NewRelicMonitoringTagRules tagRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,28 +70,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The subscriptionId to be monitored.
-        /// Serialized Name: MonitoredSubscription.subscriptionId
-        /// </summary>
+        /// <summary> The subscriptionId to be monitored. </summary>
         [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
-        /// <summary>
-        /// The state of monitoring.
-        /// Serialized Name: MonitoredSubscription.status
-        /// </summary>
+        /// <summary> The state of monitoring. </summary>
         [WirePath("status")]
         public NewRelicMonitoringStatus? Status { get; set; }
-        /// <summary>
-        /// The reason of not monitoring the subscription.
-        /// Serialized Name: MonitoredSubscription.error
-        /// </summary>
+        /// <summary> The reason of not monitoring the subscription. </summary>
         [WirePath("error")]
         public string Error { get; set; }
-        /// <summary>
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: MonitoredSubscription.tagRules
-        /// </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("tagRules")]
         public NewRelicMonitoringTagRules TagRules { get; set; }
     }
