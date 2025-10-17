@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    /// <summary> Describes a history request to be executed. </summary>
-    public partial class ResourcesHistoryContent
+    /// <summary> Graph query list result. </summary>
+    internal partial class GraphQueryListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,26 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourcesHistoryContent"/>. </summary>
-        public ResourcesHistoryContent()
+        /// <summary> Initializes a new instance of <see cref="GraphQueryListResult"/>. </summary>
+        internal GraphQueryListResult()
         {
-            Subscriptions = new ChangeTrackingList<string>();
-            ManagementGroups = new ChangeTrackingList<string>();
+            Value = new ChangeTrackingList<ResourceGraphQueryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourcesHistoryContent"/>. </summary>
-        /// <param name="subscriptions"> Azure subscriptions against which to execute the query. </param>
-        /// <param name="query"> The resources query. </param>
-        /// <param name="options"> The history request evaluation options. </param>
-        /// <param name="managementGroups"> Azure management groups against which to execute the query. Example: [ 'mg1', 'mg2' ]. </param>
+        /// <summary> Initializes a new instance of <see cref="GraphQueryListResult"/>. </summary>
+        /// <param name="nextLink"> URL to fetch the next set of queries. </param>
+        /// <param name="value"> An array of graph queries. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourcesHistoryContent(IList<string> subscriptions, string query, ResourcesHistoryRequestOptions options, IList<string> managementGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GraphQueryListResult(string nextLink, IReadOnlyList<ResourceGraphQueryData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Subscriptions = subscriptions;
-            Query = query;
-            Options = options;
-            ManagementGroups = managementGroups;
+            NextLink = nextLink;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Azure subscriptions against which to execute the query. </summary>
-        public IList<string> Subscriptions { get; }
-        /// <summary> The resources query. </summary>
-        public string Query { get; set; }
-        /// <summary> The history request evaluation options. </summary>
-        public ResourcesHistoryRequestOptions Options { get; set; }
-        /// <summary> Azure management groups against which to execute the query. Example: [ 'mg1', 'mg2' ]. </summary>
-        public IList<string> ManagementGroups { get; }
+        /// <summary> URL to fetch the next set of queries. </summary>
+        public string NextLink { get; }
+        /// <summary> An array of graph queries. </summary>
+        public IReadOnlyList<ResourceGraphQueryData> Value { get; }
     }
 }
