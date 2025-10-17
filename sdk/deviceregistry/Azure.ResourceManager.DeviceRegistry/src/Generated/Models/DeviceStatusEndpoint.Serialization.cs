@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            DeviceRegistryStatusError error = default;
+            StatusError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    error = DeviceRegistryStatusError.DeserializeDeviceRegistryStatusError(property.Value, options);
+                    error = StatusError.DeserializeStatusError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

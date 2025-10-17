@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            DeviceRegistryStatusConfig config = default;
+            StatusConfig config = default;
             DeviceStatusEndpoints endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    config = DeviceRegistryStatusConfig.DeserializeDeviceRegistryStatusConfig(property.Value, options);
+                    config = StatusConfig.DeserializeStatusConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endpoints"u8))
