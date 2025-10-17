@@ -109,6 +109,26 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("reseller"u8);
                 writer.WriteObjectValue(Reseller, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsEstimatedBalance))
+            {
+                writer.WritePropertyName("isEstimatedBalance"u8);
+                writer.WriteBooleanValue(IsEstimatedBalance.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETagPropertiesETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETagPropertiesETag);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OrganizationType))
+            {
+                writer.WritePropertyName("OrganizationType"u8);
+                writer.WriteStringValue(OrganizationType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsedAmount))
+            {
+                writer.WritePropertyName("usedAmount"u8);
+                writer.WriteObjectValue(UsedAmount, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -150,6 +170,10 @@ namespace Azure.ResourceManager.Consumption.Models
             ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = default;
             ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default;
             ConsumptionReseller reseller = default;
+            bool? isEstimatedBalance = default;
+            string etag0 = default;
+            ConsumptionOrganizationType? organizationType = default;
+            ConsumptionAmount usedAmount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -301,6 +325,38 @@ namespace Azure.ResourceManager.Consumption.Models
                             reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("isEstimatedBalance"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isEstimatedBalance = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("eTag"u8))
+                        {
+                            etag0 = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("OrganizationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            organizationType = new ConsumptionOrganizationType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("usedAmount"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            usedAmount = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -328,6 +384,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 originalAmountInBillingCurrency,
                 closedBalanceInBillingCurrency,
                 reseller,
+                isEstimatedBalance,
+                etag0,
+                organizationType,
+                usedAmount,
                 etag,
                 serializedAdditionalRawData);
         }

@@ -120,6 +120,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("priceHidden"u8);
                 writer.WriteBooleanValue(IsPriceHidden.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(OverageRefund))
+            {
+                writer.WritePropertyName("overageRefund"u8);
+                writer.WriteNumberValue(OverageRefund.Value);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(NewPurchasesDetails))
             {
                 writer.WritePropertyName("newPurchasesDetails"u8);
@@ -182,6 +187,7 @@ namespace Azure.ResourceManager.Consumption.Models
             decimal? azureMarketplaceServiceCharges = default;
             ConsumptionBillingFrequency? billingFrequency = default;
             bool? priceHidden = default;
+            decimal? overageRefund = default;
             IReadOnlyList<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails = default;
             IReadOnlyList<ConsumptionBalanceAdjustmentDetail> adjustmentDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -357,6 +363,15 @@ namespace Azure.ResourceManager.Consumption.Models
                             priceHidden = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("overageRefund"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            overageRefund = property0.Value.GetDecimal();
+                            continue;
+                        }
                         if (property0.NameEquals("newPurchasesDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -412,6 +427,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 azureMarketplaceServiceCharges,
                 billingFrequency,
                 priceHidden,
+                overageRefund,
                 newPurchasesDetails ?? new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>(),
                 adjustmentDetails ?? new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>(),
                 etag,

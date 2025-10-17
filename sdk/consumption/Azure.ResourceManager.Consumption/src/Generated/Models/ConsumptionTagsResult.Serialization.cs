@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<ConsumptionTag> tags = default;
+            IReadOnlyList<ConsumptionTag> tags = default;
             string nextLink = default;
             string previousLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;

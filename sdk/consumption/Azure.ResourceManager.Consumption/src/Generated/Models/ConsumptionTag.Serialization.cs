@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             string key = default;
-            IList<string> value = default;
+            IReadOnlyList<string> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

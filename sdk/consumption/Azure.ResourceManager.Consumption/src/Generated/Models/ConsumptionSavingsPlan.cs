@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Result of listing lot summary. </summary>
-    internal partial class Lots
+    /// <summary> The properties of the SavingsPlan. </summary>
+    public partial class ConsumptionSavingsPlan
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,29 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Lots"/>. </summary>
-        internal Lots()
+        /// <summary> Initializes a new instance of <see cref="ConsumptionSavingsPlan"/>. </summary>
+        internal ConsumptionSavingsPlan()
         {
-            Value = new ChangeTrackingList<ConsumptionLotSummary>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Lots"/>. </summary>
-        /// <param name="value"> The list of lot summary. </param>
-        /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionSavingsPlan"/>. </summary>
+        /// <param name="term"> SavingsPlan term. </param>
+        /// <param name="marketPrice"> SavingsPlan Market Price. </param>
+        /// <param name="effectivePrice"> SavingsPlan Effective Price. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Lots(IReadOnlyList<ConsumptionLotSummary> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConsumptionSavingsPlan(string term, decimal? marketPrice, decimal? effectivePrice, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Term = term;
+            MarketPrice = marketPrice;
+            EffectivePrice = effectivePrice;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of lot summary. </summary>
-        public IReadOnlyList<ConsumptionLotSummary> Value { get; }
-        /// <summary> URL to get the next set of operation list results if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> SavingsPlan term. </summary>
+        public string Term { get; }
+        /// <summary> SavingsPlan Market Price. </summary>
+        public decimal? MarketPrice { get; }
+        /// <summary> SavingsPlan Effective Price. </summary>
+        public decimal? EffectivePrice { get; }
     }
 }

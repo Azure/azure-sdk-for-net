@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="sku"> Resource sku. </param>
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="sku"> Resource sku. </param>
+        /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="normalizedSize"> The normalized Size. </param>
         /// <param name="recommendedQuantityNormalized"> The recommended Quantity Normalized. </param>
         /// <param name="meterId"> The meter id (GUID). </param>
-        /// <param name="term"> RI recommendations in one or three year terms. </param>
+        /// <param name="term"> Term period of the reservation. ex: P1M, P1Y or P3Y. </param>
         /// <param name="costWithNoReservedInstances"> The total amount of cost without reserved instances. </param>
         /// <param name="recommendedQuantity"> Recommended quality for reserved instances. </param>
         /// <param name="totalCostWithReservedInstances"> The total amount of cost with reserved instances. </param>
@@ -52,7 +52,9 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="firstUsageOn"> The usage date for looking back. </param>
         /// <param name="scope"> Shared or single recommendation. </param>
         /// <param name="skuProperties"> List of sku properties. </param>
-        internal ConsumptionLegacyReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationRecommendationKind kind, AzureLocation? location, string sku, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, decimal? costWithNoReservedInstances, decimal? recommendedQuantity, decimal? totalCostWithReservedInstances, decimal? netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties) : base(id, name, resourceType, systemData, kind, location, sku, etag, tags, serializedAdditionalRawData)
+        /// <param name="lastUsageOn"> The last usage date used for looking back for computing the recommendation. </param>
+        /// <param name="totalHours"> The total hours for which the cost is covered. </param>
+        internal ConsumptionLegacyReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyDictionary<string, string> tags, AzureLocation? location, string sku, ReservationRecommendationKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, decimal? costWithNoReservedInstances, decimal? recommendedQuantity, decimal? totalCostWithReservedInstances, decimal? netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, DateTimeOffset? lastUsageOn, int? totalHours) : base(id, name, resourceType, systemData, etag, tags, location, sku, kind, serializedAdditionalRawData)
         {
             LookBackPeriod = lookBackPeriod;
             InstanceFlexibilityRatio = instanceFlexibilityRatio;
@@ -68,6 +70,8 @@ namespace Azure.ResourceManager.Consumption.Models
             FirstUsageOn = firstUsageOn;
             Scope = scope;
             SkuProperties = skuProperties;
+            LastUsageOn = lastUsageOn;
+            TotalHours = totalHours;
             Kind = kind;
         }
 
@@ -88,7 +92,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public float? RecommendedQuantityNormalized { get; }
         /// <summary> The meter id (GUID). </summary>
         public Guid? MeterId { get; }
-        /// <summary> RI recommendations in one or three year terms. </summary>
+        /// <summary> Term period of the reservation. ex: P1M, P1Y or P3Y. </summary>
         public string Term { get; }
         /// <summary> The total amount of cost without reserved instances. </summary>
         public decimal? CostWithNoReservedInstances { get; }
@@ -104,5 +108,9 @@ namespace Azure.ResourceManager.Consumption.Models
         internal string Scope { get; set; }
         /// <summary> List of sku properties. </summary>
         public IReadOnlyList<ConsumptionSkuProperty> SkuProperties { get; }
+        /// <summary> The last usage date used for looking back for computing the recommendation. </summary>
+        public DateTimeOffset? LastUsageOn { get; }
+        /// <summary> The total hours for which the cost is covered. </summary>
+        public int? TotalHours { get; }
     }
 }

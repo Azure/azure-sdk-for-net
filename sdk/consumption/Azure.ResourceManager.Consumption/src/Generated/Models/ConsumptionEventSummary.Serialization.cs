@@ -79,6 +79,16 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("closedBalance"u8);
                 writer.WriteObjectValue(ClosedBalance, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
+            {
+                writer.WritePropertyName("billingAccountId"u8);
+                writer.WriteStringValue(BillingAccountId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingAccountDisplayName))
+            {
+                writer.WritePropertyName("billingAccountDisplayName"u8);
+                writer.WriteStringValue(BillingAccountDisplayName);
+            }
             if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
@@ -154,6 +164,16 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
                 writer.WriteObjectValue(ClosedBalanceInBillingCurrency, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsEstimatedBalance))
+            {
+                writer.WritePropertyName("isEstimatedBalance"u8);
+                writer.WriteBooleanValue(IsEstimatedBalance.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETagPropertiesETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETagPropertiesETag);
+            }
             writer.WriteEndObject();
         }
 
@@ -189,6 +209,8 @@ namespace Azure.ResourceManager.Consumption.Models
             ConsumptionAmount creditExpired = default;
             ConsumptionAmount charges = default;
             ConsumptionAmount closedBalance = default;
+            string billingAccountId = default;
+            string billingAccountDisplayName = default;
             ConsumptionEventType? eventType = default;
             string invoiceNumber = default;
             ResourceIdentifier billingProfileId = default;
@@ -204,6 +226,8 @@ namespace Azure.ResourceManager.Consumption.Models
             ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = default;
             ConsumptionAmountWithExchangeRate chargesInBillingCurrency = default;
             ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default;
+            bool? isEstimatedBalance = default;
+            string etag0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -307,6 +331,16 @@ namespace Azure.ResourceManager.Consumption.Models
                                 continue;
                             }
                             closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("billingAccountId"u8))
+                        {
+                            billingAccountId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("billingAccountDisplayName"u8))
+                        {
+                            billingAccountDisplayName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("eventType"u8))
@@ -424,6 +458,20 @@ namespace Azure.ResourceManager.Consumption.Models
                             closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("isEstimatedBalance"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isEstimatedBalance = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("eTag"u8))
+                        {
+                            etag0 = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -445,6 +493,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 creditExpired,
                 charges,
                 closedBalance,
+                billingAccountId,
+                billingAccountDisplayName,
                 eventType,
                 invoiceNumber,
                 billingProfileId,
@@ -460,6 +510,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 adjustmentsInBillingCurrency,
                 chargesInBillingCurrency,
                 closedBalanceInBillingCurrency,
+                isEstimatedBalance,
+                etag0,
                 etag,
                 serializedAdditionalRawData);
         }

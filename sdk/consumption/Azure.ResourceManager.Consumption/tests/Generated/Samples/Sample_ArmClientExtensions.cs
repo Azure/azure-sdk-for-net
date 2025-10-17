@@ -9,15 +9,38 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Consumption.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Consumption.Samples
 {
-    public partial class Sample_ConsumptionBudgetResource
+    public partial class Sample_ArmClientExtensions
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_Budget()
+        public async Task GetBudgets_BudgetsList()
+        {
+            // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2024-08-01/examples/BudgetsList.json
+            // this example is just showing the usage of "Budgets_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // invoke the operation and iterate over the result
+            ResourceIdentifier scope = new ResourceIdentifier("subscriptions/00000000-0000-0000-0000-000000000000");
+            await foreach (ConsumptionBudget item in client.GetBudgetsAsync(scope))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBudget_Budget()
         {
             // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2024-08-01/examples/Budget.json
             // this example is just showing the usage of "Budgets_Get" operation, for the dependent resources, they will have to be created separately.
@@ -27,26 +50,17 @@ namespace Azure.ResourceManager.Consumption.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ConsumptionBudgetResource created on azure
-            // for more information of creating ConsumptionBudgetResource, please refer to the document of ConsumptionBudgetResource
-            string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            string budgetName = "TestBudget";
-            ResourceIdentifier consumptionBudgetResourceId = ConsumptionBudgetResource.CreateResourceIdentifier(scope, budgetName);
-            ConsumptionBudgetResource consumptionBudget = client.GetConsumptionBudgetResource(consumptionBudgetResourceId);
-
             // invoke the operation
-            ConsumptionBudgetResource result = await consumptionBudget.GetAsync();
+            ResourceIdentifier scope = new ResourceIdentifier("subscriptions/00000000-0000-0000-0000-000000000000");
+            string budgetName = "TestBudget";
+            ConsumptionBudget result = await client.GetBudgetAsync(scope, budgetName);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ConsumptionBudgetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteBudget()
+        public async Task DeleteBudget_DeleteBudget()
         {
             // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2024-08-01/examples/DeleteBudget.json
             // this example is just showing the usage of "Budgets_Delete" operation, for the dependent resources, they will have to be created separately.
@@ -56,15 +70,10 @@ namespace Azure.ResourceManager.Consumption.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ConsumptionBudgetResource created on azure
-            // for more information of creating ConsumptionBudgetResource, please refer to the document of ConsumptionBudgetResource
-            string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            string budgetName = "TestBudget";
-            ResourceIdentifier consumptionBudgetResourceId = ConsumptionBudgetResource.CreateResourceIdentifier(scope, budgetName);
-            ConsumptionBudgetResource consumptionBudget = client.GetConsumptionBudgetResource(consumptionBudgetResourceId);
-
             // invoke the operation
-            await consumptionBudget.DeleteAsync(WaitUntil.Completed);
+            ResourceIdentifier scope = new ResourceIdentifier("subscriptions/00000000-0000-0000-0000-000000000000");
+            string budgetName = "TestBudget";
+            await client.DeleteBudgetAsync(scope, budgetName);
 
             Console.WriteLine("Succeeded");
         }

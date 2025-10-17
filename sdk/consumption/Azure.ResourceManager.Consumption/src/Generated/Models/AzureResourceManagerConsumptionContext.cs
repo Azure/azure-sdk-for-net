@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Consumption
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ArmResourceGetConsumptionReservationRecommendationDetailsOptions))]
     [ModelReaderWriterBuildable(typeof(ArmResourceGetConsumptionReservationsSummariesOptions))]
     [ModelReaderWriterBuildable(typeof(BillingAccountConsumptionResource))]
     [ModelReaderWriterBuildable(typeof(BillingCustomerConsumptionResource))]
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.Consumption
     [ModelReaderWriterBuildable(typeof(ConsumptionModernReservationRecommendation))]
     [ModelReaderWriterBuildable(typeof(ConsumptionModernReservationTransaction))]
     [ModelReaderWriterBuildable(typeof(ConsumptionModernUsageDetail))]
+    [ModelReaderWriterBuildable(typeof(ConsumptionOperationStatus))]
     [ModelReaderWriterBuildable(typeof(ConsumptionReseller))]
     [ModelReaderWriterBuildable(typeof(ConsumptionReservationDetail))]
     [ModelReaderWriterBuildable(typeof(ConsumptionReservationRecommendation))]
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.Consumption
     [ModelReaderWriterBuildable(typeof(ConsumptionReservationSummary))]
     [ModelReaderWriterBuildable(typeof(ConsumptionReservationTransaction))]
     [ModelReaderWriterBuildable(typeof(ConsumptionResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(ConsumptionSavingsPlan))]
     [ModelReaderWriterBuildable(typeof(ConsumptionSavingsProperties))]
     [ModelReaderWriterBuildable(typeof(ConsumptionSkuProperty))]
     [ModelReaderWriterBuildable(typeof(ConsumptionTag))]

@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Specifies the kind of charge summary. </summary>
         internal ChargeSummaryKind Kind { get; set; }
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; set; }
+        public ETag? ETag { get; }
     }
 }

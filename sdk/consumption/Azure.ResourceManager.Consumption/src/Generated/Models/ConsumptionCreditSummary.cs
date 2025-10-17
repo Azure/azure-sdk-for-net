@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="balanceSummary"> Summary of balances associated with this credit summary. </param>
         /// <param name="pendingCreditAdjustments"> Pending credit adjustments. </param>
         /// <param name="expiredCredit"> Expired credit. </param>
@@ -64,10 +65,12 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="creditCurrency"> The credit currency. </param>
         /// <param name="billingCurrency"> The billing currency. </param>
         /// <param name="reseller"> Credit's reseller. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="isEstimatedBalance"> If true, the listed details are based on an estimation and it will be subjected to change. </param>
+        /// <param name="etagPropertiesETag"> The eTag for the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionCreditSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CreditBalanceSummary balanceSummary, ConsumptionAmount pendingCreditAdjustments, ConsumptionAmount expiredCredit, ConsumptionAmount pendingEligibleCharges, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionCreditSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, CreditBalanceSummary balanceSummary, ConsumptionAmount pendingCreditAdjustments, ConsumptionAmount expiredCredit, ConsumptionAmount pendingEligibleCharges, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, bool? isEstimatedBalance, string etagPropertiesETag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
             BalanceSummary = balanceSummary;
             PendingCreditAdjustments = pendingCreditAdjustments;
             ExpiredCredit = expiredCredit;
@@ -75,10 +78,13 @@ namespace Azure.ResourceManager.Consumption.Models
             CreditCurrency = creditCurrency;
             BillingCurrency = billingCurrency;
             Reseller = reseller;
-            ETag = etag;
+            IsEstimatedBalance = isEstimatedBalance;
+            ETagPropertiesETag = etagPropertiesETag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
+        public ETag? ETag { get; set; }
         /// <summary> Summary of balances associated with this credit summary. </summary>
         public CreditBalanceSummary BalanceSummary { get; }
         /// <summary> Pending credit adjustments. </summary>
@@ -93,7 +99,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public string BillingCurrency { get; }
         /// <summary> Credit's reseller. </summary>
         public ConsumptionReseller Reseller { get; }
-        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; set; }
+        /// <summary> If true, the listed details are based on an estimation and it will be subjected to change. </summary>
+        public bool? IsEstimatedBalance { get; }
+        /// <summary> The eTag for the resource. </summary>
+        public string ETagPropertiesETag { get; }
     }
 }

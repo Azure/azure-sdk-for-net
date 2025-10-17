@@ -16,8 +16,13 @@ namespace Azure.ResourceManager.Consumption.Models
     public partial class ConsumptionModernReservationRecommendation : ConsumptionReservationRecommendation
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationRecommendation"/>. </summary>
-        internal ConsumptionModernReservationRecommendation()
+        /// <param name="scope"> Shared or single recommendation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        internal ConsumptionModernReservationRecommendation(string scope)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            Scope = scope;
             SkuProperties = new ChangeTrackingList<ConsumptionSkuProperty>();
             Kind = ReservationRecommendationKind.Modern;
         }
@@ -27,11 +32,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="sku"> Resource sku. </param>
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="sku"> Resource sku. </param>
+        /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="locationPropertiesLocation"> Resource Location. </param>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="normalizedSize"> The normalized Size. </param>
         /// <param name="recommendedQuantityNormalized"> The recommended Quantity Normalized. </param>
         /// <param name="meterId"> The meter id (GUID). </param>
-        /// <param name="term"> RI recommendations in one or three year terms. </param>
+        /// <param name="term"> Term period of the reservation. ex: P1M, P1Y or P3Y. </param>
         /// <param name="costWithNoReservedInstances"> The total amount of cost without reserved instances. </param>
         /// <param name="recommendedQuantity"> Recommended quality for reserved instances. </param>
         /// <param name="totalCostWithReservedInstances"> The total amount of cost with reserved instances. </param>
@@ -49,7 +54,9 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="scope"> Shared or single recommendation. </param>
         /// <param name="skuProperties"> List of sku properties. </param>
         /// <param name="skuName"> This is the ARM Sku name. </param>
-        internal ConsumptionModernReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationRecommendationKind kind, AzureLocation? location, string sku, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string locationPropertiesLocation, int? lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, ConsumptionAmount costWithNoReservedInstances, decimal? recommendedQuantity, ConsumptionAmount totalCostWithReservedInstances, ConsumptionAmount netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, string skuName) : base(id, name, resourceType, systemData, kind, location, sku, etag, tags, serializedAdditionalRawData)
+        /// <param name="lastUsageOn"> The last usage date used for looking back for computing the recommendation. </param>
+        /// <param name="totalHours"> The total hours for which the cost is covered. </param>
+        internal ConsumptionModernReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyDictionary<string, string> tags, AzureLocation? location, string sku, ReservationRecommendationKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string locationPropertiesLocation, int? lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, ConsumptionAmount costWithNoReservedInstances, decimal? recommendedQuantity, ConsumptionAmount totalCostWithReservedInstances, ConsumptionAmount netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, string skuName, DateTimeOffset? lastUsageOn, int? totalHours) : base(id, name, resourceType, systemData, etag, tags, location, sku, kind, serializedAdditionalRawData)
         {
             LocationPropertiesLocation = locationPropertiesLocation;
             LookBackPeriod = lookBackPeriod;
@@ -67,7 +74,14 @@ namespace Azure.ResourceManager.Consumption.Models
             Scope = scope;
             SkuProperties = skuProperties;
             SkuName = skuName;
+            LastUsageOn = lastUsageOn;
+            TotalHours = totalHours;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationRecommendation"/> for deserialization. </summary>
+        internal ConsumptionModernReservationRecommendation()
+        {
         }
 
         /// <summary> Resource Location. </summary>
@@ -84,7 +98,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public float? RecommendedQuantityNormalized { get; }
         /// <summary> The meter id (GUID). </summary>
         public Guid? MeterId { get; }
-        /// <summary> RI recommendations in one or three year terms. </summary>
+        /// <summary> Term period of the reservation. ex: P1M, P1Y or P3Y. </summary>
         public string Term { get; }
         /// <summary> The total amount of cost without reserved instances. </summary>
         public ConsumptionAmount CostWithNoReservedInstances { get; }
@@ -97,10 +111,14 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> The usage date for looking back. </summary>
         public DateTimeOffset? FirstUsageOn { get; }
         /// <summary> Shared or single recommendation. </summary>
-        public string Scope { get; }
+        internal string Scope { get; set; }
         /// <summary> List of sku properties. </summary>
         public IReadOnlyList<ConsumptionSkuProperty> SkuProperties { get; }
         /// <summary> This is the ARM Sku name. </summary>
         public string SkuName { get; }
+        /// <summary> The last usage date used for looking back for computing the recommendation. </summary>
+        public DateTimeOffset? LastUsageOn { get; }
+        /// <summary> The total hours for which the cost is covered. </summary>
+        public int? TotalHours { get; }
     }
 }
