@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class ResubscribeProperties : IUtf8JsonSerializable, IJsonModel<ResubscribeProperties>
+    public partial class NewRelicResubscribeProperties : IUtf8JsonSerializable, IJsonModel<NewRelicResubscribeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResubscribeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicResubscribeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ResubscribeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NewRelicResubscribeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResubscribeProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicResubscribeProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(PlanId))
@@ -86,19 +86,19 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
         }
 
-        ResubscribeProperties IJsonModel<ResubscribeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NewRelicResubscribeProperties IJsonModel<NewRelicResubscribeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResubscribeProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicResubscribeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResubscribeProperties(document.RootElement, options);
+            return DeserializeNewRelicResubscribeProperties(document.RootElement, options);
         }
 
-        internal static ResubscribeProperties DeserializeResubscribeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NewRelicResubscribeProperties DeserializeNewRelicResubscribeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResubscribeProperties(
+            return new NewRelicResubscribeProperties(
                 planId,
                 termId,
                 subscriptionId,
@@ -169,35 +169,35 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ResubscribeProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NewRelicResubscribeProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResubscribeProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicResubscribeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ResubscribeProperties IPersistableModel<ResubscribeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NewRelicResubscribeProperties IPersistableModel<NewRelicResubscribeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeResubscribeProperties(document.RootElement, options);
+                        return DeserializeNewRelicResubscribeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResubscribeProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicResubscribeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ResubscribeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NewRelicResubscribeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

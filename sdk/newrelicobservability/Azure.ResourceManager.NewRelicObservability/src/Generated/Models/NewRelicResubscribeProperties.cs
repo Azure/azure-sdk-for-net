@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Resubscribe Properties. </summary>
-    public partial class ResubscribeProperties
+    public partial class NewRelicResubscribeProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResubscribeProperties"/>. </summary>
-        public ResubscribeProperties()
+        /// <summary> Initializes a new instance of <see cref="NewRelicResubscribeProperties"/>. </summary>
+        public NewRelicResubscribeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResubscribeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicResubscribeProperties"/>. </summary>
         /// <param name="planId"> Newly selected plan Id to create the new Marketplace subscription for Resubscribe. </param>
         /// <param name="termId"> Newly selected term Id to create the new Marketplace subscription for Resubscribe. </param>
         /// <param name="subscriptionId"> Newly selected Azure Subscription Id in which the new Marketplace subscription will be created for Resubscribe. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="publisherId"> Publisher Id of the NewRelic offer that needs to be resubscribed. </param>
         /// <param name="offerId"> Offer Id of the NewRelic offer that needs to be resubscribed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResubscribeProperties(string planId, string termId, string subscriptionId, string resourceGroup, string organizationId, string publisherId, string offerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NewRelicResubscribeProperties(string planId, string termId, string subscriptionId, string resourceGroup, string organizationId, string publisherId, string offerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PlanId = planId;
             TermId = termId;

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NewRelicObservability
 
         /// <summary> Resolve the token to get the SaaS resource ID and activate the SaaS resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="content"> The details for ActivateSaaSParameter request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NewRelicObservability
 
         /// <summary> Resolve the token to get the SaaS resource ID and activate the SaaS resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="content"> The details for ActivateSaaSParameter request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

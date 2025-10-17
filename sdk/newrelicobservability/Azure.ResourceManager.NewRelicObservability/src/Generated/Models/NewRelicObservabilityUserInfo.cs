@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityUserInfo"/>. </summary>
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
-        /// <param name="emailAddress"> User Email. </param>
+        /// <param name="emailAddress"> Reusable representation of an email address. </param>
         /// <param name="phoneNumber"> Contact phone number. </param>
         /// <param name="country"> country if user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Last name. </summary>
         [WirePath("lastName")]
         public string LastName { get; set; }
-        /// <summary> User Email. </summary>
+        /// <summary> Reusable representation of an email address. </summary>
         [WirePath("emailAddress")]
         public string EmailAddress { get; set; }
         /// <summary> Contact phone number. </summary>

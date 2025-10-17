@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         internal NewRelicObservabilitySaaSContent SaaSData { get; set; }
         /// <summary> SaaS resource id. </summary>
         [WirePath("properties.saaSData.saaSResourceId")]
-        public string SaaSResourceId
+        public ResourceIdentifier SaaSResourceId
         {
             get => SaaSData is null ? default : SaaSData.SaaSResourceId;
             set

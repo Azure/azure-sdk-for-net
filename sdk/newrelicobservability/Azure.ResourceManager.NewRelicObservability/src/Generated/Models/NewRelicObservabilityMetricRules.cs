@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityMetricRules"/>. </summary>
         /// <param name="sendMetrics"> Flag specifying if metrics should be sent for the Monitor resource. </param>
         /// <param name="filteringTags"> List of filtering tags to be used for capturing metrics. </param>
-        /// <param name="userEmail"> User Email. </param>
+        /// <param name="userEmail"> Reusable representation of an email address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicObservabilityMetricRules(NewRelicObservabilitySendMetricsStatus? sendMetrics, IList<NewRelicObservabilityFilteringTag> filteringTags, string userEmail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> List of filtering tags to be used for capturing metrics. </summary>
         [WirePath("filteringTags")]
         public IList<NewRelicObservabilityFilteringTag> FilteringTags { get; }
-        /// <summary> User Email. </summary>
+        /// <summary> Reusable representation of an email address. </summary>
         [WirePath("userEmail")]
         public string UserEmail { get; set; }
     }

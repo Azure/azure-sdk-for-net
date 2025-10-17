@@ -3,6 +3,7 @@
 ## 1.2.0-beta.1 (2025-11-05)
 
 ### Features Added
+
 Updating the api-version to "2025-05-01-preview"
 
 ### Other Changes

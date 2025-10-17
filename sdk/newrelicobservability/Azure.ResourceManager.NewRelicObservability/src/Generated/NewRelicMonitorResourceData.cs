@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         internal NewRelicObservabilitySaaSContent SaaSData { get; set; }
         /// <summary> SaaS resource id. </summary>
         [WirePath("properties.saaSData.saaSResourceId")]
-        public string SaaSResourceId
+        public ResourceIdentifier SaaSResourceId
         {
             get => SaaSData is null ? default : SaaSData.SaaSResourceId;
             set

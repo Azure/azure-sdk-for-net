@@ -37,20 +37,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
-                }
-                writer.WriteEndArray();
+                ((IJsonModel<SubResource>)item).Write(writer, options);
             }
+            writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -90,17 +87,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 return null;
             }
             IReadOnlyList<SubResource> value = default;
-            string nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -111,7 +104,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +117,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LinkedResourceListResponse(value ?? new ChangeTrackingList<SubResource>(), nextLink, serializedAdditionalRawData);
+            return new LinkedResourceListResponse(value, nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -168,15 +165,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 if (Optional.IsDefined(NextLink))
                 {
                     builder.Append("  nextLink: ");
-                    if (NextLink.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NextLink}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NextLink}'");
-                    }
+                    builder.AppendLine($"'{NextLink.AbsoluteUri}'");
                 }
             }
 
