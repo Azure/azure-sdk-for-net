@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> SubscriptionIds and quota allocated to subscriptions from the GroupQuota. </summary>
     public partial class AllocatedToSubscription
