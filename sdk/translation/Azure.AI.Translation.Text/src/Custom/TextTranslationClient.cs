@@ -301,7 +301,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
+        public virtual Task<Response<TransliterateResult>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -328,7 +328,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="text"> Text to be transliterated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="text"/> is null. </exception>
-        public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, string text, CancellationToken cancellationToken = default)
+        public virtual Task<Response<TransliterateResult>> TransliterateAsync(string language, string fromScript, string toScript, string text, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -356,7 +356,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
+        public virtual Response<TransliterateResult> Transliterate(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -383,7 +383,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="text"> Text to be transliterated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="text"/> is null. </exception>
-        public virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(string language, string fromScript, string toScript, string text, CancellationToken cancellationToken = default)
+        public virtual Response<TransliterateResult> Transliterate(string language, string fromScript, string toScript, string text, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -407,28 +407,19 @@ namespace Azure.AI.Translation.Text
         /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
         /// scripts available for the selected combination of input language and input script.
         /// </param>
-        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="inputs"> Defines the content of the request. </param>
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="requestBody"/> is null. </exception>
-        internal virtual async Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<InputTextItem> requestBody, Guid clientTraceId = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="inputs"/> is null. </exception>
+        internal virtual async Task<Response<TransliterateResult>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<InputTextItem> inputs, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
             Argument.AssertNotNull(toScript, nameof(toScript));
-            Argument.AssertNotNull(requestBody, nameof(requestBody));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await TransliterateAsync(language, fromScript, toScript, RequestContentHelper.FromEnumerable(requestBody), GetClientTraceId(clientTraceId), context).ConfigureAwait(false);
-            IReadOnlyList<TransliteratedText> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            List<TransliteratedText> array = new List<TransliteratedText>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(TransliteratedText.DeserializeTransliteratedText(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
+            TransliterateBody transliterateBody = new TransliterateBody(inputs);
+            return await TransliterateAsync(language, fromScript, toScript, transliterateBody, GetClientTraceId(clientTraceId), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -445,110 +436,19 @@ namespace Azure.AI.Translation.Text
         /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
         /// scripts available for the selected combination of input language and input script.
         /// </param>
-        /// <param name="requestBody"> Defines the content of the request. </param>
+        /// <param name="inputs"> Defines the content of the request. </param>
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="requestBody"/> is null. </exception>
-        internal virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(string language, string fromScript, string toScript, IEnumerable<InputTextItem> requestBody, Guid clientTraceId = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="inputs"/> is null. </exception>
+        internal virtual Response<TransliterateResult> Transliterate(string language, string fromScript, string toScript, IEnumerable<InputTextItem> inputs, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
             Argument.AssertNotNull(toScript, nameof(toScript));
-            Argument.AssertNotNull(requestBody, nameof(requestBody));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Transliterate(language, fromScript, toScript, RequestContentHelper.FromEnumerable(requestBody), GetClientTraceId(clientTraceId), context);
-            IReadOnlyList<TransliteratedText> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
-            List<TransliteratedText> array = new List<TransliteratedText>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(TransliteratedText.DeserializeTransliteratedText(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Transliterate Text. </summary>
-        /// <param name="language">
-        /// Specifies the language of the text to convert from one script to another.
-        /// Possible languages are listed in the transliteration scope obtained by querying the service
-        /// for its supported languages.
-        /// </param>
-        /// <param name="fromScript">
-        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
-        /// to find input scripts available for the selected language.
-        /// </param>
-        /// <param name="toScript">
-        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
-        /// scripts available for the selected combination of input language and input script.
-        /// </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual async Task<Response> TransliterateAsync(string language, string fromScript, string toScript, RequestContent content, string clientTraceId = null, RequestContext context = null)
-        {
-            Argument.AssertNotNull(language, nameof(language));
-            Argument.AssertNotNull(fromScript, nameof(fromScript));
-            Argument.AssertNotNull(toScript, nameof(toScript));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.Transliterate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, clientTraceId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Transliterate Text. </summary>
-        /// <param name="language">
-        /// Specifies the language of the text to convert from one script to another.
-        /// Possible languages are listed in the transliteration scope obtained by querying the service
-        /// for its supported languages.
-        /// </param>
-        /// <param name="fromScript">
-        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
-        /// to find input scripts available for the selected language.
-        /// </param>
-        /// <param name="toScript">
-        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
-        /// scripts available for the selected combination of input language and input script.
-        /// </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        internal virtual Response Transliterate(string language, string fromScript, string toScript, RequestContent content, string clientTraceId = null, RequestContext context = null)
-        {
-            Argument.AssertNotNull(language, nameof(language));
-            Argument.AssertNotNull(fromScript, nameof(fromScript));
-            Argument.AssertNotNull(toScript, nameof(toScript));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.Transliterate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, clientTraceId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            TransliterateBody transliterateBody = new TransliterateBody(inputs);
+            return Transliterate(language, fromScript, toScript, transliterateBody, GetClientTraceId(clientTraceId), cancellationToken);
         }
 
         /// <summary>
