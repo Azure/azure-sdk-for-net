@@ -46,7 +46,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _schedulesRestClient.ScheduleRunAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryRunResource>(Response.FromValue(new ContainerRegistryRunResource(Client, response), response.GetRawResponse()));
+                var uri = _schedulesRestClient.CreateScheduleRunRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Post, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryRunResource>(Response.FromValue(new ContainerRegistryRunResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -89,7 +91,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _schedulesRestClient.ScheduleRun(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryRunResource>(Response.FromValue(new ContainerRegistryRunResource(Client, response), response.GetRawResponse()));
+                var uri = _schedulesRestClient.CreateScheduleRunRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Post, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryRunResource>(Response.FromValue(new ContainerRegistryRunResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
