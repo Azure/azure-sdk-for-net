@@ -54,6 +54,7 @@ function Invoke-LoggedCommand
       if($LastExitCode -notin $AllowedExitCodes)
       {
           LogError "Command failed to execute ($duration): $Command`n"
+          exit $LastExitCode
       }
       else {
           Write-Host "Command succeeded ($duration)`n"
