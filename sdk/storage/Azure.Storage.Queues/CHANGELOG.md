@@ -7,6 +7,11 @@
 - Added support for User Delegation SAS.
 - Added support for Principal-Bound Identity User Delegation SAS.
 
+## 12.24.0 (2025-10-13)
+
+### Features Added
+- Includes all features from 12.24.0-beta.1
+
 ## 12.23.0 (2025-07-14)
 
 ### Features Added

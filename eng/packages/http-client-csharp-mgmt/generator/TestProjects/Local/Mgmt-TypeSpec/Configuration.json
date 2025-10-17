@@ -1,6 +1,6 @@
 {
-  "package-name": "MgmtTypeSpec",
-  "namespace": "MgmtTypeSpec",
+  "package-name": "Azure.Generator.MgmtTypeSpec.Tests",
+  "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
   "model-namespace": true,
   "license": {
     "name": "MIT License",

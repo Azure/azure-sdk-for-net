@@ -24,45 +24,7 @@
             "$ref": "2"
           },
           "enumType": {
-            "$id": "4",
-            "kind": "enum",
-            "decorators": [],
-            "name": "DogKind",
-            "isGeneratedName": false,
-            "namespace": "Type.Model.Inheritance.EnumDiscriminator",
-            "doc": "extensible enum type for discriminator",
-            "valueType": {
-              "$id": "5",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "6",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "Golden",
-                "doc": "Species golden",
-                "value": "golden",
-                "valueType": {
-                  "$ref": "5"
-                },
-                "enumType": {
-                  "$ref": "4"
-                }
-              }
-            ],
-            "isFixed": false,
-            "isFlags": false,
-            "usage": "Input,Output,Json",
-            "access": "public",
-            "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.DogKind",
-            "apiVersions": [],
-            "isUnionAsEnum": true,
-            "__accessSet": true
+            "$ref": "1"
           },
           "doc": "Species golden",
           "decorators": []
@@ -76,12 +38,12 @@
       "decorators": []
     },
     {
-      "$id": "7",
+      "$id": "4",
       "kind": "enum",
       "name": "SnakeKind",
       "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.SnakeKind",
       "valueType": {
-        "$id": "8",
+        "$id": "5",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -89,53 +51,15 @@
       },
       "values": [
         {
-          "$id": "9",
+          "$id": "6",
           "kind": "enumvalue",
           "name": "Cobra",
           "value": "cobra",
           "valueType": {
-            "$ref": "8"
+            "$ref": "5"
           },
           "enumType": {
-            "$id": "10",
-            "kind": "enum",
-            "decorators": [],
-            "name": "SnakeKind",
-            "isGeneratedName": false,
-            "namespace": "Type.Model.Inheritance.EnumDiscriminator",
-            "doc": "fixed enum type for discriminator",
-            "valueType": {
-              "$id": "11",
-              "kind": "string",
-              "decorators": [],
-              "name": "string",
-              "doc": "A sequence of textual characters.",
-              "crossLanguageDefinitionId": "TypeSpec.string"
-            },
-            "values": [
-              {
-                "$id": "12",
-                "kind": "enumvalue",
-                "decorators": [],
-                "name": "Cobra",
-                "value": "cobra",
-                "doc": "Species cobra",
-                "enumType": {
-                  "$ref": "10"
-                },
-                "valueType": {
-                  "$ref": "11"
-                }
-              }
-            ],
-            "isFixed": true,
-            "isFlags": false,
-            "usage": "Input,Output,Json",
-            "access": "public",
-            "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.SnakeKind",
-            "apiVersions": [],
-            "isUnionAsEnum": false,
-            "__accessSet": true
+            "$ref": "4"
           },
           "doc": "Species cobra",
           "decorators": []
@@ -151,9 +75,57 @@
   ],
   "constants": [
     {
-      "$id": "13",
+      "$id": "7",
       "kind": "constant",
       "name": "getExtensibleModelContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "8",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "9",
+      "kind": "constant",
+      "name": "putExtensibleModelContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "10",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "11",
+      "kind": "constant",
+      "name": "getExtensibleModelMissingDiscriminatorContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "12",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "13",
+      "kind": "constant",
+      "name": "getExtensibleModelWrongDiscriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -169,7 +141,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "putExtensibleModelContentType",
+      "name": "getFixedModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -185,7 +157,7 @@
     {
       "$id": "17",
       "kind": "constant",
-      "name": "getExtensibleModelMissingDiscriminatorContentType",
+      "name": "putFixedModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -201,7 +173,7 @@
     {
       "$id": "19",
       "kind": "constant",
-      "name": "getExtensibleModelWrongDiscriminatorContentType",
+      "name": "getFixedModelMissingDiscriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -217,7 +189,7 @@
     {
       "$id": "21",
       "kind": "constant",
-      "name": "getFixedModelContentType",
+      "name": "getFixedModelWrongDiscriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -229,59 +201,11 @@
       },
       "value": "application/json",
       "decorators": []
-    },
-    {
-      "$id": "23",
-      "kind": "constant",
-      "name": "putFixedModelContentType",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "24",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": []
-    },
-    {
-      "$id": "25",
-      "kind": "constant",
-      "name": "getFixedModelMissingDiscriminatorContentType",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "26",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": []
-    },
-    {
-      "$id": "27",
-      "kind": "constant",
-      "name": "getFixedModelWrongDiscriminatorContentType",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "28",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": []
     }
   ],
   "models": [
     {
-      "$id": "29",
+      "$id": "23",
       "kind": "model",
       "name": "Dog",
       "namespace": "Type.Model.Inheritance.EnumDiscriminator",
@@ -290,7 +214,7 @@
       "doc": "Test extensible enum type for discriminator",
       "decorators": [],
       "discriminatorProperty": {
-        "$id": "30",
+        "$id": "24",
         "kind": "property",
         "name": "kind",
         "serializedName": "kind",
@@ -313,16 +237,16 @@
       },
       "properties": [
         {
-          "$ref": "30"
+          "$ref": "24"
         },
         {
-          "$id": "31",
+          "$id": "25",
           "kind": "property",
           "name": "weight",
           "serializedName": "weight",
           "doc": "Weight of the dog",
           "type": {
-            "$id": "32",
+            "$id": "26",
             "kind": "int32",
             "name": "int32",
             "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -344,7 +268,7 @@
       ],
       "discriminatedSubtypes": {
         "golden": {
-          "$id": "33",
+          "$id": "27",
           "kind": "model",
           "name": "Golden",
           "namespace": "Type.Model.Inheritance.EnumDiscriminator",
@@ -354,17 +278,66 @@
           "discriminatorValue": "golden",
           "decorators": [],
           "baseModel": {
-            "$ref": "29"
+            "$ref": "23"
           },
           "properties": [
             {
-              "$id": "34",
+              "$id": "28",
               "kind": "property",
               "name": "kind",
               "serializedName": "kind",
               "doc": "discriminator property",
               "type": {
-                "$ref": "3"
+                "$id": "29",
+                "kind": "enumvalue",
+                "name": "Golden",
+                "value": "golden",
+                "valueType": {
+                  "$ref": "2"
+                },
+                "enumType": {
+                  "$id": "30",
+                  "kind": "enum",
+                  "decorators": [],
+                  "doc": "extensible enum type for discriminator",
+                  "name": "DogKind",
+                  "isGeneratedName": false,
+                  "namespace": "Type.Model.Inheritance.EnumDiscriminator",
+                  "valueType": {
+                    "$id": "31",
+                    "kind": "string",
+                    "decorators": [],
+                    "doc": "A sequence of textual characters.",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "values": [
+                    {
+                      "$id": "32",
+                      "kind": "enumvalue",
+                      "decorators": [],
+                      "doc": "Species golden",
+                      "name": "Golden",
+                      "value": "golden",
+                      "valueType": {
+                        "$ref": "31"
+                      },
+                      "enumType": {
+                        "$ref": "30"
+                      }
+                    }
+                  ],
+                  "isFixed": false,
+                  "isFlags": false,
+                  "usage": "Input,Output,Json",
+                  "access": "public",
+                  "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.DogKind",
+                  "apiVersions": [],
+                  "isUnionAsEnum": true,
+                  "__accessSet": true
+                },
+                "doc": "Species golden",
+                "decorators": []
               },
               "optional": false,
               "readOnly": false,
@@ -384,10 +357,10 @@
       }
     },
     {
-      "$ref": "33"
+      "$ref": "27"
     },
     {
-      "$id": "35",
+      "$id": "33",
       "kind": "model",
       "name": "Snake",
       "namespace": "Type.Model.Inheritance.EnumDiscriminator",
@@ -396,13 +369,13 @@
       "doc": "Test fixed enum type for discriminator",
       "decorators": [],
       "discriminatorProperty": {
-        "$id": "36",
+        "$id": "34",
         "kind": "property",
         "name": "kind",
         "serializedName": "kind",
         "doc": "discriminator property",
         "type": {
-          "$ref": "7"
+          "$ref": "4"
         },
         "optional": false,
         "readOnly": false,
@@ -419,16 +392,16 @@
       },
       "properties": [
         {
-          "$ref": "36"
+          "$ref": "34"
         },
         {
-          "$id": "37",
+          "$id": "35",
           "kind": "property",
           "name": "length",
           "serializedName": "length",
           "doc": "Length of the snake",
           "type": {
-            "$id": "38",
+            "$id": "36",
             "kind": "int32",
             "name": "int32",
             "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -450,7 +423,7 @@
       ],
       "discriminatedSubtypes": {
         "cobra": {
-          "$id": "39",
+          "$id": "37",
           "kind": "model",
           "name": "Cobra",
           "namespace": "Type.Model.Inheritance.EnumDiscriminator",
@@ -460,25 +433,63 @@
           "discriminatorValue": "cobra",
           "decorators": [],
           "baseModel": {
-            "$ref": "35"
+            "$ref": "33"
           },
           "properties": [
             {
-              "$id": "40",
+              "$id": "38",
               "kind": "property",
               "name": "kind",
               "serializedName": "kind",
               "doc": "discriminator property",
               "type": {
-                "$id": "41",
+                "$id": "39",
                 "kind": "enumvalue",
                 "name": "Cobra",
                 "value": "cobra",
                 "valueType": {
-                  "$ref": "8"
+                  "$ref": "5"
                 },
                 "enumType": {
-                  "$ref": "10"
+                  "$id": "40",
+                  "kind": "enum",
+                  "decorators": [],
+                  "doc": "fixed enum type for discriminator",
+                  "name": "SnakeKind",
+                  "isGeneratedName": false,
+                  "namespace": "Type.Model.Inheritance.EnumDiscriminator",
+                  "valueType": {
+                    "$id": "41",
+                    "kind": "string",
+                    "decorators": [],
+                    "doc": "A sequence of textual characters.",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "values": [
+                    {
+                      "$id": "42",
+                      "kind": "enumvalue",
+                      "decorators": [],
+                      "doc": "Species cobra",
+                      "name": "Cobra",
+                      "value": "cobra",
+                      "enumType": {
+                        "$ref": "40"
+                      },
+                      "valueType": {
+                        "$ref": "41"
+                      }
+                    }
+                  ],
+                  "isFixed": true,
+                  "isFlags": false,
+                  "usage": "Input,Output,Json",
+                  "access": "public",
+                  "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.SnakeKind",
+                  "apiVersions": [],
+                  "isUnionAsEnum": false,
+                  "__accessSet": true
                 },
                 "doc": "Species cobra",
                 "decorators": []
@@ -501,38 +512,38 @@
       }
     },
     {
-      "$ref": "39"
+      "$ref": "37"
     }
   ],
   "clients": [
     {
-      "$id": "42",
+      "$id": "43",
       "kind": "client",
       "name": "EnumDiscriminatorClient",
       "namespace": "Type.Model.Inheritance.EnumDiscriminator",
       "doc": "Illustrates inheritance with enum discriminator.",
       "methods": [
         {
-          "$id": "43",
+          "$id": "44",
           "kind": "basic",
           "name": "getExtensibleModel",
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Receive model with extensible enum discriminator type.",
           "operation": {
-            "$id": "44",
+            "$id": "45",
             "name": "getExtensibleModel",
             "resourceName": "EnumDiscriminator",
             "doc": "Receive model with extensible enum discriminator type.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "45",
+                "$id": "46",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "13"
+                  "$ref": "7"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -549,7 +560,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "29"
+                  "$ref": "23"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -569,12 +580,12 @@
           },
           "parameters": [
             {
-              "$id": "46",
+              "$id": "47",
               "kind": "method",
               "name": "accept",
               "serializedName": "Accept",
               "type": {
-                "$ref": "13"
+                "$ref": "7"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -588,7 +599,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "29"
+              "$ref": "23"
             }
           },
           "isOverride": false,
@@ -597,27 +608,27 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModel"
         },
         {
-          "$id": "47",
+          "$id": "48",
           "kind": "basic",
           "name": "putExtensibleModel",
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Send model with extensible enum discriminator type.",
           "operation": {
-            "$id": "48",
+            "$id": "49",
             "name": "putExtensibleModel",
             "resourceName": "EnumDiscriminator",
             "doc": "Send model with extensible enum discriminator type.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "49",
+                "$id": "50",
                 "kind": "header",
                 "name": "contentType",
                 "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
-                  "$ref": "15"
+                  "$ref": "9"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -628,13 +639,13 @@
                 "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel.contentType"
               },
               {
-                "$id": "50",
+                "$id": "51",
                 "kind": "body",
                 "name": "input",
                 "serializedName": "input",
                 "doc": "Dog to create",
                 "type": {
-                  "$ref": "29"
+                  "$ref": "23"
                 },
                 "isApiVersion": false,
                 "contentTypes": [
@@ -671,13 +682,13 @@
           },
           "parameters": [
             {
-              "$id": "51",
+              "$id": "52",
               "kind": "method",
               "name": "input",
               "serializedName": "input",
               "doc": "Dog to create",
               "type": {
-                "$ref": "29"
+                "$ref": "23"
               },
               "location": "Body",
               "isApiVersion": false,
@@ -689,13 +700,13 @@
               "decorators": []
             },
             {
-              "$id": "52",
+              "$id": "53",
               "kind": "method",
               "name": "contentType",
               "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
-                "$ref": "15"
+                "$ref": "9"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -714,26 +725,26 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel"
         },
         {
-          "$id": "53",
+          "$id": "54",
           "kind": "basic",
           "name": "getExtensibleModelMissingDiscriminator",
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Get a model omitting the discriminator.",
           "operation": {
-            "$id": "54",
+            "$id": "55",
             "name": "getExtensibleModelMissingDiscriminator",
             "resourceName": "EnumDiscriminator",
             "doc": "Get a model omitting the discriminator.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "55",
+                "$id": "56",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "17"
+                  "$ref": "11"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -750,7 +761,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "29"
+                  "$ref": "23"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -770,12 +781,12 @@
           },
           "parameters": [
             {
-              "$id": "56",
+              "$id": "57",
               "kind": "method",
               "name": "accept",
               "serializedName": "Accept",
               "type": {
-                "$ref": "17"
+                "$ref": "11"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -789,7 +800,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "29"
+              "$ref": "23"
             }
           },
           "isOverride": false,
@@ -798,26 +809,26 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelMissingDiscriminator"
         },
         {
-          "$id": "57",
+          "$id": "58",
           "kind": "basic",
           "name": "getExtensibleModelWrongDiscriminator",
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Get a model containing discriminator value never defined.",
           "operation": {
-            "$id": "58",
+            "$id": "59",
             "name": "getExtensibleModelWrongDiscriminator",
             "resourceName": "EnumDiscriminator",
             "doc": "Get a model containing discriminator value never defined.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "59",
+                "$id": "60",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "19"
+                  "$ref": "13"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -834,7 +845,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "29"
+                  "$ref": "23"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -854,12 +865,12 @@
           },
           "parameters": [
             {
-              "$id": "60",
+              "$id": "61",
               "kind": "method",
               "name": "accept",
               "serializedName": "Accept",
               "type": {
-                "$ref": "19"
+                "$ref": "13"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -873,7 +884,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "29"
+              "$ref": "23"
             }
           },
           "isOverride": false,
@@ -882,26 +893,26 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelWrongDiscriminator"
         },
         {
-          "$id": "61",
+          "$id": "62",
           "kind": "basic",
           "name": "getFixedModel",
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Receive model with fixed enum discriminator type.",
           "operation": {
-            "$id": "62",
+            "$id": "63",
             "name": "getFixedModel",
             "resourceName": "EnumDiscriminator",
             "doc": "Receive model with fixed enum discriminator type.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "63",
+                "$id": "64",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "21"
+                  "$ref": "15"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -918,7 +929,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "35"
+                  "$ref": "33"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -938,12 +949,12 @@
           },
           "parameters": [
             {
-              "$id": "64",
+              "$id": "65",
               "kind": "method",
               "name": "accept",
               "serializedName": "Accept",
               "type": {
-                "$ref": "21"
+                "$ref": "15"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -957,7 +968,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "35"
+              "$ref": "33"
             }
           },
           "isOverride": false,
@@ -966,27 +977,27 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModel"
         },
         {
-          "$id": "65",
+          "$id": "66",
           "kind": "basic",
           "name": "putFixedModel",
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Send model with fixed enum discriminator type.",
           "operation": {
-            "$id": "66",
+            "$id": "67",
             "name": "putFixedModel",
             "resourceName": "EnumDiscriminator",
             "doc": "Send model with fixed enum discriminator type.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "67",
+                "$id": "68",
                 "kind": "header",
                 "name": "contentType",
                 "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
-                  "$ref": "23"
+                  "$ref": "17"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -997,13 +1008,13 @@
                 "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel.contentType"
               },
               {
-                "$id": "68",
+                "$id": "69",
                 "kind": "body",
                 "name": "input",
                 "serializedName": "input",
                 "doc": "Snake to create",
                 "type": {
-                  "$ref": "35"
+                  "$ref": "33"
                 },
                 "isApiVersion": false,
                 "contentTypes": [
@@ -1040,13 +1051,13 @@
           },
           "parameters": [
             {
-              "$id": "69",
+              "$id": "70",
               "kind": "method",
               "name": "input",
               "serializedName": "input",
               "doc": "Snake to create",
               "type": {
-                "$ref": "35"
+                "$ref": "33"
               },
               "location": "Body",
               "isApiVersion": false,
@@ -1058,13 +1069,13 @@
               "decorators": []
             },
             {
-              "$id": "70",
+              "$id": "71",
               "kind": "method",
               "name": "contentType",
               "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
-                "$ref": "23"
+                "$ref": "17"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -1083,26 +1094,26 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel"
         },
         {
-          "$id": "71",
+          "$id": "72",
           "kind": "basic",
           "name": "getFixedModelMissingDiscriminator",
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Get a model omitting the discriminator.",
           "operation": {
-            "$id": "72",
+            "$id": "73",
             "name": "getFixedModelMissingDiscriminator",
             "resourceName": "EnumDiscriminator",
             "doc": "Get a model omitting the discriminator.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "73",
+                "$id": "74",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "25"
+                  "$ref": "19"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -1119,7 +1130,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "35"
+                  "$ref": "33"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -1139,12 +1150,12 @@
           },
           "parameters": [
             {
-              "$id": "74",
+              "$id": "75",
               "kind": "method",
               "name": "accept",
               "serializedName": "Accept",
               "type": {
-                "$ref": "25"
+                "$ref": "19"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -1158,7 +1169,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "35"
+              "$ref": "33"
             }
           },
           "isOverride": false,
@@ -1167,26 +1178,26 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelMissingDiscriminator"
         },
         {
-          "$id": "75",
+          "$id": "76",
           "kind": "basic",
           "name": "getFixedModelWrongDiscriminator",
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Get a model containing discriminator value never defined.",
           "operation": {
-            "$id": "76",
+            "$id": "77",
             "name": "getFixedModelWrongDiscriminator",
             "resourceName": "EnumDiscriminator",
             "doc": "Get a model containing discriminator value never defined.",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "77",
+                "$id": "78",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "27"
+                  "$ref": "21"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -1203,7 +1214,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "35"
+                  "$ref": "33"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -1223,12 +1234,12 @@
           },
           "parameters": [
             {
-              "$id": "78",
+              "$id": "79",
               "kind": "method",
               "name": "accept",
               "serializedName": "Accept",
               "type": {
-                "$ref": "27"
+                "$ref": "21"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -1242,7 +1253,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "35"
+              "$ref": "33"
             }
           },
           "isOverride": false,
@@ -1253,13 +1264,13 @@
       ],
       "parameters": [
         {
-          "$id": "79",
+          "$id": "80",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "80",
+            "$id": "81",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1270,7 +1281,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "81",
+              "$id": "82",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"

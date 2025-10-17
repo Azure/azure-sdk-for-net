@@ -11,6 +11,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -47,15 +48,32 @@ namespace Azure.Generator.Management.Visitors
             foreach (var method in modelFactory.Methods)
             {
                 var returnType = method.Signature.ReturnType;
-                if (returnType is not null && _flattenedModelTypes.TryGetValue(returnType, out var value))
+                if (returnType is not null && TryGetFlattenPropertyInfo(returnType, out var propertyNameMap))
                 {
-                    var (propertyNameMap, _) = value;
-                    UpdateModelFactoryMethod(method, returnType, propertyNameMap);
+                    UpdateModelFactoryMethod(method, propertyNameMap);
                 }
             }
         }
 
-        private void UpdateModelFactoryMethod(MethodProvider method, CSharpType returnType, Dictionary<string, List<FlattenPropertyInfo>> propertyNameMap)
+        private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
+        {
+            propertyNameMap = null;
+            if (_flattenedModelTypes.TryGetValue(returnType, out var value))
+            {
+                propertyNameMap = value.Item1;
+                return true;
+            }
+            // handle the case where the return type is a derived type of a flattened model type
+            // we only deal with single level inheritance here to avoid complexity
+            else if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(returnType, out var typeProvider) && typeProvider is ModelProvider model && model.BaseType is not null && _flattenedModelTypes.TryGetValue(model.BaseType, out value))
+            {
+                propertyNameMap = value.Item1;
+                return true;
+            }
+            return false;
+        }
+
+        private void UpdateModelFactoryMethod(MethodProvider method, Dictionary<string, List<FlattenPropertyInfo>> propertyNameMap)
         {
             var parameterMap = new Dictionary<ParameterProvider, ParameterProvider>();
             var updatedParameters = new List<ParameterProvider>(method.Signature.Parameters.Count);
@@ -175,24 +193,31 @@ namespace Azure.Generator.Management.Visitors
 
             var parameters = new List<ValueExpression>();
             var additionalPropertyIndex = GetAdditionalPropertyIndex();
-            for (int i = 0, fullConstructorParameterIndex = 0; i < flattenedProperties.Count; i++, fullConstructorParameterIndex++)
+            for (int flattenedPropertyIndex = 0, fullConstructorParameterIndex = 0; ; fullConstructorParameterIndex++)
             {
-                if (i == additionalPropertyIndex)
+                // If we have processed all the flattened properties or all the constructor parameters, we can break the loop.
+                if (flattenedPropertyIndex >= flattenedProperties.Count || fullConstructorParameterIndex >= fullConstructorParameters.Count)
+                {
+                    break;
+                }
+
+                if (fullConstructorParameterIndex == additionalPropertyIndex)
                 {
                     // If the additionalProperties parameter exists, we need to pass a new instance for it.
                     parameters.Add(New.Instance(new CSharpType(typeof(Dictionary<string, BinaryData>))));
 
                     // If the additionalProperties parameter is the last parameter, we can break the loop.
-                    if (additionalPropertyIndex == fullConstructorParameters.Count - 1)
+                    if (fullConstructorParameterIndex == fullConstructorParameters.Count - 1)
                     {
                         break;
                     }
                     fullConstructorParameterIndex++;
                 }
-                var (isOverriddenValueType, flattenedProperty) = flattenedProperties[i];
+                var (isOverriddenValueType, flattenedProperty) = flattenedProperties[flattenedPropertyIndex];
                 var propertyParameter = flattenedProperty.AsParameter;
                 var flattenedPropertyType = flattenedProperty.Type;
                 var constructorParameterType = fullConstructorParameters[fullConstructorParameterIndex].Type;
+
                 // If the internal property type is the same as the property type, we can use the flattened property directly.
                 if (constructorParameterType.AreNamesEqual(flattenedPropertyType))
                 {
@@ -204,6 +229,8 @@ namespace Azure.Generator.Management.Visitors
                     {
                         parameters.Add(isOverriddenValueType ? propertyParameter.Property("Value") : propertyParameter);
                     }
+                    // only increase flattenedPropertyIndex when we use a flattened property
+                    flattenedPropertyIndex++;
                 }
                 else
                 {
@@ -219,8 +246,8 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
-            // If the additionalProperties parameter exists at the end, we need to pass a new instance for it.
-            if (additionalPropertyIndex == propertyModelType!.FullConstructor.Signature.Parameters.Count - 1)
+            // If the additionalProperties parameter is missing at the end, we need to pass a new instance for it.
+            if (parameters.Count < fullConstructorParameters.Count && additionalPropertyIndex == propertyModelType!.FullConstructor.Signature.Parameters.Count - 1)
             {
                 parameters.Add(New.Instance(new CSharpType(typeof(Dictionary<string, BinaryData>))));
             }
@@ -288,6 +315,12 @@ namespace Azure.Generator.Management.Visitors
                     if (internalProperty.IsDiscriminator)
                     {
                         ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-warning", "Discriminator property should not be flattened.");
+                        continue;
+                    }
+
+                    // skip if internal property type is base abstract discriminator model
+                    if (modelProvider.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
+                    {
                         continue;
                     }
 
