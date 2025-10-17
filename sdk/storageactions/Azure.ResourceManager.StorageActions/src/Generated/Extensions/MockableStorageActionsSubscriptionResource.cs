@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.StorageActions.Mocking
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>
-        /// <param name="content"> The parameters to preview action condition. </param>
+        /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<StorageTaskPreviewAction>> PreviewActionsAsync(AzureLocation location, StorageTaskPreviewAction content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="storageTaskPreviewAction"/> is null. </exception>
+        public virtual async Task<Response<StorageTaskPreviewAction>> PreviewActionsAsync(AzureLocation location, StorageTaskPreviewAction storageTaskPreviewAction, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(storageTaskPreviewAction, nameof(storageTaskPreviewAction));
 
             using DiagnosticScope scope = StorageTasksClientDiagnostics.CreateScope("MockableStorageActionsSubscriptionResource.PreviewActions");
             scope.Start();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StorageActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, StorageTaskPreviewAction.ToRequestContent(content), context);
+                HttpMessage message = StorageTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, StorageTaskPreviewAction.ToRequestContent(storageTaskPreviewAction), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageTaskPreviewAction> response = Response.FromValue(StorageTaskPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.StorageActions.Mocking
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="location"></param>
-        /// <param name="content"> The parameters to preview action condition. </param>
+        /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<StorageTaskPreviewAction> PreviewActions(AzureLocation location, StorageTaskPreviewAction content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="storageTaskPreviewAction"/> is null. </exception>
+        public virtual Response<StorageTaskPreviewAction> PreviewActions(AzureLocation location, StorageTaskPreviewAction storageTaskPreviewAction, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(storageTaskPreviewAction, nameof(storageTaskPreviewAction));
 
             using DiagnosticScope scope = StorageTasksClientDiagnostics.CreateScope("MockableStorageActionsSubscriptionResource.PreviewActions");
             scope.Start();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, StorageTaskPreviewAction.ToRequestContent(content), context);
+                HttpMessage message = StorageTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, StorageTaskPreviewAction.ToRequestContent(storageTaskPreviewAction), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageTaskPreviewAction> response = Response.FromValue(StorageTaskPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
