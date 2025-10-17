@@ -11,12 +11,21 @@ namespace Azure.Generator.Management.Primitives
 {
     internal class FlattenedPropertyProvider : PropertyProvider
     {
-        public PropertyProvider PropertyFlattenedFrom { get; }
+        /// <summary>
+        /// The property that this property is flattened from.
+        /// </summary>
+        public PropertyProvider FlattenedProperty { get; }
 
-        public FlattenedPropertyProvider(FormattableString? description, MethodSignatureModifiers modifiers, CSharpType type, string name, PropertyBody body, TypeProvider enclosingType, PropertyProvider flattenedFrom, CSharpType? explicitInterface = null, PropertyWireInformation? wireInfo = null, bool isRef = false, IEnumerable<AttributeStatement>? attributes = null)
+        /// <summary>
+        /// The property that this property is directed to.
+        /// </summary>
+        public PropertyProvider OriginalProperty { get; }
+
+        public FlattenedPropertyProvider(FormattableString? description, MethodSignatureModifiers modifiers, CSharpType type, string name, PropertyBody body, TypeProvider enclosingType, PropertyProvider flattenedFrom, PropertyProvider originalProperty, CSharpType? explicitInterface = null, PropertyWireInformation? wireInfo = null, bool isRef = false, IEnumerable<AttributeStatement>? attributes = null)
             : base(description, modifiers, type, name, body, enclosingType, explicitInterface, wireInfo, isRef, attributes)
         {
-            PropertyFlattenedFrom = flattenedFrom;
+            FlattenedProperty = flattenedFrom;
+            OriginalProperty = originalProperty;
         }
     }
 }

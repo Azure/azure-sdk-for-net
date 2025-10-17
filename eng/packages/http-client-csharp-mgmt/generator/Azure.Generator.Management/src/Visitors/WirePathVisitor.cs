@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
+using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors
@@ -44,23 +45,22 @@ namespace Azure.Generator.Management.Visitors
         private static string GetWirePath(PropertyProvider property)
         {
             // if the property is not flattened, return its serialized name
-            if (property is not FlattenedPropertyProvider flattenedProperty)
+            if (property is not FlattenedPropertyProvider)
             {
                 return property.WireInfo!.SerializedName;
             }
 
             // if the property is flattened, we need to recursively get the wire path from its flattened from property until we get a normal property
-            var wirePathSegments = new Stack<string>();
-            wirePathSegments.Push(property.WireInfo!.SerializedName);
-            var currentProperty = property;
-            while (currentProperty is FlattenedPropertyProvider currentFlattenedProperty)
+            var propertyHierarchy = new List<PropertyProvider>();
+            var current = property;
+            while (current is FlattenedPropertyProvider flattenedProperty)
             {
-                var parentProperty = currentFlattenedProperty.PropertyFlattenedFrom;
-                wirePathSegments.Push(parentProperty.WireInfo!.SerializedName);
-                currentProperty = parentProperty;
+                propertyHierarchy.Add(flattenedProperty.FlattenedProperty);
+                current = flattenedProperty.OriginalProperty;
             }
+            propertyHierarchy.Add(current); // add the last normal property
 
-            return string.Join('.', wirePathSegments);
+            return string.Join('.', propertyHierarchy.Select(p => p.WireInfo!.SerializedName));
         }
     }
 }

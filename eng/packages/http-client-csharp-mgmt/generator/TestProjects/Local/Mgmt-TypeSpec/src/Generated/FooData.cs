@@ -162,7 +162,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        [WirePath("properties.properties")]
+        [WirePath("properties.nestedProperty.properties")]
         public FooProperties NestedPropertyProperties
         {
             get
