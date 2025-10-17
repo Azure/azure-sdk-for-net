@@ -641,7 +641,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var target = new BlobCheckpointStoreInternal(containerClient, initializeWithLegacyCheckpoints: true);
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
-            Assert.That(checkpoint, Is.Null, "A checkpoints should have not been returned.");
+            Assert.That(checkpoint, Is.Null, "A checkpoint should have not been returned.");
         }
 
         /// <summary>
