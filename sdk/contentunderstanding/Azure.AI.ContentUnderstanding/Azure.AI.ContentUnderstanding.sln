@@ -5,6 +5,22 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.ContentUnderstanding", "src\Azure.AI.ContentUnderstanding.csproj", "{F5B9B4E2-A5CF-4E9F-9101-E3E9289E8DCF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnalyzeBinary", "samples\AnalyzeBinary\AnalyzeBinary.csproj", "{A1B2C3D4-E5F6-7890-1234-567890ABCDEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnalyzeInvoice", "samples\AnalyzeInvoice\AnalyzeInvoice.csproj", "{B2C3D4E5-F6G7-8901-2345-678901BCDEF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnalyzeUrl", "samples\AnalyzeUrl\AnalyzeUrl.csproj", "{C3D4E5F6-G7H8-9012-3456-789012CDEF01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateOrReplaceAnalyzer", "samples\CreateOrReplaceAnalyzer\CreateOrReplaceAnalyzer.csproj", "{D4E5F6G7-H8I9-0123-4567-890123DEF012}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeleteAnalyzer", "samples\DeleteAnalyzer\DeleteAnalyzer.csproj", "{E5F6G7H8-I9J0-1234-5678-901234EF0123}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetAnalyzer", "samples\GetAnalyzer\GetAnalyzer.csproj", "{F6G7H8I9-J0K1-2345-6789-012345F01234}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListAnalyzers", "samples\ListAnalyzers\ListAnalyzers.csproj", "{G7H8I9J0-K1L2-3456-7890-123456012345}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateAnalyzer", "samples\UpdateAnalyzer\UpdateAnalyzer.csproj", "{H8I9J0K1-L2M3-4567-8901-234567123456}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +31,38 @@ Global
 		{F5B9B4E2-A5CF-4E9F-9101-E3E9289E8DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5B9B4E2-A5CF-4E9F-9101-E3E9289E8DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5B9B4E2-A5CF-4E9F-9101-E3E9289E8DCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-E5F6-7890-1234-567890ABCDEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-E5F6-7890-1234-567890ABCDEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-E5F6-7890-1234-567890ABCDEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-E5F6-7890-1234-567890ABCDEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C3D4E5-F6G7-8901-2345-678901BCDEF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C3D4E5-F6G7-8901-2345-678901BCDEF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C3D4E5-F6G7-8901-2345-678901BCDEF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C3D4E5-F6G7-8901-2345-678901BCDEF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3D4E5F6-G7H8-9012-3456-789012CDEF01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3D4E5F6-G7H8-9012-3456-789012CDEF01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3D4E5F6-G7H8-9012-3456-789012CDEF01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D4E5F6-G7H8-9012-3456-789012CDEF01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E5F6G7-H8I9-0123-4567-890123DEF012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E5F6G7-H8I9-0123-4567-890123DEF012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4E5F6G7-H8I9-0123-4567-890123DEF012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4E5F6G7-H8I9-0123-4567-890123DEF012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5F6G7H8-I9J0-1234-5678-901234EF0123}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5F6G7H8-I9J0-1234-5678-901234EF0123}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5F6G7H8-I9J0-1234-5678-901234EF0123}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5F6G7H8-I9J0-1234-5678-901234EF0123}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6G7H8I9-J0K1-2345-6789-012345F01234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6G7H8I9-J0K1-2345-6789-012345F01234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6G7H8I9-J0K1-2345-6789-012345F01234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6G7H8I9-J0K1-2345-6789-012345F01234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{G7H8I9J0-K1L2-3456-7890-123456012345}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{G7H8I9J0-K1L2-3456-7890-123456012345}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{G7H8I9J0-K1L2-3456-7890-123456012345}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{G7H8I9J0-K1L2-3456-7890-123456012345}.Release|Any CPU.Build.0 = Release|Any CPU
+		{H8I9J0K1-L2M3-4567-8901-234567123456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{H8I9J0K1-L2M3-4567-8901-234567123456}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{H8I9J0K1-L2M3-4567-8901-234567123456}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{H8I9J0K1-L2M3-4567-8901-234567123456}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
