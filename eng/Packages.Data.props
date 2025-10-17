@@ -187,7 +187,7 @@
     <PackageReference Update="Microsoft.Identity.Client" Version="4.76.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.76.0" />
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.76.0" />
-    <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
+    <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.14.0" />
     <PackageReference Update="Microsoft.IdentityModel.Tokens" Version="8.14.0" />
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
   </ItemGroup>
