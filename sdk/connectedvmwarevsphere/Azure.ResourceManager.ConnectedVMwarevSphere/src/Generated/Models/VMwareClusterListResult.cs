@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VMwareClusterListResult"/>. </summary>
-        /// <param name="value"> Array of Clusters. </param>
+        /// <param name="value"> The Cluster items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VMwareClusterListResult(IEnumerable<VMwareClusterData> value)
         {
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareClusterListResult"/>. </summary>
-        /// <param name="nextLink"> Url to follow for getting next page of Clusters. </param>
-        /// <param name="value"> Array of Clusters. </param>
+        /// <param name="value"> The Cluster items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareClusterListResult(string nextLink, IReadOnlyList<VMwareClusterData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VMwareClusterListResult(IReadOnlyList<VMwareClusterData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         {
         }
 
-        /// <summary> Url to follow for getting next page of Clusters. </summary>
-        public string NextLink { get; }
-        /// <summary> Array of Clusters. </summary>
+        /// <summary> The Cluster items on this page. </summary>
         public IReadOnlyList<VMwareClusterData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
