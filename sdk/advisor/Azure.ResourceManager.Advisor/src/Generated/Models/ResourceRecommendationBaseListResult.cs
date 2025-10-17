@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    /// <summary> The list of Advisor recommendations. </summary>
+    /// <summary> The response of a ResourceRecommendationBase list operation. </summary>
     internal partial class ResourceRecommendationBaseListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Advisor.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceRecommendationBaseListResult"/>. </summary>
-        internal ResourceRecommendationBaseListResult()
+        /// <param name="value"> The ResourceRecommendationBase items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ResourceRecommendationBaseListResult(IEnumerable<ResourceRecommendationBaseData> value)
         {
-            Value = new ChangeTrackingList<ResourceRecommendationBaseData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceRecommendationBaseListResult"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of recommendations. </param>
-        /// <param name="value"> The list of recommendations. </param>
+        /// <param name="value"> The ResourceRecommendationBase items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceRecommendationBaseListResult(string nextLink, IReadOnlyList<ResourceRecommendationBaseData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceRecommendationBaseListResult(IReadOnlyList<ResourceRecommendationBaseData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link used to get the next page of recommendations. </summary>
-        public string NextLink { get; }
-        /// <summary> The list of recommendations. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceRecommendationBaseListResult"/> for deserialization. </summary>
+        internal ResourceRecommendationBaseListResult()
+        {
+        }
+
+        /// <summary> The ResourceRecommendationBase items on this page. </summary>
         public IReadOnlyList<ResourceRecommendationBaseData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
