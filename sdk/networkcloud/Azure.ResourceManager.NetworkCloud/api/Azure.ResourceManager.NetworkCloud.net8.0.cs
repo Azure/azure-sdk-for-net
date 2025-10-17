@@ -3163,6 +3163,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public CommandOutputType(string value) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType BareMetalMachineRunCommand { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType BareMetalMachineRunDataExtracts { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType BareMetalMachineRunDataExtractsRestricted { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType BareMetalMachineRunReadCommands { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType StorageRunReadCommands { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.CommandOutputType other) { throw null; }
