@@ -272,7 +272,7 @@ namespace Azure.Generator.Management.Providers
                 case ResourceScope.Tenant:
                     return typeof(TenantResource);
                 default:
-                    // Fallback to the resource type itself
+                    // TODO -- this is incorrect, but we put it here as a placeholder.
                     return resource.Type;
             }
         }
