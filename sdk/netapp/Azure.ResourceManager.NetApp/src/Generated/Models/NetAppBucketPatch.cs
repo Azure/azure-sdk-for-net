@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
         /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppBucketPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, BucketFileSystemUser fileSystemUser, NetAppProvisioningState? provisioningState, NetAppBucketServerPatchProperties server, NetAppBucketPatchPermission? permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetAppBucketPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, NetAppBucketFileSystemUser fileSystemUser, NetAppProvisioningState? provisioningState, NetAppBucketServerPatchProperties server, NetAppBucketPatchPermission? permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Path = path;
             FileSystemUser = fileSystemUser;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The volume path mounted inside the bucket. </summary>
         public string Path { get; set; }
         /// <summary> File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both. </summary>
-        public BucketFileSystemUser FileSystemUser { get; set; }
+        public NetAppBucketFileSystemUser FileSystemUser { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
         public NetAppProvisioningState? ProvisioningState { get; }
         /// <summary> Properties of the server managing the lifecycle of volume buckets. </summary>

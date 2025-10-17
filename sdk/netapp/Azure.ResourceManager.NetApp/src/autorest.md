@@ -119,6 +119,9 @@ prepend-rp-prefix:
   - BucketServerPatchProperties
   - BucketPermissions
   - BucketPatchPermissions
+  - BucketCredentialStatus
+  - BucketFileSystemUser
+  - BucketNfsUser
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
@@ -271,9 +274,9 @@ rename-mapping:
   UsageResult : NetAppUsageResult
   UsageName: NetAppUsageName
   QuotaItem: NetAppSubscriptionQuotaItem
-  NfsUser: BucketNfsUser
-  FileSystemUser: BucketFileSystemUser
-  CredentialsStatus: BucketCredentialStatus
+  NfsUser: NetAppBucketNfsUser
+  FileSystemUser: NetAppBucketFileSystemUser
+  CredentialsStatus: NetAppBucketCredentialStatus
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

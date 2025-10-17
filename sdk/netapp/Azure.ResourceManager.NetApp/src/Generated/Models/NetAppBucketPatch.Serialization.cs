@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceType type = default;
             SystemData systemData = default;
             string path = default;
-            BucketFileSystemUser fileSystemUser = default;
+            NetAppBucketFileSystemUser fileSystemUser = default;
             NetAppProvisioningState? provisioningState = default;
             NetAppBucketServerPatchProperties server = default;
             NetAppBucketPatchPermission? permissions = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            fileSystemUser = BucketFileSystemUser.DeserializeBucketFileSystemUser(property0.Value, options);
+                            fileSystemUser = NetAppBucketFileSystemUser.DeserializeNetAppBucketFileSystemUser(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

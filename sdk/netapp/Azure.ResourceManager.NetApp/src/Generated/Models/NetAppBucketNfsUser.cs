@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The effective NFS User ID and Group ID when accessing the volume data. </summary>
-    public partial class BucketNfsUser
+    public partial class NetAppBucketNfsUser
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BucketNfsUser"/>. </summary>
-        public BucketNfsUser()
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketNfsUser"/>. </summary>
+        public NetAppBucketNfsUser()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BucketNfsUser"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketNfsUser"/>. </summary>
         /// <param name="userId"> The NFS user's UID. </param>
         /// <param name="groupId"> The NFS user's GID. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BucketNfsUser(long? userId, long? groupId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppBucketNfsUser(long? userId, long? groupId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserId = userId;
             GroupId = groupId;

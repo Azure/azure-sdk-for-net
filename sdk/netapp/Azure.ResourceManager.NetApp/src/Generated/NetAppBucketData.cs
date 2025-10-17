@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
         /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppBucketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, BucketFileSystemUser fileSystemUser, NetAppProvisioningState? provisioningState, BucketCredentialStatus? status, NetAppBucketServerProperties server, NetAppBucketPermission? permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetAppBucketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, NetAppBucketFileSystemUser fileSystemUser, NetAppProvisioningState? provisioningState, NetAppBucketCredentialStatus? status, NetAppBucketServerProperties server, NetAppBucketPermission? permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Path = path;
             FileSystemUser = fileSystemUser;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> The volume path mounted inside the bucket. The default is the root path '/' if no value is provided when the bucket is created. </summary>
         public string Path { get; set; }
         /// <summary> File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both. </summary>
-        public BucketFileSystemUser FileSystemUser { get; set; }
+        public NetAppBucketFileSystemUser FileSystemUser { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
         public NetAppProvisioningState? ProvisioningState { get; }
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetApp
         /// "CredentialsExpired": Access and Secret key pair have expired.
         /// "Active": The certificate has been installed and credentials are unexpired.
         /// </summary>
-        public BucketCredentialStatus? Status { get; }
+        public NetAppBucketCredentialStatus? Status { get; }
         /// <summary> Properties of the server managing the lifecycle of volume buckets. </summary>
         public NetAppBucketServerProperties Server { get; set; }
         /// <summary> Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation. </summary>

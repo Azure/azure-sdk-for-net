@@ -1452,7 +1452,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
         /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation. </param>
         /// <returns> A new <see cref="NetApp.NetAppBucketData"/> instance for mocking. </returns>
-        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, BucketFileSystemUser fileSystemUser = null, NetAppProvisioningState? provisioningState = null, BucketCredentialStatus? status = null, NetAppBucketServerProperties server = null, NetAppBucketPermission? permissions = null)
+        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, NetAppBucketFileSystemUser fileSystemUser = null, NetAppProvisioningState? provisioningState = null, NetAppBucketCredentialStatus? status = null, NetAppBucketServerProperties server = null, NetAppBucketPermission? permissions = null)
         {
             return new NetAppBucketData(
                 id,
@@ -1497,7 +1497,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
         /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. </param>
         /// <returns> A new <see cref="Models.NetAppBucketPatch"/> instance for mocking. </returns>
-        public static NetAppBucketPatch NetAppBucketPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, BucketFileSystemUser fileSystemUser = null, NetAppProvisioningState? provisioningState = null, NetAppBucketServerPatchProperties server = null, NetAppBucketPatchPermission? permissions = null)
+        public static NetAppBucketPatch NetAppBucketPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, NetAppBucketFileSystemUser fileSystemUser = null, NetAppProvisioningState? provisioningState = null, NetAppBucketServerPatchProperties server = null, NetAppBucketPatchPermission? permissions = null)
         {
             return new NetAppBucketPatch(
                 id,

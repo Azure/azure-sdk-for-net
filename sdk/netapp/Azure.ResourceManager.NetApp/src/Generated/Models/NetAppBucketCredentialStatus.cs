@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// "CredentialsExpired": Access and Secret key pair have expired.
     /// "Active": The certificate has been installed and credentials are unexpired.
     /// </summary>
-    public readonly partial struct BucketCredentialStatus : IEquatable<BucketCredentialStatus>
+    public readonly partial struct NetAppBucketCredentialStatus : IEquatable<NetAppBucketCredentialStatus>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="BucketCredentialStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketCredentialStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BucketCredentialStatus(string value)
+        public NetAppBucketCredentialStatus(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -33,23 +33,23 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string ActiveValue = "Active";
 
         /// <summary> Access and Secret key pair have not been generated. </summary>
-        public static BucketCredentialStatus NoCredentialsSet { get; } = new BucketCredentialStatus(NoCredentialsSetValue);
+        public static NetAppBucketCredentialStatus NoCredentialsSet { get; } = new NetAppBucketCredentialStatus(NoCredentialsSetValue);
         /// <summary> Access and Secret key pair have expired. </summary>
-        public static BucketCredentialStatus CredentialsExpired { get; } = new BucketCredentialStatus(CredentialsExpiredValue);
+        public static NetAppBucketCredentialStatus CredentialsExpired { get; } = new NetAppBucketCredentialStatus(CredentialsExpiredValue);
         /// <summary> The certificate has been installed on the bucket server and the bucket credentials are unexpired. </summary>
-        public static BucketCredentialStatus Active { get; } = new BucketCredentialStatus(ActiveValue);
-        /// <summary> Determines if two <see cref="BucketCredentialStatus"/> values are the same. </summary>
-        public static bool operator ==(BucketCredentialStatus left, BucketCredentialStatus right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="BucketCredentialStatus"/> values are not the same. </summary>
-        public static bool operator !=(BucketCredentialStatus left, BucketCredentialStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BucketCredentialStatus"/>. </summary>
-        public static implicit operator BucketCredentialStatus(string value) => new BucketCredentialStatus(value);
+        public static NetAppBucketCredentialStatus Active { get; } = new NetAppBucketCredentialStatus(ActiveValue);
+        /// <summary> Determines if two <see cref="NetAppBucketCredentialStatus"/> values are the same. </summary>
+        public static bool operator ==(NetAppBucketCredentialStatus left, NetAppBucketCredentialStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="NetAppBucketCredentialStatus"/> values are not the same. </summary>
+        public static bool operator !=(NetAppBucketCredentialStatus left, NetAppBucketCredentialStatus right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppBucketCredentialStatus"/>. </summary>
+        public static implicit operator NetAppBucketCredentialStatus(string value) => new NetAppBucketCredentialStatus(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BucketCredentialStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is NetAppBucketCredentialStatus other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(BucketCredentialStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(NetAppBucketCredentialStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

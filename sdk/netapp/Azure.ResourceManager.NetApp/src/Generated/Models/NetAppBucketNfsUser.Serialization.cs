@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class BucketFileSystemUser : IUtf8JsonSerializable, IJsonModel<BucketFileSystemUser>
+    public partial class NetAppBucketNfsUser : IUtf8JsonSerializable, IJsonModel<NetAppBucketNfsUser>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BucketFileSystemUser>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppBucketNfsUser>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BucketFileSystemUser>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppBucketNfsUser>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketFileSystemUser>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketNfsUser>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BucketFileSystemUser)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBucketNfsUser)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(NfsUser))
+            if (Optional.IsDefined(UserId))
             {
-                writer.WritePropertyName("nfsUser"u8);
-                writer.WriteObjectValue(NfsUser, options);
+                writer.WritePropertyName("userId"u8);
+                writer.WriteNumberValue(UserId.Value);
             }
-            if (Optional.IsDefined(CifsUser))
+            if (Optional.IsDefined(GroupId))
             {
-                writer.WritePropertyName("cifsUser"u8);
-                writer.WriteObjectValue(CifsUser, options);
+                writer.WritePropertyName("groupId"u8);
+                writer.WriteNumberValue(GroupId.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        BucketFileSystemUser IJsonModel<BucketFileSystemUser>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppBucketNfsUser IJsonModel<NetAppBucketNfsUser>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketFileSystemUser>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketNfsUser>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BucketFileSystemUser)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBucketNfsUser)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBucketFileSystemUser(document.RootElement, options);
+            return DeserializeNetAppBucketNfsUser(document.RootElement, options);
         }
 
-        internal static BucketFileSystemUser DeserializeBucketFileSystemUser(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppBucketNfsUser DeserializeNetAppBucketNfsUser(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,28 +81,28 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            BucketNfsUser nfsUser = default;
-            CifsUser cifsUser = default;
+            long? userId = default;
+            long? groupId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nfsUser"u8))
+                if (property.NameEquals("userId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nfsUser = BucketNfsUser.DeserializeBucketNfsUser(property.Value, options);
+                    userId = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cifsUser"u8))
+                if (property.NameEquals("groupId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cifsUser = CifsUser.DeserializeCifsUser(property.Value, options);
+                    groupId = property.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BucketFileSystemUser(nfsUser, cifsUser, serializedAdditionalRawData);
+            return new NetAppBucketNfsUser(userId, groupId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BucketFileSystemUser>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppBucketNfsUser>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketFileSystemUser>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketNfsUser>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BucketFileSystemUser)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBucketNfsUser)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BucketFileSystemUser IPersistableModel<BucketFileSystemUser>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppBucketNfsUser IPersistableModel<NetAppBucketNfsUser>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BucketFileSystemUser>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBucketNfsUser>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBucketFileSystemUser(document.RootElement, options);
+                        return DeserializeNetAppBucketNfsUser(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BucketFileSystemUser)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBucketNfsUser)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BucketFileSystemUser>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppBucketNfsUser>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

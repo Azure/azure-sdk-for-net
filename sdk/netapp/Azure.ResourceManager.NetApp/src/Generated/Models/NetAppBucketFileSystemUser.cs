@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both. </summary>
-    public partial class BucketFileSystemUser
+    public partial class NetAppBucketFileSystemUser
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BucketFileSystemUser"/>. </summary>
-        public BucketFileSystemUser()
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketFileSystemUser"/>. </summary>
+        public NetAppBucketFileSystemUser()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BucketFileSystemUser"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketFileSystemUser"/>. </summary>
         /// <param name="nfsUser"> The effective NFS User ID and Group ID when accessing the volume data. </param>
         /// <param name="cifsUser"> The effective CIFS username when accessing the volume data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BucketFileSystemUser(BucketNfsUser nfsUser, CifsUser cifsUser, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppBucketFileSystemUser(NetAppBucketNfsUser nfsUser, CifsUser cifsUser, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NfsUser = nfsUser;
             CifsUser = cifsUser;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The effective NFS User ID and Group ID when accessing the volume data. </summary>
-        public BucketNfsUser NfsUser { get; set; }
+        public NetAppBucketNfsUser NfsUser { get; set; }
         /// <summary> The effective CIFS username when accessing the volume data. </summary>
         internal CifsUser CifsUser { get; set; }
         /// <summary> The CIFS user's username. </summary>

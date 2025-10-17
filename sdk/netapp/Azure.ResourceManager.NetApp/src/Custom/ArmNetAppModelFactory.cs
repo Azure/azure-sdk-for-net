@@ -218,13 +218,12 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             VolumeReplicationRelationshipStatus volumeReplicationRelationshipStatus = new VolumeReplicationRelationshipStatus(relationshipStatus.ToString());
 
-            return new NetAppVolumeReplicationStatus(
+            return ArmNetAppModelFactory.NetAppVolumeReplicationStatus(
                 isHealthy,
                 volumeReplicationRelationshipStatus,
                 mirrorState,
                 totalProgress,
-                errorMessage,
-                serializedAdditionalRawData: null);
+                errorMessage);
         }
     }
 }
