@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RulestackCountryListResult"/>. </summary>
-        /// <param name="value"> List of countries. </param>
+        /// <param name="value"> The Country items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RulestackCountryListResult(IEnumerable<RulestackCountry> value)
         {
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RulestackCountryListResult"/>. </summary>
-        /// <param name="value"> List of countries. </param>
-        /// <param name="nextLink"> next link. </param>
+        /// <param name="value"> The Country items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RulestackCountryListResult(IReadOnlyList<RulestackCountry> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RulestackCountryListResult(IReadOnlyList<RulestackCountry> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         {
         }
 
-        /// <summary> List of countries. </summary>
+        /// <summary> The Country items on this page. </summary>
         public IReadOnlyList<RulestackCountry> Value { get; }
-        /// <summary> next link. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

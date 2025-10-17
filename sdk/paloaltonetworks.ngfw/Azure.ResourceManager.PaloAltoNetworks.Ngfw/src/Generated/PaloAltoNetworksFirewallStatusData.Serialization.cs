@@ -65,6 +65,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(IsStrataCloudManaged))
+            {
+                writer.WritePropertyName("isStrataCloudManaged"u8);
+                writer.WriteStringValue(IsStrataCloudManaged.Value.ToString());
+            }
+            if (Optional.IsDefined(StrataCloudManagerInfo))
+            {
+                writer.WritePropertyName("strataCloudManagerInfo"u8);
+                writer.WriteObjectValue(StrataCloudManagerInfo, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -97,6 +107,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             string healthReason = default;
             FirewallPanoramaStatus panoramaStatus = default;
             FirewallProvisioningStateType? provisioningState = default;
+            FirewallBooleanType? isStrataCloudManaged = default;
+            StrataCloudManagerInfo strataCloudManagerInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,6 +187,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             provisioningState = new FirewallProvisioningStateType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("isStrataCloudManaged"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isStrataCloudManaged = new FirewallBooleanType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("strataCloudManagerInfo"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            strataCloudManagerInfo = StrataCloudManagerInfo.DeserializeStrataCloudManagerInfo(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -194,6 +224,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 healthReason,
                 panoramaStatus,
                 provisioningState,
+                isStrataCloudManaged,
+                strataCloudManagerInfo,
                 serializedAdditionalRawData);
         }
 

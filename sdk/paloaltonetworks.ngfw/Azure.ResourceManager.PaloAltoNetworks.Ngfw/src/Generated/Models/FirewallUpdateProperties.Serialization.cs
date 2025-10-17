@@ -49,10 +49,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("isPanoramaManaged"u8);
                 writer.WriteStringValue(IsPanoramaManaged.Value.ToString());
             }
+            if (Optional.IsDefined(IsStrataCloudManaged))
+            {
+                writer.WritePropertyName("isStrataCloudManaged"u8);
+                writer.WriteStringValue(IsStrataCloudManaged.Value.ToString());
+            }
             if (Optional.IsDefined(PanoramaConfig))
             {
                 writer.WritePropertyName("panoramaConfig"u8);
                 writer.WriteObjectValue(PanoramaConfig, options);
+            }
+            if (Optional.IsDefined(StrataCloudManagerConfig))
+            {
+                writer.WritePropertyName("strataCloudManagerConfig"u8);
+                writer.WriteObjectValue(StrataCloudManagerConfig, options);
             }
             if (Optional.IsDefined(AssociatedRulestack))
             {
@@ -124,7 +134,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             ETag? panETag = default;
             FirewallNetworkProfile networkProfile = default;
             FirewallBooleanType? isPanoramaManaged = default;
+            FirewallBooleanType? isStrataCloudManaged = default;
             FirewallPanoramaConfiguration panoramaConfig = default;
+            StrataCloudManagerConfig strataCloudManagerConfig = default;
             RulestackDetails associatedRulestack = default;
             FirewallDnsSettings dnsSettings = default;
             IList<FirewallFrontendSetting> frontEndSettings = default;
@@ -161,6 +173,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     isPanoramaManaged = new FirewallBooleanType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("isStrataCloudManaged"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isStrataCloudManaged = new FirewallBooleanType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("panoramaConfig"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -168,6 +189,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         continue;
                     }
                     panoramaConfig = FirewallPanoramaConfiguration.DeserializeFirewallPanoramaConfiguration(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("strataCloudManagerConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    strataCloudManagerConfig = StrataCloudManagerConfig.DeserializeStrataCloudManagerConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("associatedRulestack"u8))
@@ -230,7 +260,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 panETag,
                 networkProfile,
                 isPanoramaManaged,
+                isStrataCloudManaged,
                 panoramaConfig,
+                strataCloudManagerConfig,
                 associatedRulestack,
                 dnsSettings,
                 frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>(),

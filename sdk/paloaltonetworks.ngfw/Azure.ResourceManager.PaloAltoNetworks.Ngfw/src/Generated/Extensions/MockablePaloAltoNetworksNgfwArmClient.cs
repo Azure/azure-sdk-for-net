@@ -83,18 +83,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GlobalRulestackPrefixResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GlobalRulestackPrefixResource.CreateResourceIdentifier" /> to create a <see cref="GlobalRulestackPrefixResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GlobalRulestackPrefixResource"/> object. </returns>
-        public virtual GlobalRulestackPrefixResource GetGlobalRulestackPrefixResource(ResourceIdentifier id)
-        {
-            GlobalRulestackPrefixResource.ValidateResourceId(id);
-            return new GlobalRulestackPrefixResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="PreRulestackRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PreRulestackRuleResource.CreateResourceIdentifier" /> to create a <see cref="PreRulestackRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -104,6 +92,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         {
             PreRulestackRuleResource.ValidateResourceId(id);
             return new PreRulestackRuleResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GlobalRulestackPrefixResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GlobalRulestackPrefixResource.CreateResourceIdentifier" /> to create a <see cref="GlobalRulestackPrefixResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GlobalRulestackPrefixResource"/> object. </returns>
+        public virtual GlobalRulestackPrefixResource GetGlobalRulestackPrefixResource(ResourceIdentifier id)
+        {
+            GlobalRulestackPrefixResource.ValidateResourceId(id);
+            return new GlobalRulestackPrefixResource(Client, id);
         }
 
         /// <summary>
@@ -128,6 +128,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         {
             LocalRulestackResource.ValidateResourceId(id);
             return new LocalRulestackResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MetricsObjectFirewallResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MetricsObjectFirewallResource.CreateResourceIdentifier" /> to create a <see cref="MetricsObjectFirewallResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MetricsObjectFirewallResource"/> object. </returns>
+        public virtual MetricsObjectFirewallResource GetMetricsObjectFirewallResource(ResourceIdentifier id)
+        {
+            MetricsObjectFirewallResource.ValidateResourceId(id);
+            return new MetricsObjectFirewallResource(Client, id);
         }
 
         /// <summary>

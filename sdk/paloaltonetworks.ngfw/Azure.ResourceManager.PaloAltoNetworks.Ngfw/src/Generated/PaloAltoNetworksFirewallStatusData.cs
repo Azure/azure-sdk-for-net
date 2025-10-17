@@ -66,14 +66,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="healthReason"> Detail description of current health of the Firewall. </param>
         /// <param name="panoramaStatus"> Panorama Status. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="isStrataCloudManaged"> Strata Cloud Manager. </param>
+        /// <param name="strataCloudManagerInfo"> This field is only present if Strata Cloud Manager is managing the policy for this firewall. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PaloAltoNetworksFirewallStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FirewallBooleanType? isPanoramaManaged, FirewallHealthStatus? healthStatus, string healthReason, FirewallPanoramaStatus panoramaStatus, FirewallProvisioningStateType? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PaloAltoNetworksFirewallStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FirewallBooleanType? isPanoramaManaged, FirewallHealthStatus? healthStatus, string healthReason, FirewallPanoramaStatus panoramaStatus, FirewallProvisioningStateType? provisioningState, FirewallBooleanType? isStrataCloudManaged, StrataCloudManagerInfo strataCloudManagerInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsPanoramaManaged = isPanoramaManaged;
             HealthStatus = healthStatus;
             HealthReason = healthReason;
             PanoramaStatus = panoramaStatus;
             ProvisioningState = provisioningState;
+            IsStrataCloudManaged = isStrataCloudManaged;
+            StrataCloudManagerInfo = strataCloudManagerInfo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,5 +91,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public FirewallPanoramaStatus PanoramaStatus { get; }
         /// <summary> Provisioning state of the resource. </summary>
         public FirewallProvisioningStateType? ProvisioningState { get; }
+        /// <summary> Strata Cloud Manager. </summary>
+        public FirewallBooleanType? IsStrataCloudManaged { get; }
+        /// <summary> This field is only present if Strata Cloud Manager is managing the policy for this firewall. </summary>
+        public StrataCloudManagerInfo StrataCloudManagerInfo { get; set; }
     }
 }
