@@ -7,8 +7,6 @@
 - Added support for Principal-Bound Identity User Delegation SAS
 - Added support for the StartFrom parameter on DataLakeFileSystemClient.GetPaths() and .GetPathsAsync().
 
-### Other Changes
-
 ## 12.24.0 (2025-10-13)
 
 ### Features Added
