@@ -13,7 +13,7 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Management.Visitors
 {
     /// <summary>
-    /// This visitor will visit all properties in model types and add WirePathAttribute to all its properties with wire path info.
+    /// This visitor will visit all properties in model types and add WirePathAttribute to all their properties with wire path info.
     /// </summary>
     internal class WirePathVisitor : ScmLibraryVisitor
     {
