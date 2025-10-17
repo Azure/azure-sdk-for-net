@@ -575,11 +575,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-<<<<<<< HEAD:eng/packages/http-client-csharp-mgmt/generator/TestProjects/Local/Mgmt-TypeSpec/src/Generated/Extensions/AzureGeneratorMgmtTypeSpecTestsExtensions.cs
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, content, cancellationToken).ConfigureAwait(false);
-=======
-            return await GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, body, cancellationToken).ConfigureAwait(false);
->>>>>>> f722f92838a (working in progress.):eng/packages/http-client-csharp-mgmt/generator/TestProjects/Local/Mgmt-TypeSpec/src/Generated/Extensions/MgmtTypeSpecExtensions.cs
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, body, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
@@ -592,11 +588,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-<<<<<<< HEAD:eng/packages/http-client-csharp-mgmt/generator/TestProjects/Local/Mgmt-TypeSpec/src/Generated/Extensions/AzureGeneratorMgmtTypeSpecTestsExtensions.cs
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActions(location, content, cancellationToken);
-=======
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).PreviewActions(location, body, cancellationToken);
->>>>>>> f722f92838a (working in progress.):eng/packages/http-client-csharp-mgmt/generator/TestProjects/Local/Mgmt-TypeSpec/src/Generated/Extensions/MgmtTypeSpecExtensions.cs
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActions(location, body, cancellationToken);
         }
 
         /// <summary> Gets a collection of GroupQuotaSubscriptionRequestStatuses in the <see cref="TenantResource"/>. </summary>
