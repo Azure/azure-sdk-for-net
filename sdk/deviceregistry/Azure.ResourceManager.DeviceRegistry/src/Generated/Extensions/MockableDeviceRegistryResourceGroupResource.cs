@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return GetDeviceRegistryAssetEndpointProfiles().Get(assetEndpointProfileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DeviceRegistryNamespaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DeviceRegistryNamespaceResources and their operations over a DeviceRegistryNamespaceResource. </returns>
-        public virtual DeviceRegistryNamespaceCollection GetDeviceRegistryNamespaces()
+        /// <summary> Gets a collection of NamespaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NamespaceResources and their operations over a NamespaceResource. </returns>
+        public virtual NamespaceCollection GetNamespaces()
         {
-            return GetCachedClient(client => new DeviceRegistryNamespaceCollection(client, Id));
+            return GetCachedClient(client => new NamespaceCollection(client, Id));
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceResource"/></description>
+        /// <description><see cref="NamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DeviceRegistryNamespaceResource>> GetDeviceRegistryNamespaceAsync(string namespaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NamespaceResource>> GetNamespaceAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            return await GetDeviceRegistryNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
+            return await GetNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceResource"/></description>
+        /// <description><see cref="NamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,9 +235,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DeviceRegistryNamespaceResource> GetDeviceRegistryNamespace(string namespaceName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceResource> GetNamespace(string namespaceName, CancellationToken cancellationToken = default)
         {
-            return GetDeviceRegistryNamespaces().Get(namespaceName, cancellationToken);
+            return GetNamespaces().Get(namespaceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DeviceRegistrySchemaRegistryResources in the ResourceGroupResource. </summary>
