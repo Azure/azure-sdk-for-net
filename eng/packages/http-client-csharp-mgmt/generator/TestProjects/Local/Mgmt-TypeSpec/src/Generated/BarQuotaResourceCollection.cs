@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
@@ -48,9 +47,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != BarResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BarResource.ResourceType), id);
             }
         }
 
