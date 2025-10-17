@@ -297,6 +297,7 @@ namespace Azure.Management.ResourceGraph.Tests
         }
 
         [Test]
+        [Ignore("Resource history API is not enabled in stable version of SDK.")]
         public async Task ResourceHistoryAsync()
         {
             var historyContent = new ResourcesHistoryContent()
