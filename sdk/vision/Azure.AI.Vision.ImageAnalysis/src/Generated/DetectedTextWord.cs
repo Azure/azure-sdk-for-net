@@ -17,48 +17,15 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// </summary>
     public partial class DetectedTextWord
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DetectedTextWord"/>. </summary>
         /// <param name="text"> Text content of the word. </param>
         /// <param name="boundingPolygon"> A bounding polygon around the word. At the moment only quadrilaterals are supported (represented by 4 image points). </param>
         /// <param name="confidence"> The level of confidence that the word was detected. Confidence scores span the range of 0.0 to 1.0 (inclusive), with higher values indicating a higher confidence of detection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="boundingPolygon"/> is null. </exception>
         internal DetectedTextWord(string text, IEnumerable<ImagePoint> boundingPolygon, float confidence)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(boundingPolygon, nameof(boundingPolygon));
-
             Text = text;
             BoundingPolygon = boundingPolygon.ToList();
             Confidence = confidence;
@@ -68,24 +35,21 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="text"> Text content of the word. </param>
         /// <param name="boundingPolygon"> A bounding polygon around the word. At the moment only quadrilaterals are supported (represented by 4 image points). </param>
         /// <param name="confidence"> The level of confidence that the word was detected. Confidence scores span the range of 0.0 to 1.0 (inclusive), with higher values indicating a higher confidence of detection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedTextWord(string text, IReadOnlyList<ImagePoint> boundingPolygon, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DetectedTextWord(string text, IReadOnlyList<ImagePoint> boundingPolygon, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             BoundingPolygon = boundingPolygon;
             Confidence = confidence;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DetectedTextWord"/> for deserialization. </summary>
-        internal DetectedTextWord()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Text content of the word. </summary>
         public string Text { get; }
+
         /// <summary> A bounding polygon around the word. At the moment only quadrilaterals are supported (represented by 4 image points). </summary>
         public IReadOnlyList<ImagePoint> BoundingPolygon { get; }
+
         /// <summary> The level of confidence that the word was detected. Confidence scores span the range of 0.0 to 1.0 (inclusive), with higher values indicating a higher confidence of detection. </summary>
         public float Confidence { get; }
     }
