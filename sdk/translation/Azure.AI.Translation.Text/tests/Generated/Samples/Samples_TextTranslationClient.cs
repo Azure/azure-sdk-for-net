@@ -373,5 +373,157 @@ new TranslateTarget("cs")
             });
             Response<TranslationResult> response = await client.TranslateAsync(body);
         }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TextTranslation_Transliterate_TransliterateText()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                inputs = new object[]
+            {
+new
+{
+text = "这是个测试。",
+}
+            },
+            });
+            Response response = client.Transliterate("zh-Hans", "Hans", "Latn", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("script").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TextTranslation_Transliterate_TransliterateText_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                inputs = new object[]
+            {
+new
+{
+text = "这是个测试。",
+}
+            },
+            });
+            Response response = await client.TransliterateAsync("zh-Hans", "Hans", "Latn", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("script").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TextTranslation_Transliterate_TransliterateText_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            TransliterateBody body = new TransliterateBody(new InputTextItem[]
+            {
+new InputTextItem("这是个测试。")
+            });
+            Response<TransliterateResult> response = client.Transliterate("zh-Hans", "Hans", "Latn", body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TextTranslation_Transliterate_TransliterateText_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            TransliterateBody body = new TransliterateBody(new InputTextItem[]
+            {
+new InputTextItem("这是个测试。")
+            });
+            Response<TransliterateResult> response = await client.TransliterateAsync("zh-Hans", "Hans", "Latn", body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TextTranslation_Transliterate_TransliterateTextWithMinimumProperties()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                inputs = new object[]
+            {
+new
+{
+text = "这是个测试。",
+}
+            },
+            });
+            Response response = client.Transliterate("zh-Hans", "Hans", "Latn", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("script").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TextTranslation_Transliterate_TransliterateTextWithMinimumProperties_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                inputs = new object[]
+            {
+new
+{
+text = "这是个测试。",
+}
+            },
+            });
+            Response response = await client.TransliterateAsync("zh-Hans", "Hans", "Latn", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("script").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TextTranslation_Transliterate_TransliterateTextWithMinimumProperties_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            TransliterateBody body = new TransliterateBody(new InputTextItem[]
+            {
+new InputTextItem("这是个测试。")
+            });
+            Response<TransliterateResult> response = client.Transliterate("zh-Hans", "Hans", "Latn", body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TextTranslation_Transliterate_TransliterateTextWithMinimumProperties_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            TransliterateBody body = new TransliterateBody(new InputTextItem[]
+            {
+new InputTextItem("这是个测试。")
+            });
+            Response<TransliterateResult> response = await client.TransliterateAsync("zh-Hans", "Hans", "Latn", body);
+        }
     }
 }

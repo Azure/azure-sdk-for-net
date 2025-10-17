@@ -335,5 +335,145 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("translations")[0].GetProperty("text").ToString());
 ]]></code></example>
     </member>
+    <member name="TransliterateAsync(string,string,string,TransliterateBody,string,CancellationToken)">
+      <example>
+This sample shows how to call TransliterateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+TransliterateBody body = new TransliterateBody(new InputTextItem[]
+{
+    new InputTextItem("这是个测试。")
+});
+Response<TransliterateResult> response = await client.TransliterateAsync("zh-Hans", "Hans", "Latn", body);
+]]></code>
+This sample shows how to call TransliterateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+TransliterateBody body = new TransliterateBody(new InputTextItem[]
+{
+    new InputTextItem("这是个测试。")
+});
+Response<TransliterateResult> response = await client.TransliterateAsync("zh-Hans", "Hans", "Latn", body);
+]]></code></example>
+    </member>
+    <member name="Transliterate(string,string,string,TransliterateBody,string,CancellationToken)">
+      <example>
+This sample shows how to call Transliterate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+TransliterateBody body = new TransliterateBody(new InputTextItem[]
+{
+    new InputTextItem("这是个测试。")
+});
+Response<TransliterateResult> response = client.Transliterate("zh-Hans", "Hans", "Latn", body);
+]]></code>
+This sample shows how to call Transliterate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+TransliterateBody body = new TransliterateBody(new InputTextItem[]
+{
+    new InputTextItem("这是个测试。")
+});
+Response<TransliterateResult> response = client.Transliterate("zh-Hans", "Hans", "Latn", body);
+]]></code></example>
+    </member>
+    <member name="TransliterateAsync(string,string,string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call TransliterateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    inputs = new object[]
+    {
+        new
+        {
+            text = "这是个测试。",
+        }
+    },
+});
+Response response = await client.TransliterateAsync("zh-Hans", "Hans", "Latn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("script").ToString());
+]]></code>
+This sample shows how to call TransliterateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    inputs = new object[]
+    {
+        new
+        {
+            text = "这是个测试。",
+        }
+    },
+});
+Response response = await client.TransliterateAsync("zh-Hans", "Hans", "Latn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("script").ToString());
+]]></code></example>
+    </member>
+    <member name="Transliterate(string,string,string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call Transliterate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    inputs = new object[]
+    {
+        new
+        {
+            text = "这是个测试。",
+        }
+    },
+});
+Response response = client.Transliterate("zh-Hans", "Hans", "Latn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("script").ToString());
+]]></code>
+This sample shows how to call Transliterate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    inputs = new object[]
+    {
+        new
+        {
+            text = "这是个测试。",
+        }
+    },
+});
+Response response = client.Transliterate("zh-Hans", "Hans", "Latn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("script").ToString());
+]]></code></example>
+    </member>
   </members>
 </doc>
