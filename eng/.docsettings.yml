@@ -109,9 +109,6 @@ known_content_issues:
   - ['sdk/search/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/storage/README.md','Not a package: azure-sdk-tools/issues/42']
 
-  - ['sdk/monitor/Azure.Monitor.Query.Logs/*','404s clear at release: azure-sdk-tools/issues/42']
-  - ['sdk/monitor/Azure.Monitor.Query.Metrics/*','404s clear at release: azure-sdk-tools/issues/42']
-
   - ['sdk/core/Azure.Core.Amqp/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Azure.Core.Experimental/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/Azure.Core.TestFramework/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
