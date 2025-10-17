@@ -69,8 +69,9 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// The available derived classes include <see cref="DevOpsVmssFabricProfile"/>.
         /// </param>
         /// <param name="devCenterProjectResourceId"> The resource id of the DevCenter Project the pool belongs to. </param>
+        /// <param name="runtimeConfiguration"> The runtime configuration of the pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PoolUpdateProperties(DevOpsInfrastructureProvisioningState? provisioningState, int? maximumConcurrency, DevOpsOrganizationProfile organizationProfile, DevOpsPoolAgentProfile agentProfile, DevOpsFabricProfile fabricProfile, string devCenterProjectResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PoolUpdateProperties(DevOpsInfrastructureProvisioningState? provisioningState, int? maximumConcurrency, DevOpsOrganizationProfile organizationProfile, DevOpsPoolAgentProfile agentProfile, DevOpsFabricProfile fabricProfile, string devCenterProjectResourceId, RuntimeConfiguration runtimeConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             MaximumConcurrency = maximumConcurrency;
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             AgentProfile = agentProfile;
             FabricProfile = fabricProfile;
             DevCenterProjectResourceId = devCenterProjectResourceId;
+            RuntimeConfiguration = runtimeConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -105,5 +107,18 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public DevOpsFabricProfile FabricProfile { get; set; }
         /// <summary> The resource id of the DevCenter Project the pool belongs to. </summary>
         public string DevCenterProjectResourceId { get; set; }
+        /// <summary> The runtime configuration of the pool. </summary>
+        internal RuntimeConfiguration RuntimeConfiguration { get; set; }
+        /// <summary> The target work folder of the task agent on the machine. </summary>
+        public string RuntimeWorkFolder
+        {
+            get => RuntimeConfiguration is null ? default : RuntimeConfiguration.WorkFolder;
+            set
+            {
+                if (RuntimeConfiguration is null)
+                    RuntimeConfiguration = new RuntimeConfiguration();
+                RuntimeConfiguration.WorkFolder = value;
+            }
+        }
     }
 }

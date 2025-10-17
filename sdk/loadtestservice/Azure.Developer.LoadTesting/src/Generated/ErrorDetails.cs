@@ -48,18 +48,27 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Initializes a new instance of <see cref="ErrorDetails"/>. </summary>
         internal ErrorDetails()
         {
+            Properties = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ErrorDetails"/>. </summary>
+        /// <param name="code"> Error code if there is any failure in load test run. </param>
         /// <param name="message"> Error details in case test run was not successfully run. </param>
+        /// <param name="properties"> A dictionary for storing additional error information for better context. Each key is a property name (e.g., "Description", "Resolution", "Category", "Region"), and its value is an array of strings with relevant details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorDetails(string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ErrorDetails(string code, string message, IReadOnlyDictionary<string, IList<string>> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Code = code;
             Message = message;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Error code if there is any failure in load test run. </summary>
+        public string Code { get; }
         /// <summary> Error details in case test run was not successfully run. </summary>
         public string Message { get; }
+        /// <summary> A dictionary for storing additional error information for better context. Each key is a property name (e.g., "Description", "Resolution", "Category", "Region"), and its value is an array of strings with relevant details. </summary>
+        public IReadOnlyDictionary<string, IList<string>> Properties { get; }
     }
 }
