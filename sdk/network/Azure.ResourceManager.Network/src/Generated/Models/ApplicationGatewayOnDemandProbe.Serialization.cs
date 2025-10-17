@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("pickHostNameFromBackendHttpSettings"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendHttpSettings.Value);
             }
-            if (Optional.IsDefined(EnableProbeProxyProtocolHeader))
+            if (Optional.IsDefined(IsProbeProxyProtocolHeaderEnabled))
             {
                 writer.WritePropertyName("enableProbeProxyProtocolHeader"u8);
-                writer.WriteBooleanValue(EnableProbeProxyProtocolHeader.Value);
+                writer.WriteBooleanValue(IsProbeProxyProtocolHeaderEnabled.Value);
             }
             if (Optional.IsDefined(Match))
             {

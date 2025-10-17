@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network
             IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = default;
             IList<PrivateLinkServiceIPConfiguration> ipConfigurations = default;
             string destinationIPAddress = default;
-            AccessMode? accessMode = default;
+            PrivateLinkServiceAccessMode? accessMode = default;
             IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
             NetworkProvisioningState? provisioningState = default;
             IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            accessMode = new AccessMode(property0.Value.GetString());
+                            accessMode = new PrivateLinkServiceAccessMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("networkInterfaces"u8))

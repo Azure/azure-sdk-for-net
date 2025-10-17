@@ -39,6 +39,7 @@ enable-bicep-serialization: true
 
 rename-mapping:
   Access: NetworkAccess
+  AccessMode: PrivateLinkServiceAccessMode
   AssociationAccessMode: NetworkSecurityPerimeterAssociationAccessMode
   AccessRuleDirection: NetworkSecurityPerimeterAccessRuleDirection
   Action: RouteMapAction
@@ -58,10 +59,13 @@ rename-mapping:
   ApplicationGatewayBackendHttpSettings.properties.requestTimeout: RequestTimeoutInSeconds
   ApplicationGatewayBackendHttpSettings.properties.validateCertChainAndExpiry: IsValidateCertChainAndExpiryEnabled
   ApplicationGatewayBackendHttpSettings.properties.validateSNI: IsValidateSniEnabled
+  ApplicationGatewayBackendSettings.properties.enableL4ClientIpPreservation: IsL4ClientIPPreservationEnabled
   ApplicationGatewayBackendSettings.properties.timeout: TimeoutInSeconds
   ApplicationGatewayConnectionDraining.drainTimeoutInSec: DrainTimeoutInSeconds
+  ApplicationGatewayOnDemandProbe.enableProbeProxyProtocolHeader: IsProbeProxyProtocolHeaderEnabled
   ApplicationGatewayPrivateEndpointConnection.properties.privateLinkServiceConnectionState: connectionState
   ApplicationGatewayPrivateLinkIpConfiguration.properties.primary: IsPrimary
+  ApplicationGatewayProbe.properties.enableProbeProxyProtocolHeader: IsProbeProxyProtocolHeaderEnabled
   ApplicationGatewayProbe.properties.interval: IntervalInSeconds
   ApplicationGatewayProbe.properties.timeout: TimeoutInSeconds
   ApplicationGatewayTierTypes.WAF: Waf

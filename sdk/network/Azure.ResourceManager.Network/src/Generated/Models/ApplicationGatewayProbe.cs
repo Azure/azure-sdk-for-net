@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="pickHostNameFromBackendSettings"> Whether the server name indication should be picked from the backend settings for Tls protocol. Default value is false. </param>
         /// <param name="minServers"> Minimum number of servers that are always marked healthy. Default value is 0. </param>
         /// <param name="match"> Criterion for classifying a healthy probe response. </param>
-        /// <param name="enableProbeProxyProtocolHeader"> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </param>
+        /// <param name="isProbeProxyProtocolHeaderEnabled"> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
         /// <param name="port"> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Basic, Standard_v2 and WAF_v2 only. </param>
-        internal ApplicationGatewayProbe(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ApplicationGatewayProtocol? protocol, string host, string path, int? intervalInSeconds, int? timeoutInSeconds, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, bool? pickHostNameFromBackendSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, bool? enableProbeProxyProtocolHeader, NetworkProvisioningState? provisioningState, int? port) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayProbe(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ApplicationGatewayProtocol? protocol, string host, string path, int? intervalInSeconds, int? timeoutInSeconds, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, bool? pickHostNameFromBackendSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, bool? isProbeProxyProtocolHeaderEnabled, NetworkProvisioningState? provisioningState, int? port) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Protocol = protocol;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
             PickHostNameFromBackendSettings = pickHostNameFromBackendSettings;
             MinServers = minServers;
             Match = match;
-            EnableProbeProxyProtocolHeader = enableProbeProxyProtocolHeader;
+            IsProbeProxyProtocolHeaderEnabled = isProbeProxyProtocolHeaderEnabled;
             ProvisioningState = provisioningState;
             Port = port;
         }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
         public ApplicationGatewayProbeHealthResponseMatch Match { get; set; }
         /// <summary> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </summary>
         [WirePath("properties.enableProbeProxyProtocolHeader")]
-        public bool? EnableProbeProxyProtocolHeader { get; set; }
+        public bool? IsProbeProxyProtocolHeaderEnabled { get; set; }
         /// <summary> The provisioning state of the probe resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }

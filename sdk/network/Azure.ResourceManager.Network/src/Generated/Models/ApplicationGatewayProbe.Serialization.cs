@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("match"u8);
                 writer.WriteObjectValue(Match, options);
             }
-            if (Optional.IsDefined(EnableProbeProxyProtocolHeader))
+            if (Optional.IsDefined(IsProbeProxyProtocolHeaderEnabled))
             {
                 writer.WritePropertyName("enableProbeProxyProtocolHeader"u8);
-                writer.WriteBooleanValue(EnableProbeProxyProtocolHeader.Value);
+                writer.WriteBooleanValue(IsProbeProxyProtocolHeaderEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableProbeProxyProtocolHeader), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsProbeProxyProtocolHeaderEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    enableProbeProxyProtocolHeader: ");
@@ -574,10 +574,10 @@ namespace Azure.ResourceManager.Network.Models
             }
             else
             {
-                if (Optional.IsDefined(EnableProbeProxyProtocolHeader))
+                if (Optional.IsDefined(IsProbeProxyProtocolHeaderEnabled))
                 {
                     builder.Append("    enableProbeProxyProtocolHeader: ");
-                    var boolValue = EnableProbeProxyProtocolHeader.Value == true ? "true" : "false";
+                    var boolValue = IsProbeProxyProtocolHeaderEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

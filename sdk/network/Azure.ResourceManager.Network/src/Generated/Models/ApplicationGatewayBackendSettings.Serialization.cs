@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("pickHostNameFromBackendAddress"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendAddress.Value);
             }
-            if (Optional.IsDefined(EnableL4ClientIPPreservation))
+            if (Optional.IsDefined(IsL4ClientIPPreservationEnabled))
             {
                 writer.WritePropertyName("enableL4ClientIpPreservation"u8);
-                writer.WriteBooleanValue(EnableL4ClientIPPreservation.Value);
+                writer.WriteBooleanValue(IsL4ClientIPPreservationEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableL4ClientIPPreservation), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsL4ClientIPPreservationEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    enableL4ClientIpPreservation: ");
@@ -485,10 +485,10 @@ namespace Azure.ResourceManager.Network.Models
             }
             else
             {
-                if (Optional.IsDefined(EnableL4ClientIPPreservation))
+                if (Optional.IsDefined(IsL4ClientIPPreservationEnabled))
                 {
                     builder.Append("    enableL4ClientIpPreservation: ");
-                    var boolValue = EnableL4ClientIPPreservation.Value == true ? "true" : "false";
+                    var boolValue = IsL4ClientIPPreservationEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

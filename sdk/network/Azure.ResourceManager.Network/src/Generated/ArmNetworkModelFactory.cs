@@ -298,11 +298,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="pickHostNameFromBackendSettings"> Whether the server name indication should be picked from the backend settings for Tls protocol. Default value is false. </param>
         /// <param name="minServers"> Minimum number of servers that are always marked healthy. Default value is 0. </param>
         /// <param name="match"> Criterion for classifying a healthy probe response. </param>
-        /// <param name="enableProbeProxyProtocolHeader"> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </param>
+        /// <param name="isProbeProxyProtocolHeaderEnabled"> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
         /// <param name="port"> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Basic, Standard_v2 and WAF_v2 only. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayProbe"/> instance for mocking. </returns>
-        public static ApplicationGatewayProbe ApplicationGatewayProbe(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayProtocol? protocol = null, string host = null, string path = null, int? intervalInSeconds = null, int? timeoutInSeconds = null, int? unhealthyThreshold = null, bool? pickHostNameFromBackendHttpSettings = null, bool? pickHostNameFromBackendSettings = null, int? minServers = null, ApplicationGatewayProbeHealthResponseMatch match = null, bool? enableProbeProxyProtocolHeader = null, NetworkProvisioningState? provisioningState = null, int? port = null)
+        public static ApplicationGatewayProbe ApplicationGatewayProbe(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayProtocol? protocol = null, string host = null, string path = null, int? intervalInSeconds = null, int? timeoutInSeconds = null, int? unhealthyThreshold = null, bool? pickHostNameFromBackendHttpSettings = null, bool? pickHostNameFromBackendSettings = null, int? minServers = null, ApplicationGatewayProbeHealthResponseMatch match = null, bool? isProbeProxyProtocolHeaderEnabled = null, NetworkProvisioningState? provisioningState = null, int? port = null)
         {
             return new ApplicationGatewayProbe(
                 id,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Network.Models
                 pickHostNameFromBackendSettings,
                 minServers,
                 match,
-                enableProbeProxyProtocolHeader,
+                isProbeProxyProtocolHeaderEnabled,
                 provisioningState,
                 port);
         }
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="alias"> The alias of the private link service. </param>
         /// <param name="enableProxyProtocol"> Whether the private link service is enabled for proxy protocol or not. </param>
         /// <returns> A new <see cref="Network.PrivateLinkServiceData"/> instance for mocking. </returns>
-        public static PrivateLinkServiceData PrivateLinkServiceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, ETag? etag = null, IEnumerable<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = null, IEnumerable<PrivateLinkServiceIPConfiguration> ipConfigurations = null, string destinationIPAddress = null, AccessMode? accessMode = null, IEnumerable<NetworkInterfaceData> networkInterfaces = null, NetworkProvisioningState? provisioningState = null, IEnumerable<NetworkPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<string> visibilitySubscriptions = null, IEnumerable<string> autoApprovalSubscriptions = null, IEnumerable<string> fqdns = null, string @alias = null, bool? enableProxyProtocol = null)
+        public static PrivateLinkServiceData PrivateLinkServiceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, ETag? etag = null, IEnumerable<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = null, IEnumerable<PrivateLinkServiceIPConfiguration> ipConfigurations = null, string destinationIPAddress = null, PrivateLinkServiceAccessMode? accessMode = null, IEnumerable<NetworkInterfaceData> networkInterfaces = null, NetworkProvisioningState? provisioningState = null, IEnumerable<NetworkPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<string> visibilitySubscriptions = null, IEnumerable<string> autoApprovalSubscriptions = null, IEnumerable<string> fqdns = null, string @alias = null, bool? enableProxyProtocol = null)
         {
             tags ??= new Dictionary<string, string>();
             loadBalancerFrontendIPConfigurations ??= new List<FrontendIPConfigurationData>();
@@ -1647,10 +1647,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="trustedRootCertificates"> Array of references to application gateway trusted root certificates. </param>
         /// <param name="hostName"> Server name indication to be sent to the backend servers for Tls protocol. </param>
         /// <param name="pickHostNameFromBackendAddress"> Whether to pick server name indication from the host name of the backend server for Tls protocol. Default value is false. </param>
-        /// <param name="enableL4ClientIPPreservation"> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </param>
+        /// <param name="isL4ClientIPPreservationEnabled"> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayBackendSettings"/> instance for mocking. </returns>
-        public static ApplicationGatewayBackendSettings ApplicationGatewayBackendSettings(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, int? port = null, ApplicationGatewayProtocol? protocol = null, int? timeoutInSeconds = null, ResourceIdentifier probeId = null, IEnumerable<WritableSubResource> trustedRootCertificates = null, string hostName = null, bool? pickHostNameFromBackendAddress = null, bool? enableL4ClientIPPreservation = null, NetworkProvisioningState? provisioningState = null)
+        public static ApplicationGatewayBackendSettings ApplicationGatewayBackendSettings(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, int? port = null, ApplicationGatewayProtocol? protocol = null, int? timeoutInSeconds = null, ResourceIdentifier probeId = null, IEnumerable<WritableSubResource> trustedRootCertificates = null, string hostName = null, bool? pickHostNameFromBackendAddress = null, bool? isL4ClientIPPreservationEnabled = null, NetworkProvisioningState? provisioningState = null)
         {
             trustedRootCertificates ??= new List<WritableSubResource>();
 
@@ -1667,7 +1667,7 @@ namespace Azure.ResourceManager.Network.Models
                 trustedRootCertificates?.ToList(),
                 hostName,
                 pickHostNameFromBackendAddress,
-                enableL4ClientIPPreservation,
+                isL4ClientIPPreservationEnabled,
                 provisioningState);
         }
 
@@ -9185,7 +9185,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApplicationGatewayProbe ApplicationGatewayProbe(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayProtocol? protocol, string host, string path, int? intervalInSeconds, int? timeoutInSeconds, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, bool? pickHostNameFromBackendSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, NetworkProvisioningState? provisioningState, int? port)
         {
-            return ApplicationGatewayProbe(id: id, name: name, resourceType: resourceType, etag: etag, protocol: protocol, host: host, path: path, intervalInSeconds: intervalInSeconds, timeoutInSeconds: timeoutInSeconds, unhealthyThreshold: unhealthyThreshold, pickHostNameFromBackendHttpSettings: pickHostNameFromBackendHttpSettings, pickHostNameFromBackendSettings: pickHostNameFromBackendSettings, minServers: minServers, match: match, enableProbeProxyProtocolHeader: default, provisioningState: provisioningState, port: port);
+            return ApplicationGatewayProbe(id: id, name: name, resourceType: resourceType, etag: etag, protocol: protocol, host: host, path: path, intervalInSeconds: intervalInSeconds, timeoutInSeconds: timeoutInSeconds, unhealthyThreshold: unhealthyThreshold, pickHostNameFromBackendHttpSettings: pickHostNameFromBackendHttpSettings, pickHostNameFromBackendSettings: pickHostNameFromBackendSettings, minServers: minServers, match: match, isProbeProxyProtocolHeaderEnabled: default, provisioningState: provisioningState, port: port);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.PrivateLinkServiceData" />. </summary>
@@ -9231,7 +9231,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApplicationGatewayBackendSettings ApplicationGatewayBackendSettings(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, int? timeoutInSeconds, ResourceIdentifier probeId, IEnumerable<WritableSubResource> trustedRootCertificates, string hostName, bool? pickHostNameFromBackendAddress, NetworkProvisioningState? provisioningState)
         {
-            return ApplicationGatewayBackendSettings(id: id, name: name, resourceType: resourceType, etag: etag, port: port, protocol: protocol, timeoutInSeconds: timeoutInSeconds, probeId: probeId, trustedRootCertificates: trustedRootCertificates, hostName: hostName, pickHostNameFromBackendAddress: pickHostNameFromBackendAddress, enableL4ClientIPPreservation: default, provisioningState: provisioningState);
+            return ApplicationGatewayBackendSettings(id: id, name: name, resourceType: resourceType, etag: etag, port: port, protocol: protocol, timeoutInSeconds: timeoutInSeconds, probeId: probeId, trustedRootCertificates: trustedRootCertificates, hostName: hostName, pickHostNameFromBackendAddress: pickHostNameFromBackendAddress, isL4ClientIPPreservationEnabled: default, provisioningState: provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.LoadBalancerData" />. </summary>
