@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Speech.Transcription
 {
-    /// <summary> The Speaker Identification settings. Diarization settings must be specified to enable speaker identification. </summary>
+    /// <summary> The Speaker Diarization settings. Diarization settings must be specified to enable speaker diarization. </summary>
     public partial class TranscriptionDiarizationOptions
     {
         /// <summary>

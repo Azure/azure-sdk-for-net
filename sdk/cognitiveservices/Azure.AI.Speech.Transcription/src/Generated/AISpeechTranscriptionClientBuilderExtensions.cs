@@ -28,6 +28,15 @@ namespace Microsoft.Extensions.Azure
 
         /// <summary> Registers a <see cref="TranscriptionClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus.api.cognitive.microsoft.com. </param>
+        public static IAzureClientBuilder<TranscriptionClient, TranscriptionClientOptions> AddTranscriptionClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<TranscriptionClient, TranscriptionClientOptions>((options, cred) => new TranscriptionClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="TranscriptionClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
