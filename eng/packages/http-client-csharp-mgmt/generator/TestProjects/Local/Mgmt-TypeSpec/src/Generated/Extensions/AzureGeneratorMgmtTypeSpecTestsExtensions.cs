@@ -568,27 +568,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"></param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<FooPreviewAction>> PreviewActionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FooPreviewAction content, CancellationToken cancellationToken = default)
+        public static async Task<Response<FooPreviewAction>> PreviewActionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, body, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"></param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<FooPreviewAction> PreviewActions(this SubscriptionResource subscriptionResource, AzureLocation location, FooPreviewAction content, CancellationToken cancellationToken = default)
+        public static Response<FooPreviewAction> PreviewActions(this SubscriptionResource subscriptionResource, AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActions(location, content, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActions(location, body, cancellationToken);
         }
 
         /// <summary> Gets a collection of GroupQuotaSubscriptionRequestStatuses in the <see cref="TenantResource"/>. </summary>
