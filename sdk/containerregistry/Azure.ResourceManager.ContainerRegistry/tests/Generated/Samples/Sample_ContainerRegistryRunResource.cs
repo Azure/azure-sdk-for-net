@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RunsGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RunsGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2025-03-01-preview/examples/RunsGet.json
             // this example is just showing the usage of "Runs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RunsUpdate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RunsUpdate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2025-03-01-preview/examples/RunsUpdate.json
             // this example is just showing the usage of "Runs_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,8 +73,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             {
                 IsArchiveEnabled = true,
             };
-            ArmOperation<ContainerRegistryRunResource> lro = await containerRegistryRun.UpdateAsync(WaitUntil.Completed, patch);
-            ContainerRegistryRunResource result = lro.Value;
+            ContainerRegistryRunResource result = await containerRegistryRun.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -85,9 +84,36 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Cancel_RunsCancel()
+        {
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2025-03-01-preview/examples/RunsCancel.json
+            // this example is just showing the usage of "Runs_Cancel" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerRegistryRunResource created on azure
+            // for more information of creating ContainerRegistryRunResource, please refer to the document of ContainerRegistryRunResource
+            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string resourceGroupName = "myResourceGroup";
+            string registryName = "myRegistry";
+            string runId = "0accec26-d6de-4757-8e74-d080f38eaaab";
+            ResourceIdentifier containerRegistryRunResourceId = ContainerRegistryRunResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, runId);
+            ContainerRegistryRunResource containerRegistryRun = client.GetContainerRegistryRunResource(containerRegistryRunResourceId);
+
+            // invoke the operation
+            await containerRegistryRun.CancelAsync();
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLogSasUrl_RunsGetLogSasUrl()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RunsGetLogSasUrl.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2025-03-01-preview/examples/RunsGetLogSasUrl.json
             // this example is just showing the usage of "Runs_GetLogSasUrl" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,33 +134,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             ContainerRegistryRunGetLogResult result = await containerRegistryRun.GetLogSasUrlAsync();
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Cancel_RunsCancel()
-        {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RunsCancel.json
-            // this example is just showing the usage of "Runs_Cancel" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerRegistryRunResource created on azure
-            // for more information of creating ContainerRegistryRunResource, please refer to the document of ContainerRegistryRunResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
-            string resourceGroupName = "myResourceGroup";
-            string registryName = "myRegistry";
-            string runId = "0accec26-d6de-4757-8e74-d080f38eaaab";
-            ResourceIdentifier containerRegistryRunResourceId = ContainerRegistryRunResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, runId);
-            ContainerRegistryRunResource containerRegistryRun = client.GetContainerRegistryRunResource(containerRegistryRunResourceId);
-
-            // invoke the operation
-            await containerRegistryRun.CancelAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

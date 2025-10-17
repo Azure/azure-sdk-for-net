@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupId))
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsCollectionDefined(RequiredMembers))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredMembers))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            if (Optional.IsCollectionDefined(RequiredZoneNamesList))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
-                foreach (var item in RequiredZoneNames)
+                foreach (var item in RequiredZoneNamesList)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             SystemData systemData = default;
             string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
-            IReadOnlyList<string> requiredZoneNames = default;
+            IList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredZoneNames), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredZoneNamesList), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    requiredZoneNames: ");
@@ -318,13 +318,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
             else
             {
-                if (Optional.IsCollectionDefined(RequiredZoneNames))
+                if (Optional.IsCollectionDefined(RequiredZoneNamesList))
                 {
-                    if (RequiredZoneNames.Any())
+                    if (RequiredZoneNamesList.Any())
                     {
                         builder.Append("    requiredZoneNames: ");
                         builder.AppendLine("[");
-                        foreach (var item in RequiredZoneNames)
+                        foreach (var item in RequiredZoneNamesList)
                         {
                             if (item == null)
                             {
