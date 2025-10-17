@@ -8,7 +8,6 @@
 - Added support for the StartFrom parameter on DataLakeFileSystemClient.GetPaths() and .GetPathsAsync().
 
 ### Other Changes
-- Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
 
 ## 12.24.0 (2025-10-13)
 

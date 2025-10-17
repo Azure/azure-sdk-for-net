@@ -12,7 +12,6 @@
 - Added support for the PropertySemantics parameter on ShareFileClient.Create(), .CreateAsync(), ShareDirectoryClient.Create(), and .CreateAsync().
 
 ### Other Changes
-- Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
 
 ## 12.24.0 (2025-10-13)
 

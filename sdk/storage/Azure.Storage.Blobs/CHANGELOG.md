@@ -14,8 +14,6 @@
 
 ### Other Changes
 
-- Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
-
 ## 12.26.0 (2025-10-13)
 
 ### Features Added
