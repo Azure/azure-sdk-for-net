@@ -10,6 +10,7 @@
         This is SDK for QnAMaker v4 API with custom clients for V5-preview.1.	
     ]]>
     </PackageReleaseNotes>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>

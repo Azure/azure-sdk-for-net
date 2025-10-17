@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.Grafana</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Grafana.</Description>
     <PackageTags>azure;management;arm;resource manager;grafana</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

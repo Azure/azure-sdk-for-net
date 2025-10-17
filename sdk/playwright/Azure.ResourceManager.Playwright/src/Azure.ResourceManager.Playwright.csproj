@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Playwright</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Playwright.</Description>
     <PackageTags>azure;management;arm;resource manager;playwright</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

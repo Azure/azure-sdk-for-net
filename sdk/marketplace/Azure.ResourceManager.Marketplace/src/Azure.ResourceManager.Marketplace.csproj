@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Marketplace</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Marketplace.</Description>
     <PackageTags>azure;management;arm;resource manager;marketplace</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

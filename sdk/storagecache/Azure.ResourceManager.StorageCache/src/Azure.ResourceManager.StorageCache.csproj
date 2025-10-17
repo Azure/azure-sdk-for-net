@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.StorageCache</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.StorageCache.</Description>
     <PackageTags>azure;management;arm;resource manager;storagecache</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

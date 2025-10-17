@@ -7,5 +7,6 @@
     <Description>Azure Resource Manager client SDK for Azure resource provider CostManagement.</Description>
     <PackageTags>azure;management;arm;resource manager;costmanagement</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

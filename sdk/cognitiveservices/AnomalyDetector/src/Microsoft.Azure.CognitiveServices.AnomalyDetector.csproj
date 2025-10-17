@@ -12,6 +12,7 @@
     2. Add new enum value "secondly" to Granularity.
     ]]>
     </PackageReleaseNotes>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>

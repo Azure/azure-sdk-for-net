@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.StorageSync</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.StorageSync.</Description>
     <PackageTags>azure;management;arm;resource manager;storagesync</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

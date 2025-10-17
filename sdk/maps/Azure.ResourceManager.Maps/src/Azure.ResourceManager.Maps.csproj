@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Maps</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Maps.</Description>
     <PackageTags>azure;management;arm;resource manager;maps</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

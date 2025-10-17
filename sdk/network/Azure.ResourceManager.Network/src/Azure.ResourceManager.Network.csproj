@@ -9,5 +9,6 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <!-- CA1708 cannot be suppress through #pragma. So we suppress it here. -->
     <NoWarn>$(NoWarn);CA1708</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

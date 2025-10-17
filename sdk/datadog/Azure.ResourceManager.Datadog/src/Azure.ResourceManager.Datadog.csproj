@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.Datadog</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Datadog.</Description>
     <PackageTags>azure;management;arm;resource manager;datadog</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>
