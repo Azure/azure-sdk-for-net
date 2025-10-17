@@ -18,7 +18,7 @@ namespace MgmtTypeSpec.Mocking
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableMgmtTypeSpecArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableMgmtTypeSpecArmClient for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableMgmtTypeSpecArmClient"/> class for mocking. </summary>
         protected MockableMgmtTypeSpecArmClient()
         {
         }
