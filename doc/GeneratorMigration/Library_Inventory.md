@@ -2,16 +2,16 @@
 
 ## Summary
 
-- Total libraries: 416
+- Total libraries: 417
 - Management Plane (Swagger): 164
 - Management Plane (TSP-Old): 46
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 14
 - Management Plane (TypeSpec - @typespec/http-client-csharp): 0
 - Management Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 0
-- Data Plane (Swagger): 119
-- Data Plane (TSP-Old): 22
-- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 10
+- Data Plane (Swagger): 120
+- Data Plane (TSP-Old): 21
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 11
 - Data Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 0
 - Data Plane (TypeSpec - @typespec/http-client-csharp): 2
 - Data Plane (TypeSpec - Unknown TypeSpec Generator: eng/emitter-package.json): 1
@@ -20,7 +20,7 @@
 
 ## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 10
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 11
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -34,6 +34,7 @@ TypeSpec with @azure-typespec/http-client-csharp generator is detected by the pr
 | monitor | Azure.Monitor.Query.Logs | sdk/monitor/Azure.Monitor.Query.Logs |
 | monitor | Azure.Monitor.Query.Metrics | sdk/monitor/Azure.Monitor.Query.Metrics |
 | schemaregistry | Azure.Data.SchemaRegistry | sdk/schemaregistry/Azure.Data.SchemaRegistry |
+| vision | Azure.AI.Vision.ImageAnalysis | sdk/vision/Azure.AI.Vision.ImageAnalysis |
 
 
 ## Data Plane Libraries using TypeSpec (@typespec/http-client-csharp)
@@ -57,7 +58,7 @@ TypeSpec with Unknown TypeSpec Generator: eng/emitter-package.json generator is 
 
 ## Data Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 22
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 21
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -82,12 +83,11 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | purview | Azure.Analytics.Purview.DataMap | sdk/purview/Azure.Analytics.Purview.DataMap |
 | translation | Azure.AI.Translation.Document | sdk/translation/Azure.AI.Translation.Document |
 | translation | Azure.AI.Translation.Text | sdk/translation/Azure.AI.Translation.Text |
-| vision | Azure.AI.Vision.ImageAnalysis | sdk/vision/Azure.AI.Vision.ImageAnalysis |
 
 
 ## Data Plane Libraries using Swagger
 
-Total: 119
+Total: 120
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -167,6 +167,7 @@ Total: 119
 | provisioning | Azure.Provisioning.CosmosDB | sdk/provisioning/Azure.Provisioning.CosmosDB |
 | provisioning | Azure.Provisioning.EventGrid | sdk/provisioning/Azure.Provisioning.EventGrid |
 | provisioning | Azure.Provisioning.EventHubs | sdk/provisioning/Azure.Provisioning.EventHubs |
+| provisioning | Azure.Provisioning.FrontDoor | sdk/provisioning/Azure.Provisioning.FrontDoor |
 | provisioning | Azure.Provisioning.KeyVault | sdk/provisioning/Azure.Provisioning.KeyVault |
 | provisioning | Azure.Provisioning.Kubernetes | sdk/provisioning/Azure.Provisioning.Kubernetes |
 | provisioning | Azure.Provisioning.KubernetesConfiguration | sdk/provisioning/Azure.Provisioning.KubernetesConfiguration |
