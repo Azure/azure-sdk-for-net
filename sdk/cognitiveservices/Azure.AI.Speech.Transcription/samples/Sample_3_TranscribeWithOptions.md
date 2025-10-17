@@ -113,7 +113,7 @@ TranscriptionClient client = new TranscriptionClient(new Uri("https://myaccount.
 using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions();
-    options.ActiveChannels.Add(0);
+    options.Channels.Add(0);
 
     var request = new TranscribeRequestContent
     {
@@ -144,7 +144,7 @@ using (FileStream fileStream = File.Open(filePath, FileMode.Open))
 {
     var options = new TranscriptionOptions()
     {
-        DiarizationOptions = new()
+        Diarization = new()
         {
             Enabled = true,
             MaxSpeakers = 2

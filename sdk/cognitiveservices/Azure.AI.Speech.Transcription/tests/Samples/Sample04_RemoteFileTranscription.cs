@@ -152,7 +152,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             {
                 AudioUrl = audioUrl,
                 ProfanityFilterMode = ProfanityFilterMode.Masked,
-                DiarizationOptions = new TranscriptionDiarizationOptions
+                Diarization = new TranscriptionDiarizationOptions
                 {
                     Enabled = true,
                     MaxSpeakers = 2
