@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Reference the local SDK project -->
+    <ProjectReference Include="..\..\src\Azure.AI.ContentUnderstanding.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Azure Identity for authentication -->
+    <PackageReference Include="Azure.Identity" Version="1.13.1" />
+
+    <!-- NuGet packages for configuration -->
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Include shared helper from Common directory -->
+    <Compile Include="..\Common\SampleHelper.cs" Link="SampleHelper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Copy appsettings.json to output directory -->
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
+
+
+
