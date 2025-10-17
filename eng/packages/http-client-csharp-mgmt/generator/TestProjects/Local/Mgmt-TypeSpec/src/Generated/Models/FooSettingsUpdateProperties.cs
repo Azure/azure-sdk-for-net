@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
@@ -31,6 +32,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets or sets the AccessControlEnabled. </summary>
+        [WirePath("accessControlEnabled")]
         public bool? AccessControlEnabled { get; set; }
     }
 }

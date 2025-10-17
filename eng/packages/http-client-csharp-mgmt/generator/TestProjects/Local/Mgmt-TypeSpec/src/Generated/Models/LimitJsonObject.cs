@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
@@ -36,6 +37,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The limit object type. </summary>
+        [WirePath("limitObjectType")]
         internal LimitType LimitObjectType { get; set; }
     }
 }

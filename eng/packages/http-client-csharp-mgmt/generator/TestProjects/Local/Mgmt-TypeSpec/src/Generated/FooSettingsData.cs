@@ -38,6 +38,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         public FooSettingsProperties Properties { get; set; }
     }
 }

@@ -41,6 +41,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         public BarProperties Properties { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
@@ -33,6 +34,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets the Sku. </summary>
+        [WirePath("sku")]
         public string Sku { get; }
     }
 }

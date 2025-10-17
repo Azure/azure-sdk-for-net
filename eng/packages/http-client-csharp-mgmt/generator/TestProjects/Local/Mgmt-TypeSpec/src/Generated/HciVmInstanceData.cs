@@ -38,6 +38,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal HciVmInstanceProperties Properties { get; }
 
         /// <summary> Gets the Sku. </summary>

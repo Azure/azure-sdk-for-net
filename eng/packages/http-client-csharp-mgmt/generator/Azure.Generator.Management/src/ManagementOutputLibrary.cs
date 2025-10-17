@@ -31,6 +31,9 @@ namespace Azure.Generator.Management
         private ProviderConstantsProvider? _providerConstants;
         internal ProviderConstantsProvider ProviderConstants => _providerConstants ??= new ProviderConstantsProvider();
 
+        private WirePathAttributeDefinition? _wirePathAttributeProvider;
+        internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
+
         // TODO -- this is really a bad practice that this map is not built in one place, but we are building it while generating stuff and in the meantime we might read it.
         // but currently this is the best we could do right now.
         internal Dictionary<TypeProvider, string> PageableMethodScopes { get; } = new();
@@ -264,6 +267,7 @@ namespace Azure.Generator.Management
 
             return [
                 .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
+                WirePathAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
                 ProviderConstants,

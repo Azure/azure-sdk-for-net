@@ -38,6 +38,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal EndpointProperties Properties { get; set; }
 
         /// <summary> Gets or sets the Prop. </summary>

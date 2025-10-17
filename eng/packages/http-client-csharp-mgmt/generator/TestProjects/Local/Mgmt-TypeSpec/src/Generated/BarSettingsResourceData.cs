@@ -62,24 +62,31 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal BarSettingsProperties Properties { get; set; }
 
         /// <summary> Gets the StringArray. </summary>
+        [WirePath("stringArray")]
         public IList<string> StringArray { get; }
 
         /// <summary> Gets or sets the Property. </summary>
+        [WirePath("property")]
         internal BarQuotaProperties Property { get; set; }
 
         /// <summary> Gets or sets the AnotherProperty. </summary>
+        [WirePath("anotherProperty")]
         internal BarQuotaProperties AnotherProperty { get; set; }
 
         /// <summary> Gets or sets the FlattenedNestedProperty. </summary>
+        [WirePath("flattenedNestedProperty")]
         internal BarNestedQuotaProperties FlattenedNestedProperty { get; set; }
 
         /// <summary> Gets or sets the OptionalFlattenProperty. </summary>
+        [WirePath("optionalFlattenProperty")]
         internal OptionalFlattenPropertyType OptionalFlattenProperty { get; set; }
 
         /// <summary> Gets or sets the DiscriminatorProperty. </summary>
+        [WirePath("discriminatorProperty")]
         public LimitJsonObject DiscriminatorProperty { get; set; }
 
         /// <summary> enabled. </summary>
@@ -118,6 +125,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets or sets the InnerProp1. </summary>
+        [WirePath("innerProp1")]
         public int? InnerProp1
         {
             get
@@ -135,6 +143,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets or sets the InnerProp2. </summary>
+        [WirePath("innerProp2")]
         public string InnerProp2
         {
             get
@@ -152,6 +161,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets or sets the MiddleProp1. </summary>
+        [WirePath("middleProp1")]
         public int MiddleProp1
         {
             get
@@ -169,6 +179,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the MiddleProp2. </summary>
+        [WirePath("middleProp2")]
         public IDictionary<string, string> MiddleProp2
         {
             get
@@ -182,6 +193,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the Prop1. </summary>
+        [WirePath("prop1")]
         public IList<string> Prop1
         {
             get
@@ -195,6 +207,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets or sets the Prop2. </summary>
+        [WirePath("prop2")]
         public int Prop2
         {
             get

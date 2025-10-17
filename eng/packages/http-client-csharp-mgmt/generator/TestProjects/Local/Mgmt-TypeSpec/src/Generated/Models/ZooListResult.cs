@@ -37,9 +37,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The Zoo items on this page. </summary>
+        [WirePath("value")]
         public IList<ZooData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

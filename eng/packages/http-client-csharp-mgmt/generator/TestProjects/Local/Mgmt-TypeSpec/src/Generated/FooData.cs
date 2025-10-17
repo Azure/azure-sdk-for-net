@@ -44,12 +44,15 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal FooProperties Properties { get; set; }
 
         /// <summary> Gets or sets the ExtendedLocation. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> the service url. </summary>
+        [WirePath("serviceUrl")]
         public Uri ServiceUri
         {
             get
@@ -67,6 +70,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> something. </summary>
+        [WirePath("something")]
         public string Something
         {
             get
@@ -84,6 +88,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> boolean value. </summary>
+        [WirePath("boolValue")]
         public bool? BoolValue
         {
             get
@@ -101,6 +106,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> float value. </summary>
+        [WirePath("floatValue")]
         public float? FloatValue
         {
             get
@@ -118,6 +124,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> double value. </summary>
+        [WirePath("doubleValue")]
         public double? DoubleValue
         {
             get
@@ -135,6 +142,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the Prop1. </summary>
+        [WirePath("prop1")]
         public IList<string> Prop1
         {
             get
@@ -144,6 +152,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the Prop2. </summary>
+        [WirePath("prop2")]
         public IList<int> Prop2
         {
             get

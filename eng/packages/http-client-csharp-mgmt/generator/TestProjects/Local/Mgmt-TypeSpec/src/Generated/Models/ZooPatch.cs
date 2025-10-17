@@ -35,9 +35,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal ZooUpdateProperties Properties { get; set; }
 
         /// <summary> something. </summary>

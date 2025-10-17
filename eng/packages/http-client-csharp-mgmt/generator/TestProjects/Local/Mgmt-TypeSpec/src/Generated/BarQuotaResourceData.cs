@@ -38,6 +38,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal BarQuotaProperties Properties { get; set; }
 
         /// <summary> enabled. </summary>

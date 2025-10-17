@@ -43,6 +43,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal JobProperties Properties { get; }
 
         /// <summary> Gets or sets the JobName. </summary>

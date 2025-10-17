@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
@@ -33,9 +34,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The subscription-level location-based Playwright quota resource free-trial properties. </summary>
+        [WirePath("freeTrial")]
         public string FreeTrial { get; }
 
         /// <summary> The status of the last resource operation. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

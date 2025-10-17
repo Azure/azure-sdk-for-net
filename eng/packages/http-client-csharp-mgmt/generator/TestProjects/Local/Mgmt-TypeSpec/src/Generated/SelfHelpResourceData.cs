@@ -38,6 +38,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal SelfHelpResourceProperties Properties { get; }
 
         /// <summary> Gets the SelfHelpId. </summary>

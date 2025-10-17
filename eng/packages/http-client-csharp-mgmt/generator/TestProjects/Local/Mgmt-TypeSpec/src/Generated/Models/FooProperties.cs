@@ -59,27 +59,35 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> the service url. </summary>
+        [WirePath("serviceUrl")]
         public Uri ServiceUri { get; set; }
 
         /// <summary> something. </summary>
+        [WirePath("something")]
         public string Something { get; set; }
 
         /// <summary> boolean value. </summary>
+        [WirePath("boolValue")]
         public bool? BoolValue { get; set; }
 
         /// <summary> float value. </summary>
+        [WirePath("floatValue")]
         public float? FloatValue { get; set; }
 
         /// <summary> double value. </summary>
+        [WirePath("doubleValue")]
         public double? DoubleValue { get; set; }
 
         /// <summary> Gets the Prop1. </summary>
+        [WirePath("prop1")]
         public IList<string> Prop1 { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets the Prop2. </summary>
+        [WirePath("prop2")]
         public IList<int> Prop2 { get; } = new ChangeTrackingList<int>();
 
         /// <summary> Gets or sets the NestedProperty. </summary>
+        [WirePath("nestedProperty")]
         internal NestedFooModel NestedProperty { get; set; }
 
         /// <summary> Gets or sets the Properties. </summary>

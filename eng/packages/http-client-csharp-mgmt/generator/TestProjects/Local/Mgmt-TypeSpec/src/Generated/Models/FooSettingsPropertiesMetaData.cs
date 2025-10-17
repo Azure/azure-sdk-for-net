@@ -33,6 +33,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets the MetaDatas. </summary>
+        [WirePath("metaDatas")]
         public IList<string> MetaDatas { get; }
     }
 }

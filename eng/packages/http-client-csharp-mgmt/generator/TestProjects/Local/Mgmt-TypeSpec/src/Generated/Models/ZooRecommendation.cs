@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
@@ -37,9 +38,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The recommended value. </summary>
+        [WirePath("recommendedValue")]
         public string RecommendedValue { get; }
 
         /// <summary> The reason for the recommendation. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

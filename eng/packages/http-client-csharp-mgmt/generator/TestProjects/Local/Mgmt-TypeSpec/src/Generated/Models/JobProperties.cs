@@ -37,6 +37,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets or sets the JobName. </summary>
+        [WirePath("jobName")]
         public string JobName { get; set; }
     }
 }

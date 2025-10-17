@@ -37,6 +37,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets or sets the Prop. </summary>
+        [WirePath("prop")]
         public string Prop { get; set; }
     }
 }

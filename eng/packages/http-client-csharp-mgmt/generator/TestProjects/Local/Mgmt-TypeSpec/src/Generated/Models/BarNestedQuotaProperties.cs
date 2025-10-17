@@ -47,9 +47,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets the Prop1. </summary>
+        [WirePath("prop1")]
         public IList<string> Prop1 { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets or sets the Prop2. </summary>
+        [WirePath("prop2")]
         public int Prop2 { get; set; }
     }
 }

@@ -37,6 +37,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties")]
         public FooProperties Properties { get; set; }
     }
 }

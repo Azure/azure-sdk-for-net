@@ -39,9 +39,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets or sets the InnerProp1. </summary>
+        [WirePath("innerProp1")]
         public int? InnerProp1 { get; set; }
 
         /// <summary> Gets or sets the InnerProp2. </summary>
+        [WirePath("innerProp2")]
         public string InnerProp2 { get; set; }
     }
 }
