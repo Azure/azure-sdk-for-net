@@ -35,15 +35,27 @@ namespace Azure.ResourceManager.Cdn.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FrontDoorCustomDomainResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FrontDoorCustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorCustomDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProfileResource.CreateResourceIdentifier" /> to create a <see cref="ProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontDoorCustomDomainResource"/> object. </returns>
-        public virtual FrontDoorCustomDomainResource GetFrontDoorCustomDomainResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProfileResource"/> object. </returns>
+        public virtual ProfileResource GetProfileResource(ResourceIdentifier id)
         {
-            FrontDoorCustomDomainResource.ValidateResourceId(id);
-            return new FrontDoorCustomDomainResource(Client, id);
+            ProfileResource.ValidateResourceId(id);
+            return new ProfileResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnWebApplicationFirewallPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnWebApplicationFirewallPolicyResource.CreateResourceIdentifier" /> to create a <see cref="CdnWebApplicationFirewallPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicyResource"/> object. </returns>
+        public virtual CdnWebApplicationFirewallPolicyResource GetCdnWebApplicationFirewallPolicyResource(ResourceIdentifier id)
+        {
+            CdnWebApplicationFirewallPolicyResource.ValidateResourceId(id);
+            return new CdnWebApplicationFirewallPolicyResource(Client, id);
         }
 
         /// <summary>
@@ -56,6 +68,78 @@ namespace Azure.ResourceManager.Cdn.Mocking
         {
             FrontDoorEndpointResource.ValidateResourceId(id);
             return new FrontDoorEndpointResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="FrontDoorRouteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorRouteResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorRouteResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FrontDoorRouteResource"/> object. </returns>
+        public virtual FrontDoorRouteResource GetFrontDoorRouteResource(ResourceIdentifier id)
+        {
+            FrontDoorRouteResource.ValidateResourceId(id);
+            return new FrontDoorRouteResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="FrontDoorCustomDomainResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorCustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorCustomDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FrontDoorCustomDomainResource"/> object. </returns>
+        public virtual FrontDoorCustomDomainResource GetFrontDoorCustomDomainResource(ResourceIdentifier id)
+        {
+            FrontDoorCustomDomainResource.ValidateResourceId(id);
+            return new FrontDoorCustomDomainResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnEndpointResource.CreateResourceIdentifier" /> to create a <see cref="CdnEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CdnEndpointResource"/> object. </returns>
+        public virtual CdnEndpointResource GetCdnEndpointResource(ResourceIdentifier id)
+        {
+            CdnEndpointResource.ValidateResourceId(id);
+            return new CdnEndpointResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnCustomDomainResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnCustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="CdnCustomDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CdnCustomDomainResource"/> object. </returns>
+        public virtual CdnCustomDomainResource GetCdnCustomDomainResource(ResourceIdentifier id)
+        {
+            CdnCustomDomainResource.ValidateResourceId(id);
+            return new CdnCustomDomainResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnOriginGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnOriginGroupResource.CreateResourceIdentifier" /> to create a <see cref="CdnOriginGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CdnOriginGroupResource"/> object. </returns>
+        public virtual CdnOriginGroupResource GetCdnOriginGroupResource(ResourceIdentifier id)
+        {
+            CdnOriginGroupResource.ValidateResourceId(id);
+            return new CdnOriginGroupResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnOriginResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnOriginResource.CreateResourceIdentifier" /> to create a <see cref="CdnOriginResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CdnOriginResource"/> object. </returns>
+        public virtual CdnOriginResource GetCdnOriginResource(ResourceIdentifier id)
+        {
+            CdnOriginResource.ValidateResourceId(id);
+            return new CdnOriginResource(Client, id);
         }
 
         /// <summary>
@@ -83,18 +167,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FrontDoorRouteResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FrontDoorRouteResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorRouteResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontDoorRouteResource"/> object. </returns>
-        public virtual FrontDoorRouteResource GetFrontDoorRouteResource(ResourceIdentifier id)
-        {
-            FrontDoorRouteResource.ValidateResourceId(id);
-            return new FrontDoorRouteResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="FrontDoorRuleSetResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FrontDoorRuleSetResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorRuleSetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -119,18 +191,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FrontDoorSecurityPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FrontDoorSecurityPolicyResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorSecurityPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontDoorSecurityPolicyResource"/> object. </returns>
-        public virtual FrontDoorSecurityPolicyResource GetFrontDoorSecurityPolicyResource(ResourceIdentifier id)
-        {
-            FrontDoorSecurityPolicyResource.ValidateResourceId(id);
-            return new FrontDoorSecurityPolicyResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="FrontDoorSecretResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FrontDoorSecretResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorSecretResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -143,75 +203,15 @@ namespace Azure.ResourceManager.Cdn.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProfileResource.CreateResourceIdentifier" /> to create a <see cref="ProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="FrontDoorSecurityPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorSecurityPolicyResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorSecurityPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProfileResource"/> object. </returns>
-        public virtual ProfileResource GetProfileResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FrontDoorSecurityPolicyResource"/> object. </returns>
+        public virtual FrontDoorSecurityPolicyResource GetFrontDoorSecurityPolicyResource(ResourceIdentifier id)
         {
-            ProfileResource.ValidateResourceId(id);
-            return new ProfileResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CdnEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CdnEndpointResource.CreateResourceIdentifier" /> to create a <see cref="CdnEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnEndpointResource"/> object. </returns>
-        public virtual CdnEndpointResource GetCdnEndpointResource(ResourceIdentifier id)
-        {
-            CdnEndpointResource.ValidateResourceId(id);
-            return new CdnEndpointResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CdnOriginResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CdnOriginResource.CreateResourceIdentifier" /> to create a <see cref="CdnOriginResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnOriginResource"/> object. </returns>
-        public virtual CdnOriginResource GetCdnOriginResource(ResourceIdentifier id)
-        {
-            CdnOriginResource.ValidateResourceId(id);
-            return new CdnOriginResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CdnOriginGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CdnOriginGroupResource.CreateResourceIdentifier" /> to create a <see cref="CdnOriginGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnOriginGroupResource"/> object. </returns>
-        public virtual CdnOriginGroupResource GetCdnOriginGroupResource(ResourceIdentifier id)
-        {
-            CdnOriginGroupResource.ValidateResourceId(id);
-            return new CdnOriginGroupResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CdnCustomDomainResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CdnCustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="CdnCustomDomainResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnCustomDomainResource"/> object. </returns>
-        public virtual CdnCustomDomainResource GetCdnCustomDomainResource(ResourceIdentifier id)
-        {
-            CdnCustomDomainResource.ValidateResourceId(id);
-            return new CdnCustomDomainResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CdnWebApplicationFirewallPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CdnWebApplicationFirewallPolicyResource.CreateResourceIdentifier" /> to create a <see cref="CdnWebApplicationFirewallPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicyResource"/> object. </returns>
-        public virtual CdnWebApplicationFirewallPolicyResource GetCdnWebApplicationFirewallPolicyResource(ResourceIdentifier id)
-        {
-            CdnWebApplicationFirewallPolicyResource.ValidateResourceId(id);
-            return new CdnWebApplicationFirewallPolicyResource(Client, id);
+            FrontDoorSecurityPolicyResource.ValidateResourceId(id);
+            return new FrontDoorSecurityPolicyResource(Client, id);
         }
     }
 }

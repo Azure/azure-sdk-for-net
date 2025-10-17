@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.Cdn.Models
     /// StandardPlus_ChinaCdn = The SKU name for a China CDN profile for live-streaming using GB based billing model.
     /// StandardPlus_955BandWidth_ChinaCdn = The SKU name for a China CDN live-streaming profile using 95-5 peak bandwidth billing model.
     /// StandardPlus_AvgBandWidth_ChinaCdn = The SKU name for a China CDN live-streaming profile using monthly average peak bandwidth billing model.
-    ///
     /// Serialized Name: Sku
     /// </summary>
     public partial class CdnSku

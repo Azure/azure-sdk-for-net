@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task CreateOrUpdate_RuleSetsCreate()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/RuleSets_Create.json
-            // this example is just showing the usage of "FrontDoorRuleSets_Create" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "RuleSets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task Get_RuleSetsGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/RuleSets_Get.json
-            // this example is just showing the usage of "FrontDoorRuleSets_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "RuleSets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task GetAll_RuleSetsListByProfile()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/RuleSets_ListByProfile.json
-            // this example is just showing the usage of "FrontDoorRuleSets_ListByProfile" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "RuleSets_ListByProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task Exists_RuleSetsGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/RuleSets_Get.json
-            // this example is just showing the usage of "FrontDoorRuleSets_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "RuleSets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task GetIfExists_RuleSetsGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/RuleSets_Get.json
-            // this example is just showing the usage of "FrontDoorRuleSets_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "RuleSets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

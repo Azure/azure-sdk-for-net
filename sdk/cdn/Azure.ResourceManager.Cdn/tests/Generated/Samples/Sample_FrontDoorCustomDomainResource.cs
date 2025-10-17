@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task Get_AFDCustomDomainsGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDCustomDomains_Get.json
-            // this example is just showing the usage of "FrontDoorCustomDomains_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDCustomDomains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task Delete_AFDCustomDomainsDelete()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDCustomDomains_Delete.json
-            // this example is just showing the usage of "FrontDoorCustomDomains_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDCustomDomains_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task Update_AFDCustomDomainsUpdate()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDCustomDomains_Update.json
-            // this example is just showing the usage of "FrontDoorCustomDomains_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDCustomDomains_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         public async Task RefreshValidationToken_AFDCustomDomainsDelete()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-06-01/examples/AFDCustomDomains_RefreshValidationToken.json
-            // this example is just showing the usage of "FrontDoorCustomDomains_RefreshValidationToken" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AFDCustomDomains_RefreshValidationToken" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

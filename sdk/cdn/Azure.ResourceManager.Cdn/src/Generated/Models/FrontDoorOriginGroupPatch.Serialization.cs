@@ -53,15 +53,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
-                if (TrafficRestorationTimeInMinutes != null)
-                {
-                    writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8);
-                    writer.WriteNumberValue(TrafficRestorationTimeInMinutes.Value);
-                }
-                else
-                {
-                    writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
-                }
+                writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8);
+                writer.WriteNumberValue(TrafficRestorationTimeInMinutes.Value);
             }
             if (Optional.IsDefined(SessionAffinityState))
             {
@@ -157,7 +150,6 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                trafficRestorationTimeToHealedOrNewEndpointsInMinutes = null;
                                 continue;
                             }
                             trafficRestorationTimeToHealedOrNewEndpointsInMinutes = property0.Value.GetInt32();

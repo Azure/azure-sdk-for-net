@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Result of the request to list origins. It contains a list of origin objects and a URL link to get the next set of results.
+    /// The response of a AFDOrigin list operation.
     /// Serialized Name: AFDOriginListResult
     /// </summary>
     internal partial class FrontDoorOriginListResult
@@ -49,37 +50,49 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginListResult"/>. </summary>
-        internal FrontDoorOriginListResult()
+        /// <param name="value">
+        /// The AFDOrigin items on this page
+        /// Serialized Name: AFDOriginListResult.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal FrontDoorOriginListResult(IEnumerable<FrontDoorOriginData> value)
         {
-            Value = new ChangeTrackingList<FrontDoorOriginData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginListResult"/>. </summary>
         /// <param name="value">
-        /// List of Azure Front Door origins within an Azure Front Door endpoint
+        /// The AFDOrigin items on this page
         /// Serialized Name: AFDOriginListResult.value
         /// </param>
         /// <param name="nextLink">
-        /// URL to get the next set of origin objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: AFDOriginListResult.nextLink
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorOriginListResult(IReadOnlyList<FrontDoorOriginData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FrontDoorOriginListResult(IReadOnlyList<FrontDoorOriginData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginListResult"/> for deserialization. </summary>
+        internal FrontDoorOriginListResult()
+        {
+        }
+
         /// <summary>
-        /// List of Azure Front Door origins within an Azure Front Door endpoint
+        /// The AFDOrigin items on this page
         /// Serialized Name: AFDOriginListResult.value
         /// </summary>
         public IReadOnlyList<FrontDoorOriginData> Value { get; }
         /// <summary>
-        /// URL to get the next set of origin objects if there are any.
+        /// The link to the next page of items
         /// Serialized Name: AFDOriginListResult.nextLink
         /// </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }
