@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Group Quota details. </summary>
     public partial class GroupQuotaDetails

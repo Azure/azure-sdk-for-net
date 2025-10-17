@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> The virtual machine instance resource definition. </summary>
     public partial class HciVmInstanceData : ResourceData
