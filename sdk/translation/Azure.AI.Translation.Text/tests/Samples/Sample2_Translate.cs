@@ -30,8 +30,8 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "This is a test.";
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguage, inputText);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
+                Response<TranslationResult> response = client.Translate(targetLanguage, inputText);
+                IReadOnlyList<TranslatedTextItem> translations = response.Value.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -46,32 +46,6 @@ namespace Azure.AI.Translation.Text.Samples
         }
 
         [Test]
-        public void GetTextTranslationOptions()
-        {
-            TextTranslationClient client = CreateClient();
-
-            try
-            {
-                TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
-                    targetLanguage: "cs",
-                    content: "This is a test."
-                );
-
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
-                TranslatedTextItem translation = translations.FirstOrDefault();
-
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-            }
-            catch (RequestFailedException exception)
-            {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
-                Console.WriteLine($"Message: {exception.Message}");
-            }
-        }
-
-        [Test]
         public void GetTextTranslationBySource()
         {
             TextTranslationClient client = CreateClient();
@@ -83,8 +57,8 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "This is a test.";
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguage, inputText, sourceLanguage: from);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
+                Response<TranslationResult> response = client.Translate(targetLanguage, inputText, sourceLanguage: from);
+                IReadOnlyList<TranslatedTextItem> translations = response.Value.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -109,8 +83,39 @@ namespace Azure.AI.Translation.Text.Samples
                 string targetLanguage = "cs";
                 string inputText = "This is a test.";
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguage, inputText);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
+                Response<TranslationResult> response = client.Translate(targetLanguage, inputText);
+                IReadOnlyList<TranslatedTextItem> translations = response.Value.Value;
+                TranslatedTextItem translation = translations.FirstOrDefault();
+
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+            }
+            catch (RequestFailedException exception)
+            {
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
+            }
+            #endregion
+        }
+
+        [Test]
+        public void GetTextTranslationLlm()
+        {
+            TextTranslationClient client = CreateClient();
+
+            #region Snippet:GetTextTranslationLlm
+            try
+            {
+                string targetLanguage = "cs";
+                string llmModelname = "gpt-4o-mini";
+                string inputText = "This is a test.";
+
+                TranslateTarget target = new TranslateTarget(targetLanguage);
+                target.DeploymentName = llmModelname;
+                TranslateInputItem input = new TranslateInputItem(inputText, [target]);
+
+                Response<TranslationResult> response = client.Translate([input]);
+                IReadOnlyList<TranslatedTextItem> translations = response.Value.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -131,7 +136,7 @@ namespace Azure.AI.Translation.Text.Samples
 
             try
             {
-                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
+                string targetLanguage = "cs";
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "This is a test.",
@@ -139,8 +144,8 @@ namespace Azure.AI.Translation.Text.Samples
                     "Dies ist ein Test."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
+                Response<TranslationResult> response = client.Translate(targetLanguage, inputTextElements);
+                IReadOnlyList<TranslatedTextItem> translations = response.Value.Value;
 
                 foreach (TranslatedTextItem translation in translations)
                 {
@@ -153,41 +158,6 @@ namespace Azure.AI.Translation.Text.Samples
                 Console.WriteLine($"Error Code: {exception.ErrorCode}");
                 Console.WriteLine($"Message: {exception.Message}");
             }
-        }
-
-        [Test]
-        public void GetMultipleTextTranslationsOptions()
-        {
-            TextTranslationClient client = CreateClient();
-
-            #region Snippet:GetMultipleTextTranslationsOptions
-            try
-            {
-                TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
-                    targetLanguages: new[] { "cs" },
-                    content: new[]
-                    {
-                        "This is a test.",
-                        "Esto es una prueba.",
-                        "Dies ist ein Test."
-                    }
-                );
-
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
-
-                foreach (TranslatedTextItem translation in translations)
-                {
-                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
-                    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-                }
-            }
-            catch (RequestFailedException exception)
-            {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
-                Console.WriteLine($"Message: {exception.Message}");
-            }
-            #endregion
         }
 
         [Test]
@@ -198,45 +168,12 @@ namespace Azure.AI.Translation.Text.Samples
             #region Snippet:GetTextTranslationMatrix
             try
             {
-                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs", "es", "de" };
-                IEnumerable<string> inputTextElements = new[]
-                {
-                    "This is a test."
-                };
+                IEnumerable<string> targetLanguages = new[] { "cs", "es", "de" };
+                string inputText = "This is a test.";
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
-
-                foreach (TranslatedTextItem translation in translations)
-                {
-                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
-
-                    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-                }
-            }
-            catch (RequestFailedException exception)
-            {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
-                Console.WriteLine($"Message: {exception.Message}");
-            }
-            #endregion
-        }
-
-        [Test]
-        public void GetTextTranslationMatrixOptions()
-        {
-            TextTranslationClient client = CreateClient();
-
-            #region Snippet:GetTextTranslationMatrixOptions
-            try
-            {
-                TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
-                    targetLanguages: new[] { "cs", "es", "de" },
-                    content: new[] { "This is a test." }
-                );
-
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
+                TranslateInputItem input = new TranslateInputItem(inputText, targetLanguages.Select(lang => new TranslateTarget(lang)));
+                Response<TranslationResult> response = client.Translate([input]);
+                IReadOnlyList<TranslatedTextItem> translations = response.Value.Value;
 
                 foreach (TranslatedTextItem translation in translations)
                 {
@@ -261,14 +198,14 @@ namespace Azure.AI.Translation.Text.Samples
             #region Snippet:GetTextTranslationFormat
             try
             {
-                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
-                IEnumerable<string> inputTextElements = new[]
-                {
-                    "<html><body>This <b>is</b> a test.</body></html>"
-                };
+                string targetLanguage = "cs";
+                string inputText = "<html><body>This <b>is</b> a test.</body></html>";
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, textType: TextType.Html);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
+                TranslateInputItem input = new TranslateInputItem(inputText, [new TranslateTarget(targetLanguage)]);
+                input.TextType = TextType.Html;
+
+                Response<TranslationResult> response = client.Translate([input]);
+                IReadOnlyList<TranslatedTextItem> translations = response.Value.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -290,15 +227,16 @@ namespace Azure.AI.Translation.Text.Samples
             #region Snippet:GetTextTranslationFilter
             try
             {
-                string from = "en";
-                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
-                IEnumerable<string> inputTextElements = new[]
-                {
-                    "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>"
-                };
+                string sourceLanguage = "en";
+                string targetLanguage = "cs";
+                string inputText = "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>";
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, textType: TextType.Html, sourceLanguage: from);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
+                TranslateInputItem input = new TranslateInputItem(inputText, [new TranslateTarget(targetLanguage)]);
+                input.Language = sourceLanguage;
+                input.TextType = TextType.Html;
+
+                Response<TranslationResult> response = client.Translate([input]);
+                IReadOnlyList<TranslatedTextItem> translations = response.Value.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -320,15 +258,16 @@ namespace Azure.AI.Translation.Text.Samples
             #region Snippet:GetTextTranslationMarkup
             try
             {
-                string from = "en";
-                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
-                IEnumerable<string> inputTextElements = new[]
-                {
-                    "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry."
-            };
+                string sourceLanguage = "en";
+                string targetLanguage = "cs";
+                string inputText = "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry.";
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, sourceLanguage: from);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
+                TranslateInputItem input = new TranslateInputItem(inputText, [new TranslateTarget(targetLanguage)]);
+                input.Language = sourceLanguage;
+                input.TextType = TextType.Html;
+
+                Response<TranslationResult> response = client.Translate([input]);
+                IReadOnlyList<TranslatedTextItem> translations = response.Value.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -353,114 +292,22 @@ namespace Azure.AI.Translation.Text.Samples
                 ProfanityAction profanityAction = ProfanityAction.Marked;
                 ProfanityMarker profanityMarkers = ProfanityMarker.Asterisk;
 
-                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
-                IEnumerable<string> inputTextElements = new[]
-                {
-                    "This is ***."
-                };
+                string targetLanguage = "cs";
+                string inputText = "This is ***.";
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, profanityAction: profanityAction, profanityMarker: profanityMarkers);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
+                TranslateTarget target = new TranslateTarget(targetLanguage)
+                {
+                    ProfanityAction = profanityAction,
+                    ProfanityMarker = profanityMarkers
+                };
+                TranslateInputItem input = new TranslateInputItem(inputText, [target]);
+
+                Response<TranslationResult> response = client.Translate([input]);
+                IReadOnlyList<TranslatedTextItem> translations = response.Value.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-            }
-            catch (RequestFailedException exception)
-            {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
-                Console.WriteLine($"Message: {exception.Message}");
-            }
-            #endregion
-        }
-
-        [Test]
-        public void GetTextTranslationFallback()
-        {
-            TextTranslationClient client = CreateClient();
-
-            #region Snippet:GetTextTranslationFallback
-            try
-            {
-                string category = "<<Category ID>>";
-                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
-                IEnumerable<string> inputTextElements = new[]
-                {
-                    "This is a test."
-                };
-
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, category: category);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
-                TranslatedTextItem translation = translations.FirstOrDefault();
-
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-            }
-            catch (RequestFailedException exception)
-            {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
-                Console.WriteLine($"Message: {exception.Message}");
-            }
-            #endregion
-        }
-
-        [Test]
-        public void GetTranslationTextTransliterated()
-        {
-            TextTranslationClient client = CreateClient();
-
-            #region Snippet:GetTranslationTextTransliterated
-            try
-            {
-                string fromScript = "Latn";
-                string fromLanguage = "ar";
-                string toScript = "Latn";
-                IEnumerable<string> tarGetSupportedLanguages = new[] { "zh-Hans" };
-                IEnumerable<string> inputTextElements = new[]
-                {
-                    "hudha akhtabar."
-                };
-
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, sourceLanguage: fromLanguage, fromScript: fromScript, toScript: toScript);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
-                TranslatedTextItem translation = translations.FirstOrDefault();
-
-                Console.WriteLine($"Source Text: {translation.SourceText.Text}");
-                Console.WriteLine($"Translation: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-                Console.WriteLine($"Transliterated text ({translation?.Translations?.FirstOrDefault()?.Transliteration?.Script}): {translation?.Translations?.FirstOrDefault()?.Transliteration?.Text}");
-            }
-            catch (RequestFailedException exception)
-            {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
-                Console.WriteLine($"Message: {exception.Message}");
-            }
-            #endregion
-        }
-
-        [Test]
-        public void GetTranslationTextTransliteratedOptions()
-        {
-            TextTranslationClient client = CreateClient();
-
-            #region Snippet:GetTranslationTextTransliteratedOptions
-            try
-            {
-                TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
-                    targetLanguage: "zh-Hans",
-                    content: "hudha akhtabar.")
-                {
-                    FromScript = "Latn",
-                    SourceLanguage = "ar",
-                    ToScript = "Latn"
-                };
-
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
-                IReadOnlyList<TranslatedTextItem> translations = response.Value;
-                TranslatedTextItem translation = translations.FirstOrDefault();
-
-                Console.WriteLine($"Source Text: {translation.SourceText.Text}");
-                Console.WriteLine($"Translation: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-                Console.WriteLine($"Transliterated text ({translation?.Translations?.FirstOrDefault()?.Transliteration?.Script}): {translation?.Translations?.FirstOrDefault()?.Transliteration?.Text}");
             }
             catch (RequestFailedException exception)
             {
