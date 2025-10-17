@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Name availability request payload. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<ConfidentialLedgerNameAvailabilityResult>> CheckConfidentialLedgerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Name availability request payload. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<ConfidentialLedgerNameAvailabilityResult> CheckConfidentialLedgerNameAvailability(this SubscriptionResource subscriptionResource, ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-19-preview</description>
+        /// <description>2025-06-10-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

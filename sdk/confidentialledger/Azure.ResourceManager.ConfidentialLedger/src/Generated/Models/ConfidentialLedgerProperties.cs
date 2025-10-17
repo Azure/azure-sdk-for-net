@@ -71,8 +71,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="workerThreads"> Number of additional threads processing incoming client requests in the enclave (modify with care!). </param>
         /// <param name="enclavePlatform"> Enclave platform of the Confidential Ledger. </param>
         /// <param name="applicationType"> Application type of the Confidential Ledger. </param>
+        /// <param name="scittConfiguration"> The SCITT Configuration that needs to be set for the Confidential Ledger. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfidentialLedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerType? ledgerType, ConfidentialLedgerProvisioningState? provisioningState, ConfidentialLedgerSku? ledgerSku, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals, string hostLevel, int? maxBodySizeInMb, string subjectName, int? nodeCount, string writeLBAddressPrefix, int? workerThreads, ConfidentialLedgerEnclavePlatform? enclavePlatform, ConfidentialLedgerApplicationType? applicationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfidentialLedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerType? ledgerType, ConfidentialLedgerProvisioningState? provisioningState, ConfidentialLedgerSku? ledgerSku, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals, string hostLevel, int? maxBodySizeInMb, string subjectName, int? nodeCount, string writeLBAddressPrefix, int? workerThreads, ConfidentialLedgerEnclavePlatform? enclavePlatform, ConfidentialLedgerApplicationType? applicationType, string scittConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LedgerName = ledgerName;
             LedgerUri = ledgerUri;
@@ -92,6 +93,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             WorkerThreads = workerThreads;
             EnclavePlatform = enclavePlatform;
             ApplicationType = applicationType;
+            ScittConfiguration = scittConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -131,5 +133,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public ConfidentialLedgerEnclavePlatform? EnclavePlatform { get; set; }
         /// <summary> Application type of the Confidential Ledger. </summary>
         public ConfidentialLedgerApplicationType? ApplicationType { get; set; }
+        /// <summary> The SCITT Configuration that needs to be set for the Confidential Ledger. </summary>
+        public string ScittConfiguration { get; set; }
     }
 }
