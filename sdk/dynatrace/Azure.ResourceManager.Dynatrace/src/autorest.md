@@ -8,13 +8,16 @@ azure-arm: true
 csharp: true
 library-name: Dynatrace
 namespace: Azure.ResourceManager.Dynatrace
-require: https://github.com/Azure/azure-rest-api-specs/blob/df6a22e29f0eca5b4a89372eb66db94cb1659c0c/specification/dynatrace/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/3b2afb5c94cfb3dd5345f1bdbd029bfbb265d218/specification/dynatrace/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
+# mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -47,6 +50,10 @@ acronym-mapping:
   URL: Uri
   PRE: Pre
 
+override-operation-name:
+  CreationSupported_List: GetAllCreationSupported
+  CreationSupported_Get: GetCreationSupported
+
 rename-mapping:
   DynatraceSingleSignOnResource: DynatraceSingleSignOn
   DynatraceSingleSignOnResource.properties.enterpriseAppId: -|uuid
@@ -54,7 +61,6 @@ rename-mapping:
   ProvisioningState: DynatraceProvisioningState
   SingleSignOnStates: DynatraceSingleSignOnState
   MonitorResource: DynatraceMonitor
-  AccountInfoSecure: DynatraceAccountCredentialsInfo
   AppServiceInfo: DynatraceOneAgentEnabledAppServiceInfo
   AppServiceInfo.resourceId: -|arm-id
   VMInfo: DynatraceMonitorVmInfo
@@ -93,5 +99,17 @@ rename-mapping:
   SendActivityLogsStatus: ActivityLogsSendingStatus
   SendingLogsStatus: LogsSendingStatus
   SendingMetricsStatus: MetricsSendingStatus
-
+  MetricsStatusResponse: DynatraceMetricsStatusResult
+  LogStatusRequest: DynatraceMetricStatusContent
+  MarketplaceSaaSResourceDetailsResponse: MarketplaceSaaSResourceDetailsResult
+  MarketplaceSaaSResourceDetailsResponse.marketplaceSaaSResourceId : -|arm-id
+  ConnectedResourcesCountResponse: ConnectedResourcesCountResult
+  Action: DynatraceAgentAction
+  CreateResourceSupportedProperties.creationSupported: IsCreationSupported
+  MarketplaceSubscriptionIdRequest.marketplaceSubscriptionId: -|uuid
+  MonitoredSubscription: DynatraceMonitoredSubscription
+  MonitoredSubscription.subscriptionId: -|uuid
+  Status: DynatraceMonitoringState
+  SubscriptionList: DynatraceMonitoredSubscriptionList
+  SubscriptionListOperation: DynatraceMonitoredSubscriptionListOperation
 ```
