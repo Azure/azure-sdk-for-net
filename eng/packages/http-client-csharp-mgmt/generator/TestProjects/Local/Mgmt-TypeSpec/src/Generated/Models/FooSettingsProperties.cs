@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
@@ -35,15 +36,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <summary> Gets or sets the AccessControlEnabled. </summary>
+        [WirePath("accessControlEnabled")]
         public bool? AccessControlEnabled { get; set; }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [WirePath("provisioningState")]
         public ResourceProvisioningState? ProvisioningState { get; }
 
         /// <summary> Gets the MetaData. </summary>
+        [WirePath("metaData")]
         internal FooSettingsPropertiesMetaData MetaData { get; }
 
         /// <summary> Gets the MetaDatas. </summary>
+        [WirePath("metaData.metaDatas")]
         public IList<string> MetaDatas
         {
             get

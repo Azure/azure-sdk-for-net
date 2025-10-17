@@ -41,9 +41,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <summary> Gets or sets the MiddleProp1. </summary>
+        [WirePath("middleProp1")]
         public int MiddleProp1 { get; set; }
 
         /// <summary> Gets the MiddleProp2. </summary>
+        [WirePath("middleProp2")]
         public IDictionary<string, string> MiddleProp2 { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }

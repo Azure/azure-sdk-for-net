@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
@@ -33,6 +34,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <summary> Gets the SelfHelpId. </summary>
+        [WirePath("selfHelpId")]
         public string SelfHelpId { get; }
     }
 }

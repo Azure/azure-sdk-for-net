@@ -35,12 +35,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties")]
         internal JobProperties Properties { get; set; }
 
         /// <summary> Gets the Tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Gets or sets the JobName. </summary>
+        [WirePath("properties.jobName")]
         public string JobName
         {
             get
