@@ -114,27 +114,27 @@ namespace Azure.ResourceManager.StorageActions
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"></param>
-        /// <param name="parameters"> The parameters to preview action condition. </param>
+        /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<StorageTaskPreviewAction>> PreviewActionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StorageTaskPreviewAction parameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<StorageTaskPreviewAction>> PreviewActionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StorageTaskPreviewAction storageTaskPreviewAction, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableStorageActionsSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, parameters, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStorageActionsSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, storageTaskPreviewAction, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"></param>
-        /// <param name="parameters"> The parameters to preview action condition. </param>
+        /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<StorageTaskPreviewAction> PreviewActions(this SubscriptionResource subscriptionResource, AzureLocation location, StorageTaskPreviewAction parameters, CancellationToken cancellationToken = default)
+        public static Response<StorageTaskPreviewAction> PreviewActions(this SubscriptionResource subscriptionResource, AzureLocation location, StorageTaskPreviewAction storageTaskPreviewAction, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableStorageActionsSubscriptionResource(subscriptionResource).PreviewActions(location, parameters, cancellationToken);
+            return GetMockableStorageActionsSubscriptionResource(subscriptionResource).PreviewActions(location, storageTaskPreviewAction, cancellationToken);
         }
     }
 }
