@@ -3,8 +3,8 @@
 ## 1.0.1 (Unreleased)
 
 ### Other Changes
-- Updated `System.IdentityModel.Tokens.Jwt` to 8.14.0
-- Updated `Microsoft.IdentityModel.Tokens` to 8.14.0
+- Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
+- Updated `Microsoft.IdentityModel.Tokens` dependency to 8.14.0
 
 ## 1.0.0 (2025-04-15)
 
