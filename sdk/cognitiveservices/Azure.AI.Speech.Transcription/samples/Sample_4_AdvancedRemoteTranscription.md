@@ -107,7 +107,7 @@ TranscriptionOptions options = new TranscriptionOptions
 {
     AudioUrl = audioUrl,
     ProfanityFilterMode = ProfanityFilterMode.Masked,
-    Diarization = new TranscriptionDiarizationOptions
+    DiarizationOptions = new TranscriptionDiarizationOptions
     {
         Enabled = true,
         MaxSpeakers = 2

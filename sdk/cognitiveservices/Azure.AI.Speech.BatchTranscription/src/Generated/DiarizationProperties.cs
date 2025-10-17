@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Speech.BatchTranscription
 {
-    /// <summary> Speaker Identification Properties. </summary>
+    /// <summary> Speaker Diarization Properties. </summary>
     public partial class DiarizationProperties
     {
         /// <summary>
@@ -46,7 +46,7 @@ namespace Azure.AI.Speech.BatchTranscription
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DiarizationProperties"/>. </summary>
-        /// <param name="enabled"> A value indicating whether speaker identification is enabled. </param>
+        /// <param name="enabled"> A value indicating whether speaker diarization is enabled. </param>
         /// <param name="maxSpeakers"> A hint for the maximum number of speakers for diarization. Must be greater than 1 and less than 36. </param>
         public DiarizationProperties(bool enabled, int maxSpeakers)
         {
@@ -55,7 +55,7 @@ namespace Azure.AI.Speech.BatchTranscription
         }
 
         /// <summary> Initializes a new instance of <see cref="DiarizationProperties"/>. </summary>
-        /// <param name="enabled"> A value indicating whether speaker identification is enabled. </param>
+        /// <param name="enabled"> A value indicating whether speaker diarization is enabled. </param>
         /// <param name="maxSpeakers"> A hint for the maximum number of speakers for diarization. Must be greater than 1 and less than 36. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DiarizationProperties(bool enabled, int maxSpeakers, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -70,7 +70,7 @@ namespace Azure.AI.Speech.BatchTranscription
         {
         }
 
-        /// <summary> A value indicating whether speaker identification is enabled. </summary>
+        /// <summary> A value indicating whether speaker diarization is enabled. </summary>
         public bool Enabled { get; set; }
         /// <summary> A hint for the maximum number of speakers for diarization. Must be greater than 1 and less than 36. </summary>
         public int MaxSpeakers { get; set; }

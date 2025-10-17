@@ -29,12 +29,12 @@ TranscribeRequestContent body = new TranscribeRequestContent
             ["key"] = new Uri("http://localhost:3000")
         },
         ProfanityFilterMode = ProfanityFilterMode.None,
-        Diarization = new TranscriptionDiarizationOptions
+        DiarizationOptions = new TranscriptionDiarizationOptions
         {
             Enabled = true,
             MaxSpeakers = 1234,
         },
-        Channels = { 1234 },
+        ActiveChannels = { 1234 },
         EnhancedMode = new EnhancedModeProperties
         {
             Enabled = true,
@@ -81,12 +81,12 @@ TranscribeRequestContent body = new TranscribeRequestContent
             ["key"] = new Uri("http://localhost:3000")
         },
         ProfanityFilterMode = ProfanityFilterMode.None,
-        Diarization = new TranscriptionDiarizationOptions
+        DiarizationOptions = new TranscriptionDiarizationOptions
         {
             Enabled = true,
             MaxSpeakers = 1234,
         },
-        Channels = { 1234 },
+        ActiveChannels = { 1234 },
         EnhancedMode = new EnhancedModeProperties
         {
             Enabled = true,

@@ -86,7 +86,7 @@ namespace Azure.AI.Speech.BatchTranscription
         /// The shortest supported duration is 6 hours, the longest supported duration is 31 days. 2 days (48 hours) is the recommended default value when data is consumed directly.
         /// </param>
         /// <param name="error"> EntityError. </param>
-        /// <param name="diarization"> Speaker Identification. </param>
+        /// <param name="diarization"> Speaker Diarization. </param>
         /// <param name="languageIdentificationProperties"> LanguageIdentificationProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TranscriptionProperties(bool? wordLevelTimestampsEnabled, bool? displayFormWordLevelTimestampsEnabled, int? durationMilliseconds, IList<int> channels, Uri destinationContainer, PunctuationMode? punctuationMode, ProfanityFilterMode? profanityFilterMode, int timeToLiveHours, EntityError error, DiarizationProperties diarization, LanguageIdentificationProperties languageIdentificationProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -132,7 +132,7 @@ namespace Azure.AI.Speech.BatchTranscription
         public ProfanityFilterMode? ProfanityFilterMode { get; set; }
         /// <summary> EntityError. </summary>
         public EntityError Error { get; set; }
-        /// <summary> Speaker Identification. </summary>
+        /// <summary> Speaker Diarization. </summary>
         public DiarizationProperties Diarization { get; set; }
         /// <summary> LanguageIdentificationProperties. </summary>
         public LanguageIdentificationProperties LanguageIdentificationProperties { get; set; }

@@ -245,7 +245,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             using (FileStream fileStream = File.Open(filePath, FileMode.Open))
             {
                 var options = new TranscriptionOptions();
-                options.Channels.Add(0);
+                options.ActiveChannels.Add(0);
 
                 var request = new TranscribeRequestContent
                 {
@@ -279,7 +279,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             {
                 var options = new TranscriptionOptions()
                 {
-                    Diarization = new()
+                    DiarizationOptions = new()
                     {
                         Enabled = true,
                         MaxSpeakers = 2

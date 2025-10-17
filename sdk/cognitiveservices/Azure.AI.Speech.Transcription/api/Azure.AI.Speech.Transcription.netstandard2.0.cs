@@ -141,9 +141,9 @@ namespace Azure.AI.Speech.Transcription
     public partial class TranscriptionOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscriptionOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscriptionOptions>
     {
         public TranscriptionOptions() { }
+        public System.Collections.Generic.IList<int> ActiveChannels { get { throw null; } }
         public System.Uri AudioUrl { get { throw null; } set { } }
-        public System.Collections.Generic.IList<int> Channels { get { throw null; } }
-        public Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions Diarization { get { throw null; } set { } }
+        public Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions DiarizationOptions { get { throw null; } set { } }
         public Azure.AI.Speech.Transcription.EnhancedModeProperties EnhancedMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Locales { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Uri> Models { get { throw null; } }
