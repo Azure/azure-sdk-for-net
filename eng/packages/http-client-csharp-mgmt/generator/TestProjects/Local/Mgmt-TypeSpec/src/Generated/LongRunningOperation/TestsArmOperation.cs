@@ -13,32 +13,31 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class MgmtTypeSpecArmOperation<T> : ArmOperation<T>
+    internal partial class TestsArmOperation : ArmOperation
     {
-        private readonly OperationInternal<T> _operation;
+        private readonly OperationInternal _operation;
         private readonly RehydrationToken? _completeRehydrationToken;
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly string _operationId;
 
-        /// <summary> Initializes a new instance of MgmtTypeSpecArmOperation for mocking. </summary>
-        protected MgmtTypeSpecArmOperation()
+        /// <summary> Initializes a new instance of TestsArmOperation for mocking. </summary>
+        protected TestsArmOperation()
         {
         }
 
         /// <summary></summary>
         /// <param name="response"> The operation response. </param>
         /// <param name="rehydrationToken"> The token to rehydrate the operation. </param>
-        internal MgmtTypeSpecArmOperation(Response<T> response, RehydrationToken? rehydrationToken = null)
+        internal TestsArmOperation(Response response, RehydrationToken? rehydrationToken = null)
         {
-            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
+            _operation = OperationInternal.Succeeded(response);
             _completeRehydrationToken = rehydrationToken;
             _operationId = GetOperationId(rehydrationToken);
         }
 
         /// <summary></summary>
-        /// <param name="source"> The instance of <see cref="IOperationSource{T}"/>. </param>
         /// <param name="clientDiagnostics"> The instance of <see cref="ClientDiagnostics"/>. </param>
         /// <param name="pipeline"> The instance of <see cref="HttpPipeline"/>. </param>
         /// <param name="request"> The operation request. </param>
@@ -46,7 +45,7 @@ namespace MgmtTypeSpec
         /// <param name="finalStateVia"> The finalStateVia of the operation. </param>
         /// <param name="skipApiVersionOverride"> If should skip Api version override. </param>
         /// <param name="apiVersionOverrideValue"> The Api version override value. </param>
-        internal MgmtTypeSpecArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
+        internal TestsArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             IOperation nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationImplementation)
@@ -59,23 +58,17 @@ namespace MgmtTypeSpec
                 _completeRehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia);
                 _operationId = GetOperationId(_completeRehydrationToken);
             }
-            _operation = new OperationInternal<T>(
-                NextLinkOperationImplementation.Create(source, nextLinkOperation),
+            _operation = new OperationInternal(
+                nextLinkOperation,
                 clientDiagnostics,
                 response,
-                "MgmtTypeSpecArmOperation",
+                "TestsArmOperation",
                 null,
                 new SequentialDelayStrategy());
         }
 
         /// <summary> Gets the Id. </summary>
         public override string Id => _operationId ?? NextLinkOperationImplementation.NotSet;
-
-        /// <summary> Gets the Value. </summary>
-        public override T Value => _operation.Value;
-
-        /// <summary> Gets the HasValue. </summary>
-        public override bool HasValue => _operation.HasValue;
 
         /// <summary> Gets the HasCompleted. </summary>
         public override bool HasCompleted => _operation.HasCompleted;
@@ -99,15 +92,15 @@ namespace MgmtTypeSpec
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override Response<T> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+        public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(cancellationToken);
 
         /// <inheritdoc/>
-        public override Response<T> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
+        public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(pollingInterval, cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
     }
 }
