@@ -198,19 +198,51 @@ namespace Azure.Generator.Management
 
         // TODO: replace this with CSharpType to TypeProvider mapping and move this logic to ModelFactoryVisitor
         private HashSet<CSharpType>? _modelFactoryModels;
-        private HashSet<CSharpType> ModelFactoryModels => _modelFactoryModels ??= BuildModelFactoryModels();
-        internal HashSet<CSharpType> BuildModelFactoryModels()
+        private HashSet<CSharpType>? _allModelTypes;
+
+        private HashSet<CSharpType> ModelFactoryModels
         {
-            var result = new HashSet<CSharpType>();
+            get
+            {
+                BuildModelTypes();
+                return _modelFactoryModels!;
+            }
+        }
+
+        private HashSet<CSharpType> AllModelTypes
+        {
+            get
+            {
+                BuildModelTypes();
+                return _allModelTypes!;
+            }
+        }
+
+        private void BuildModelTypes()
+        {
+            if (_modelFactoryModels is not null && _allModelTypes is not null)
+            {
+                return; // already built
+            }
+
+            var allModelTypes = new HashSet<CSharpType>();
+            var modelFactoryModels = new HashSet<CSharpType>();
+
             foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
                 var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-                if (model is not null && IsModelFactoryModel(model))
+                if (model is not null)
                 {
-                    result.Add(model.Type);
+                    allModelTypes.Add(model.Type);
+                    if (IsModelFactoryModel(model))
+                    {
+                        modelFactoryModels.Add(model.Type);
+                    }
                 }
             }
-            return result;
+
+            _allModelTypes = allModelTypes;
+            _modelFactoryModels = modelFactoryModels;
         }
 
         private static bool IsModelFactoryModel(ModelProvider model)
@@ -244,6 +276,8 @@ namespace Azure.Generator.Management
         }
 
         internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type);
+
+        internal bool IsModelType(CSharpType type) => AllModelTypes.Contains(type);
 
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Resources.Models;
-using MgmtTypeSpec;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Paged collection of ZooAddress items. </summary>
     public partial class ZooAddressListListResult
