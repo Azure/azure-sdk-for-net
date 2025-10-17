@@ -212,10 +212,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("raiMonitorConfig"u8);
                 writer.WriteObjectValue(RaiMonitorConfig, options);
             }
-            if (Optional.IsDefined(NetworkInjections))
+            if (Optional.IsCollectionDefined(AIFoundryNetworkInjections))
             {
                 writer.WritePropertyName("networkInjections"u8);
-                writer.WriteObjectValue(NetworkInjections, options);
+                writer.WriteStartArray();
+                foreach (var item in AIFoundryNetworkInjections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(AllowProjectManagement))
             {
@@ -303,7 +308,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations = default;
             AbusePenalty abusePenalty = default;
             RaiMonitorConfig raiMonitorConfig = default;
-            AIFoundryNetworkInjection networkInjections = default;
+            IList<AIFoundryNetworkInjection> networkInjections = default;
             bool? allowProjectManagement = default;
             string defaultProject = default;
             IList<string> associatedProjects = default;
@@ -592,7 +597,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    networkInjections = AIFoundryNetworkInjection.DeserializeAIFoundryNetworkInjection(property.Value, options);
+                    List<AIFoundryNetworkInjection> array = new List<AIFoundryNetworkInjection>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AIFoundryNetworkInjection.DeserializeAIFoundryNetworkInjection(item, options));
+                    }
+                    networkInjections = array;
                     continue;
                 }
                 if (property.NameEquals("allowProjectManagement"u8))
@@ -659,7 +669,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>(),
                 abusePenalty,
                 raiMonitorConfig,
-                networkInjections,
+                networkInjections ?? new ChangeTrackingList<AIFoundryNetworkInjection>(),
                 allowProjectManagement,
                 defaultProject,
                 associatedProjects ?? new ChangeTrackingList<string>(),
@@ -1226,7 +1236,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkInjections), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AIFoundryNetworkInjections), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  networkInjections: ");
@@ -1234,10 +1244,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             else
             {
-                if (Optional.IsDefined(NetworkInjections))
+                if (Optional.IsCollectionDefined(AIFoundryNetworkInjections))
                 {
-                    builder.Append("  networkInjections: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, NetworkInjections, options, 2, false, "  networkInjections: ");
+                    if (AIFoundryNetworkInjections.Any())
+                    {
+                        builder.Append("  networkInjections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AIFoundryNetworkInjections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  networkInjections: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
