@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //create 2 storage accounts
             string accountName1 = await CreateValidAccountNameAsync("teststoragemgmt");
             string accountName2 = await CreateValidAccountNameAsync("teststoragemgmt");
-            StorageAccountCreateOrUpdateContent createContent = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
+            StorageAccountCreateOrUpdateContent createContent = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.StorageV2, "centralusEUAP");
             StorageAccountResource sourceAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName1, createContent)).Value;
             StorageAccountResource destAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName2, createContent)).Value;
 
@@ -511,6 +511,10 @@ namespace Azure.ResourceManager.Storage.Tests
                 SourceAccount = sourceAccount.Id.Name,
                 DestinationAccount = destAccount.Id.Name,
                 IsMetricsEnabled = true,
+                PriorityReplication = new ObjectReplicationPolicyPropertiesPriorityReplication()
+                {
+                    Enabled = true,
+                },
                 Rules =
                 {
                     new ObjectReplicationPolicyRule(containerName1, containerName2)
@@ -528,6 +532,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.IsMetricsEnabled, true);
+            Assert.AreEqual(objectReplicationPolicy.Data.PriorityReplication.Enabled, true);
 
             //get policy
             List<ObjectReplicationPolicyResource> policies = await objectReplicationPolicyCollection.GetAllAsync().ToEnumerableAsync();
@@ -536,6 +541,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.IsMetricsEnabled, true);
+            Assert.AreEqual(objectReplicationPolicy.Data.PriorityReplication.Enabled, true);
 
             //delete policy
             await objectReplicationPolicy.DeleteAsync(WaitUntil.Completed);
