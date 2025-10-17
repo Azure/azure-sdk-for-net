@@ -178,7 +178,7 @@ function ProcessPackage($packageInfo)
     $isShipped = IsVersionShipped $pkgName $versionString
     if ($isShipped) {
         Write-Host "Package work item already exists for version [$versionString] that is marked as shipped. Skipping the update of package work item."
-        exit 0
+        return
     }
 
     Write-Host "Validating package $pkgName with version $versionString."
