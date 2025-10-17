@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AttachedNetworksGetByDevCenter()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/AttachedNetworks_GetByDevCenter.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/AttachedNetworks_GetByDevCenter.json
             // this example is just showing the usage of "AttachedNetworks_GetByDevCenter" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this AttachedNetworkConnectionResource created on azure
             // for more information of creating AttachedNetworkConnectionResource, please refer to the document of AttachedNetworkConnectionResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string attachedNetworkConnectionName = "network-uswest3";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_AttachedNetworksDelete()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/AttachedNetworks_Delete.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/AttachedNetworks_Delete.json
             // this example is just showing the usage of "AttachedNetworks_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this AttachedNetworkConnectionResource created on azure
             // for more information of creating AttachedNetworkConnectionResource, please refer to the document of AttachedNetworkConnectionResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string attachedNetworkConnectionName = "network-uswest3";
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_AttachedNetworksCreate()
         {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/AttachedNetworks_Create.json
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/preview/2025-07-01-preview/examples/AttachedNetworks_Create.json
             // this example is just showing the usage of "AttachedNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this AttachedNetworkConnectionResource created on azure
             // for more information of creating AttachedNetworkConnectionResource, please refer to the document of AttachedNetworkConnectionResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58fffff";
             string resourceGroupName = "rg1";
             string devCenterName = "Contoso";
             string attachedNetworkConnectionName = "network-uswest3";

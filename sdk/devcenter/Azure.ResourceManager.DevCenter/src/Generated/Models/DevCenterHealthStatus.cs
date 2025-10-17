@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.DevCenter.Models
         private const string WarningValue = "Warning";
         private const string UnhealthyValue = "Unhealthy";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Unknown health status. </summary>
         public static DevCenterHealthStatus Unknown { get; } = new DevCenterHealthStatus(UnknownValue);
-        /// <summary> Pending. </summary>
+        /// <summary> Pending health status. </summary>
         public static DevCenterHealthStatus Pending { get; } = new DevCenterHealthStatus(PendingValue);
-        /// <summary> Healthy. </summary>
+        /// <summary> Healthy health status. </summary>
         public static DevCenterHealthStatus Healthy { get; } = new DevCenterHealthStatus(HealthyValue);
-        /// <summary> Warning. </summary>
+        /// <summary> Warning health status. </summary>
         public static DevCenterHealthStatus Warning { get; } = new DevCenterHealthStatus(WarningValue);
-        /// <summary> Unhealthy. </summary>
+        /// <summary> Unhealthy health status. </summary>
         public static DevCenterHealthStatus Unhealthy { get; } = new DevCenterHealthStatus(UnhealthyValue);
         /// <summary> Determines if two <see cref="DevCenterHealthStatus"/> values are the same. </summary>
         public static bool operator ==(DevCenterHealthStatus left, DevCenterHealthStatus right) => left.Equals(right);

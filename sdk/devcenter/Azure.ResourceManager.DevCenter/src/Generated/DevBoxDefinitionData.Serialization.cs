@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("imageValidationErrorDetails"u8);
                 writer.WriteObjectValue(ImageValidationErrorDetails, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ValidationStatus))
+            {
+                writer.WritePropertyName("validationStatus"u8);
+                writer.WriteStringValue(ValidationStatus.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(ActiveImageReference))
             {
                 writer.WritePropertyName("activeImageReference"u8);
@@ -116,6 +121,7 @@ namespace Azure.ResourceManager.DevCenter
             DevCenterProvisioningState? provisioningState = default;
             ImageValidationStatus? imageValidationStatus = default;
             ImageValidationErrorDetails imageValidationErrorDetails = default;
+            CatalogResourceValidationStatus? validationStatus = default;
             DevCenterImageReference activeImageReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -232,6 +238,15 @@ namespace Azure.ResourceManager.DevCenter
                             imageValidationErrorDetails = ImageValidationErrorDetails.DeserializeImageValidationErrorDetails(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("validationStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            validationStatus = new CatalogResourceValidationStatus(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("activeImageReference"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -264,6 +279,7 @@ namespace Azure.ResourceManager.DevCenter
                 provisioningState,
                 imageValidationStatus,
                 imageValidationErrorDetails,
+                validationStatus,
                 activeImageReference,
                 serializedAdditionalRawData);
         }

@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.DevCenter.Models
         private const string FailedValue = "Failed";
         private const string TimedOutValue = "TimedOut";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Unknown image validation status. </summary>
         public static ImageValidationStatus Unknown { get; } = new ImageValidationStatus(UnknownValue);
-        /// <summary> Pending. </summary>
+        /// <summary> Pending image validation status. </summary>
         public static ImageValidationStatus Pending { get; } = new ImageValidationStatus(PendingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> Succeeded image validation status. </summary>
         public static ImageValidationStatus Succeeded { get; } = new ImageValidationStatus(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Failed image validation status. </summary>
         public static ImageValidationStatus Failed { get; } = new ImageValidationStatus(FailedValue);
-        /// <summary> TimedOut. </summary>
+        /// <summary> Timed out image validation status. </summary>
         public static ImageValidationStatus TimedOut { get; } = new ImageValidationStatus(TimedOutValue);
         /// <summary> Determines if two <see cref="ImageValidationStatus"/> values are the same. </summary>
         public static bool operator ==(ImageValidationStatus left, ImageValidationStatus right) => left.Equals(right);

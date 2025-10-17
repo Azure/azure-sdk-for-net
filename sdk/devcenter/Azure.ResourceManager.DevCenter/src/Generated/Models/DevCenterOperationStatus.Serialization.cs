@@ -37,11 +37,6 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
-            {
-                writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
-            }
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -53,6 +48,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
             }
         }
 
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            ResourceIdentifier resourceId = default;
             BinaryData properties = default;
+            ResourceIdentifier resourceId = default;
             ResourceIdentifier id = default;
             string name = default;
             string status = default;
@@ -90,15 +90,6 @@ namespace Azure.ResourceManager.DevCenter.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -106,6 +97,15 @@ namespace Azure.ResourceManager.DevCenter.Models
                         continue;
                     }
                     properties = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("resourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.DevCenter.Models
                 endTime,
                 operations ?? new ChangeTrackingList<OperationStatusResult>(),
                 error,
-                resourceId,
                 properties,
+                resourceId,
                 serializedAdditionalRawData);
         }
 

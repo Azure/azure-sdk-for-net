@@ -34,17 +34,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 throw new FormatException($"The model {nameof(DevCenterCatalogPatch)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(GitHub))
@@ -56,6 +45,22 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 writer.WritePropertyName("adoGit"u8);
                 writer.WriteObjectValue(AdoGit, options);
+            }
+            if (Optional.IsDefined(SyncType))
+            {
+                writer.WritePropertyName("syncType"u8);
+                writer.WriteStringValue(SyncType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -95,27 +100,14 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
             DevCenterGitCatalog gitHub = default;
             DevCenterGitCatalog adoGit = default;
+            CatalogSyncType? syncType = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -143,6 +135,29 @@ namespace Azure.ResourceManager.DevCenter.Models
                             adoGit = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("syncType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            syncType = new CatalogSyncType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("tags"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            tags = dictionary;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -152,7 +167,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevCenterCatalogPatch(tags ?? new ChangeTrackingDictionary<string, string>(), gitHub, adoGit, serializedAdditionalRawData);
+            return new DevCenterCatalogPatch(gitHub, adoGit, syncType, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterCatalogPatch>.Write(ModelReaderWriterOptions options)

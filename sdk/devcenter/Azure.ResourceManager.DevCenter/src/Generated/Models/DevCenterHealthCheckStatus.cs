@@ -28,19 +28,22 @@ namespace Azure.ResourceManager.DevCenter.Models
         private const string PassedValue = "Passed";
         private const string WarningValue = "Warning";
         private const string FailedValue = "Failed";
+        private const string InformationalValue = "Informational";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Unknown health check status. </summary>
         public static DevCenterHealthCheckStatus Unknown { get; } = new DevCenterHealthCheckStatus(UnknownValue);
-        /// <summary> Pending. </summary>
+        /// <summary> Pending health check status. </summary>
         public static DevCenterHealthCheckStatus Pending { get; } = new DevCenterHealthCheckStatus(PendingValue);
-        /// <summary> Running. </summary>
+        /// <summary> Running health check status. </summary>
         public static DevCenterHealthCheckStatus Running { get; } = new DevCenterHealthCheckStatus(RunningValue);
-        /// <summary> Passed. </summary>
+        /// <summary> Passed health check status. </summary>
         public static DevCenterHealthCheckStatus Passed { get; } = new DevCenterHealthCheckStatus(PassedValue);
-        /// <summary> Warning. </summary>
+        /// <summary> Warning health check status. </summary>
         public static DevCenterHealthCheckStatus Warning { get; } = new DevCenterHealthCheckStatus(WarningValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Failed health check status. </summary>
         public static DevCenterHealthCheckStatus Failed { get; } = new DevCenterHealthCheckStatus(FailedValue);
+        /// <summary> Informational health check status. </summary>
+        public static DevCenterHealthCheckStatus Informational { get; } = new DevCenterHealthCheckStatus(InformationalValue);
         /// <summary> Determines if two <see cref="DevCenterHealthCheckStatus"/> values are the same. </summary>
         public static bool operator ==(DevCenterHealthCheckStatus left, DevCenterHealthCheckStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevCenterHealthCheckStatus"/> values are not the same. </summary>
