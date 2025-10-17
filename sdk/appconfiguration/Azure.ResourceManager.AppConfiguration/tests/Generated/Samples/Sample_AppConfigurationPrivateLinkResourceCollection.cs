@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateLinkResourcesGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/PrivateLinkResourceGet.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/PrivateLinkResourceGet.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_PrivateLinkResourcesListGroupIds()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/PrivateLinkResourcesListByConfigurationStore.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/PrivateLinkResourcesListByConfigurationStore.json
             // this example is just showing the usage of "PrivateLinkResources_ListByConfigurationStore" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_PrivateLinkResourcesGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/PrivateLinkResourceGet.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/PrivateLinkResourceGet.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PrivateLinkResourcesGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/PrivateLinkResourceGet.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/PrivateLinkResourceGet.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

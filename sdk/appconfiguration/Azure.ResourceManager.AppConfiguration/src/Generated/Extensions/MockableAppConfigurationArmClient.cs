@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DeletedAppConfigurationStoreResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedAppConfigurationStoreResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAppConfigurationStoreResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeletedAppConfigurationStoreResource"/> object. </returns>
+        public virtual DeletedAppConfigurationStoreResource GetDeletedAppConfigurationStoreResource(ResourceIdentifier id)
+        {
+            DeletedAppConfigurationStoreResource.ValidateResourceId(id);
+            return new DeletedAppConfigurationStoreResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="AppConfigurationStoreResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AppConfigurationStoreResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationStoreResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -47,15 +59,15 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeletedAppConfigurationStoreResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedAppConfigurationStoreResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAppConfigurationStoreResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AppConfigurationKeyValueResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationKeyValueResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationKeyValueResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedAppConfigurationStoreResource"/> object. </returns>
-        public virtual DeletedAppConfigurationStoreResource GetDeletedAppConfigurationStoreResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppConfigurationKeyValueResource"/> object. </returns>
+        public virtual AppConfigurationKeyValueResource GetAppConfigurationKeyValueResource(ResourceIdentifier id)
         {
-            DeletedAppConfigurationStoreResource.ValidateResourceId(id);
-            return new DeletedAppConfigurationStoreResource(Client, id);
+            AppConfigurationKeyValueResource.ValidateResourceId(id);
+            return new AppConfigurationKeyValueResource(Client, id);
         }
 
         /// <summary>
@@ -80,18 +92,6 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         {
             AppConfigurationPrivateLinkResource.ValidateResourceId(id);
             return new AppConfigurationPrivateLinkResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AppConfigurationKeyValueResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppConfigurationKeyValueResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationKeyValueResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppConfigurationKeyValueResource"/> object. </returns>
-        public virtual AppConfigurationKeyValueResource GetAppConfigurationKeyValueResource(ResourceIdentifier id)
-        {
-            AppConfigurationKeyValueResource.ValidateResourceId(id);
-            return new AppConfigurationKeyValueResource(Client, id);
         }
 
         /// <summary>

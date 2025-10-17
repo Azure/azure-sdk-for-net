@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfigurationStoresGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresGet.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresGet.json
             // this example is just showing the usage of "ConfigurationStores_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ConfigurationStoresDelete()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresDelete.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresDelete.json
             // this example is just showing the usage of "ConfigurationStores_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ConfigurationStoresUpdate()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresUpdate.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresUpdate.json
             // this example is just showing the usage of "ConfigurationStores_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ConfigurationStoresUpdateDisableLocalAuth()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresUpdateDisableLocalAuth.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresUpdateDisableLocalAuth.json
             // this example is just showing the usage of "ConfigurationStores_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ConfigurationStoresUpdateWithIdentity()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresUpdateWithIdentity.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresUpdateWithIdentity.json
             // this example is just showing the usage of "ConfigurationStores_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_ConfigurationStoresListKeys()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresListKeys.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresListKeys.json
             // this example is just showing the usage of "ConfigurationStores_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_ConfigurationStoresRegenerateKey()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresRegenerateKey.json
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration/preview/2025-02-01-preview/examples/ConfigurationStoresRegenerateKey.json
             // this example is just showing the usage of "ConfigurationStores_RegenerateKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
