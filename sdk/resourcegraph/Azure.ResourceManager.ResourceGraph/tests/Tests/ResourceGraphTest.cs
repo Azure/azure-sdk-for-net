@@ -295,25 +295,5 @@ namespace Azure.Management.ResourceGraph.Tests
             Assert.AreEqual(((JsonElement)list[0]["tags"]).ValueKind, JsonValueKind.Object);
             Assert.AreEqual(((JsonElement)list[0]["properties"]).ValueKind, JsonValueKind.Object);
         }
-
-        [Test]
-        [Ignore("Resource history API is not enabled in stable version of SDK.")]
-        public async Task ResourceHistoryAsync()
-        {
-            var historyContent = new ResourcesHistoryContent()
-            {
-                Query = "project id, tags, properties | limit 2",
-                ManagementGroups = { "91f5d6bc-f464-8343-5e53-3c3e3f99e5c4" },
-                Options = new ResourcesHistoryRequestOptions
-                {
-                    Interval = new DateTimeInterval(Recording.Now.AddDays(-1), Recording.Now)
-                }
-            };
-            var result = (await tenant.GetResourceHistoryAsync(historyContent)).Value;
-            var dict = result.ToObjectFromJson<Dictionary<string, object>>();
-            Assert.AreEqual(dict.Count, 2);
-            Assert.AreEqual(((JsonElement)dict["count"]).ValueKind,JsonValueKind.Number);
-            Assert.AreEqual(((JsonElement)dict["snapshots"]).ValueKind, JsonValueKind.Array);
-        }
     }
 }

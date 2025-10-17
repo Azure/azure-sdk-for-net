@@ -4,10 +4,9 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.ResourceGraph.Models;
 
 namespace Azure.ResourceManager.ResourceGraph.Mocking
@@ -30,10 +29,11 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// </summary>
         /// <param name="content"> Request specifying the query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        [Obsolete("This method isn't available in the stable SDK version. To use it, please install https://www.nuget.org/packages/Azure.ResourceManager.ResourceGraph/1.1.0-beta.4.", true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<BinaryData>> GetResourceHistoryAsync(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("This method isn’t available in the stable SDK version. To use it, please install https://www.nuget.org/packages/Azure.ResourceManager.ResourceGraph/1.1.0-beta.4.");
+            throw new NotSupportedException("This method isn't available in the stable SDK version. To use it, please install https://www.nuget.org/packages/Azure.ResourceManager.ResourceGraph/1.1.0-beta.4.");
         }
 
         /// <summary>
@@ -52,9 +52,11 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <param name="content"> Request specifying the query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        [Obsolete("This method isn't available in the stable SDK version. To use it. To use it, please install https://www.nuget.org/packages/Azure.ResourceManager.ResourceGraph/1.1.0-beta.4.", true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BinaryData> GetResourceHistory(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("This method isn’t available in the stable SDK version. To use it, please install https://www.nuget.org/packages/Azure.ResourceManager.ResourceGraph/1.1.0-beta.4.");
+            throw new NotSupportedException("This method isn't available in the stable SDK version. To use it, please install https://www.nuget.org/packages/Azure.ResourceManager.ResourceGraph/1.1.0-beta.4.");
         }
     }
 }
