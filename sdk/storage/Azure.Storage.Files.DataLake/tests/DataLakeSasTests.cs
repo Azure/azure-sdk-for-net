@@ -503,8 +503,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 { "foo", new List<string>{ "bar" } },
                 { "company", new List<string>{ "msft" } },
-                //{ "city", new List<string>{ "redmond", "atlanta" } },
-                //{ "state", new List<string>{ "washington", "georgia" } }
+                { "city", new List<string>{ "redmond", "atlanta", "reston" } },
+                { "state", new List<string>{ "washington", "georgia" } }
             };
 
             Dictionary<string, List<string>> requestQueryParameters = new Dictionary<string, List<string>>()

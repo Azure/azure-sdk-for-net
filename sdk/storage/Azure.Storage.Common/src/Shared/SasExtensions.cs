@@ -202,7 +202,7 @@ namespace Azure.Storage.Sas
                     sb
                     .Append(entry.Key)
                     .Append(':')
-                    .Append(string.Join(",", entry.Value))
+                    .Append(string.Join(", ", entry.Value))
                     .Append('\n');
                 }
             }
