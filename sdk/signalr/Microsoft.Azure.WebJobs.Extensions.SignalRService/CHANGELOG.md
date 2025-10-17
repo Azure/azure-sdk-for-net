@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Updated `System.IdentityModel.Tokens.Jwt` to 8.14.0
+
 ## 2.1.0 (2025-07-25)
 
 ### Features Added

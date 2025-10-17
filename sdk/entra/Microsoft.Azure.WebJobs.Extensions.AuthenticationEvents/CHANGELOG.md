@@ -10,6 +10,10 @@
 
 ### Other Changes
 
+- Updated `System.IdentityModel.Tokens.Jwt` to 8.14.0
+- Updated `Microsoft.IdentityModel.Tokens` to 8.14.0
+- Updated `Microsoft.IdentityModel.Protocols.OpenIdConnect` to 8.14.0
+
 ## 1.1.0 (2025-07-29)
 
 ### Other Changes
