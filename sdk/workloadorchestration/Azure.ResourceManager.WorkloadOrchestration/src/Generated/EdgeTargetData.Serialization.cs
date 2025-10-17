@@ -12,7 +12,6 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadOrchestration.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
@@ -47,12 +46,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
+                writer.WriteObjectValue(ExtendedLocation, options);
             }
         }
 
@@ -76,9 +75,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 return null;
             }
-            EdgeTargetProperties properties = default;
-            ETag? etag = default;
-            ExtendedLocation extendedLocation = default;
+            TargetProperties properties = default;
+            string etag = default;
+            AzureResourceManagerCommonTypesExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -95,16 +94,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         continue;
                     }
-                    properties = EdgeTargetProperties.DeserializeEdgeTargetProperties(property.Value, options);
+                    properties = TargetProperties.DeserializeTargetProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -113,7 +108,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         continue;
                     }
-                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerWorkloadOrchestrationContext.Default);
+                    extendedLocation = AzureResourceManagerCommonTypesExtendedLocation.DeserializeAzureResourceManagerCommonTypesExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

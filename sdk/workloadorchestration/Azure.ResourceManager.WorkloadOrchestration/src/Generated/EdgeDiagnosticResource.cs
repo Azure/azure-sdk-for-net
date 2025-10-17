@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <description>Diagnostics_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <description>Diagnostics_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostic_Delete</description>
+        /// <description>Diagnostics_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeDiagnosticDiagnosticsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, _edgeDiagnosticDiagnosticsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, _edgeDiagnosticDiagnosticsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostic_Delete</description>
+        /// <description>Diagnostics_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeDiagnosticDiagnosticsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, _edgeDiagnosticDiagnosticsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, _edgeDiagnosticDiagnosticsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostic_Update</description>
+        /// <description>Diagnostics_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeDiagnosticDiagnosticsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(new EdgeDiagnosticOperationSource(Client), _edgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, _edgeDiagnosticDiagnosticsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(new EdgeDiagnosticOperationSource(Client), _edgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, _edgeDiagnosticDiagnosticsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostic_Update</description>
+        /// <description>Diagnostics_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeDiagnosticDiagnosticsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(new EdgeDiagnosticOperationSource(Client), _edgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, _edgeDiagnosticDiagnosticsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(new EdgeDiagnosticOperationSource(Client), _edgeDiagnosticDiagnosticsClientDiagnostics, Pipeline, _edgeDiagnosticDiagnosticsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <description>Diagnostics_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <description>Diagnostics_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <description>Diagnostics_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <description>Diagnostics_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <description>Diagnostics_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
+        /// <description>Diagnostics_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

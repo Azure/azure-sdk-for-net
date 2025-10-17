@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_CreateOrUpdate</description>
+        /// <description>ConfigTemplates_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeConfigTemplateConfigTemplatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource>(new EdgeConfigTemplateOperationSource(Client), _edgeConfigTemplateConfigTemplatesClientDiagnostics, Pipeline, _edgeConfigTemplateConfigTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource>(new EdgeConfigTemplateOperationSource(Client), _edgeConfigTemplateConfigTemplatesClientDiagnostics, Pipeline, _edgeConfigTemplateConfigTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_CreateOrUpdate</description>
+        /// <description>ConfigTemplates_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeConfigTemplateConfigTemplatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, data, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource>(new EdgeConfigTemplateOperationSource(Client), _edgeConfigTemplateConfigTemplatesClientDiagnostics, Pipeline, _edgeConfigTemplateConfigTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource>(new EdgeConfigTemplateOperationSource(Client), _edgeConfigTemplateConfigTemplatesClientDiagnostics, Pipeline, _edgeConfigTemplateConfigTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configTemplateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <description>ConfigTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <description>ConfigTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_ListByResourceGroup</description>
+        /// <description>ConfigTemplates_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_ListByResourceGroup</description>
+        /// <description>ConfigTemplates_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <description>ConfigTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <description>ConfigTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <description>ConfigTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <description>ConfigTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

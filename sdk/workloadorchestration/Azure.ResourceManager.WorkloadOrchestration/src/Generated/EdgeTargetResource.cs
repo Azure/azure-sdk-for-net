@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <description>Solutions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <description>Solutions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Delete</description>
+        /// <description>Targets_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeTargetTargetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Delete</description>
+        /// <description>Targets_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeTargetTargetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDelete).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Update</description>
+        /// <description>Targets_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeTargetTargetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(new EdgeTargetOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(new EdgeTargetOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Update</description>
+        /// <description>Targets_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeTargetTargetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(new EdgeTargetOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(new EdgeTargetOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> InstallSolutionAsync(WaitUntil waitUntil, InstallSolutionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> InstallSolutionAsync(WaitUntil waitUntil, WorkloadOrchestrationInstallSolutionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeTargetTargetsRestClient.InstallSolutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateInstallSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateInstallSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation InstallSolution(WaitUntil waitUntil, InstallSolutionContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation InstallSolution(WaitUntil waitUntil, WorkloadOrchestrationInstallSolutionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -497,377 +497,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeTargetTargetsRestClient.InstallSolution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateInstallSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateInstallSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Post request to uninstall
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/uninstallSolution</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Targets_UninstallSolution</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeTargetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> UninstallSolutionAsync(WaitUntil waitUntil, UninstallSolutionContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.UninstallSolution");
-            scope.Start();
-            try
-            {
-                var response = await _edgeTargetTargetsRestClient.UninstallSolutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateUninstallSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Post request to uninstall
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/uninstallSolution</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Targets_UninstallSolution</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeTargetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation UninstallSolution(WaitUntil waitUntil, UninstallSolutionContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.UninstallSolution");
-            scope.Start();
-            try
-            {
-                var response = _edgeTargetTargetsRestClient.UninstallSolution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateUninstallSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Post request to remove solution version revision
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/removeRevision</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Targets_RemoveRevision</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeTargetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> RemoveRevisionAsync(WaitUntil waitUntil, RemoveRevisionContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.RemoveRevision");
-            scope.Start();
-            try
-            {
-                var response = await _edgeTargetTargetsRestClient.RemoveRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateRemoveRevisionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Post request to remove solution version revision
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/removeRevision</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Targets_RemoveRevision</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeTargetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation RemoveRevision(WaitUntil waitUntil, RemoveRevisionContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.RemoveRevision");
-            scope.Start();
-            try
-            {
-                var response = _edgeTargetTargetsRestClient.RemoveRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateRemoveRevisionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Post request to resolve configuration
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/resolveConfiguration</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Targets_ResolveConfiguration</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeTargetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ResolvedConfiguration>> ResolveConfigurationAsync(WaitUntil waitUntil, EdgeSolutionTemplateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.ResolveConfiguration");
-            scope.Start();
-            try
-            {
-                var response = await _edgeTargetTargetsRestClient.ResolveConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<ResolvedConfiguration>(new ResolvedConfigurationOperationSource(), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateResolveConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Post request to resolve configuration
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/resolveConfiguration</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Targets_ResolveConfiguration</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeTargetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ResolvedConfiguration> ResolveConfiguration(WaitUntil waitUntil, EdgeSolutionTemplateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.ResolveConfiguration");
-            scope.Start();
-            try
-            {
-                var response = _edgeTargetTargetsRestClient.ResolveConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<ResolvedConfiguration>(new ResolvedConfigurationOperationSource(), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateResolveConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Post request to review configuration
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/reviewSolutionVersion</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Targets_ReviewSolutionVersion</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeTargetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeSolutionVersionResource>> ReviewSolutionVersionAsync(WaitUntil waitUntil, EdgeSolutionTemplateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.ReviewSolutionVersion");
-            scope.Start();
-            try
-            {
-                var response = await _edgeTargetTargetsRestClient.ReviewSolutionVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateReviewSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Post request to review configuration
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/reviewSolutionVersion</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Targets_ReviewSolutionVersion</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeTargetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<EdgeSolutionVersionResource> ReviewSolutionVersion(WaitUntil waitUntil, EdgeSolutionTemplateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.ReviewSolutionVersion");
-            scope.Start();
-            try
-            {
-                var response = _edgeTargetTargetsRestClient.ReviewSolutionVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateReviewSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -902,7 +534,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeSolutionVersionResource>> PublishSolutionVersionAsync(WaitUntil waitUntil, EdgeSolutionVersionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeSolutionVersionResource>> PublishSolutionVersionAsync(WaitUntil waitUntil, WorkloadOrchestrationSolutionVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -911,7 +543,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeTargetTargetsRestClient.PublishSolutionVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreatePublishSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreatePublishSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -948,7 +580,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<EdgeSolutionVersionResource> PublishSolutionVersion(WaitUntil waitUntil, EdgeSolutionVersionContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeSolutionVersionResource> PublishSolutionVersion(WaitUntil waitUntil, WorkloadOrchestrationSolutionVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -957,9 +589,377 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeTargetTargetsRestClient.PublishSolutionVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreatePublishSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreatePublishSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Post request to remove solution version revision
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/removeRevision</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_RemoveRevision</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> RemoveRevisionAsync(WaitUntil waitUntil, WorkloadOrchestrationRemoveRevisionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.RemoveRevision");
+            scope.Start();
+            try
+            {
+                var response = await _edgeTargetTargetsRestClient.RemoveRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateRemoveRevisionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Post request to remove solution version revision
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/removeRevision</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_RemoveRevision</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation RemoveRevision(WaitUntil waitUntil, WorkloadOrchestrationRemoveRevisionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.RemoveRevision");
+            scope.Start();
+            try
+            {
+                var response = _edgeTargetTargetsRestClient.RemoveRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateRemoveRevisionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Post request to resolve configuration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/resolveConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_ResolveConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ResolvedConfiguration>> ResolveConfigurationAsync(WaitUntil waitUntil, WorkloadOrchestrationSolutionTemplateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.ResolveConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await _edgeTargetTargetsRestClient.ResolveConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadOrchestrationArmOperation<ResolvedConfiguration>(new ResolvedConfigurationOperationSource(), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateResolveConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Post request to resolve configuration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/resolveConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_ResolveConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ResolvedConfiguration> ResolveConfiguration(WaitUntil waitUntil, WorkloadOrchestrationSolutionTemplateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.ResolveConfiguration");
+            scope.Start();
+            try
+            {
+                var response = _edgeTargetTargetsRestClient.ResolveConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new WorkloadOrchestrationArmOperation<ResolvedConfiguration>(new ResolvedConfigurationOperationSource(), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateResolveConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Post request to review configuration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/reviewSolutionVersion</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_ReviewSolutionVersion</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<EdgeSolutionVersionResource>> ReviewSolutionVersionAsync(WaitUntil waitUntil, WorkloadOrchestrationSolutionTemplateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.ReviewSolutionVersion");
+            scope.Start();
+            try
+            {
+                var response = await _edgeTargetTargetsRestClient.ReviewSolutionVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateReviewSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Post request to review configuration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/reviewSolutionVersion</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_ReviewSolutionVersion</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<EdgeSolutionVersionResource> ReviewSolutionVersion(WaitUntil waitUntil, WorkloadOrchestrationSolutionTemplateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.ReviewSolutionVersion");
+            scope.Start();
+            try
+            {
+                var response = _edgeTargetTargetsRestClient.ReviewSolutionVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateReviewSolutionVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Post request to uninstall
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/uninstallSolution</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_UninstallSolution</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> UninstallSolutionAsync(WaitUntil waitUntil, WorkloadOrchestrationUninstallSolutionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.UninstallSolution");
+            scope.Start();
+            try
+            {
+                var response = await _edgeTargetTargetsRestClient.UninstallSolutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateUninstallSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Post request to uninstall
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}/uninstallSolution</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_UninstallSolution</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation UninstallSolution(WaitUntil waitUntil, WorkloadOrchestrationUninstallSolutionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetResource.UninstallSolution");
+            scope.Start();
+            try
+            {
+                var response = _edgeTargetTargetsRestClient.UninstallSolution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateUninstallSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -994,7 +994,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeSolutionVersionResource>> UpdateExternalValidationStatusAsync(WaitUntil waitUntil, UpdateExternalValidationStatusContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeSolutionVersionResource>> UpdateExternalValidationStatusAsync(WaitUntil waitUntil, WorkloadOrchestrationUpdateExternalValidationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeTargetTargetsRestClient.UpdateExternalValidationStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateUpdateExternalValidationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateUpdateExternalValidationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<EdgeSolutionVersionResource> UpdateExternalValidationStatus(WaitUntil waitUntil, UpdateExternalValidationStatusContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeSolutionVersionResource> UpdateExternalValidationStatus(WaitUntil waitUntil, WorkloadOrchestrationUpdateExternalValidationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeTargetTargetsRestClient.UpdateExternalValidationStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateUpdateExternalValidationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(new EdgeSolutionVersionOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateUpdateExternalValidationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1132,7 +1132,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1194,7 +1194,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1251,7 +1251,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1308,7 +1308,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1368,7 +1368,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
+        /// <description>Targets_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

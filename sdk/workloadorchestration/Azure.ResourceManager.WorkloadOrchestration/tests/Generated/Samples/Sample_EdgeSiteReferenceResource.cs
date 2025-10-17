@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SiteReferencesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SiteReferences_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SiteReference_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SiteReferences_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SiteReferences_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_SiteReferencesDeleteMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SiteReferences_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "SiteReference_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SiteReferences_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "SiteReferences_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_SiteReferencesUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SiteReferences_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "SiteReference_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SiteReferences_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "SiteReferences_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeSiteReferenceResource edgeSiteReference = client.GetEdgeSiteReferenceResource(edgeSiteReferenceResourceId);
 
             // invoke the operation
-            EdgeSiteReferenceData data = new EdgeSiteReferenceData
+            EdgeSiteReferencePatch patch = new EdgeSiteReferencePatch
             {
-                Properties = new EdgeSiteReferenceProperties("nwiuyaro"),
+                SiteId = "nwiuyaro",
             };
-            ArmOperation<EdgeSiteReferenceResource> lro = await edgeSiteReference.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<EdgeSiteReferenceResource> lro = await edgeSiteReference.UpdateAsync(WaitUntil.Completed, patch);
             EdgeSiteReferenceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

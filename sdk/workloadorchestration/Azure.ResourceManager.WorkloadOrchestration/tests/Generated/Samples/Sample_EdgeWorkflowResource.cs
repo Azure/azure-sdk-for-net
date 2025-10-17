@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkflowsGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Workflows_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Workflow_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Workflows_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Workflows_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_WorkflowsDeleteMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Workflows_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "Workflow_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Workflows_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "Workflows_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_WorkflowsUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Workflows_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "Workflow_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Workflows_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "Workflows_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeWorkflowResource edgeWorkflow = client.GetEdgeWorkflowResource(edgeWorkflowResourceId);
 
             // invoke the operation
-            EdgeWorkflowData data = new EdgeWorkflowData
+            EdgeWorkflowPatch patch = new EdgeWorkflowPatch
             {
-                Properties = new EdgeWorkflowProperties(),
+                Properties = new WorkflowProperties(),
             };
-            ArmOperation<EdgeWorkflowResource> lro = await edgeWorkflow.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<EdgeWorkflowResource> lro = await edgeWorkflow.UpdateAsync(WaitUntil.Completed, patch);
             EdgeWorkflowResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

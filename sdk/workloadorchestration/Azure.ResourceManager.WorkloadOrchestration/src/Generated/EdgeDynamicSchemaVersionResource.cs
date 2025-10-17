@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.WorkloadOrchestration.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_Get</description>
+        /// <description>DynamicSchemaVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_Get</description>
+        /// <description>DynamicSchemaVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_Delete</description>
+        /// <description>DynamicSchemaVersions_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeDynamicSchemaVersionDynamicSchemaVersionsClientDiagnostics, Pipeline, _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeDynamicSchemaVersionDynamicSchemaVersionsClientDiagnostics, Pipeline, _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_Delete</description>
+        /// <description>DynamicSchemaVersions_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -241,7 +242,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeDynamicSchemaVersionDynamicSchemaVersionsClientDiagnostics, Pipeline, _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeDynamicSchemaVersionDynamicSchemaVersionsClientDiagnostics, Pipeline, _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_Update</description>
+        /// <description>DynamicSchemaVersions_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -274,18 +275,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<EdgeDynamicSchemaVersionResource>> UpdateAsync(EdgeDynamicSchemaVersionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<EdgeDynamicSchemaVersionResource>> UpdateAsync(EdgeDynamicSchemaVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _edgeDynamicSchemaVersionDynamicSchemaVersionsClientDiagnostics.CreateScope("EdgeDynamicSchemaVersionResource.Update");
             scope.Start();
             try
             {
-                var response = await _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new EdgeDynamicSchemaVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -304,7 +305,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchemaVersion_Update</description>
+        /// <description>DynamicSchemaVersions_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -316,18 +317,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<EdgeDynamicSchemaVersionResource> Update(EdgeDynamicSchemaVersionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<EdgeDynamicSchemaVersionResource> Update(EdgeDynamicSchemaVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _edgeDynamicSchemaVersionDynamicSchemaVersionsClientDiagnostics.CreateScope("EdgeDynamicSchemaVersionResource.Update");
             scope.Start();
             try
             {
-                var response = _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var response = _edgeDynamicSchemaVersionDynamicSchemaVersionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new EdgeDynamicSchemaVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

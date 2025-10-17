@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DynamicSchemaVersionsGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/DynamicSchemaVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchemaVersion_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemaVersions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemaVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DynamicSchemaVersionsDeleteMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/DynamicSchemaVersions_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchemaVersion_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemaVersions_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemaVersions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DynamicSchemaVersionsUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/DynamicSchemaVersions_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchemaVersion_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemaVersions_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemaVersions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeDynamicSchemaVersionResource edgeDynamicSchemaVersion = client.GetEdgeDynamicSchemaVersionResource(edgeDynamicSchemaVersionResourceId);
 
             // invoke the operation
-            EdgeDynamicSchemaVersionData data = new EdgeDynamicSchemaVersionData
+            EdgeDynamicSchemaVersionPatch patch = new EdgeDynamicSchemaVersionPatch
             {
-                Properties = new EdgeSchemaVersionProperties("muezi"),
+                SchemaVersionPropertiesUpdateValue = "muezi",
             };
-            EdgeDynamicSchemaVersionResource result = await edgeDynamicSchemaVersion.UpdateAsync(data);
+            EdgeDynamicSchemaVersionResource result = await edgeDynamicSchemaVersion.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

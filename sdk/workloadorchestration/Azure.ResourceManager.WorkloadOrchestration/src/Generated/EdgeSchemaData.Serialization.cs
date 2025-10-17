@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
         }
 
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 return null;
             }
-            EdgeSchemaProperties properties = default;
-            ETag? etag = default;
+            SchemaProperties properties = default;
+            string etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -88,16 +88,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         continue;
                     }
-                    properties = EdgeSchemaProperties.DeserializeEdgeSchemaProperties(property.Value, options);
+                    properties = SchemaProperties.DeserializeSchemaProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

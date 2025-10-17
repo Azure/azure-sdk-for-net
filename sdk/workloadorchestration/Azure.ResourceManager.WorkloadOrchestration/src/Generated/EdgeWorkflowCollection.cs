@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workflow_CreateOrUpdate</description>
+        /// <description>Workflows_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeWorkflowWorkflowsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeWorkflowResource>(new EdgeWorkflowOperationSource(Client), _edgeWorkflowWorkflowsClientDiagnostics, Pipeline, _edgeWorkflowWorkflowsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeWorkflowResource>(new EdgeWorkflowOperationSource(Client), _edgeWorkflowWorkflowsClientDiagnostics, Pipeline, _edgeWorkflowWorkflowsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workflow_CreateOrUpdate</description>
+        /// <description>Workflows_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeWorkflowWorkflowsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, data, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeWorkflowResource>(new EdgeWorkflowOperationSource(Client), _edgeWorkflowWorkflowsClientDiagnostics, Pipeline, _edgeWorkflowWorkflowsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeWorkflowResource>(new EdgeWorkflowOperationSource(Client), _edgeWorkflowWorkflowsClientDiagnostics, Pipeline, _edgeWorkflowWorkflowsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
+        /// <description>Workflows_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
+        /// <description>Workflows_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workflow_ListByContext</description>
+        /// <description>Workflows_ListByContext</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workflow_ListByContext</description>
+        /// <description>Workflows_ListByContext</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
+        /// <description>Workflows_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
+        /// <description>Workflows_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
+        /// <description>Workflows_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
+        /// <description>Workflows_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

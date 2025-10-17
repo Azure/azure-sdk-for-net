@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
-            EdgeUpdateType? updateType = default;
+            UpdateType? updateType = default;
             string version = default;
             EdgeConfigTemplateVersionData configTemplateVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    updateType = new EdgeUpdateType(property.Value.GetString());
+                    updateType = new UpdateType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("version"u8))

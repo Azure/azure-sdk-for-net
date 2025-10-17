@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_Get</description>
+        /// <description>SolutionTemplateVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_Get</description>
+        /// <description>SolutionTemplateVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> BulkDeploySolutionAsync(WaitUntil waitUntil, BulkDeploySolutionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> BulkDeploySolutionAsync(WaitUntil waitUntil, WorkloadOrchestrationBulkDeploySolutionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.BulkDeploySolutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics, Pipeline, _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.CreateBulkDeploySolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics, Pipeline, _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.CreateBulkDeploySolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation BulkDeploySolution(WaitUntil waitUntil, BulkDeploySolutionContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation BulkDeploySolution(WaitUntil waitUntil, WorkloadOrchestrationBulkDeploySolutionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.BulkDeploySolution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics, Pipeline, _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.CreateBulkDeploySolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics, Pipeline, _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.CreateBulkDeploySolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> BulkPublishSolutionAsync(WaitUntil waitUntil, BulkPublishSolutionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> BulkPublishSolutionAsync(WaitUntil waitUntil, WorkloadOrchestrationBulkPublishSolutionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.BulkPublishSolutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics, Pipeline, _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.CreateBulkPublishSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics, Pipeline, _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.CreateBulkPublishSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation BulkPublishSolution(WaitUntil waitUntil, BulkPublishSolutionContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation BulkPublishSolution(WaitUntil waitUntil, WorkloadOrchestrationBulkPublishSolutionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.BulkPublishSolution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics, Pipeline, _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.CreateBulkPublishSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeSolutionTemplateVersionSolutionTemplateVersionsClientDiagnostics, Pipeline, _edgeSolutionTemplateVersionSolutionTemplateVersionsRestClient.CreateBulkPublishSolutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

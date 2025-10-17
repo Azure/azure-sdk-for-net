@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ConfigTemplatesCreateOrUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/ConfigTemplates_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "ConfigTemplate_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/ConfigTemplates_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "ConfigTemplates_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             string configTemplateName = "testname";
             EdgeConfigTemplateData data = new EdgeConfigTemplateData(new AzureLocation("egqjo"))
             {
-                Properties = new EdgeConfigTemplateProperties("ccdyggozwmhyvemlcwlsnhijwg"),
+                Properties = new ConfigTemplateProperties("ccdyggozwmhyvemlcwlsnhijwg"),
                 Tags =
 {
 ["key6936"] = "vnqujuvnbxonbsgb"
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfigTemplatesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/ConfigTemplates_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "ConfigTemplate_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/ConfigTemplates_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "ConfigTemplates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ConfigTemplatesListByResourceGroupMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/ConfigTemplates_ListByResourceGroup_MaximumSet_Gen.json
-            // this example is just showing the usage of "ConfigTemplate_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/ConfigTemplates_ListByResourceGroup_MaximumSet_Gen.json
+            // this example is just showing the usage of "ConfigTemplates_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ConfigTemplatesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/ConfigTemplates_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "ConfigTemplate_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/ConfigTemplates_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "ConfigTemplates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ConfigTemplatesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/ConfigTemplates_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "ConfigTemplate_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/ConfigTemplates_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "ConfigTemplates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DynamicSchemasGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/DynamicSchemas_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchema_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemas_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DynamicSchemasDeleteMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/DynamicSchemas_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchema_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemas_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemas_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DynamicSchemasUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/DynamicSchemas_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "DynamicSchema_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/DynamicSchemas_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "DynamicSchemas_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeDynamicSchemaResource edgeDynamicSchema = client.GetEdgeDynamicSchemaResource(edgeDynamicSchemaResourceId);
 
             // invoke the operation
-            EdgeDynamicSchemaData data = new EdgeDynamicSchemaData
+            EdgeDynamicSchemaPatch patch = new EdgeDynamicSchemaPatch
             {
-                Properties = new EdgeDynamicSchemaProperties(),
+                Properties = new DynamicSchemaProperties(),
             };
-            EdgeDynamicSchemaResource result = await edgeDynamicSchema.UpdateAsync(data);
+            EdgeDynamicSchemaResource result = await edgeDynamicSchema.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

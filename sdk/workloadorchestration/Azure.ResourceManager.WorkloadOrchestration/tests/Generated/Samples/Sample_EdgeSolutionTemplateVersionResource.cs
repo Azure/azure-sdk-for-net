@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SolutionTemplateVersionsGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SolutionTemplateVersions_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionTemplateVersion_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplateVersions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionTemplateVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task BulkDeploySolution_SolutionTemplateVersionsBulkDeploySolutionMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SolutionTemplateVersions_BulkDeploySolution_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplateVersions_BulkDeploySolution_MaximumSet_Gen.json
             // this example is just showing the usage of "SolutionTemplateVersions_BulkDeploySolution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeSolutionTemplateVersionResource edgeSolutionTemplateVersion = client.GetEdgeSolutionTemplateVersionResource(edgeSolutionTemplateVersionResourceId);
 
             // invoke the operation
-            BulkDeploySolutionContent content = new BulkDeploySolutionContent(new BulkDeployTargetDetails[]
+            WorkloadOrchestrationBulkDeploySolutionContent content = new WorkloadOrchestrationBulkDeploySolutionContent(new BulkDeployTargetDetails[]
             {
 new BulkDeployTargetDetails(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Edge/Targets/target/Solutions/solution/Versions/solution-1.0.0.1"))
             });
@@ -82,7 +82,7 @@ new BulkDeployTargetDetails(new ResourceIdentifier("/subscriptions/00000000-0000
         [Ignore("Only validating compilation of examples")]
         public async Task BulkPublishSolution_SolutionTemplateVersionsBulkPublishSolutionMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SolutionTemplateVersions_BulkPublishSolution_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplateVersions_BulkPublishSolution_MaximumSet_Gen.json
             // this example is just showing the usage of "SolutionTemplateVersions_BulkPublishSolution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,7 @@ new BulkDeployTargetDetails(new ResourceIdentifier("/subscriptions/00000000-0000
             EdgeSolutionTemplateVersionResource edgeSolutionTemplateVersion = client.GetEdgeSolutionTemplateVersionResource(edgeSolutionTemplateVersionResourceId);
 
             // invoke the operation
-            BulkPublishSolutionContent content = new BulkPublishSolutionContent(new BulkPublishTargetDetails[]
+            WorkloadOrchestrationBulkPublishSolutionContent content = new WorkloadOrchestrationBulkPublishSolutionContent(new BulkPublishTargetDetails[]
             {
 new BulkPublishTargetDetails(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Edge/Targets/target"))
 {
@@ -109,13 +109,13 @@ SolutionInstanceName = "test-instance",
             })
             {
                 SolutionInstanceName = "test-instance",
-                SolutionDependencies = {new EdgeSolutionDependencyContent
+                SolutionDependencies = {new WorkloadOrchestrationSolutionDependencyContent
 {
-SolutionVersionId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Edge/Targets/target/Solutions/solution/Versions/solution-1.0.0.1"),
-SolutionTemplateId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Edge/SolutionTemplates/st"),
+SolutionVersionId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Edge/Targets/target/Solutions/solution/Versions/solution-1.0.0.1",
+SolutionTemplateId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Edge/SolutionTemplates/st",
 SolutionTemplateVersion = "1.0.0",
 SolutionInstanceName = "test-instance",
-TargetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Edge/Targets/target"),
+TargetId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Edge/Targets/target",
 Dependencies = {},
 }},
             };

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_TargetsGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Targets_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Target_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Targets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_TargetsDeleteMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Targets_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "Target_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "Targets_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_TargetsUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Targets_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "Target_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "Targets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 {
 ["key8026"] = "yoosplotwgoquvpox"
 },
-                Properties = new EdgeTargetPatchProperties
+                Properties = new TargetUpdateProperties
                 {
                     Description = "yhnhdpznncdvncmnvoeohqjx",
                     DisplayName = "pguujtzjjvixgjitugybrefp",
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
                     Capabilities = { "dasqhyxfakivfzqb" },
                     HierarchyLevel = "hfyntwxetgsmnucbjvvphtyxu",
                     SolutionScope = "testname",
-                    State = EdgeResourceState.Active,
+                    State = ResourceState.Active,
                 },
             };
             ArmOperation<EdgeTargetResource> lro = await edgeTarget.UpdateAsync(WaitUntil.Completed, patch);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task InstallSolution_TargetsInstallSolutionMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Targets_InstallSolution_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_InstallSolution_MaximumSet_Gen.json
             // this example is just showing the usage of "Targets_InstallSolution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
 
             // invoke the operation
-            InstallSolutionContent content = new InstallSolutionContent(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"));
+            WorkloadOrchestrationInstallSolutionContent content = new WorkloadOrchestrationInstallSolutionContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}");
             await edgeTarget.InstallSolutionAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
@@ -151,150 +151,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task UninstallSolution_TargetsUninstallSolutionMaximumSet()
-        {
-            // Generated from example definition: 2025-06-01/Targets_UninstallSolution_MaximumSet_Gen.json
-            // this example is just showing the usage of "Targets_UninstallSolution" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this EdgeTargetResource created on azure
-            // for more information of creating EdgeTargetResource, please refer to the document of EdgeTargetResource
-            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
-            string resourceGroupName = "rgconfigurationmanager";
-            string targetName = "testname";
-            ResourceIdentifier edgeTargetResourceId = EdgeTargetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetName);
-            EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
-
-            // invoke the operation
-            UninstallSolutionContent content = new UninstallSolutionContent(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"))
-            {
-                SolutionInstanceName = "lzihiumrcxbolmkqktvtuqyhg",
-            };
-            await edgeTarget.UninstallSolutionAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task RemoveRevision_TargetsRemoveRevisionMaximumSet()
-        {
-            // Generated from example definition: 2025-06-01/Targets_RemoveRevision_MaximumSet_Gen.json
-            // this example is just showing the usage of "Targets_RemoveRevision" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this EdgeTargetResource created on azure
-            // for more information of creating EdgeTargetResource, please refer to the document of EdgeTargetResource
-            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
-            string resourceGroupName = "rgconfigurationmanager";
-            string targetName = "testname";
-            ResourceIdentifier edgeTargetResourceId = EdgeTargetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetName);
-            EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
-
-            // invoke the operation
-            RemoveRevisionContent content = new RemoveRevisionContent(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"), "tomwmqybqomwkfaeukjneva");
-            await edgeTarget.RemoveRevisionAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task ResolveConfiguration_TargetsResolveConfigurationMaximumSet()
-        {
-            // Generated from example definition: 2025-06-01/Targets_ResolveConfiguration_MaximumSet_Gen.json
-            // this example is just showing the usage of "Targets_ResolveConfiguration" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this EdgeTargetResource created on azure
-            // for more information of creating EdgeTargetResource, please refer to the document of EdgeTargetResource
-            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
-            string resourceGroupName = "rgconfigurationmanager";
-            string targetName = "testname";
-            ResourceIdentifier edgeTargetResourceId = EdgeTargetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetName);
-            EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
-
-            // invoke the operation
-            EdgeSolutionTemplateContent content = new EdgeSolutionTemplateContent(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}/{resourceType}/{resourceName}"))
-            {
-                SolutionInstanceName = "testname",
-                SolutionDependencies = {new EdgeSolutionDependencyContent
-{
-SolutionVersionId = new ResourceIdentifier("cydzqntmjlqtksbavjwteru"),
-SolutionTemplateId = new ResourceIdentifier("liqauthxnscodbiwktwfwrrsg"),
-SolutionTemplateVersion = "gordjasyxxrj",
-SolutionInstanceName = "testname",
-TargetId = new ResourceIdentifier("steadvphxtyhjokqicrtg"),
-Dependencies = {},
-}},
-            };
-            ArmOperation<ResolvedConfiguration> lro = await edgeTarget.ResolveConfigurationAsync(WaitUntil.Completed, content);
-            ResolvedConfiguration result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task ReviewSolutionVersion_TargetsReviewSolutionVersionMaximumSet()
-        {
-            // Generated from example definition: 2025-06-01/Targets_ReviewSolutionVersion_MaximumSet_Gen.json
-            // this example is just showing the usage of "Targets_ReviewSolutionVersion" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this EdgeTargetResource created on azure
-            // for more information of creating EdgeTargetResource, please refer to the document of EdgeTargetResource
-            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
-            string resourceGroupName = "rgconfigurationmanager";
-            string targetName = "testname";
-            ResourceIdentifier edgeTargetResourceId = EdgeTargetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetName);
-            EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
-
-            // invoke the operation
-            EdgeSolutionTemplateContent content = new EdgeSolutionTemplateContent(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}/{resourceType}/{resourceName}"))
-            {
-                SolutionInstanceName = "testname",
-                SolutionDependencies = {new EdgeSolutionDependencyContent
-{
-SolutionVersionId = new ResourceIdentifier("cydzqntmjlqtksbavjwteru"),
-SolutionTemplateId = new ResourceIdentifier("liqauthxnscodbiwktwfwrrsg"),
-SolutionTemplateVersion = "gordjasyxxrj",
-SolutionInstanceName = "testname",
-TargetId = new ResourceIdentifier("steadvphxtyhjokqicrtg"),
-Dependencies = {},
-}},
-            };
-            ArmOperation<EdgeSolutionVersionResource> lro = await edgeTarget.ReviewSolutionVersionAsync(WaitUntil.Completed, content);
-            EdgeSolutionVersionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            EdgeSolutionVersionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task PublishSolutionVersion_TargetsPublishSolutionVersionMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Targets_PublishSolutionVersion_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_PublishSolutionVersion_MaximumSet_Gen.json
             // this example is just showing the usage of "Targets_PublishSolutionVersion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -311,7 +170,7 @@ Dependencies = {},
             EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
 
             // invoke the operation
-            EdgeSolutionVersionContent content = new EdgeSolutionVersionContent(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"));
+            WorkloadOrchestrationSolutionVersionContent content = new WorkloadOrchestrationSolutionVersionContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}");
             ArmOperation<EdgeSolutionVersionResource> lro = await edgeTarget.PublishSolutionVersionAsync(WaitUntil.Completed, content);
             EdgeSolutionVersionResource result = lro.Value;
 
@@ -324,9 +183,150 @@ Dependencies = {},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task RemoveRevision_TargetsRemoveRevisionMaximumSet()
+        {
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_RemoveRevision_MaximumSet_Gen.json
+            // this example is just showing the usage of "Targets_RemoveRevision" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this EdgeTargetResource created on azure
+            // for more information of creating EdgeTargetResource, please refer to the document of EdgeTargetResource
+            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
+            string resourceGroupName = "rgconfigurationmanager";
+            string targetName = "testname";
+            ResourceIdentifier edgeTargetResourceId = EdgeTargetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetName);
+            EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
+
+            // invoke the operation
+            WorkloadOrchestrationRemoveRevisionContent content = new WorkloadOrchestrationRemoveRevisionContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}", "tomwmqybqomwkfaeukjneva");
+            await edgeTarget.RemoveRevisionAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ResolveConfiguration_TargetsResolveConfigurationMaximumSet()
+        {
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_ResolveConfiguration_MaximumSet_Gen.json
+            // this example is just showing the usage of "Targets_ResolveConfiguration" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this EdgeTargetResource created on azure
+            // for more information of creating EdgeTargetResource, please refer to the document of EdgeTargetResource
+            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
+            string resourceGroupName = "rgconfigurationmanager";
+            string targetName = "testname";
+            ResourceIdentifier edgeTargetResourceId = EdgeTargetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetName);
+            EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
+
+            // invoke the operation
+            WorkloadOrchestrationSolutionTemplateContent content = new WorkloadOrchestrationSolutionTemplateContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}/{resourceType}/{resourceName}")
+            {
+                SolutionInstanceName = "testname",
+                SolutionDependencies = {new WorkloadOrchestrationSolutionDependencyContent
+{
+SolutionVersionId = "cydzqntmjlqtksbavjwteru",
+SolutionTemplateId = "liqauthxnscodbiwktwfwrrsg",
+SolutionTemplateVersion = "gordjasyxxrj",
+SolutionInstanceName = "testname",
+TargetId = "steadvphxtyhjokqicrtg",
+Dependencies = {},
+}},
+            };
+            ArmOperation<ResolvedConfiguration> lro = await edgeTarget.ResolveConfigurationAsync(WaitUntil.Completed, content);
+            ResolvedConfiguration result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ReviewSolutionVersion_TargetsReviewSolutionVersionMaximumSet()
+        {
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_ReviewSolutionVersion_MaximumSet_Gen.json
+            // this example is just showing the usage of "Targets_ReviewSolutionVersion" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this EdgeTargetResource created on azure
+            // for more information of creating EdgeTargetResource, please refer to the document of EdgeTargetResource
+            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
+            string resourceGroupName = "rgconfigurationmanager";
+            string targetName = "testname";
+            ResourceIdentifier edgeTargetResourceId = EdgeTargetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetName);
+            EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
+
+            // invoke the operation
+            WorkloadOrchestrationSolutionTemplateContent content = new WorkloadOrchestrationSolutionTemplateContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}/{resourceType}/{resourceName}")
+            {
+                SolutionInstanceName = "testname",
+                SolutionDependencies = {new WorkloadOrchestrationSolutionDependencyContent
+{
+SolutionVersionId = "cydzqntmjlqtksbavjwteru",
+SolutionTemplateId = "liqauthxnscodbiwktwfwrrsg",
+SolutionTemplateVersion = "gordjasyxxrj",
+SolutionInstanceName = "testname",
+TargetId = "steadvphxtyhjokqicrtg",
+Dependencies = {},
+}},
+            };
+            ArmOperation<EdgeSolutionVersionResource> lro = await edgeTarget.ReviewSolutionVersionAsync(WaitUntil.Completed, content);
+            EdgeSolutionVersionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            EdgeSolutionVersionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task UninstallSolution_TargetsUninstallSolutionMaximumSet()
+        {
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_UninstallSolution_MaximumSet_Gen.json
+            // this example is just showing the usage of "Targets_UninstallSolution" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this EdgeTargetResource created on azure
+            // for more information of creating EdgeTargetResource, please refer to the document of EdgeTargetResource
+            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
+            string resourceGroupName = "rgconfigurationmanager";
+            string targetName = "testname";
+            ResourceIdentifier edgeTargetResourceId = EdgeTargetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetName);
+            EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
+
+            // invoke the operation
+            WorkloadOrchestrationUninstallSolutionContent content = new WorkloadOrchestrationUninstallSolutionContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}")
+            {
+                SolutionInstanceName = "lzihiumrcxbolmkqktvtuqyhg",
+            };
+            await edgeTarget.UninstallSolutionAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateExternalValidationStatus_TargetsUpdateExternalValidationStatusMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Targets_UpdateExternalValidationStatus_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_UpdateExternalValidationStatus_MaximumSet_Gen.json
             // this example is just showing the usage of "Targets_UpdateExternalValidationStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -343,7 +343,7 @@ Dependencies = {},
             EdgeTargetResource edgeTarget = client.GetEdgeTargetResource(edgeTargetResourceId);
 
             // invoke the operation
-            UpdateExternalValidationStatusContent content = new UpdateExternalValidationStatusContent(new ResourceIdentifier("shntcsuwlmpehmuqkrbf"), "ivsjzwy", SolutionInstanceValidationStatus.Valid)
+            WorkloadOrchestrationUpdateExternalValidationStatusContent content = new WorkloadOrchestrationUpdateExternalValidationStatusContent("shntcsuwlmpehmuqkrbf", "ivsjzwy", ValidationStatus.Valid)
             {
                 ErrorDetails = new ResponseError(null, null),
             };

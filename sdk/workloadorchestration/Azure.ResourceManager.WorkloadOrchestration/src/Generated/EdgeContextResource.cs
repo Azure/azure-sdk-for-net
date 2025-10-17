@@ -90,75 +90,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of EdgeWorkflowResources in the EdgeContext. </summary>
-        /// <returns> An object representing collection of EdgeWorkflowResources and their operations over a EdgeWorkflowResource. </returns>
-        public virtual EdgeWorkflowCollection GetEdgeWorkflows()
-        {
-            return GetCachedClient(client => new EdgeWorkflowCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Workflow resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeWorkflowResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workflowName"> Name of the workflow. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeWorkflowResource>> GetEdgeWorkflowAsync(string workflowName, CancellationToken cancellationToken = default)
-        {
-            return await GetEdgeWorkflows().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Workflow resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workflow_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeWorkflowResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workflowName"> Name of the workflow. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EdgeWorkflowResource> GetEdgeWorkflow(string workflowName, CancellationToken cancellationToken = default)
-        {
-            return GetEdgeWorkflows().Get(workflowName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of EdgeSiteReferenceResources in the EdgeContext. </summary>
         /// <returns> An object representing collection of EdgeSiteReferenceResources and their operations over a EdgeSiteReferenceResource. </returns>
         public virtual EdgeSiteReferenceCollection GetEdgeSiteReferences()
@@ -175,7 +106,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SiteReference_Get</description>
+        /// <description>SiteReferences_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -206,7 +137,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SiteReference_Get</description>
+        /// <description>SiteReferences_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -228,6 +159,75 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetEdgeSiteReferences().Get(siteReferenceName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of EdgeWorkflowResources in the EdgeContext. </summary>
+        /// <returns> An object representing collection of EdgeWorkflowResources and their operations over a EdgeWorkflowResource. </returns>
+        public virtual EdgeWorkflowCollection GetEdgeWorkflows()
+        {
+            return GetCachedClient(client => new EdgeWorkflowCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Workflow resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeWorkflowResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workflowName"> Name of the workflow. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeWorkflowResource>> GetEdgeWorkflowAsync(string workflowName, CancellationToken cancellationToken = default)
+        {
+            return await GetEdgeWorkflows().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Workflow resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}/workflows/{workflowName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeWorkflowResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workflowName"> Name of the workflow. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeWorkflowResource> GetEdgeWorkflow(string workflowName, CancellationToken cancellationToken = default)
+        {
+            return GetEdgeWorkflows().Get(workflowName, cancellationToken);
+        }
+
         /// <summary>
         /// Get Context Resource
         /// <list type="bullet">
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Get</description>
+        /// <description>Contexts_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Get</description>
+        /// <description>Contexts_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Delete</description>
+        /// <description>Contexts_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeContextContextsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeContextContextsClientDiagnostics, Pipeline, _edgeContextContextsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeContextContextsClientDiagnostics, Pipeline, _edgeContextContextsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Delete</description>
+        /// <description>Contexts_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeContextContextsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeContextContextsClientDiagnostics, Pipeline, _edgeContextContextsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeContextContextsClientDiagnostics, Pipeline, _edgeContextContextsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Update</description>
+        /// <description>Contexts_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeContextContextsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeContextResource>(new EdgeContextOperationSource(Client), _edgeContextContextsClientDiagnostics, Pipeline, _edgeContextContextsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeContextResource>(new EdgeContextOperationSource(Client), _edgeContextContextsClientDiagnostics, Pipeline, _edgeContextContextsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Update</description>
+        /// <description>Contexts_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeContextContextsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeContextResource>(new EdgeContextOperationSource(Client), _edgeContextContextsClientDiagnostics, Pipeline, _edgeContextContextsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeContextResource>(new EdgeContextOperationSource(Client), _edgeContextContextsClientDiagnostics, Pipeline, _edgeContextContextsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Get</description>
+        /// <description>Contexts_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Get</description>
+        /// <description>Contexts_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Get</description>
+        /// <description>Contexts_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Get</description>
+        /// <description>Contexts_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Get</description>
+        /// <description>Contexts_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Get</description>
+        /// <description>Contexts_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

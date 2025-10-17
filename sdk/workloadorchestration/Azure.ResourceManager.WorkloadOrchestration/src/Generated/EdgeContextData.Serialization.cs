@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 return null;
             }
-            EdgeContextProperties properties = default;
+            ContextProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         continue;
                     }
-                    properties = EdgeContextProperties.DeserializeEdgeContextProperties(property.Value, options);
+                    properties = ContextProperties.DeserializeContextProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

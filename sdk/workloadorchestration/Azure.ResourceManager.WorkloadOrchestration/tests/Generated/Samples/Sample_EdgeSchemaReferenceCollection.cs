@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SchemaReferencesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SchemaReferences_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SchemaReference_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SchemaReferences_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SchemaReferences_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SchemaReferencesListByResourceGroupMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SchemaReferences_ListByResourceGroup_MaximumSet_Gen.json
-            // this example is just showing the usage of "SchemaReference_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SchemaReferences_ListByResourceGroup_MaximumSet_Gen.json
+            // this example is just showing the usage of "SchemaReferences_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SchemaReferencesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SchemaReferences_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SchemaReference_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SchemaReferences_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SchemaReferences_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SchemaReferencesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SchemaReferences_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SchemaReference_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SchemaReferences_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SchemaReferences_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

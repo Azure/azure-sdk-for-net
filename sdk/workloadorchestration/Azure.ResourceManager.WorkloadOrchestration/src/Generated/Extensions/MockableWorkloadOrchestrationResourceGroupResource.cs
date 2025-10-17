@@ -33,213 +33,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of EdgeSchemaResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EdgeSchemaResources and their operations over a EdgeSchemaResource. </returns>
-        public virtual EdgeSchemaCollection GetEdgeSchemas()
-        {
-            return GetCachedClient(client => new EdgeSchemaCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Schema Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schema_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="schemaName"> The name of the Schema. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeSchemaResource>> GetEdgeSchemaAsync(string schemaName, CancellationToken cancellationToken = default)
-        {
-            return await GetEdgeSchemas().GetAsync(schemaName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Schema Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schema_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="schemaName"> The name of the Schema. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EdgeSchemaResource> GetEdgeSchema(string schemaName, CancellationToken cancellationToken = default)
-        {
-            return GetEdgeSchemas().Get(schemaName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of EdgeTargetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EdgeTargetResources and their operations over a EdgeTargetResource. </returns>
-        public virtual EdgeTargetCollection GetEdgeTargets()
-        {
-            return GetCachedClient(client => new EdgeTargetCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Target Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeTargetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="targetName"> Name of the target. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeTargetResource>> GetEdgeTargetAsync(string targetName, CancellationToken cancellationToken = default)
-        {
-            return await GetEdgeTargets().GetAsync(targetName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Target Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeTargetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="targetName"> Name of the target. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EdgeTargetResource> GetEdgeTarget(string targetName, CancellationToken cancellationToken = default)
-        {
-            return GetEdgeTargets().Get(targetName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of EdgeSolutionTemplateResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EdgeSolutionTemplateResources and their operations over a EdgeSolutionTemplateResource. </returns>
-        public virtual EdgeSolutionTemplateCollection GetEdgeSolutionTemplates()
-        {
-            return GetCachedClient(client => new EdgeSolutionTemplateCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Solution Template Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="solutionTemplateName"> The name of the SolutionTemplate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionTemplateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="solutionTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeSolutionTemplateResource>> GetEdgeSolutionTemplateAsync(string solutionTemplateName, CancellationToken cancellationToken = default)
-        {
-            return await GetEdgeSolutionTemplates().GetAsync(solutionTemplateName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Solution Template Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionTemplate_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSolutionTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="solutionTemplateName"> The name of the SolutionTemplate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionTemplateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="solutionTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EdgeSolutionTemplateResource> GetEdgeSolutionTemplate(string solutionTemplateName, CancellationToken cancellationToken = default)
-        {
-            return GetEdgeSolutionTemplates().Get(solutionTemplateName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of EdgeConfigTemplateResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of EdgeConfigTemplateResources and their operations over a EdgeConfigTemplateResource. </returns>
         public virtual EdgeConfigTemplateCollection GetEdgeConfigTemplates()
@@ -256,7 +49,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <description>ConfigTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -287,7 +80,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ConfigTemplate_Get</description>
+        /// <description>ConfigTemplates_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -309,75 +102,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return GetEdgeConfigTemplates().Get(configTemplateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EdgeDiagnosticResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EdgeDiagnosticResources and their operations over a EdgeDiagnosticResource. </returns>
-        public virtual EdgeDiagnosticCollection GetEdgeDiagnostics()
-        {
-            return GetCachedClient(client => new EdgeDiagnosticCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns details of specified Diagnostic resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDiagnosticResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="diagnosticName"> Name of Diagnostic. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeDiagnosticResource>> GetEdgeDiagnosticAsync(string diagnosticName, CancellationToken cancellationToken = default)
-        {
-            return await GetEdgeDiagnostics().GetAsync(diagnosticName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns details of specified Diagnostic resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostic_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeDiagnosticResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="diagnosticName"> Name of Diagnostic. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EdgeDiagnosticResource> GetEdgeDiagnostic(string diagnosticName, CancellationToken cancellationToken = default)
-        {
-            return GetEdgeDiagnostics().Get(diagnosticName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of EdgeContextResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of EdgeContextResources and their operations over a EdgeContextResource. </returns>
         public virtual EdgeContextCollection GetEdgeContexts()
@@ -394,7 +118,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Get</description>
+        /// <description>Contexts_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -425,7 +149,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Context_Get</description>
+        /// <description>Contexts_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -445,6 +169,282 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         public virtual Response<EdgeContextResource> GetEdgeContext(string contextName, CancellationToken cancellationToken = default)
         {
             return GetEdgeContexts().Get(contextName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EdgeDiagnosticResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EdgeDiagnosticResources and their operations over a EdgeDiagnosticResource. </returns>
+        public virtual EdgeDiagnosticCollection GetEdgeDiagnostics()
+        {
+            return GetCachedClient(client => new EdgeDiagnosticCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Returns details of specified Diagnostic resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDiagnosticResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diagnosticName"> Name of Diagnostic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeDiagnosticResource>> GetEdgeDiagnosticAsync(string diagnosticName, CancellationToken cancellationToken = default)
+        {
+            return await GetEdgeDiagnostics().GetAsync(diagnosticName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns details of specified Diagnostic resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDiagnosticResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diagnosticName"> Name of Diagnostic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeDiagnosticResource> GetEdgeDiagnostic(string diagnosticName, CancellationToken cancellationToken = default)
+        {
+            return GetEdgeDiagnostics().Get(diagnosticName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EdgeSchemaResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EdgeSchemaResources and their operations over a EdgeSchemaResource. </returns>
+        public virtual EdgeSchemaCollection GetEdgeSchemas()
+        {
+            return GetCachedClient(client => new EdgeSchemaCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Schema Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Schemas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="schemaName"> The name of the Schema. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeSchemaResource>> GetEdgeSchemaAsync(string schemaName, CancellationToken cancellationToken = default)
+        {
+            return await GetEdgeSchemas().GetAsync(schemaName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Schema Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Schemas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="schemaName"> The name of the Schema. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeSchemaResource> GetEdgeSchema(string schemaName, CancellationToken cancellationToken = default)
+        {
+            return GetEdgeSchemas().Get(schemaName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EdgeSolutionTemplateResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EdgeSolutionTemplateResources and their operations over a EdgeSolutionTemplateResource. </returns>
+        public virtual EdgeSolutionTemplateCollection GetEdgeSolutionTemplates()
+        {
+            return GetCachedClient(client => new EdgeSolutionTemplateCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Solution Template Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SolutionTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSolutionTemplateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="solutionTemplateName"> The name of the SolutionTemplate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeSolutionTemplateResource>> GetEdgeSolutionTemplateAsync(string solutionTemplateName, CancellationToken cancellationToken = default)
+        {
+            return await GetEdgeSolutionTemplates().GetAsync(solutionTemplateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Solution Template Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SolutionTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSolutionTemplateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="solutionTemplateName"> The name of the SolutionTemplate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeSolutionTemplateResource> GetEdgeSolutionTemplate(string solutionTemplateName, CancellationToken cancellationToken = default)
+        {
+            return GetEdgeSolutionTemplates().Get(solutionTemplateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EdgeTargetResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EdgeTargetResources and their operations over a EdgeTargetResource. </returns>
+        public virtual EdgeTargetCollection GetEdgeTargets()
+        {
+            return GetCachedClient(client => new EdgeTargetCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Target Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeTargetResource>> GetEdgeTargetAsync(string targetName, CancellationToken cancellationToken = default)
+        {
+            return await GetEdgeTargets().GetAsync(targetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Target Resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Targets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeTargetResource> GetEdgeTarget(string targetName, CancellationToken cancellationToken = default)
+        {
+            return GetEdgeTargets().Get(targetName, cancellationToken);
         }
     }
 }

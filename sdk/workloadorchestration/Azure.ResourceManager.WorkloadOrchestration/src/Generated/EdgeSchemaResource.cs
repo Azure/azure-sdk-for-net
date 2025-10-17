@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchema_Get</description>
+        /// <description>DynamicSchemas_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DynamicSchema_Get</description>
+        /// <description>DynamicSchemas_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Get</description>
+        /// <description>SchemaVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Get</description>
+        /// <description>SchemaVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schema_Get</description>
+        /// <description>Schemas_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schema_Get</description>
+        /// <description>Schemas_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schema_Delete</description>
+        /// <description>Schemas_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeSchemaSchemasRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSchemaSchemasClientDiagnostics, Pipeline, _edgeSchemaSchemasRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeSchemaSchemasClientDiagnostics, Pipeline, _edgeSchemaSchemasRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schema_Delete</description>
+        /// <description>Schemas_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeSchemaSchemasRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation(_edgeSchemaSchemasClientDiagnostics, Pipeline, _edgeSchemaSchemasRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation(_edgeSchemaSchemasClientDiagnostics, Pipeline, _edgeSchemaSchemasRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schema_Update</description>
+        /// <description>Schemas_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schema_Update</description>
+        /// <description>Schemas_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeSchemaVersionResource>> CreateVersionAsync(WaitUntil waitUntil, EdgeSchemaVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeSchemaVersionResource>> CreateVersionAsync(WaitUntil waitUntil, SchemaVersionWithUpdateType body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeSchemaSchemasRestClient.CreateVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource>(new EdgeSchemaVersionOperationSource(Client), _edgeSchemaSchemasClientDiagnostics, Pipeline, _edgeSchemaSchemasRestClient.CreateCreateVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource>(new EdgeSchemaVersionOperationSource(Client), _edgeSchemaSchemasClientDiagnostics, Pipeline, _edgeSchemaSchemasRestClient.CreateCreateVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<EdgeSchemaVersionResource> CreateVersion(WaitUntil waitUntil, EdgeSchemaVersionWithUpdateType body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeSchemaVersionResource> CreateVersion(WaitUntil waitUntil, SchemaVersionWithUpdateType body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeSchemaSchemasRestClient.CreateVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource>(new EdgeSchemaVersionOperationSource(Client), _edgeSchemaSchemasClientDiagnostics, Pipeline, _edgeSchemaSchemasRestClient.CreateCreateVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource>(new EdgeSchemaVersionOperationSource(Client), _edgeSchemaSchemasClientDiagnostics, Pipeline, _edgeSchemaSchemasRestClient.CreateCreateVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<RemoveVersionResult>> RemoveVersionAsync(EdgeVersionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadOrchestrationRemoveVersionResult>> RemoveVersionAsync(WorkloadOrchestrationVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<RemoveVersionResult> RemoveVersion(EdgeVersionContent content, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadOrchestrationRemoveVersionResult> RemoveVersion(WorkloadOrchestrationVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schema_Get</description>
+        /// <description>Schemas_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schema_Get</description>
+        /// <description>Schemas_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schema_Get</description>
+        /// <description>Schemas_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schema_Get</description>
+        /// <description>Schemas_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schema_Get</description>
+        /// <description>Schemas_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schema_Get</description>
+        /// <description>Schemas_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

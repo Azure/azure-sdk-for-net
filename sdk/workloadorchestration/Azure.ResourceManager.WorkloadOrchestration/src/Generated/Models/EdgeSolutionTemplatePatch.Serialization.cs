@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            EdgeSolutionTemplatePatchProperties properties = default;
+            SolutionTemplateUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    properties = EdgeSolutionTemplatePatchProperties.DeserializeEdgeSolutionTemplatePatchProperties(property.Value, options);
+                    properties = SolutionTemplateUpdateProperties.DeserializeSolutionTemplateUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

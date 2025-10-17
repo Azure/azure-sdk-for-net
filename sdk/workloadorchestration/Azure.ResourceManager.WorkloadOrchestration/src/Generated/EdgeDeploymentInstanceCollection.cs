@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Instance_CreateOrUpdate</description>
+        /// <description>Instances_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = await _edgeDeploymentInstanceInstancesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeDeploymentInstanceResource>(new EdgeDeploymentInstanceOperationSource(Client), _edgeDeploymentInstanceInstancesClientDiagnostics, Pipeline, _edgeDeploymentInstanceInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeDeploymentInstanceResource>(new EdgeDeploymentInstanceOperationSource(Client), _edgeDeploymentInstanceInstancesClientDiagnostics, Pipeline, _edgeDeploymentInstanceInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Instance_CreateOrUpdate</description>
+        /// <description>Instances_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             try
             {
                 var response = _edgeDeploymentInstanceInstancesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceName, data, cancellationToken);
-                var operation = new WorkloadOrchestrationArmOperation<EdgeDeploymentInstanceResource>(new EdgeDeploymentInstanceOperationSource(Client), _edgeDeploymentInstanceInstancesClientDiagnostics, Pipeline, _edgeDeploymentInstanceInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeDeploymentInstanceResource>(new EdgeDeploymentInstanceOperationSource(Client), _edgeDeploymentInstanceInstancesClientDiagnostics, Pipeline, _edgeDeploymentInstanceInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation, skipApiVersionOverride: true);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Instance_Get</description>
+        /// <description>Instances_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Instance_Get</description>
+        /// <description>Instances_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Instance_ListBySolution</description>
+        /// <description>Instances_ListBySolution</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Instance_ListBySolution</description>
+        /// <description>Instances_ListBySolution</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Instance_Get</description>
+        /// <description>Instances_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Instance_Get</description>
+        /// <description>Instances_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Instance_Get</description>
+        /// <description>Instances_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Instance_Get</description>
+        /// <description>Instances_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

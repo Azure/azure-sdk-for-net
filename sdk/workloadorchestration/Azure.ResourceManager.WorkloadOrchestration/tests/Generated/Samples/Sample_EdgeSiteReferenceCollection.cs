@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SiteReferencesCreateOrUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SiteReferences_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "SiteReference_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SiteReferences_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "SiteReferences_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             string siteReferenceName = "testname";
             EdgeSiteReferenceData data = new EdgeSiteReferenceData
             {
-                Properties = new EdgeSiteReferenceProperties("xxjpxdcaumewwgpbwzkcrgrcw"),
+                Properties = new SiteReferenceProperties("xxjpxdcaumewwgpbwzkcrgrcw"),
             };
             ArmOperation<EdgeSiteReferenceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, siteReferenceName, data);
             EdgeSiteReferenceResource result = lro.Value;
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SiteReferencesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SiteReferences_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SiteReference_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SiteReferences_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SiteReferences_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SiteReferencesListByContextMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SiteReferences_ListByContext_MaximumSet_Gen.json
-            // this example is just showing the usage of "SiteReference_ListByContext" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SiteReferences_ListByContext_MaximumSet_Gen.json
+            // this example is just showing the usage of "SiteReferences_ListByContext" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -129,8 +129,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SiteReferencesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SiteReferences_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SiteReference_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SiteReferences_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SiteReferences_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SiteReferencesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SiteReferences_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SiteReference_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SiteReferences_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SiteReferences_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

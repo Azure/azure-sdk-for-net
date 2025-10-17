@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SolutionTemplatesGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SolutionTemplates_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionTemplate_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplates_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionTemplates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_SolutionTemplatesDeleteMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SolutionTemplates_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionTemplate_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplates_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionTemplates_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_SolutionTemplatesUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SolutionTemplates_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "SolutionTemplate_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplates_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "SolutionTemplates_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 {
 ["key8772"] = "vbdujmqklnwiepis"
 },
-                Properties = new EdgeSolutionTemplatePatchProperties
+                Properties = new SolutionTemplateUpdateProperties
                 {
                     Description = "onqlteg",
                     Capabilities = { "relsv" },
-                    State = EdgeResourceState.Active,
-                    IsExternalValidationEnabled = true,
+                    State = ResourceState.Active,
+                    EnableExternalValidation = true,
                 },
             };
             EdgeSolutionTemplateResource result = await edgeSolutionTemplate.UpdateAsync(patch);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateVersion_SolutionTemplatesCreateVersionMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SolutionTemplates_CreateVersion_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplates_CreateVersion_MaximumSet_Gen.json
             // this example is just showing the usage of "SolutionTemplates_CreateVersion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeSolutionTemplateResource edgeSolutionTemplate = client.GetEdgeSolutionTemplateResource(edgeSolutionTemplateResourceId);
 
             // invoke the operation
-            EdgeSolutionTemplateVersionWithUpdateType body = new EdgeSolutionTemplateVersionWithUpdateType(new EdgeSolutionTemplateVersionData
+            SolutionTemplateVersionWithUpdateType body = new SolutionTemplateVersionWithUpdateType(new EdgeSolutionTemplateVersionData
             {
-                Properties = new EdgeSolutionTemplateVersionProperties("ofqcsavwmeuwmvtjnqpoybtjvkmrlh", new Dictionary<string, BinaryData>())
+                Properties = new SolutionTemplateVersionProperties("ofqcsavwmeuwmvtjnqpoybtjvkmrlh", new Dictionary<string, BinaryData>())
                 {
-                    OrchestratorType = SolutionVersionOrchestratorType.TO,
+                    OrchestratorType = OrchestratorType.TO,
                 },
             })
             {
-                UpdateType = EdgeUpdateType.Major,
+                UpdateType = UpdateType.Major,
                 Version = "1.0.0",
             };
             ArmOperation<EdgeSolutionTemplateVersionResource> lro = await edgeSolutionTemplate.CreateVersionAsync(WaitUntil.Completed, body);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RemoveVersion_SolutionTemplatesRemoveVersionMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/SolutionTemplates_RemoveVersion_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplates_RemoveVersion_MaximumSet_Gen.json
             // this example is just showing the usage of "SolutionTemplates_RemoveVersion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             EdgeSolutionTemplateResource edgeSolutionTemplate = client.GetEdgeSolutionTemplateResource(edgeSolutionTemplateResourceId);
 
             // invoke the operation
-            EdgeVersionContent content = new EdgeVersionContent("ghtvdzgmzncaifrnuumg");
+            WorkloadOrchestrationVersionContent content = new WorkloadOrchestrationVersionContent("ghtvdzgmzncaifrnuumg");
             await edgeSolutionTemplate.RemoveVersionAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");

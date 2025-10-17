@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="version"> Version to create. </param>
         /// <param name="configTemplateVersion"> Config Template Version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigTemplateVersionWithUpdateType(EdgeUpdateType? updateType, string version, EdgeConfigTemplateVersionData configTemplateVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfigTemplateVersionWithUpdateType(UpdateType? updateType, string version, EdgeConfigTemplateVersionData configTemplateVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UpdateType = updateType;
             Version = version;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Update type. </summary>
-        public EdgeUpdateType? UpdateType { get; set; }
+        public UpdateType? UpdateType { get; set; }
         /// <summary> Version to create. </summary>
         public string Version { get; set; }
         /// <summary> Config Template Version. </summary>

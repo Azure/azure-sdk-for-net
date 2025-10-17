@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadOrchestration.Models;
 using NUnit.Framework;
 
@@ -23,8 +22,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_TargetsCreateOrUpdateMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Targets_CreateOrUpdate_MaximumSet_Gen.json
-            // this example is just showing the usage of "Target_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "Targets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             string targetName = "testname";
             EdgeTargetData data = new EdgeTargetData(new AzureLocation("kckloegmwsjgwtcl"))
             {
-                Properties = new EdgeTargetProperties(
+                Properties = new TargetProperties(
                 "riabrxtvhlmizyhffdpjeyhvw",
                 "qjlbshhqzfmwxvvynibkoi",
                 new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"),
@@ -54,12 +53,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
                 "octqptfirejhjfavlnfqeiikqx")
                 {
                     SolutionScope = "testname",
-                    State = EdgeResourceState.Active,
+                    State = ResourceState.Active,
                 },
-                ExtendedLocation = new ExtendedLocation
-                {
-                    Name = "szjrwimeqyiue",
-                },
+                ExtendedLocation = new AzureResourceManagerCommonTypesExtendedLocation("szjrwimeqyiue", ExtendedLocationType.EdgeZone),
                 Tags =
 {
 ["key612"] = "vtqzrk"
@@ -79,8 +75,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_TargetsGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Targets_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Target_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Targets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -112,8 +108,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_TargetsListByResourceGroupMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Targets_ListByResourceGroup_MaximumSet_Gen.json
-            // this example is just showing the usage of "Target_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_ListByResourceGroup_MaximumSet_Gen.json
+            // this example is just showing the usage of "Targets_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -147,8 +143,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_TargetsGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Targets_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Target_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Targets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -176,8 +172,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_TargetsGetMaximumSet()
         {
-            // Generated from example definition: 2025-06-01/Targets_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Target_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Targets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

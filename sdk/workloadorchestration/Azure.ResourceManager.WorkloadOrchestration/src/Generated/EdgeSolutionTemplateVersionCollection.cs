@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_Get</description>
+        /// <description>SolutionTemplateVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_Get</description>
+        /// <description>SolutionTemplateVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_ListBySolutionTemplate</description>
+        /// <description>SolutionTemplateVersions_ListBySolutionTemplate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_ListBySolutionTemplate</description>
+        /// <description>SolutionTemplateVersions_ListBySolutionTemplate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_Get</description>
+        /// <description>SolutionTemplateVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_Get</description>
+        /// <description>SolutionTemplateVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_Get</description>
+        /// <description>SolutionTemplateVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionTemplateVersion_Get</description>
+        /// <description>SolutionTemplateVersions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
