@@ -407,12 +407,12 @@ namespace Azure.ResourceManager.NetApp
     public partial class NetAppBucketData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.NetAppBucketData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppBucketData>
     {
         public NetAppBucketData() { }
-        public Azure.ResourceManager.NetApp.Models.BucketFileSystemUser FileSystemUser { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppBucketFileSystemUser FileSystemUser { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppBucketPermission? Permissions { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties Server { get { throw null; } set { } }
-        public Azure.ResourceManager.NetApp.Models.BucketCredentialStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus? Status { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetApp.NetAppBucketData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.NetAppBucketData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.NetAppBucketData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1146,9 +1146,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.NetAppBackupPolicyData NetAppBackupPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier backupPolicyId = null, string provisioningState = null, int? dailyBackupsToKeep = default(int?), int? weeklyBackupsToKeep = default(int?), int? monthlyBackupsToKeep = default(int?), int? volumesAssigned = default(int?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupDetail> volumeBackups = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppBackupPolicyPatch NetAppBackupPolicyPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier backupPolicyId = null, string provisioningState = null, int? dailyBackupsToKeep = default(int?), int? weeklyBackupsToKeep = default(int?), int? monthlyBackupsToKeep = default(int?), int? volumesAssigned = default(int?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupDetail> volumeBackups = null) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppBackupVaultData NetAppBackupVaultData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string provisioningState = null) { throw null; }
-        public static Azure.ResourceManager.NetApp.NetAppBucketData NetAppBucketData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string path = null, Azure.ResourceManager.NetApp.Models.BucketFileSystemUser fileSystemUser = null, Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? provisioningState = default(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState?), Azure.ResourceManager.NetApp.Models.BucketCredentialStatus? status = default(Azure.ResourceManager.NetApp.Models.BucketCredentialStatus?), Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties server = null, Azure.ResourceManager.NetApp.Models.NetAppBucketPermission? permissions = default(Azure.ResourceManager.NetApp.Models.NetAppBucketPermission?)) { throw null; }
+        public static Azure.ResourceManager.NetApp.NetAppBucketData NetAppBucketData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string path = null, Azure.ResourceManager.NetApp.Models.NetAppBucketFileSystemUser fileSystemUser = null, Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? provisioningState = default(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState?), Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus? status = default(Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus?), Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties server = null, Azure.ResourceManager.NetApp.Models.NetAppBucketPermission? permissions = default(Azure.ResourceManager.NetApp.Models.NetAppBucketPermission?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials NetAppBucketGenerateCredentials(string accessKey = null, string secretKey = null, System.DateTimeOffset? keyPairExpiry = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.NetAppBucketPatch NetAppBucketPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string path = null, Azure.ResourceManager.NetApp.Models.BucketFileSystemUser fileSystemUser = null, Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? provisioningState = default(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState?), Azure.ResourceManager.NetApp.Models.NetAppBucketServerPatchProperties server = null, Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission? permissions = default(Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission?)) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.NetAppBucketPatch NetAppBucketPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string path = null, Azure.ResourceManager.NetApp.Models.NetAppBucketFileSystemUser fileSystemUser = null, Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? provisioningState = default(Azure.ResourceManager.NetApp.Models.NetAppProvisioningState?), Azure.ResourceManager.NetApp.Models.NetAppBucketServerPatchProperties server = null, Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission? permissions = default(Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppBucketServerProperties NetAppBucketServerProperties(string fqdn = null, string certificateCommonName = null, System.DateTimeOffset? certificateExpiryOn = default(System.DateTimeOffset?), string ipAddress = null, string certificateObject = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppChangeKeyVault NetAppChangeKeyVault(System.Uri keyVaultUri = null, string keyName = null, Azure.Core.ResourceIdentifier keyVaultResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppCheckAvailabilityResult NetAppCheckAvailabilityResult(bool? isAvailable = default(bool?), Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason? reason = default(Azure.ResourceManager.NetApp.Models.NetAppNameUnavailableReason?), string message = null) { throw null; }
@@ -1256,49 +1256,6 @@ namespace Azure.ResourceManager.NetApp.Models
         Azure.ResourceManager.NetApp.Models.BackupsMigrationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BackupsMigrationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BackupsMigrationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BackupsMigrationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BucketCredentialStatus : System.IEquatable<Azure.ResourceManager.NetApp.Models.BucketCredentialStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BucketCredentialStatus(string value) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.BucketCredentialStatus Active { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.BucketCredentialStatus CredentialsExpired { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.BucketCredentialStatus NoCredentialsSet { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetApp.Models.BucketCredentialStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetApp.Models.BucketCredentialStatus left, Azure.ResourceManager.NetApp.Models.BucketCredentialStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetApp.Models.BucketCredentialStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetApp.Models.BucketCredentialStatus left, Azure.ResourceManager.NetApp.Models.BucketCredentialStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class BucketFileSystemUser : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketFileSystemUser>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketFileSystemUser>
-    {
-        public BucketFileSystemUser() { }
-        public string CifsUserUsername { get { throw null; } set { } }
-        public Azure.ResourceManager.NetApp.Models.BucketNfsUser NfsUser { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketFileSystemUser System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketFileSystemUser>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketFileSystemUser>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketFileSystemUser System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketFileSystemUser>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketFileSystemUser>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketFileSystemUser>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class BucketNfsUser : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketNfsUser>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketNfsUser>
-    {
-        public BucketNfsUser() { }
-        public long? GroupId { get { throw null; } set { } }
-        public long? UserId { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketNfsUser System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketNfsUser>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BucketNfsUser>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BucketNfsUser System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketNfsUser>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketNfsUser>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BucketNfsUser>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CapacityPoolEncryptionType : System.IEquatable<Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType>
@@ -1701,6 +1658,37 @@ namespace Azure.ResourceManager.NetApp.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialsExpiry>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialsExpiry>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetAppBucketCredentialStatus : System.IEquatable<Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetAppBucketCredentialStatus(string value) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus Active { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus CredentialsExpired { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus NoCredentialsSet { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus left, Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus left, Azure.ResourceManager.NetApp.Models.NetAppBucketCredentialStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NetAppBucketFileSystemUser : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketFileSystemUser>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketFileSystemUser>
+    {
+        public NetAppBucketFileSystemUser() { }
+        public string CifsUserUsername { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppBucketNfsUser NfsUser { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketFileSystemUser System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketFileSystemUser>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketFileSystemUser>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketFileSystemUser System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketFileSystemUser>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketFileSystemUser>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketFileSystemUser>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class NetAppBucketGenerateCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials>
     {
         internal NetAppBucketGenerateCredentials() { }
@@ -1714,10 +1702,22 @@ namespace Azure.ResourceManager.NetApp.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketGenerateCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class NetAppBucketNfsUser : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketNfsUser>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketNfsUser>
+    {
+        public NetAppBucketNfsUser() { }
+        public long? GroupId { get { throw null; } set { } }
+        public long? UserId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketNfsUser System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketNfsUser>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketNfsUser>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.NetAppBucketNfsUser System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketNfsUser>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketNfsUser>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketNfsUser>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class NetAppBucketPatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBucketPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBucketPatch>
     {
         public NetAppBucketPatch() { }
-        public Azure.ResourceManager.NetApp.Models.BucketFileSystemUser FileSystemUser { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppBucketFileSystemUser FileSystemUser { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppBucketPatchPermission? Permissions { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? ProvisioningState { get { throw null; } }

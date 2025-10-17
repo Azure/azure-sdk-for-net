@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketData data = new NetAppBucketData
             {
                 Path = "/",
-                FileSystemUser = new BucketFileSystemUser
+                FileSystemUser = new NetAppBucketFileSystemUser
                 {
-                    NfsUser = new BucketNfsUser
+                    NfsUser = new NetAppBucketNfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketData data = new NetAppBucketData
             {
                 Path = "/",
-                FileSystemUser = new BucketFileSystemUser
+                FileSystemUser = new NetAppBucketFileSystemUser
                 {
                     NfsUser = new BucketNfsUser
                     {
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketData data2 = new NetAppBucketData
             {
                 Path = "/",
-                FileSystemUser = new BucketFileSystemUser
+                FileSystemUser = new NetAppBucketFileSystemUser
                 {
-                    NfsUser = new BucketNfsUser
+                    NfsUser = new NetAppBucketNfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketData data = new NetAppBucketData
             {
                 Path = "/",
-                FileSystemUser = new BucketFileSystemUser
+                FileSystemUser = new NetAppBucketFileSystemUser
                 {
-                    NfsUser = new BucketNfsUser
+                    NfsUser = new NetAppBucketNfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
@@ -273,9 +273,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBucketData data = new NetAppBucketData
             {
                 Path = "/",
-                FileSystemUser = new BucketFileSystemUser
+                FileSystemUser = new NetAppBucketFileSystemUser
                 {
-                    NfsUser = new BucketNfsUser
+                    NfsUser = new NetAppBucketNfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
