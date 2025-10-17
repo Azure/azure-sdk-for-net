@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetConfigurationDetailsForNode()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/ConfigurationGetNode.json
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationGetNode.json
             // this example is just showing the usage of "Configurations_GetNode" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateSingleConfigurationOfNodes()
         {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/ConfigurationUpdateNode.json
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/preview/2023-03-02-preview/examples/ConfigurationUpdateNode.json
             // this example is just showing the usage of "Configurations_UpdateOnNode" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

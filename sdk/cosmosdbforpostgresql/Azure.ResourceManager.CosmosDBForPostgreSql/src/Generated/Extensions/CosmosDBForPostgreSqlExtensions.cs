@@ -53,25 +53,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlClusterServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBForPostgreSqlClusterServerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlClusterServerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBForPostgreSqlArmClient.GetCosmosDBForPostgreSqlClusterServerResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterServerResource"/> object. </returns>
-        public static CosmosDBForPostgreSqlClusterServerResource GetCosmosDBForPostgreSqlClusterServerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableCosmosDBForPostgreSqlArmClient(client).GetCosmosDBForPostgreSqlClusterServerResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="CosmosDBForPostgreSqlConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBForPostgreSqlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -148,25 +129,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlRoleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBForPostgreSqlRoleResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlRoleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBForPostgreSqlArmClient.GetCosmosDBForPostgreSqlRoleResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlRoleResource"/> object. </returns>
-        public static CosmosDBForPostgreSqlRoleResource GetCosmosDBForPostgreSqlRoleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableCosmosDBForPostgreSqlArmClient(client).GetCosmosDBForPostgreSqlRoleResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -205,6 +167,44 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlRoleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBForPostgreSqlRoleResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlRoleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBForPostgreSqlArmClient.GetCosmosDBForPostgreSqlRoleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlRoleResource"/> object. </returns>
+        public static CosmosDBForPostgreSqlRoleResource GetCosmosDBForPostgreSqlRoleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCosmosDBForPostgreSqlArmClient(client).GetCosmosDBForPostgreSqlRoleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CosmosDBForPostgreSqlClusterServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBForPostgreSqlClusterServerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBForPostgreSqlClusterServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBForPostgreSqlArmClient.GetCosmosDBForPostgreSqlClusterServerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterServerResource"/> object. </returns>
+        public static CosmosDBForPostgreSqlClusterServerResource GetCosmosDBForPostgreSqlClusterServerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCosmosDBForPostgreSqlArmClient(client).GetCosmosDBForPostgreSqlClusterServerResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of CosmosDBForPostgreSqlClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -298,6 +298,78 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         }
 
         /// <summary>
+        /// Checks availability of a cluster name. Cluster names should be globally unique; at least 3 characters and at most 40 characters long; they must only contain lowercase letters, numbers, and hyphens; and must not start or end with a hyphen.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBForPostgreSqlSubscriptionResource.CheckCosmosDBForPostgreSqlClusterNameAvailability(CosmosDBForPostgreSqlClusterNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult>> CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableCosmosDBForPostgreSqlSubscriptionResource(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks availability of a cluster name. Cluster names should be globally unique; at least 3 characters and at most 40 characters long; they must only contain lowercase letters, numbers, and hyphens; and must not start or end with a hyphen.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBForPostgreSqlSubscriptionResource.CheckCosmosDBForPostgreSqlClusterNameAvailability(CosmosDBForPostgreSqlClusterNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> CheckCosmosDBForPostgreSqlClusterNameAvailability(this SubscriptionResource subscriptionResource, CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCosmosDBForPostgreSqlSubscriptionResource(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailability(content, cancellationToken);
+        }
+
+        /// <summary>
         /// Lists all clusters in a subscription.
         /// <list type="bullet">
         /// <item>
@@ -310,7 +382,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -346,7 +418,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
+        /// <description>2023-03-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,78 +439,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCosmosDBForPostgreSqlSubscriptionResource(subscriptionResource).GetCosmosDBForPostgreSqlClusters(cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks availability of a cluster name. Cluster names should be globally unique; at least 3 characters and at most 40 characters long; they must only contain lowercase letters, numbers, and hyphens; and must not start or end with a hyphen.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBForPostgreSqlSubscriptionResource.CheckCosmosDBForPostgreSqlClusterNameAvailability(CosmosDBForPostgreSqlClusterNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The required parameters for checking if cluster name is available. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult>> CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableCosmosDBForPostgreSqlSubscriptionResource(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Checks availability of a cluster name. Cluster names should be globally unique; at least 3 characters and at most 40 characters long; they must only contain lowercase letters, numbers, and hyphens; and must not start or end with a hyphen.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBForPostgreSqlSubscriptionResource.CheckCosmosDBForPostgreSqlClusterNameAvailability(CosmosDBForPostgreSqlClusterNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The required parameters for checking if cluster name is available. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> CheckCosmosDBForPostgreSqlClusterNameAvailability(this SubscriptionResource subscriptionResource, CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableCosmosDBForPostgreSqlSubscriptionResource(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailability(content, cancellationToken);
         }
     }
 }
