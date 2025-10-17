@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectedRegistryStatusDetail"/>. </summary>
         /// <param name="statusDetailType"> The component of the connected registry corresponding to the status. </param>
-        /// <param name="code"> The code of the status. </param>
+        /// <param name="code"> The HTTP status code. </param>
         /// <param name="description"> The description of the status. </param>
         /// <param name="timestamp"> The timestamp of the status. </param>
         /// <param name="correlationId"> The correlation ID of the status. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The component of the connected registry corresponding to the status. </summary>
         [WirePath("type")]
         public string StatusDetailType { get; }
-        /// <summary> The code of the status. </summary>
+        /// <summary> The HTTP status code. </summary>
         [WirePath("code")]
         public string Code { get; }
         /// <summary> The description of the status. </summary>

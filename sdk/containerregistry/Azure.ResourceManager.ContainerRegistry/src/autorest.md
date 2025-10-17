@@ -7,7 +7,8 @@ azure-arm: true
 csharp: true
 library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
-require: https://github.com/Azure/azure-rest-api-specs/blob/a55917cb512540bc3d0aec760d4e28712c3a4ae0/specification/containerregistry/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/46f0876572153f2d941e862613abb95953f71d34/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/readme.md
+tag: package-2025-11-dotnetmix
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,7 +21,7 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug:
+# mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -267,6 +268,7 @@ rename-mapping:
   RoleAssignmentMode: ContainerRegistryRoleAssignmentMode
   ConnectedRegistry.properties.clientTokenIds: -|arm-id
   ConnectedRegistryUpdateParameters.properties.clientTokenIds: -|arm-id
+  PrivateLinkResource.properties.requiredZoneNames: RequiredZoneNamesList
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun
@@ -274,6 +276,10 @@ override-operation-name:
   Builds_GetBuildSourceUploadUrl: GetBuildSourceUploadUrl
 
 directive:
+  - from: containerregistry_build.json
+    where: $.info
+    transform: >
+      $['title'] = 'ContainerRegistryManagementClient';
   # these two renames of operation would make the xml doc incorrect, but currently this is required because now the same operation would contain multiple api-versions if we do not rename.
   - rename-operation:
       from: Registries_GetBuildSourceUploadUrl
@@ -282,31 +288,17 @@ directive:
       from: Registries_ScheduleRun
       to: Schedules_ScheduleRun
   - from: swagger-document
-    where: $.definitions
-    transform: >
-      $.IdentityProperties.properties.principalId.readOnly = true;
-      $.IdentityProperties.properties.tenantId.readOnly = true;
-      $.UserIdentityProperties.properties.principalId.readOnly = true;
-      $.UserIdentityProperties.properties.clientId.readOnly = true;
-  - from: containerregistry.json
-    where: $.definitions
-    transform: >
-      $.LoginServerProperties.properties.tls = {
-          "$ref": "#/definitions/TlsProperties",
-          "description": "The TLS properties of the connected registry login server.",
-          "readOnly": true
-        };
-      $.TlsProperties.properties.certificate = {
-          "$ref": "#/definitions/TlsCertificateProperties",
-          "description": "The certificate used to configure HTTPS for the login server.",
-          "readOnly": true
-        };
-  - from: swagger-document
     where: $.definitions..expiry
     transform: >
       $['x-ms-client-name'] = 'ExpireOn';
-  - from: types.json
-    where: $.parameters.SubscriptionIdParameter.format
-    transform: >
-      return undefined;
+```
+
+### Tag: package-2025-11-dotnetmix
+
+These settings apply only when `--tag=package-2025-11-dotnetmix` is specified on the command line.
+
+``` yaml $(tag) == 'package-2025-11-dotnetmix'
+input-file:
+  - https://github.com/kazrael2119/azure-rest-api-specs/tree/46f0876572153f2d941e862613abb95953f71d34/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/containerregistry.json
+  - https://github.com/kazrael2119/azure-rest-api-specs/tree/46f0876572153f2d941e862613abb95953f71d34/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2025-03-01-preview/containerregistry_build.json
 ```
