@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalR_Get</description>
+        /// <description>SignalRResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalR_Get</description>
+        /// <description>SignalRResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
