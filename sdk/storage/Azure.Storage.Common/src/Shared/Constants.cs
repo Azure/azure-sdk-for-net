@@ -622,6 +622,10 @@ namespace Azure.Storage
                 public const string EncryptionScopeUpper = "SES";
                 public const string DelegatedUserObjectId = "sduoid";
                 public const string DelegatedUserObjectIdUpper = "SDUOID";
+                public const string RequestHeaders = "srh";
+                public const string RequestHeadersUpper = "SRH";
+                public const string RequestQueryParameters = "srq";
+                public const string RequestQueryParametersUpper = "SRQ";
             }
 
             internal static class Resource
