@@ -110,6 +110,8 @@ namespace Azure.AI.Speech.Transcription
         protected TranscriptionClient() { }
         public TranscriptionClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public TranscriptionClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Speech.Transcription.TranscriptionClientOptions options) { }
+        public TranscriptionClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public TranscriptionClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Speech.Transcription.TranscriptionClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.Speech.Transcription.TranscriptionResult> Transcribe(Azure.AI.Speech.Transcription.TranscribeRequestContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Transcribe(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
@@ -139,9 +141,9 @@ namespace Azure.AI.Speech.Transcription
     public partial class TranscriptionOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Speech.Transcription.TranscriptionOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Speech.Transcription.TranscriptionOptions>
     {
         public TranscriptionOptions() { }
-        public System.Collections.Generic.IList<int> ActiveChannels { get { throw null; } }
         public System.Uri AudioUrl { get { throw null; } set { } }
-        public Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions DiarizationOptions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<int> Channels { get { throw null; } }
+        public Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions Diarization { get { throw null; } set { } }
         public Azure.AI.Speech.Transcription.EnhancedModeProperties EnhancedMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Locales { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Uri> Models { get { throw null; } }
@@ -171,6 +173,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AISpeechTranscriptionClientBuilderExtensions
     {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Speech.Transcription.TranscriptionClient, Azure.AI.Speech.Transcription.TranscriptionClientOptions> AddTranscriptionClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Speech.Transcription.TranscriptionClient, Azure.AI.Speech.Transcription.TranscriptionClientOptions> AddTranscriptionClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Speech.Transcription.TranscriptionClient, Azure.AI.Speech.Transcription.TranscriptionClientOptions> AddTranscriptionClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
