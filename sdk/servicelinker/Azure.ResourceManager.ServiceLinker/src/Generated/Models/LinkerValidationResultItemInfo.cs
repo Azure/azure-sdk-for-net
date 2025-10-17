@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> The validation item for a linker. </summary>
+    /// <summary> The validation item for a Linker. </summary>
     public partial class LinkerValidationResultItemInfo
     {
         /// <summary>
