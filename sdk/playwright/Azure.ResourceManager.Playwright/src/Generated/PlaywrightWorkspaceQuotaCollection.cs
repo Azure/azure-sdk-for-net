@@ -16,7 +16,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Playwright.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Playwright
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.Playwright
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != PlaywrightWorkspaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PlaywrightWorkspaceResource.ResourceType), id);
             }
         }
 
