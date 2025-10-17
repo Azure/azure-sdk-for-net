@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="SelfHelpResource"/> and their operations.
@@ -37,7 +37,7 @@ namespace MgmtTypeSpec
         internal SelfHelpResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(SelfHelpResource.ResourceType, out string selfHelpResourceApiVersion);
-            _solutionResourcesClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", SelfHelpResource.ResourceType.Namespace, Diagnostics);
+            _solutionResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", SelfHelpResource.ResourceType.Namespace, Diagnostics);
             _solutionResourcesRestClient = new SolutionResources(_solutionResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The updatable properties of the FooSettings. </summary>
     internal partial class FooSettingsUpdateProperties : IJsonModel<FooSettingsUpdateProperties>
@@ -112,7 +112,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FooSettingsUpdateProperties)} does not support writing '{options.Format}' format.");
             }

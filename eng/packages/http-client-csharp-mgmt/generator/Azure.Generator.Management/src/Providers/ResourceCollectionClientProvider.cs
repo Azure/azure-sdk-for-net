@@ -142,9 +142,14 @@ namespace Azure.Generator.Management.Providers
         protected override CSharpType? BuildBaseType() => typeof(ArmCollection);
 
         protected override CSharpType[] BuildImplements() =>
-            _getAll is null
+            ShouldSkipIEnumerableImplementation()
             ? []
             : [new CSharpType(typeof(IEnumerable<>), _resource.Type), new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)];
+
+        private bool ShouldSkipIEnumerableImplementation()
+        {
+            return _getAll is null || _getAll.InputMethod.Parameters.Any(p => p.DefaultValue != null);
+        }
 
         protected override PropertyProvider[] BuildProperties()
         {
@@ -196,7 +201,7 @@ namespace Azure.Generator.Management.Providers
                 fields.Add(clientInfo.DiagnosticsField);
                 fields.Add(clientInfo.RestClientField);
             }
-            return [ .. fields, .. _pathParameterMap.Values];
+            return [.. fields, .. _pathParameterMap.Values];
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -294,7 +299,7 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider[] BuildEnumeratorMethods()
         {
-            if (_getAll is null)
+            if (ShouldSkipIEnumerableImplementation())
             {
                 return [];
             }

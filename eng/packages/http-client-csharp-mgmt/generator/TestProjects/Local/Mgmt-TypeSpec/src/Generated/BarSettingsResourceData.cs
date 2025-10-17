@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class BarSettingsResourceData : ResourceData
@@ -23,8 +23,9 @@ namespace MgmtTypeSpec
         /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
         /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
         /// <param name="prop2"> Gets or sets the Prop2. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/> is null. </exception>
-        public BarSettingsResourceData(string innerProp2, int middleProp1, int prop2)
+        /// <param name="discriminatorProperty"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/> or <paramref name="discriminatorProperty"/> is null. </exception>
+        public BarSettingsResourceData(string innerProp2, int middleProp1, int prop2, LimitJsonObject discriminatorProperty)
         {
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
 
@@ -32,6 +33,7 @@ namespace MgmtTypeSpec
             InnerProp2 = innerProp2;
             MiddleProp1 = middleProp1;
             Prop2 = prop2;
+            DiscriminatorProperty = discriminatorProperty;
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
@@ -46,7 +48,8 @@ namespace MgmtTypeSpec
         /// <param name="anotherProperty"></param>
         /// <param name="flattenedNestedProperty"></param>
         /// <param name="optionalFlattenProperty"></param>
-        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty, OptionalFlattenPropertyType optionalFlattenProperty) : base(id, name, resourceType, systemData)
+        /// <param name="discriminatorProperty"></param>
+        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty, OptionalFlattenPropertyType optionalFlattenProperty, LimitJsonObject discriminatorProperty) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -55,6 +58,7 @@ namespace MgmtTypeSpec
             AnotherProperty = anotherProperty;
             FlattenedNestedProperty = flattenedNestedProperty;
             OptionalFlattenProperty = optionalFlattenProperty;
+            DiscriminatorProperty = discriminatorProperty;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -74,6 +78,9 @@ namespace MgmtTypeSpec
 
         /// <summary> Gets or sets the OptionalFlattenProperty. </summary>
         internal OptionalFlattenPropertyType OptionalFlattenProperty { get; set; }
+
+        /// <summary> Gets or sets the DiscriminatorProperty. </summary>
+        public LimitJsonObject DiscriminatorProperty { get; set; }
 
         /// <summary> enabled. </summary>
         public bool? IsEnabled

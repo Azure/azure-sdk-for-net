@@ -84,6 +84,21 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WritePropertyName("isSuperUser"u8);
                 writer.WriteBooleanValue(IsSuperUser.Value);
             }
+            if (Optional.IsDefined(RoleName))
+            {
+                writer.WritePropertyName("roleName"u8);
+                writer.WriteStringValue(RoleName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            {
+                writer.WritePropertyName("lastUpdated"u8);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Owns))
+            {
+                writer.WritePropertyName("owns"u8);
+                writer.WriteStringValue(Owns);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -129,6 +144,9 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             string branchId = default;
             IList<string> permissions = default;
             bool? isSuperUser = default;
+            string roleName = default;
+            DateTimeOffset? lastUpdated = default;
+            string owns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,6 +217,25 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     isSuperUser = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("roleName"u8))
+                {
+                    roleName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastUpdated"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastUpdated = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("owns"u8))
+                {
+                    owns = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -214,6 +251,9 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 branchId,
                 permissions ?? new ChangeTrackingList<string>(),
                 isSuperUser,
+                roleName,
+                lastUpdated,
+                owns,
                 serializedAdditionalRawData);
         }
 

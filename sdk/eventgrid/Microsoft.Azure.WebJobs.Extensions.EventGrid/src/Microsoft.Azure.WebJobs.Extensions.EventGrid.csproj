@@ -8,12 +8,14 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Azure.Messaging.EventGrid" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
 
   <ItemGroup>

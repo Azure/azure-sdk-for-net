@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a JobResource along with the instance operations that can be performed on it.
@@ -52,7 +52,7 @@ namespace MgmtTypeSpec
         internal JobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string jobResourceApiVersion);
-            _jobResourcesClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _jobResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _jobResourcesRestClient = new JobResources(_jobResourcesClientDiagnostics, Pipeline, Endpoint, jobResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -170,7 +170,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, JobResourcePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation<JobResource> operation = new MgmtTypeSpecArmOperation<JobResource>(
+                TestsArmOperation<JobResource> operation = new TestsArmOperation<JobResource>(
                     new JobResourceOperationSource(Client),
                     _jobResourcesClientDiagnostics,
                     Pipeline,
@@ -209,7 +209,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, JobResourcePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation<JobResource> operation = new MgmtTypeSpecArmOperation<JobResource>(
+                TestsArmOperation<JobResource> operation = new TestsArmOperation<JobResource>(
                     new JobResourceOperationSource(Client),
                     _jobResourcesClientDiagnostics,
                     Pipeline,
