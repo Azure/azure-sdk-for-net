@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.Support.Models
                 throw new FormatException($"The model {nameof(SecondaryConsentEnabled)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(LocalDescription))
             {
                 writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                writer.WriteStringValue(LocalDescription);
             }
-            if (Optional.IsDefined(SecondaryConsentEnabledType))
+            if (Optional.IsDefined(LocalSecondaryConsentEnabledType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(SecondaryConsentEnabledType);
+                writer.WriteStringValue(LocalSecondaryConsentEnabledType);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
