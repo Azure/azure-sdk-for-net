@@ -43,6 +43,7 @@ namespace MgmtTypeSpec.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Gets or sets the JobName. </summary>
+        [WirePath("properties.jobName")]
         public string JobName
         {
             get

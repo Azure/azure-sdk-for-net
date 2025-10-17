@@ -42,6 +42,7 @@ namespace MgmtTypeSpec
         internal EndpointProperties Properties { get; set; }
 
         /// <summary> Gets or sets the Prop. </summary>
+        [WirePath("properties.prop")]
         public string EndpointProp
         {
             get

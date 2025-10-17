@@ -42,6 +42,7 @@ namespace MgmtTypeSpec
         internal BarQuotaProperties Properties { get; set; }
 
         /// <summary> enabled. </summary>
+        [WirePath("properties.left")]
         public int? BarQuotaLeft
         {
             get

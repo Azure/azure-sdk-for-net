@@ -48,6 +48,7 @@ namespace MgmtTypeSpec.Models
         internal FooSettingsPropertiesMetaData MetaData { get; }
 
         /// <summary> Gets the MetaDatas. </summary>
+        [WirePath("metaData.metaDatas")]
         public IList<string> MetaDatas
         {
             get

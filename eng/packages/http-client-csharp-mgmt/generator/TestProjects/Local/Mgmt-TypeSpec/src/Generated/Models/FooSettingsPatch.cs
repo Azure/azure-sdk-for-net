@@ -36,6 +36,7 @@ namespace MgmtTypeSpec.Models
         internal FooSettingsUpdateProperties Properties { get; set; }
 
         /// <summary> Gets or sets the AccessControlEnabled. </summary>
+        [WirePath("properties.accessControlEnabled")]
         public bool? AccessControlEnabled
         {
             get

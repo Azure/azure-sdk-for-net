@@ -52,6 +52,7 @@ namespace MgmtTypeSpec
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> something. </summary>
+        [WirePath("properties.something")]
         public string ZooSomething
         {
             get

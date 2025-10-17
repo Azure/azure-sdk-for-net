@@ -43,6 +43,7 @@ namespace MgmtTypeSpec.Models
         internal ZooUpdateProperties Properties { get; set; }
 
         /// <summary> something. </summary>
+        [WirePath("properties.something")]
         public string ZooUpdateSomething
         {
             get

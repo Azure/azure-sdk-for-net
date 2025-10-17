@@ -66,6 +66,7 @@ namespace MgmtTypeSpec.Models
         internal AllocatedQuotaToSubscriptionList AllocatedToSubscriptions { get; }
 
         /// <summary> List of Group Quota Limit allocated to subscriptions. </summary>
+        [WirePath("allocatedToSubscriptions.value")]
         public IList<AllocatedToSubscription> AllocatedToSubscriptionsValue
         {
             get

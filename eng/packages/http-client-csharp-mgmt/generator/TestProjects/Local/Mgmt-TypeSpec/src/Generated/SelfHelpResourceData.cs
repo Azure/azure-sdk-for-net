@@ -42,6 +42,7 @@ namespace MgmtTypeSpec
         internal SelfHelpResourceProperties Properties { get; }
 
         /// <summary> Gets the SelfHelpId. </summary>
+        [WirePath("properties.selfHelpId")]
         public string SelfHelpId
         {
             get

@@ -52,7 +52,7 @@ namespace MgmtTypeSpec
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> the service url. </summary>
-        [WirePath("serviceUrl")]
+        [WirePath("properties.serviceUrl")]
         public Uri ServiceUri
         {
             get
@@ -70,7 +70,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> something. </summary>
-        [WirePath("something")]
+        [WirePath("properties.something")]
         public string Something
         {
             get
@@ -88,7 +88,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> boolean value. </summary>
-        [WirePath("boolValue")]
+        [WirePath("properties.boolValue")]
         public bool? BoolValue
         {
             get
@@ -106,7 +106,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> float value. </summary>
-        [WirePath("floatValue")]
+        [WirePath("properties.floatValue")]
         public float? FloatValue
         {
             get
@@ -124,7 +124,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> double value. </summary>
-        [WirePath("doubleValue")]
+        [WirePath("properties.doubleValue")]
         public double? DoubleValue
         {
             get
@@ -142,7 +142,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the Prop1. </summary>
-        [WirePath("prop1")]
+        [WirePath("properties.prop1")]
         public IList<string> Prop1
         {
             get
@@ -152,7 +152,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the Prop2. </summary>
-        [WirePath("prop2")]
+        [WirePath("properties.prop2")]
         public IList<int> Prop2
         {
             get
@@ -162,6 +162,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties.properties")]
         public FooProperties NestedPropertyProperties
         {
             get

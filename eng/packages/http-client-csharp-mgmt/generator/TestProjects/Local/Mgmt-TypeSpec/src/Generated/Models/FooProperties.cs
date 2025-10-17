@@ -91,6 +91,7 @@ namespace MgmtTypeSpec.Models
         internal NestedFooModel NestedProperty { get; set; }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("nestedProperty.properties")]
         public FooProperties NestedPropertyProperties
         {
             get

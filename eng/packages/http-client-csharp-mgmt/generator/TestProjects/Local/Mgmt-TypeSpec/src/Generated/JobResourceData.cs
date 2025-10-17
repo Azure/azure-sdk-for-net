@@ -47,6 +47,7 @@ namespace MgmtTypeSpec
         internal JobProperties Properties { get; }
 
         /// <summary> Gets or sets the JobName. </summary>
+        [WirePath("properties.jobName")]
         public string JobName
         {
             get

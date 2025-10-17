@@ -42,6 +42,7 @@ namespace MgmtTypeSpec
         internal HciVmInstanceProperties Properties { get; }
 
         /// <summary> Gets the Sku. </summary>
+        [WirePath("properties.sku")]
         public string HciVmInstanceSku
         {
             get
