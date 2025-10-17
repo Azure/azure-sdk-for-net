@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,14 +25,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
 
         EdgeSolutionTemplateVersionResource IOperationSource<EdgeSolutionTemplateVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeSolutionTemplateVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
-            return new EdgeSolutionTemplateVersionResource(_client, data);
+            // Parse the operation status response to extract the actual resource ID
+            var resourceId = ExtractResourceIdFromOperationResponse(response);
+            return new EdgeSolutionTemplateVersionResource(_client, resourceId);
         }
 
         async ValueTask<EdgeSolutionTemplateVersionResource> IOperationSource<EdgeSolutionTemplateVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeSolutionTemplateVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
-            return await Task.FromResult(new EdgeSolutionTemplateVersionResource(_client, data)).ConfigureAwait(false);
+            // Parse the operation status response to extract the actual resource ID
+            var resourceId = ExtractResourceIdFromOperationResponse(response);
+            return await Task.FromResult(new EdgeSolutionTemplateVersionResource(_client, resourceId)).ConfigureAwait(false);
+        }
+
+        private ResourceIdentifier ExtractResourceIdFromOperationResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            var root = document.RootElement;
+            
+            // Try to get the resource ID from properties.solutionTemplateVersionId
+            if (root.TryGetProperty("properties", out var properties) && 
+                properties.TryGetProperty("solutionTemplateVersionId", out var solutionTemplateVersionId))
+            {
+                return new ResourceIdentifier(solutionTemplateVersionId.GetString());
+            }
+            
+            // Fallback to resourceId if available
+            if (root.TryGetProperty("resourceId", out var resourceId))
+            {
+                return new ResourceIdentifier(resourceId.GetString());
+            }
+            
+            // If neither is available, throw an exception
+            throw new InvalidOperationException("Unable to extract resource ID from operation response. Expected 'properties.solutionTemplateVersionId' or 'resourceId' field.");
         }
     }
 }
