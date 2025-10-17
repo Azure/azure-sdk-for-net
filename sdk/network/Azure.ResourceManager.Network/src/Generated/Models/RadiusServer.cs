@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="RadiusServer"/>. </summary>
         /// <param name="radiusServerAddress"> The address of this radius server. </param>
         /// <param name="radiusServerScore"> The initial score assigned to this radius server. </param>
-        /// <param name="radiusServerSecret"> The secret used for this radius server. </param>
+        /// <param name="radiusServerSecret"> The secret used for this radius server. We will no longer return radiusServerSecret in VirtualNetworkGateway Create/Update/Get/List/UpdateTags APIs response. Please use VirtualNetworkGateway ListRadiusSecrets API to fetch radius server secrets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RadiusServer(string radiusServerAddress, long? radiusServerScore, string radiusServerSecret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The initial score assigned to this radius server. </summary>
         [WirePath("radiusServerScore")]
         public long? RadiusServerScore { get; set; }
-        /// <summary> The secret used for this radius server. </summary>
+        /// <summary> The secret used for this radius server. We will no longer return radiusServerSecret in VirtualNetworkGateway Create/Update/Get/List/UpdateTags APIs response. Please use VirtualNetworkGateway ListRadiusSecrets API to fetch radius server secrets. </summary>
         [WirePath("radiusServerSecret")]
         public string RadiusServerSecret { get; set; }
     }

@@ -1,14 +1,14 @@
 # Release History
 
-## 1.13.0-beta.1 (Unreleased)
+## 1.13.0 (2025-10-24)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-2024-10-01' to 'package-2025-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c712a519a493d13c1cd997aa4e5adbab8df76e85/specification/network/resource-manager/readme.md.
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.48.0 to 1.49.0
 
 ## 1.12.0 (2025-09-19)
 

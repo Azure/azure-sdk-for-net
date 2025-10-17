@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateExpressRouteCrossConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ExpressRouteCrossConnectionUpdate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCrossConnectionUpdate.json
             // this example is just showing the usage of "ExpressRouteCrossConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetExpressRouteCrossConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ExpressRouteCrossConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCrossConnectionGet.json
             // this example is just showing the usage of "ExpressRouteCrossConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExpressRouteCrossConnectionListByResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ExpressRouteCrossConnectionListByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCrossConnectionListByResourceGroup.json
             // this example is just showing the usage of "ExpressRouteCrossConnections_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetExpressRouteCrossConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ExpressRouteCrossConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCrossConnectionGet.json
             // this example is just showing the usage of "ExpressRouteCrossConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetExpressRouteCrossConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/ExpressRouteCrossConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCrossConnectionGet.json
             // this example is just showing the usage of "ExpressRouteCrossConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
