@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using MgmtTypeSpec.Models;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class ZoosGetBySubscriptionCollectionResultOfT : Pageable<ZooData>
     {
@@ -61,7 +61,7 @@ namespace MgmtTypeSpec
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.GetZoos");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetZoos");
             scope.Start();
             try
             {

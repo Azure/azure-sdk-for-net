@@ -14,11 +14,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="PlaywrightQuotaResource"/> and their operations.
@@ -45,7 +45,7 @@ namespace MgmtTypeSpec
         {
             TryGetApiVersion(PlaywrightQuotaResource.ResourceType, out string playwrightQuotaApiVersion);
             _location = location;
-            _playwrightQuotasClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", PlaywrightQuotaResource.ResourceType.Namespace, Diagnostics);
+            _playwrightQuotasClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PlaywrightQuotaResource.ResourceType.Namespace, Diagnostics);
             _playwrightQuotasRestClient = new PlaywrightQuotas(_playwrightQuotasClientDiagnostics, Pipeline, Endpoint, playwrightQuotaApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }

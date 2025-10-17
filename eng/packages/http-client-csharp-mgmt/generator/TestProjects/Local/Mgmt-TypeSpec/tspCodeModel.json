@@ -1,5 +1,5 @@
 {
-  "name": "MgmtTypeSpec",
+  "name": "Azure.Generator.MgmtTypeSpec.Tests",
   "apiVersions": [
     "2024-05-01"
   ],
@@ -60,7 +60,7 @@
           "decorators": []
         }
       ],
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "doc": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
       "isFixed": false,
       "isFlags": false,
@@ -95,7 +95,7 @@
           "decorators": []
         }
       ],
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "doc": "Extensible enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
       "isFixed": false,
       "isFlags": false,
@@ -172,7 +172,7 @@
           "decorators": []
         }
       ],
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "doc": "Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).",
       "isFixed": false,
       "isFlags": false,
@@ -249,7 +249,7 @@
           "decorators": []
         }
       ],
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "doc": "The kind of entity that created the resource.",
       "isFixed": false,
       "isFlags": false,
@@ -312,7 +312,7 @@
           "decorators": []
         }
       ],
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "doc": "The provisioning state of a resource type.",
       "isFixed": false,
       "isFlags": false,
@@ -361,7 +361,7 @@
           "decorators": []
         }
       ],
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "doc": "The supported ExtendedLocation types.",
       "isFixed": false,
       "isFlags": false,
@@ -395,7 +395,7 @@
           "decorators": []
         }
       ],
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "doc": "The limit object type.",
       "isFixed": false,
       "isFlags": false,
@@ -430,7 +430,7 @@
           "decorators": []
         }
       ],
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "doc": "Available Playwright quota types.",
       "isFixed": false,
       "isFlags": false,
@@ -465,7 +465,7 @@
           "decorators": []
         }
       ],
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "doc": "Playwright quota names.",
       "isFixed": false,
       "isFlags": false,
@@ -500,7 +500,7 @@
           "decorators": []
         }
       ],
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "doc": "The available API versions.",
       "isFixed": true,
       "isFlags": false,
@@ -1811,7 +1811,7 @@
       "$id": "204",
       "kind": "model",
       "name": "FooPreviewAction",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.FooPreviewAction",
       "usage": "Input,Output,Json",
       "decorators": [
@@ -1878,7 +1878,7 @@
       "$id": "209",
       "kind": "model",
       "name": "ErrorResponse",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
       "usage": "Json,Exception",
       "doc": "Common error response for all Azure Resource Manager APIs to return error details for failed operations.",
@@ -1900,7 +1900,7 @@
             "$id": "211",
             "kind": "model",
             "name": "ErrorDetail",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
             "usage": "Output,Json,Exception,LroInitial,LroPolling,LroFinalEnvelope",
             "doc": "The error detail.",
@@ -2032,7 +2032,7 @@
                     "$id": "222",
                     "kind": "model",
                     "name": "ErrorAdditionalInfo",
-                    "namespace": "MgmtTypeSpec",
+                    "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
                     "usage": "Output,Json,Exception,LroInitial,LroPolling,LroFinalEnvelope",
                     "doc": "The resource management error additional info.",
@@ -2140,7 +2140,7 @@
       "$id": "227",
       "kind": "model",
       "name": "OperationListResult",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult",
       "usage": "Output,Json",
       "doc": "A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.",
@@ -2165,7 +2165,7 @@
               "$id": "230",
               "kind": "model",
               "name": "Operation",
-              "namespace": "MgmtTypeSpec",
+              "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
               "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation",
               "usage": "Output,Json",
               "doc": "Details of a REST API operation, returned from the Resource Provider Operations API",
@@ -2239,7 +2239,7 @@
                     "$id": "236",
                     "kind": "model",
                     "name": "OperationDisplay",
-                    "namespace": "MgmtTypeSpec",
+                    "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay",
                     "usage": "Output,Json",
                     "doc": "Localized display information for and operation.",
@@ -2476,7 +2476,7 @@
       "$id": "250",
       "kind": "model",
       "name": "PrivateLinkListResult",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
       "usage": "Output,Json",
       "doc": "The response of a PrivateLink list operation.",
@@ -2501,7 +2501,7 @@
               "$id": "253",
               "kind": "model",
               "name": "PrivateLink",
-              "namespace": "MgmtTypeSpec",
+              "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
               "crossLanguageDefinitionId": "MgmtTypeSpec.PrivateLink",
               "usage": "Output,Json",
               "doc": "Concrete proxy resource types can be created by aliasing this type using a specific property type.",
@@ -2519,7 +2519,7 @@
                 "$id": "254",
                 "kind": "model",
                 "name": "ProxyResource",
-                "namespace": "MgmtTypeSpec",
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                 "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ProxyResource",
                 "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
                 "doc": "The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location",
@@ -2534,7 +2534,7 @@
                   "$id": "255",
                   "kind": "model",
                   "name": "Resource",
-                  "namespace": "MgmtTypeSpec",
+                  "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource",
                   "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
                   "doc": "Common fields that are returned in the response for all Azure Resource Manager resources",
@@ -2648,7 +2648,7 @@
                         "$id": "265",
                         "kind": "model",
                         "name": "SystemData",
-                        "namespace": "MgmtTypeSpec",
+                        "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData",
                         "usage": "Output,Json,LroInitial,LroFinalEnvelope",
                         "doc": "Metadata pertaining to creation and last modification of the resource.",
@@ -2853,7 +2853,7 @@
                     "$id": "279",
                     "kind": "model",
                     "name": "PrivateLinkResourceProperties",
-                    "namespace": "MgmtTypeSpec",
+                    "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.PrivateLinkResourceProperties",
                     "usage": "Output,Json",
                     "doc": "Properties of a private link resource.",
@@ -2996,7 +2996,7 @@
                     "$id": "289",
                     "kind": "model",
                     "name": "ManagedServiceIdentity",
-                    "namespace": "MgmtTypeSpec",
+                    "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ManagedServiceIdentity",
                     "usage": "Output,Json",
                     "doc": "Managed service identity (system assigned and/or user assigned identities)",
@@ -3118,7 +3118,7 @@
                               "$id": "301",
                               "kind": "model",
                               "name": "UserAssignedIdentity",
-                              "namespace": "MgmtTypeSpec",
+                              "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                               "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.UserAssignedIdentity",
                               "usage": "Output,Json",
                               "doc": "User assigned identity properties",
@@ -3197,7 +3197,7 @@
                                 }
                               ]
                             },
-                            "namespace": "MgmtTypeSpec"
+                            "namespace": "Azure.Generator.MgmtTypeSpec.Tests"
                           },
                           "decorators": []
                         },
@@ -3307,7 +3307,7 @@
       "$id": "311",
       "kind": "model",
       "name": "StartParameterBody",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.start.Parameter.body.anonymous",
       "usage": "Input",
       "decorators": [
@@ -3326,7 +3326,7 @@
             "$id": "313",
             "kind": "model",
             "name": "StartRequest",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.StartRequest",
             "usage": "Input,Json",
             "doc": "Start SAP instance(s) request body.",
@@ -3383,7 +3383,7 @@
       "$id": "316",
       "kind": "model",
       "name": "OperationStatusResult",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationStatusResult",
       "usage": "Output,Json,LroInitial,LroFinalEnvelope",
       "doc": "The current status of an async operation.",
@@ -3663,7 +3663,7 @@
       "$id": "338",
       "kind": "model",
       "name": "ArmOperationStatusResourceProvisioningState",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus",
       "usage": "LroPolling",
       "doc": "Standard Azure Resource Manager operation status response",
@@ -3870,7 +3870,7 @@
       "$id": "353",
       "kind": "model",
       "name": "Foo",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.Foo",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
       "doc": "Concrete tracked resource types can be created by aliasing this type using a specific property type.",
@@ -3945,7 +3945,7 @@
         "$id": "360",
         "kind": "model",
         "name": "TrackedResource",
-        "namespace": "MgmtTypeSpec",
+        "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource",
         "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
         "doc": "The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'",
@@ -4044,7 +4044,7 @@
             "$id": "369",
             "kind": "model",
             "name": "FooProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.FooProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
             "decorators": [
@@ -4252,7 +4252,7 @@
                   "$id": "385",
                   "kind": "model",
                   "name": "NestedFooModel",
-                  "namespace": "MgmtTypeSpec",
+                  "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                   "crossLanguageDefinitionId": "MgmtTypeSpec.NestedFooModel",
                   "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
                   "decorators": [
@@ -4353,7 +4353,7 @@
             "$id": "390",
             "kind": "model",
             "name": "ExtendedLocation",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ExtendedLocation",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
             "doc": "The complex type of the extended location.",
@@ -4445,7 +4445,7 @@
       "$id": "394",
       "kind": "model",
       "name": "FooListResult",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
       "usage": "Output,Json",
       "doc": "The response of a Foo list operation.",
@@ -4524,7 +4524,7 @@
       "$id": "400",
       "kind": "model",
       "name": "FooSettings",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.FooSettings",
       "usage": "Input,Output,Json",
       "doc": "Concrete proxy resource types can be created by aliasing this type using a specific property type.",
@@ -4600,7 +4600,7 @@
             "$id": "406",
             "kind": "model",
             "name": "FooSettingsProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.FooSettingsProperties",
             "usage": "Input,Output,Json",
             "decorators": [
@@ -4665,7 +4665,7 @@
                   "$id": "411",
                   "kind": "model",
                   "name": "FooSettingsPropertiesMetaData",
-                  "namespace": "MgmtTypeSpec",
+                  "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                   "crossLanguageDefinitionId": "MgmtTypeSpec.FooSettingsPropertiesMetaData",
                   "usage": "Output,Json",
                   "decorators": [
@@ -4764,7 +4764,7 @@
       "$id": "415",
       "kind": "model",
       "name": "FooSettingsUpdate",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModel",
       "usage": "Input,Json",
       "doc": "The type used for update operations of the FooSettings.",
@@ -4785,7 +4785,7 @@
             "$id": "417",
             "kind": "model",
             "name": "FooSettingsUpdateProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModelProperties",
             "usage": "Input,Json",
             "doc": "The updatable properties of the FooSettings.",
@@ -4845,7 +4845,7 @@
       "$id": "420",
       "kind": "model",
       "name": "Bar",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.Bar",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
       "doc": "Concrete tracked resource types can be created by aliasing this type using a specific property type.",
@@ -4929,7 +4929,7 @@
             "$id": "427",
             "kind": "model",
             "name": "BarProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.BarProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
             "decorators": [
@@ -5119,7 +5119,7 @@
       "$id": "440",
       "kind": "model",
       "name": "BarListResult",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
       "usage": "Output,Json",
       "doc": "The response of a Bar list operation.",
@@ -5198,7 +5198,7 @@
       "$id": "446",
       "kind": "model",
       "name": "BarSettingsResource",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.BarSettingsResource",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
       "doc": "Concrete proxy resource types can be created by aliasing this type using a specific property type.",
@@ -5265,7 +5265,7 @@
             "$id": "450",
             "kind": "model",
             "name": "BarSettingsProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.BarSettingsProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
             "decorators": [
@@ -5372,7 +5372,7 @@
             "$id": "457",
             "kind": "model",
             "name": "BarQuotaProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.BarQuotaProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
             "decorators": [
@@ -5453,7 +5453,7 @@
             "$id": "462",
             "kind": "model",
             "name": "BarNestedQuotaProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.BarNestedQuotaProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
             "decorators": [
@@ -5466,7 +5466,7 @@
               "$id": "463",
               "kind": "model",
               "name": "BarMiddleNestedQuotaProperties",
-              "namespace": "MgmtTypeSpec",
+              "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
               "crossLanguageDefinitionId": "MgmtTypeSpec.BarMiddleNestedQuotaProperties",
               "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
               "decorators": [
@@ -5479,7 +5479,7 @@
                 "$id": "464",
                 "kind": "model",
                 "name": "BarDeeplyNestedQuotaProperties",
-                "namespace": "MgmtTypeSpec",
+                "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                 "crossLanguageDefinitionId": "MgmtTypeSpec.BarDeeplyNestedQuotaProperties",
                 "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
                 "decorators": [
@@ -5666,7 +5666,7 @@
             "$id": "476",
             "kind": "model",
             "name": "optionalFlattenPropertyType",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.optionalFlattenPropertyType",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
             "decorators": [
@@ -5721,7 +5721,7 @@
             "$id": "479",
             "kind": "model",
             "name": "LimitJsonObject",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.LimitJsonObject",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
             "doc": "LimitJson abstract class.",
@@ -5799,7 +5799,7 @@
       "$id": "481",
       "kind": "model",
       "name": "BarQuotaResource",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.BarQuotaResource",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
       "doc": "Concrete proxy resource types can be created by aliasing this type using a specific property type.",
@@ -5899,7 +5899,7 @@
       "$id": "486",
       "kind": "model",
       "name": "Baz",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.Baz",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
       "doc": "Concrete tracked resource types can be created by aliasing this type using a specific property type.",
@@ -5984,7 +5984,7 @@
             "$id": "494",
             "kind": "model",
             "name": "BazProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.BazProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
             "decorators": [
@@ -6096,7 +6096,7 @@
       "$id": "501",
       "kind": "model",
       "name": "BazListResult",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
       "usage": "Output,Json",
       "doc": "The response of a Baz list operation.",
@@ -6175,7 +6175,7 @@
       "$id": "507",
       "kind": "model",
       "name": "Zoo",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.Zoo",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
       "doc": "Concrete tracked resource types can be created by aliasing this type using a specific property type.",
@@ -6276,7 +6276,7 @@
             "$id": "517",
             "kind": "model",
             "name": "ZooProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.ZooProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
             "decorators": [
@@ -6389,7 +6389,7 @@
       "$id": "523",
       "kind": "model",
       "name": "ZooUpdate",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModel",
       "usage": "Input,Json",
       "doc": "The type used for update operations of the Zoo.",
@@ -6432,7 +6432,7 @@
             "$id": "526",
             "kind": "model",
             "name": "ZooUpdateProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModelProperties",
             "usage": "Input,Json",
             "doc": "The updatable properties of the Zoo.",
@@ -6493,7 +6493,7 @@
       "$id": "529",
       "kind": "model",
       "name": "ZooListResult",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
       "usage": "Output,Json",
       "doc": "The response of a Zoo list operation.",
@@ -6572,7 +6572,7 @@
       "$id": "535",
       "kind": "model",
       "name": "ZooAddressListListResult",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.ZooAddressListListResult",
       "usage": "Output,Json",
       "doc": "Paged collection of ZooAddress items",
@@ -6597,7 +6597,7 @@
               "$id": "538",
               "kind": "model",
               "name": "SubResource",
-              "namespace": "MgmtTypeSpec",
+              "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
               "crossLanguageDefinitionId": "Azure.ResourceManager.Models.SubResource",
               "usage": "Output,Json",
               "decorators": [
@@ -6666,7 +6666,7 @@
       "$id": "542",
       "kind": "model",
       "name": "EndpointResource",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.EndpointResource",
       "usage": "Input,Output,Json",
       "doc": "Concrete extension resource types can be created by aliasing this type using a specific property type.",
@@ -6727,7 +6727,7 @@
         "$id": "547",
         "kind": "model",
         "name": "ExtensionResource",
-        "namespace": "MgmtTypeSpec",
+        "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ExtensionResource",
         "usage": "Input,Output,Json",
         "doc": "The base extension resource.",
@@ -6753,7 +6753,7 @@
             "$id": "549",
             "kind": "model",
             "name": "EndpointProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.EndpointProperties",
             "usage": "Input,Output,Json",
             "decorators": [
@@ -6841,7 +6841,7 @@
       "$id": "554",
       "kind": "model",
       "name": "SelfHelpResource",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.SelfHelpResource",
       "usage": "Output,Json",
       "doc": "Concrete extension resource types can be created by aliasing this type using a specific property type.",
@@ -6888,7 +6888,7 @@
             "$id": "557",
             "kind": "model",
             "name": "SelfHelpResourceProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.SelfHelpResourceProperties",
             "usage": "Output,Json",
             "decorators": [
@@ -6973,7 +6973,7 @@
       "$id": "562",
       "kind": "model",
       "name": "PlaywrightQuota",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.PlaywrightQuota",
       "usage": "Output,Json",
       "doc": "Subscription-level location-based Playwright quota resource.",
@@ -7031,7 +7031,7 @@
             "$id": "566",
             "kind": "model",
             "name": "PlaywrightQuotaProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.PlaywrightQuotaProperties",
             "usage": "Output,Json",
             "doc": "Subscription-level location-based Playwright quota resource properties.",
@@ -7140,7 +7140,7 @@
       "$id": "572",
       "kind": "model",
       "name": "PlaywrightQuotaListResult",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
       "usage": "Output,Json",
       "doc": "The response of a PlaywrightQuota list operation.",
@@ -7219,7 +7219,7 @@
       "$id": "578",
       "kind": "model",
       "name": "JobResource",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.JobResource",
       "usage": "Output,Json,LroInitial,LroFinalEnvelope",
       "doc": "Concrete tracked resource types can be created by aliasing this type using a specific property type.",
@@ -7274,7 +7274,7 @@
             "$id": "582",
             "kind": "model",
             "name": "JobProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.JobProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
             "decorators": [
@@ -7359,7 +7359,7 @@
       "$id": "587",
       "kind": "model",
       "name": "JobResourceUpdateParameter",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.JobResourceUpdateParameter",
       "usage": "Input,Json",
       "decorators": [
@@ -7417,7 +7417,7 @@
       "$id": "590",
       "kind": "model",
       "name": "HciVmInstance",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.HciVmInstance",
       "usage": "Output,Json",
       "doc": "The virtual machine instance resource definition.",
@@ -7471,7 +7471,7 @@
             "$id": "593",
             "kind": "model",
             "name": "HciVmInstanceProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.HciVmInstanceProperties",
             "usage": "Output,Json",
             "decorators": [
@@ -7556,7 +7556,7 @@
       "$id": "598",
       "kind": "model",
       "name": "GroupQuotaSubscriptionRequestStatus",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaSubscriptionRequestStatus",
       "usage": "Output,Json",
       "doc": "The new quota limit request status.",
@@ -7603,7 +7603,7 @@
             "$id": "601",
             "kind": "model",
             "name": "GroupQuotaLimitProperties",
-            "namespace": "MgmtTypeSpec",
+            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaLimitProperties",
             "usage": "Output,Json",
             "decorators": [
@@ -7616,7 +7616,7 @@
               "$id": "602",
               "kind": "model",
               "name": "GroupQuotaDetails",
-              "namespace": "MgmtTypeSpec",
+              "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
               "crossLanguageDefinitionId": "MgmtTypeSpec.GroupQuotaDetails",
               "usage": "Output,Json",
               "doc": "Group Quota details.",
@@ -7767,7 +7767,7 @@
                     "$id": "614",
                     "kind": "model",
                     "name": "AllocatedQuotaToSubscriptionList",
-                    "namespace": "MgmtTypeSpec",
+                    "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                     "crossLanguageDefinitionId": "MgmtTypeSpec.AllocatedQuotaToSubscriptionList",
                     "usage": "Output,Json",
                     "doc": "Quota allocated to subscriptions",
@@ -7792,7 +7792,7 @@
                             "$id": "617",
                             "kind": "model",
                             "name": "AllocatedToSubscription",
-                            "namespace": "MgmtTypeSpec",
+                            "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                             "crossLanguageDefinitionId": "MgmtTypeSpec.AllocatedToSubscription",
                             "usage": "Output,Json",
                             "doc": "SubscriptionIds and quota allocated to subscriptions from the GroupQuota.",
@@ -7949,7 +7949,7 @@
       "$id": "624",
       "kind": "model",
       "name": "ZooRecommendation",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "crossLanguageDefinitionId": "MgmtTypeSpec.ZooRecommendation",
       "usage": "Output,Json",
       "decorators": [
@@ -8019,7 +8019,7 @@
       "$id": "629",
       "kind": "client",
       "name": "MgmtTypeSpecClient",
-      "namespace": "MgmtTypeSpec",
+      "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
       "methods": [
         {
           "$id": "630",
@@ -8372,7 +8372,7 @@
           "$id": "653",
           "kind": "client",
           "name": "Operations",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "654",
@@ -8550,7 +8550,7 @@
           "$id": "664",
           "kind": "client",
           "name": "PrivateLinks",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "665",
@@ -9219,7 +9219,7 @@
           "$id": "708",
           "kind": "client",
           "name": "Foos",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "709",
@@ -10867,7 +10867,7 @@
           "$id": "820",
           "kind": "client",
           "name": "FooSettingsOperations",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "821",
@@ -11841,7 +11841,7 @@
           "$id": "886",
           "kind": "client",
           "name": "Bars",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "887",
@@ -12854,7 +12854,7 @@
           "$id": "958",
           "kind": "client",
           "name": "BarSettingsOperations",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "959",
@@ -13612,7 +13612,7 @@
           "$id": "1012",
           "kind": "client",
           "name": "BarQuotaOperations",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "1013",
@@ -14440,7 +14440,7 @@
           "$id": "1070",
           "kind": "client",
           "name": "Bazs",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "1071",
@@ -16088,7 +16088,7 @@
           "$id": "1182",
           "kind": "client",
           "name": "Zoos",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "1183",
@@ -18021,7 +18021,7 @@
           "$id": "1316",
           "kind": "client",
           "name": "EndpointResources",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "1317",
@@ -19042,7 +19042,7 @@
           "$id": "1386",
           "kind": "client",
           "name": "SolutionResources",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "1387",
@@ -19308,7 +19308,7 @@
           "$id": "1405",
           "kind": "client",
           "name": "PlaywrightQuotas",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "1406",
@@ -19837,7 +19837,7 @@
           "$id": "1443",
           "kind": "client",
           "name": "JobResources",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "1444",
@@ -20540,7 +20540,7 @@
           "$id": "1493",
           "kind": "client",
           "name": "HciVmInstances",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "1494",
@@ -20760,7 +20760,7 @@
           "$id": "1508",
           "kind": "client",
           "name": "GroupQuotaSubscriptionRequestStatuses",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "1509",
@@ -21026,7 +21026,7 @@
           "$id": "1527",
           "kind": "client",
           "name": "Bar",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "1528",
@@ -21730,7 +21730,7 @@
           "$id": "1579",
           "kind": "client",
           "name": "ZooRecommendation",
-          "namespace": "MgmtTypeSpec",
+          "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
           "methods": [
             {
               "$id": "1580",

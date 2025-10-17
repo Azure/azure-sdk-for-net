@@ -11,15 +11,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using MgmtTypeSpec;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec.Mocking
+namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
-    public partial class MockableMgmtTypeSpecSubscriptionResource : ArmResource
+    public partial class MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _foosClientDiagnostics;
         private Foos _foosRestClient;
@@ -30,31 +30,31 @@ namespace MgmtTypeSpec.Mocking
         private ClientDiagnostics _mgmtTypeSpecClientClientDiagnostics;
         private MgmtTypeSpecClient _mgmtTypeSpecClientRestClient;
 
-        /// <summary> Initializes a new instance of MockableMgmtTypeSpecSubscriptionResource for mocking. </summary>
-        protected MockableMgmtTypeSpecSubscriptionResource()
+        /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource for mocking. </summary>
+        protected MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableMgmtTypeSpecSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableMgmtTypeSpecSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics FoosClientDiagnostics => _foosClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics FoosClientDiagnostics => _foosClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Foos FoosRestClient => _foosRestClient ??= new Foos(FoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
-        private ClientDiagnostics BazsClientDiagnostics => _bazsClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics BazsClientDiagnostics => _bazsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Bazs BazsRestClient => _bazsRestClient ??= new Bazs(BazsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
-        private ClientDiagnostics ZoosClientDiagnostics => _zoosClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ZoosClientDiagnostics => _zoosClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Zoos ZoosRestClient => _zoosRestClient ??= new Zoos(ZoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
-        private ClientDiagnostics MgmtTypeSpecClientClientDiagnostics => _mgmtTypeSpecClientClientDiagnostics ??= new ClientDiagnostics("MgmtTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics MgmtTypeSpecClientClientDiagnostics => _mgmtTypeSpecClientClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private MgmtTypeSpecClient MgmtTypeSpecClientRestClient => _mgmtTypeSpecClientRestClient ??= new MgmtTypeSpecClient(MgmtTypeSpecClientClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
@@ -167,7 +167,7 @@ namespace MgmtTypeSpec.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = MgmtTypeSpecClientClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
+            using DiagnosticScope scope = MgmtTypeSpecClientClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.PreviewActions");
             scope.Start();
             try
             {
@@ -200,7 +200,7 @@ namespace MgmtTypeSpec.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = MgmtTypeSpecClientClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.PreviewActions");
+            using DiagnosticScope scope = MgmtTypeSpecClientClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.PreviewActions");
             scope.Start();
             try
             {
