@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: RedisEnterprise
 namespace: Azure.ResourceManager.RedisEnterprise
-require: https://github.com/Azure/azure-rest-api-specs/blob/e22d3642ca152418d8658c2547ce2179d15317b6/specification/redisenterprise/resource-manager/readme.md
-tag: package-2025-04-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/91e3aca0bfa4b59a9f578959d0b214a26b90df40/specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/readme.md
+tag: package-2025-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

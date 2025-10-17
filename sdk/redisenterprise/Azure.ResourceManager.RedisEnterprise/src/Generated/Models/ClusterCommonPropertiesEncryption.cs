@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> Optional set of properties to configure geo replication for this database. </summary>
-    public partial class RedisEnterpriseDatabaseGeoReplication
+    /// <summary> Encryption-at-rest configuration for the cluster. </summary>
+    internal partial class ClusterCommonPropertiesEncryption
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,28 +45,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDatabaseGeoReplication"/>. </summary>
-        public RedisEnterpriseDatabaseGeoReplication()
+        /// <summary> Initializes a new instance of <see cref="ClusterCommonPropertiesEncryption"/>. </summary>
+        public ClusterCommonPropertiesEncryption()
         {
-            LinkedDatabases = new ChangeTrackingList<RedisEnterpriseLinkedDatabase>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDatabaseGeoReplication"/>. </summary>
-        /// <param name="groupNickname"> Name for the group of linked database resources. </param>
-        /// <param name="linkedDatabases"> List of database resources to link with this database. </param>
+        /// <summary> Initializes a new instance of <see cref="ClusterCommonPropertiesEncryption"/>. </summary>
+        /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseDatabaseGeoReplication(string groupNickname, IList<RedisEnterpriseLinkedDatabase> linkedDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterCommonPropertiesEncryption(ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption customerManagedKeyEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            GroupNickname = groupNickname;
-            LinkedDatabases = linkedDatabases;
+            CustomerManagedKeyEncryption = customerManagedKeyEncryption;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name for the group of linked database resources. </summary>
-        [WirePath("groupNickname")]
-        public string GroupNickname { get; set; }
-        /// <summary> List of database resources to link with this database. </summary>
-        [WirePath("linkedDatabases")]
-        public IList<RedisEnterpriseLinkedDatabase> LinkedDatabases { get; }
+        /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
+        [WirePath("customerManagedKeyEncryption")]
+        public ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption CustomerManagedKeyEncryption { get; set; }
     }
 }

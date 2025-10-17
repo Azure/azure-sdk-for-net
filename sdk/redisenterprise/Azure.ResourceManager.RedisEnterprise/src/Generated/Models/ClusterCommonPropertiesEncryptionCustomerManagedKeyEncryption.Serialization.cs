@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterpriseCustomerManagedKeyEncryption : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseCustomerManagedKeyEncryption>
+    public partial class ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption : IUtf8JsonSerializable, IJsonModel<ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseCustomerManagedKeyEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RedisEnterpriseCustomerManagedKeyEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
         }
 
-        RedisEnterpriseCustomerManagedKeyEncryption IJsonModel<RedisEnterpriseCustomerManagedKeyEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption IJsonModel<ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRedisEnterpriseCustomerManagedKeyEncryption(document.RootElement, options);
+            return DeserializeClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption(document.RootElement, options);
         }
 
-        internal static RedisEnterpriseCustomerManagedKeyEncryption DeserializeRedisEnterpriseCustomerManagedKeyEncryption(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption DeserializeClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default;
+            ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default;
             Uri keyEncryptionKeyUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    keyEncryptionKeyIdentity = RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity.DeserializeRedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(property.Value, options);
+                    keyEncryptionKeyIdentity = ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity.DeserializeClusterCommonPropertiesEncryptionCustomerManagedKeyEncryptionKeyIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKeyUrl"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RedisEnterpriseCustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUrl, serializedAdditionalRawData);
+            return new ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUrl, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -171,26 +171,26 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RedisEnterpriseCustomerManagedKeyEncryption IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption IPersistableModel<ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRedisEnterpriseCustomerManagedKeyEncryption(document.RootElement, options);
+                        return DeserializeClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseCustomerManagedKeyEncryption)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RedisEnterpriseCustomerManagedKeyEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClusterCommonPropertiesEncryptionCustomerManagedKeyEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
