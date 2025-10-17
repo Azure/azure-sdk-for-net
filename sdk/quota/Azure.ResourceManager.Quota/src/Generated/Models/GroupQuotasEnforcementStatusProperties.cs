@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> The GroupQuotasEnforcementStatusProperties. </summary>
     public partial class GroupQuotasEnforcementStatusProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotasEnforcementStatusProperties"/>. </summary>
         public GroupQuotasEnforcementStatusProperties()
@@ -55,27 +26,26 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="enforcedGroupName"> The name of the group that is enforced. </param>
         /// <param name="provisioningState"> Request status. </param>
         /// <param name="faultCode"> Details of the failure. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotasEnforcementStatusProperties(EnforcementState? enforcementEnabled, string enforcedGroupName, QuotaRequestStatus? provisioningState, string faultCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GroupQuotasEnforcementStatusProperties(EnforcementState? enforcementEnabled, string enforcedGroupName, QuotaRequestStatus? provisioningState, string faultCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnforcementEnabled = enforcementEnabled;
             EnforcedGroupName = enforcedGroupName;
             ProvisioningState = provisioningState;
             FaultCode = faultCode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Is the GroupQuota Enforcement enabled for the Azure region. </summary>
-        [WirePath("enforcementEnabled")]
         public EnforcementState? EnforcementEnabled { get; set; }
+
         /// <summary> The name of the group that is enforced. </summary>
-        [WirePath("enforcedGroupName")]
         public string EnforcedGroupName { get; }
+
         /// <summary> Request status. </summary>
-        [WirePath("provisioningState")]
         public QuotaRequestStatus? ProvisioningState { get; }
+
         /// <summary> Details of the failure. </summary>
-        [WirePath("faultCode")]
         public string FaultCode { get; }
     }
 }

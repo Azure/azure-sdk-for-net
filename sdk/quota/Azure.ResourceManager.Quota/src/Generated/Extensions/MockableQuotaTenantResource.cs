@@ -5,91 +5,319 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Quota;
 using Azure.ResourceManager.Quota.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Quota.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableQuotaTenantResource : ArmResource
     {
+        private ClientDiagnostics _currentUsagesBasesClientDiagnostics;
+        private CurrentUsagesBases _currentUsagesBasesRestClient;
+        private ClientDiagnostics _currentQuotaLimitBasesClientDiagnostics;
+        private CurrentQuotaLimitBases _currentQuotaLimitBasesRestClient;
+        private ClientDiagnostics _quotaRequestStatusClientDiagnostics;
+        private QuotaRequestStatus _quotaRequestStatusRestClient;
         private ClientDiagnostics _quotaOperationClientDiagnostics;
-        private QuotaOperationRestOperations _quotaOperationRestClient;
+        private QuotaOperation _quotaOperationRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableQuotaTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableQuotaTenantResource for mocking. </summary>
         protected MockableQuotaTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableQuotaTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableQuotaTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableQuotaTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics QuotaOperationClientDiagnostics => _quotaOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quota", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private QuotaOperationRestOperations QuotaOperationRestClient => _quotaOperationRestClient ??= new QuotaOperationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics CurrentUsagesBasesClientDiagnostics => _currentUsagesBasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quota.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private CurrentUsagesBases CurrentUsagesBasesRestClient => _currentUsagesBasesRestClient ??= new CurrentUsagesBases(CurrentUsagesBasesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics CurrentQuotaLimitBasesClientDiagnostics => _currentQuotaLimitBasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quota.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CurrentQuotaLimitBases CurrentQuotaLimitBasesRestClient => _currentQuotaLimitBasesRestClient ??= new CurrentQuotaLimitBases(CurrentQuotaLimitBasesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics QuotaRequestStatusClientDiagnostics => _quotaRequestStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quota.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private QuotaRequestStatus QuotaRequestStatusRestClient => _quotaRequestStatusRestClient ??= new QuotaRequestStatus(QuotaRequestStatusClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics QuotaOperationClientDiagnostics => _quotaOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quota.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private QuotaOperation QuotaOperationRestClient => _quotaOperationRestClient ??= new QuotaOperation(QuotaOperationClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+
+        /// <summary> Gets a collection of GroupQuotaEntities in the <see cref="TenantResource"/>. </summary>
+        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
+        /// <returns> An object representing collection of GroupQuotaEntities and their operations over a GroupQuotaEntityResource. </returns>
+        public virtual GroupQuotaEntityCollection GetGroupQuotaEntities(string managementGroupId)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            return GetCachedClient(client => new GroupQuotaEntityCollection(client, Id, managementGroupId));
         }
 
-        /// <summary>
-        /// List the operations for the provider
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Quota/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaOperation_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the GroupQuotas for the name passed. It will return the GroupQuotas properties only. The details on group quota can be access from the group quota APIs. </summary>
+        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QuotaOperationResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuotaOperationResult> GetQuotaOperationsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GroupQuotaEntityResource>> GetGroupQuotaEntityAsync(string managementGroupId, string groupQuotaName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => QuotaOperationResult.DeserializeQuotaOperationResult(e), QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+
+            return await GetGroupQuotaEntities(managementGroupId).GetAsync(groupQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// List the operations for the provider
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Quota/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaOperation_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the GroupQuotas for the name passed. It will return the GroupQuotas properties only. The details on group quota can be access from the group quota APIs. </summary>
+        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
+        /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GroupQuotaEntityResource> GetGroupQuotaEntity(string managementGroupId, string groupQuotaName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
+
+            return GetGroupQuotaEntities(managementGroupId).Get(groupQuotaName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SubscriptionQuotaAllocationsLists in the <see cref="TenantResource"/>. </summary>
+        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
+        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
+        /// <returns> An object representing collection of SubscriptionQuotaAllocationsLists and their operations over a SubscriptionQuotaAllocationsListResource. </returns>
+        public virtual SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName)
+        {
+            return GetCachedClient(client => new SubscriptionQuotaAllocationsListCollection(
+                client,
+                Id,
+                managementGroupId,
+                subscriptionId,
+                groupQuotaName,
+                resourceProviderName));
+        }
+
+        /// <summary> Gets a collection of QuotaAllocationRequestStatuses in the <see cref="TenantResource"/>. </summary>
+        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
+        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
+        /// <returns> An object representing collection of QuotaAllocationRequestStatuses and their operations over a QuotaAllocationRequestStatusResource. </returns>
+        public virtual QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName)
+        {
+            return GetCachedClient(client => new QuotaAllocationRequestStatusCollection(
+                client,
+                Id,
+                managementGroupId,
+                subscriptionId,
+                groupQuotaName,
+                resourceProviderName));
+        }
+
+        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
+        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
+        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
+        /// <param name="allocationId"> Request Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
+
+            return await GetQuotaAllocationRequestStatuses(managementGroupId, subscriptionId, groupQuotaName, resourceProviderName).GetAsync(allocationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the quota allocation request status for the subscriptionId by allocationId. </summary>
+        /// <param name="managementGroupId"> The managementGroupId for the resource. </param>
+        /// <param name="subscriptionId"> The subscriptionId for the resource. </param>
+        /// <param name="groupQuotaName"> The groupQuotaName for the resource. </param>
+        /// <param name="resourceProviderName"> The resourceProviderName for the resource. </param>
+        /// <param name="allocationId"> Request Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="allocationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="allocationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(string managementGroupId, string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(allocationId, nameof(allocationId));
+
+            return GetQuotaAllocationRequestStatuses(managementGroupId, subscriptionId, groupQuotaName, resourceProviderName).Get(allocationId, cancellationToken);
+        }
+
+        /// <summary> Get a list of current usage for all resources for the scope specified. </summary>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="CurrentUsagesBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CurrentUsagesBaseResource> GetCurrentUsagesBasesAsync(string scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllAsyncCollectionResultOfT(CurrentUsagesBasesRestClient, scope, context), data => new CurrentUsagesBaseResource(Client, data));
+        }
+
+        /// <summary> Get a list of current usage for all resources for the scope specified. </summary>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="CurrentUsagesBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CurrentUsagesBaseResource> GetCurrentUsagesBases(string scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllCollectionResultOfT(CurrentUsagesBasesRestClient, scope, context), data => new CurrentUsagesBaseResource(Client, data));
+        }
+
+        /// <summary> Get a list of current quota limits of all resources for the specified scope. The response from this GET operation can be leveraged to submit requests to update a quota. </summary>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="CurrentQuotaLimitBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CurrentQuotaLimitBaseResource> GetCurrentQuotaLimitBasesAsync(string scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllAsyncCollectionResultOfT(CurrentQuotaLimitBasesRestClient, scope, context), data => new CurrentQuotaLimitBaseResource(Client, data));
+        }
+
+        /// <summary> Get a list of current quota limits of all resources for the specified scope. The response from this GET operation can be leveraged to submit requests to update a quota. </summary>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="CurrentQuotaLimitBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CurrentQuotaLimitBaseResource> GetCurrentQuotaLimitBases(string scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllCollectionResultOfT(CurrentQuotaLimitBasesRestClient, scope, context), data => new CurrentQuotaLimitBaseResource(Client, data));
+        }
+
+        /// <summary> For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests. </summary>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="filter">
+        /// | Field                    | Supported operators
+        /// |---------------------|------------------------
+        /// 
+        /// |requestSubmitTime | ge, le, eq, gt, lt
+        /// |provisioningState eq {QuotaRequestState}
+        /// |resourceName eq {resourceName}
+        /// </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="QuotaRequestDetailsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<QuotaRequestDetailsResource> GetQuotaRequestDetailsAsync(string scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<QuotaRequestDetailsData, QuotaRequestDetailsResource>(new QuotaRequestStatusGetAllAsyncCollectionResultOfT(
+                QuotaRequestStatusRestClient,
+                scope,
+                filter,
+                top,
+                skiptoken,
+                context), data => new QuotaRequestDetailsResource(Client, data));
+        }
+
+        /// <summary> For the specified scope, get the current quota requests for a one year period ending at the time is made. Use the **oData** filter to select quota requests. </summary>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="filter">
+        /// | Field                    | Supported operators
+        /// |---------------------|------------------------
+        /// 
+        /// |requestSubmitTime | ge, le, eq, gt, lt
+        /// |provisioningState eq {QuotaRequestState}
+        /// |resourceName eq {resourceName}
+        /// </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skiptoken"> The **Skiptoken** parameter is used only if a previous operation returned a partial result. If a previous response contains a **nextLink** element, its value includes a **skiptoken** parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="QuotaRequestDetailsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QuotaRequestDetailsResource> GetQuotaRequestDetails(string scope, string filter = default, int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<QuotaRequestDetailsData, QuotaRequestDetailsResource>(new QuotaRequestStatusGetAllCollectionResultOfT(
+                QuotaRequestStatusRestClient,
+                scope,
+                filter,
+                top,
+                skiptoken,
+                context), data => new QuotaRequestDetailsResource(Client, data));
+        }
+
+        /// <summary> List the operations for the provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="QuotaOperationResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuotaOperationResult> GetQuotaOperations(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<QuotaOperationResult> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => QuotaOperationResult.DeserializeQuotaOperationResult(e), QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new QuotaOperationGetAllAsyncCollectionResultOfT(QuotaOperationRestClient, context);
+        }
+
+        /// <summary> List the operations for the provider. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="QuotaOperationResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QuotaOperationResult> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new QuotaOperationGetAllCollectionResultOfT(QuotaOperationRestClient, context);
         }
     }
 }

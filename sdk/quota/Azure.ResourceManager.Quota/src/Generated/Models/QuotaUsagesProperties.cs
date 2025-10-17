@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Usage properties for the specified resource. </summary>
     public partial class QuotaUsagesProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QuotaUsagesProperties"/>. </summary>
         internal QuotaUsagesProperties()
@@ -64,8 +36,8 @@ namespace Azure.ResourceManager.Quota.Models
         /// </param>
         /// <param name="isQuotaApplicable"> States if quota can be requested for this resource. </param>
         /// <param name="properties"> Additional properties for the specific resource provider. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaUsagesProperties(QuotaUsagesObject usages, string unit, QuotaRequestResourceName name, string resourceTypeName, TimeSpan? quotaPeriod, bool? isQuotaApplicable, BinaryData properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaUsagesProperties(QuotaUsagesObject usages, string unit, QuotaRequestResourceName name, string resourceTypeName, TimeSpan? quotaPeriod, bool? isQuotaApplicable, BinaryData properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Usages = usages;
             Unit = unit;
@@ -74,21 +46,21 @@ namespace Azure.ResourceManager.Quota.Models
             QuotaPeriod = quotaPeriod;
             IsQuotaApplicable = isQuotaApplicable;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The quota limit properties for this resource. </summary>
-        [WirePath("usages")]
         public QuotaUsagesObject Usages { get; }
+
         /// <summary> The units for the quota usage, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </summary>
-        [WirePath("unit")]
         public string Unit { get; }
+
         /// <summary> Resource name provided by the resource provider. Use this property name when requesting quota. </summary>
-        [WirePath("name")]
         public QuotaRequestResourceName Name { get; }
+
         /// <summary> The name of the resource type. Optional field. </summary>
-        [WirePath("resourceType")]
         public string ResourceTypeName { get; }
+
         /// <summary>
         /// The time period for the summary of the quota usage values. For example:
         /// *P1D (per one day)
@@ -96,42 +68,37 @@ namespace Azure.ResourceManager.Quota.Models
         /// *PT1S (per one second).
         /// This parameter is optional because it is not relevant for all resources such as compute.
         /// </summary>
-        [WirePath("quotaPeriod")]
         public TimeSpan? QuotaPeriod { get; }
+
         /// <summary> States if quota can be requested for this resource. </summary>
-        [WirePath("isQuotaApplicable")]
         public bool? IsQuotaApplicable { get; }
+
         /// <summary>
         /// Additional properties for the specific resource provider.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("properties")]
         public BinaryData Properties { get; }
     }
 }

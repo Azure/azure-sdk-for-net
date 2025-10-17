@@ -23,12 +23,11 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="limit"> The current Group Quota Limit at the parentId level. </param>
         /// <param name="comment"> Any comment related to quota request. </param>
         /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
-        /// <param name="value"> Resource name. </param>
-        /// <param name="localizedValue"> Resource display name. </param>
+        /// <param name="name"> Name of the resource provided by the resource provider. This property is already included in the request URI, so it is a readonly property returned in the response. </param>
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
         /// <param name="allocatedToSubscriptions"> Quota allocated to subscriptions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotaLimitProperties(string resourceName, long? limit, string comment, string unit, string value, string localizedValue, long? availableLimit, AllocatedQuotaToSubscriptionList allocatedToSubscriptions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceName, limit, comment, unit, value, localizedValue, availableLimit, allocatedToSubscriptions, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GroupQuotaLimitProperties(string resourceName, long? limit, string comment, string unit, GroupQuotaDetailsName name, long? availableLimit, AllocatedQuotaToSubscriptionList allocatedToSubscriptions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceName, limit, comment, unit, name, availableLimit, allocatedToSubscriptions, additionalBinaryDataProperties)
         {
         }
     }

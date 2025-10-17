@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
-    /// A Class representing a CurrentQuotaLimitBase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CurrentQuotaLimitBaseResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetCurrentQuotaLimitBaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetCurrentQuotaLimitBase method.
+    /// A class representing a CurrentQuotaLimitBase along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CurrentQuotaLimitBaseResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetCurrentQuotaLimitBases method.
     /// </summary>
     public partial class CurrentQuotaLimitBaseResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CurrentQuotaLimitBaseResource"/> instance. </summary>
-        /// <param name="scope"> The scope. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, string resourceName)
-        {
-            var resourceId = $"{scope}/providers/Microsoft.Quota/quotas/{resourceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics;
-        private readonly CurrentQuotaLimitBasesRestOperations _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient;
+        private readonly ClientDiagnostics _currentQuotaLimitBasesClientDiagnostics;
+        private readonly CurrentQuotaLimitBases _currentQuotaLimitBasesRestClient;
         private readonly CurrentQuotaLimitBaseData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Quota/quotas";
 
-        /// <summary> Initializes a new instance of the <see cref="CurrentQuotaLimitBaseResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CurrentQuotaLimitBaseResource for mocking. </summary>
         protected CurrentQuotaLimitBaseResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CurrentQuotaLimitBaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CurrentQuotaLimitBaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CurrentQuotaLimitBaseResource(ArmClient client, CurrentQuotaLimitBaseData data) : this(client, data.Id)
@@ -52,71 +43,71 @@ namespace Azure.ResourceManager.Quota
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CurrentQuotaLimitBaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CurrentQuotaLimitBaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CurrentQuotaLimitBaseResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string currentQuotaLimitBaseCurrentQuotaLimitBasesApiVersion);
-            _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient = new CurrentQuotaLimitBasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, currentQuotaLimitBaseCurrentQuotaLimitBasesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string currentQuotaLimitBaseApiVersion);
+            _currentQuotaLimitBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
+            _currentQuotaLimitBasesRestClient = new CurrentQuotaLimitBases(_currentQuotaLimitBasesClientDiagnostics, Pipeline, Endpoint, currentQuotaLimitBaseApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual CurrentQuotaLimitBaseData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string resourceName)
+        {
+            string resourceId = $"{scope}/providers/Microsoft.Quota/quotas/{resourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Quota/quotas/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CurrentQuotaLimitBase_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CurrentQuotaLimitBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CurrentQuotaLimitBaseResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Get");
+            using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Get");
             scope.Start();
             try
             {
-                var response = await _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CurrentQuotaLimitBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -126,37 +117,25 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary>
-        /// Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Quota/quotas/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CurrentQuotaLimitBase_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CurrentQuotaLimitBaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CurrentQuotaLimitBaseResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Get");
+            using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Get");
             scope.Start();
             try
             {
-                var response = _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CurrentQuotaLimitBaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,24 +149,6 @@ namespace Azure.ResourceManager.Quota
         /// Update the quota limit for a specific resource to the specified value:
         /// 1. Use the Usages-GET and Quota-GET operations to determine the remaining quota for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).
         /// 2. Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Quota/quotas/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CurrentQuotaLimitBase_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CurrentQuotaLimitBaseResource"/></description>
-        /// </item>
-        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Quota requests payload. </param>
@@ -197,14 +158,27 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Update");
+            using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Update");
             scope.Start();
             try
             {
-                var response = await _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics, Pipeline, _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
+                    new CurrentQuotaLimitBaseOperationSource(Client),
+                    _currentQuotaLimitBasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -218,24 +192,6 @@ namespace Azure.ResourceManager.Quota
         /// Update the quota limit for a specific resource to the specified value:
         /// 1. Use the Usages-GET and Quota-GET operations to determine the remaining quota for the specific resource and to calculate the new quota limit. These steps are detailed in [this example](https://techcommunity.microsoft.com/t5/azure-governance-and-management/using-the-new-quota-rest-api/ba-p/2183670).
         /// 2. Use this PUT operation to update the quota limit. Please check the URI in location header for the detailed status of the request.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Quota/quotas/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CurrentQuotaLimitBase_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CurrentQuotaLimitBaseResource"/></description>
-        /// </item>
-        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Quota requests payload. </param>
@@ -245,14 +201,27 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Update");
+            using DiagnosticScope scope = _currentQuotaLimitBasesClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Update");
             scope.Start();
             try
             {
-                var response = _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseCurrentQuotaLimitBasesClientDiagnostics, Pipeline, _currentQuotaLimitBaseCurrentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
+                    new CurrentQuotaLimitBaseOperationSource(Client),
+                    _currentQuotaLimitBasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
