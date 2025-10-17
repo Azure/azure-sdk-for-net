@@ -518,8 +518,6 @@ namespace Azure.Storage.Sas
             string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
             string canonicalizedSignedRequestHeaders = SasExtensions.FormatRequestHeadersForSasSigning(RequestHeaders);
             string canonicalizedSignedRequestQueryParameters = SasExtensions.FormatRequestQueryParametersForSasSigning(RequestQueryParameters);
-            Console.WriteLine($"canonicalizedSignedRequestHeaders = {canonicalizedSignedRequestHeaders}");
-            Console.WriteLine($"canonicalizedSignedRequestQueryParameters = {canonicalizedSignedRequestQueryParameters}");
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             return string.Join("\n",

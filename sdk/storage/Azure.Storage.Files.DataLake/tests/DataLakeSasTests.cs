@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Files.DataLake.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
@@ -477,6 +479,196 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 identitySasFile.GetPropertiesAsync(),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task FileSystemIdentitySAS_RequestHeadersAndQueryParameters()
+        {
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+            string fileName = GetNewFileName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName, service: oauthService);
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
+            await file.CreateAsync();
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            Dictionary<string, List<string>> requestHeaders = new Dictionary<string, List<string>>()
+            {
+                { "foo", new List<string>{ "bar" } },
+                { "company", new List<string>{ "msft" } },
+                //{ "city", new List<string>{ "redmond", "atlanta" } },
+                //{ "state", new List<string>{ "washington", "georgia" } }
+            };
+
+            Dictionary<string, List<string>> requestQueryParameters = new Dictionary<string, List<string>>()
+            {
+                { "firstName", new List<string>{ "john", "Tim" } },
+                { "lastName", new List<string>{ "Smith", "jones" } },
+                { "abra", new List<string>{ "cadabra" } }
+            };
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder(DataLakeFileSystemSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                FileSystemName = test.Container.Name,
+                RequestHeaders = requestHeaders,
+                RequestQueryParameters = requestQueryParameters
+            };
+
+            DataLakeSasQueryParameters dataLakeSasQueryParameters = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(file.Uri)
+            {
+                Sas = dataLakeSasQueryParameters
+            };
+
+            CustomRequestHeadersAndQueryParametersPolicy customRequestPolicy = new CustomRequestHeadersAndQueryParametersPolicy();
+            // Send the request headers based on 'requestHeaders' Dictionary
+            foreach (var header in requestHeaders)
+            {
+                if (!string.IsNullOrEmpty(header.Key))
+                {
+                    foreach (string value in header.Value)
+                    {
+                        customRequestPolicy.AddRequestHeader(header.Key, value);
+                    }
+                }
+            }
+
+            // Send the query parameters based on 'requestQueryParameters' Dictionary
+            foreach (var param in requestQueryParameters)
+            {
+                if (param.Key != null)
+                {
+                    foreach (string value in param.Value)
+                    {
+                        customRequestPolicy.AddQueryParameter(param.Key, value);
+                    }
+                }
+            }
+
+            DataLakeClientOptions datalakeClientOptions = GetOptions();
+            datalakeClientOptions.AddPolicy(customRequestPolicy, HttpPipelinePosition.PerCall);
+
+            DataLakeFileClient identitySasFile = InstrumentClient(new DataLakeFileClient(dataLakeUriBuilder.ToUri(), TestEnvironment.Credential, datalakeClientOptions));
+
+            // Act
+            Response<PathProperties> response = await identitySasFile.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task FileSystemIdentitySAS_RequestHeadersAndQueryParameters_Fail()
+        {
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+            string fileName = GetNewFileName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName, service: oauthService);
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
+            await file.CreateAsync();
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            Dictionary<string, List<string>> requestHeaders = new Dictionary<string, List<string>>()
+            {
+                { "foo", new List<string>{ "bar" } },
+            };
+
+            Dictionary<string, List<string>> requestQueryParameters = new Dictionary<string, List<string>>()
+            {
+                { "abra", new List<string>{ "cadabra" } }
+            };
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder(DataLakeFileSystemSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                FileSystemName = test.Container.Name,
+                RequestHeaders = requestHeaders,
+                RequestQueryParameters = requestQueryParameters
+            };
+
+            DataLakeSasQueryParameters dataLakeSasQueryParameters = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(file.Uri)
+            {
+                Sas = dataLakeSasQueryParameters
+            };
+
+            // Deliberately do not send the request header and query parameter to cause an auth failure
+
+            DataLakeClientOptions datalakeClientOptions = GetOptions();
+            DataLakeFileClient identitySasFile = InstrumentClient(new DataLakeFileClient(dataLakeUriBuilder.ToUri(), TestEnvironment.Credential, datalakeClientOptions));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                identitySasFile.GetPropertiesAsync(),
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task FileSystemIdentitySAS_Roundtrip()
+        {
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+            string fileName = GetNewFileName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName, service: oauthService);
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
+            await file.CreateAsync();
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            Dictionary<string, List<string>> requestHeaders = new Dictionary<string, List<string>>()
+            {
+                { "foo", new List<string>{ "bar" } },
+                { "city", new List<string>{ "redmond", "atlanta" } },
+                { "state", new List<string>{ "washington", "georgia" } }
+            };
+
+            Dictionary<string, List<string>> requestQueryParameters = new Dictionary<string, List<string>>()
+            {
+                { "firstName", new List<string>{ "john", "Tim" } },
+                { "lastName", new List<string>{ "Smith", "jones" } },
+                { "abra", new List<string>{ "cadabra" } }
+            };
+
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder(DataLakeFileSystemSasPermissions.Read, Recording.UtcNow.AddHours(1))
+            {
+                FileSystemName = test.Container.Name,
+                RequestHeaders = requestHeaders,
+                RequestQueryParameters = requestQueryParameters
+            };
+
+            DataLakeSasQueryParameters dataLakeSasQueryParameters = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
+
+            DataLakeUriBuilder originalDataLakeUriBuilder = new DataLakeUriBuilder(file.Uri)
+            {
+                Sas = dataLakeSasQueryParameters
+            };
+
+            // Act
+            DataLakeUriBuilder roundtripDataLakeUriBuilder = new DataLakeUriBuilder(originalDataLakeUriBuilder.ToUri());
+
+            Assert.AreEqual(originalDataLakeUriBuilder.ToUri(), roundtripDataLakeUriBuilder.ToUri());
+            Assert.AreEqual(originalDataLakeUriBuilder.Sas.ToString(), roundtripDataLakeUriBuilder.Sas.ToString());
         }
         #endregion DataLakeFileSystemClient
 

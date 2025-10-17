@@ -518,7 +518,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [LiveOnly]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
-        public async Task ContainerIdentitySAS_RoundRobin()
+        public async Task ContainerIdentitySAS_Roundtrip()
         {
             BlobServiceClient oauthService = GetServiceClient_OAuth();
             var containerName = GetNewContainerName();
@@ -560,12 +560,10 @@ namespace Azure.Storage.Blobs.Test
                 Sas = blobSasQueryParameters
             };
 
-            BlobUriBuilder roundRobinBlobUriBuilder = new BlobUriBuilder(originalBlobUriBuilder.ToUri());
+            BlobUriBuilder roundtripBlobUriBuilder = new BlobUriBuilder(originalBlobUriBuilder.ToUri());
 
-            var originalUri = originalBlobUriBuilder.ToUri();
-            var roundRobinUri = roundRobinBlobUriBuilder.ToUri();
-            Assert.AreEqual(originalBlobUriBuilder.ToUri(), roundRobinBlobUriBuilder.ToUri());
-            Assert.AreEqual(originalBlobUriBuilder.Sas.ToString(), roundRobinBlobUriBuilder.Sas.ToString());
+            Assert.AreEqual(originalBlobUriBuilder.ToUri(), roundtripBlobUriBuilder.ToUri());
+            Assert.AreEqual(originalBlobUriBuilder.Sas.ToString(), roundtripBlobUriBuilder.Sas.ToString());
         }
 
         [RecordedTest]

@@ -1078,7 +1078,7 @@ namespace Azure.Storage.Sas
         {
             return string.IsNullOrEmpty(listString)
                 ? null
-                : listString.Split(new char[] { ',' }).ToList();
+                : listString.Split(',').ToList();
         }
 
         private static readonly string[] s_sasTimeFormats = {
