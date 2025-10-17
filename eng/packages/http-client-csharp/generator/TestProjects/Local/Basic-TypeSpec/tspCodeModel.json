@@ -27,8 +27,8 @@
             "$id": "4",
             "kind": "string",
             "decorators": [],
-            "name": "string",
             "doc": "A sequence of textual characters.",
+            "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string"
           },
           "enumType": {
@@ -65,8 +65,8 @@
             "$id": "8",
             "kind": "int32",
             "decorators": [],
-            "name": "int32",
             "doc": "A 32-bit integer. (`-2,147,483,648` to `2,147,483,647`)",
+            "name": "int32",
             "crossLanguageDefinitionId": "TypeSpec.int32"
           },
           "enumType": {
@@ -103,8 +103,8 @@
             "$id": "12",
             "kind": "float32",
             "decorators": [],
-            "name": "float32",
             "doc": "A 32 bit floating point number. (`±1.5 x 10^−45` to `±3.4 x 10^38`)",
+            "name": "float32",
             "crossLanguageDefinitionId": "TypeSpec.float32"
           },
           "enumType": {
@@ -4669,8 +4669,8 @@
                       "$id": "362",
                       "kind": "string",
                       "decorators": [],
-                      "name": "string",
                       "doc": "A sequence of textual characters.",
+                      "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string"
                     },
                     "enumType": {
@@ -4721,8 +4721,8 @@
                       "$id": "367",
                       "kind": "int32",
                       "decorators": [],
-                      "name": "int32",
                       "doc": "A 32-bit integer. (`-2,147,483,648` to `2,147,483,647`)",
+                      "name": "int32",
                       "crossLanguageDefinitionId": "TypeSpec.int32"
                     },
                     "enumType": {
@@ -4773,8 +4773,8 @@
                       "$id": "372",
                       "kind": "float32",
                       "decorators": [],
-                      "name": "float32",
                       "doc": "A 32 bit floating point number. (`±1.5 x 10^−45` to `±3.4 x 10^38`)",
+                      "name": "float32",
                       "crossLanguageDefinitionId": "TypeSpec.float32"
                     },
                     "enumType": {
