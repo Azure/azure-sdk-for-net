@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Generator.Management.Utilities
 {
     internal static class StringExtensions
@@ -10,7 +12,7 @@ namespace Azure.Generator.Management.Utilities
             if (string.IsNullOrEmpty(str) || char.IsLower(str[0]))
                 return str;
 
-            return char.ToLower(str[0]) + str.Substring(1);
+            return string.Concat(char.ToLower(str[0]), str.AsSpan(1).ToString());
         }
     }
 }
