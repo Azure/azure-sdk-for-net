@@ -13,6 +13,7 @@ These are complete, executable samples that demonstrate end-to-end scenarios:
 | **Analyze URL** | Analyze a document from a remote URL using prebuilt-documentAnalyzer | [AnalyzeUrl/](AnalyzeUrl/) |
 | **Analyze Binary** | Analyze a local PDF file using binary content with prebuilt-documentAnalyzer | [AnalyzeBinary/](AnalyzeBinary/) |
 | **Analyze Invoice** | Extract structured invoice fields from a URL using prebuilt-invoice analyzer | [AnalyzeInvoice/](AnalyzeInvoice/) |
+| **Create or Replace Analyzer** | Create a custom analyzer with field schema and configuration settings | [CreateOrReplaceAnalyzer/](CreateOrReplaceAnalyzer/) |
 
 ### Documentation Samples
 
