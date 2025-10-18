@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Input text in the default script of the source language. </summary>
-    public partial class SourceText
+    /// <summary> Request body for the transliterate API. </summary>
+    public partial class TransliterateBody
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +46,31 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SourceText"/>. </summary>
-        /// <param name="text"> Input text in the default script of the source language. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        internal SourceText(string text)
+        /// <summary> Initializes a new instance of <see cref="TransliterateBody"/>. </summary>
+        /// <param name="inputs"> Array of the input text elements to transliterate. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
+        public TransliterateBody(IEnumerable<InputTextItem> inputs)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            Text = text;
+            Inputs = inputs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SourceText"/>. </summary>
-        /// <param name="text"> Input text in the default script of the source language. </param>
+        /// <summary> Initializes a new instance of <see cref="TransliterateBody"/>. </summary>
+        /// <param name="inputs"> Array of the input text elements to transliterate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SourceText(string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TransliterateBody(IList<InputTextItem> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Text = text;
+            Inputs = inputs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SourceText"/> for deserialization. </summary>
-        internal SourceText()
+        /// <summary> Initializes a new instance of <see cref="TransliterateBody"/> for deserialization. </summary>
+        internal TransliterateBody()
         {
         }
 
-        /// <summary> Input text in the default script of the source language. </summary>
-        public string Text { get; }
+        /// <summary> Array of the input text elements to transliterate. </summary>
+        public IList<InputTextItem> Inputs { get; }
     }
 }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class DictionaryLookupItem : IUtf8JsonSerializable, IJsonModel<DictionaryLookupItem>
+    public partial class TranslateBody : IUtf8JsonSerializable, IJsonModel<TranslateBody>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DictionaryLookupItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranslateBody>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DictionaryLookupItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TranslateBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,19 +28,15 @@ namespace Azure.AI.Translation.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DictionaryLookupItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranslateBody>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DictionaryLookupItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TranslateBody)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("normalizedSource"u8);
-            writer.WriteStringValue(NormalizedSource);
-            writer.WritePropertyName("displaySource"u8);
-            writer.WriteStringValue(DisplaySource);
-            writer.WritePropertyName("translations"u8);
+            writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
-            foreach (var item in Translations)
+            foreach (var item in Inputs)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -62,19 +58,19 @@ namespace Azure.AI.Translation.Text
             }
         }
 
-        DictionaryLookupItem IJsonModel<DictionaryLookupItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TranslateBody IJsonModel<TranslateBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DictionaryLookupItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranslateBody>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DictionaryLookupItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TranslateBody)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDictionaryLookupItem(document.RootElement, options);
+            return DeserializeTranslateBody(document.RootElement, options);
         }
 
-        internal static DictionaryLookupItem DeserializeDictionaryLookupItem(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TranslateBody DeserializeTranslateBody(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,31 +78,19 @@ namespace Azure.AI.Translation.Text
             {
                 return null;
             }
-            string normalizedSource = default;
-            string displaySource = default;
-            IReadOnlyList<DictionaryTranslation> translations = default;
+            IList<TranslateInputItem> inputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("normalizedSource"u8))
+                if (property.NameEquals("inputs"u8))
                 {
-                    normalizedSource = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("displaySource"u8))
-                {
-                    displaySource = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("translations"u8))
-                {
-                    List<DictionaryTranslation> array = new List<DictionaryTranslation>();
+                    List<TranslateInputItem> array = new List<TranslateInputItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DictionaryTranslation.DeserializeDictionaryTranslation(item, options));
+                        array.Add(TranslateInputItem.DeserializeTranslateInputItem(item, options));
                     }
-                    translations = array;
+                    inputs = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,46 +99,46 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DictionaryLookupItem(normalizedSource, displaySource, translations, serializedAdditionalRawData);
+            return new TranslateBody(inputs, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DictionaryLookupItem>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TranslateBody>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DictionaryLookupItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranslateBody>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAITranslationTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DictionaryLookupItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TranslateBody)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DictionaryLookupItem IPersistableModel<DictionaryLookupItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TranslateBody IPersistableModel<TranslateBody>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DictionaryLookupItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranslateBody>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDictionaryLookupItem(document.RootElement, options);
+                        return DeserializeTranslateBody(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DictionaryLookupItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TranslateBody)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DictionaryLookupItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TranslateBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DictionaryLookupItem FromResponse(Response response)
+        internal static TranslateBody FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDictionaryLookupItem(document.RootElement);
+            return DeserializeTranslateBody(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

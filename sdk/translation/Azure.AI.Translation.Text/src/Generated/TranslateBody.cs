@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Element containing the text for translation. </summary>
-    public partial class InputTextItem
+    /// <summary> Request body for the translate API. </summary>
+    public partial class TranslateBody
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +46,31 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InputTextItem"/>. </summary>
-        /// <param name="text"> Text to translate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public InputTextItem(string text)
+        /// <summary> Initializes a new instance of <see cref="TranslateBody"/>. </summary>
+        /// <param name="inputs"> Array of the input text elements to translate. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
+        public TranslateBody(IEnumerable<TranslateInputItem> inputs)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            Text = text;
+            Inputs = inputs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InputTextItem"/>. </summary>
-        /// <param name="text"> Text to translate. </param>
+        /// <summary> Initializes a new instance of <see cref="TranslateBody"/>. </summary>
+        /// <param name="inputs"> Array of the input text elements to translate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InputTextItem(string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslateBody(IList<TranslateInputItem> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Text = text;
+            Inputs = inputs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InputTextItem"/> for deserialization. </summary>
-        internal InputTextItem()
+        /// <summary> Initializes a new instance of <see cref="TranslateBody"/> for deserialization. </summary>
+        internal TranslateBody()
         {
         }
 
-        /// <summary> Text to translate. </summary>
-        public string Text { get; }
+        /// <summary> Array of the input text elements to translate. </summary>
+        public IList<TranslateInputItem> Inputs { get; }
     }
 }

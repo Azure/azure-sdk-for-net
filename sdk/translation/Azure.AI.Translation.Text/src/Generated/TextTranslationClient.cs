@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -30,10 +28,6 @@ namespace Azure.AI.Translation.Text
     /// Transliterate. Converts characters or letters of a source language to the corresponding characters or letters of a target language.
     ///
     /// Detect. Returns the source code language code and a boolean variable denoting whether the detected language is supported for text translation and transliteration.
-    ///
-    /// Dictionary lookup. Returns equivalent words for the source term in the target language.
-    ///
-    /// Dictionary example Returns grammatical structure and context examples for the source term and target term pair.
     /// </summary>
     public partial class TextTranslationClient
     {
@@ -222,6 +216,294 @@ namespace Azure.AI.Translation.Text
             }
         }
 
+        /// <summary> Translate Text. </summary>
+        /// <param name="body"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TranslateAsync(TranslateBody,string,CancellationToken)']/*" />
+        public virtual async Task<Response<TranslationResult>> TranslateAsync(TranslateBody body, string clientTraceId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await TranslateAsync(content, clientTraceId, context).ConfigureAwait(false);
+            return Response.FromValue(TranslationResult.FromResponse(response), response);
+        }
+
+        /// <summary> Translate Text. </summary>
+        /// <param name="body"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Translate(TranslateBody,string,CancellationToken)']/*" />
+        public virtual Response<TranslationResult> Translate(TranslateBody body, string clientTraceId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = Translate(content, clientTraceId, context);
+            return Response.FromValue(TranslationResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Translate Text
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="TranslateAsync(TranslateBody,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TranslateAsync(RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> TranslateAsync(RequestContent content, string clientTraceId = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.Translate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateTranslateRequest(content, clientTraceId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Translate Text
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="Translate(TranslateBody,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Translate(RequestContent,string,RequestContext)']/*" />
+        public virtual Response Translate(RequestContent content, string clientTraceId = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.Translate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateTranslateRequest(content, clientTraceId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Transliterate Text. </summary>
+        /// <param name="language">
+        /// Specifies the language of the text to convert from one script to another.
+        /// Possible languages are listed in the transliteration scope obtained by querying the service
+        /// for its supported languages.
+        /// </param>
+        /// <param name="fromScript">
+        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
+        /// to find input scripts available for the selected language.
+        /// </param>
+        /// <param name="toScript">
+        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
+        /// scripts available for the selected combination of input language and input script.
+        /// </param>
+        /// <param name="body"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TransliterateAsync(string,string,string,TransliterateBody,string,CancellationToken)']/*" />
+        public virtual async Task<Response<TransliterateResult>> TransliterateAsync(string language, string fromScript, string toScript, TransliterateBody body, string clientTraceId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(language, nameof(language));
+            Argument.AssertNotNull(fromScript, nameof(fromScript));
+            Argument.AssertNotNull(toScript, nameof(toScript));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await TransliterateAsync(language, fromScript, toScript, content, clientTraceId, context).ConfigureAwait(false);
+            return Response.FromValue(TransliterateResult.FromResponse(response), response);
+        }
+
+        /// <summary> Transliterate Text. </summary>
+        /// <param name="language">
+        /// Specifies the language of the text to convert from one script to another.
+        /// Possible languages are listed in the transliteration scope obtained by querying the service
+        /// for its supported languages.
+        /// </param>
+        /// <param name="fromScript">
+        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
+        /// to find input scripts available for the selected language.
+        /// </param>
+        /// <param name="toScript">
+        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
+        /// scripts available for the selected combination of input language and input script.
+        /// </param>
+        /// <param name="body"> Defines the content of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Transliterate(string,string,string,TransliterateBody,string,CancellationToken)']/*" />
+        public virtual Response<TransliterateResult> Transliterate(string language, string fromScript, string toScript, TransliterateBody body, string clientTraceId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(language, nameof(language));
+            Argument.AssertNotNull(fromScript, nameof(fromScript));
+            Argument.AssertNotNull(toScript, nameof(toScript));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = Transliterate(language, fromScript, toScript, content, clientTraceId, context);
+            return Response.FromValue(TransliterateResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Transliterate Text
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="TransliterateAsync(string,string,string,TransliterateBody,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="language">
+        /// Specifies the language of the text to convert from one script to another.
+        /// Possible languages are listed in the transliteration scope obtained by querying the service
+        /// for its supported languages.
+        /// </param>
+        /// <param name="fromScript">
+        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
+        /// to find input scripts available for the selected language.
+        /// </param>
+        /// <param name="toScript">
+        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
+        /// scripts available for the selected combination of input language and input script.
+        /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='TransliterateAsync(string,string,string,RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> TransliterateAsync(string language, string fromScript, string toScript, RequestContent content, string clientTraceId = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(language, nameof(language));
+            Argument.AssertNotNull(fromScript, nameof(fromScript));
+            Argument.AssertNotNull(toScript, nameof(toScript));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.Transliterate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, clientTraceId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Transliterate Text
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="Transliterate(string,string,string,TransliterateBody,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="language">
+        /// Specifies the language of the text to convert from one script to another.
+        /// Possible languages are listed in the transliteration scope obtained by querying the service
+        /// for its supported languages.
+        /// </param>
+        /// <param name="fromScript">
+        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
+        /// to find input scripts available for the selected language.
+        /// </param>
+        /// <param name="toScript">
+        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
+        /// scripts available for the selected combination of input language and input script.
+        /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='Transliterate(string,string,string,RequestContent,string,RequestContext)']/*" />
+        public virtual Response Transliterate(string language, string fromScript, string toScript, RequestContent content, string clientTraceId = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(language, nameof(language));
+            Argument.AssertNotNull(fromScript, nameof(fromScript));
+            Argument.AssertNotNull(toScript, nameof(toScript));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("TextTranslationClient.Transliterate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateTransliterateRequest(language, fromScript, toScript, content, clientTraceId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         internal HttpMessage CreateGetSupportedLanguagesRequest(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -252,7 +534,7 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
-        internal HttpMessage CreateTranslateRequest(IEnumerable<string> targetLanguages, RequestContent content, string clientTraceId, string sourceLanguage, string textType, string category, string profanityAction, string profanityMarker, bool? includeAlignment, bool? includeSentenceLength, string suggestedSourceLanguage, string sourceLanguageScript, string targetLanguageScript, bool? allowFallback, RequestContext context)
+        internal HttpMessage CreateTranslateRequest(RequestContent content, string clientTraceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -260,57 +542,6 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/translate", false);
-            if (targetLanguages != null && !(targetLanguages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var param in targetLanguages)
-                {
-                    uri.AppendQuery("to", param, true);
-                }
-            }
-            if (sourceLanguage != null)
-            {
-                uri.AppendQuery("from", sourceLanguage, true);
-            }
-            if (textType != null)
-            {
-                uri.AppendQuery("textType", textType, true);
-            }
-            if (category != null)
-            {
-                uri.AppendQuery("category", category, true);
-            }
-            if (profanityAction != null)
-            {
-                uri.AppendQuery("profanityAction", profanityAction, true);
-            }
-            if (profanityMarker != null)
-            {
-                uri.AppendQuery("profanityMarker", profanityMarker, true);
-            }
-            if (includeAlignment != null)
-            {
-                uri.AppendQuery("includeAlignment", includeAlignment.Value, true);
-            }
-            if (includeSentenceLength != null)
-            {
-                uri.AppendQuery("includeSentenceLength", includeSentenceLength.Value, true);
-            }
-            if (suggestedSourceLanguage != null)
-            {
-                uri.AppendQuery("suggestedFrom", suggestedSourceLanguage, true);
-            }
-            if (sourceLanguageScript != null)
-            {
-                uri.AppendQuery("fromScript", sourceLanguageScript, true);
-            }
-            if (targetLanguageScript != null)
-            {
-                uri.AppendQuery("toScript", targetLanguageScript, true);
-            }
-            if (allowFallback != null)
-            {
-                uri.AppendQuery("allowFallback", allowFallback.Value, true);
-            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -323,7 +554,7 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
-        internal HttpMessage CreateTransliterateRequest(string language, string sourceLanguageScript, string targetLanguageScript, RequestContent content, string clientTraceId, RequestContext context)
+        internal HttpMessage CreateTransliterateRequest(string language, string fromScript, string toScript, RequestContent content, string clientTraceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -332,80 +563,8 @@ namespace Azure.AI.Translation.Text
             uri.Reset(_endpoint);
             uri.AppendPath("/transliterate", false);
             uri.AppendQuery("language", language, true);
-            uri.AppendQuery("fromScript", sourceLanguageScript, true);
-            uri.AppendQuery("toScript", targetLanguageScript, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (clientTraceId != null)
-            {
-                request.Headers.Add("X-ClientTraceId", clientTraceId);
-            }
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateFindSentenceBoundariesRequest(RequestContent content, string clientTraceId, string language, string script, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/breaksentence", false);
-            if (language != null)
-            {
-                uri.AppendQuery("language", language, true);
-            }
-            if (script != null)
-            {
-                uri.AppendQuery("script", script, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (clientTraceId != null)
-            {
-                request.Headers.Add("X-ClientTraceId", clientTraceId);
-            }
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateLookupDictionaryEntriesRequest(string sourceLanguage, string targetLanguage, RequestContent content, string clientTraceId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/dictionary/lookup", false);
-            uri.AppendQuery("from", sourceLanguage, true);
-            uri.AppendQuery("to", targetLanguage, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (clientTraceId != null)
-            {
-                request.Headers.Add("X-ClientTraceId", clientTraceId);
-            }
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateLookupDictionaryExamplesRequest(string sourceLanguage, string targetLanguage, RequestContent content, string clientTraceId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/dictionary/examples", false);
-            uri.AppendQuery("from", sourceLanguage, true);
-            uri.AppendQuery("to", targetLanguage, true);
+            uri.AppendQuery("fromScript", fromScript, true);
+            uri.AppendQuery("toScript", toScript, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
