@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BotConnectionSettingProperties"/>. </summary>
+        /// <param name="id"> Id of the Connection Setting. </param>
+        /// <param name="name"> Name of the Connection Setting. </param>
         /// <param name="clientId"> Client Id associated with the Connection Setting. </param>
         /// <param name="settingId"> Setting Id set by the service for the Connection Setting. </param>
         /// <param name="clientSecret"> Client Secret associated with the Connection Setting. </param>
@@ -61,8 +63,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="parameters"> Service Provider Parameters associated with the Connection Setting. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotConnectionSettingProperties(string clientId, string settingId, string clientSecret, string scopes, string serviceProviderId, string serviceProviderDisplayName, IList<BotConnectionSettingParameter> parameters, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BotConnectionSettingProperties(string id, string name, string clientId, string settingId, string clientSecret, string scopes, string serviceProviderId, string serviceProviderDisplayName, IList<BotConnectionSettingParameter> parameters, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Id = id;
+            Name = name;
             ClientId = clientId;
             SettingId = settingId;
             ClientSecret = clientSecret;
@@ -74,6 +78,10 @@ namespace Azure.ResourceManager.BotService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Id of the Connection Setting. </summary>
+        public string Id { get; set; }
+        /// <summary> Name of the Connection Setting. </summary>
+        public string Name { get; set; }
         /// <summary> Client Id associated with the Connection Setting. </summary>
         public string ClientId { get; set; }
         /// <summary> Setting Id set by the service for the Connection Setting. </summary>

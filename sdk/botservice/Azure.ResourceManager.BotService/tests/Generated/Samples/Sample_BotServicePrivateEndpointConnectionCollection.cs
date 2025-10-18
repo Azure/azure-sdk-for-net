@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.BotService.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.BotService.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/PutPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-09-15-preview/PutPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,14 +40,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // invoke the operation
             string privateEndpointConnectionName = "{privateEndpointConnectionName}";
-            BotServicePrivateEndpointConnectionData data = new BotServicePrivateEndpointConnectionData
-            {
-                ConnectionState = new BotServicePrivateLinkServiceConnectionState
-                {
-                    Status = BotServicePrivateEndpointServiceConnectionStatus.Approved,
-                    Description = "Auto-Approved",
-                },
-            };
+            BotServicePrivateEndpointConnectionData data = new BotServicePrivateEndpointConnectionData();
             ArmOperation<BotServicePrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
             BotServicePrivateEndpointConnectionResource result = lro.Value;
 
@@ -63,8 +55,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-09-15-preview/GetPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -97,8 +89,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPrivateEndpointConnections()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/ListPrivateEndpointConnections.json
-            // this example is just showing the usage of "PrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-09-15-preview/ListPrivateEndpointConnections.json
+            // this example is just showing the usage of "PrivateEndpointConnection_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -133,8 +125,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-09-15-preview/GetPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -163,8 +155,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-09-15-preview/GetPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
