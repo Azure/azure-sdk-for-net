@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Cấu hình - chỉnh lại trước khi chạy
+REPO_OWNER="satashinakamotox-coder"
+REPO_NAME="<repo-name>"            # ← thay tên repo (không có khoảng trắng)
+COLLABORATOR="NA-satoshinakamoto"  # ← username người cần mời
+BRANCH="invite-admin-$(date +%Y%m%d%H%M%S)"
+
+if ! command -v gh >/dev/null 2>&1; then
+  echo "ERROR: gh CLI không được cài. Cài tại https://cli.github.com/ rồi chạy lại."
+  exit 1
+fi
+
+# kiểm tra đăng nhập
+if ! gh auth status >/dev/null 2>&1; then
+  echo "ERROR: Bạn chưa đăng nhập gh. Chạy: gh auth login"
+  exit 1
+fi
+
+# Tạo nhánh, thêm file mô tả, commit và push
+git fetch origin
+git checkout -b "${BRANCH}"
+
+cat > INVITE_ADMIN.md <<EOF
+# Request admin access for ${COLLABORATOR}
+
+Repository: ${REPO_OWNER}/${REPO_NAME}
+Requested collaborator: ${COLLABORATOR}
+
+This branch contains the prepared PR body (PR_BODY.md) and a short description file to request admin permissions.
+EOF
+
+git add INVITE_ADMIN.md PR_BODY.md || true
+git commit -m "chore: add invite admin materials for ${COLLABORATOR}" || {
+  echo "No changes to commit (maybe PR_BODY.md already exists). Continuing..."
+}
+git push --set-upstream origin "${BRANCH}"
+
+echo "Done. Branch pushed: ${BRANCH}"
+echo "Create PR with:"
+echo "  gh pr create --base main --head ${REPO_OWNER}:${BRANCH} --title \"Request admin access for ${COLLABORATOR}\" --body-file PR_BODY.md"Subject: Requesting admin access for NA-satoshinakamoto
+
+Hello maintainers,
+
+I am creating this pull request to request that the user `NA-satoshinakamoto` is granted admin (or maintainer) access for the relevant area of this repository.
+
+Who: @NA-satoshinakamoto
+Requested role: Admin / Maintainer (please advise exact permission if maintainers prefer more specific role)
+
+Rationale / Evidence of contribution:
+- (Add links to PRs you've opened, e.g.)
+  - https://github.com/satashinakamotox-coder/azure-sdk-for-net/pull/...
+  - https://github.com/Azure/azure-sdk-for-net/pull/...
+- (Add links to issues you triaged/fixed)
+- (Short summary of relevant experience and commitment, e.g., "I will follow CONTRIBUTING.md, 2FA enabled, will limit actions to area X")
+
+Requested scope:
+- (Specify areas/files/teams you will manage, e.g., "Service Bus client area", "Text Analytics area", etc.)
+
+Security & compliance:
+- 2FA: Yes
+- CLA/DCO: I will sign the required agreements if requested.
+
+If more information is required (identity documents, company registration, etc.), please advise and I will provide them.
+
+Thank you for considering this request.
+
+Regards,  
+@NA-satoshinakamotox-coder
