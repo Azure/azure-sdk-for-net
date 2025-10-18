@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetAppFileServiceLevel? serviceLevel = null, long? usageThreshold = null, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = null, float? throughputMibps = null, ResourceIdentifier snapshotPolicyId = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, string unixPermissions = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, bool? isSnapshotDirectoryVisible = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null)
         {
             tags ??= new Dictionary<string, string>();
-            exportRules ??= new List<NetAppVolumeExportPolicyRule>();
+            //exportRules ??= new List<NetAppVolumeExportPolicyRule>();
 
-            return new NetAppVolumePatch(
+            return ArmNetAppModelFactory.NetAppVolumePatch(
                 id,
                 name,
                 resourceType,
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 location,
                 serviceLevel,
                 usageThreshold,
-                exportRules != null ? new VolumePatchPropertiesExportPolicy(exportRules?.ToList(), serializedAdditionalRawData: null) : null,
+                exportRules != null ? exportRules : null,
                 null, //protocolTypes
                 throughputMibps,
                 snapshotPolicyId != null ? new NetAppVolumePatchDataProtection(null, new VolumeSnapshotProperties(snapshotPolicyId, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
@@ -132,8 +132,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 null,
                 isSnapshotDirectoryVisible,
                 smbAccessBasedEnumeration,
-                smbNonBrowsable,
-                serializedAdditionalRawData: null);
+                smbNonBrowsable);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppBackupData"/>. </summary>
