@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Elastic.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetElasticMonitors_MonitorsList()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/Monitors_List.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2025-06-01/examples/Monitors_List.json
             // this example is just showing the usage of "Monitors_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Elastic.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetElasticVersions_ElasticVersionsList()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/ElasticVersions_List.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2025-06-01/examples/ElasticVersions_List.json
             // this example is just showing the usage of "ElasticVersions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Elastic.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetApiKey_OrganizationsGetApiKey()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/Organizations_GetApiKey.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2025-06-01/examples/Organizations_GetApiKey.json
             // this example is just showing the usage of "Organizations_GetApiKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Elastic.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetElasticToAzureSubscriptionMapping_OrganizationsGetElasticToAzureSubscriptionMapping()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/Organizations_GetElasticToAzureSubscriptionMapping.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2025-06-01/examples/Organizations_GetElasticToAzureSubscriptionMapping.json
             // this example is just showing the usage of "Organizations_GetElasticToAzureSubscriptionMapping" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

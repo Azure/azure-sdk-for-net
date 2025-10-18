@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Elastic
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -75,6 +80,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 return null;
             }
+            string kind = default;
             ElasticSku sku = default;
             ElasticMonitorProperties properties = default;
             ManagedServiceIdentity identity = default;
@@ -88,6 +94,11 @@ namespace Azure.ResourceManager.Elastic
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -171,6 +182,7 @@ namespace Azure.ResourceManager.Elastic
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                kind,
                 sku,
                 properties,
                 identity,

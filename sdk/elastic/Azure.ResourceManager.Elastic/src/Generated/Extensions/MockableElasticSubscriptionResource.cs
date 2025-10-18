@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// List all monitors under the specified subscription.
+        /// List all Elastic monitor resources within a specified subscription, helping you audit and manage your monitoring setup.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// List all monitors under the specified subscription.
+        /// List all Elastic monitor resources within a specified subscription, helping you audit and manage your monitoring setup.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// Get a list of available versions for a region.
+        /// Retrieve a list of all available Elastic versions for a specified region, helping you choose the best version for your deployment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// Get a list of available versions for a region.
+        /// Retrieve a list of all available Elastic versions for a specified region, helping you choose the best version for your deployment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// Fetch User API Key from internal database, if it was generated and stored while creating the Elasticsearch Organization.
+        /// Fetch the User API Key from the internal database, if it was generated and stored during the creation of the Elasticsearch Organization.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// Fetch User API Key from internal database, if it was generated and stored while creating the Elasticsearch Organization.
+        /// Fetch the User API Key from the internal database, if it was generated and stored during the creation of the Elasticsearch Organization.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// Get Elastic Organization To Azure Subscription Mapping details for the logged-in user.
+        /// Retrieve mapping details between the Elastic Organization and Azure Subscription for the logged-in user.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// Get Elastic Organization To Azure Subscription Mapping details for the logged-in user.
+        /// Retrieve mapping details between the Elastic Organization and Azure Subscription for the logged-in user.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// </list>
         /// </summary>

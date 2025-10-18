@@ -64,12 +64,14 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="kind"> The kind of the Elastic resource - observability, security, search etc. </param>
         /// <param name="sku"> SKU of the monitor resource. </param>
         /// <param name="properties"> Properties of the monitor resource. </param>
         /// <param name="identity"> Identity properties of the monitor resource. Current supported identity types: SystemAssigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSku sku, ElasticMonitorProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ElasticMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ElasticSku sku, ElasticMonitorProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Kind = kind;
             Sku = sku;
             Properties = properties;
             Identity = identity;
@@ -81,6 +83,8 @@ namespace Azure.ResourceManager.Elastic
         {
         }
 
+        /// <summary> The kind of the Elastic resource - observability, security, search etc. </summary>
+        public string Kind { get; set; }
         /// <summary> SKU of the monitor resource. </summary>
         internal ElasticSku Sku { get; set; }
         /// <summary> Name of the SKU. </summary>

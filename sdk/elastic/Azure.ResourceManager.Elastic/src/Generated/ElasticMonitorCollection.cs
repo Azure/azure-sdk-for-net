@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create a monitor resource.
+        /// Create a new Elastic monitor resource in your Azure subscription, enabling observability and monitoring of your Azure resources through Elastic.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create a monitor resource.
+        /// Create a new Elastic monitor resource in your Azure subscription, enabling observability and monitoring of your Azure resources through Elastic.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get the properties of a specific monitor resource.
+        /// Get detailed properties of a specific Elastic monitor resource, helping you manage observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get the properties of a specific monitor resource.
+        /// Get detailed properties of a specific Elastic monitor resource, helping you manage observability and performance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List all monitors under the specified resource group.
+        /// List all Elastic monitor resources within a specified resource group of the subscription, helping you audit and manage your monitoring setup.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List all monitors under the specified resource group.
+        /// List all Elastic monitor resources within a specified resource group of the subscription, helping you audit and manage your monitoring setup.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
