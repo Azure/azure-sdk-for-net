@@ -1,0 +1,5 @@
+directory: specification/cognitiveservices/Speech.Transcription
+commit: fc549fc4bc9ebddfad4b975bd45d8f2bd79dbfbb
+repo: Azure/azure-rest-api-specs
+additionalDirectories: []
+
