@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Monitor.Query.Metrics
+namespace Azure.Core
 {
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct), AllowMultiple = true)]
     internal partial class CodeGenSuppressAttribute : Attribute
