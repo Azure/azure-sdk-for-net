@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where a legacy ownership record without checkpoint data was interpreted as a valid checkpoint and used to initialize a partition when no current generation checkpoint was present.
+
 ### Other Changes
 
 ## 6.5.2 (2025-06-16)
