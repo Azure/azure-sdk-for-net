@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Logs.Models
 {
