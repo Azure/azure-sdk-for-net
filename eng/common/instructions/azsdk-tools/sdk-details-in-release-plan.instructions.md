@@ -9,13 +9,19 @@ description: 'Identify languages configured in the TypeSpec project and add it t
    - For .NET, use namespace property to get package name.
    - For JavaScript, use `packagedetails:name` property to get package name.
    - For Go, use module name and remove `github.com/Azure/azure-sdk-for-go/` to get package name
-3. Map the language name in emitter to one of the following in Pascal case(except .NET):
+3. Validate package names against these prefix rules before proceeding:
+   - .NET package names start with `Azure.`
+   - JavaScript package names start with `@azure/`
+   - Java package names start with `azure-` or start with `com.azure.`
+   - Go package names start with `sdk/`
+   - Python package names start with `azure-`
+4. Map the language name in emitter to one of the following in Pascal case(except .NET):
    - .NET
    - Java
    - Python
    - JavaScript
    - Go
-4. Create a JSON array object with the following structure:
+5. Create a JSON array object with the following structure:
    ```json
    [
            {
@@ -25,7 +31,7 @@ description: 'Identify languages configured in the TypeSpec project and add it t
            ...
     ]
    ```
-5. If no languages are configured, inform the user: "No languages configured in TypeSpec project. Please add at least one language emitter in tspconfig.yaml."
+6. If no languages are configured, inform the user: "No languages configured in TypeSpec project. Please add at least one language emitter in tspconfig.yaml."
 **Success Criteria**: JSON object with languages and package names created.
 
 # Step 2: Check if release plan exists
