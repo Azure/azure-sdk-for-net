@@ -48,7 +48,7 @@ The following API changes were made between `Azure.Monitor.Query` and `Azure.Mon
 Code using the previous `QueryTimeRange` class will need to be updated to use the new `LogsQueryTimeRange` class:
 
 Previous code:
-```C# Snippet:QueryLogsPrintTable
+```C#
 string workspaceId = "<workspace_id>";
 
 var client = new LogsQueryClient(new DefaultAzureCredential());
@@ -112,7 +112,7 @@ foreach (var row in table.Rows)
 ### Query logs from workspace
 
 Previous code:
-```C# Snippet:QueryLogsPrintTable
+```C#
 string workspaceId = "<workspace_id>";
 
 var client = new LogsQueryClient(new DefaultAzureCredential());
@@ -163,8 +163,7 @@ foreach (var row in table.Rows)
 ### Query resource logs
 
 Previous code:
-
-```C# Snippet:QueryResource
+```C#
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
 string resourceId = "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
@@ -187,7 +186,6 @@ foreach (LogsTableColumn columns in resultTable.Columns)
 ```
 
 New code:
-
 ```C# Snippet:QueryLogs_QueryResource
 var client = new LogsQueryClient(new DefaultAzureCredential());
 

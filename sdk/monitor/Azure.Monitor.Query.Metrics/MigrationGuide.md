@@ -110,7 +110,7 @@ foreach (MetricsQueryResult value in metricsQueryResults.Values)
 ### Query metrics for multiple resources
 
 Previous code:
-```C# Snippet:QueryResourcesMetrics
+```C#
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
 var client = new MetricsClient(
@@ -151,7 +151,7 @@ foreach (MetricsQueryResult value in metricsQueryResults.Values)
 
 Previous code:
 
-```C# Snippet:QueryResourcesMetricsWithOptions
+```C#
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
 var client = new MetricsClient(
