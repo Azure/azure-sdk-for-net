@@ -1,5 +1,17 @@
 namespace Azure.AI.Vision.Face
 {
+    public partial class AbuseMonitoringResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.AbuseMonitoringResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AbuseMonitoringResult>
+    {
+        internal AbuseMonitoringResult() { }
+        public bool IsAbuseDetected { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.OtherFlaggedSessions> OtherFlaggedSessions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.AbuseMonitoringResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.AbuseMonitoringResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.AbuseMonitoringResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.AbuseMonitoringResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AbuseMonitoringResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AbuseMonitoringResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AbuseMonitoringResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AccessoryItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.AccessoryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AccessoryItem>
     {
         internal AccessoryItem() { }
@@ -44,15 +56,13 @@ namespace Azure.AI.Vision.Face
     }
     public static partial class AIVisionFaceModelFactory
     {
+        public static Azure.AI.Vision.Face.AbuseMonitoringResult AbuseMonitoringResult(bool isAbuseDetected = false, System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.OtherFlaggedSessions> otherFlaggedSessions = null) { throw null; }
         public static Azure.AI.Vision.Face.AccessoryItem AccessoryItem(Azure.AI.Vision.Face.AccessoryType type = default(Azure.AI.Vision.Face.AccessoryType), float confidence = 0f) { throw null; }
         public static Azure.AI.Vision.Face.AddFaceResult AddFaceResult(System.Guid persistedFaceId = default(System.Guid)) { throw null; }
-        public static Azure.AI.Vision.Face.AuditLivenessResponseInfo AuditLivenessResponseInfo(Azure.AI.Vision.Face.LivenessResponseBody body = null, int statusCode = 0, long latencyInMilliseconds = (long)0) { throw null; }
-        public static Azure.AI.Vision.Face.AuditRequestInfo AuditRequestInfo(string url = null, string method = null, long? contentLength = default(long?), string contentType = null, string userAgent = null) { throw null; }
         public static Azure.AI.Vision.Face.BlurProperties BlurProperties(Azure.AI.Vision.Face.BlurLevel blurLevel = default(Azure.AI.Vision.Face.BlurLevel), float value = 0f) { throw null; }
-        public static Azure.AI.Vision.Face.CreateLivenessSessionContent CreateLivenessSessionContent(Azure.AI.Vision.Face.LivenessOperationMode livenessOperationMode = default(Azure.AI.Vision.Face.LivenessOperationMode), bool? sendResultsToClient = default(bool?), bool? deviceCorrelationIdSetInClient = default(bool?), bool? enableSessionImage = default(bool?), Azure.AI.Vision.Face.LivenessModel? livenessSingleModalModel = default(Azure.AI.Vision.Face.LivenessModel?), string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = default(int?)) { throw null; }
-        public static Azure.AI.Vision.Face.CreateLivenessSessionResult CreateLivenessSessionResult(string sessionId = null, string authToken = null) { throw null; }
-        public static Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent CreateLivenessWithVerifySessionContent(Azure.AI.Vision.Face.LivenessOperationMode livenessOperationMode = default(Azure.AI.Vision.Face.LivenessOperationMode), bool? sendResultsToClient = default(bool?), bool? deviceCorrelationIdSetInClient = default(bool?), bool? enableSessionImage = default(bool?), Azure.AI.Vision.Face.LivenessModel? livenessSingleModalModel = default(Azure.AI.Vision.Face.LivenessModel?), string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = default(int?), bool? returnVerifyImageHash = default(bool?), float? verifyConfidenceThreshold = default(float?)) { throw null; }
-        public static Azure.AI.Vision.Face.CreateLivenessWithVerifySessionResult CreateLivenessWithVerifySessionResult(string sessionId = null, string authToken = null, Azure.AI.Vision.Face.LivenessWithVerifyImage verifyImage = null) { throw null; }
+        public static Azure.AI.Vision.Face.ClientInformation ClientInformation(string ip = null) { throw null; }
+        public static Azure.AI.Vision.Face.CreateLivenessSessionContent CreateLivenessSessionContent(Azure.AI.Vision.Face.LivenessOperationMode livenessOperationMode = default(Azure.AI.Vision.Face.LivenessOperationMode), bool? deviceCorrelationIdSetInClient = default(bool?), bool? enableSessionImage = default(bool?), Azure.AI.Vision.Face.LivenessModel? livenessModelVersion = default(Azure.AI.Vision.Face.LivenessModel?), string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = default(int?), int numberOfClientAttemptsAllowed = 0, string userCorrelationId = null, bool? userCorrelationIdSetInClient = default(bool?), string expectedClientIpAddress = null) { throw null; }
+        public static Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent CreateLivenessWithVerifySessionContent(Azure.AI.Vision.Face.LivenessOperationMode livenessOperationMode = default(Azure.AI.Vision.Face.LivenessOperationMode), bool? deviceCorrelationIdSetInClient = default(bool?), bool? enableSessionImage = default(bool?), Azure.AI.Vision.Face.LivenessModel? livenessModelVersion = default(Azure.AI.Vision.Face.LivenessModel?), bool? returnVerifyImageHash = default(bool?), float? verifyConfidenceThreshold = default(float?), System.IO.Stream verifyImage = null, string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = default(int?), int? numberOfClientAttemptsAllowed = default(int?)) { throw null; }
         public static Azure.AI.Vision.Face.CreatePersonResult CreatePersonResult(System.Guid personId = default(System.Guid)) { throw null; }
         public static Azure.AI.Vision.Face.ExposureProperties ExposureProperties(Azure.AI.Vision.Face.ExposureLevel exposureLevel = default(Azure.AI.Vision.Face.ExposureLevel), float value = 0f) { throw null; }
         public static Azure.AI.Vision.Face.FaceAttributes FaceAttributes(float? age = default(float?), float? smile = default(float?), Azure.AI.Vision.Face.FacialHair facialHair = null, Azure.AI.Vision.Face.GlassesType? glasses = default(Azure.AI.Vision.Face.GlassesType?), Azure.AI.Vision.Face.HeadPose headPose = null, Azure.AI.Vision.Face.HairProperties hair = null, Azure.AI.Vision.Face.OcclusionProperties occlusion = null, System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.AccessoryItem> accessories = null, Azure.AI.Vision.Face.BlurProperties blur = null, Azure.AI.Vision.Face.ExposureProperties exposure = null, Azure.AI.Vision.Face.NoiseProperties noise = null, Azure.AI.Vision.Face.MaskProperties mask = null, Azure.AI.Vision.Face.QualityForRecognition? qualityForRecognition = default(Azure.AI.Vision.Face.QualityForRecognition?)) { throw null; }
@@ -75,53 +85,33 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.LargePersonGroup LargePersonGroup(string name = null, string userData = null, Azure.AI.Vision.Face.FaceRecognitionModel? recognitionModel = default(Azure.AI.Vision.Face.FaceRecognitionModel?), string largePersonGroupId = null) { throw null; }
         public static Azure.AI.Vision.Face.LargePersonGroupPerson LargePersonGroupPerson(System.Guid personId = default(System.Guid), string name = null, string userData = null, System.Collections.Generic.IEnumerable<System.Guid> persistedFaceIds = null) { throw null; }
         public static Azure.AI.Vision.Face.LargePersonGroupPersonFace LargePersonGroupPersonFace(System.Guid persistedFaceId = default(System.Guid), string userData = null) { throw null; }
-        public static Azure.AI.Vision.Face.LivenessOutputsTarget LivenessOutputsTarget(Azure.AI.Vision.Face.FaceRectangle faceRectangle = null, string fileName = null, int timeOffsetWithinFile = 0, Azure.AI.Vision.Face.FaceImageType imageType = default(Azure.AI.Vision.Face.FaceImageType)) { throw null; }
-        public static Azure.AI.Vision.Face.LivenessResponseBody LivenessResponseBody(Azure.AI.Vision.Face.FaceLivenessDecision? livenessDecision = default(Azure.AI.Vision.Face.FaceLivenessDecision?), Azure.AI.Vision.Face.LivenessOutputsTarget target = null, Azure.AI.Vision.Face.LivenessModel? modelVersionUsed = default(Azure.AI.Vision.Face.LivenessModel?), Azure.AI.Vision.Face.LivenessWithVerifyOutputs verifyResult = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
-        public static Azure.AI.Vision.Face.LivenessSession LivenessSession(string id = null, System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset? sessionStartDateTime = default(System.DateTimeOffset?), bool sessionExpired = false, string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = default(int?), Azure.AI.Vision.Face.FaceSessionStatus status = default(Azure.AI.Vision.Face.FaceSessionStatus), Azure.AI.Vision.Face.LivenessSessionAuditEntry result = null) { throw null; }
-        public static Azure.AI.Vision.Face.LivenessSessionAuditEntry LivenessSessionAuditEntry(long id = (long)0, string sessionId = null, string requestId = null, string clientRequestId = null, System.DateTimeOffset receivedDateTime = default(System.DateTimeOffset), Azure.AI.Vision.Face.AuditRequestInfo request = null, Azure.AI.Vision.Face.AuditLivenessResponseInfo response = null, string digest = null, string sessionImageId = null, string verifyImageHash = null) { throw null; }
-        public static Azure.AI.Vision.Face.LivenessSessionItem LivenessSessionItem(string id = null, System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset? sessionStartDateTime = default(System.DateTimeOffset?), bool sessionExpired = false, string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = default(int?)) { throw null; }
-        public static Azure.AI.Vision.Face.LivenessWithVerifyImage LivenessWithVerifyImage(Azure.AI.Vision.Face.FaceRectangle faceRectangle = null, Azure.AI.Vision.Face.QualityForRecognition qualityForRecognition = default(Azure.AI.Vision.Face.QualityForRecognition)) { throw null; }
-        public static Azure.AI.Vision.Face.LivenessWithVerifyOutputs LivenessWithVerifyOutputs(Azure.AI.Vision.Face.LivenessWithVerifyImage verifyImage = null, float matchConfidence = 0f, bool isIdentical = false) { throw null; }
-        public static Azure.AI.Vision.Face.LivenessWithVerifySession LivenessWithVerifySession(string id = null, System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset? sessionStartDateTime = default(System.DateTimeOffset?), bool sessionExpired = false, string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = default(int?), Azure.AI.Vision.Face.FaceSessionStatus status = default(Azure.AI.Vision.Face.FaceSessionStatus), Azure.AI.Vision.Face.LivenessSessionAuditEntry result = null) { throw null; }
+        public static Azure.AI.Vision.Face.LivenessColorDecisionTarget LivenessColorDecisionTarget(Azure.AI.Vision.Face.FaceRectangle faceRectangle = null) { throw null; }
+        public static Azure.AI.Vision.Face.LivenessDecisionTargets LivenessDecisionTargets(Azure.AI.Vision.Face.LivenessColorDecisionTarget color = null) { throw null; }
+        public static Azure.AI.Vision.Face.LivenessError LivenessError(string code = null, string message = null, Azure.AI.Vision.Face.LivenessDecisionTargets targets = null) { throw null; }
+        public static Azure.AI.Vision.Face.LivenessResult LivenessResult(Azure.AI.Vision.Face.FaceLivenessDecision? livenessDecision = default(Azure.AI.Vision.Face.FaceLivenessDecision?), Azure.AI.Vision.Face.LivenessDecisionTargets targets = null, string digest = null, string sessionImageId = null) { throw null; }
+        public static Azure.AI.Vision.Face.LivenessSession LivenessSession(string sessionId = null, string authToken = null, Azure.AI.Vision.Face.OperationState status = default(Azure.AI.Vision.Face.OperationState), Azure.AI.Vision.Face.LivenessModel? modelVersion = default(Azure.AI.Vision.Face.LivenessModel?), bool isAbuseMonitoringEnabled = false, string expectedClientIpAddress = null, Azure.AI.Vision.Face.LivenessSessionResults results = null) { throw null; }
+        public static Azure.AI.Vision.Face.LivenessSessionAttempt LivenessSessionAttempt(int attemptId = 0, Azure.AI.Vision.Face.OperationState attemptStatus = default(Azure.AI.Vision.Face.OperationState), Azure.AI.Vision.Face.LivenessResult result = null, Azure.AI.Vision.Face.LivenessError error = null, System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.ClientInformation> clientInformation = null, Azure.AI.Vision.Face.AbuseMonitoringResult abuseMonitoringResult = null) { throw null; }
+        public static Azure.AI.Vision.Face.LivenessSessionResults LivenessSessionResults(System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.LivenessSessionAttempt> attempts = null) { throw null; }
+        public static Azure.AI.Vision.Face.LivenessWithVerifyOutputs LivenessWithVerifyOutputs(float matchConfidence = 0f, bool isIdentical = false) { throw null; }
+        public static Azure.AI.Vision.Face.LivenessWithVerifyReference LivenessWithVerifyReference(Azure.AI.Vision.Face.FaceImageType referenceType = default(Azure.AI.Vision.Face.FaceImageType), Azure.AI.Vision.Face.FaceRectangle faceRectangle = null, Azure.AI.Vision.Face.QualityForRecognition qualityForRecognition = default(Azure.AI.Vision.Face.QualityForRecognition)) { throw null; }
+        public static Azure.AI.Vision.Face.LivenessWithVerifyResult LivenessWithVerifyResult(Azure.AI.Vision.Face.FaceLivenessDecision? livenessDecision = default(Azure.AI.Vision.Face.FaceLivenessDecision?), Azure.AI.Vision.Face.LivenessDecisionTargets targets = null, string digest = null, string sessionImageId = null, Azure.AI.Vision.Face.LivenessWithVerifyOutputs verifyResult = null, string verifyImageHash = null) { throw null; }
+        public static Azure.AI.Vision.Face.LivenessWithVerifySession LivenessWithVerifySession(string sessionId = null, string authToken = null, Azure.AI.Vision.Face.OperationState status = default(Azure.AI.Vision.Face.OperationState), Azure.AI.Vision.Face.LivenessModel? modelVersion = default(Azure.AI.Vision.Face.LivenessModel?), bool isAbuseMonitoringEnabled = false, string expectedClientIpAddress = null, Azure.AI.Vision.Face.LivenessWithVerifySessionResults results = null) { throw null; }
+        public static Azure.AI.Vision.Face.LivenessWithVerifySessionAttempt LivenessWithVerifySessionAttempt(int attemptId = 0, Azure.AI.Vision.Face.OperationState attemptStatus = default(Azure.AI.Vision.Face.OperationState), Azure.AI.Vision.Face.LivenessWithVerifyResult result = null, Azure.AI.Vision.Face.LivenessError error = null, System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.ClientInformation> clientInformation = null, Azure.AI.Vision.Face.AbuseMonitoringResult abuseMonitoringResult = null) { throw null; }
+        public static Azure.AI.Vision.Face.LivenessWithVerifySessionResults LivenessWithVerifySessionResults(System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.LivenessWithVerifyReference> verifyReferences = null, System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.LivenessWithVerifySessionAttempt> attempts = null) { throw null; }
         public static Azure.AI.Vision.Face.MaskProperties MaskProperties(bool noseAndMouthCovered = false, Azure.AI.Vision.Face.MaskType type = default(Azure.AI.Vision.Face.MaskType)) { throw null; }
         public static Azure.AI.Vision.Face.NoiseProperties NoiseProperties(Azure.AI.Vision.Face.NoiseLevel noiseLevel = default(Azure.AI.Vision.Face.NoiseLevel), float value = 0f) { throw null; }
         public static Azure.AI.Vision.Face.OcclusionProperties OcclusionProperties(bool foreheadOccluded = false, bool eyeOccluded = false, bool mouthOccluded = false) { throw null; }
-    }
-    public partial class AuditLivenessResponseInfo : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.AuditLivenessResponseInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AuditLivenessResponseInfo>
-    {
-        internal AuditLivenessResponseInfo() { }
-        public Azure.AI.Vision.Face.LivenessResponseBody Body { get { throw null; } }
-        public long LatencyInMilliseconds { get { throw null; } }
-        public int StatusCode { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.AuditLivenessResponseInfo System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.AuditLivenessResponseInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.AuditLivenessResponseInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.AuditLivenessResponseInfo System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AuditLivenessResponseInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AuditLivenessResponseInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AuditLivenessResponseInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AuditRequestInfo : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.AuditRequestInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AuditRequestInfo>
-    {
-        internal AuditRequestInfo() { }
-        public long? ContentLength { get { throw null; } }
-        public string ContentType { get { throw null; } }
-        public string Method { get { throw null; } }
-        public string Url { get { throw null; } }
-        public string UserAgent { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.AuditRequestInfo System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.AuditRequestInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.AuditRequestInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.AuditRequestInfo System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AuditRequestInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AuditRequestInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.AuditRequestInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public static Azure.AI.Vision.Face.OtherFlaggedSessions OtherFlaggedSessions(int attemptId = 0, string sessionId = null, string sessionImageId = null) { throw null; }
     }
     public partial class AzureAIVisionFaceClientOptions : Azure.Core.ClientOptions
     {
-        public AzureAIVisionFaceClientOptions(Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions.ServiceVersion version = Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions.ServiceVersion.V1_2_Preview_1) { }
+        public AzureAIVisionFaceClientOptions(Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions.ServiceVersion version = Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions.ServiceVersion.V1_3_Preview_1) { }
         public enum ServiceVersion
         {
             V1_1_Preview_1 = 1,
             V1_2_Preview_1 = 2,
+            V1_2 = 3,
+            V1_3_Preview_1 = 4,
         }
     }
     public partial class AzureAIVisionFaceContext : System.ClientModel.Primitives.ModelReaderWriterContext
@@ -161,6 +151,17 @@ namespace Azure.AI.Vision.Face
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.BlurProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.BlurProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ClientInformation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.ClientInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.ClientInformation>
+    {
+        internal ClientInformation() { }
+        public string Ip { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.ClientInformation System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.ClientInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.ClientInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.ClientInformation System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.ClientInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.ClientInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.ClientInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CreateLivenessSessionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.CreateLivenessSessionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessSessionContent>
     {
         public CreateLivenessSessionContent(Azure.AI.Vision.Face.LivenessOperationMode livenessOperationMode) { }
@@ -168,9 +169,12 @@ namespace Azure.AI.Vision.Face
         public string DeviceCorrelationId { get { throw null; } set { } }
         public bool? DeviceCorrelationIdSetInClient { get { throw null; } set { } }
         public bool? EnableSessionImage { get { throw null; } set { } }
+        public string ExpectedClientIpAddress { get { throw null; } set { } }
+        public Azure.AI.Vision.Face.LivenessModel? LivenessModelVersion { get { throw null; } set { } }
         public Azure.AI.Vision.Face.LivenessOperationMode LivenessOperationMode { get { throw null; } }
-        public Azure.AI.Vision.Face.LivenessModel? LivenessSingleModalModel { get { throw null; } set { } }
-        public bool? SendResultsToClient { get { throw null; } set { } }
+        public int NumberOfClientAttemptsAllowed { get { throw null; } set { } }
+        public string UserCorrelationId { get { throw null; } set { } }
+        public bool? UserCorrelationIdSetInClient { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.Face.CreateLivenessSessionContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.CreateLivenessSessionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.CreateLivenessSessionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -178,49 +182,25 @@ namespace Azure.AI.Vision.Face
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessSessionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessSessionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CreateLivenessSessionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.CreateLivenessSessionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessSessionResult>
-    {
-        internal CreateLivenessSessionResult() { }
-        public string AuthToken { get { throw null; } }
-        public string SessionId { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.CreateLivenessSessionResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.CreateLivenessSessionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.CreateLivenessSessionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.CreateLivenessSessionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessSessionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessSessionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessSessionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class CreateLivenessWithVerifySessionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent>
     {
-        public CreateLivenessWithVerifySessionContent(Azure.AI.Vision.Face.LivenessOperationMode livenessOperationMode) { }
+        public CreateLivenessWithVerifySessionContent(Azure.AI.Vision.Face.LivenessOperationMode livenessOperationMode, System.IO.Stream verifyImage) { }
         public int? AuthTokenTimeToLiveInSeconds { get { throw null; } set { } }
         public string DeviceCorrelationId { get { throw null; } set { } }
         public bool? DeviceCorrelationIdSetInClient { get { throw null; } set { } }
         public bool? EnableSessionImage { get { throw null; } set { } }
+        public Azure.AI.Vision.Face.LivenessModel? LivenessModelVersion { get { throw null; } set { } }
         public Azure.AI.Vision.Face.LivenessOperationMode LivenessOperationMode { get { throw null; } }
-        public Azure.AI.Vision.Face.LivenessModel? LivenessSingleModalModel { get { throw null; } set { } }
+        public int? NumberOfClientAttemptsAllowed { get { throw null; } set { } }
         public bool? ReturnVerifyImageHash { get { throw null; } set { } }
-        public bool? SendResultsToClient { get { throw null; } set { } }
         public float? VerifyConfidenceThreshold { get { throw null; } set { } }
+        public System.IO.Stream VerifyImage { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CreateLivenessWithVerifySessionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionResult>
-    {
-        internal CreateLivenessWithVerifySessionResult() { }
-        public string AuthToken { get { throw null; } }
-        public string SessionId { get { throw null; } }
-        public Azure.AI.Vision.Face.LivenessWithVerifyImage VerifyImage { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.CreateLivenessWithVerifySessionResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.CreateLivenessWithVerifySessionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CreatePersonResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.CreatePersonResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.CreatePersonResult>
     {
@@ -612,12 +592,14 @@ namespace Azure.AI.Vision.Face
         public FaceSessionClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public FaceSessionClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Vision.Face.AzureAIVisionFaceClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.AI.Vision.Face.CreateLivenessSessionResult> CreateLivenessSession(Azure.AI.Vision.Face.CreateLivenessSessionContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Vision.Face.LivenessSession> CreateLivenessSession(Azure.AI.Vision.Face.CreateLivenessSessionContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateLivenessSession(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.Face.CreateLivenessSessionResult>> CreateLivenessSessionAsync(Azure.AI.Vision.Face.CreateLivenessSessionContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.Face.LivenessSession>> CreateLivenessSessionAsync(Azure.AI.Vision.Face.CreateLivenessSessionContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateLivenessSessionAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySession(Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent jsonContent, System.IO.Stream verifyImage, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.Face.CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionAsync(Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent jsonContent, System.IO.Stream verifyImage, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Vision.Face.LivenessWithVerifySession> CreateLivenessWithVerifySession(Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateLivenessWithVerifySession(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.Face.LivenessWithVerifySession>> CreateLivenessWithVerifySessionAsync(Azure.AI.Vision.Face.CreateLivenessWithVerifySessionContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateLivenessWithVerifySessionAsync(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteLivenessSession(string sessionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteLivenessSessionAsync(string sessionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteLivenessWithVerifySession(string sessionId, Azure.RequestContext context = null) { throw null; }
@@ -626,53 +608,18 @@ namespace Azure.AI.Vision.Face
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.FaceDetectionResult>> DetectFromSessionImage(string sessionImageId, Azure.AI.Vision.Face.FaceDetectionModel? detectionModel = default(Azure.AI.Vision.Face.FaceDetectionModel?), Azure.AI.Vision.Face.FaceRecognitionModel? recognitionModel = default(Azure.AI.Vision.Face.FaceRecognitionModel?), bool? returnFaceId = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.FaceAttributeType> returnFaceAttributes = null, bool? returnFaceLandmarks = default(bool?), bool? returnRecognitionModel = default(bool?), int? faceIdTimeToLive = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DetectFromSessionImageAsync(Azure.Core.RequestContent content, string detectionModel = null, string recognitionModel = null, bool? returnFaceId = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.FaceAttributeType> returnFaceAttributes = null, bool? returnFaceLandmarks = default(bool?), bool? returnRecognitionModel = default(bool?), int? faceIdTimeToLive = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.FaceDetectionResult>>> DetectFromSessionImageAsync(string sessionImageId, Azure.AI.Vision.Face.FaceDetectionModel? detectionModel = default(Azure.AI.Vision.Face.FaceDetectionModel?), Azure.AI.Vision.Face.FaceRecognitionModel? recognitionModel = default(Azure.AI.Vision.Face.FaceRecognitionModel?), bool? returnFaceId = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.Vision.Face.FaceAttributeType> returnFaceAttributes = null, bool? returnFaceLandmarks = default(bool?), bool? returnRecognitionModel = default(bool?), int? faceIdTimeToLive = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetLivenessSessionAuditEntries(string sessionId, string start, int? top, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.LivenessSessionAuditEntry>> GetLivenessSessionAuditEntries(string sessionId, string start = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetLivenessSessionAuditEntriesAsync(string sessionId, string start, int? top, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.LivenessSessionAuditEntry>>> GetLivenessSessionAuditEntriesAsync(string sessionId, string start = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetLivenessSessionResult(string sessionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Vision.Face.LivenessSession> GetLivenessSessionResult(string sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLivenessSessionResultAsync(string sessionId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.Face.LivenessSession>> GetLivenessSessionResultAsync(string sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetLivenessSessions(string start, int? top, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.LivenessSessionItem>> GetLivenessSessions(string start = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetLivenessSessionsAsync(string start, int? top, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.LivenessSessionItem>>> GetLivenessSessionsAsync(string start = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetLivenessWithVerifySessionAuditEntries(string sessionId, string start, int? top, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.LivenessSessionAuditEntry>> GetLivenessWithVerifySessionAuditEntries(string sessionId, string start = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetLivenessWithVerifySessionAuditEntriesAsync(string sessionId, string start, int? top, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.LivenessSessionAuditEntry>>> GetLivenessWithVerifySessionAuditEntriesAsync(string sessionId, string start = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetLivenessWithVerifySessionResult(string sessionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Vision.Face.LivenessWithVerifySession> GetLivenessWithVerifySessionResult(string sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLivenessWithVerifySessionResultAsync(string sessionId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.Face.LivenessWithVerifySession>> GetLivenessWithVerifySessionResultAsync(string sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetLivenessWithVerifySessions(string start, int? top, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.LivenessSessionItem>> GetLivenessWithVerifySessions(string start = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetLivenessWithVerifySessionsAsync(string start, int? top, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.LivenessSessionItem>>> GetLivenessWithVerifySessionsAsync(string start = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSessionImage(string sessionImageId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.BinaryData> GetSessionImage(string sessionImageId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSessionImageAsync(string sessionImageId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetSessionImageAsync(string sessionImageId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FaceSessionStatus : System.IEquatable<Azure.AI.Vision.Face.FaceSessionStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FaceSessionStatus(string value) { throw null; }
-        public static Azure.AI.Vision.Face.FaceSessionStatus NotStarted { get { throw null; } }
-        public static Azure.AI.Vision.Face.FaceSessionStatus ResultAvailable { get { throw null; } }
-        public static Azure.AI.Vision.Face.FaceSessionStatus Started { get { throw null; } }
-        public bool Equals(Azure.AI.Vision.Face.FaceSessionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Vision.Face.FaceSessionStatus left, Azure.AI.Vision.Face.FaceSessionStatus right) { throw null; }
-        public static implicit operator Azure.AI.Vision.Face.FaceSessionStatus (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Vision.Face.FaceSessionStatus left, Azure.AI.Vision.Face.FaceSessionStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class FaceTrainingResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.FaceTrainingResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.FaceTrainingResult>
     {
@@ -1002,14 +949,48 @@ namespace Azure.AI.Vision.Face
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LargePersonGroupPersonFace>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LargePersonGroupPersonFace>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class LivenessColorDecisionTarget : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessColorDecisionTarget>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessColorDecisionTarget>
+    {
+        internal LivenessColorDecisionTarget() { }
+        public Azure.AI.Vision.Face.FaceRectangle FaceRectangle { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessColorDecisionTarget System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessColorDecisionTarget>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessColorDecisionTarget>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessColorDecisionTarget System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessColorDecisionTarget>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessColorDecisionTarget>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessColorDecisionTarget>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LivenessDecisionTargets : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessDecisionTargets>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessDecisionTargets>
+    {
+        internal LivenessDecisionTargets() { }
+        public Azure.AI.Vision.Face.LivenessColorDecisionTarget Color { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessDecisionTargets System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessDecisionTargets>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessDecisionTargets>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessDecisionTargets System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessDecisionTargets>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessDecisionTargets>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessDecisionTargets>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LivenessError : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessError>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessError>
+    {
+        internal LivenessError() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        public Azure.AI.Vision.Face.LivenessDecisionTargets Targets { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessError System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessError System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LivenessModel : System.IEquatable<Azure.AI.Vision.Face.LivenessModel>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public LivenessModel(string value) { throw null; }
-        public static Azure.AI.Vision.Face.LivenessModel V20221015Preview04 { get { throw null; } }
-        public static Azure.AI.Vision.Face.LivenessModel V20231220Preview06 { get { throw null; } }
+        public static Azure.AI.Vision.Face.LivenessModel V20241115 { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.LivenessModel other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1038,46 +1019,30 @@ namespace Azure.AI.Vision.Face
         public static bool operator !=(Azure.AI.Vision.Face.LivenessOperationMode left, Azure.AI.Vision.Face.LivenessOperationMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LivenessOutputsTarget : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessOutputsTarget>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessOutputsTarget>
+    public partial class LivenessResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessResult>
     {
-        internal LivenessOutputsTarget() { }
-        public Azure.AI.Vision.Face.FaceRectangle FaceRectangle { get { throw null; } }
-        public string FileName { get { throw null; } }
-        public Azure.AI.Vision.Face.FaceImageType ImageType { get { throw null; } }
-        public int TimeOffsetWithinFile { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.LivenessOutputsTarget System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessOutputsTarget>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessOutputsTarget>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.LivenessOutputsTarget System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessOutputsTarget>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessOutputsTarget>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessOutputsTarget>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class LivenessResponseBody : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessResponseBody>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessResponseBody>
-    {
-        internal LivenessResponseBody() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        internal LivenessResult() { }
+        public string Digest { get { throw null; } }
         public Azure.AI.Vision.Face.FaceLivenessDecision? LivenessDecision { get { throw null; } }
-        public Azure.AI.Vision.Face.LivenessModel? ModelVersionUsed { get { throw null; } }
-        public Azure.AI.Vision.Face.LivenessOutputsTarget Target { get { throw null; } }
-        public Azure.AI.Vision.Face.LivenessWithVerifyOutputs VerifyResult { get { throw null; } }
+        public string SessionImageId { get { throw null; } }
+        public Azure.AI.Vision.Face.LivenessDecisionTargets Targets { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.LivenessResponseBody System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessResponseBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessResponseBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.LivenessResponseBody System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessResponseBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessResponseBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessResponseBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Vision.Face.LivenessResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LivenessSession : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSession>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSession>
     {
         internal LivenessSession() { }
-        public int? AuthTokenTimeToLiveInSeconds { get { throw null; } }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
-        public string DeviceCorrelationId { get { throw null; } }
-        public string Id { get { throw null; } }
-        public Azure.AI.Vision.Face.LivenessSessionAuditEntry Result { get { throw null; } }
-        public bool SessionExpired { get { throw null; } }
-        public System.DateTimeOffset? SessionStartDateTime { get { throw null; } }
-        public Azure.AI.Vision.Face.FaceSessionStatus Status { get { throw null; } }
+        public string AuthToken { get { throw null; } }
+        public string ExpectedClientIpAddress { get { throw null; } }
+        public bool IsAbuseMonitoringEnabled { get { throw null; } }
+        public Azure.AI.Vision.Face.LivenessModel? ModelVersion { get { throw null; } }
+        public Azure.AI.Vision.Face.LivenessSessionResults Results { get { throw null; } }
+        public string SessionId { get { throw null; } }
+        public Azure.AI.Vision.Face.OperationState Status { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.Face.LivenessSession System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSession>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSession>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1085,60 +1050,38 @@ namespace Azure.AI.Vision.Face
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSession>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSession>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LivenessSessionAuditEntry : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSessionAuditEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionAuditEntry>
+    public partial class LivenessSessionAttempt : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSessionAttempt>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionAttempt>
     {
-        internal LivenessSessionAuditEntry() { }
-        public string ClientRequestId { get { throw null; } }
-        public string Digest { get { throw null; } }
-        public long Id { get { throw null; } }
-        public System.DateTimeOffset ReceivedDateTime { get { throw null; } }
-        public Azure.AI.Vision.Face.AuditRequestInfo Request { get { throw null; } }
-        public string RequestId { get { throw null; } }
-        public Azure.AI.Vision.Face.AuditLivenessResponseInfo Response { get { throw null; } }
-        public string SessionId { get { throw null; } }
-        public string SessionImageId { get { throw null; } }
-        public string VerifyImageHash { get { throw null; } }
+        internal LivenessSessionAttempt() { }
+        public Azure.AI.Vision.Face.AbuseMonitoringResult AbuseMonitoringResult { get { throw null; } }
+        public int AttemptId { get { throw null; } }
+        public Azure.AI.Vision.Face.OperationState AttemptStatus { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.ClientInformation> ClientInformation { get { throw null; } }
+        public Azure.AI.Vision.Face.LivenessError Error { get { throw null; } }
+        public Azure.AI.Vision.Face.LivenessResult Result { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.LivenessSessionAuditEntry System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSessionAuditEntry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSessionAuditEntry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.LivenessSessionAuditEntry System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionAuditEntry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionAuditEntry>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionAuditEntry>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Vision.Face.LivenessSessionAttempt System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSessionAttempt>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSessionAttempt>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessSessionAttempt System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionAttempt>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionAttempt>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionAttempt>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LivenessSessionItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSessionItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionItem>
+    public partial class LivenessSessionResults : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSessionResults>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionResults>
     {
-        internal LivenessSessionItem() { }
-        public int? AuthTokenTimeToLiveInSeconds { get { throw null; } }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
-        public string DeviceCorrelationId { get { throw null; } }
-        public string Id { get { throw null; } }
-        public bool SessionExpired { get { throw null; } }
-        public System.DateTimeOffset? SessionStartDateTime { get { throw null; } }
+        internal LivenessSessionResults() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.LivenessSessionAttempt> Attempts { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.LivenessSessionItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSessionItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSessionItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.LivenessSessionItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class LivenessWithVerifyImage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifyImage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyImage>
-    {
-        internal LivenessWithVerifyImage() { }
-        public Azure.AI.Vision.Face.FaceRectangle FaceRectangle { get { throw null; } }
-        public Azure.AI.Vision.Face.QualityForRecognition QualityForRecognition { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.LivenessWithVerifyImage System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifyImage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifyImage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Vision.Face.LivenessWithVerifyImage System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyImage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyImage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyImage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Vision.Face.LivenessSessionResults System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSessionResults>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessSessionResults>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessSessionResults System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionResults>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionResults>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessSessionResults>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LivenessWithVerifyOutputs : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifyOutputs>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyOutputs>
     {
         internal LivenessWithVerifyOutputs() { }
         public bool IsIdentical { get { throw null; } }
         public float MatchConfidence { get { throw null; } }
-        public Azure.AI.Vision.Face.LivenessWithVerifyImage VerifyImage { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.Face.LivenessWithVerifyOutputs System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifyOutputs>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifyOutputs>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1146,23 +1089,79 @@ namespace Azure.AI.Vision.Face
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyOutputs>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyOutputs>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class LivenessWithVerifyReference : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifyReference>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyReference>
+    {
+        internal LivenessWithVerifyReference() { }
+        public Azure.AI.Vision.Face.FaceRectangle FaceRectangle { get { throw null; } }
+        public Azure.AI.Vision.Face.QualityForRecognition QualityForRecognition { get { throw null; } }
+        public Azure.AI.Vision.Face.FaceImageType ReferenceType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessWithVerifyReference System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifyReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifyReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessWithVerifyReference System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LivenessWithVerifyResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifyResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyResult>
+    {
+        internal LivenessWithVerifyResult() { }
+        public string Digest { get { throw null; } }
+        public Azure.AI.Vision.Face.FaceLivenessDecision? LivenessDecision { get { throw null; } }
+        public string SessionImageId { get { throw null; } }
+        public Azure.AI.Vision.Face.LivenessDecisionTargets Targets { get { throw null; } }
+        public string VerifyImageHash { get { throw null; } }
+        public Azure.AI.Vision.Face.LivenessWithVerifyOutputs VerifyResult { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessWithVerifyResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifyResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifyResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessWithVerifyResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifyResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class LivenessWithVerifySession : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifySession>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifySession>
     {
         internal LivenessWithVerifySession() { }
-        public int? AuthTokenTimeToLiveInSeconds { get { throw null; } }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
-        public string DeviceCorrelationId { get { throw null; } }
-        public string Id { get { throw null; } }
-        public Azure.AI.Vision.Face.LivenessSessionAuditEntry Result { get { throw null; } }
-        public bool SessionExpired { get { throw null; } }
-        public System.DateTimeOffset? SessionStartDateTime { get { throw null; } }
-        public Azure.AI.Vision.Face.FaceSessionStatus Status { get { throw null; } }
+        public string AuthToken { get { throw null; } }
+        public string ExpectedClientIpAddress { get { throw null; } }
+        public bool IsAbuseMonitoringEnabled { get { throw null; } }
+        public Azure.AI.Vision.Face.LivenessModel? ModelVersion { get { throw null; } }
+        public Azure.AI.Vision.Face.LivenessWithVerifySessionResults Results { get { throw null; } }
+        public string SessionId { get { throw null; } }
+        public Azure.AI.Vision.Face.OperationState Status { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.Face.LivenessWithVerifySession System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifySession>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifySession>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Vision.Face.LivenessWithVerifySession System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifySession>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifySession>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifySession>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LivenessWithVerifySessionAttempt : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifySessionAttempt>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifySessionAttempt>
+    {
+        internal LivenessWithVerifySessionAttempt() { }
+        public Azure.AI.Vision.Face.AbuseMonitoringResult AbuseMonitoringResult { get { throw null; } }
+        public int AttemptId { get { throw null; } }
+        public Azure.AI.Vision.Face.OperationState AttemptStatus { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.ClientInformation> ClientInformation { get { throw null; } }
+        public Azure.AI.Vision.Face.LivenessError Error { get { throw null; } }
+        public Azure.AI.Vision.Face.LivenessWithVerifyResult Result { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessWithVerifySessionAttempt System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifySessionAttempt>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifySessionAttempt>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessWithVerifySessionAttempt System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifySessionAttempt>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifySessionAttempt>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifySessionAttempt>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LivenessWithVerifySessionResults : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifySessionResults>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifySessionResults>
+    {
+        internal LivenessWithVerifySessionResults() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.LivenessWithVerifySessionAttempt> Attempts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Vision.Face.LivenessWithVerifyReference> VerifyReferences { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessWithVerifySessionResults System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifySessionResults>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.LivenessWithVerifySessionResults>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.LivenessWithVerifySessionResults System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifySessionResults>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifySessionResults>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.LivenessWithVerifySessionResults>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MaskProperties : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.MaskProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.MaskProperties>
     {
@@ -1239,6 +1238,40 @@ namespace Azure.AI.Vision.Face
         Azure.AI.Vision.Face.OcclusionProperties System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.OcclusionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.OcclusionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.OcclusionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationState : System.IEquatable<Azure.AI.Vision.Face.OperationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationState(string value) { throw null; }
+        public static Azure.AI.Vision.Face.OperationState Canceled { get { throw null; } }
+        public static Azure.AI.Vision.Face.OperationState Failed { get { throw null; } }
+        public static Azure.AI.Vision.Face.OperationState NotStarted { get { throw null; } }
+        public static Azure.AI.Vision.Face.OperationState Running { get { throw null; } }
+        public static Azure.AI.Vision.Face.OperationState Succeeded { get { throw null; } }
+        public bool Equals(Azure.AI.Vision.Face.OperationState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Vision.Face.OperationState left, Azure.AI.Vision.Face.OperationState right) { throw null; }
+        public static implicit operator Azure.AI.Vision.Face.OperationState (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Vision.Face.OperationState left, Azure.AI.Vision.Face.OperationState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class OtherFlaggedSessions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.OtherFlaggedSessions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.OtherFlaggedSessions>
+    {
+        internal OtherFlaggedSessions() { }
+        public int AttemptId { get { throw null; } }
+        public string SessionId { get { throw null; } }
+        public string SessionImageId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.OtherFlaggedSessions System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.OtherFlaggedSessions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.Face.OtherFlaggedSessions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Vision.Face.OtherFlaggedSessions System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.OtherFlaggedSessions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.OtherFlaggedSessions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Vision.Face.OtherFlaggedSessions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QualityForRecognition : System.IEquatable<Azure.AI.Vision.Face.QualityForRecognition>

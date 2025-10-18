@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    public partial class CreateLivenessSessionResult : IUtf8JsonSerializable, IJsonModel<CreateLivenessSessionResult>
+    public partial class ClientInformation : IUtf8JsonSerializable, IJsonModel<ClientInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateLivenessSessionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CreateLivenessSessionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClientInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,14 @@ namespace Azure.AI.Vision.Face
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessSessionResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClientInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateLivenessSessionResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientInformation)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("sessionId"u8);
-            writer.WriteStringValue(SessionId);
-            writer.WritePropertyName("authToken"u8);
-            writer.WriteStringValue(AuthToken);
+            writer.WritePropertyName("ip"u8);
+            writer.WriteStringValue(Ip);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -55,19 +53,19 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        CreateLivenessSessionResult IJsonModel<CreateLivenessSessionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClientInformation IJsonModel<ClientInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessSessionResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClientInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateLivenessSessionResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCreateLivenessSessionResult(document.RootElement, options);
+            return DeserializeClientInformation(document.RootElement, options);
         }
 
-        internal static CreateLivenessSessionResult DeserializeCreateLivenessSessionResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClientInformation DeserializeClientInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,20 +73,14 @@ namespace Azure.AI.Vision.Face
             {
                 return null;
             }
-            string sessionId = default;
-            string authToken = default;
+            string ip = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sessionId"u8))
+                if (property.NameEquals("ip"u8))
                 {
-                    sessionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("authToken"u8))
-                {
-                    authToken = property.Value.GetString();
+                    ip = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,46 +89,46 @@ namespace Azure.AI.Vision.Face
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CreateLivenessSessionResult(sessionId, authToken, serializedAdditionalRawData);
+            return new ClientInformation(ip, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CreateLivenessSessionResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClientInformation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessSessionResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClientInformation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVisionFaceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CreateLivenessSessionResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CreateLivenessSessionResult IPersistableModel<CreateLivenessSessionResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClientInformation IPersistableModel<ClientInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessSessionResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClientInformation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCreateLivenessSessionResult(document.RootElement, options);
+                        return DeserializeClientInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateLivenessSessionResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientInformation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CreateLivenessSessionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClientInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CreateLivenessSessionResult FromResponse(Response response)
+        internal static ClientInformation FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCreateLivenessSessionResult(document.RootElement);
+            return DeserializeClientInformation(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

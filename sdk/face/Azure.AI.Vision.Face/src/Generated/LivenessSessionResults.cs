@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.Vision.Face
 {
-    /// <summary> The face verification output. </summary>
-    public partial class LivenessWithVerifyOutputs
+    /// <summary> The results of the liveness session. </summary>
+    public partial class LivenessSessionResults
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +46,31 @@ namespace Azure.AI.Vision.Face
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyOutputs"/>. </summary>
-        /// <param name="matchConfidence"> The target face liveness face and comparison image face verification confidence. </param>
-        /// <param name="isIdentical"> Whether the target liveness face and comparison image face match. </param>
-        internal LivenessWithVerifyOutputs(float matchConfidence, bool isIdentical)
+        /// <summary> Initializes a new instance of <see cref="LivenessSessionResults"/>. </summary>
+        /// <param name="attempts"> The attempts data of underlying liveness call with the session. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="attempts"/> is null. </exception>
+        internal LivenessSessionResults(IEnumerable<LivenessSessionAttempt> attempts)
         {
-            MatchConfidence = matchConfidence;
-            IsIdentical = isIdentical;
+            Argument.AssertNotNull(attempts, nameof(attempts));
+
+            Attempts = attempts.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyOutputs"/>. </summary>
-        /// <param name="matchConfidence"> The target face liveness face and comparison image face verification confidence. </param>
-        /// <param name="isIdentical"> Whether the target liveness face and comparison image face match. </param>
+        /// <summary> Initializes a new instance of <see cref="LivenessSessionResults"/>. </summary>
+        /// <param name="attempts"> The attempts data of underlying liveness call with the session. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LivenessWithVerifyOutputs(float matchConfidence, bool isIdentical, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LivenessSessionResults(IReadOnlyList<LivenessSessionAttempt> attempts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MatchConfidence = matchConfidence;
-            IsIdentical = isIdentical;
+            Attempts = attempts;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyOutputs"/> for deserialization. </summary>
-        internal LivenessWithVerifyOutputs()
+        /// <summary> Initializes a new instance of <see cref="LivenessSessionResults"/> for deserialization. </summary>
+        internal LivenessSessionResults()
         {
         }
 
-        /// <summary> The target face liveness face and comparison image face verification confidence. </summary>
-        public float MatchConfidence { get; }
-        /// <summary> Whether the target liveness face and comparison image face match. </summary>
-        public bool IsIdentical { get; }
+        /// <summary> The attempts data of underlying liveness call with the session. </summary>
+        public IReadOnlyList<LivenessSessionAttempt> Attempts { get; }
     }
 }

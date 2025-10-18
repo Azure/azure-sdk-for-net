@@ -5,8 +5,10 @@
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
+- Added support for service versions `v1.2` and `v1.3-preview.1`.
 
 ### Breaking Changes
+- Removed deprecated operations prior to service version `v1.2`.
 
 ### Bugs Fixed
 
