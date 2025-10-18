@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetDnsService()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetDnsService.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_GetDnsService.json
             // this example is just showing the usage of "WorkloadNetworkDnsService_GetDnsService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_WorkloadNetworksDeleteDnsService()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_DeleteDnsService.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_DeleteDnsService.json
             // this example is just showing the usage of "WorkloadNetworkDnsService_DeleteDnsService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_WorkloadNetworksUpdateDnsService()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_UpdateDnsService.json
+            // Generated from example definition: 2025-09-01/WorkloadNetworks_UpdateDnsService.json
             // this example is just showing the usage of "WorkloadNetworkDnsService_UpdateDnsService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
