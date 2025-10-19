@@ -153,68 +153,12 @@ try
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguage, inputText);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
+    Response<TranslationResult> response = client.Translate(targetLanguage, inputText);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
-    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-A convenience overload of Translate is provided using a TextTranslationTranslateOptions parameter.  This sample demonstrates rendering a single source-language to multiple target languages with a single request using the options overload.
-
-```C# Snippet:GetTextTranslationMatrixOptions
-try
-{
-    TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
-        targetLanguages: new[] { "cs", "es", "de" },
-        content: new[] { "This is a test." }
-    );
-
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-
-    foreach (TranslatedTextItem translation in translations)
-    {
-        Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
-
-        Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().TargetLanguage}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-    }
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-This sample demonstrates Translation and Transliteration in a single call using the TextTranslationTranslateOptions parameter.  Required parameters are passed to the constructor, optional parameters are set using an object initializer.
-
-```C# Snippet:GetTranslationTextTransliteratedOptions
-try
-{
-    TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
-        targetLanguage: "zh-Hans",
-        content: "hudha akhtabar.")
-    {
-        FromScript = "Latn",
-        SourceLanguage = "ar",
-        ToScript = "Latn"
-    };
-
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-    TranslatedTextItem translation = translations.FirstOrDefault();
-
-    Console.WriteLine($"Source Text: {translation.SourceText.Text}");
-    Console.WriteLine($"Translation: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-    Console.WriteLine($"Transliterated text ({translation?.Translations?.FirstOrDefault()?.Transliteration?.Script}): {translation?.Translations?.FirstOrDefault()?.Transliteration?.Text}");
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
 }
 catch (RequestFailedException exception)
 {
@@ -240,33 +184,8 @@ try
 
     string inputText = "这是个测试。";
 
-    Response<IReadOnlyList<TransliteratedText>> response = client.Transliterate(language, fromScript, toScript, inputText);
-    IReadOnlyList<TransliteratedText> transliterations = response.Value;
-    TransliteratedText transliteration = transliterations.FirstOrDefault();
-
-    Console.WriteLine($"Input text was transliterated to '{transliteration?.Script}' script. Transliterated text: '{transliteration?.Text}'.");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-A convenience overload of Transliterate is provided using a single TextTranslationTransliterateOptions parameter.  A modified version of the preceding sample is provided here demonstrating its use.
-
-```C# Snippet:GetTransliteratedTextOptions
-try
-{
-    TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions(
-        language: "zh-Hans",
-        fromScript: "Hans",
-        toScript: "Latn",
-        content: "这是个测试。"
-    );
-
-    Response<IReadOnlyList<TransliteratedText>> response = client.Transliterate(options);
-    IReadOnlyList<TransliteratedText> transliterations = response.Value;
+    Response<TransliterateResult> response = client.Transliterate(language, fromScript, toScript, inputText);
+    IReadOnlyList<TransliteratedText> transliterations = response.Value.Value;
     TransliteratedText transliteration = transliterations.FirstOrDefault();
 
     Console.WriteLine($"Input text was transliterated to '{transliteration?.Script}' script. Transliterated text: '{transliteration?.Text}'.");
@@ -291,7 +210,7 @@ For example, if you submit a translation request without a target translate lang
 ```C# Snippet:HandleBadRequest
 try
 {
-    var translation = client.Translate(Array.Empty<string>(), new[] { "This is a Test" });
+    var translation = client.Translate("", "This is a Test");
 }
 catch (RequestFailedException e)
 {
