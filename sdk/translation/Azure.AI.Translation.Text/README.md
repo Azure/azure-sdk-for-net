@@ -32,7 +32,7 @@ This table shows the relationship between SDK versions and supported API version
 |-------------|-----------------------------------------------------|
 |1.0.0-beta.1 | 3.0
 |1.0.0 | 3.0
-|1.1.0 | 2025-10-01-preview
+|2.0.0-beta.1 | 2025-10-01-preview
 
 ### Prerequisites
 

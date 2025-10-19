@@ -1,10 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 2.0.0-beta.1 (Unreleased)
 
 ### Features Added
 
-- Exposed `JsonModelWriteCore` for model serialization procedure.
+- Introduced text translations using LLM option.
 
 ### Breaking Changes
 
