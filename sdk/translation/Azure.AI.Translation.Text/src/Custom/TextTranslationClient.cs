@@ -171,12 +171,13 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="text"/> is null. </exception>
-        public virtual Task<Response<TranslationResult>> TranslateAsync(string targetLanguage, string text, string sourceLanguage = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TranslatedTextItem>> TranslateAsync(string targetLanguage, string text, string sourceLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(text, nameof(text));
 
-            return TranslateAsync(targetLanguage, [text], sourceLanguage, cancellationToken: cancellationToken);
+            Response<IReadOnlyList<TranslatedTextItem>> response = await TranslateAsync(targetLanguage, [text], sourceLanguage, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value.FirstOrDefault(), response.GetRawResponse());
         }
 
         /// <summary> Translate Text. </summary>
@@ -197,13 +198,26 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
-        public virtual Task<Response<TranslationResult>> TranslateAsync(string targetLanguage, IEnumerable<string> content, string sourceLanguage = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(string targetLanguage, IEnumerable<string> content, string sourceLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(content, nameof(content));
 
             IEnumerable<TranslateInputItem> inputItems = content.Select(input => new TranslateInputItem(input, [new TranslateTarget(targetLanguage)]) { Language = sourceLanguage });
             return TranslateAsync(inputItems, cancellationToken: cancellationToken);
+        }
+
+        /// <summary> Translate Text. </summary>
+        /// <param name="input"> Defines the input of the translation request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public virtual async Task<Response<TranslatedTextItem>> TranslateAsync(TranslateInputItem input, Guid clientTraceId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(input, nameof(input));
+
+            Response<IReadOnlyList<TranslatedTextItem>> response = await TranslateAsync([input], clientTraceId, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value.FirstOrDefault(), response.GetRawResponse());
         }
 
         /// <summary> Translate Text. </summary>
@@ -224,12 +238,13 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="text"/> is null. </exception>
-        public virtual Response<TranslationResult> Translate(string targetLanguage, string text, string sourceLanguage = null, CancellationToken cancellationToken = default)
+        public virtual Response<TranslatedTextItem> Translate(string targetLanguage, string text, string sourceLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(text, nameof(text));
 
-            return Translate(targetLanguage, [text], sourceLanguage, cancellationToken: cancellationToken);
+            Response<IReadOnlyList<TranslatedTextItem>> response = Translate(targetLanguage, [text], sourceLanguage, cancellationToken: cancellationToken);
+            return Response.FromValue(response.Value.FirstOrDefault(), response.GetRawResponse());
         }
 
         /// <summary> Translate Text. </summary>
@@ -250,7 +265,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<TranslationResult> Translate(string targetLanguage, IEnumerable<string> content, string sourceLanguage = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(string targetLanguage, IEnumerable<string> content, string sourceLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(content, nameof(content));
@@ -260,15 +275,16 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> Translate Text. </summary>
-        /// <param name="inputs"> Defines the inputs of the translation request. </param>
+        /// <param name="input"> Defines the input of the translation request. </param>
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        public virtual async Task<Response<TranslationResult>> TranslateAsync(IEnumerable<TranslateInputItem> inputs, Guid clientTraceId = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public virtual Response<TranslatedTextItem> Translate(TranslateInputItem input, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(input, nameof(input));
 
-            return await TranslateAsync(new TranslateBody(inputs), GetClientTraceId(clientTraceId), cancellationToken).ConfigureAwait(false);
+            Response<IReadOnlyList<TranslatedTextItem>> response = Translate([input], clientTraceId, cancellationToken);
+            return Response.FromValue(response.Value.FirstOrDefault(), response.GetRawResponse());
         }
 
         /// <summary> Translate Text. </summary>
@@ -276,11 +292,53 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        public virtual Response<TranslationResult> Translate(IEnumerable<TranslateInputItem> inputs, Guid clientTraceId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(IEnumerable<TranslateInputItem> inputs, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
-            return Translate(new TranslateBody(inputs), GetClientTraceId(clientTraceId), cancellationToken);
+            Response<TranslationResult> response = await TranslateAsync(new TranslateBody(inputs), GetClientTraceId(clientTraceId), cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value.Value, response.GetRawResponse());
+        }
+
+        /// <summary> Translate Text. </summary>
+        /// <param name="inputs"> Defines the inputs of the translation request. </param>
+        /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
+        public virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(IEnumerable<TranslateInputItem> inputs, Guid clientTraceId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            Response<TranslationResult> response = Translate(new TranslateBody(inputs), GetClientTraceId(clientTraceId), cancellationToken);
+            return Response.FromValue(response.Value.Value, response.GetRawResponse());
+        }
+
+        /// <summary> Transliterate Text. </summary>
+        /// <param name="language">
+        /// Specifies the language of the text to convert from one script to another.
+        /// Possible languages are listed in the transliteration scope obtained by querying the service
+        /// for its supported languages.
+        /// </param>
+        /// <param name="fromScript">
+        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
+        /// to find input scripts available for the selected language.
+        /// </param>
+        /// <param name="toScript">
+        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
+        /// scripts available for the selected combination of input language and input script.
+        /// </param>
+        /// <param name="text"> Text to be transliterated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="text"/> is null. </exception>
+        public async virtual Task<Response<TransliteratedText>> TransliterateAsync(string language, string fromScript, string toScript, string text, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(language, nameof(language));
+            Argument.AssertNotNull(fromScript, nameof(fromScript));
+            Argument.AssertNotNull(toScript, nameof(toScript));
+            Argument.AssertNotNull(text, nameof(text));
+
+            Response<IReadOnlyList<TransliteratedText>> response = await TransliterateAsync(language, fromScript, toScript, new[] { new InputTextItem(text) }, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value.FirstOrDefault(), response.GetRawResponse());
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -301,14 +359,14 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        public virtual Task<Response<TransliterateResult>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
+        public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
             Argument.AssertNotNull(toScript, nameof(toScript));
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.TransliterateAsync(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), clientTraceId, cancellationToken);
+            return TransliterateAsync(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), clientTraceId, cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -328,14 +386,15 @@ namespace Azure.AI.Translation.Text
         /// <param name="text"> Text to be transliterated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="text"/> is null. </exception>
-        public virtual Task<Response<TransliterateResult>> TransliterateAsync(string language, string fromScript, string toScript, string text, CancellationToken cancellationToken = default)
+        public virtual Response<TransliteratedText> Transliterate(string language, string fromScript, string toScript, string text, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
             Argument.AssertNotNull(toScript, nameof(toScript));
             Argument.AssertNotNull(text, nameof(text));
 
-            return this.TransliterateAsync(language, fromScript, toScript, new[] { new InputTextItem(text) }, cancellationToken: cancellationToken);
+            Response<IReadOnlyList<TransliteratedText>> response = Transliterate(language, fromScript, toScript, new[] { new InputTextItem(text) }, cancellationToken: cancellationToken);
+            return Response.FromValue(response.Value.FirstOrDefault(), response.GetRawResponse());
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -356,41 +415,14 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<TransliterateResult> Transliterate(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
             Argument.AssertNotNull(toScript, nameof(toScript));
             Argument.AssertNotNull(content, nameof(content));
 
-            return this.Transliterate(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), clientTraceId, cancellationToken);
-        }
-
-        /// <summary> Transliterate Text. </summary>
-        /// <param name="language">
-        /// Specifies the language of the text to convert from one script to another.
-        /// Possible languages are listed in the transliteration scope obtained by querying the service
-        /// for its supported languages.
-        /// </param>
-        /// <param name="fromScript">
-        /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
-        /// to find input scripts available for the selected language.
-        /// </param>
-        /// <param name="toScript">
-        /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
-        /// scripts available for the selected combination of input language and input script.
-        /// </param>
-        /// <param name="text"> Text to be transliterated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="text"/> is null. </exception>
-        public virtual Response<TransliterateResult> Transliterate(string language, string fromScript, string toScript, string text, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(language, nameof(language));
-            Argument.AssertNotNull(fromScript, nameof(fromScript));
-            Argument.AssertNotNull(toScript, nameof(toScript));
-            Argument.AssertNotNull(text, nameof(text));
-
-            return this.Transliterate(language, fromScript, toScript, new[] { new InputTextItem(text) }, cancellationToken: cancellationToken);
+            return Transliterate(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), clientTraceId, cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -411,7 +443,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="inputs"/> is null. </exception>
-        internal virtual async Task<Response<TransliterateResult>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<InputTextItem> inputs, Guid clientTraceId = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, IEnumerable<InputTextItem> inputs, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -419,7 +451,8 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(inputs, nameof(inputs));
 
             TransliterateBody transliterateBody = new TransliterateBody(inputs);
-            return await TransliterateAsync(language, fromScript, toScript, transliterateBody, GetClientTraceId(clientTraceId), cancellationToken).ConfigureAwait(false);
+            Response<TransliterateResult> response = await TransliterateAsync(language, fromScript, toScript, transliterateBody, GetClientTraceId(clientTraceId), cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value.Value, response.GetRawResponse());
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -440,7 +473,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="fromScript"/>, <paramref name="toScript"/> or <paramref name="inputs"/> is null. </exception>
-        internal virtual Response<TransliterateResult> Transliterate(string language, string fromScript, string toScript, IEnumerable<InputTextItem> inputs, Guid clientTraceId = default, CancellationToken cancellationToken = default)
+        internal virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(string language, string fromScript, string toScript, IEnumerable<InputTextItem> inputs, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(fromScript, nameof(fromScript));
@@ -448,7 +481,8 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(inputs, nameof(inputs));
 
             TransliterateBody transliterateBody = new TransliterateBody(inputs);
-            return Transliterate(language, fromScript, toScript, transliterateBody, GetClientTraceId(clientTraceId), cancellationToken);
+            Response<TransliterateResult> response = Transliterate(language, fromScript, toScript, transliterateBody, GetClientTraceId(clientTraceId), cancellationToken);
+            return Response.FromValue(response.Value.Value, response.GetRawResponse());
         }
 
         /// <summary>
