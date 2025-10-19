@@ -186,7 +186,7 @@ namespace Azure.AI.Translation.Text
         public enum ServiceVersion
         {
             V3_0 = 1,
-            V2025_05_01_Preview = 2,
+            V2025_10_01_Preview = 2,
         }
     }
     public partial class TextTranslationTranslateOptions
