@@ -33,9 +33,8 @@ namespace Azure.AI.Translation.Text.Samples
 
                 string inputText = "这是个测试。";
 
-                Response<TransliterateResult> response = await client.TransliterateAsync(language, fromScript, toScript, inputText).ConfigureAwait(false);
-                IReadOnlyList<TransliteratedText> transliterations = response.Value.Value;
-                TransliteratedText transliteration = transliterations.FirstOrDefault();
+                Response<TransliteratedText> response = await client.TransliterateAsync(language, fromScript, toScript, inputText).ConfigureAwait(false);
+                TransliteratedText transliteration = response.Value;
 
                 Console.WriteLine($"Input text was transliterated to '{transliteration?.Script}' script. Transliterated text: '{transliteration?.Text}'.");
             }

@@ -153,9 +153,8 @@ try
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<TranslationResult> response = client.Translate(targetLanguage, inputText);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value.Value;
-    TranslatedTextItem translation = translations.FirstOrDefault();
+    Response<TranslatedTextItem> response = client.Translate(targetLanguage, inputText);
+    TranslatedTextItem translation = response.Value;
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().Language}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
@@ -184,9 +183,8 @@ try
 
     string inputText = "这是个测试。";
 
-    Response<TransliterateResult> response = client.Transliterate(language, fromScript, toScript, inputText);
-    IReadOnlyList<TransliteratedText> transliterations = response.Value.Value;
-    TransliteratedText transliteration = transliterations.FirstOrDefault();
+    Response<TransliteratedText> response = client.Transliterate(language, fromScript, toScript, inputText);
+    TransliteratedText transliteration = response.Value;
 
     Console.WriteLine($"Input text was transliterated to '{transliteration?.Script}' script. Transliterated text: '{transliteration?.Text}'.");
 }

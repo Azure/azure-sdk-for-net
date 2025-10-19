@@ -15,34 +15,8 @@ try
 
     string inputText = "这是个测试。";
 
-    Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync(language, fromScript, toScript, inputText).ConfigureAwait(false);
-    IReadOnlyList<TransliteratedText> transliterations = response.Value;
-    TransliteratedText transliteration = transliterations.FirstOrDefault();
-
-    Console.WriteLine($"Input text was transliterated to '{transliteration?.Script}' script. Transliterated text: '{transliteration?.Text}'.");
-}
-catch (RequestFailedException exception)
-{
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
-}
-```
-
-A convenience overload of Transliterate is provided using a single TextTranslationTransliterateOptions parameter.  A modified version of the preceding sample is provided here demonstrating its use.
-
-```C# Snippet:GetTransliteratedTextOptionsAsync
-try
-{
-    TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions(
-        language: "zh-Hans",
-        fromScript: "Hans",
-        toScript: "Latn",
-        content: "这是个测试。"
-    );
-
-    Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync(options).ConfigureAwait(false);
-    IReadOnlyList<TransliteratedText> transliterations = response.Value;
-    TransliteratedText transliteration = transliterations.FirstOrDefault();
+    Response<TransliteratedText> response = await client.TransliterateAsync(language, fromScript, toScript, inputText).ConfigureAwait(false);
+    TransliteratedText transliteration = response.Value;
 
     Console.WriteLine($"Input text was transliterated to '{transliteration?.Script}' script. Transliterated text: '{transliteration?.Text}'.");
 }

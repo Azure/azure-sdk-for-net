@@ -31,11 +31,11 @@ namespace Azure.AI.Translation.Text.Tests
                 "यहएककसौटीहैयहएककसौटीहै",
                 "यहएककसौटीहै"
             };
-            Response<TransliterateResult> response = await client.TransliterateAsync("hi", "Deva", "Latn", inputText).ConfigureAwait(false);
+            Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync("hi", "Deva", "Latn", inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.IsFalse(string.IsNullOrEmpty(response.Value.Value[0].Text));
-            Assert.IsFalse(string.IsNullOrEmpty(response.Value.Value[1].Text));
+            Assert.IsFalse(string.IsNullOrEmpty(response.Value[0].Text));
+            Assert.IsFalse(string.IsNullOrEmpty(response.Value[1].Text));
         }
 
         [RecordedTest]
@@ -48,12 +48,12 @@ namespace Azure.AI.Translation.Text.Tests
                 "hadman",
                 "hukkabar"
             };
-            Response<TransliterateResult> response = await client.TransliterateAsync("gu", "latn", "gujr", inputText).ConfigureAwait(false);
+            Response<IReadOnlyList<TransliteratedText>> response = await client.TransliterateAsync("gu", "latn", "gujr", inputText).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.IsFalse(string.IsNullOrEmpty(response.Value.Value[0].Text));
-            Assert.IsFalse(string.IsNullOrEmpty(response.Value.Value[1].Text));
-            Assert.IsFalse(string.IsNullOrEmpty(response.Value.Value[2].Text));
+            Assert.IsFalse(string.IsNullOrEmpty(response.Value[0].Text));
+            Assert.IsFalse(string.IsNullOrEmpty(response.Value[1].Text));
+            Assert.IsFalse(string.IsNullOrEmpty(response.Value[2].Text));
 
             List<string> expectedText = new()
             { "ગુજરાત", "હદમાં", "હુક્કાબાર" };
@@ -61,7 +61,7 @@ namespace Azure.AI.Translation.Text.Tests
             int editDistance = 0;
             for (int i = 0; i < expectedText.Count; i++)
             {
-                editDistance = editDistance + TestHelper.EditDistance(expectedText[i], response.Value.Value[i].Text);
+                editDistance = editDistance + TestHelper.EditDistance(expectedText[i], response.Value[i].Text);
             }
             Assert.IsTrue(editDistance < 6, $"Total string distance: {editDistance}");
         }
