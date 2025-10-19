@@ -189,36 +189,6 @@ namespace Azure.AI.Translation.Text
             V2025_10_01_Preview = 2,
         }
     }
-    public partial class TextTranslationTranslateOptions
-    {
-        public TextTranslationTranslateOptions(System.Collections.Generic.IEnumerable<string> targetLanguages, System.Collections.Generic.IEnumerable<string> content) { }
-        public TextTranslationTranslateOptions(System.Collections.Generic.IEnumerable<string> targetLanguages, System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), string sourceLanguage = null, Azure.AI.Translation.Text.TextType? textType = default(Azure.AI.Translation.Text.TextType?), string category = null, Azure.AI.Translation.Text.ProfanityAction? profanityAction = default(Azure.AI.Translation.Text.ProfanityAction?), Azure.AI.Translation.Text.ProfanityMarker? profanityMarker = default(Azure.AI.Translation.Text.ProfanityMarker?), bool? includeAlignment = default(bool?), bool? includeSentenceLength = default(bool?), string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = default(bool?)) { }
-        public TextTranslationTranslateOptions(string targetLanguage, string content) { }
-        public bool? AllowFallback { get { throw null; } set { } }
-        public string Category { get { throw null; } set { } }
-        public System.Guid ClientTraceId { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<string> Content { get { throw null; } }
-        public string FromScript { get { throw null; } set { } }
-        public bool? IncludeAlignment { get { throw null; } set { } }
-        public bool? IncludeSentenceLength { get { throw null; } set { } }
-        public Azure.AI.Translation.Text.ProfanityAction? ProfanityAction { get { throw null; } set { } }
-        public Azure.AI.Translation.Text.ProfanityMarker? ProfanityMarker { get { throw null; } set { } }
-        public string SourceLanguage { get { throw null; } set { } }
-        public string SuggestedFrom { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<string> TargetLanguages { get { throw null; } }
-        public Azure.AI.Translation.Text.TextType? TextType { get { throw null; } set { } }
-        public string ToScript { get { throw null; } set { } }
-    }
-    public partial class TextTranslationTransliterateOptions
-    {
-        public TextTranslationTransliterateOptions(string language, string fromScript, string toScript, System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid)) { }
-        public TextTranslationTransliterateOptions(string language, string fromScript, string toScript, string content, System.Guid clientTraceId = default(System.Guid)) { }
-        public System.Guid ClientTraceId { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<string> Content { get { throw null; } }
-        public string FromScript { get { throw null; } }
-        public string Language { get { throw null; } }
-        public string ToScript { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TextType : System.IEquatable<Azure.AI.Translation.Text.TextType>
     {
