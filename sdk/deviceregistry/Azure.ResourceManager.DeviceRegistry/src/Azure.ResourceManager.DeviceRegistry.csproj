@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.DeviceRegistry</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider DeviceRegistry.</Description>
     <PackageTags>azure;management;arm;resource manager;deviceregistry</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

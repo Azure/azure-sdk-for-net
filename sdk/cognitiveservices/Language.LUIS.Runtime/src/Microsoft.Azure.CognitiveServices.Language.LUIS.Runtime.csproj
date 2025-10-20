@@ -11,6 +11,7 @@
     Changes in this release:
       - Support the runtime v3.0 APIs.
     ]]></PackageReleaseNotes>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <PropertyGroup>
