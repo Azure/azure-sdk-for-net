@@ -36,7 +36,7 @@
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
     <PackageReference Update="System.Diagnostics.Tools" Version="4.3.0" />
     <PackageReference Update="System.Globalization" Version="4.3.0" />
-    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.7.0" />
+    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
     <PackageReference Update="System.Linq" Version="4.3.0" />
     <PackageReference Update="System.Memory.Data" Version="1.0.2" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
@@ -98,7 +98,7 @@
     <PackageReference Update="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Cose" Version="8.0.1" />
     <PackageReference Update="System.Threading.Channels" Version="8.0.0" />
-    <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.4" />
+    <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.6.0" />
     <PackageReference Update="System.Text.Json" Version="8.0.6" />
     <PackageReference Update="System.Text.Encodings.Web" Version="8.0.0" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
@@ -187,9 +187,9 @@
     <PackageReference Update="Microsoft.Identity.Client" Version="4.76.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.76.0" />
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.76.0" />
-    <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
-    <PackageReference Update="Microsoft.IdentityModel.Tokens" Version="6.35.0" />
-    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
+    <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.14.0" />
+    <PackageReference Update="Microsoft.IdentityModel.Tokens" Version="8.14.0" />
+    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
@@ -469,7 +469,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250930.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20251016.1</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20251017.1</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20251016.4</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>
