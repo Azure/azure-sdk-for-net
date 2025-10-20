@@ -31,7 +31,7 @@ This library allows you to specify your infrastructure in a declarative style us
 **`BicepValue<T>`** - Represents a strongly-typed value that can be:
 - A literal .NET value of type `T`
 - A Bicep expression that evaluates to type `T`
-- An unset value (can be assigned later)
+- An unset value (usually one should get this state from the property of a constructed resource/construct)
 
 ```csharp
 // Literal value
@@ -41,13 +41,13 @@ BicepValue<string> literalName = "my-storage-account";
 BicepValue<string> expressionName = BicepFunction.CreateGuid();
 
 // Unset value (can be assigned later)
-BicepValue<string> unsetName = new();
+BicepValue<string> unsetName = storageAccount.Name;
 ```
 
 **`BicepList<T>`** - Represents a collection of `BicepValue<T>` items that can be:
 - A list of literal values
 - A Bicep expression that evaluates to an array
-- An unset list
+- An unset list (usually one should get this state from the property of a constructed resource/construct)
 
 ```csharp
 // Literal list
@@ -63,7 +63,7 @@ tagNames.Add("CostCenter");
 **`BicepDictionary<T>`** - Represents a key-value collection where values are `BicepValue<T>`:
 - A dictionary of literal key-value pairs
 - A Bicep expression that evaluates to an object
-- An unset dictionary
+- An unset dictionary (usually one should get this state from the property of a constructed resource/construct)
 
 ```csharp
 // Literal dictionary
@@ -83,9 +83,9 @@ tags["CostCenter"] = "12345";
 
 #### Working with Azure Resources
 
-**`ProvisionableConstruct`** - Base class for infrastructure components that group related properties and resources. Most users will work with concrete implementations like `StorageAccount`, `VirtualNetwork`, etc.
+**`ProvisionableResource`** - Base class for Azure resources that provides resource-specific functionality. Users typically work with specific resource types like `StorageAccount`, `VirtualMachine`, `AppService`, etc. An instance of type `ProvisionableResource` corresponds to a resource statement in `bicep` language.
 
-**`ProvisionableResource`** - Base class for Azure resources that provides resource-specific functionality. Users typically work with specific resource types like `StorageAccount`, `VirtualMachine`, `AppService`, etc.
+**`ProvisionableConstruct`** - Base class for infrastructure components that group related properties and resources. Most users will work with concrete implementations like `StorageAccountSku`, `VirtualNetworkIPConfiguration`, etc. An instance of type `ProvisionableConstruct` usually corresponds to an object definition statement in `bicep` language.
 
 Here's how you use the provided Azure resource classes:
 
