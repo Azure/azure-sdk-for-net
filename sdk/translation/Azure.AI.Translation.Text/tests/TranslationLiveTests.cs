@@ -91,18 +91,18 @@ namespace Azure.AI.Translation.Text.Tests
             IEnumerable<string> inputText = new[] { "This is a test." };
             TextTranslationClient client = GetClient();
             TranslateInputItem input = new TranslateInputItem("This is a test.", targetLanguages.Select(lang => new TranslateTarget(lang)));
-            var response = await client.TranslateAsync([input]).ConfigureAwait(false);
+            var response = await client.TranslateAsync(input).ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual(1, response.Value.Count);
-            Assert.AreEqual(3, response.Value.FirstOrDefault().Translations.Count);
+            Assert.NotNull(response.Value);
+            Assert.AreEqual(3, response.Value.Translations.Count);
 
-            Assert.AreEqual("en", response.Value.FirstOrDefault().DetectedLanguage.Language);
-            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
+            Assert.AreEqual("en", response.Value.DetectedLanguage.Language);
+            Assert.LessOrEqual(0.5, response.Value.DetectedLanguage.Score);
 
-            Assert.NotNull(response.Value.FirstOrDefault().Translations.FirstOrDefault().Text);
-            Assert.NotNull(response.Value.FirstOrDefault().Translations[1].Text);
-            Assert.NotNull(response.Value.FirstOrDefault().Translations[2].Text);
+            Assert.NotNull(response.Value.Translations.FirstOrDefault().Text);
+            Assert.NotNull(response.Value.Translations[1].Text);
+            Assert.NotNull(response.Value.Translations[2].Text);
         }
 
         [RecordedTest]
