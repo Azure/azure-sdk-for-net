@@ -14,7 +14,7 @@
     <IsGeneratorLibrary Condition="'$(IsGeneratorLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator'))">true</IsGeneratorLibrary>
     <IsGeneratorLibraryGenerationTest Condition="'$(IsGeneratorLibraryGenerationTest)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator')) and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsGeneratorLibraryGenerationTest>
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
-    <IncludeAutorestDependency Condition="'$(IncludeAutorestDependency)' != 'false' and '$(IsClientLibrary)' == 'true'">true</IncludeAutorestDependency>
+    <IncludeAutorestDependency Condition="'$(IncludeAutorestDependency)' != 'true' or '$(IsClientLibrary)' != 'true'">false</IncludeAutorestDependency>
     <IsFunctionsLibrary Condition="'$(IsFunctionsLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.'))">true</IsFunctionsLibrary>
     <IsSourceGenerator Condition="'$(IsSourceGenerator)' == '' and $(MSBuildProjectName.EndsWith('.SourceGeneration'))">true</IsSourceGenerator>
 
