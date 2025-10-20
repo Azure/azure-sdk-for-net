@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Kubernetes.Models;
 using Azure.ResourceManager.Models;
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <param name="properties"> Describes the connected cluster resource properties. </param>
         /// <param name="identity"> The identity of the connected cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> or <paramref name="identity"/> is null. </exception>
-        public ConnectedClusterData(AzureLocation location, ConnectedClusterProperties properties, ManagedServiceIdentity identity) : base(location)
+        public ConnectedClusterData(AzureLocation location, ConnectedClusterProperties properties, BinaryData identity) : base(location)
         {
             Argument.AssertNotNull(properties, nameof(properties));
             Argument.AssertNotNull(identity, nameof(identity));
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <param name="properties"> Describes the connected cluster resource properties. </param>
         /// <param name="identity"> The identity of the connected cluster. </param>
         /// <param name="kind"> The kind of connected cluster. </param>
-        internal ConnectedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ConnectedClusterProperties properties, ManagedServiceIdentity identity, ConnectedClusterKind? kind) : base(id, name, resourceType, systemData, tags, location)
+        internal ConnectedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ConnectedClusterProperties properties, BinaryData identity, ConnectedClusterKind? kind) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -55,8 +56,33 @@ namespace Azure.ResourceManager.Kubernetes
         /// <summary> Describes the connected cluster resource properties. </summary>
         public ConnectedClusterProperties Properties { get; set; }
 
-        /// <summary> The identity of the connected cluster. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary>
+        /// The identity of the connected cluster.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Identity { get; set; }
 
         /// <summary> The kind of connected cluster. </summary>
         public ConnectedClusterKind? Kind { get; set; }

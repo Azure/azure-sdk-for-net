@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.Kubernetes
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("identity"u8);
-            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(Identity);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Identity))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -88,7 +95,7 @@ namespace Azure.ResourceManager.Kubernetes
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ConnectedClusterProperties properties = default;
-            ManagedServiceIdentity identity = default;
+            BinaryData identity = default;
             ConnectedClusterKind? kind = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +164,7 @@ namespace Azure.ResourceManager.Kubernetes
                 }
                 if (prop.NameEquals("identity"u8))
                 {
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKubernetesContext.Default);
+                    identity = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
