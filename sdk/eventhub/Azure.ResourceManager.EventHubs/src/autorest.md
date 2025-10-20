@@ -33,6 +33,7 @@ request-path-to-resource-name:
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckEventHubsNamespaceNameAvailability
     DisasterRecoveryConfigs_CheckNameAvailability: CheckEventHubsDisasterRecoveryNameAvailability
+    Namespaces_Failover: FailOver
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}
@@ -139,32 +140,15 @@ rename-mapping:
   NamespaceReplicaLocation.clusterArmId: -|arm-id
   Mode: EventHubsConfidentialComputeMode
   TimestampType: EventHubsTimestampType
+  EncryptionKeySource: EventHubsKeySource
 
 directive:
-  - from: eventhubs.json
-    where: $.definitions
-    transform: >
-      delete $.Eventhub.properties.properties.properties.messageRetentionInDays;
-  - from: SchemaRegistry.json
-    where: $.definitions
-    transform: >
-      delete $.SchemaGroup.properties.properties.properties.eTag['format'];
-  # solve dup ErrorResponse error
-  - from: namespaces-preview.json
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/failover'].post
-    transform: >
-      $.responses.default['schema']['$ref'] = '../../../common/v2/definitions.json#/definitions/ErrorResponse';
   # remove messageRetentionInDays and eTag format
   - from: openapi.json
     where: $.definitions
     transform: >
       delete $.EventhubProperties.properties.messageRetentionInDays;
       delete $.SchemaGroupProperties.properties.eTag['format'];
-  # rename keySource enum name to EventHubsKeySource
-  - from: openapi.json
-    where: $.definitions.Encryption.properties.keySource
-    transform: >
-      $['x-ms-enum']['name'] = 'EventHubsKeySource';
   # set provisioningIssues readOnly to false
   - from: openapi.json
     where: $.definitions.NetworkSecurityPerimeterConfigurationProperties.properties.provisioningIssues

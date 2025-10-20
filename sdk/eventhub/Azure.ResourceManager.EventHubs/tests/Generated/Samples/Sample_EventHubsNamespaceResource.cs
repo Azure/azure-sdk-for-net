@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Failover_NameSpaceCreate()
+        public async Task FailOver_NameSpaceCreate()
         {
             // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2025-05-01-preview/examples/NameSpaces/EHNamespaceFailover.json
             // this example is just showing the usage of "Namespaces_Failover" operation, for the dependent resources, they will have to be created separately.
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
                 PrimaryLocation = new AzureLocation("centralus"),
                 Force = true,
             };
-            ArmOperation<NamespaceFailOverContent> lro = await eventHubsNamespace.FailoverAsync(WaitUntil.Completed, content);
+            ArmOperation<NamespaceFailOverContent> lro = await eventHubsNamespace.FailOverAsync(WaitUntil.Completed, content);
             NamespaceFailOverContent result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

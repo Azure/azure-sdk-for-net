@@ -801,11 +801,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="content"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NamespaceFailOverContent>> FailoverAsync(WaitUntil waitUntil, NamespaceFailOverContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NamespaceFailOverContent>> FailOverAsync(WaitUntil waitUntil, NamespaceFailOverContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.Failover");
+            using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.FailOver");
             scope.Start();
             try
             {
@@ -847,11 +847,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="content"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NamespaceFailOverContent> Failover(WaitUntil waitUntil, NamespaceFailOverContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NamespaceFailOverContent> FailOver(WaitUntil waitUntil, NamespaceFailOverContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.Failover");
+            using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.FailOver");
             scope.Start();
             try
             {
