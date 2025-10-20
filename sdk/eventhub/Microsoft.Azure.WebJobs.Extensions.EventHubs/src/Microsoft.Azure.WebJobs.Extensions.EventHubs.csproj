@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK EventHubs Extension</Description>
-    <Version>6.6.0-beta.1</Version>
+    <Version>6.5.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>6.5.2</ApiCompatVersion>
     <NoWarn>$(NoWarn);CS1591;SA1636</NoWarn>
