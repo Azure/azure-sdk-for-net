@@ -593,7 +593,9 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            return GetRunsAsync(threadId, limit, order, after, before, FromCancellationToken(cancellationToken));
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+
+            return GetRunsAsync(threadId, limit, order, after, before, context);
         }
 
         /// <summary> Gets a list of runs for a specified thread. </summary>
