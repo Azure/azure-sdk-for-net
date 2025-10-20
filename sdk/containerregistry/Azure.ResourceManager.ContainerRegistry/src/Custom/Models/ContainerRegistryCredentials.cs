@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryCredentials
     {
-        // The `SourceRegistryCredentials` class now have more properties, add this property back for compatibility reason.
+        // The `SourceRegistryCredentials` class now has more properties, add this property back for compatibility reasons.
         /// <summary>
         /// The authentication mode which determines the source registry login scope. The credentials for the source registry
         /// will be generated using the given scope. These credentials will be used to login to
