@@ -338,7 +338,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
     {
         public SecretSyncUpdateProperties() { }
         public string ForceSynchronization { get { throw null; } set { } }
-        public Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType? KubernetesSecretType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping> ObjectSecretMapping { get { throw null; } }
         public string SecretProviderClassName { get { throw null; } set { } }
         public string ServiceAccountName { get { throw null; } set { } }

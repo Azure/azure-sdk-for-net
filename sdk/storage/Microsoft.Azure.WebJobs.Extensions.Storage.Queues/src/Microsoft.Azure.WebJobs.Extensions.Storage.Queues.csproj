@@ -9,12 +9,14 @@
     <Description>This extension adds bindings for Storage</Description>
     <!-- https://github.com/Azure/azure-sdk-for-net/issues/19222 -->
     <NoWarn>$(NoWarn);IDT002</NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Azure.Storage.Queues" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
 
   <ItemGroup>

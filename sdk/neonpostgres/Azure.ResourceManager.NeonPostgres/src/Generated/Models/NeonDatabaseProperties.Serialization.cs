@@ -74,6 +74,16 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WritePropertyName("ownerName"u8);
                 writer.WriteStringValue(OwnerName);
             }
+            if (Optional.IsDefined(DatabaseName))
+            {
+                writer.WritePropertyName("databaseName"u8);
+                writer.WriteStringValue(DatabaseName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            {
+                writer.WritePropertyName("lastUpdated"u8);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -118,6 +128,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             IList<Attributes> attributes = default;
             string branchId = default;
             string ownerName = default;
+            string databaseName = default;
+            DateTimeOffset? lastUpdated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,6 +182,20 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     ownerName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("databaseName"u8))
+                {
+                    databaseName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastUpdated"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastUpdated = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -184,6 +210,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 attributes ?? new ChangeTrackingList<Attributes>(),
                 branchId,
                 ownerName,
+                databaseName,
+                lastUpdated,
                 serializedAdditionalRawData);
         }
 
