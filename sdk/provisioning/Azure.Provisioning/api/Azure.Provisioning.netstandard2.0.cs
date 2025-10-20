@@ -41,7 +41,6 @@ namespace Azure.Provisioning
         public BicepList() { }
         public BicepList(System.Collections.Generic.IList<Azure.Provisioning.BicepValue<T>>? values) { }
         public int Count { get { throw null; } }
-        public override bool IsEmpty { get { throw null; } }
         public bool IsReadOnly { get { throw null; } }
         public Azure.Provisioning.BicepValue<T> this[int index] { get { throw null; } set { } }
         public void Add(Azure.Provisioning.BicepValue<T> item) { }
