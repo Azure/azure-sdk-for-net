@@ -31,5 +31,10 @@ namespace Azure.Generator.Management.Utilities
                     : typeof(Response);
             }
         }
+
+        public static bool IsModelType(this CSharpType type)
+        {
+            return ManagementClientGenerator.Instance.OutputLibrary.IsModelType(type);
+        }
     }
 }

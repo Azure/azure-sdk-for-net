@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
         /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
         /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
-        /// <param name="clusterServicePrincipal"> The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="clusterServicePrincipal"> Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
         /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
         /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
         /// <param name="computeRackDefinitions">
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public AnalyticsOutputSettings AnalyticsOutputSettings { get; set; }
         /// <summary> The customer-provided location information to identify where the cluster resides. </summary>
         public string ClusterLocation { get; set; }
-        /// <summary> The service principal to be used by the cluster during Arc Appliance installation. </summary>
+        /// <summary> Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </summary>
         public ServicePrincipalInformation ClusterServicePrincipal { get; set; }
         /// <summary> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </summary>
         public CommandOutputSettings CommandOutputSettings { get; set; }

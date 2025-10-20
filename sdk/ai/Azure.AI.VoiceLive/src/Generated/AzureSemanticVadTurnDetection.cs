@@ -23,14 +23,16 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"></param>
-        /// <param name="prefixPaddingMs"> Gets or sets the PrefixPaddingMs. </param>
-        /// <param name="silenceDurationMs"> Gets or sets the SilenceDurationMs. </param>
+        /// <param name="prefixPaddingMs"></param>
+        /// <param name="silenceDurationMs"></param>
         /// <param name="endOfUtteranceDetection"></param>
-        /// <param name="speechDurationMs"> Gets or sets the SpeechDurationMs. </param>
+        /// <param name="speechDurationMs"></param>
         /// <param name="removeFillerWords"></param>
         /// <param name="languages"></param>
         /// <param name="autoTruncate"></param>
-        internal AzureSemanticVadTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, int? speechDurationMs, bool? removeFillerWords, IList<string> languages, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
+        /// <param name="createResponse"></param>
+        /// <param name="interruptResponse"></param>
+        internal AzureSemanticVadTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, int? speechDurationMs, bool? removeFillerWords, IList<string> languages, bool? autoTruncate, bool? createResponse, bool? interruptResponse) : base(@type, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;
@@ -40,6 +42,8 @@ namespace Azure.AI.VoiceLive
             RemoveFillerWords = removeFillerWords;
             Languages = languages;
             AutoTruncate = autoTruncate;
+            CreateResponse = createResponse;
+            InterruptResponse = interruptResponse;
         }
 
         /// <summary> Gets or sets the Threshold. </summary>
@@ -56,5 +60,11 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the AutoTruncate. </summary>
         public bool? AutoTruncate { get; set; }
+
+        /// <summary> Gets or sets the CreateResponse. </summary>
+        public bool? CreateResponse { get; set; }
+
+        /// <summary> Gets or sets the InterruptResponse. </summary>
+        public bool? InterruptResponse { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Base model for VAD-based turn detection. </summary>
-    public partial class ServerVadTurnDetection : IJsonModel<ServerVadTurnDetection>
+    public partial class ServerVadTurnDetection : TurnDetection, IJsonModel<ServerVadTurnDetection>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -59,6 +59,16 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("auto_truncate"u8);
                 writer.WriteBooleanValue(AutoTruncate.Value);
             }
+            if (Optional.IsDefined(CreateResponse))
+            {
+                writer.WritePropertyName("create_response"u8);
+                writer.WriteBooleanValue(CreateResponse.Value);
+            }
+            if (Optional.IsDefined(InterruptResponse))
+            {
+                writer.WritePropertyName("interrupt_response"u8);
+                writer.WriteBooleanValue(InterruptResponse.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -93,6 +103,8 @@ namespace Azure.AI.VoiceLive
             int? silenceDurationMs = default;
             EouDetection endOfUtteranceDetection = default;
             bool? autoTruncate = default;
+            bool? createResponse = default;
+            bool? interruptResponse = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -145,6 +157,24 @@ namespace Azure.AI.VoiceLive
                     autoTruncate = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("create_response"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createResponse = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("interrupt_response"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interruptResponse = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -157,7 +187,9 @@ namespace Azure.AI.VoiceLive
                 prefixPaddingMs,
                 silenceDurationMs,
                 endOfUtteranceDetection,
-                autoTruncate);
+                autoTruncate,
+                createResponse,
+                interruptResponse);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

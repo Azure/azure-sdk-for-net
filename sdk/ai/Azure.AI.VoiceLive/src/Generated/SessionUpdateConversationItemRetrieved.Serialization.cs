@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when a conversation item is retrieved with `conversation.item.retrieve`. </summary>
-    public partial class SessionUpdateConversationItemRetrieved : IJsonModel<SessionUpdateConversationItemRetrieved>
+    public partial class SessionUpdateConversationItemRetrieved : SessionUpdate, IJsonModel<SessionUpdateConversationItemRetrieved>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -73,7 +73,7 @@ namespace Azure.AI.VoiceLive
             }
             ServerEventType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResponseItem item = default;
+            SessionResponseItem item = default;
             string eventId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -88,7 +88,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    item = ResponseItem.DeserializeResponseItem(prop.Value, options);
+                    item = SessionResponseItem.DeserializeSessionResponseItem(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("event_id"u8))

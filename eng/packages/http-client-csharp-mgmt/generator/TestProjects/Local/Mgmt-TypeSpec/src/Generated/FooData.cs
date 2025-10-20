@@ -8,11 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class FooData : TrackedResourceData
@@ -44,12 +44,15 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal FooProperties Properties { get; set; }
 
         /// <summary> Gets or sets the ExtendedLocation. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> the service url. </summary>
+        [WirePath("properties.serviceUrl")]
         public Uri ServiceUri
         {
             get
@@ -67,6 +70,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> something. </summary>
+        [WirePath("properties.something")]
         public string Something
         {
             get
@@ -84,6 +88,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> boolean value. </summary>
+        [WirePath("properties.boolValue")]
         public bool? BoolValue
         {
             get
@@ -101,6 +106,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> float value. </summary>
+        [WirePath("properties.floatValue")]
         public float? FloatValue
         {
             get
@@ -118,6 +124,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> double value. </summary>
+        [WirePath("properties.doubleValue")]
         public double? DoubleValue
         {
             get
@@ -135,6 +142,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the Prop1. </summary>
+        [WirePath("properties.prop1")]
         public IList<string> Prop1
         {
             get
@@ -144,11 +152,30 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the Prop2. </summary>
+        [WirePath("properties.prop2")]
         public IList<int> Prop2
         {
             get
             {
                 return Properties is null ? default : Properties.Prop2;
+            }
+        }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties.nestedProperty.properties")]
+        public FooProperties NestedPropertyProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NestedPropertyProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.NestedPropertyProperties = value;
             }
         }
     }

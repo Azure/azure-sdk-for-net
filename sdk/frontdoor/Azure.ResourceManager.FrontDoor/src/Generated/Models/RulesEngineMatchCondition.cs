@@ -86,16 +86,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Match Variable. </summary>
+        [WirePath("rulesEngineMatchVariable")]
         public RulesEngineMatchVariable RulesEngineMatchVariable { get; set; }
         /// <summary> Name of selector in RequestHeader or RequestBody to be matched. </summary>
+        [WirePath("selector")]
         public string Selector { get; set; }
         /// <summary> Describes operator to apply to the match condition. </summary>
+        [WirePath("rulesEngineOperator")]
         public RulesEngineOperator RulesEngineOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
+        [WirePath("negateCondition")]
         public bool? IsNegateCondition { get; set; }
         /// <summary> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </summary>
+        [WirePath("rulesEngineMatchValue")]
         public IList<string> RulesEngineMatchValue { get; }
         /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<RulesEngineMatchTransform> Transforms { get; }
     }
 }

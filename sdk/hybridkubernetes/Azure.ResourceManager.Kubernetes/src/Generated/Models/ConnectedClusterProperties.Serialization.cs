@@ -86,15 +86,15 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WritePropertyName("offering"u8);
                 writer.WriteStringValue(Offering);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityCertificateExpirationTime))
+            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityCertificateExpirationOn))
             {
                 writer.WritePropertyName("managedIdentityCertificateExpirationTime"u8);
-                writer.WriteStringValue(ManagedIdentityCertificateExpirationTime.Value, "O");
+                writer.WriteStringValue(ManagedIdentityCertificateExpirationOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastConnectivityTime))
+            if (options.Format != "W" && Optional.IsDefined(LastConnectivityOn))
             {
                 writer.WritePropertyName("lastConnectivityTime"u8);
-                writer.WriteStringValue(LastConnectivityTime.Value, "O");
+                writer.WriteStringValue(LastConnectivityOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ConnectivityStatus))
             {
@@ -219,8 +219,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
             string distributionVersion = default;
             string infrastructure = default;
             string offering = default;
-            DateTimeOffset? managedIdentityCertificateExpirationTime = default;
-            DateTimeOffset? lastConnectivityTime = default;
+            DateTimeOffset? managedIdentityCertificateExpirationOn = default;
+            DateTimeOffset? lastConnectivityOn = default;
             ConnectivityStatus? connectivityStatus = default;
             PrivateLinkState? privateLinkState = default;
             string privateLinkScopeResourceId = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    managedIdentityCertificateExpirationTime = prop.Value.GetDateTimeOffset("O");
+                    managedIdentityCertificateExpirationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastConnectivityTime"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    lastConnectivityTime = prop.Value.GetDateTimeOffset("O");
+                    lastConnectivityOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("connectivityStatus"u8))
@@ -444,8 +444,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 distributionVersion,
                 infrastructure,
                 offering,
-                managedIdentityCertificateExpirationTime,
-                lastConnectivityTime,
+                managedIdentityCertificateExpirationOn,
+                lastConnectivityOn,
                 connectivityStatus,
                 privateLinkState,
                 privateLinkScopeResourceId,

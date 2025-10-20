@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatAzureBotCommandReceivedInThread event. </summary>
     [JsonConverter(typeof(AcsChatAzureBotCommandReceivedInThreadEventDataConverter))]
-    public partial class AcsChatAzureBotCommandReceivedInThreadEventData : IJsonModel<AcsChatAzureBotCommandReceivedInThreadEventData>
+    public partial class AcsChatAzureBotCommandReceivedInThreadEventData : AcsChatMessageEventInThreadBaseProperties, IJsonModel<AcsChatAzureBotCommandReceivedInThreadEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatAzureBotCommandReceivedInThreadEventData"/> for deserialization. </summary>
         internal AcsChatAzureBotCommandReceivedInThreadEventData()

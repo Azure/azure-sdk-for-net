@@ -16,11 +16,10 @@ namespace Azure.AI.VoiceLive
     /// Returned when an earlier assistant audio message item is truncated by the
     /// client with a `conversation.item.truncate` event. This event is used to
     /// synchronize the server's understanding of the audio with the client's playback.
-    /// 
     /// This action will truncate the audio and remove the server-side text transcript
     /// to ensure there is no text in the context that hasn't been heard by the user.
     /// </summary>
-    public partial class SessionUpdateConversationItemTruncated : IJsonModel<SessionUpdateConversationItemTruncated>
+    public partial class SessionUpdateConversationItemTruncated : SessionUpdate, IJsonModel<SessionUpdateConversationItemTruncated>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemTruncated"/> for deserialization. </summary>
         internal SessionUpdateConversationItemTruncated()

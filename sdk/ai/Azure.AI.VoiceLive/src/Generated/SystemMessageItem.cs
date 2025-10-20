@@ -7,36 +7,30 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The SystemMessageItem. </summary>
+    /// <summary> A system message item within a conversation. </summary>
     public partial class SystemMessageItem : MessageItem
     {
         /// <summary> Initializes a new instance of <see cref="SystemMessageItem"/>. </summary>
-        /// <param name="content"></param>
+        /// <param name="content"> The content parts of the message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public SystemMessageItem(IEnumerable<InputTextContentPart> content) : base("system")
+        public SystemMessageItem(IEnumerable<MessageContentPart> content) : base(ResponseMessageRole.System, content)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Content = content.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemMessageItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="role"></param>
-        /// <param name="status"></param>
-        /// <param name="content"></param>
-        internal SystemMessageItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, ItemParamStatus? status, IList<InputTextContentPart> content) : base(@type, id, additionalBinaryDataProperties, role, status)
+        /// <param name="role"> The role of the message origionator. </param>
+        /// <param name="content"> The content parts of the message. </param>
+        /// <param name="status"> Processing status of the message item. </param>
+        internal SystemMessageItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<MessageContentPart> content, ItemParamStatus? status) : base(@type, id, additionalBinaryDataProperties, role, content, status)
         {
-            Content = content;
         }
-
-        /// <summary> Gets the Content. </summary>
-        public IList<InputTextContentPart> Content { get; }
     }
 }

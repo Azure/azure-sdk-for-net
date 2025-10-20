@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> Client options for <see cref="KeyVaultRestClient"/>. </summary>
     internal partial class KeyVaultRestClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_06_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_07_01;
 
         /// <summary> Initializes a new instance of KeyVaultRestClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Administration
                 ServiceVersion.V7_5 => "7.5",
                 ServiceVersion.V7_6_Preview_2 => "7.6-preview.2",
                 ServiceVersion.V7_6 => "7.6",
-                ServiceVersion.V2025_06_01_Preview => "2025-06-01-preview",
+                ServiceVersion.V2025_07_01 => "2025-07-01",
                 _ => throw new NotSupportedException()
             };
         }
@@ -40,8 +40,8 @@ namespace Azure.Security.KeyVault.Administration
             V7_6_Preview_2 = 2,
             /// <summary> The 7.6 API version. </summary>
             V7_6 = 3,
-            /// <summary> The 2025-06-01-preview API version. </summary>
-            V2025_06_01_Preview = 4
+            /// <summary> The 2025-07-01 API version. </summary>
+            V2025_07_01 = 4
         }
     }
 }

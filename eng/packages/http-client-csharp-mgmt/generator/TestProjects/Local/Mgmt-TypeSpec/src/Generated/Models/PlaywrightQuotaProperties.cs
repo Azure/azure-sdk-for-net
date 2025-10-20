@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Subscription-level location-based Playwright quota resource properties. </summary>
     public partial class PlaywrightQuotaProperties
@@ -33,9 +34,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The subscription-level location-based Playwright quota resource free-trial properties. </summary>
+        [WirePath("freeTrial")]
         public string FreeTrial { get; }
 
         /// <summary> The status of the last resource operation. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

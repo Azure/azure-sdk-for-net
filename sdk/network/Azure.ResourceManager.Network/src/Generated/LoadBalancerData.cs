@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="outboundRules"> The outbound rules. </param>
         /// <param name="resourceGuid"> The resource GUID property of the load balancer resource. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancer resource. </param>
-        internal LoadBalancerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, LoadBalancerSku sku, ETag? etag, IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<LoadBalancerInboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="scope"> Indicates the scope of the load balancer: external (Public) or internal (Private). </param>
+        internal LoadBalancerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, LoadBalancerSku sku, ETag? etag, IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<LoadBalancerInboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, Guid? resourceGuid, NetworkProvisioningState? provisioningState, LoadBalancerScope? scope) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;
@@ -64,6 +65,7 @@ namespace Azure.ResourceManager.Network
             OutboundRules = outboundRules;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
+            Scope = scope;
         }
 
         /// <summary> The extended location of the load balancer. </summary>
@@ -102,5 +104,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the load balancer resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> Indicates the scope of the load balancer: external (Public) or internal (Private). </summary>
+        [WirePath("properties.scope")]
+        public LoadBalancerScope? Scope { get; set; }
     }
 }
