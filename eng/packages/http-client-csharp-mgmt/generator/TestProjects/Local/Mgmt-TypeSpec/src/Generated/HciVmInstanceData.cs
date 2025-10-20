@@ -38,9 +38,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal HciVmInstanceProperties Properties { get; }
 
         /// <summary> Gets the Sku. </summary>
+        [WirePath("properties.sku")]
         public string HciVmInstanceSku
         {
             get

@@ -38,6 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <summary> Gets the RandomCollectionProp. </summary>
+        [WirePath("randomCollectionProp")]
         public IList<string> RandomCollectionProp { get; }
     }
 }

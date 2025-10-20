@@ -38,9 +38,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal SelfHelpResourceProperties Properties { get; }
 
         /// <summary> Gets the SelfHelpId. </summary>
+        [WirePath("properties.selfHelpId")]
         public string SelfHelpId
         {
             get
