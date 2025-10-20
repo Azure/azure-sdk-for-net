@@ -38,9 +38,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal BarQuotaProperties Properties { get; set; }
 
         /// <summary> enabled. </summary>
+        [WirePath("properties.left")]
         public int? BarQuotaLeft
         {
             get
