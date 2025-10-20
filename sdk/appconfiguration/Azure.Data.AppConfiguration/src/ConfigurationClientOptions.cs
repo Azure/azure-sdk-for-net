@@ -39,7 +39,12 @@ namespace Azure.Data.AppConfiguration
             /// <summary>
             /// Version 2023-11-01.
             /// </summary>
-            V2023_11_01 = 2
+            V2023_11_01 = 2,
+
+            /// <summary>
+            /// Version 2025-11-01.
+            /// </summary>
+            V2025_11_01 = 3
         }
 
         /// <summary>
@@ -64,7 +69,8 @@ namespace Azure.Data.AppConfiguration
                 ServiceVersion.V1_0 => "1.0",
                 ServiceVersion.V2023_10_01 => "2023-10-01",
                 ServiceVersion.V2023_11_01 => "2023-11-01",
-
+                ServiceVersion.V2025_11_01 => "2025-11-01",
+                
                 _ => throw new NotSupportedException()
             };
             this.ConfigureLogging();
