@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="GroupQuotaSubscriptionRequestStatusResource"/> and their operations.
@@ -42,7 +42,7 @@ namespace MgmtTypeSpec
         {
             TryGetApiVersion(GroupQuotaSubscriptionRequestStatusResource.ResourceType, out string groupQuotaSubscriptionRequestStatusApiVersion);
             _managementGroupId = managementGroupId;
-            _groupQuotaSubscriptionRequestStatusesClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", GroupQuotaSubscriptionRequestStatusResource.ResourceType.Namespace, Diagnostics);
+            _groupQuotaSubscriptionRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", GroupQuotaSubscriptionRequestStatusResource.ResourceType.Namespace, Diagnostics);
             _groupQuotaSubscriptionRequestStatusesRestClient = new GroupQuotaSubscriptionRequestStatuses(_groupQuotaSubscriptionRequestStatusesClientDiagnostics, Pipeline, Endpoint, groupQuotaSubscriptionRequestStatusApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }

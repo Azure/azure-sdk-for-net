@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.6.0-beta.1</Version>
+    <Version>1.5.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.5.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.CognitiveServices</PackageId>

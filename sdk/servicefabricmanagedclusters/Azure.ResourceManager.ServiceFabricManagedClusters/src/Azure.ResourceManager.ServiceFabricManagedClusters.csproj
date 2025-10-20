@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.3.0-beta.4</Version>
+    <Version>1.3.0-beta.5</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
      <ApiCompatVersion>1.2.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.ServiceFabricManagedClusters</PackageId>
