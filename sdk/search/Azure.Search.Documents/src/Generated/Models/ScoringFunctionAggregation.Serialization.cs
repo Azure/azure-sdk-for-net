@@ -18,6 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             ScoringFunctionAggregation.Minimum => "minimum",
             ScoringFunctionAggregation.Maximum => "maximum",
             ScoringFunctionAggregation.FirstMatching => "firstMatching",
+            ScoringFunctionAggregation.Product => "product",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringFunctionAggregation value.")
         };
 
@@ -28,6 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "minimum")) return ScoringFunctionAggregation.Minimum;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "maximum")) return ScoringFunctionAggregation.Maximum;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "firstMatching")) return ScoringFunctionAggregation.FirstMatching;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "product")) return ScoringFunctionAggregation.Product;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringFunctionAggregation value.");
         }
     }

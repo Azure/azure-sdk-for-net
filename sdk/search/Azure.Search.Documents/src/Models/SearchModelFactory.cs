@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Models
 {
@@ -188,6 +189,24 @@ namespace Azure.Search.Documents.Models
             new SearchIndexerSkill(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
+        /// <param name="name"> The name of the indexer. </param>
+        /// <param name="status"> Overall indexer status. </param>
+        /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
+        /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
+        /// <param name="limits"> The execution limits for the indexer. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchIndexerStatus SearchIndexerStatus(
+            string name = null,
+            IndexerStatus status = default,
+            IndexerExecutionResult lastResult = null,
+            IEnumerable<IndexerExecutionResult> executionHistory = null,
+            SearchIndexerLimits limits = null)
+        {
+            executionHistory ??= new List<IndexerExecutionResult>();
+            return new SearchIndexerStatus(name, status, runtime: default, lastResult, executionHistory?.ToList(), limits, currentState: default, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
@@ -199,7 +218,7 @@ namespace Azure.Search.Documents.Models
             IndexerExecutionResult lastResult,
             IReadOnlyList<IndexerExecutionResult> executionHistory,
             SearchIndexerLimits limits) =>
-            new SearchIndexerStatus(default, status, lastResult, executionHistory, limits, default, serializedAdditionalRawData: null);
+            new SearchIndexerStatus(default, status, default, lastResult, executionHistory, limits, default, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
         /// <param name="status"> Overall indexer status. </param>
@@ -212,24 +231,26 @@ namespace Azure.Search.Documents.Models
         {
             executionHistory ??= new List<IndexerExecutionResult>();
 
-            return new SearchIndexerStatus(default, status, lastResult, executionHistory?.ToList(), limits, default, serializedAdditionalRawData: null);
+            return new SearchIndexerStatus(default, status, default, lastResult, executionHistory?.ToList(), limits, default, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
         /// <param name="name"> The name of the indexer. </param>
         /// <param name="status"> Overall indexer status. </param>
+        /// <param name="runtime"> Snapshot of the indexer’s cumulative runtime consumption for the service over the current UTC period. </param>
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexerStatus"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchIndexerStatus SearchIndexerStatus(string name = null, IndexerStatus status = default, IndexerExecutionResult lastResult = null, IEnumerable<IndexerExecutionResult> executionHistory = null, SearchIndexerLimits limits = null)
+        public static SearchIndexerStatus SearchIndexerStatus(string name = null, IndexerStatus status = default, IndexerRuntime runtime = default, IndexerExecutionResult lastResult = null, IEnumerable<IndexerExecutionResult> executionHistory = null, SearchIndexerLimits limits = null)
         {
             executionHistory ??= new List<IndexerExecutionResult>();
 
             return new SearchIndexerStatus(
                 name,
                 status,
+                runtime,
                 lastResult,
                 executionHistory?.ToList(),
                 limits,
@@ -336,6 +357,22 @@ namespace Azure.Search.Documents.Models
         /// <param name="maxFieldNestingDepthPerIndex"> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </param>
         /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
         /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
+        /// <param name="maxStoragePerIndexInBytes"> The maximum storage per index in bytes. </param>
+        /// <returns> A new SearchServiceLimits instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchServiceLimits SearchServiceLimits(
+        int? maxFieldsPerIndex,
+        int? maxFieldNestingDepthPerIndex,
+        int? maxComplexCollectionFieldsPerIndex,
+        int? maxComplexObjectsInCollectionsPerDocument,
+        long? maxStoragePerIndexInBytes) =>
+        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes, null, serializedAdditionalRawData: null);
+
+        /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
+        /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
+        /// <param name="maxFieldNestingDepthPerIndex"> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </param>
+        /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
+        /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
         /// <returns> A new SearchServiceLimits instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServiceLimits SearchServiceLimits(
@@ -343,7 +380,7 @@ namespace Azure.Search.Documents.Models
         int? maxFieldNestingDepthPerIndex,
         int? maxComplexCollectionFieldsPerIndex,
         int? maxComplexObjectsInCollectionsPerDocument) =>
-        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, null, serializedAdditionalRawData: null);
+        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes: null, maxCumulativeIndexerRuntimeSeconds: null, serializedAdditionalRawData: null);
 
         /// <summary> Initializes a new instance of SearchServiceStatistics. </summary>
         /// <param name="counters"> Service level resource counters. </param>
@@ -352,7 +389,7 @@ namespace Azure.Search.Documents.Models
         public static SearchServiceStatistics SearchServiceStatistics(
             SearchServiceCounters counters,
             SearchServiceLimits limits) =>
-            new SearchServiceStatistics(counters, limits);
+            new SearchServiceStatistics(counters, null, limits);
 
         /// <summary> Initializes a new instance of SimilarityAlgorithm. </summary>
         /// <param name="oDataType"> . </param>
@@ -412,7 +449,7 @@ namespace Azure.Search.Documents.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new FacetResult(count, null, null, additionalProperties);
+            return new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
@@ -540,7 +577,7 @@ namespace Azure.Search.Documents.Models
             normalizers ??= new List<LexicalNormalizer>();
             serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndex(name, description, fields, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, null, etag, serializedAdditionalRawData);
+            return new SearchIndex(name, description, fields, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, null, null, etag, serializedAdditionalRawData);
         }
 
         /// <summary> Initializes a new instance of SearchIndex. </summary>
@@ -599,7 +636,7 @@ namespace Azure.Search.Documents.Models
             normalizers ??= new List<LexicalNormalizer>();
             serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndex(name, description, fields, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, permissionFilterOption, etag, serializedAdditionalRawData);
+            return new SearchIndex(name, description, fields, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, permissionFilterOption, purviewEnabled: null, etag, serializedAdditionalRawData);
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>
@@ -731,13 +768,51 @@ namespace Azure.Search.Documents.Models
             return new SearchIndexKnowledgeSource(name, description, kind, eTag, encryptionKey, serializedAdditionalRawData, searchIndexParameters);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentDebugInfo"/>. </summary>
-        /// <param name="vectors"> Contains debugging information specific to vector and hybrid search. </param>
-        /// <returns> A new <see cref="Models.DocumentDebugInfo"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DocumentDebugInfo DocumentDebugInfo(VectorsDebugInfo vectors = null)
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/>. </summary>
+        /// <param name="name"> The name of the knowledge knowledge base. </param>
+        /// <param name="knowledgeSources"></param>
+        /// <param name="models">
+        /// Contains configuration options on how to connect to AI models.
+        /// Please note <see cref="KnowledgeBaseModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KnowledgeBaseAzureOpenAIModel"/>.
+        /// </param>
+        /// <param name="retrievalReasoningEffort">
+        /// Please note <see cref="KnowledgeRetrievalReasoningEffort"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeRetrievalMediumReasoningEffort"/> and <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>.
+        /// </param>
+        /// <param name="outputMode"> The output configuration for this retrieval. </param>
+        /// <param name="eTag"> The ETag of the knowledge base. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge base definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge base definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge base definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="description"> The description of the knowledge base. </param>
+        /// <param name="retrievalInstructions"> Instructions considered by the knowledge knowledge base when developing query plan. </param>
+        /// <param name="answerInstructions"> Instructions considered by the knowledge knowledge base when generating answers. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        public static KnowledgeBase KnowledgeBase(string name = null, IEnumerable<KnowledgeSourceReference> knowledgeSources = null, IEnumerable<KnowledgeBaseModel> models = null, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = null, KnowledgeRetrievalOutputMode? outputMode = null, string eTag = null, SearchResourceEncryptionKey encryptionKey = null, string description = null, string retrievalInstructions = null, string answerInstructions = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
         {
-            return new DocumentDebugInfo(null, vectors, null, serializedAdditionalRawData: null);
+            knowledgeSources ??= new List<KnowledgeSourceReference>();
+            models ??= new List<KnowledgeBaseModel>();
+            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+
+            return new KnowledgeBase(
+                name,
+                knowledgeSources?.ToList(),
+                models?.ToList(),
+                retrievalReasoningEffort,
+                outputMode,
+                eTag,
+                encryptionKey,
+                description,
+                retrievalInstructions,
+                answerInstructions,
+                serializedAdditionalRawData);
+        }
+
+        /// <summary> Initializes a new instance of DocumentDebugInfo. </summary>
+        /// <param name="vectors"> Contains debugging information specific to vector and hybrid search. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DocumentDebugInfo DocumentDebugInfo(VectorsDebugInfo vectors)
+        {
+            return new DocumentDebugInfo(semantic: null, vectors, innerHits: null, serializedAdditionalRawData: null);
         }
     }
 }

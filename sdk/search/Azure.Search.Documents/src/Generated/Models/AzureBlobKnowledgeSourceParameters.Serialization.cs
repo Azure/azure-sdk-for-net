@@ -34,61 +34,37 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(AzureBlobKnowledgeSourceParameters)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Identity))
-            {
-                if (Identity != null)
-                {
-                    writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity, options);
-                }
-                else
-                {
-                    writer.WriteNull("identity");
-                }
-            }
             writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
             if (Optional.IsDefined(FolderPath))
             {
-                writer.WritePropertyName("folderPath"u8);
-                writer.WriteStringValue(FolderPath);
-            }
-            if (Optional.IsDefined(EmbeddingModel))
-            {
-                if (EmbeddingModel != null)
+                if (FolderPath != null)
                 {
-                    writer.WritePropertyName("embeddingModel"u8);
-                    writer.WriteObjectValue(EmbeddingModel, options);
+                    writer.WritePropertyName("folderPath"u8);
+                    writer.WriteStringValue(FolderPath);
                 }
                 else
                 {
-                    writer.WriteNull("embeddingModel");
+                    writer.WriteNull("folderPath");
                 }
             }
-            if (Optional.IsDefined(ChatCompletionModel))
+            if (Optional.IsDefined(IsAdlsGen2))
             {
-                if (ChatCompletionModel != null)
+                writer.WritePropertyName("isADLSGen2"u8);
+                writer.WriteBooleanValue(IsAdlsGen2.Value);
+            }
+            if (Optional.IsDefined(IngestionParameters))
+            {
+                if (IngestionParameters != null)
                 {
-                    writer.WritePropertyName("chatCompletionModel"u8);
-                    writer.WriteObjectValue(ChatCompletionModel, options);
+                    writer.WritePropertyName("ingestionParameters"u8);
+                    writer.WriteObjectValue(IngestionParameters, options);
                 }
                 else
                 {
-                    writer.WriteNull("chatCompletionModel");
-                }
-            }
-            if (Optional.IsDefined(IngestionSchedule))
-            {
-                if (IngestionSchedule != null)
-                {
-                    writer.WritePropertyName("ingestionSchedule"u8);
-                    writer.WriteObjectValue(IngestionSchedule, options);
-                }
-                else
-                {
-                    writer.WriteNull("ingestionSchedule");
+                    writer.WriteNull("ingestionParameters");
                 }
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CreatedResources))
@@ -101,11 +77,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(DisableImageVerbalization))
-            {
-                writer.WritePropertyName("disableImageVerbalization"u8);
-                writer.WriteBooleanValue(DisableImageVerbalization.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -144,29 +115,16 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            SearchIndexerDataIdentity identity = default;
             string connectionString = default;
             string containerName = default;
             string folderPath = default;
-            VectorSearchVectorizer embeddingModel = default;
-            KnowledgeAgentModel chatCompletionModel = default;
-            IndexingSchedule ingestionSchedule = default;
+            bool? isADLSGen2 = default;
+            KnowledgeSourceIngestionParameters ingestionParameters = default;
             IReadOnlyDictionary<string, string> createdResources = default;
-            bool? disableImageVerbalization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        identity = null;
-                        continue;
-                    }
-                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("connectionString"u8))
                 {
                     connectionString = property.Value.GetString();
@@ -179,37 +137,31 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("folderPath"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        folderPath = null;
+                        continue;
+                    }
                     folderPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("embeddingModel"u8))
+                if (property.NameEquals("isADLSGen2"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        embeddingModel = null;
                         continue;
                     }
-                    embeddingModel = VectorSearchVectorizer.DeserializeVectorSearchVectorizer(property.Value, options);
+                    isADLSGen2 = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("chatCompletionModel"u8))
+                if (property.NameEquals("ingestionParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        chatCompletionModel = null;
+                        ingestionParameters = null;
                         continue;
                     }
-                    chatCompletionModel = KnowledgeAgentModel.DeserializeKnowledgeAgentModel(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("ingestionSchedule"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        ingestionSchedule = null;
-                        continue;
-                    }
-                    ingestionSchedule = IndexingSchedule.DeserializeIndexingSchedule(property.Value, options);
+                    ingestionParameters = KnowledgeSourceIngestionParameters.DeserializeKnowledgeSourceIngestionParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdResources"u8))
@@ -226,15 +178,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     createdResources = dictionary;
                     continue;
                 }
-                if (property.NameEquals("disableImageVerbalization"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disableImageVerbalization = property.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -242,15 +185,12 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new AzureBlobKnowledgeSourceParameters(
-                identity,
                 connectionString,
                 containerName,
                 folderPath,
-                embeddingModel,
-                chatCompletionModel,
-                ingestionSchedule,
+                isADLSGen2,
+                ingestionParameters,
                 createdResources ?? new ChangeTrackingDictionary<string, string>(),
-                disableImageVerbalization,
                 serializedAdditionalRawData);
         }
 

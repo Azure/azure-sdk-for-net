@@ -36,31 +36,6 @@ namespace Azure.Search.Documents.Indexes.Models
 
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(IncludeReferences))
-            {
-                writer.WritePropertyName("includeReferences"u8);
-                writer.WriteBooleanValue(IncludeReferences.Value);
-            }
-            if (Optional.IsDefined(IncludeReferenceSourceData))
-            {
-                writer.WritePropertyName("includeReferenceSourceData"u8);
-                writer.WriteBooleanValue(IncludeReferenceSourceData.Value);
-            }
-            if (Optional.IsDefined(AlwaysQuerySource))
-            {
-                writer.WritePropertyName("alwaysQuerySource"u8);
-                writer.WriteBooleanValue(AlwaysQuerySource.Value);
-            }
-            if (Optional.IsDefined(MaxSubQueries))
-            {
-                writer.WritePropertyName("maxSubQueries"u8);
-                writer.WriteNumberValue(MaxSubQueries.Value);
-            }
-            if (Optional.IsDefined(RerankerThreshold))
-            {
-                writer.WritePropertyName("rerankerThreshold"u8);
-                writer.WriteNumberValue(RerankerThreshold.Value);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -99,11 +74,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            bool? includeReferences = default;
-            bool? includeReferenceSourceData = default;
-            bool? alwaysQuerySource = default;
-            int? maxSubQueries = default;
-            float? rerankerThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,65 +83,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("includeReferences"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    includeReferences = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("includeReferenceSourceData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    includeReferenceSourceData = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("alwaysQuerySource"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    alwaysQuerySource = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("maxSubQueries"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxSubQueries = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("rerankerThreshold"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rerankerThreshold = property.Value.GetSingle();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KnowledgeSourceReference(
-                name,
-                includeReferences,
-                includeReferenceSourceData,
-                alwaysQuerySource,
-                maxSubQueries,
-                rerankerThreshold,
-                serializedAdditionalRawData);
+            return new KnowledgeSourceReference(name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KnowledgeSourceReference>.Write(ModelReaderWriterOptions options)

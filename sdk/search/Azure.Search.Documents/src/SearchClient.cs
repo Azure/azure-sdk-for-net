@@ -19,7 +19,7 @@ using Azure.Search.Documents.Models;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Azure Cognitive Search client that can be used to query an index and
+    /// Azure AI Search client that can be used to query an index and
     /// upload, merge, or delete documents.
     /// </summary>
     public class SearchClient
@@ -99,8 +99,8 @@ namespace Azure.Search.Documents
         /// Required.  The API key credential used to authenticate requests
         /// against the search service.  You need to use an admin key to
         /// modify the documents in a Search Index.  See
-        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see>
-        /// for more information about API keys in Azure Cognitive Search.
+        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure AI Search service</see>
+        /// for more information about API keys in Azure AI Search.
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// Thrown when the <paramref name="endpoint"/>,
@@ -133,8 +133,8 @@ namespace Azure.Search.Documents
         /// </param>
         /// <param name="tokenCredential">
         /// Required.  The token credential used to authenticate requests against the Search service.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-security-rbac">Use role-based authorization in Azure Cognitive Search</see> for
-        /// more information about role-based authorization in Azure Cognitive Search.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-rbac">Use role-based authorization in Azure AI Search</see> for
+        /// more information about role-based authorization in Azure AI Search.
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// Thrown when the <paramref name="endpoint"/>,
@@ -169,8 +169,8 @@ namespace Azure.Search.Documents
         /// Required.  The API key credential used to authenticate requests
         /// against the search service.  You need to use an admin key to
         /// modify the documents in a Search Index.  See
-        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see>
-        /// for more information about API keys in Azure Cognitive Search.
+        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure AI Search service</see>
+        /// for more information about API keys in Azure AI Search.
         /// </param>
         /// <param name="options">
         /// Client configuration options for connecting to Azure Cognitive
@@ -227,8 +227,8 @@ namespace Azure.Search.Documents
         /// </param>
         /// <param name="tokenCredential">
         /// Required.  The token credential used to authenticate requests against the Search service.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-security-rbac">Use role-based authorization in Azure Cognitive Search</see> for
-        /// more information about role-based authorization in Azure Cognitive Search.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-rbac">Use role-based authorization in Azure AI Search</see> for
+        /// more information about role-based authorization in Azure AI Search.
         /// </param>
         /// <param name="options">
         /// Client configuration options for connecting to Azure Cognitive
@@ -405,7 +405,7 @@ namespace Azure.Search.Documents
 
         #region GetDocument
         /// <summary>
-        /// Retrieves a document from Azure Cognitive Search.  This is useful
+        /// Retrieves a document from Azure AI Search.  This is useful
         /// when a user clicks on a specific search result, and you want to
         /// look up specific details about that document. You can only get one
         /// document at a time.  Use Search to get multiple documents in a
@@ -452,14 +452,15 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken = default) =>
             GetDocumentInternal<T>(
                 key,
-                null,
+                querySourceAuthorization: null,
+                enabledElevatedRead: null,
                 options,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// Retrieves a document from Azure Cognitive Search.  This is useful
+        /// Retrieves a document from Azure AI Search.  This is useful
         /// when a user clicks on a specific search result, and you want to
         /// look up specific details about that document. You can only get one
         /// document at a time.  Use Search to get multiple documents in a
@@ -565,7 +566,7 @@ namespace Azure.Search.Documents
         /// Any type that can be deserialized from the JSON objects in the
         /// complex field.  This can be a value type or a reference type, but
         /// we recommend using a reference type since complex fields are
-        /// nullable in Azure Cognitive Search.
+        /// nullable in Azure AI Search.
         /// </description>
         /// </item>
         /// <item>
@@ -667,14 +668,15 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken = default) =>
             await GetDocumentInternal<T>(
                 key,
-                null,
+                querySourceAuthorization: null,
+                enabledElevatedRead: null,
                 options,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Retrieves a document from Azure Cognitive Search.  This is useful
+        /// Retrieves a document from Azure AI Search.  This is useful
         /// when a user clicks on a specific search result, and you want to
         /// look up specific details about that document. You can only get one
         /// document at a time.  Use Search to get multiple documents in a
@@ -695,6 +697,7 @@ namespace Azure.Search.Documents
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed.
         /// This token is used to enforce security restrictions on documents.
         /// </param>
+        /// <param name="enabledElevatedRead"></param>
         /// <param name="options">
         /// Options to customize the operation's behavior.
         /// </param>
@@ -709,30 +712,32 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         /// <remarks>
-        /// The generic overloads of the <see cref="GetDocument{T}(string, string, GetDocumentOptions, CancellationToken)"/> and
-        /// <see cref="GetDocumentAsync{T}(string, string, GetDocumentOptions, CancellationToken)"/> methods support mapping of Azure
+        /// The generic overloads of the <see cref="GetDocument{T}(string, string, bool?,GetDocumentOptions, CancellationToken)"/> and
+        /// <see cref="GetDocumentAsync{T}(string, string, bool?, GetDocumentOptions, CancellationToken)"/> methods support mapping of Azure
         /// Search field types to .NET types via the type parameter
         /// <typeparamref name="T"/>. Note that all search field types except
         /// collections are nullable, so we recommend using nullable types for
         /// the properties of <typeparamref name="T"/>. See
-        /// <see cref="GetDocumentAsync{T}(string, string, GetDocumentOptions, CancellationToken)"/>
+        /// <see cref="GetDocumentAsync{T}(string, string, bool?, GetDocumentOptions, CancellationToken)"/>
         /// for more information.
         /// </remarks>
         public virtual Response<T> GetDocument<T>(
             string key,
             string querySourceAuthorization,
+            bool? enabledElevatedRead = null,
             GetDocumentOptions options = null,
             CancellationToken cancellationToken = default) =>
             GetDocumentInternal<T>(
                 key,
                 querySourceAuthorization,
+                enabledElevatedRead,
                 options,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// Retrieves a document from Azure Cognitive Search.  This is useful
+        /// Retrieves a document from Azure AI Search.  This is useful
         /// when a user clicks on a specific search result, and you want to
         /// look up specific details about that document. You can only get one
         /// document at a time.  Use Search to get multiple documents in a
@@ -753,6 +758,7 @@ namespace Azure.Search.Documents
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed.
         /// This token is used to enforce security restrictions on documents.
         /// </param>
+        /// <param name="enabledElevatedRead"></param>
         /// <param name="options">
         /// Options to customize the operation's behavior.
         /// </param>
@@ -767,7 +773,7 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         /// <remarks>
-        /// The <see cref="GetDocument{T}(string, string, GetDocumentOptions, CancellationToken)"/> and <see cref="GetDocumentAsync{T}(string, string, GetDocumentOptions, CancellationToken)"/>
+        /// The <see cref="GetDocument{T}(string, string, bool?, GetDocumentOptions, CancellationToken)"/> and <see cref="GetDocumentAsync{T}(string, string, bool?, GetDocumentOptions, CancellationToken)"/>
         /// methods support mapping of Azure Search field types to .NET types
         /// via the type parameter <typeparamref name="T"/>.  Note that all
         /// search field types except collections are nullable, so we recommend
@@ -841,7 +847,7 @@ namespace Azure.Search.Documents
         /// Any type that can be deserialized from the JSON objects in the
         /// complex field.  This can be a value type or a reference type, but
         /// we recommend using a reference type since complex fields are
-        /// nullable in Azure Cognitive Search.
+        /// nullable in Azure AI Search.
         /// </description>
         /// </item>
         /// <item>
@@ -940,11 +946,13 @@ namespace Azure.Search.Documents
         public virtual async Task<Response<T>> GetDocumentAsync<T>(
             string key,
             string querySourceAuthorization,
+            bool? enabledElevatedRead = null,
             GetDocumentOptions options = null,
             CancellationToken cancellationToken = default) =>
             await GetDocumentInternal<T>(
                 key,
                 querySourceAuthorization,
+                enabledElevatedRead,
                 options,
                 async: true,
                 cancellationToken)
@@ -953,6 +961,7 @@ namespace Azure.Search.Documents
         private async Task<Response<T>> GetDocumentInternal<T>(
             string key,
             string querySourceAuthorization,
+            bool? enabledElevatedRead,
             GetDocumentOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -963,7 +972,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateGetRequest(key, options?.SelectedFieldsOrNull, querySourceAuthorization);
+                using HttpMessage message = Protocol.CreateGetRequest(key, options?.SelectedFieldsOrNull, querySourceAuthorization, enabledElevatedRead);
                 if (async)
                 {
                     await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1007,7 +1016,7 @@ namespace Azure.Search.Documents
         /// <param name="searchText">
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure AI Search</see>
         /// for more information about search query syntax.
         /// </param>
         /// <param name="options">
@@ -1034,7 +1043,7 @@ namespace Azure.Search.Documents
         /// for more details on the type mapping.
         /// </para>
         /// <para>
-        /// Azure Cognitive Search might not be able to include all results in
+        /// Azure AI Search might not be able to include all results in
         /// a single response in which case <see cref="SearchResults{T}.GetResults"/>
         /// will automatically continue making additional requests as you
         /// enumerate through the results.  You can also process the results a
@@ -1049,7 +1058,8 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken = default) =>
             SearchInternal<T>(
                 searchText,
-                null,
+                querySourceAuthorization: null,
+                enableElevatedRead: null,
                 options,
                 async: false,
                 cancellationToken)
@@ -1066,7 +1076,7 @@ namespace Azure.Search.Documents
         /// <param name="searchText">
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure AI Search</see>
         /// for more information about search query syntax.
         /// </param>
         /// <param name="typeInfo">Metadata about the type to deserialize.</param>
@@ -1094,7 +1104,7 @@ namespace Azure.Search.Documents
         /// for more details on the type mapping.
         /// </para>
         /// <para>
-        /// Azure Cognitive Search might not be able to include all results in
+        /// Azure AI Search might not be able to include all results in
         /// a single response in which case <see cref="SearchResults{T}.GetResults"/>
         /// will automatically continue making additional requests as you
         /// enumerate through the results.  You can also process the results a
@@ -1112,7 +1122,8 @@ namespace Azure.Search.Documents
             SearchInternal<T>(
                 searchText,
                 typeInfo,
-                null,
+                querySourceAuthorization: null,
+                enableElevatedRead: null,
                 options,
                 async: false,
                 cancellationToken)
@@ -1129,7 +1140,7 @@ namespace Azure.Search.Documents
         /// <param name="searchText">
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure AI Search</see>
         /// for more information about search query syntax.
         /// </param>
         /// <param name="options">
@@ -1156,7 +1167,7 @@ namespace Azure.Search.Documents
         /// for more details on the type mapping.
         /// </para>
         /// <para>
-        /// Azure Cognitive Search might not be able to include all results in
+        /// Azure AI Search might not be able to include all results in
         /// a single response in which case
         /// <see cref="SearchResults{T}.GetResultsAsync"/> will automatically
         /// continue making additional requests as you enumerate through the
@@ -1171,7 +1182,8 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken = default) =>
             await SearchInternal<T>(
                 searchText,
-                null,
+                querySourceAuthorization: null,
+                enableElevatedRead: null,
                 options,
                 async: true,
                 cancellationToken)
@@ -1188,7 +1200,7 @@ namespace Azure.Search.Documents
         /// <param name="searchText">
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure AI Search</see>
         /// for more information about search query syntax.
         /// </param>
         /// <param name="typeInfo">Metadata about the type to deserialize.</param>
@@ -1216,7 +1228,7 @@ namespace Azure.Search.Documents
         /// for more details on the type mapping.
         /// </para>
         /// <para>
-        /// Azure Cognitive Search might not be able to include all results in
+        /// Azure AI Search might not be able to include all results in
         /// a single response in which case
         /// <see cref="SearchResults{T}.GetResultsAsync"/> will automatically
         /// continue making additional requests as you enumerate through the
@@ -1234,7 +1246,8 @@ namespace Azure.Search.Documents
             await SearchInternal<T>(
                 searchText,
                 typeInfo,
-                null,
+                querySourceAuthorization: null,
+                enableElevatedRead: null,
                 options,
                 async: true,
                 cancellationToken)
@@ -1251,7 +1264,7 @@ namespace Azure.Search.Documents
         /// <param name="searchText">
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure AI Search</see>
         /// for more information about search query syntax.
         /// </param>
         /// <param name="querySourceAuthorization">
@@ -1282,7 +1295,7 @@ namespace Azure.Search.Documents
         /// for more details on the type mapping.
         /// </para>
         /// <para>
-        /// Azure Cognitive Search might not be able to include all results in
+        /// Azure AI Search might not be able to include all results in
         /// a single response in which case <see cref="SearchResults{T}.GetResults"/>
         /// will automatically continue making additional requests as you
         /// enumerate through the results.  You can also process the results a
@@ -1298,6 +1311,7 @@ namespace Azure.Search.Documents
             SearchInternal<T>(
                 searchText,
                 querySourceAuthorization,
+                enableElevatedRead: null,
                 options,
                 async: false,
                 cancellationToken)
@@ -1314,7 +1328,7 @@ namespace Azure.Search.Documents
         /// <param name="searchText">
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure AI Search</see>
         /// for more information about search query syntax.
         /// </param>
         /// <param name="querySourceAuthorization">
@@ -1345,7 +1359,7 @@ namespace Azure.Search.Documents
         /// for more details on the type mapping.
         /// </para>
         /// <para>
-        /// Azure Cognitive Search might not be able to include all results in
+        /// Azure AI Search might not be able to include all results in
         /// a single response in which case
         /// <see cref="SearchResults{T}.GetResultsAsync"/> will automatically
         /// continue making additional requests as you enumerate through the
@@ -1361,6 +1375,7 @@ namespace Azure.Search.Documents
             await SearchInternal<T>(
                 searchText,
                 querySourceAuthorization,
+                enableElevatedRead: null,
                 options,
                 async: true,
                 cancellationToken)
@@ -1398,7 +1413,7 @@ namespace Azure.Search.Documents
         /// for more details on the type mapping.
         /// </para>
         /// <para>
-        /// Azure Cognitive Search might not be able to include all results in
+        /// Azure AI Search might not be able to include all results in
         /// a single response in which case <see cref="SearchResults{T}.GetResults"/>
         /// will automatically continue making additional requests as you
         /// enumerate through the results.  You can also process the results a
@@ -1413,8 +1428,9 @@ namespace Azure.Search.Documents
             Argument.AssertNotNull(options, nameof(options));
 
             return SearchInternal<T>(
-                null,
-                null,
+                searchText: null,
+                querySourceAuthorization: null,
+                enableElevatedRead: null,
                 options,
                 async: false,
                 cancellationToken)
@@ -1453,7 +1469,7 @@ namespace Azure.Search.Documents
         /// for more details on the type mapping.
         /// </para>
         /// <para>
-        /// Azure Cognitive Search might not be able to include all results in
+        /// Azure AI Search might not be able to include all results in
         /// a single response in which case
         /// <see cref="SearchResults{T}.GetResultsAsync"/> will automatically
         /// continue making additional requests as you enumerate through the
@@ -1468,8 +1484,9 @@ namespace Azure.Search.Documents
             Argument.AssertNotNull(options, nameof(options));
 
             return await SearchInternal<T>(
-                null,
-                null,
+                searchText: null,
+                querySourceAuthorization: null,
+                enableElevatedRead: null,
                 options,
                 async: true,
                 cancellationToken)
@@ -1480,6 +1497,7 @@ namespace Azure.Search.Documents
         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
             string searchText,
             string querySourceAuthorization,
+            bool? enableElevatedRead,
             SearchOptions options,
             bool async,
             CancellationToken cancellationToken = default)
@@ -1495,6 +1513,7 @@ namespace Azure.Search.Documents
             }
             return await SearchInternal<T>(
                 querySourceAuthorization,
+                enableElevatedRead,
                 options,
                 $"{nameof(SearchClient)}.{nameof(Search)}",
                 async,
@@ -1506,6 +1525,7 @@ namespace Azure.Search.Documents
             string searchText,
             JsonTypeInfo<T> typeInfo,
             string querySourceAuthorization,
+            bool? enableElevatedRead,
             SearchOptions options,
             bool async,
             CancellationToken cancellationToken = default)
@@ -1522,6 +1542,7 @@ namespace Azure.Search.Documents
             return await SearchInternal<T>(
                 typeInfo,
                 querySourceAuthorization,
+                enableElevatedRead,
                 options,
                 $"{nameof(SearchClient)}.{nameof(Search)}",
                 async,
@@ -1532,6 +1553,7 @@ namespace Azure.Search.Documents
         [RequiresUnreferencedCode(JsonSerialization.TrimWarning)]
         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
             string querySourceAuthorization,
+            bool? enableElevatedRead,
             SearchOptions options,
             string operationName,
             bool async,
@@ -1539,6 +1561,7 @@ namespace Azure.Search.Documents
         {
             return await SearchInternal<T>(
                 querySourceAuthorization,
+                enableElevatedRead,
                 options,
                 operationName,
                 async,
@@ -1557,6 +1580,7 @@ namespace Azure.Search.Documents
         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
             JsonTypeInfo<T> typeInfo,
             string querySourceAuthorization,
+            bool? enableElevatedRead,
             SearchOptions options,
             string operationName,
             bool async,
@@ -1564,6 +1588,7 @@ namespace Azure.Search.Documents
         {
             return await SearchInternal<T>(
                 querySourceAuthorization,
+                enableElevatedRead,
                 options,
                 operationName,
                 async,
@@ -1582,6 +1607,7 @@ namespace Azure.Search.Documents
 
         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
             string querySourceAuthorization,
+            bool? enableElevatedRead,
             SearchOptions options,
             string operationName,
             bool async,
@@ -1593,7 +1619,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateSearchPostRequest(options, querySourceAuthorization);
+                using HttpMessage message = Protocol.CreateSearchPostRequest(options, querySourceAuthorization, enableElevatedRead);
                 if (async)
                 {
                     await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1637,7 +1663,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Executes a "search-as-you-type" query consisting of a partial text
         /// input (three character minimum).  It returns matching text found in
-        /// suggester-aware fields.  Azure Cognitive Search looks for matching
+        /// suggester-aware fields.  Azure AI Search looks for matching
         /// values in fields that are predefined in a Suggester.  For example,
         /// if you enable suggestions on a city field, typing "sea" produces
         /// documents containing "Seattle", "Sea Tac", and "Seaside" (all
@@ -1694,7 +1720,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Executes a "search-as-you-type" query consisting of a partial text
         /// input (three character minimum).  It returns matching text found in
-        /// suggester-aware fields.  Azure Cognitive Search looks for matching
+        /// suggester-aware fields.  Azure AI Search looks for matching
         /// values in fields that are predefined in a Suggester.  For example,
         /// if you enable suggestions on a city field, typing "sea" produces
         /// documents containing "Seattle", "Sea Tac", and "Seaside" (all

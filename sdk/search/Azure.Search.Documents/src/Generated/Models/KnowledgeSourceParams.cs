@@ -9,12 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Agents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// The KnowledgeSourceParams.
     /// Please note <see cref="KnowledgeSourceParams"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SearchIndexKnowledgeSourceParams"/>.
+    /// The available derived classes include <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="SearchIndexKnowledgeSourceParams"/> and <see cref="WebKnowledgeSourceParams"/>.
     /// </summary>
     public abstract partial class KnowledgeSourceParams
     {
@@ -62,11 +62,19 @@ namespace Azure.Search.Documents.Agents.Models
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceParams"/>. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
+        /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
+        /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
+        /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceParams(string knowledgeSourceName, KnowledgeSourceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KnowledgeSourceName = knowledgeSourceName;
+            IncludeReferences = includeReferences;
+            IncludeReferenceSourceData = includeReferenceSourceData;
+            AlwaysQuerySource = alwaysQuerySource;
+            RerankerThreshold = rerankerThreshold;
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -78,6 +86,14 @@ namespace Azure.Search.Documents.Agents.Models
 
         /// <summary> The name of the index the params apply to. </summary>
         public string KnowledgeSourceName { get; }
+        /// <summary> Indicates whether references should be included for data retrieved from this source. </summary>
+        public bool? IncludeReferences { get; set; }
+        /// <summary> Indicates whether references should include the structured data obtained during retrieval in their payload. </summary>
+        public bool? IncludeReferenceSourceData { get; set; }
+        /// <summary> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </summary>
+        public bool? AlwaysQuerySource { get; set; }
+        /// <summary> The reranker threshold all retrieved documents must meet to be included in the response. </summary>
+        public float? RerankerThreshold { get; set; }
         /// <summary> The type of the knowledge source. </summary>
         internal KnowledgeSourceKind Kind { get; set; }
     }

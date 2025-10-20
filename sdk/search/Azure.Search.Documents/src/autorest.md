@@ -15,9 +15,9 @@ use-model-reader-writer: true
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/429fd8c039c5b08541df2389f8c58d1090e01127/specification/search/data-plane/Azure.Search/preview/2025-08-01-preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/429fd8c039c5b08541df2389f8c58d1090e01127/specification/search/data-plane/Azure.Search/preview/2025-08-01-preview/searchservice.json
- - https://github.com/Azure/azure-rest-api-specs/blob/429fd8c039c5b08541df2389f8c58d1090e01127/specification/search/data-plane/Azure.Search/preview/2025-08-01-preview/knowledgeagent.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/d1da9e72acfda60af3d5ca9aa5498a9af8d061d3/specification/search/data-plane/Azure.Search/preview/2025-11-01-preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/d1da9e72acfda60af3d5ca9aa5498a9af8d061d3/specification/search/data-plane/Azure.Search/preview/2025-11-01-preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/d1da9e72acfda60af3d5ca9aa5498a9af8d061d3/specification/search/data-plane/Azure.Search/preview/2025-11-01-preview/knowledgebase.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -82,16 +82,16 @@ directive:
   transform: $["x-accessibility"] = "internal"
 ```
 
-### Move KnowledgeAgent models to Azure.Search.Documents.Agents.Models
+### Move KnowledgeBase models to Azure.Search.Documents.KnowledgeBases.Models
 
-Models in knowledgeagent.json should be moved to Azure.Search.Documents.Agents.Models.
+Models in knowledgebase.json should be moved to Azure.Search.Documents.KnowledgeBases.Models.
 
 ```yaml
 directive:
-  from: knowledgeagent.json
+  from: knowledgebase.json
   where: $.definitions.*
   transform: >
-    $["x-namespace"] = "Azure.Search.Documents.Agents.Models"
+    $["x-namespace"] = "Azure.Search.Documents.KnowledgeBases.Models"
 ```
 
 ### Remove models that have newer versions

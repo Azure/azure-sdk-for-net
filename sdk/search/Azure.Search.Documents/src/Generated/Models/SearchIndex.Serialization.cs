@@ -189,6 +189,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("permissionFilterOption");
                 }
             }
+            if (Optional.IsDefined(PurviewEnabled))
+            {
+                if (PurviewEnabled != null)
+                {
+                    writer.WritePropertyName("purviewEnabled"u8);
+                    writer.WriteBooleanValue(PurviewEnabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("purviewEnabled");
+                }
+            }
             if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
@@ -248,6 +260,7 @@ namespace Azure.Search.Documents.Indexes.Models
             SemanticSearch semantic = default;
             VectorSearch vectorSearch = default;
             SearchIndexPermissionFilterOption? permissionFilterOption = default;
+            bool? purviewEnabled = default;
             string odataEtag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -435,6 +448,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     permissionFilterOption = new SearchIndexPermissionFilterOption(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("purviewEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        purviewEnabled = null;
+                        continue;
+                    }
+                    purviewEnabled = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("@odata.etag"u8))
                 {
                     odataEtag = property.Value.GetString();
@@ -464,6 +487,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 semantic,
                 vectorSearch,
                 permissionFilterOption,
+                purviewEnabled,
                 odataEtag,
                 serializedAdditionalRawData);
         }

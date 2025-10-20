@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json;
@@ -53,14 +54,14 @@ namespace Azure.Search.Documents.Tests
         }
 
         public FacetResult MakeRangeFacet(int count, object from, object to) =>
-            new FacetResult(count, null, null, new Dictionary<string, object>()
+            new FacetResult(count, null, null, null, null, null, new Dictionary<string, IList<FacetResult>>(), new Dictionary<string, object>()
             {
                 ["from"] = from,
                 ["to"] = to
             });
 
         public FacetResult MakeValueFacet(int count, object value) =>
-            new FacetResult(count, null, null, new Dictionary<string, object>()
+            new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: new Dictionary<string, IList<FacetResult>>(), new Dictionary<string, object>()
             {
                 ["value"] = value
             });
