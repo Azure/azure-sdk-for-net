@@ -20,7 +20,53 @@ dotnet add package Azure.Provisioning
 
 ## Key concepts
 
-This library allows you to specify your infrastructure in a declarative style using `dotnet`.  You can then use `azd` to deploy your infrastructure to Azure directly without needing to write or maintain `bicep` or arm templates.
+This library allows you to specify your infrastructure in a declarative style using `dotnet`.  You can then use `azd` to deploy your infrastructure to Azure directly without needing to write or maintain `bicep` or `arm` templates.
+
+### Important Usage Guidelines
+
+**Declarative Design Pattern**: `Azure.Provisioning` is designed for declarative infrastructure definition. Each resource and construct instance should represent a single infrastructure component. Avoid reusing the same instance across multiple properties or locations, as this can lead to unexpected behavior in the generated Bicep templates.
+
+```csharp
+// ❌ Don't reuse instances
+var sharedSku = new StorageSku { Name = StorageSkuName.StandardLrs };
+var storage1 = new StorageAccount("storage1") { Sku = sharedSku };
+var storage2 = new StorageAccount("storage2") { Sku = sharedSku }; // Can cause issues
+
+// ✅ Create separate instances
+var storage1 = new StorageAccount("storage1")
+{
+    Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
+};
+var storage2 = new StorageAccount("storage2")
+{
+    Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
+};
+```
+
+**Safe Collection Access**: You can safely access any index in a `BicepList` or any key in a `BicepDictionary` without exceptions. This is **especially important when working with output properties** from Azure resources, where the actual data doesn't exist at design time but you need to create references for the generated Bicep template.
+
+```csharp
+// ✅ Accessing output properties safely - very common scenario
+CognitiveServicesAccount aiServices = new("aiServices");
+Infrastructure infra = new();
+infra.Add(aiServices);
+
+// Safe to access dictionary keys that exist in the deployed resource
+// but not at design time - no KeyNotFoundException thrown
+BicepValue<string> apiEndpoint = aiServices.Properties.Endpoints["Azure AI Model Inference API"];
+
+// Works perfectly for building references in outputs
+infra.Add(new ProvisioningOutput("connectionString", typeof(string))
+{
+    Value = BicepFunction.Interpolate($"Endpoint={apiEndpoint.ToBicepExpression()}")
+});
+// Generates: output connectionString string = 'Endpoint=${aiServices.properties.endpoints['Azure AI Model Inference API']}'
+
+// ⚠️ Note: Accessing .Value will still throw at runtime if the data doesn't exist
+// var actualValue = apiEndpoint.Value; // Would throw KeyNotFoundException at runtime
+```
+
+This feature resolves common scenarios where you need to reference nested properties or collection items as outputs.
 
 ### `ToBicepExpression` Method
 
@@ -67,6 +113,31 @@ BicepExpression uniqueStorageName = BicepFunction.Interpolate(
 ```
 
 Use `ToBicepExpression()` whenever you need to reference a resource property or value in Bicep expressions, function calls, or when building dynamic configuration values.
+
+#### Important Notes
+
+**Named Root Requirement**: `ToBicepExpression()` requires that the value being referenced belongs to a named root element. Named root elements are classes that inherit from `NamedProvisionableConstruct`, which includes:
+- `ProvisionableResource` (all Azure resources like `StorageAccount`, `CognitiveServicesAccount`, etc.)
+- `ProvisioningParameter`
+- `ProvisioningOutput`
+- `ProvisioningVariable`
+- `ModuleImport`
+
+Calling this method on properties of regular `ProvisionableConstruct` instances (like model classes) will result in an exception.
+
+```csharp
+// ✅ Works - StorageAccount inherits from ProvisionableResource (a named root)
+StorageAccount storage = new("myStorage");
+var nameRef = storage.Name.ToBicepExpression(); // Works
+
+// ✅ Works - ProvisioningParameter is a named root
+ProvisioningParameter param = new("myParam", typeof(string));
+var paramRef = param.ToBicepExpression(); // Works
+
+// ❌ Throws exception - StorageSku is just a ProvisionableConstruct (not a named root)
+StorageSku sku = new() { Name = StorageSkuName.StandardLrs };
+// var badRef = sku.Name.ToBicepExpression(); // Throws exception
+```
 
 ## Examples
 
