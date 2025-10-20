@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class BarSettingsResourceData : ResourceData
@@ -20,17 +20,20 @@ namespace MgmtTypeSpec
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
-        /// <param name="property"></param>
-        /// <param name="anotherProperty"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="property"/> or <paramref name="anotherProperty"/> is null. </exception>
-        public BarSettingsResourceData(BarQuotaProperties @property, BarQuotaProperties anotherProperty)
+        /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
+        /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
+        /// <param name="prop2"> Gets or sets the Prop2. </param>
+        /// <param name="discriminatorProperty"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/> or <paramref name="discriminatorProperty"/> is null. </exception>
+        public BarSettingsResourceData(string innerProp2, int middleProp1, int prop2, LimitJsonObject discriminatorProperty)
         {
-            Argument.AssertNotNull(@property, nameof(@property));
-            Argument.AssertNotNull(anotherProperty, nameof(anotherProperty));
+            Argument.AssertNotNull(innerProp2, nameof(innerProp2));
 
             StringArray = new ChangeTrackingList<string>();
-            Property = @property;
-            AnotherProperty = anotherProperty;
+            InnerProp2 = innerProp2;
+            MiddleProp1 = middleProp1;
+            Prop2 = prop2;
+            DiscriminatorProperty = discriminatorProperty;
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
@@ -43,13 +46,19 @@ namespace MgmtTypeSpec
         /// <param name="stringArray"></param>
         /// <param name="property"></param>
         /// <param name="anotherProperty"></param>
-        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty) : base(id, name, resourceType, systemData)
+        /// <param name="flattenedNestedProperty"></param>
+        /// <param name="optionalFlattenProperty"></param>
+        /// <param name="discriminatorProperty"></param>
+        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty, OptionalFlattenPropertyType optionalFlattenProperty, LimitJsonObject discriminatorProperty) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             StringArray = stringArray;
             Property = @property;
             AnotherProperty = anotherProperty;
+            FlattenedNestedProperty = flattenedNestedProperty;
+            OptionalFlattenProperty = optionalFlattenProperty;
+            DiscriminatorProperty = discriminatorProperty;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -63,6 +72,15 @@ namespace MgmtTypeSpec
 
         /// <summary> Gets or sets the AnotherProperty. </summary>
         internal BarQuotaProperties AnotherProperty { get; set; }
+
+        /// <summary> Gets or sets the FlattenedNestedProperty. </summary>
+        internal BarNestedQuotaProperties FlattenedNestedProperty { get; set; }
+
+        /// <summary> Gets or sets the OptionalFlattenProperty. </summary>
+        internal OptionalFlattenPropertyType OptionalFlattenProperty { get; set; }
+
+        /// <summary> Gets or sets the DiscriminatorProperty. </summary>
+        public LimitJsonObject DiscriminatorProperty { get; set; }
 
         /// <summary> enabled. </summary>
         public bool? IsEnabled
@@ -96,6 +114,113 @@ namespace MgmtTypeSpec
             set
             {
                 AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+            }
+        }
+
+        /// <summary> Gets or sets the InnerProp1. </summary>
+        public int? InnerProp1
+        {
+            get
+            {
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.InnerProp1;
+            }
+            set
+            {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
+                FlattenedNestedProperty.InnerProp1 = value.Value;
+            }
+        }
+
+        /// <summary> Gets or sets the InnerProp2. </summary>
+        public string InnerProp2
+        {
+            get
+            {
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.InnerProp2;
+            }
+            set
+            {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
+                FlattenedNestedProperty.InnerProp2 = value;
+            }
+        }
+
+        /// <summary> Gets or sets the MiddleProp1. </summary>
+        public int MiddleProp1
+        {
+            get
+            {
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.MiddleProp1;
+            }
+            set
+            {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
+                FlattenedNestedProperty.MiddleProp1 = value;
+            }
+        }
+
+        /// <summary> Gets the MiddleProp2. </summary>
+        public IDictionary<string, string> MiddleProp2
+        {
+            get
+            {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
+                return FlattenedNestedProperty.MiddleProp2;
+            }
+        }
+
+        /// <summary> Gets the Prop1. </summary>
+        public IList<string> Prop1
+        {
+            get
+            {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
+                return FlattenedNestedProperty.Prop1;
+            }
+        }
+
+        /// <summary> Gets or sets the Prop2. </summary>
+        public int Prop2
+        {
+            get
+            {
+                return FlattenedNestedProperty is null ? default : FlattenedNestedProperty.Prop2;
+            }
+            set
+            {
+                if (FlattenedNestedProperty is null)
+                {
+                    FlattenedNestedProperty = new BarNestedQuotaProperties();
+                }
+                FlattenedNestedProperty.Prop2 = value;
+            }
+        }
+
+        /// <summary> Gets the RandomCollectionProp. </summary>
+        public IList<string> OptionalFlattenPropertyRandomCollectionProp
+        {
+            get
+            {
+                return OptionalFlattenProperty is null ? default : OptionalFlattenProperty.RandomCollectionProp;
+            }
+            set
+            {
+                OptionalFlattenProperty = new OptionalFlattenPropertyType(value);
             }
         }
     }

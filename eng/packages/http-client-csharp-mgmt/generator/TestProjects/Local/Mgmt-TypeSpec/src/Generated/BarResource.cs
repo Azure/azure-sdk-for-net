@@ -13,10 +13,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a Bar along with the instance operations that can be performed on it.
@@ -53,9 +54,9 @@ namespace MgmtTypeSpec
         internal BarResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string barApiVersion);
-            _barsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _barsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
-            _barClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _barClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _barRestClient = new Bar(_barClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -112,7 +113,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _barsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_barsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(_barsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -141,7 +142,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _barsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_barsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(_barsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -305,7 +306,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BarData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BarData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     BarData patch = new BarData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -353,7 +354,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BarData current = Get(cancellationToken).Value.Data;
+                    BarData current = Get(cancellationToken: cancellationToken).Value.Data;
                     BarData patch = new BarData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -400,7 +401,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BarData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BarData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     BarData patch = new BarData();
                     patch.Tags.ReplaceWith(tags);
                     Response<BarResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
@@ -443,7 +444,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BarData current = Get(cancellationToken).Value.Data;
+                    BarData current = Get(cancellationToken: cancellationToken).Value.Data;
                     BarData patch = new BarData();
                     patch.Tags.ReplaceWith(tags);
                     Response<BarResource> result = Update(patch, cancellationToken);
@@ -485,7 +486,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BarData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BarData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     BarData patch = new BarData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -531,7 +532,7 @@ namespace MgmtTypeSpec
                 }
                 else
                 {
-                    BarData current = Get(cancellationToken).Value.Data;
+                    BarData current = Get(cancellationToken: cancellationToken).Value.Data;
                     BarData patch = new BarData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -561,6 +562,24 @@ namespace MgmtTypeSpec
         public virtual BarQuotaResourceCollection GetBarQuotaResources()
         {
             return GetCachedClient(client => new BarQuotaResourceCollection(client, Id));
+        }
+
+        /// <summary> Get a BarQuotaResource. </summary>
+        /// <param name="barQuotaResourceName"> The name of the BarQuotaResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BarQuotaResource>> GetBarQuotaResourceAsync(QuotaName barQuotaResourceName, CancellationToken cancellationToken = default)
+        {
+            return await GetBarQuotaResources().GetAsync(barQuotaResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a BarQuotaResource. </summary>
+        /// <param name="barQuotaResourceName"> The name of the BarQuotaResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<BarQuotaResource> GetBarQuotaResource(QuotaName barQuotaResourceName, CancellationToken cancellationToken = default)
+        {
+            return GetBarQuotaResources().Get(barQuotaResourceName, cancellationToken);
         }
     }
 }

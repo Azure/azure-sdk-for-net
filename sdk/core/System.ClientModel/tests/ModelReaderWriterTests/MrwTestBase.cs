@@ -43,6 +43,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         [TestCase("J")]
         [TestCase("W")]
+        public void RoundTripWithModelReaderWriter(string format)
+            => RoundTripTest(format, new ModelReaderWriterStrategy<T>());
+
+        [TestCase("J")]
+        [TestCase("W")]
         public void RoundTripWithModelReaderWriter_WithContext(string format)
             => RoundTripTest(format, new ModelReaderWriterStrategy_WithContext<T>(Context));
 

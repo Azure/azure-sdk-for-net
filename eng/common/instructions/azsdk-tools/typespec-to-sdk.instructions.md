@@ -1,120 +1,73 @@
 ---
 description: 'Generate SDKs from TypeSpec'
 ---
-Your goal is to guide user through the process of generating SDKs from TypeSpec projects. Show all the high level steps to the user to ensure they understand the flow. Use the provided tools to perform actions and gather information as needed.
+Your goal is to guide the user through the process of generating SDKs from TypeSpec projects. **Before starting**, show all the high level steps to the user and ask: 
 
-## Step 1: Identify TypeSpec Project
-**Goal**: Locate the TypeSpec project root path
-**Actions**:
-1. Check if `tspconfig.yaml` or `main.tsp` files are open in editor
-2. If found, use the parent directory as project root
-3. If not found, prompt user: "Please provide the path to your TypeSpec project root directory"
-4. Validate the provided path contains required TypeSpec files
-**Success Criteria**: Valid TypeSpec project path identified
+> "Would you like to begin the SDK generation process now? (yes/no)"
 
-## Step 2: Validate TypeSpec Specification
-**Goal**: Ensure TypeSpec specification compiles without errors
-**Actions**:
-1. Refer to #file:validate-typespec.instructions.md
-2. If validation succeeds, proceed to Step 3
-3. If validation fails:
-    - Display all compilation errors to user
-    - Prompt: "Please fix the TypeSpec compilation errors before proceeding"
-    - Wait for user to fix errors and re-run validation
-**Success Criteria**: TypeSpec compilation passes without errors
+Wait for the user to respond with a confirmation before proceeding. Use the provided tools to perform actions and gather information as needed.
 
-## Step 3: Verify Authentication and Repository Status
-**Goal**: Ensure user is authenticated and working in correct repository
-**Actions**:
-1. Run `azsdk_get_github_user_details` to verify login status
-2. If not logged in, prompt: "Please login to GitHub using `gh auth login`"
-3. Once logged in, display user details to confirm identity
-4. Run `azsdk_check_typespec_project_in_public_repo` to verify repository
-5. If not in public repo, inform: "Please make spec changes in Azure/azure-rest-api-specs public repo to generate SDKs"
-**Success Criteria**: User authenticated and working in public Azure repo
+SDK languages to be generated:
+- Management Plane: .NET, Go, Java, JavaScript, Python
+- Data Plane: .NET, Java, JavaScript, Python
 
-## Step 4: Review and Commit Changes
-**Goal**: Stage and commit TypeSpec modifications
-**Actions**:
-1. Run `azsdk_get_modified_typespec_projects` to identify changes
-2. If no changes found, inform: "No TypeSpec projects were modified in current branch"
-3. Display all modified files (excluding `.github` and `.vscode` folders)
-4. Prompt user: "Please review the modified files. Do you want to commit these changes? (yes/no)"
-5. If yes:
-    - If on main branch, prompt user: "You are currently on the main branch. Please create a new branch using `git checkout -b <branch-name>` before proceeding."
-    - Wait for user confirmation before continuing
-    - Run `git add <modified-files>`
-    - Prompt for commit message
-    - Run `git commit -m "<user-provided-message>"`
-    - Run `git push -u origin <current-branch-name>`
-**Success Criteria**: Changes committed and pushed to remote branch
+Pre-requisites:
+- TypeSpec project path is available in the current context or provided by user. If not available, prompt user to provide the TypeSpec project root path (local path or GitHub URL).
 
-## Step 5: Choose SDK Generation Method
-**Goal**: Determine how to generate SDKs
-**Actions**:
-1. Present options: "How would you like to generate SDKs?"
-    - Option A: "Generate SDK locally". This is currently supported only for Python. Do not recommend this for other languages.
-    - Option B: "Use SDK generation pipeline"
-2. Based on selection:
-    - If Option A: Refer to #file:create-sdk-locally.instructions.md and then proceed to Step 6
-    - If Option B: Continue to Step 6
-**Success Criteria**: SDK generation method selected
+# SDK generation steps
 
-## Step 6: Create Specification Pull Request
-**Goal**: Create PR for TypeSpec changes if not already created
+## Step: Generate SDKs
+**Goal**: Generate SDKs
+**Message to user**: "SDK generation will take approximately 15-20 minutes. Currently, SDKs are generated using the Azure DevOps pipeline. SDK generation is supported only from a merged API spec or from an API spec pull request in the https://github.com/Azure/azure-rest-api-specs repository."
 **Actions**:
-1. Check if spec PR already exists using `azsdk_get_pull_request_link_for_current_branch`
-2. If PR exists, display PR details and proceed to Step 7
-3. If no PR exists:
-    - Refer to #file:create-spec-pullrequest.instructions.md
-    - Wait for PR creation confirmation
-    - Display created PR details
-**Success Criteria**: Specification pull request exists
-
-## Step 7: Generate SDKs via Pipeline
-**Goal**: Create release plan and generate SDKs
-**Actions**:
-1. Refer to #file:create-release-plan.instructions.md
-2. If SDK PRs exist, link them to the release plan
-3. Refer to #file:sdk-details-in-release-plan.instructions.md to add languages and package names to the release plan
-4. If TypeSpec project is for management plane, refer to #file:verify-namespace-approval.instructions.md to check package namespace approval.
-5. Refer to #file:run-sdk-gen-pipeline.instructions.md with the spec PR
-6. Monitor pipeline status and provide updates
-7. Display generated SDK PR links when available
+1. Identify whether TypeSpec is for Management Plane or Data Plane based on project structure and files. tspconfig.yaml file contains `resource-manager` for management plane and `data-plane` for data plane as resource provider.
+  - Execute the SDK generation pipeline with the following required parameters for all languages:
+    - TypeSpec project root path
+    - API spec pull request number (if the API spec is not merged to the main branch, otherwise use 0)
+    - API version
+    - SDK release type (`beta` for preview API versions, `stable` otherwise)
+    - Language options:
+        For management plane: `Python`, `.NET`, `JavaScript`, `Java`, `Go`
+        For data plane: `Python`, `.NET`, `JavaScript`, `Java`
+    - Each SDK generation tool call should show a label to indicate the language being generated.
+2. Monitor pipeline status after 15 minutes and provide updates. If pipeline is in progress, inform user that it may take additional time and check the status later.
+3. Display generated SDK PR links when available. If pipeline fails, inform user with error details and suggest to check pipeline logs for more information.
+4. If SDK pull request is available for all languages, ask user to review generated SDK pull request and mark them as ready for review when they are ready to get them reviewed and merged.
+5. If SDK pull request was created for test purposes, inform user to close the test SDK pull request.
 **Success Criteria**: SDK generation pipeline initiated and SDKs generated
 
-## Step 8: Show Generated SDK PRs
-**Goal**: Display all created SDK pull requests
-**Actions**:
-1. Run `azsdk_get_sdk_pull_request_link` to fetch generated SDK PR info.
-
-## Step 9: Validate Label and Codeowners
-**Goal**: Validate the label and all codeowners for a service. Create new label and codeowner entry if none exist.
-**Actions**:
-1. To validate a service label refer to #file:./validate-service-label.instructions.md
-2. After service label is validated or created refer to #file:./validate-codeowners.instructions.md
-3. Handle post-validation actions based on results:
-   - **If both label and codeowners were already valid**: Prompt user "Your service label and codeowners are already properly configured. Would you like to modify the existing codeowners entry for your service?"
-   - **If new label or codeowner entries were created**: Display details of the label and codeowners PR if they were created, then prompt user "The following PRs have been created for your service configuration: [list PRs]. Would you like to make any additional modifications to these entries?"
-**Success Criteria**: Service label exists and codeowners are properly configured with at least 2 valid owners. For created entries, showcase all PR's.
-
-## Step 10: Create release plan
+## Step: SDK release plan
 **Goal**: Create a release plan for the generated SDKs
+**Condition**: Only if SDK PRs are created
+**Message to user**: "Creating a release plan is essential to manage the release of the generated SDKs. Each release plan must include SDKs for all required languages based on the TypeSpec project type (Management Plane or Data Plane) or request exclusion approval for any excluded language. SDK pull request needs to get approval and merged to main branch before releasing the SDK package."
 **Actions**:
-1. Refer to #file:create-release-plan.instructions.md to create a release plan using the spec pull request.
-2. If the release plan already exists, display the existing plan details.
+1. Prompt the user to check if they generated the SDK just to test or do they intend to release it: "Do you want to create a release plan for the generated SDKs to publish them? (yes/no)"
+   - If no, inform user: "You can create a release plan later when ready to release the SDK" and end the workflow.
+2. Ask user if they have already created a release plan for the generated SDKs: "Have you already created a release plan for the generated SDKs? (yes/no)"
+   - If no, proceed to create a new release plan
+   - If yes, get release plan details and show them to user
+3. Prompt the user to provide the API spec pull request link if not already available in the current context.
+4. If unsure, check if a release plan already exists for API spec pull request.
+5. Prompt user to find the service id and product id in service tree `aka.ms/st` and provide them. Stress the importance of correct service id and product id for proper release plan creation.
+6. If a new release plan is needed, refer to #file:create-release-plan.instructions.md to create a release plan using the spec pull request. API spec pull request is required to create a release plan.
+7. Prompt user to change spec PR to ready for review: "Please change the spec pull request to ready for review status"
+8. Suggest users to follow the instructions on spec PR to get approval from API reviewers and merge the spec PR.
+9. Link SDK pull requests to the release plan.
+10. Each release plan must release SDK for all languages based on the TypeSpec project type (Management Plane or Data Plane). If any language is missing, inform user: "The release plan must include SDKs for all required languages: Python, .NET, JavaScript, Java, Go (for Management Plane) or Python, .NET, JavaScript, Java (for Data Plane)". If it is intentional to exclude a language then user must provide a justification for it.
+**Success Criteria**: Release plan created and linked to SDK PRs
 
-## Step 11: Mark Spec PR as Ready for Review
-**Goal**: Update spec PR to ready for review status
-**Actions**:
-1. Prompt user to change spec PR to ready for review: "Please change the spec pull request to ready for review status"
-2. Get approval and merge the spec PR
-
-## Step 12: Release SDK Package
+## Step: Release SDK Package
 **Goal**: Release the SDK package using the release plan
 **Actions**:
-1. Run `ReleaseSdkPackage` to release the SDK package.
-2. Inform user to approve the package release using release pipeline.
+1. Prompt the user to confirm if they want to release the SDK package now: "Do you want to release the SDK package now? (yes/no)"
+   - If no, inform user: "You can release the SDK package later using the prompt `release <package name> for  <language>`" and end the workflow.
+2. Get SDK pull request status for all languages.
+3. Inform user that it needs to check SDK PR status. If any SDK pull request is not merged, inform user: "Please merge all SDK pull requests before releasing the package.". Show a summary of SDK PR status for all languages.
+4. If an SDK pull request is merged then run release readiness of the package for that language.
+5. Inform user if a language is ready for release and prompt user for a confirmation to proceed with the release.
+6. If user confirms, run the tool to release the SDK package.
+7. Inform user to approve the package release using release pipeline. Warn user that package will be published to public registries once approved.
+8. Identify remaining languages to be released and inform user to release SDK for all languages to complete the release plan. Release plan completion is required for KPI attestation in service tree.
 
 ## Process Complete
 Display summary of all created PRs and next steps for user.

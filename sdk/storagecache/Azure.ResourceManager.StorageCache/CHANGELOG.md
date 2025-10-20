@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2025-09-30)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-03' to 'package-2025-07-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ec0ec094fc9eae3a75ac16b175a3b596a482003b/specification/storagecache/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.47.3 to 1.49.0
 
 ## 1.3.2 (2025-08-27)
 

@@ -582,8 +582,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 for (int i = ids.Count; i < agentLimit; i++)
                 {
-                    PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
-                    ids.Add((await GetAgent(client)).Id);
+                    PersistentAgent agent = await client.Administration.CreateAgentAsync(
+                        model: "gpt-4o",
+                        name: AGENT_NAME,
+                        instructions: "You are helpful agent.");
+                    ids.Add(agent.Id);
                 }
             }
             // Test calling before.
@@ -721,7 +724,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Assert.AreEqual(ids[idNum], run.Id, $"The ID #{idNum} is incorrect.");
                 idNum++;
             }
-            client.Threads.DeleteThread(threadId: thread.Id);
+            await client.Threads.DeleteThreadAsync(threadId: thread.Id);
         }
 
         [RecordedTest]
@@ -761,7 +764,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 "What is the stock price of Microsoft and the weather in Seattle?");
 
             // Run the agent
-            ThreadRun run = client.Runs.CreateRun(thread, agent);
+            ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
             run = await WaitForRun(client, run);
 
             // Check run steps
@@ -807,7 +810,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.Greater(messages.Count, 0);
 
             // NOTE: Comment out these four lines if you plan to reuse the agent later.
-            client.Threads.DeleteThread(threadId: thread.Id);
+            await client.Threads.DeleteThreadAsync(threadId: thread.Id);
         }
 
         [RecordedTest]
@@ -1128,7 +1131,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     },
                     new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4",
+                model: "gpt-4o",
                 name: AGENT_NAME,
                 instructions: "Use the provided functions to help answer questions.",
                 tools: new List<ToolDefinition> { getFavouriteNameTool }
@@ -1886,7 +1889,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 tools.Add(incorrectGeHhumidityByAddressTool);
 
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                    model: "gpt-4o-mini",
+                    model: "gpt-4o",
                     name: AGENT_NAME,
                     instructions: "Use the provided functions to help answer questions.",
                     tools: tools
@@ -2070,7 +2073,12 @@ namespace Azure.AI.Agents.Persistent.Tests
         }
 
         [RecordedTest]
-        public async Task TestMcpTool()
+        [TestCase(null, false, true)]
+        [TestCase("always", false, true)]
+        [TestCase("never", false, false)]
+        [TestCase("always", true, true)]
+        [TestCase("never", true, false)]
+        public async Task TestMcpTool(string trust, bool isPerTool, bool shouldApprove)
         {
             PersistentAgentsClient client = GetClient();
             MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
@@ -2090,6 +2098,26 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             MCPToolResource mcpToolResource = new("github");
             mcpToolResource.UpdateHeader("SuperSecret", "123456");
+            if (trust is not null)
+            {
+                MCPApproval trustMode;
+                if (isPerTool)
+                {
+                    MCPApprovalPerTool perTool = new()
+                    {
+                        Never = new MCPToolList(
+                            string.Equals(trust, "never") ? ["search_azure_rest_api_code"] : []),
+                        Always = new MCPToolList(
+                            string.Equals(trust, "always") ? ["search_azure_rest_api_code"] : []),
+                    };
+                    trustMode = new(perToolApproval: perTool);
+                }
+                else
+                {
+                    trustMode = new(trust);
+                }
+                mcpToolResource.RequireApproval = trustMode;
+            }
             ToolResources toolResources = mcpToolResource.ToToolResources();
 
             // Run the agent with MCP tool resources
@@ -2126,7 +2154,9 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
             }
             Assert.AreEqual(RunStatus.Completed, run.Status, run.LastError?.Message);
-            Assert.IsTrue(isApprovalRequested, "The approval was not requested.");
+            Assert.AreEqual(shouldApprove, isApprovalRequested,
+                isApprovalRequested ? $"The approval was requested, but it was not expected: trust: {trust}, isPerTool: {isPerTool}, shouldApprove: {shouldApprove}." : $"The approval was not requested, but it was expected: trust: {trust}, isPerTool: {isPerTool}, shouldApprove: {shouldApprove}."
+            );
             Assert.Greater((await client.Messages.GetMessagesAsync(thread.Id).ToListAsync()).Count, 1);
             AsyncPageable<RunStep> steps = client.Runs.GetRunStepsAsync(thread.Id, run.Id);
             bool isRunStepMCPPresent = false;
@@ -2147,6 +2177,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestMcpToolStreaming()
         {
+            if (!IsAsync && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             PersistentAgentsClient client = GetClient();
             MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
             string searchApiCode = "search_azure_rest_api_code";
@@ -2226,6 +2258,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         // AzureAISearch is tested separately in TestAzureAiSearchStreaming.
         public async Task TestStreamDelta(ToolTypes toolToTest)
         {
+            if (!IsAsync && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
             // Commenting DeepResearch as it is not compatible with unit test framework iterations
             // and connection breaks after timeout during streaming test.
             // The error says that the thread already contains the active run.
@@ -2277,6 +2311,58 @@ namespace Azure.AI.Agents.Persistent.Tests
                 fileAnnotation: fileAnnotation,
                 agentMessagePattern: searchPattern
                 );
+        }
+
+        [RecordedTest]
+        [TestCase(true, "adani")]
+        //TODO: The Image URI is not supported, uncomment this text when the ICM 686545924 will be resolved.
+        //[TestCase(false, "trail")]
+        public async Task TestImageAsInput(bool useUploaded, string expectedWord)
+        {
+            PersistentAgentsClient client = GetClient();
+            PersistentAgent agent = await GetAgent(
+                client: client,
+                model: "gpt-4o",
+                instruction: "Analyze images from internally uploaded files."
+            );
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+            var contentBlocks = new List<MessageInputContentBlock>
+            {
+                new MessageInputTextBlock("Here is an uploaded file. Please describe it:"),
+            };
+            if (useUploaded)
+            {
+                // Note: To get the Image ID, please upload it using sample "Sample_PersistentAgents_ImageFileInputs."
+                contentBlocks.Add(new MessageInputImageFileBlock(new MessageImageFileParam(TestEnvironment.UPLOADED_IMAGE_ID)));
+            }
+            else
+            {
+                string uri = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg";
+                contentBlocks.Add(new MessageInputImageUriBlock(new MessageImageUriParam(uri)));
+            }
+
+            PersistentThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
+                threadId: thread.Id,
+                role: MessageRole.User,
+                contentBlocks: contentBlocks
+            );
+            ThreadRun run = await client.Runs.CreateRunAsync(
+                threadId: thread.Id,
+                assistantId: agent.Id
+            );
+            run = await WaitForRun(client, run);
+            List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(threadId: run.ThreadId).ToListAsync();
+            Assert.Greater(messages.Count, 0);
+            StringBuilder sbResponse = new();
+            foreach (PersistentThreadMessage msg in messages)
+            {
+                if (msg.Role == MessageRole.Agent)
+                {
+                    msg.ContentItems.Where(x => x is MessageTextContent).Select(x => ((MessageTextContent)x).Text).Aggregate(sbResponse, (sbResponse, next) => sbResponse.Append(next));
+                }
+            }
+            string response = sbResponse.ToString().ToLower();
+            Assert.That(response.Contains(expectedWord), $"The word {expectedWord} was not found in the response: {response}");
         }
 
         #region Helpers

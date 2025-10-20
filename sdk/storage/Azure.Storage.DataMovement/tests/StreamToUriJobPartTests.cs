@@ -93,7 +93,7 @@ namespace Azure.Storage.DataMovement.Tests
             int numberOfInvocationCalls = 1,
             int maxWaitTimeInSec = 6)
         {
-            CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(maxWaitTimeInSec));
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(maxWaitTimeInSec));
             CancellationToken cancellationToken = cancellationSource.Token;
             bool verified = false;
 

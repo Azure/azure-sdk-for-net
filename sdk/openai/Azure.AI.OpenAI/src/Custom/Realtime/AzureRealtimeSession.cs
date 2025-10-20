@@ -17,15 +17,15 @@ internal partial class AzureRealtimeSession : RealtimeSession
     private readonly TokenCredential _tokenCredential;
     private readonly IEnumerable<string> _tokenAuthorizationScopes;
     private readonly string _userAgent;
-    private readonly IDictionary<string, string> _defaultHeaders;
 
     protected internal AzureRealtimeSession(
         AzureRealtimeClient parentClient,
         Uri endpoint,
         ApiKeyCredential credential,
         string userAgent,
-        IDictionary<string, string> defaultHeaders)
-            : this(parentClient, endpoint, userAgent, defaultHeaders)
+        string deploymentName,
+        string intent)
+            : this(parentClient, endpoint, userAgent, deploymentName, intent)
     {
         _keyCredential = credential;
     }
@@ -36,19 +36,19 @@ internal partial class AzureRealtimeSession : RealtimeSession
         TokenCredential credential,
         IEnumerable<string> tokenAuthorizationScopes,
         string userAgent,
-        IDictionary<string, string> defaultHeaders)
-            : this(parentClient, endpoint, userAgent, defaultHeaders)
+        string deploymentName,
+        string intent)
+            : this(parentClient, endpoint, userAgent, deploymentName, intent)
     {
         _tokenCredential = credential;
         _tokenAuthorizationScopes = tokenAuthorizationScopes;
     }
 
-    private AzureRealtimeSession(AzureRealtimeClient parentClient, Uri endpoint, string userAgent, IDictionary<string, string> defaultHeaders)
-        : base(parentClient, endpoint, credential: new("placeholder"))
+    private AzureRealtimeSession(AzureRealtimeClient parentClient, Uri endpoint, string userAgent, string deploymentName, string intent)
+        : base(credential: new("placeholder"), parentClient, endpoint, deploymentName, intent)
     {
         _endpoint = endpoint;
         _userAgent = userAgent;
-        _defaultHeaders = defaultHeaders;
     }
 }
 

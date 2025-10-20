@@ -222,7 +222,11 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             List<string> sourceFileNames = new List<string>();
 
             // Get source directory client and list the paths
-            await foreach (Page<BlobItem> page in sourceContainer.GetBlobsAsync(prefix: sourcePrefix, cancellationToken: cancellationToken).AsPages())
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                Prefix = sourcePrefix
+            };
+            await foreach (Page<BlobItem> page in sourceContainer.GetBlobsAsync(options, cancellationToken: cancellationToken).AsPages())
             {
                 sourceFileNames.AddRange(page.Values.Select((BlobItem item) => item.Name.Substring(sourcePrefix.Length + 1)));
             }

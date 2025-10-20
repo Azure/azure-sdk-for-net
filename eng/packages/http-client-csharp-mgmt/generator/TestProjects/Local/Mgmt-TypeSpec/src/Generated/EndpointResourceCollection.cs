@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="EndpointResource"/> and their operations.
@@ -37,7 +37,7 @@ namespace MgmtTypeSpec
         internal EndpointResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(EndpointResource.ResourceType, out string endpointResourceApiVersion);
-            _endpointResourcesClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", EndpointResource.ResourceType.Namespace, Diagnostics);
+            _endpointResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", EndpointResource.ResourceType.Namespace, Diagnostics);
             _endpointResourcesRestClient = new EndpointResources(_endpointResourcesClientDiagnostics, Pipeline, Endpoint, endpointResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -77,7 +77,7 @@ namespace MgmtTypeSpec
                 Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MgmtTypeSpecArmOperation<EndpointResource> operation = new MgmtTypeSpecArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TestsArmOperation<EndpointResource> operation = new TestsArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -116,7 +116,7 @@ namespace MgmtTypeSpec
                 Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MgmtTypeSpecArmOperation<EndpointResource> operation = new MgmtTypeSpecArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TestsArmOperation<EndpointResource> operation = new TestsArmOperation<EndpointResource>(Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -214,8 +214,20 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id, endpointName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EndpointResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EndpointResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,8 +255,20 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id, endpointName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EndpointResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EndpointResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,8 +296,20 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id, endpointName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EndpointResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EndpointResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
                 {
                     return new NoValueResponse<EndpointResource>(response.GetRawResponse());
@@ -305,8 +341,20 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id, endpointName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EndpointResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EndpointResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
                 {
                     return new NoValueResponse<EndpointResource>(response.GetRawResponse());

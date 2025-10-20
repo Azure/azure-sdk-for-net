@@ -214,7 +214,12 @@ namespace Azure.Storage.Blobs.Specialized
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientOptions: options);
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _blobRestClient = BuildBlobRestClient(_uri);
@@ -405,8 +410,7 @@ namespace Azure.Storage.Blobs.Specialized
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                trimBlobNameSlashes: options.TrimBlobNameSlashes,
-                clientOptions: options);
+                trimBlobNameSlashes: options.TrimBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _blobRestClient = BuildBlobRestClient(blobUri);
@@ -6056,15 +6060,6 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(GetTags)}");
 
-                conditions.ValidateConditionsNotPresent(
-                    invalidConditions:
-                        BlobRequestConditionProperty.IfModifiedSince
-                        | BlobRequestConditionProperty.IfUnmodifiedSince
-                        | BlobRequestConditionProperty.IfMatch
-                        | BlobRequestConditionProperty.IfNoneMatch,
-                    operationName: nameof(BlobBaseClient.GetTags),
-                    parameterName: nameof(conditions));
-
                 try
                 {
                     scope.Start();
@@ -6075,6 +6070,10 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await BlobRestClient.GetTagsAsync(
                             ifTags: conditions?.TagConditions,
                             leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -6083,6 +6082,10 @@ namespace Azure.Storage.Blobs.Specialized
                         response = BlobRestClient.GetTags(
                             ifTags: conditions?.TagConditions,
                             leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 
@@ -6246,15 +6249,6 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetTags)}");
 
-                conditions.ValidateConditionsNotPresent(
-                    invalidConditions:
-                        BlobRequestConditionProperty.IfModifiedSince
-                        | BlobRequestConditionProperty.IfUnmodifiedSince
-                        | BlobRequestConditionProperty.IfMatch
-                        | BlobRequestConditionProperty.IfNoneMatch,
-                    operationName: nameof(BlobBaseClient.SetTags),
-                    parameterName: nameof(conditions));
-
                 try
                 {
                     scope.Start();
@@ -6265,6 +6259,10 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await BlobRestClient.SetTagsAsync(
                             ifTags: conditions?.TagConditions,
                             leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             tags: tags.ToBlobTags(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -6274,6 +6272,10 @@ namespace Azure.Storage.Blobs.Specialized
                         response = BlobRestClient.SetTags(
                             ifTags: conditions?.TagConditions,
                             leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             tags: tags.ToBlobTags(),
                             cancellationToken: cancellationToken);
                     }

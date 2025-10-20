@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Test framework for clients built on System.ClientModel</Description>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Microsoft.ClientModel.TestFramework</PackageTags>
+    <RequiredTargetFrameworks>net462;net8.0;net9.0</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <NoWarn>AZC0015;AZC0007</NoWarn>
+    <IsTestProject>false</IsTestProject>
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
+    <IsPackable>true</IsPackable>
+    <AotCompatOptOut>true</AotCompatOptOut>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Castle.Core" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="System.ClientModel" /> 
+  </ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="$(MSBuildThisFileDirectory)/../../System.ClientModel/src/Internal/ContentTypeUtilities.cs" LinkBase="Shared\Core" />
+	</ItemGroup>
+</Project>

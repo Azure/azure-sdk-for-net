@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobClassified event. </summary>
     [JsonConverter(typeof(AcsRouterJobClassifiedEventDataConverter))]
-    public partial class AcsRouterJobClassifiedEventData : IJsonModel<AcsRouterJobClassifiedEventData>
+    public partial class AcsRouterJobClassifiedEventData : AcsRouterJobEventData, IJsonModel<AcsRouterJobClassifiedEventData>
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassifiedEventData"/> for deserialization. </summary>
         internal AcsRouterJobClassifiedEventData()

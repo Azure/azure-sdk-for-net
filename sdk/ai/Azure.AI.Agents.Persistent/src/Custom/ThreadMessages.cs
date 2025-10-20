@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -140,7 +141,8 @@ namespace Azure.AI.Agents.Persistent
 
             // Serialize the plain text into JSON so that the underlying generated code
             // sees a properly quoted/escaped string instead of raw text.
-            BinaryData contentJson = BinaryData.FromObjectAsJson(content);
+            var jsonString = JsonSerializer.Serialize(content, StringSerializerContext.Default.String);
+            BinaryData contentJson = BinaryData.FromString(jsonString);
 
             return await CreateMessageAsync(
                 threadId,
@@ -181,7 +183,8 @@ namespace Azure.AI.Agents.Persistent
 
             // Serialize the plain text into JSON so that the underlying generated code
             // sees a properly quoted/escaped string instead of raw text.
-            BinaryData contentJson = BinaryData.FromObjectAsJson(content);
+            var jsonString = JsonSerializer.Serialize(content, StringSerializerContext.Default.String);
+            BinaryData contentJson = BinaryData.FromString(jsonString);
 
             // Reuse the existing generated method internally by converting the string to BinaryData.
             return CreateMessage(
@@ -228,25 +231,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(contentBlocks, nameof(contentBlocks));
 
             // Convert blocks to a JSON array stored as BinaryData
-            var jsonElements = new List<JsonElement>();
-            foreach (MessageInputContentBlock block in contentBlocks)
-            {
-                // Write the content into a MemoryStream.
-                using var memStream = new MemoryStream();
-
-                // Write the RequestContent into the MemoryStream
-                block.ToRequestContent().WriteTo(memStream, default);
-
-                // Reset stream position to the beginning
-                memStream.Position = 0;
-
-                // Parse to a JsonDocument, then clone the root element so we can reuse it
-                using var tempDoc = JsonDocument.Parse(memStream);
-                jsonElements.Add(tempDoc.RootElement.Clone());
-            }
-
-            // Now serialize the array of JsonElements into a single BinaryData for the request:
-            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(jsonElements);
+            BinaryData serializedBlocks = ConvertMessageInputContentBlocksToJson(contentBlocks);
 
             return await CreateMessageAsync(
                 threadId,
@@ -292,6 +277,21 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(contentBlocks, nameof(contentBlocks));
 
             // Convert blocks to a JSON array stored as BinaryData
+            BinaryData serializedBlocks = ConvertMessageInputContentBlocksToJson(contentBlocks);
+
+            return CreateMessage(
+                threadId,
+                role,
+                serializedBlocks,
+                attachments,
+                metadata,
+                cancellationToken
+            );
+        }
+
+        private static BinaryData ConvertMessageInputContentBlocksToJson(IEnumerable<MessageInputContentBlock> contentBlocks)
+        {
+            // Convert blocks to a JSON array stored as BinaryData
             var jsonElements = new List<JsonElement>();
             foreach (MessageInputContentBlock block in contentBlocks)
             {
@@ -310,16 +310,8 @@ namespace Azure.AI.Agents.Persistent
             }
 
             // Now serialize the array of JsonElements into a single BinaryData for the request:
-            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(jsonElements);
-
-            return CreateMessage(
-                threadId,
-                role,
-                serializedBlocks,
-                attachments,
-                metadata,
-                cancellationToken
-            );
+            var jsonString = JsonSerializer.Serialize(jsonElements, JsonElementSerializer.Default.ListJsonElement);
+            return BinaryData.FromString(jsonString);
         }
 
         /// <summary> Gets a list of messages that exist on a thread. </summary>

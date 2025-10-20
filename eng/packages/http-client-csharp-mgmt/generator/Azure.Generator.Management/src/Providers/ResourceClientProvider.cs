@@ -86,6 +86,8 @@ namespace Azure.Generator.Management.Providers
 
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
 
+        public RequestPathPattern ContextualPath => _contextualPath;
+
         protected override string BuildName() => ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
 
         protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of {typeof(ArmClient):C} using the GetResource method.\nOtherwise you can get one from its parent resource {TypeOfParentResource:C} using the {FactoryMethodSignature.Name} method.";
@@ -154,8 +156,9 @@ namespace Azure.Generator.Management.Providers
             {
                 // we have the collection, we are not a singleton resource
                 var pluralOfResourceName = ResourceName.Pluralize();
+                var methodName = BuildFactoryMethodName();
                 return new MethodSignature(
-                    $"Get{pluralOfResourceName}",
+                    methodName,
                     $"Gets a collection of {pluralOfResourceName} in the {TypeOfParentResource:C}",
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                     ResourceCollection.Type,
@@ -174,6 +177,22 @@ namespace Azure.Generator.Management.Providers
                     $"Returns a {Type:C} object.",
                     []
                     );
+            }
+        }
+
+        // TODO: Temporary workaround for recent breaking changes in converting Playwright service.
+        // This special-casing will be replaced by a generalized naming strategy in a follow-up PR.
+        private string BuildFactoryMethodName()
+        {
+            var ResourceNamesHavingIrregularPlural = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "PlaywrightQuota", "PlaywrightWorkspaceQuota" };
+
+            if (ResourceNamesHavingIrregularPlural.Contains(ResourceName))
+            {
+                return $"GetAll{ResourceName}";
+            }
+            else
+            {
+                return $"Get{ResourceName.Pluralize()}";
             }
         }
 
@@ -302,7 +321,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         // TODO -- this is temporary. We should change this to find the corresponding parameters in ContextualParameters after it is refactored to consume parent resources.
-        private CSharpType GetPathParameterType(string parameterName)
+        public CSharpType GetPathParameterType(string parameterName)
         {
             foreach (var resourceMethod in _resourceServiceMethods)
             {
@@ -374,7 +393,7 @@ namespace Azure.Generator.Management.Providers
 
             var bodyStatements = new MethodBodyStatement[]
             {
-                Declare("resourceId", typeof(string), new FormattableStringExpression(formatBuilder.ToString(), parameters.Select(p => p.AsExpression()).ToArray()), out var resourceIdVar),
+                Declare("resourceId", typeof(string), new FormattableStringExpression(formatBuilder.ToString(), parameters.Select(p => p.AsArgument()).ToArray()), out var resourceIdVar),
                 Return(New.Instance(typeof(ResourceIdentifier), resourceIdVar))
             };
 
@@ -468,10 +487,7 @@ namespace Azure.Generator.Management.Providers
             }
 
             // add method to get the child resource collection from the current resource.
-            foreach (var childResource in ChildResources)
-            {
-                methods.Add(BuildGetChildResourceMethod(childResource));
-            }
+            methods.AddRange(BuildGetChildResourceMethods());
 
             return [.. methods];
         }
@@ -493,23 +509,62 @@ namespace Azure.Generator.Management.Providers
             return (false, putClient);
         }
 
-        private MethodProvider BuildGetChildResourceMethod(ResourceClientProvider childResource)
+        private List<MethodProvider> BuildGetChildResourceMethods()
         {
-            var thisResource = This.As<ArmResource>();
-            if (childResource.IsSingleton)
+            var methods = new List<MethodProvider>();
+
+            foreach (var childResource in ChildResources)
             {
-                var signature = childResource.FactoryMethodSignature;
-                var lastSegment = childResource.ResourceTypeValue.Split('/')[^1];
-                var bodyStatement = Return(New.Instance(childResource.Type, thisResource.Client(), thisResource.Id().AppendChildResource(Literal(lastSegment), Literal(childResource.SingletonResourceName!))));
-                return new MethodProvider(signature, bodyStatement, this);
+                var thisResource = This.As<ArmResource>();
+                if (childResource.IsSingleton)
+                {
+                    var signature = childResource.FactoryMethodSignature;
+                    var lastSegment = childResource.ResourceTypeValue.Split('/')[^1];
+                    var bodyStatement = Return(New.Instance(childResource.Type, thisResource.Client(), thisResource.Id().AppendChildResource(Literal(lastSegment), Literal(childResource.SingletonResourceName!))));
+                    methods.Add(new MethodProvider(signature, bodyStatement, this));
+                }
+                else
+                {
+                    Debug.Assert(childResource.ResourceCollection is not null, "Child resource collection should not be null for non-singleton resources.");
+                    var signature = childResource.FactoryMethodSignature;
+                    var bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(childResource.ResourceCollection.Type, client, thisResource.Id())));
+                    methods.Add(new MethodProvider(signature, bodyStatement, this));
+                    // Add Get methods backed by collection's Get and GetAsync methods
+                    if (childResource.ResourceCollection.GetSyncMethodProvider is not null && childResource.ResourceCollection.GetAsyncMethodProvider is not null)
+                    {
+                        // Create both async and sync Get methods
+                        var methodProviders = new[]
+                        {
+                            (childResource.ResourceCollection.GetAsyncMethodProvider, true, "Async"),
+                            (childResource.ResourceCollection.GetSyncMethodProvider, false, "")
+                        };
+
+                        foreach (var (collectionMethodProvider, isAsync, suffix) in methodProviders)
+                        {
+                            var collectionSignature = collectionMethodProvider.Signature;
+                            var getMethodName = $"Get{childResource.ResourceName}{suffix}";
+
+                            var getSignature = new MethodSignature(
+                                getMethodName,
+                                collectionSignature.Description,
+                                collectionSignature.Modifiers,
+                                collectionSignature.ReturnType,
+                                collectionSignature.ReturnDescription,
+                                collectionSignature.Parameters,
+                                [new AttributeStatement(typeof(ForwardsClientCallsAttribute))],
+                                collectionSignature.GenericArguments);
+
+                            var getBodyStatement = Return(
+                                thisResource.Invoke(signature.Name)
+                                    .Invoke(collectionSignature.Name, collectionSignature.Parameters.Select(p => p.AsArgument()).ToArray(), null, isAsync));
+
+                            methods.Add(new MethodProvider(getSignature, getBodyStatement, this));
+                        }
+                    }
+                }
             }
-            else
-            {
-                Debug.Assert(childResource.ResourceCollection is not null, "Child resource collection should not be null for non-singleton resources.");
-                var signature = childResource.FactoryMethodSignature;
-                var bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(childResource.ResourceCollection.Type, client, thisResource.Id())));
-                return new MethodProvider(signature, bodyStatement, this);
-            }
+
+            return methods;
         }
 
         private bool HasTags()

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all chat message events. </summary>
-    public partial class AcsChatMessageEventBaseProperties : IJsonModel<AcsChatMessageEventBaseProperties>
+    public partial class AcsChatMessageEventBaseProperties : AcsChatEventBaseProperties, IJsonModel<AcsChatMessageEventBaseProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatMessageEventBaseProperties"/> for deserialization. </summary>
         internal AcsChatMessageEventBaseProperties()

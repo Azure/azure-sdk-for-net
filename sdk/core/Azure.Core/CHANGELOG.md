@@ -1,6 +1,12 @@
 # Release History
 
-## 1.48.0-beta.1 (Unreleased)
+## 1.50.0-beta.1 (Unreleased)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Azure.Core library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
 
 ### Features Added
 
@@ -9,6 +15,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Several performance and efficiency improvements were made to how request content is created and managed.   _([#52488](https://github.com/Azure/azure-sdk-for-net/pull/52488), a community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+## 1.49.0 (2025-09-22)
+
+### Features Added
+
+- Adopt System.ClientModel 1.7.0
+
+## 1.48.0 (2025-09-09)
+
+### Bugs Fixed
+
+- Fixed an issue that prevented unbranded generated clients from utilizing an instance of `TokenCredential` with APIs that accept `AuthenticationTokenProvider`.
 
 ## 1.47.3 (2025-08-20)
 

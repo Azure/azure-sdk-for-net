@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Quota
     /// </summary>
     public partial class GroupQuotaSubscriptionRequestStatusCollection : ArmCollection, IEnumerable<GroupQuotaSubscriptionRequestStatusResource>, IAsyncEnumerable<GroupQuotaSubscriptionRequestStatusResource>
     {
-        private readonly ClientDiagnostics _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsClientDiagnostics;
-        private readonly GroupQuotaSubscriptionRequestsRestOperations _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsRestClient;
+        private readonly ClientDiagnostics _groupQuotaSubscriptionRequestStatusClientDiagnostics;
+        private readonly GroupQuotaSubscriptionRequestStatusesRestOperations _groupQuotaSubscriptionRequestStatusRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="GroupQuotaSubscriptionRequestStatusCollection"/> class for mocking. </summary>
         protected GroupQuotaSubscriptionRequestStatusCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Quota
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal GroupQuotaSubscriptionRequestStatusCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaSubscriptionRequestStatusResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GroupQuotaSubscriptionRequestStatusResource.ResourceType, out string groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsApiVersion);
-            _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsRestClient = new GroupQuotaSubscriptionRequestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsApiVersion);
+            _groupQuotaSubscriptionRequestStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaSubscriptionRequestStatusResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(GroupQuotaSubscriptionRequestStatusResource.ResourceType, out string groupQuotaSubscriptionRequestStatusApiVersion);
+            _groupQuotaSubscriptionRequestStatusRestClient = new GroupQuotaSubscriptionRequestStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaSubscriptionRequestStatusApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionRequests_Get</description>
+        /// <description>GroupQuotaSubscriptionRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
-            using var scope = _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.Get");
+            using var scope = _groupQuotaSubscriptionRequestStatusClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.Get");
             scope.Start();
             try
             {
-                var response = await _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsRestClient.GetAsync(Id.Parent.Name, Id.Name, requestId, cancellationToken).ConfigureAwait(false);
+                var response = await _groupQuotaSubscriptionRequestStatusRestClient.GetAsync(Id.Parent.Name, Id.Name, requestId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaSubscriptionRequestStatusResource(Client, response.Value), response.GetRawResponse());
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionRequests_Get</description>
+        /// <description>GroupQuotaSubscriptionRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
-            using var scope = _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.Get");
+            using var scope = _groupQuotaSubscriptionRequestStatusClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.Get");
             scope.Start();
             try
             {
-                var response = _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsRestClient.Get(Id.Parent.Name, Id.Name, requestId, cancellationToken);
+                var response = _groupQuotaSubscriptionRequestStatusRestClient.Get(Id.Parent.Name, Id.Name, requestId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaSubscriptionRequestStatusResource(Client, response.Value), response.GetRawResponse());
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionRequests_List</description>
+        /// <description>GroupQuotaSubscriptionRequestStatus_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An async collection of <see cref="GroupQuotaSubscriptionRequestStatusResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GroupQuotaSubscriptionRequestStatusResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsRestClient.CreateListRequest(Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GroupQuotaSubscriptionRequestStatusResource(Client, GroupQuotaSubscriptionRequestStatusData.DeserializeGroupQuotaSubscriptionRequestStatusData(e)), _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsClientDiagnostics, Pipeline, "GroupQuotaSubscriptionRequestStatusCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaSubscriptionRequestStatusRestClient.CreateListRequest(Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaSubscriptionRequestStatusRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GroupQuotaSubscriptionRequestStatusResource(Client, GroupQuotaSubscriptionRequestStatusData.DeserializeGroupQuotaSubscriptionRequestStatusData(e)), _groupQuotaSubscriptionRequestStatusClientDiagnostics, Pipeline, "GroupQuotaSubscriptionRequestStatusCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionRequests_List</description>
+        /// <description>GroupQuotaSubscriptionRequestStatus_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.Quota
         /// <returns> A collection of <see cref="GroupQuotaSubscriptionRequestStatusResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GroupQuotaSubscriptionRequestStatusResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsRestClient.CreateListRequest(Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GroupQuotaSubscriptionRequestStatusResource(Client, GroupQuotaSubscriptionRequestStatusData.DeserializeGroupQuotaSubscriptionRequestStatusData(e)), _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsClientDiagnostics, Pipeline, "GroupQuotaSubscriptionRequestStatusCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaSubscriptionRequestStatusRestClient.CreateListRequest(Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaSubscriptionRequestStatusRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GroupQuotaSubscriptionRequestStatusResource(Client, GroupQuotaSubscriptionRequestStatusData.DeserializeGroupQuotaSubscriptionRequestStatusData(e)), _groupQuotaSubscriptionRequestStatusClientDiagnostics, Pipeline, "GroupQuotaSubscriptionRequestStatusCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionRequests_Get</description>
+        /// <description>GroupQuotaSubscriptionRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
-            using var scope = _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.Exists");
+            using var scope = _groupQuotaSubscriptionRequestStatusClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsRestClient.GetAsync(Id.Parent.Name, Id.Name, requestId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _groupQuotaSubscriptionRequestStatusRestClient.GetAsync(Id.Parent.Name, Id.Name, requestId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -253,11 +253,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionRequests_Get</description>
+        /// <description>GroupQuotaSubscriptionRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
-            using var scope = _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.Exists");
+            using var scope = _groupQuotaSubscriptionRequestStatusClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.Exists");
             scope.Start();
             try
             {
-                var response = _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsRestClient.Get(Id.Parent.Name, Id.Name, requestId, cancellationToken: cancellationToken);
+                var response = _groupQuotaSubscriptionRequestStatusRestClient.Get(Id.Parent.Name, Id.Name, requestId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -296,11 +296,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionRequests_Get</description>
+        /// <description>GroupQuotaSubscriptionRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,11 +316,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
-            using var scope = _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.GetIfExists");
+            using var scope = _groupQuotaSubscriptionRequestStatusClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsRestClient.GetAsync(Id.Parent.Name, Id.Name, requestId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _groupQuotaSubscriptionRequestStatusRestClient.GetAsync(Id.Parent.Name, Id.Name, requestId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<GroupQuotaSubscriptionRequestStatusResource>(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaSubscriptionRequestStatusResource(Client, response.Value), response.GetRawResponse());
@@ -341,11 +341,11 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaSubscriptionRequests_Get</description>
+        /// <description>GroupQuotaSubscriptionRequestStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -361,11 +361,11 @@ namespace Azure.ResourceManager.Quota
         {
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
-            using var scope = _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.GetIfExists");
+            using var scope = _groupQuotaSubscriptionRequestStatusClientDiagnostics.CreateScope("GroupQuotaSubscriptionRequestStatusCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _groupQuotaSubscriptionRequestStatusGroupQuotaSubscriptionRequestsRestClient.Get(Id.Parent.Name, Id.Name, requestId, cancellationToken: cancellationToken);
+                var response = _groupQuotaSubscriptionRequestStatusRestClient.Get(Id.Parent.Name, Id.Name, requestId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<GroupQuotaSubscriptionRequestStatusResource>(response.GetRawResponse());
                 return Response.FromValue(new GroupQuotaSubscriptionRequestStatusResource(Client, response.Value), response.GetRawResponse());
