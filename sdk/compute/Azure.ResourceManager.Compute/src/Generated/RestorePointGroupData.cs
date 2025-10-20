@@ -69,13 +69,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
         /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
+        /// <param name="instantAccess"> This property determines whether instant access snapshot is enabled for restore points created under this restore point collection for Premium SSD v2 or Ultra disk. Instant access snapshot for Premium SSD v2 or Ultra disk is instantaneously available for restoring disk with fast restore performance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RestorePointGroupSource source, string provisioningState, string restorePointGroupId, IReadOnlyList<RestorePointData> restorePoints, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal RestorePointGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RestorePointGroupSource source, string provisioningState, string restorePointGroupId, IReadOnlyList<RestorePointData> restorePoints, bool? instantAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Source = source;
             ProvisioningState = provisioningState;
             RestorePointGroupId = restorePointGroupId;
             RestorePoints = restorePoints;
+            InstantAccess = instantAccess;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -92,5 +94,7 @@ namespace Azure.ResourceManager.Compute
         public string RestorePointGroupId { get; }
         /// <summary> A list containing all restore points created under this restore point collection. </summary>
         public IReadOnlyList<RestorePointData> RestorePoints { get; }
+        /// <summary> This property determines whether instant access snapshot is enabled for restore points created under this restore point collection for Premium SSD v2 or Ultra disk. Instant access snapshot for Premium SSD v2 or Ultra disk is instantaneously available for restoring disk with fast restore performance. </summary>
+        public bool? InstantAccess { get; set; }
     }
 }
