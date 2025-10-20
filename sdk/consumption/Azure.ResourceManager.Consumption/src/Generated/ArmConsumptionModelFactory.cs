@@ -881,16 +881,16 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="marketplaceCharges"> Marketplace Charges. </param>
         /// <param name="chargesBilledSeparately"> Charges Billed Separately. </param>
         /// <param name="currency"> The ISO currency in which the meter is charged, for example, USD. </param>
-        /// <param name="localChildren"> Children of a management group. </param>
-        /// <param name="localIncludedSubscriptions"> List of subscription Guids included in the calculation of aggregated cost. </param>
-        /// <param name="localExcludedSubscriptions"> List of subscription Guids excluded from the calculation of aggregated cost. </param>
+        /// <param name="childResults"> Children of a management group. </param>
+        /// <param name="includedSubscriptionIds"> List of subscription Guids included in the calculation of aggregated cost. </param>
+        /// <param name="excludedSubscriptionIds"> List of subscription Guids excluded from the calculation of aggregated cost. </param>
         /// <returns> A new <see cref="Models.ConsumptionAggregatedCostResult"/> instance for mocking. </returns>
-        public static ConsumptionAggregatedCostResult ConsumptionAggregatedCostResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, string billingPeriodId = null, DateTimeOffset? usageStartOn = null, DateTimeOffset? usageEndOn = null, decimal? azureCharges = null, decimal? marketplaceCharges = null, decimal? chargesBilledSeparately = null, string currency = null, IEnumerable<ConsumptionAggregatedCostResult> localChildren = null, IEnumerable<string> localIncludedSubscriptions = null, IEnumerable<string> localExcludedSubscriptions = null)
+        public static ConsumptionAggregatedCostResult ConsumptionAggregatedCostResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, string billingPeriodId = null, DateTimeOffset? usageStartOn = null, DateTimeOffset? usageEndOn = null, decimal? azureCharges = null, decimal? marketplaceCharges = null, decimal? chargesBilledSeparately = null, string currency = null, IEnumerable<ConsumptionAggregatedCostResult> childResults = null, IEnumerable<string> includedSubscriptionIds = null, IEnumerable<string> excludedSubscriptionIds = null)
         {
             tags ??= new Dictionary<string, string>();
-            localChildren ??= new List<ConsumptionAggregatedCostResult>();
-            localIncludedSubscriptions ??= new List<string>();
-            localExcludedSubscriptions ??= new List<string>();
+            childResults ??= new List<ConsumptionAggregatedCostResult>();
+            includedSubscriptionIds ??= new List<string>();
+            excludedSubscriptionIds ??= new List<string>();
 
             return new ConsumptionAggregatedCostResult(
                 id,
@@ -906,9 +906,9 @@ namespace Azure.ResourceManager.Consumption.Models
                 marketplaceCharges,
                 chargesBilledSeparately,
                 currency,
-                localChildren?.ToList(),
-                localIncludedSubscriptions?.ToList(),
-                localExcludedSubscriptions?.ToList(),
+                childResults?.ToList(),
+                includedSubscriptionIds?.ToList(),
+                excludedSubscriptionIds?.ToList(),
                 serializedAdditionalRawData: null);
         }
 

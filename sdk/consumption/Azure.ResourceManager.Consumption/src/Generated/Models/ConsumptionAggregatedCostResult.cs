@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public ConsumptionAggregatedCostResult()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            LocalChildren = new ChangeTrackingList<ConsumptionAggregatedCostResult>();
-            LocalIncludedSubscriptions = new ChangeTrackingList<string>();
-            LocalExcludedSubscriptions = new ChangeTrackingList<string>();
+            ChildResults = new ChangeTrackingList<ConsumptionAggregatedCostResult>();
+            IncludedSubscriptionIds = new ChangeTrackingList<string>();
+            ExcludedSubscriptionIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionAggregatedCostResult"/>. </summary>
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="marketplaceCharges"> Marketplace Charges. </param>
         /// <param name="chargesBilledSeparately"> Charges Billed Separately. </param>
         /// <param name="currency"> The ISO currency in which the meter is charged, for example, USD. </param>
-        /// <param name="localChildren"> Children of a management group. </param>
-        /// <param name="localIncludedSubscriptions"> List of subscription Guids included in the calculation of aggregated cost. </param>
-        /// <param name="localExcludedSubscriptions"> List of subscription Guids excluded from the calculation of aggregated cost. </param>
+        /// <param name="childResults"> Children of a management group. </param>
+        /// <param name="includedSubscriptionIds"> List of subscription Guids included in the calculation of aggregated cost. </param>
+        /// <param name="excludedSubscriptionIds"> List of subscription Guids excluded from the calculation of aggregated cost. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionAggregatedCostResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyDictionary<string, string> tags, string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? azureCharges, decimal? marketplaceCharges, decimal? chargesBilledSeparately, string currency, IList<ConsumptionAggregatedCostResult> localChildren, IList<string> localIncludedSubscriptions, IList<string> localExcludedSubscriptions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionAggregatedCostResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyDictionary<string, string> tags, string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? azureCharges, decimal? marketplaceCharges, decimal? chargesBilledSeparately, string currency, IList<ConsumptionAggregatedCostResult> childResults, IList<string> includedSubscriptionIds, IList<string> excludedSubscriptionIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Tags = tags;
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Consumption.Models
             MarketplaceCharges = marketplaceCharges;
             ChargesBilledSeparately = chargesBilledSeparately;
             Currency = currency;
-            LocalChildren = localChildren;
-            LocalIncludedSubscriptions = localIncludedSubscriptions;
-            LocalExcludedSubscriptions = localExcludedSubscriptions;
+            ChildResults = childResults;
+            IncludedSubscriptionIds = includedSubscriptionIds;
+            ExcludedSubscriptionIds = excludedSubscriptionIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> The ISO currency in which the meter is charged, for example, USD. </summary>
         public string Currency { get; }
         /// <summary> Children of a management group. </summary>
-        public IList<ConsumptionAggregatedCostResult> LocalChildren { get; }
+        public IList<ConsumptionAggregatedCostResult> ChildResults { get; }
         /// <summary> List of subscription Guids included in the calculation of aggregated cost. </summary>
-        public IList<string> LocalIncludedSubscriptions { get; }
+        public IList<string> IncludedSubscriptionIds { get; }
         /// <summary> List of subscription Guids excluded from the calculation of aggregated cost. </summary>
-        public IList<string> LocalExcludedSubscriptions { get; }
+        public IList<string> ExcludedSubscriptionIds { get; }
     }
 }

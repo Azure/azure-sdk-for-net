@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Consumption
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary> GetLotsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction> GetReservationTransactions(string filter = null, bool? useMarkupIfPartner = default(bool?), decimal? previewMarkupPercentage = default(decimal?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction> GetReservationTransactions(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction> GetReservationTransactions(string filter, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction> GetReservationTransactionsAsync(string filter = null, bool? useMarkupIfPartner = default(bool?), decimal? previewMarkupPercentage = default(decimal?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction> GetReservationTransactionsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction> GetReservationTransactionsAsync(string filter, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class BillingCustomerConsumptionResource : Azure.ResourceManager.ArmResource
     {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         public static Azure.ResourceManager.Consumption.Models.BudgetCurrentSpend BudgetCurrentSpend(decimal? amount = default(decimal?), string unit = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.BudgetForecastSpend BudgetForecastSpend(decimal? amount = default(decimal?), string unit = null) { throw null; }
-        public static Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult ConsumptionAggregatedCostResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, string billingPeriodId = null, System.DateTimeOffset? usageStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? usageEndOn = default(System.DateTimeOffset?), decimal? azureCharges = default(decimal?), decimal? marketplaceCharges = default(decimal?), decimal? chargesBilledSeparately = default(decimal?), string currency = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult> localChildren = null, System.Collections.Generic.IEnumerable<string> localIncludedSubscriptions = null, System.Collections.Generic.IEnumerable<string> localExcludedSubscriptions = null) { throw null; }
+        public static Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult ConsumptionAggregatedCostResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, string billingPeriodId = null, System.DateTimeOffset? usageStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? usageEndOn = default(System.DateTimeOffset?), decimal? azureCharges = default(decimal?), decimal? marketplaceCharges = default(decimal?), decimal? chargesBilledSeparately = default(decimal?), string currency = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult> childResults = null, System.Collections.Generic.IEnumerable<string> includedSubscriptionIds = null, System.Collections.Generic.IEnumerable<string> excludedSubscriptionIds = null) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionAmount ConsumptionAmount(string currency = null, decimal? value = default(decimal?)) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate ConsumptionAmountWithExchangeRate(string currency = null, decimal? value = default(decimal?), decimal? exchangeRate = default(decimal?), int? exchangeRateMonth = default(int?)) { throw null; }
         public static Azure.ResourceManager.Consumption.Models.ConsumptionBalanceAdjustmentDetail ConsumptionBalanceAdjustmentDetail(string name = null, decimal? value = default(decimal?)) { throw null; }
@@ -433,15 +433,15 @@ namespace Azure.ResourceManager.Consumption.Models
         public decimal? ChargesBilledSeparately { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult> Children { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult> ChildResults { get { throw null; } }
         public string Currency { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
+        public System.Collections.Generic.IList<string> ExcludedSubscriptionIds { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<string> ExcludedSubscriptions { get { throw null; } }
+        public System.Collections.Generic.IList<string> IncludedSubscriptionIds { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IReadOnlyList<string> IncludedSubscriptions { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult> LocalChildren { get { throw null; } }
-        public System.Collections.Generic.IList<string> LocalExcludedSubscriptions { get { throw null; } }
-        public System.Collections.Generic.IList<string> LocalIncludedSubscriptions { get { throw null; } }
         public decimal? MarketplaceCharges { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public System.DateTimeOffset? UsageEndOn { get { throw null; } }

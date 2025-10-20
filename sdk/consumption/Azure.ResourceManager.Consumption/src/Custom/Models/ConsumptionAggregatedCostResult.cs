@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         /// <summary> Children of a management group. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<ConsumptionAggregatedCostResult> Children => (IReadOnlyList<ConsumptionAggregatedCostResult>)LocalChildren;
+        public IReadOnlyList<ConsumptionAggregatedCostResult> Children => (IReadOnlyList<ConsumptionAggregatedCostResult>)ChildResults;
 
         /// <summary> List of subscription Guids included in the calculation of aggregated cost. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<string> IncludedSubscriptions => (IReadOnlyList<string>)LocalIncludedSubscriptions;
+        public IReadOnlyList<string> IncludedSubscriptions => (IReadOnlyList<string>)IncludedSubscriptionIds;
 
         /// <summary> List of subscription Guids excluded from the calculation of aggregated cost. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<string> ExcludedSubscriptions => (IReadOnlyList<string>)LocalExcludedSubscriptions;
+        public IReadOnlyList<string> ExcludedSubscriptions => (IReadOnlyList<string>)ExcludedSubscriptionIds;
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConsumptionReservationTransaction"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<ConsumptionReservationTransaction> GetReservationTransactionsAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConsumptionReservationTransaction> GetReservationTransactionsAsync(string filter, CancellationToken cancellationToken)
         {
             return GetReservationTransactionsAsync(filter, useMarkupIfPartner: default, previewMarkupPercentage: default, cancellationToken);
         }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConsumptionReservationTransaction"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<ConsumptionReservationTransaction> GetReservationTransactions(string filter, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConsumptionReservationTransaction> GetReservationTransactions(string filter, CancellationToken cancellationToken)
         {
             return GetReservationTransactions(filter, useMarkupIfPartner: default, previewMarkupPercentage: default, cancellationToken);
         }

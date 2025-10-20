@@ -90,31 +90,31 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (Optional.IsCollectionDefined(LocalChildren))
+            if (Optional.IsCollectionDefined(ChildResults))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
-                foreach (var item in LocalChildren)
+                foreach (var item in ChildResults)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LocalIncludedSubscriptions))
+            if (Optional.IsCollectionDefined(IncludedSubscriptionIds))
             {
                 writer.WritePropertyName("includedSubscriptions"u8);
                 writer.WriteStartArray();
-                foreach (var item in LocalIncludedSubscriptions)
+                foreach (var item in IncludedSubscriptionIds)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LocalExcludedSubscriptions))
+            if (Optional.IsCollectionDefined(ExcludedSubscriptionIds))
             {
                 writer.WritePropertyName("excludedSubscriptions"u8);
                 writer.WriteStartArray();
-                foreach (var item in LocalExcludedSubscriptions)
+                foreach (var item in ExcludedSubscriptionIds)
                 {
                     writer.WriteStringValue(item);
                 }

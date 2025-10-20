@@ -147,9 +147,9 @@ rename-mapping:
   ManagementGroupAggregatedCostResult: ConsumptionAggregatedCostResult
   ManagementGroupAggregatedCostResult.properties.usageStart: UsageStartOn
   ManagementGroupAggregatedCostResult.properties.usageEnd: UsageEndOn
-  ManagementGroupAggregatedCostResult.properties.children: LocalChildren
-  ManagementGroupAggregatedCostResult.properties.includedSubscriptions: LocalIncludedSubscriptions
-  ManagementGroupAggregatedCostResult.properties.excludedSubscriptions: LocalExcludedSubscriptions
+  ManagementGroupAggregatedCostResult.properties.children: ChildResults
+  ManagementGroupAggregatedCostResult.properties.includedSubscriptions: IncludedSubscriptionIds
+  ManagementGroupAggregatedCostResult.properties.excludedSubscriptions: ExcludedSubscriptionIds
   LotSummary: ConsumptionLotSummary
   LotSource: ConsumptionLotSource
   Status: ConsumptionLotStatus
