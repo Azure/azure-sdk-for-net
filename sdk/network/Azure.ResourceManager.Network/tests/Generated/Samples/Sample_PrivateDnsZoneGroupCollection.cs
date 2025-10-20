@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePrivateDnsZoneGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointDnsZoneGroupCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointDnsZoneGroupCreate.json
             // this example is just showing the usage of "PrivateDnsZoneGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +62,7 @@ PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateDnsZoneGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointDnsZoneGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointDnsZoneGroupGet.json
             // this example is just showing the usage of "PrivateDnsZoneGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPrivateEndpointsInResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointDnsZoneGroupList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointDnsZoneGroupList.json
             // this example is just showing the usage of "PrivateDnsZoneGroups_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPrivateDnsZoneGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointDnsZoneGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointDnsZoneGroupGet.json
             // this example is just showing the usage of "PrivateDnsZoneGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -162,7 +162,7 @@ PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPrivateDnsZoneGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointDnsZoneGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointDnsZoneGroupGet.json
             // this example is just showing the usage of "PrivateDnsZoneGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
