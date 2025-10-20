@@ -431,7 +431,7 @@ namespace Azure.Storage.Blobs.Test
             // Send the request headers based on 'requestHeaders' Dictionary
             foreach (var header in requestHeaders)
             {
-                if (!string.IsNullOrEmpty(header.Key))
+                if (header.Key != null)
                 {
                     foreach (string value in header.Value)
                     {

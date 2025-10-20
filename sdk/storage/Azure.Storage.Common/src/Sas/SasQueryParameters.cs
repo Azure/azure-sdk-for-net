@@ -1032,16 +1032,9 @@ namespace Azure.Storage.Sas
 
             if (RequestHeaders != null && RequestHeaders.Count > 0)
             {
-                // remove empty entries
-                List<string> filteredRequestHeaders = RequestHeaders
-                    .Where(entry => !string.IsNullOrEmpty(entry))
-                    .ToList();
-                if (filteredRequestHeaders.Count > 0)
-                {
-                    stringBuilder.AppendQueryParameter(
-                        Constants.Sas.Parameters.RequestHeaders,
-                        ListToEncodedSasQueryParameterString(filteredRequestHeaders));
-                }
+                stringBuilder.AppendQueryParameter(
+                    Constants.Sas.Parameters.RequestHeaders,
+                    ListToEncodedSasQueryParameterString(RequestHeaders));
             }
 
             if (RequestQueryParameters != null && RequestQueryParameters.Count > 0)

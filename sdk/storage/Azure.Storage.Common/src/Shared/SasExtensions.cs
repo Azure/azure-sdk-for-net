@@ -197,14 +197,11 @@ namespace Azure.Storage.Sas
             StringBuilder sb = new StringBuilder();
             foreach (var entry in requestHeaders)
             {
-                if (!string.IsNullOrEmpty(entry.Key))
-                {
-                    sb
-                    .Append(entry.Key)
-                    .Append(':')
-                    .Append(string.Join(", ", entry.Value))
-                    .Append('\n');
-                }
+                sb
+                .Append(entry.Key)
+                .Append(':')
+                .Append(string.Join(", ", entry.Value))
+                .Append('\n');
             }
             return sb.ToString();
         }
