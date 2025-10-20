@@ -1816,6 +1816,8 @@
     {
       "filename": "**/sdk/workloadorchestration/**/*.cs",
       "words": [
+        "Inprogress",
+        "Undeployed",
         "inprogress",
         "undeployed"
        ]

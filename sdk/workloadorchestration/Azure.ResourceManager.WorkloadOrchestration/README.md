@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure InformaticaDataManagement management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure WorkloadOrchestration management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.WorkloadOrchestration
