@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -15,10 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
-		<ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
-		<!-- The PackageReference is commented out because Azure.Storage.Blobs is now included via ProjectReference above. -->
-		<!-- It is retained here until after the next release, and the dependency will be switched back to a PackageReference in the future. -->
-		<!-- <PackageReference Include="Azure.Storage.Blobs" /> -->
+		<PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Azure.Storage.Queues" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
