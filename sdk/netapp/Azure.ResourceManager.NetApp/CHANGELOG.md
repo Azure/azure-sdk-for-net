@@ -1,5 +1,24 @@
 # Release History
 
+## 1.13.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.12.0 (2025-08-25)
+
+### Features Added
+- Upgraded api-version tag from 'package-2025-03-01' to 'package-2025-06-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/bf90cab9d5f6060ce1f7775ffac88ed8eda785ca/specification/netapp/resource-manager/readme.md.
+- Added `customThroughputMibps` to `CapacityPoolData`
+- Added Enum value `Flexible`  to `NetAppFileServiceLevel`
+- Added `SplitCloneFromParent` to `NetAppVolumeResource` to convert clone volume to an independent volume
+- Added `AcceptGrowCapacityPoolForShortTermCloneSplit` and read only property `InheritedSizeInBytes` to `NetAppVolumeData`
+
 ## 1.11.0 (2025-07-25)
 
 ### Features Added

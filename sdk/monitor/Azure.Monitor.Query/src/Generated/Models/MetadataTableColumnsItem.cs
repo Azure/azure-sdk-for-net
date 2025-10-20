@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The MetadataTableColumnsItem. </summary>
     internal partial class MetadataTableColumnsItem
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetadataTableColumnsItem"/>. </summary>
         /// <param name="name"> The name of the column. </param>
         /// <param name="type"> The data type of the column. </param>
@@ -30,13 +63,20 @@ namespace Azure.Monitor.Query.Models
         /// <param name="type"> The data type of the column. </param>
         /// <param name="isPreferredFacet"> A flag indicating this column is a preferred facet. </param>
         /// <param name="source"> an indication of the source of the column, used only when multiple workspaces have conflicting definition for the column. </param>
-        internal MetadataTableColumnsItem(string name, string description, MetadataColumnDataType type, bool? isPreferredFacet, object source)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataTableColumnsItem(string name, string description, MetadataColumnDataType type, bool? isPreferredFacet, object source, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
             Type = type;
             IsPreferredFacet = isPreferredFacet;
             Source = source;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataTableColumnsItem"/> for deserialization. </summary>
+        internal MetadataTableColumnsItem()
+        {
         }
 
         /// <summary> The name of the column. </summary>

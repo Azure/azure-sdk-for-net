@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ElasticSanPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 baseSizeTiB,
                 extendedCapacitySizeTiB,
                 publicNetworkAccess,
                 autoScaleProperties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<ResponseError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -291,7 +292,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerDataProtectionBackupContext.Default));
                     }
                     errorDetails = array;
                     continue;

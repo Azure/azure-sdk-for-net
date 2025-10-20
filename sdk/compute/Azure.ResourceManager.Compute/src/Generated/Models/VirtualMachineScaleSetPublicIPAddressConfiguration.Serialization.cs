@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -42,6 +43,17 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IdleTimeoutInMinutes))
@@ -67,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix"u8);
-                JsonSerializer.Serialize(writer, PublicIPPrefix);
+                ((IJsonModel<WritableSubResource>)PublicIPPrefix).Write(writer, options);
             }
             if (Optional.IsDefined(PublicIPAddressVersion))
             {
@@ -119,6 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             ComputePublicIPAddressSku sku = default;
+            IDictionary<string, string> tags = default;
             int? idleTimeoutInMinutes = default;
             VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default;
             IList<VirtualMachineScaleSetIPTag> ipTags = default;
@@ -141,6 +154,20 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     sku = ComputePublicIPAddressSku.DeserializeComputePublicIPAddressSku(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -190,7 +217,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            publicIPPrefix = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            publicIPPrefix = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddressVersion"u8))
@@ -223,6 +250,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineScaleSetPublicIPAddressConfiguration(
                 name,
                 sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 idleTimeoutInMinutes,
                 dnsSettings,
                 ipTags ?? new ChangeTrackingList<VirtualMachineScaleSetIPTag>(),

@@ -84,8 +84,8 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachmentSync_CreateRun
 ThreadRun run = client.Runs.CreateRun(
-    thread.Id,
-    agent.Id
+    thread,
+    agent
 );
 
 do
@@ -104,8 +104,8 @@ Assert.AreEqual(
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachment_CreateRun
 ThreadRun run = await client.Runs.CreateRunAsync(
-    thread.Id,
-    agent.Id
+    thread,
+    agent
 );
 
 do

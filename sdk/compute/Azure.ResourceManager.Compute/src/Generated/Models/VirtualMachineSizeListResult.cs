@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeListResult"/>. </summary>
         /// <param name="value"> The list of virtual machine sizes. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineSizeListResult(IReadOnlyList<VirtualMachineSize> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineSizeListResult(IReadOnlyList<VirtualMachineSize> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of virtual machine sizes. </summary>
         public IReadOnlyList<VirtualMachineSize> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public string NextLink { get; }
     }
 }

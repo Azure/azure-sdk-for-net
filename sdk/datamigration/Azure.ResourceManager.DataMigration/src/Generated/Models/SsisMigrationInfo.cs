@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SsisMigrationInfo"/>. </summary>
-        /// <param name="ssisStoreType"> The SSIS store type of source, only SSIS catalog is supported now in DMS. </param>
+        /// <param name="ssisStoreType"> The SSIS store type of source, only SSIS catalog is supported now in DMS (classic). </param>
         /// <param name="projectOverwriteOption"> The overwrite option for the SSIS project migration. </param>
         /// <param name="environmentOverwriteOption"> The overwrite option for the SSIS environment migration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SsisMigrationInfo(SsisStoreType? ssisStoreType, SsisMigrationOverwriteOption? projectOverwriteOption, SsisMigrationOverwriteOption? environmentOverwriteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SsisMigrationInfo(DataMigrationSsisStoreType? ssisStoreType, SsisMigrationOverwriteOption? projectOverwriteOption, SsisMigrationOverwriteOption? environmentOverwriteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SsisStoreType = ssisStoreType;
             ProjectOverwriteOption = projectOverwriteOption;
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The SSIS store type of source, only SSIS catalog is supported now in DMS. </summary>
-        public SsisStoreType? SsisStoreType { get; set; }
+        /// <summary> The SSIS store type of source, only SSIS catalog is supported now in DMS (classic). </summary>
+        public DataMigrationSsisStoreType? SsisStoreType { get; set; }
         /// <summary> The overwrite option for the SSIS project migration. </summary>
         public SsisMigrationOverwriteOption? ProjectOverwriteOption { get; set; }
         /// <summary> The overwrite option for the SSIS environment migration. </summary>

@@ -1,4 +1,4 @@
-# Azure.Provisioning.PostgreSql client library for .NET
+# Azure Provisioning PostgreSql client library for .NET
 
 Azure.Provisioning.PostgreSql simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,94 @@ dotnet add package Azure.Provisioning.PostgreSql
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create a PostgreSQL Flexible Server
+
+This example demonstrates how to create a PostgreSQL Flexible Server with Azure Active Directory authentication, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.dbforpostgresql/flexible-postgresql-with-aad/main.bicep).
+
+```C# Snippet:PostgreSqlBasic
+Infrastructure infra = new();
+
+ProvisioningParameter adminLogin =
+    new(nameof(adminLogin), typeof(string))
+    {
+        Description = "The administrator username of the server."
+    };
+infra.Add(adminLogin);
+
+ProvisioningParameter adminPass =
+    new(nameof(adminPass), typeof(string))
+    {
+        Description = "The administrator password of the server.",
+        IsSecure = true
+    };
+infra.Add(adminPass);
+
+ProvisioningParameter aadAdminName =
+    new(nameof(aadAdminName), typeof(string))
+    {
+        Description = "The AAD admin username."
+    };
+infra.Add(aadAdminName);
+
+ProvisioningParameter aadAdminOid =
+    new(nameof(aadAdminOid), typeof(string))
+    {
+        Description = "The AAD admin Object ID."
+    };
+infra.Add(aadAdminOid);
+
+PostgreSqlFlexibleServer server =
+    new(nameof(server), PostgreSqlFlexibleServer.ResourceVersions.V2022_12_01)
+    {
+        Sku =
+            new PostgreSqlFlexibleServerSku
+            {
+                Name = "Standard_D2ds_v4",
+                Tier = PostgreSqlFlexibleServerSkuTier.GeneralPurpose
+            },
+        CreateMode = PostgreSqlFlexibleServerCreateMode.Default,
+        Version = PostgreSqlFlexibleServerVersion.Ver14,
+        AdministratorLogin = adminLogin,
+        AdministratorLoginPassword = adminPass,
+        AuthConfig =
+            new PostgreSqlFlexibleServerAuthConfig
+            {
+                ActiveDirectoryAuth = PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled,
+                PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Disabled,
+                TenantId = BicepFunction.GetTenant().TenantId
+            },
+        Storage =
+            new PostgreSqlFlexibleServerStorage
+            {
+                StorageSizeInGB = 32
+            },
+        Backup =
+            new PostgreSqlFlexibleServerBackupProperties
+            {
+                BackupRetentionDays = 7,
+                GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled
+            },
+        HighAvailability = new PostgreSqlFlexibleServerHighAvailability
+        {
+            Mode = PostgreSqlFlexibleServerHighAvailabilityMode.Disabled
+        }
+    };
+infra.Add(server);
+
+PostgreSqlFlexibleServerActiveDirectoryAdministrator admin =
+    new(nameof(admin), PostgreSqlFlexibleServer.ResourceVersions.V2022_12_01)
+    {
+        Parent = server,
+        Name = aadAdminOid,
+        TenantId = BicepFunction.GetSubscription().TenantId,
+        PrincipalName = aadAdminName,
+        PrincipalType = PostgreSqlFlexibleServerPrincipalType.ServicePrincipal
+    };
+infra.Add(admin);
+```
 
 ## Troubleshooting
 

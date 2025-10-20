@@ -34,7 +34,7 @@ namespace Azure.Generator.Management.Tests.Providers
         {
             // find the resource
             var resource = _plugin.OutputLibrary.TypeProviders
-                .OfType<ResourceClientProvider>().Where(t => t is not ResourceCollectionClientProvider).FirstOrDefault();
+                .OfType<ResourceClientProvider>().FirstOrDefault();
 
             Assert.IsNotNull(resource);
             var collection = resource?.ResourceCollection;
@@ -46,7 +46,7 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.IsNotNull(extension);
 
             // validate the get collection method
-            var method = extension!.Methods.FirstOrDefault(m => m.Signature.Name == $"Get{resource?.SpecName.Pluralize()}")!;
+            var method = extension!.Methods.FirstOrDefault(m => m.Signature.Name == $"Get{resource?.ResourceName.Pluralize()}")!;
 
             Assert.IsNotNull(method);
             Assert.AreEqual(collection!.Type, method.Signature.ReturnType);
@@ -57,7 +57,7 @@ namespace Azure.Generator.Management.Tests.Providers
         {
             // find the resource
             var resource = _plugin.OutputLibrary.TypeProviders
-                .OfType<ResourceClientProvider>().Where(t => t is not ResourceCollectionClientProvider).FirstOrDefault();
+                .OfType<ResourceClientProvider>().FirstOrDefault();
             Assert.IsNotNull(resource);
             var collection = resource?.ResourceCollection;
             Assert.IsNotNull(collection);

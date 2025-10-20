@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (options.Format != "W" && Optional.IsDefined(TriggeredBuildResult))
             {
                 writer.WritePropertyName("triggeredBuildResult"u8);
-                JsonSerializer.Serialize(writer, TriggeredBuildResult);
+                ((IJsonModel<SubResource>)TriggeredBuildResult).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceRequests))
             {
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    triggeredBuildResult = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    triggeredBuildResult = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerAppPlatformContext.Default);
                     continue;
                 }
                 if (property.NameEquals("resourceRequests"u8))

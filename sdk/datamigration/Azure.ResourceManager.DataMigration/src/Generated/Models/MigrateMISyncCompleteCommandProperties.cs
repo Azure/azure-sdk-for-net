@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Properties for the command that completes online migration for an Azure SQL Database Managed Instance. </summary>
-    public partial class MigrateMISyncCompleteCommandProperties : CommandProperties
+    public partial class MigrateMISyncCompleteCommandProperties : DataMigrationCommandProperties
     {
         /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandProperties"/>. </summary>
         public MigrateMISyncCompleteCommandProperties()
         {
-            CommandType = CommandType.MigrateSqlServerAzureDBSqlMIComplete;
+            CommandType = DataMigrationCommandType.MigrateSqlServerAzureDBSqlMIComplete;
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandProperties"/>. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Command input. </param>
         /// <param name="output"> Command output. This is ignored if submitted. </param>
-        internal MigrateMISyncCompleteCommandProperties(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrateMISyncCompleteCommandInput input, MigrateMISyncCompleteCommandOutput output) : base(commandType, errors, state, serializedAdditionalRawData)
+        internal MigrateMISyncCompleteCommandProperties(DataMigrationCommandType commandType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationCommandState? state, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrateMISyncCompleteCommandInput input, MigrateMISyncCompleteCommandOutput output) : base(commandType, errors, state, serializedAdditionalRawData)
         {
             Input = input;
             Output = output;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Command output. This is ignored if submitted. </summary>
         internal MigrateMISyncCompleteCommandOutput Output { get; }
         /// <summary> List of errors that happened during the command execution. </summary>
-        public IReadOnlyList<ReportableException> OutputErrors
+        public IReadOnlyList<DataMigrationReportableException> OutputErrors
         {
             get => Output?.Errors;
         }

@@ -331,4 +331,51 @@ public class ClientPipelineTests : SyncAsyncTestBase
         Assert.AreEqual("Response:RetryPolicy", observations[index++]);
         Assert.AreEqual("Response:A", observations[index++]);
     }
+
+        [Test]
+    public void CreateMessageWithUriMethodAndClassifierSetsProperties()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        Uri testUri = new Uri("https://example.com/test");
+        string testMethod = "POST";
+        PipelineMessageClassifier testClassifier = PipelineMessageClassifier.Create(ReadOnlySpan<ushort>.Empty);
+
+        PipelineMessage message = pipeline.CreateMessage(testUri, testMethod, testClassifier);
+
+        Assert.IsNotNull(message);
+        Assert.AreEqual(testUri, message.Request.Uri);
+        Assert.AreEqual(testMethod, message.Request.Method);
+        Assert.AreEqual(testClassifier, message.ResponseClassifier);
+        Assert.IsNotNull(message.NetworkTimeout);
+    }
+
+    [Test]
+    public void CreateMessageThrowsOnNullUriOrMethod()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        Uri testUri = new Uri("https://example.com/test");
+        string testMethod = "GET";
+        PipelineMessageClassifier testClassifier = PipelineMessageClassifier.Default;
+
+        Assert.Throws<ArgumentNullException>(() =>
+            pipeline.CreateMessage(null!, testMethod, testClassifier));
+
+        Assert.Throws<ArgumentNullException>(() =>
+            pipeline.CreateMessage(testUri, null!, testClassifier));
+    }
+
+    [Test]
+    public void CreateMessageWithUriAndMethodUsesDefaultClassifier()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        Uri testUri = new Uri("https://example.com/test");
+        string testMethod = "DELETE";
+
+        PipelineMessage message = pipeline.CreateMessage(testUri, testMethod);
+
+        Assert.IsNotNull(message);
+        Assert.AreEqual(testUri, message.Request.Uri);
+        Assert.AreEqual(testMethod, message.Request.Method);
+        Assert.AreEqual(PipelineMessageClassifier.Default, message.ResponseClassifier);
+    }
 }

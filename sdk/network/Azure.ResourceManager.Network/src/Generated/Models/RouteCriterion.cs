@@ -69,12 +69,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of route prefixes which this criteria matches. </summary>
+        [WirePath("routePrefix")]
         public IList<string> RoutePrefix { get; }
         /// <summary> List of BGP communities which this criteria matches. </summary>
+        [WirePath("community")]
         public IList<string> Community { get; }
         /// <summary> List of AS paths which this criteria matches. </summary>
+        [WirePath("asPath")]
         public IList<string> AsPath { get; }
         /// <summary> Match condition to apply RouteMap rules. </summary>
+        [WirePath("matchCondition")]
         public RouteMapMatchCondition? MatchCondition { get; set; }
     }
 }

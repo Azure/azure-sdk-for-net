@@ -1,4 +1,4 @@
-# Azure.Provisioning.SignalR client library for .NET
+# Azure Provisioning SignalR client library for .NET
 
 Azure.Provisioning.SignalR simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,80 @@ dotnet add package Azure.Provisioning.SignalR
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create a SignalR Service
+
+This example demonstrates how to create an Azure SignalR Service for real-time web functionality.
+
+```C# Snippet:SignalRBasic
+Infrastructure infra = new();
+
+ProvisioningParameter endpointName =
+    new(nameof(endpointName), typeof(string))
+    {
+        Value = "mySignalRService.55e432ab-7428-3695-b637-de57b20d40e5"
+    };
+infra.Add(endpointName);
+
+SignalRService signalr =
+    new(nameof(signalr), "2022-02-01")
+    {
+        Sku = new SignalRResourceSku { Name = "Standard_S1", Capacity = 1 },
+        Kind = SignalRServiceKind.SignalR,
+        Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
+        IsClientCertEnabled = false,
+        Features =
+        {
+            new SignalRFeature
+            {
+                Flag = SignalRFeatureFlag.ServiceMode,
+                Value = "Default"
+            },
+            new SignalRFeature
+            {
+                Flag = SignalRFeatureFlag.EnableConnectivityLogs,
+                Value = "true"
+            },
+            new SignalRFeature
+            {
+                Flag = SignalRFeatureFlag.EnableLiveTrace,
+                Value = "true"
+            },
+        },
+        CorsAllowedOrigins = { "*" },
+        NetworkACLs =
+            new SignalRNetworkAcls
+            {
+                DefaultAction = SignalRNetworkAclAction.Deny,
+                PublicNetwork =
+                    new SignalRNetworkAcl
+                    {
+                        Allow = { SignalRRequestType.ClientConnection }
+                    },
+                PrivateEndpoints =
+                {
+                    new SignalRPrivateEndpointAcl
+                    {
+                        Name = endpointName,
+                        Allow = { SignalRRequestType.ServerConnection }
+                    }
+                },
+            },
+        UpstreamTemplates =
+        {
+            new SignalRUpstreamTemplate
+            {
+                CategoryPattern = "*",
+                EventPattern = "connect,disconnect",
+                HubPattern = "*",
+                UrlTemplate = "https://example.com/chat/api/connect"
+            }
+        }
+    };
+infra.Add(signalr);
+```
 
 ## Troubleshooting
 

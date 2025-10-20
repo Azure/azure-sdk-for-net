@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class ErrorResult<T> : Response<T>
     {

@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.12.0-beta.1</Version>
+    <Version>1.13.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.11.1</ApiCompatVersion>
+    <ApiCompatVersion>1.12.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Network</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.Network.</Description>
     <PackageTags>azure;management;network</PackageTags>

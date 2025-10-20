@@ -17,7 +17,6 @@ namespace Azure.Monitor.Query.Models
         /// </summary>
         public string Id { get; internal set; }
 
-        // TODO, remove after https://github.com/Azure/azure-sdk-for-net/issues/21655 is fixed
         internal static LogsBatchQueryResult DeserializeLogsBatchQueryResult(JsonElement element)
         {
             JsonElement error = default;
@@ -72,7 +71,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new LogsBatchQueryResult(tables, statistics, render, error);
+            return new LogsBatchQueryResult(tables, statistics, render, error, serializedAdditionalRawData: null);
         }
     }
 }

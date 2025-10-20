@@ -124,6 +124,12 @@ namespace Azure.Generator.Primitives
         /// <returns>A relative path string for the compile include file.</returns>
         protected string GetCompileInclude(string fileName, string relativeSegment = RelativeCoreSegment)
         {
+            // Use the AzureCoreSharedSources property for Core shared files
+            if (relativeSegment == RelativeCoreSegment)
+            {
+                return $"$(AzureCoreSharedSources){fileName}";
+            }
+
             return $"{MSBuildThisFileDirectory}{string.Concat(Enumerable.Repeat(ParentDirectory, GetPathSegmentCount()))}{relativeSegment}{fileName}";
         }
 
@@ -165,6 +171,12 @@ namespace Azure.Generator.Primitives
                 {
                     compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(file), SharedSourceLinkBase));
                 }
+            }
+
+            // Add TaskExtensions if there are multipart form data operations and it hasn't already been added for LRO
+            if (!hasLongRunningOperation && AzureClientGenerator.Instance.InputLibrary.HasMultipartFormDataOperation)
+            {
+                compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("TaskExtensions.cs"), SharedSourceLinkBase));
             }
 
             return compileIncludes;

@@ -20,6 +20,8 @@ namespace Azure.Health.Deidentification
         private const string SurrogateValue = "Surrogate";
         /// <summary> Tag Operation will detect all entities of PHI, their type, and return their locations in the document. </summary>
         private const string TagValue = "Tag";
+        /// <summary> SurrogateOnly Operation will replace only specified entities of PHI with surrogate values. </summary>
+        private const string SurrogateOnlyValue = "SurrogateOnly";
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +42,9 @@ namespace Azure.Health.Deidentification
         /// <summary> Tag Operation will detect all entities of PHI, their type, and return their locations in the document. </summary>
         public static DeidentificationOperationType Tag { get; } = new DeidentificationOperationType(TagValue);
 
+        /// <summary> SurrogateOnly Operation will replace only specified entities of PHI with surrogate values. </summary>
+        public static DeidentificationOperationType SurrogateOnly { get; } = new DeidentificationOperationType(SurrogateOnlyValue);
+
         /// <summary> Determines if two <see cref="DeidentificationOperationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
@@ -53,6 +58,10 @@ namespace Azure.Health.Deidentification
         /// <summary> Converts a string to a <see cref="DeidentificationOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DeidentificationOperationType(string value) => new DeidentificationOperationType(value);
+
+        /// <summary> Converts a string to a <see cref="DeidentificationOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeidentificationOperationType?(string value) => value == null ? null : new DeidentificationOperationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

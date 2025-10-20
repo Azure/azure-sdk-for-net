@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for Source SQL Server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
-        public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo)
+        public ConnectToSourceSqlServerTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
 
@@ -58,22 +58,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for Source SQL Server. </param>
         /// <param name="checkPermissionsGroup"> Permission group for validations. </param>
-        /// <param name="collectDatabases"> Flag for whether to collect databases from source server. </param>
-        /// <param name="collectLogins"> Flag for whether to collect logins from source server. </param>
-        /// <param name="collectAgentJobs"> Flag for whether to collect agent jobs from source server. </param>
-        /// <param name="collectTdeCertificateInfo"> Flag for whether to collect TDE Certificate names from source server. </param>
-        /// <param name="validateSsisCatalogOnly"> Flag for whether to validate SSIS catalog is reachable on the source server. </param>
+        /// <param name="shouldCollectDatabases"> Flag for whether to collect databases from source server. </param>
+        /// <param name="shouldCollectLogins"> Flag for whether to collect logins from source server. </param>
+        /// <param name="shouldCollectAgentJobs"> Flag for whether to collect agent jobs from source server. </param>
+        /// <param name="shouldCollectTdeCertificateInfo"> Flag for whether to collect TDE Certificate names from source server. </param>
+        /// <param name="shouldValidateSsisCatalogOnly"> Flag for whether to validate SSIS catalog is reachable on the source server. </param>
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, ServerLevelPermissionsGroup? checkPermissionsGroup, bool? collectDatabases, bool? collectLogins, bool? collectAgentJobs, bool? collectTdeCertificateInfo, bool? validateSsisCatalogOnly, string encryptedKeyForSecureFields, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToSourceSqlServerTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, ServerLevelPermissionsGroup? checkPermissionsGroup, bool? shouldCollectDatabases, bool? shouldCollectLogins, bool? shouldCollectAgentJobs, bool? shouldCollectTdeCertificateInfo, bool? shouldValidateSsisCatalogOnly, string encryptedKeyForSecureFields, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             CheckPermissionsGroup = checkPermissionsGroup;
-            CollectDatabases = collectDatabases;
-            CollectLogins = collectLogins;
-            CollectAgentJobs = collectAgentJobs;
-            CollectTdeCertificateInfo = collectTdeCertificateInfo;
-            ValidateSsisCatalogOnly = validateSsisCatalogOnly;
+            ShouldCollectDatabases = shouldCollectDatabases;
+            ShouldCollectLogins = shouldCollectLogins;
+            ShouldCollectAgentJobs = shouldCollectAgentJobs;
+            ShouldCollectTdeCertificateInfo = shouldCollectTdeCertificateInfo;
+            ShouldValidateSsisCatalogOnly = shouldValidateSsisCatalogOnly;
             EncryptedKeyForSecureFields = encryptedKeyForSecureFields;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -84,19 +84,19 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for Source SQL Server. </summary>
-        public SqlConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationSqlConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary> Permission group for validations. </summary>
         public ServerLevelPermissionsGroup? CheckPermissionsGroup { get; set; }
         /// <summary> Flag for whether to collect databases from source server. </summary>
-        public bool? CollectDatabases { get; set; }
+        public bool? ShouldCollectDatabases { get; set; }
         /// <summary> Flag for whether to collect logins from source server. </summary>
-        public bool? CollectLogins { get; set; }
+        public bool? ShouldCollectLogins { get; set; }
         /// <summary> Flag for whether to collect agent jobs from source server. </summary>
-        public bool? CollectAgentJobs { get; set; }
+        public bool? ShouldCollectAgentJobs { get; set; }
         /// <summary> Flag for whether to collect TDE Certificate names from source server. </summary>
-        public bool? CollectTdeCertificateInfo { get; set; }
+        public bool? ShouldCollectTdeCertificateInfo { get; set; }
         /// <summary> Flag for whether to validate SSIS catalog is reachable on the source server. </summary>
-        public bool? ValidateSsisCatalogOnly { get; set; }
+        public bool? ShouldValidateSsisCatalogOnly { get; set; }
         /// <summary> encrypted key for secure fields. </summary>
         public string EncryptedKeyForSecureFields { get; set; }
     }

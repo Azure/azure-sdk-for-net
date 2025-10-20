@@ -40,8 +40,8 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <VersionPrefix>2.2.0</VersionPrefix>
-        <VersionSuffix>beta.4</VersionSuffix>
+        <VersionPrefix>2.5.0</VersionPrefix>
+        <VersionSuffix>beta.1</VersionSuffix>
       </PropertyGroup>
     </Otherwise>
   </Choose>

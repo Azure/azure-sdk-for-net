@@ -30,7 +30,7 @@ namespace Azure.Generator.Providers
         {
             _publicClients = publicClients;
             _resourceProviderName = TypeNameUtilities.GetResourceProviderName();
-            AzureClientGenerator.Instance.AddTypeToKeep(this);
+            AzureClientGenerator.Instance.AddTypeToKeep(this, isRoot: false);
         }
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
@@ -156,7 +156,7 @@ namespace Azure.Generator.Providers
                 [.. constructorSignature.Parameters];
 
             return new FuncExpression(
-                isTokenCredential ? [options.AsExpression().Declaration, token.Declaration] : [options.AsExpression().Declaration],
+                isTokenCredential ? [options.AsVariable().Declaration, token.Declaration] : [options.AsVariable().Declaration],
                 New.Instance(client.Type, ctorArgs));
         }
 

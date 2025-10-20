@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace Azure.Developer.Playwright
 {
     /// <summary>
-    /// Options to configure the requests to the Playwright service browser client.
+    /// Options to configure the requests to the Playwright Workspaces browser client.
     /// </summary>
     public class PlaywrightServiceBrowserClientOptions : ClientOptions
     {
@@ -23,7 +23,7 @@ namespace Azure.Developer.Playwright
 
         private OSPlatform? _os;
         /// <summary>
-        /// Gets or sets the operating system for Playwright service.
+        /// Gets or sets the operating system for Playwright Workspaces.
         /// </summary>
         public OSPlatform OS
         {
@@ -57,14 +57,62 @@ namespace Azure.Developer.Playwright
         /// </summary>
         public string RunId
         {
-            get => _runId ?? _environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable) ?? _clientUtility.GetDefaultRunId();
+            get
+            {
+                // If runId is not set, try to get it from the environment variable if not present in environment variable then set default value
+                if (string.IsNullOrEmpty(_runId))
+                {
+                    var envRunId = _environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable);
+                    _runId = !string.IsNullOrEmpty(envRunId) ? envRunId : _clientUtility.GetDefaultRunId();
+                }
+                return _runId!;
+            }
             set
             {
+                if (!string.IsNullOrEmpty(value) && !Guid.TryParse(value, out _))
+                {
+                    throw new ArgumentException(Constants.s_playwright_service_runId_not_guid_error_message);
+                }
                 _runId = value;
                 // Set run id if not already set in the environment
                 if (string.IsNullOrEmpty(_environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable)))
                 {
                     _environment.SetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable, value);
+                }
+            }
+        }
+
+        private string? _runName;
+
+        /// <summary>
+        /// Gets or sets the run name.
+        /// </summary>
+        public string RunName
+        {
+            get
+            {
+                // If runName is not set, try to get it from the environment variable if not present in environment variable then set default value
+                if (string.IsNullOrEmpty(_runName))
+                {
+                    var envRunName = _environment.GetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable);
+                    _runName = !string.IsNullOrEmpty(envRunName) ? envRunName : _clientUtility.GetDefaultRunName(RunId);
+                }
+                return _runName!;
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(value) && value.Length > 200)
+                {
+                    _runName = value.Substring(0, 200);
+                }
+                else
+                {
+                    _runName = value;
+                }
+                // Set run name if not already set in the environment
+                if (string.IsNullOrEmpty(_environment.GetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable)))
+                {
+                    _environment.SetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable, _runName);
                 }
             }
         }
@@ -135,39 +183,8 @@ namespace Azure.Developer.Playwright
             }
         }
 
-        private bool? _useCloudHostedBrowsers;
         /// <summary>
-        /// Gets or sets a flag indicating whether to use cloud-hosted browsers.
-        /// </summary>
-        public bool UseCloudHostedBrowsers
-        {
-            get
-            {
-                if (_useCloudHostedBrowsers != null)
-                    return (bool)_useCloudHostedBrowsers!;
-                var envValue = _environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable);
-                if (envValue != null)
-                {
-                    if (bool.TryParse(envValue, out var result))
-                        return result;
-                    throw new ArgumentException($"Invalid value for UseCloudHostedBrowsers. Supported values are true or false");
-                }
-                _environment.SetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable, true.ToString());
-                return true;
-            }
-            set
-            {
-                _useCloudHostedBrowsers = value;
-                // Set use cloud hosted browsers if not already set in the environment
-                if (_environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable) == null)
-                {
-                    _environment.SetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable, value.ToString());
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets the service endpoint for Playwright service.
+        /// Gets the service endpoint for Playwright Workspaces.
         /// </summary>
         public string? ServiceEndpoint
         {
@@ -175,7 +192,7 @@ namespace Azure.Developer.Playwright
             set => _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), value);
         }
 
-        private const ServiceVersion Latest = ServiceVersion.V2025_07_01_Preview;
+        private const ServiceVersion Latest = ServiceVersion.V2025_09_01;
 
         internal string VersionString { get; }
 
@@ -185,9 +202,9 @@ namespace Azure.Developer.Playwright
         public enum ServiceVersion
         {
             /// <summary>
-            /// The Playwright service browser client API version 2025-07-01-preview.
+            /// The Playwright Workspaces browser client API version 2025-09-01.
             /// </summary>
-            V2025_07_01_Preview = 1,
+            V2025_09_01 = 1,
         }
 
         internal string? AuthToken
@@ -211,13 +228,13 @@ namespace Azure.Developer.Playwright
             // no-op
         }
 
-        internal PlaywrightServiceBrowserClientOptions(ServiceVersion serviceVersion, IEnvironment? environment = null, ClientUtilities? clientUtility = null)
+        internal PlaywrightServiceBrowserClientOptions(ServiceVersion serviceVersion, IEnvironment? environment = null, ILogger? logger = null, ClientUtilities? clientUtility = null)
         {
             _environment = environment ?? new EnvironmentHandler();
             _clientUtility = clientUtility ?? new ClientUtilities(_environment);
             VersionString = serviceVersion switch
             {
-                ServiceVersion.V2025_07_01_Preview => "2025-07-01-preview",
+                ServiceVersion.V2025_09_01 => "2025-09-01",
                 _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion))
             };
         }

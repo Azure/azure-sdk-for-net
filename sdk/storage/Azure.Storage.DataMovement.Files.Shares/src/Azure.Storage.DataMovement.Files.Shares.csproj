@@ -6,9 +6,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Files.Shares client library</AssemblyTitle>
-    <Version>12.2.0-beta.2</Version>
+    <Version>12.3.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>12.1.0</ApiCompatVersion>
+    <ApiCompatVersion>12.2.2</ApiCompatVersion>
     <DefineConstants>ShareDataMovementSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage DataMovement Files AzureStorage AzureFiles azureofficial</PackageTags>
     <Description>

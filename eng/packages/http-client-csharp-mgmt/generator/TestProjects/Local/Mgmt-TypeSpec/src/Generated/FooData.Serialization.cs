@@ -8,17 +8,18 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class FooData : IJsonModel<FooData>
+    public partial class FooData : TrackedResourceData, IJsonModel<FooData>
     {
         /// <summary> Initializes a new instance of <see cref="FooData"/> for deserialization. </summary>
         internal FooData()
@@ -52,7 +53,7 @@ namespace MgmtTypeSpec
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
         }
 
@@ -82,13 +83,13 @@ namespace MgmtTypeSpec
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation location = default;
             FooProperties properties = default;
-            string name = default;
             ExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -101,8 +102,17 @@ namespace MgmtTypeSpec
                     id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("type"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
@@ -112,7 +122,7 @@ namespace MgmtTypeSpec
                     {
                         continue;
                     }
-                    systemData = prop.Value.Deserialize<SystemData>();
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -138,7 +148,7 @@ namespace MgmtTypeSpec
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -156,7 +166,7 @@ namespace MgmtTypeSpec
                     {
                         continue;
                     }
-                    extendedLocation = prop.Value.Deserialize<ExtendedLocation>();
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -166,13 +176,13 @@ namespace MgmtTypeSpec
             }
             return new FooData(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                name,
                 extendedLocation);
         }
 
@@ -186,7 +196,7 @@ namespace MgmtTypeSpec
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FooData)} does not support writing '{options.Format}' format.");
             }

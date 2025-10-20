@@ -4,9 +4,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Files.Shares client library</AssemblyTitle>
-    <Version>12.24.0-beta.2</Version>
+    <Version>12.25.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>12.22.0</ApiCompatVersion>
+    <ApiCompatVersion>12.24.0</ApiCompatVersion>
     <DefineConstants>FileSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Files;Microsoft;Azure;File;Files;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
@@ -19,6 +19,7 @@
       REST API Reference for File Service - https://docs.microsoft.com/en-us/rest/api/storageservices/file-service-rest-api
     </Description>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0034;AZC0007;AZC0010</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
@@ -93,5 +94,7 @@
     <Compile Include="$(AzureStorageSharedSources)\StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)UserDelegationKeyProperties.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Storage.Common\src\Shared\SasQueryParametersExtensions.cs" Link="Shared\Sas\KeySasQueryParametersExtensions.cs" />
   </ItemGroup>
 </Project>

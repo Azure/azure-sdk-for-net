@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The Firewall Internal Load Balancer IP to be used as the next hop in User Defined Routes. </summary>
+        [WirePath("properties.privateIPAddress")]
         public string PrivateIPAddress { get; }
         /// <summary> Reference to the subnet resource. This resource must be named 'AzureFirewallSubnet' or 'AzureFirewallManagementSubnet'. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.subnet.id")]
         public ResourceIdentifier SubnetId
         {
             get => Subnet is null ? default : Subnet.Id;
@@ -60,6 +63,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Reference to the PublicIP resource. This field is a mandatory input if subnet is not null. </summary>
         internal WritableSubResource PublicIPAddress { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.publicIPAddress.id")]
         public ResourceIdentifier PublicIPAddressId
         {
             get => PublicIPAddress is null ? default : PublicIPAddress.Id;
@@ -72,6 +76,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the Azure firewall IP configuration resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

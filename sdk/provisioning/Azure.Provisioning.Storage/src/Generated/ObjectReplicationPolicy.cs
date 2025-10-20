@@ -136,6 +136,7 @@ public partial class ObjectReplicationPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _destinationAccount = DefineProperty<string>("DestinationAccount", ["properties", "destinationAccount"]);
         _isMetricsEnabled = DefineProperty<bool>("IsMetricsEnabled", ["properties", "metrics", "enabled"]);

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Authorization.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
@@ -13,6 +15,71 @@ namespace Azure.ResourceManager.Authorization
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AuthorizationClassicAdministrator))]
+    [ModelReaderWriterBuildable(typeof(AuthorizationClassicAdministratorListResult))]
+    [ModelReaderWriterBuildable(typeof(AuthorizationProviderOperationInfo))]
+    [ModelReaderWriterBuildable(typeof(AuthorizationProviderOperationsMetadataData))]
+    [ModelReaderWriterBuildable(typeof(AuthorizationProviderOperationsMetadataListResult))]
+    [ModelReaderWriterBuildable(typeof(AuthorizationProviderOperationsMetadataResource))]
+    [ModelReaderWriterBuildable(typeof(AuthorizationProviderResourceType))]
+    [ModelReaderWriterBuildable(typeof(AuthorizationRoleDefinitionData))]
+    [ModelReaderWriterBuildable(typeof(AuthorizationRoleDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(DenyAssignmentData))]
+    [ModelReaderWriterBuildable(typeof(DenyAssignmentListResult))]
+    [ModelReaderWriterBuildable(typeof(DenyAssignmentPermission))]
+    [ModelReaderWriterBuildable(typeof(DenyAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(EligibleChildResource))]
+    [ModelReaderWriterBuildable(typeof(EligibleChildResourcesListResult))]
+    [ModelReaderWriterBuildable(typeof(PolicyAssignmentProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentData))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentListResult))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentScheduleData))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentScheduleInstanceData))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentScheduleInstanceListResult))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentScheduleInstanceResource))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentScheduleListResult))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentScheduleRequestData))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentScheduleRequestListResult))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentScheduleRequestResource))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentScheduleResource))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentScheduleTicketInfo))]
+    [ModelReaderWriterBuildable(typeof(RoleDefinitionListResult))]
+    [ModelReaderWriterBuildable(typeof(RoleDefinitionPermission))]
+    [ModelReaderWriterBuildable(typeof(RoleDefinitionPermissionListResult))]
+    [ModelReaderWriterBuildable(typeof(RoleEligibilityScheduleData))]
+    [ModelReaderWriterBuildable(typeof(RoleEligibilityScheduleInstanceData))]
+    [ModelReaderWriterBuildable(typeof(RoleEligibilityScheduleInstanceListResult))]
+    [ModelReaderWriterBuildable(typeof(RoleEligibilityScheduleInstanceResource))]
+    [ModelReaderWriterBuildable(typeof(RoleEligibilityScheduleListResult))]
+    [ModelReaderWriterBuildable(typeof(RoleEligibilityScheduleRequestData))]
+    [ModelReaderWriterBuildable(typeof(RoleEligibilityScheduleRequestListResult))]
+    [ModelReaderWriterBuildable(typeof(RoleEligibilityScheduleRequestPropertiesTicketInfo))]
+    [ModelReaderWriterBuildable(typeof(RoleEligibilityScheduleRequestResource))]
+    [ModelReaderWriterBuildable(typeof(RoleEligibilityScheduleResource))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementApprovalSettings))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementApprovalStage))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementExpandedProperties))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyApprovalRule))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyAssignmentData))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyAssignmentListResult))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyAuthenticationContextRule))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyData))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyEnablementRule))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyExpirationRule))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyListResult))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyNotificationRule))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyProperties))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyResource))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyRule))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPolicyRuleTarget))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementPrincipal))]
+    [ModelReaderWriterBuildable(typeof(RoleManagementUserInfo))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UnknownRoleManagementPolicyRule))]
     public partial class AzureResourceManagerAuthorizationContext : ModelReaderWriterContext
     {
     }

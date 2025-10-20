@@ -15,10 +15,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Initializes a new instance of <see cref="AvsClusterCreatedEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         internal AvsClusterCreatedEventData(string operationId) : base(operationId)
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsClusterCreatedEventData"/>. </summary>
@@ -26,13 +24,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="addedHostNames"> Hosts added to the cluster in this event, if any. </param>
         /// <param name="removedHostNames"> Hosts removed from the cluster in this event, if any. </param>
         /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsClusterCreatedEventData(string operationId, IReadOnlyList<string> addedHostNames, IReadOnlyList<string> removedHostNames, IReadOnlyList<string> inMaintenanceHostNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(operationId, addedHostNames, removedHostNames, inMaintenanceHostNames, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AvsClusterCreatedEventData"/> for deserialization. </summary>
-        internal AvsClusterCreatedEventData()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AvsClusterCreatedEventData(string operationId, IReadOnlyList<string> addedHostNames, IReadOnlyList<string> removedHostNames, IReadOnlyList<string> inMaintenanceHostNames, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(operationId, addedHostNames, removedHostNames, inMaintenanceHostNames, additionalBinaryDataProperties)
         {
         }
     }

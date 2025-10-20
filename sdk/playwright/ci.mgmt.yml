@@ -1,0 +1,24 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/playwright/ci.mgmt.yml
+    - sdk/playwright/Azure.ResourceManager.Playwright/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: playwright
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.Playwright
+      safeName: AzureResourceManagerPlaywright

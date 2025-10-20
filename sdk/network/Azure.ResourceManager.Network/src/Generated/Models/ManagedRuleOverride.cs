@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Identifier for the managed rule. </summary>
+        [WirePath("ruleId")]
         public string RuleId { get; set; }
         /// <summary> The state of the managed rule. Defaults to Disabled if not specified. </summary>
+        [WirePath("state")]
         public ManagedRuleEnabledState? State { get; set; }
         /// <summary> Describes the override action to be applied when rule matches. </summary>
+        [WirePath("action")]
         public RuleMatchActionType? Action { get; set; }
         /// <summary> Describes the override sensitivity to be applied when rule matches. </summary>
+        [WirePath("sensitivity")]
         public ManagedRuleSensitivityType? Sensitivity { get; set; }
     }
 }

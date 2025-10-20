@@ -272,7 +272,6 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
             public void Add(int content, string name, string? filename = default, string? contentType = default)
             {
-                ArgumentNullException.ThrowIfNull(content, nameof(content));
                 ArgumentNullException.ThrowIfNullOrEmpty(name, nameof(name));
 
                 string value = content.ToString("G", CultureInfo.InvariantCulture);
@@ -281,7 +280,6 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
             public void Add(long content, string name, string? filename = default, string? contentType = default)
             {
-                ArgumentNullException.ThrowIfNull(content, nameof(content));
                 ArgumentNullException.ThrowIfNullOrEmpty(name, nameof(name));
 
                 string value = content.ToString("G", CultureInfo.InvariantCulture);
@@ -290,7 +288,6 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
             public void Add(float content, string name, string? filename = default, string? contentType = default)
             {
-                ArgumentNullException.ThrowIfNull(content, nameof(content));
                 ArgumentNullException.ThrowIfNullOrEmpty(name, nameof(name));
 
                 string value = content.ToString("G", CultureInfo.InvariantCulture);
@@ -299,7 +296,6 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
             public void Add(double content, string name, string? filename = default, string? contentType = default)
             {
-                ArgumentNullException.ThrowIfNull(content, nameof(content));
                 ArgumentNullException.ThrowIfNullOrEmpty(name, nameof(name));
 
                 string value = content.ToString("G", CultureInfo.InvariantCulture);
@@ -308,7 +304,6 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
             public void Add(decimal content, string name, string? filename = default, string? contentType = default)
             {
-                ArgumentNullException.ThrowIfNull(content, nameof(content));
                 ArgumentNullException.ThrowIfNullOrEmpty(name, nameof(name));
 
                 string value = content.ToString("G", CultureInfo.InvariantCulture);
@@ -317,7 +312,6 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
             public void Add(bool content, string name, string? filename = default, string? contentType = default)
             {
-                ArgumentNullException.ThrowIfNull(content, nameof(content));
                 ArgumentNullException.ThrowIfNullOrEmpty(name, nameof(name));
 
                 string value = content ? "true" : "false";

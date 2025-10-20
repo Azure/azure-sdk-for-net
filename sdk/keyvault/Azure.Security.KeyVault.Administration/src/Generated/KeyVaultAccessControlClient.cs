@@ -15,7 +15,7 @@ using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary></summary>
+    /// <summary> The KeyVaultAccessControlClient. </summary>
     public partial class KeyVaultAccessControlClient
     {
         private readonly Uri _endpoint;

@@ -48,7 +48,8 @@ namespace Azure.Communication.CallAutomation
         /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
         /// </param>
-        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions)
+        /// <param name="teamsAppSource"> The identifier of the source for creating call with Teams resource account ID. </param>
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions, MicrosoftTeamsAppIdentifierModel teamsAppSource)
         {
             Targets = targets;
             SourceCallerIdNumber = sourceCallerIdNumber;
@@ -59,6 +60,7 @@ namespace Azure.Communication.CallAutomation
             CallIntelligenceOptions = callIntelligenceOptions;
             MediaStreamingOptions = mediaStreamingOptions;
             TranscriptionOptions = transcriptionOptions;
+            TeamsAppSource = teamsAppSource;
         }
 
         /// <summary> The targets of the call. </summary>
@@ -90,5 +92,7 @@ namespace Azure.Communication.CallAutomation
         /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
         /// </summary>
         public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
+        /// <summary> The identifier of the source for creating call with Teams resource account ID. </summary>
+        public MicrosoftTeamsAppIdentifierModel TeamsAppSource { get; set; }
     }
 }

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
     /// <summary> A class to add extension methods to TenantResource. </summary>
     public partial class MockableSelfHelpTenantResource : ArmResource
     {
-        private ClientDiagnostics _discoverySolutionClientDiagnostics;
-        private DiscoverySolutionRestOperations _discoverySolutionRestClient;
+        private ClientDiagnostics _discoverySolutionNLPOperationGroupClientDiagnostics;
+        private DiscoverySolutionNLPOperationGroupRestOperations _discoverySolutionNLPOperationGroupRestClient;
         private ClientDiagnostics _solutionSelfHelpClientDiagnostics;
         private SolutionSelfHelpRestOperations _solutionSelfHelpRestClient;
-        private ClientDiagnostics _discoverySolutionNlpClientDiagnostics;
-        private DiscoverySolutionNLPRestOperations _discoverySolutionNlpRestClient;
+        private ClientDiagnostics _discoverySolutionClientDiagnostics;
+        private DiscoverySolutionRestOperations _discoverySolutionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableSelfHelpTenantResource"/> class for mocking. </summary>
         protected MockableSelfHelpTenantResource()
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         {
         }
 
-        private ClientDiagnostics DiscoverySolutionClientDiagnostics => _discoverySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DiscoverySolutionRestOperations DiscoverySolutionRestClient => _discoverySolutionRestClient ??= new DiscoverySolutionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DiscoverySolutionNLPOperationGroupClientDiagnostics => _discoverySolutionNLPOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DiscoverySolutionNLPOperationGroupRestOperations DiscoverySolutionNLPOperationGroupRestClient => _discoverySolutionNLPOperationGroupRestClient ??= new DiscoverySolutionNLPOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SolutionSelfHelpClientDiagnostics => _solutionSelfHelpClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SolutionSelfHelpRestOperations SolutionSelfHelpRestClient => _solutionSelfHelpRestClient ??= new SolutionSelfHelpRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DiscoverySolutionNLPClientDiagnostics => _discoverySolutionNlpClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DiscoverySolutionNLPRestOperations DiscoverySolutionNLPRestClient => _discoverySolutionNlpRestClient ??= new DiscoverySolutionNLPRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DiscoverySolutionClientDiagnostics => _discoverySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DiscoverySolutionRestOperations DiscoverySolutionRestClient => _discoverySolutionRestClient ??= new DiscoverySolutionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         }
 
         /// <summary>
-        /// Lists the relevant Azure Diagnostics, Solutions and Troubleshooters using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. &lt;br/&gt;&lt;br/&gt; Required Input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.
+        /// Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Help/discoverySolutions</description>
+        /// <description>/providers/Microsoft.Help/discoverSolutions</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DiscoverySolution_List</description>
+        /// <description>DiscoverySolutionNLPOperationGroup_DiscoverSolutionsNlp</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -67,27 +67,25 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> 'ProblemClassificationId' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The [$filter](https://learn.microsoft.com/en-us/odata/webapi/first-odata-api#filter) supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SelfHelpSolutionMetadata> DiscoverSolutionsAsync(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsNlpAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateListRequest(filter, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateListNextPageRequest(nextLink, filter, skiptoken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(e), DiscoverySolutionClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.DiscoverSolutions", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPOperationGroupRestClient.CreateDiscoverSolutionsNlpRequest(content);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPOperationGroupClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.DiscoverSolutionsNlp", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Lists the relevant Azure Diagnostics, Solutions and Troubleshooters using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. &lt;br/&gt;&lt;br/&gt; Required Input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.
+        /// Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Help/discoverySolutions</description>
+        /// <description>/providers/Microsoft.Help/discoverSolutions</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DiscoverySolution_List</description>
+        /// <description>DiscoverySolutionNLPOperationGroup_DiscoverSolutionsNlp</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -95,15 +93,13 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> 'ProblemClassificationId' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The [$filter](https://learn.microsoft.com/en-us/odata/webapi/first-odata-api#filter) supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SelfHelpSolutionMetadata> DiscoverSolutions(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SolutionNlpMetadata> DiscoverSolutionsNlp(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateListRequest(filter, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateListNextPageRequest(nextLink, filter, skiptoken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(e), DiscoverySolutionClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.DiscoverSolutions", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPOperationGroupRestClient.CreateDiscoverSolutionsNlpRequest(content);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPOperationGroupClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.DiscoverSolutionsNlp", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -115,7 +111,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionSelfHelp_Get</description>
+        /// <description>SolutionResourceSelfHelp_GetSelfHelpSolutionById</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -135,7 +131,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             scope.Start();
             try
             {
-                var response = await SolutionSelfHelpRestClient.GetAsync(solutionId, cancellationToken).ConfigureAwait(false);
+                var response = await SolutionSelfHelpRestClient.GetSelfHelpSolutionByIdAsync(solutionId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -154,7 +150,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionSelfHelp_Get</description>
+        /// <description>SolutionResourceSelfHelp_GetSelfHelpSolutionById</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -174,7 +170,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             scope.Start();
             try
             {
-                var response = SolutionSelfHelpRestClient.Get(solutionId, cancellationToken);
+                var response = SolutionSelfHelpRestClient.GetSelfHelpSolutionById(solutionId, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -185,15 +181,15 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         }
 
         /// <summary>
-        /// Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary.
+        /// Lists the relevant Azure Diagnostics, Solutions and Troubleshooters using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. &lt;br/&gt;&lt;br/&gt; Required Input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Help/discoverSolutions</description>
+        /// <description>/providers/Microsoft.Help/discoverySolutions</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DiscoverySolutionNLP_DiscoverSolutions</description>
+        /// <description>DiscoverySolutionOperationGroup_DiscoverSolutions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -201,25 +197,27 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Request body for discovering solutions using NLP. </param>
+        /// <param name="filter"> 'ProblemClassificationId' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The [$filter](https://learn.microsoft.com/en-us/odata/webapi/first-odata-api#filter) supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsNlpAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SelfHelpSolutionMetadata> DiscoverSolutionsAsync(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsRequest(content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.DiscoverSolutionsNlp", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateDiscoverSolutionsRequest(filter, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateDiscoverSolutionsNextPageRequest(nextLink, filter, skiptoken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(e), DiscoverySolutionClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.DiscoverSolutions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary.
+        /// Lists the relevant Azure Diagnostics, Solutions and Troubleshooters using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. &lt;br/&gt;&lt;br/&gt; Required Input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Help/discoverSolutions</description>
+        /// <description>/providers/Microsoft.Help/discoverySolutions</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DiscoverySolutionNLP_DiscoverSolutions</description>
+        /// <description>DiscoverySolutionOperationGroup_DiscoverSolutions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -227,13 +225,15 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Request body for discovering solutions using NLP. </param>
+        /// <param name="filter"> 'ProblemClassificationId' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The [$filter](https://learn.microsoft.com/en-us/odata/webapi/first-odata-api#filter) supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SolutionNlpMetadata> DiscoverSolutionsNlp(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SelfHelpSolutionMetadata> DiscoverSolutions(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsRequest(content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.DiscoverSolutionsNlp", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateDiscoverSolutionsRequest(filter, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateDiscoverSolutionsNextPageRequest(nextLink, filter, skiptoken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(e), DiscoverySolutionClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.DiscoverSolutions", "value", "nextLink", cancellationToken);
         }
     }
 }

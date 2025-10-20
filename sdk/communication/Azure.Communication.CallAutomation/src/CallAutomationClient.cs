@@ -241,7 +241,7 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer_2025_06_30.Serialize(options.CallInvite.Target));
                 return await AzureCommunicationServicesRestClient.RedirectCallAsync(request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -279,7 +279,7 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer_2025_06_30.Serialize(options.CallInvite.Target));
 
                 return AzureCommunicationServicesRestClient.RedirectCall(request, cancellationToken);
             }
@@ -657,14 +657,15 @@ namespace Azure.Communication.CallAutomation
         private CreateCallRequestInternal CreateCallRequest(CreateCallOptions options)
         {
             CreateCallRequestInternal request = new(
-                targets: new List<CommunicationIdentifierModel>() { { CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target) } },
+                targets: new List<CommunicationIdentifierModel>() { { CommunicationIdentifierSerializer_2025_06_30.Serialize(options.CallInvite.Target) } },
                 callbackUri: options.CallbackUri.AbsoluteUri)
             {
                 SourceCallerIdNumber = options?.CallInvite?.SourceCallerIdNumber == null
                     ? null
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
-                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id)
+                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId),
             };
 
             request.CallIntelligenceOptions = new()
@@ -681,14 +682,15 @@ namespace Azure.Communication.CallAutomation
         private CreateCallRequestInternal CreateCallRequest(CreateGroupCallOptions options)
         {
             CreateCallRequestInternal request = new(
-                targets: options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
+                targets: options.Targets.Select(t => CommunicationIdentifierSerializer_2025_06_30.Serialize(t)),
                 callbackUri: options.CallbackUri.AbsoluteUri)
             {
                 SourceCallerIdNumber = options?.SourceCallerIdNumber == null
                     ? null
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
-                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id)
+                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId),
             };
 
             request.CallIntelligenceOptions = new()

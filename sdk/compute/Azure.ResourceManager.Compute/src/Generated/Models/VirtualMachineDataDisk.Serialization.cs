@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SourceResource))
             {
                 writer.WritePropertyName("sourceResource"u8);
-                JsonSerializer.Serialize(writer, SourceResource);
+                ((IJsonModel<WritableSubResource>)SourceResource).Write(writer, options);
             }
             if (Optional.IsDefined(ToBeDetached))
             {
@@ -235,7 +236,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sourceResource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    sourceResource = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (property.NameEquals("toBeDetached"u8))

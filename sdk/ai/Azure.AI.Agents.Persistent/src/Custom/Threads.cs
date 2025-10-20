@@ -142,14 +142,20 @@ namespace Azure.AI.Agents.Persistent
         public virtual AsyncPageable<PersistentAgentThread> GetThreadsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetThreadsRequest(limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetThreadsRequest(
+                limit:limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context:context);
             return new ContinuationTokenPageableAsync<PersistentAgentThread>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentAgentThread.DeserializePersistentAgentThread(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 
@@ -162,14 +168,20 @@ namespace Azure.AI.Agents.Persistent
         public virtual Pageable<PersistentAgentThread> GetThreads(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetThreadsRequest(limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetThreadsRequest(
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             return new ContinuationTokenPageable<PersistentAgentThread>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentAgentThread.DeserializePersistentAgentThread(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 

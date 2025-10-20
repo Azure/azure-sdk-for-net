@@ -45,7 +45,7 @@ public abstract class PipelineTransport : PipelinePolicy
     /// <summary>
     /// Create an instance of <see cref="PipelineMessage"/> that can be sent
     /// using this transport instance. This method will rarely be called directly;
-    /// <see cref="ClientPipeline.CreateMessage"/> should be called instead.
+    /// <see cref="ClientPipeline.CreateMessage()"/> should be called instead.
     /// </summary>
     /// <returns>A <see cref="PipelineMessage"/> that can be passed to
     /// <see cref="Process(PipelineMessage)"/>.</returns>

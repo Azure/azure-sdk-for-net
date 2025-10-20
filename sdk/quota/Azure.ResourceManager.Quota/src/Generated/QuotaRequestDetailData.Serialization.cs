@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Quota
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerQuotaContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

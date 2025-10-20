@@ -59,6 +59,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("transcriptionOptions"u8);
                 writer.WriteObjectValue(TranscriptionOptions);
             }
+            if (Optional.IsDefined(TeamsAppSource))
+            {
+                writer.WritePropertyName("teamsAppSource"u8);
+                writer.WriteObjectValue(TeamsAppSource);
+            }
             writer.WriteEndObject();
         }
 
