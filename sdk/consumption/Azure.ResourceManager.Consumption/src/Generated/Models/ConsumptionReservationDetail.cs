@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionReservationDetail"/>. </summary>
-        internal ConsumptionReservationDetail()
+        public ConsumptionReservationDetail()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -58,6 +58,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="reservationOrderId"> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
         /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
@@ -69,11 +71,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="instanceId"> This identifier is the name of the resource or the fully qualified Resource ID. </param>
         /// <param name="totalReservedQuantity"> This is the total count of instances that are reserved for the reservationId. </param>
         /// <param name="kind"> The reservation kind. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionReservationDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reservationOrderId, string instanceFlexibilityRatio, string instanceFlexibilityGroup, string reservationId, string skuName, decimal? reservedHours, DateTimeOffset? consumptionOccurredOn, decimal? usedHours, ResourceIdentifier instanceId, decimal? totalReservedQuantity, string kind, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionReservationDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyDictionary<string, string> tags, string reservationOrderId, string instanceFlexibilityRatio, string instanceFlexibilityGroup, string reservationId, string skuName, decimal? reservedHours, DateTimeOffset? consumptionOccurredOn, decimal? usedHours, ResourceIdentifier instanceId, decimal? totalReservedQuantity, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
+            Tags = tags;
             ReservationOrderId = reservationOrderId;
             InstanceFlexibilityRatio = instanceFlexibilityRatio;
             InstanceFlexibilityGroup = instanceFlexibilityGroup;
@@ -85,11 +87,13 @@ namespace Azure.ResourceManager.Consumption.Models
             InstanceId = instanceId;
             TotalReservedQuantity = totalReservedQuantity;
             Kind = kind;
-            ETag = etag;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The etag for the resource. </summary>
+        public ETag? ETag { get; }
+        /// <summary> Resource tags. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </summary>
         public string ReservationOrderId { get; }
         /// <summary> The instance Flexibility Ratio. </summary>
@@ -112,9 +116,5 @@ namespace Azure.ResourceManager.Consumption.Models
         public decimal? TotalReservedQuantity { get; }
         /// <summary> The reservation kind. </summary>
         public string Kind { get; }
-        /// <summary> The etag for the resource. </summary>
-        public ETag? ETag { get; }
-        /// <summary> Resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

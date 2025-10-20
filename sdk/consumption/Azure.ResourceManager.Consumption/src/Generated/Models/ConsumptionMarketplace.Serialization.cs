@@ -480,6 +480,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 type,
                 systemData,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 billingPeriodId,
                 usageStart,
                 usageEnd,
@@ -506,8 +508,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 publisherName,
                 planName,
                 isRecurringCharge,
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

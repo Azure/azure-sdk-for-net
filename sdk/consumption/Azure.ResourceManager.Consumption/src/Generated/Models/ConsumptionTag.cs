@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionTag"/>. </summary>
-        internal ConsumptionTag()
+        public ConsumptionTag()
         {
             Value = new ChangeTrackingList<string>();
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="key"> Tag key. </param>
         /// <param name="value"> Tag values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionTag(string key, IReadOnlyList<string> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConsumptionTag(string key, IList<string> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Value = value;
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Tag key. </summary>
-        public string Key { get; }
+        public string Key { get; set; }
         /// <summary> Tag values. </summary>
-        public IReadOnlyList<string> Value { get; }
+        public IList<string> Value { get; }
     }
 }

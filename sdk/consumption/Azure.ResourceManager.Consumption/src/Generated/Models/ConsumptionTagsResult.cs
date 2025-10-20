@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionTagsResult"/>. </summary>
-        internal ConsumptionTagsResult()
+        public ConsumptionTagsResult()
         {
             Tags = new ChangeTrackingList<ConsumptionTag>();
         }
@@ -58,27 +58,27 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="tags"> A list of Tag. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="previousLink"> The link (url) to the previous page of results. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionTagsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<ConsumptionTag> tags, string nextLink, string previousLink, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionTagsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IList<ConsumptionTag> tags, string nextLink, string previousLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
             Tags = tags;
             NextLink = nextLink;
             PreviousLink = previousLink;
-            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
+        public ETag? ETag { get; set; }
         /// <summary> A list of Tag. </summary>
-        public IReadOnlyList<ConsumptionTag> Tags { get; }
+        public IList<ConsumptionTag> Tags { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
         /// <summary> The link (url) to the previous page of results. </summary>
         public string PreviousLink { get; }
-        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; }
     }
 }

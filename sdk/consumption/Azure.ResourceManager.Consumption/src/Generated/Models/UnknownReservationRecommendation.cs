@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Resource sku. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyDictionary<string, string> tags, AzureLocation? location, string sku, ReservationRecommendationKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, etag, tags, location, sku, kind, serializedAdditionalRawData)
+        internal UnknownReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string sku, ETag? etag, IReadOnlyDictionary<string, string> tags, ReservationRecommendationKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, location, sku, etag, tags, kind, serializedAdditionalRawData)
         {
             Kind = kind;
         }

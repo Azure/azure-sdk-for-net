@@ -90,31 +90,31 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (Optional.IsCollectionDefined(Children))
+            if (Optional.IsCollectionDefined(LocalChildren))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
-                foreach (var item in Children)
+                foreach (var item in LocalChildren)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IncludedSubscriptions))
+            if (Optional.IsCollectionDefined(LocalIncludedSubscriptions))
             {
                 writer.WritePropertyName("includedSubscriptions"u8);
                 writer.WriteStartArray();
-                foreach (var item in IncludedSubscriptions)
+                foreach (var item in LocalIncludedSubscriptions)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludedSubscriptions))
+            if (Optional.IsCollectionDefined(LocalExcludedSubscriptions))
             {
                 writer.WritePropertyName("excludedSubscriptions"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExcludedSubscriptions)
+                foreach (var item in LocalExcludedSubscriptions)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.Consumption.Models
             decimal? marketplaceCharges = default;
             decimal? chargesBilledSeparately = default;
             string currency = default;
-            IReadOnlyList<ConsumptionAggregatedCostResult> children = default;
-            IReadOnlyList<string> includedSubscriptions = default;
-            IReadOnlyList<string> excludedSubscriptions = default;
+            IList<ConsumptionAggregatedCostResult> children = default;
+            IList<string> includedSubscriptions = default;
+            IList<string> excludedSubscriptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -330,6 +330,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 type,
                 systemData,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 billingPeriodId,
                 usageStart,
                 usageEnd,
@@ -340,8 +342,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 children ?? new ChangeTrackingList<ConsumptionAggregatedCostResult>(),
                 includedSubscriptions ?? new ChangeTrackingList<string>(),
                 excludedSubscriptions ?? new ChangeTrackingList<string>(),
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

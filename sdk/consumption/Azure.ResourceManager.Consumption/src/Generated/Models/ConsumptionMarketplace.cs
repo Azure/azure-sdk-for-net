@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionMarketplace"/>. </summary>
-        internal ConsumptionMarketplace()
+        public ConsumptionMarketplace()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -58,6 +58,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
         /// <param name="usageStartOn"> The start of the date time range covered by the usage detail. </param>
         /// <param name="usageEndOn"> The end of the date time range covered by the usage detail. </param>
@@ -84,11 +86,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="publisherName"> The name of publisher. </param>
         /// <param name="planName"> The name of plan. </param>
         /// <param name="isRecurringCharge"> Flag indicating whether this is a recurring charge or not. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionMarketplace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? resourceRate, string offerName, string resourceGroup, string additionalInfo, string orderNumber, string instanceName, string instanceId, string currency, decimal? consumedQuantity, string unitOfMeasure, decimal? pretaxCost, bool? isEstimated, Guid? meterId, Guid? subscriptionGuid, string subscriptionName, string accountName, string departmentName, string consumedService, string costCenter, string additionalProperties, string publisherName, string planName, bool? isRecurringCharge, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionMarketplace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyDictionary<string, string> tags, string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? resourceRate, string offerName, string resourceGroup, string additionalInfo, string orderNumber, string instanceName, string instanceId, string currency, decimal? consumedQuantity, string unitOfMeasure, decimal? pretaxCost, bool? isEstimated, Guid? meterId, Guid? subscriptionGuid, string subscriptionName, string accountName, string departmentName, string consumedService, string costCenter, string additionalProperties, string publisherName, string planName, bool? isRecurringCharge, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
+            Tags = tags;
             BillingPeriodId = billingPeriodId;
             UsageStartOn = usageStartOn;
             UsageEndOn = usageEndOn;
@@ -115,11 +117,13 @@ namespace Azure.ResourceManager.Consumption.Models
             PublisherName = publisherName;
             PlanName = planName;
             IsRecurringCharge = isRecurringCharge;
-            ETag = etag;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The etag for the resource. </summary>
+        public ETag? ETag { get; }
+        /// <summary> Resource tags. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> The id of the billing period resource that the usage belongs to. </summary>
         public string BillingPeriodId { get; }
         /// <summary> The start of the date time range covered by the usage detail. </summary>
@@ -172,9 +176,5 @@ namespace Azure.ResourceManager.Consumption.Models
         public string PlanName { get; }
         /// <summary> Flag indicating whether this is a recurring charge or not. </summary>
         public bool? IsRecurringCharge { get; }
-        /// <summary> The etag for the resource. </summary>
-        public ETag? ETag { get; }
-        /// <summary> Resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

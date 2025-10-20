@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
     /// A class extending from the BillingCustomerResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="BillingCustomerConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of microsoft.Billing/billingAccounts/customers.
+    /// You can only construct a <see cref="BillingCustomerConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Billing/billingAccounts/customers.
     /// </summary>
     public partial class BillingCustomerConsumptionResource : ArmResource
     {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="customerId"> The customerId. </param>
         internal static ResourceIdentifier CreateResourceIdentifier(string billingAccountId, string customerId)
         {
-            var resourceId = $"/providers/microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}";
+            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "microsoft.Billing/billingAccounts/customers";
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/customers";
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}/providers/Microsoft.Consumption/lots</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}/providers/Microsoft.Consumption/lots</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}/providers/Microsoft.Consumption/lots</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}/providers/Microsoft.Consumption/lots</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>

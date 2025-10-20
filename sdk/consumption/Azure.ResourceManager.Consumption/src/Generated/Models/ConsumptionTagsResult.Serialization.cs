@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IReadOnlyList<ConsumptionTag> tags = default;
+            IList<ConsumptionTag> tags = default;
             string nextLink = default;
             string previousLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 type,
                 systemData,
+                etag,
                 tags ?? new ChangeTrackingList<ConsumptionTag>(),
                 nextLink,
                 previousLink,
-                etag,
                 serializedAdditionalRawData);
         }
 

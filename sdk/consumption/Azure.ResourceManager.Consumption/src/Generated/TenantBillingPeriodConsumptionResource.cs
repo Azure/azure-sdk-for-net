@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
     /// A class extending from the TenantBillingPeriodResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="TenantBillingPeriodConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of microsoft.Billing/billingAccounts/billingPeriods.
+    /// You can only construct a <see cref="TenantBillingPeriodConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Billing/billingAccounts/billingPeriods.
     /// </summary>
     public partial class TenantBillingPeriodConsumptionResource : ArmResource
     {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingPeriodName"> The billingPeriodName. </param>
         internal static ResourceIdentifier CreateResourceIdentifier(string billingAccountId, string billingPeriodName)
         {
-            var resourceId = $"/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}";
+            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "microsoft.Billing/billingAccounts/billingPeriods";
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingPeriods";
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>

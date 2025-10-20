@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
     /// A class extending from the BillingAccountResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="BillingAccountConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of microsoft.Billing/billingAccounts.
+    /// You can only construct a <see cref="BillingAccountConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Billing/billingAccounts.
     /// </summary>
     public partial class BillingAccountConsumptionResource : ArmResource
     {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="billingAccountId"> The billingAccountId. </param>
         internal static ResourceIdentifier CreateResourceIdentifier(string billingAccountId)
         {
-            var resourceId = $"/providers/microsoft.Billing/billingAccounts/{billingAccountId}";
+            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "microsoft.Billing/billingAccounts";
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts";
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/balances</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/events</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/lots</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions</description>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>

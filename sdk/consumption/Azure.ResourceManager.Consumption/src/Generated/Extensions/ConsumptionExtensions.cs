@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Consumption/aggregatedcost</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>

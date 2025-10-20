@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.Consumption
     [ModelReaderWriterBuildable(typeof(ReservationRecommendationsListResult))]
     [ModelReaderWriterBuildable(typeof(ReservationSummariesListResult))]
     [ModelReaderWriterBuildable(typeof(ReservationTransactionsListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubscriptionBillingPeriodConsumptionResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TenantBillingPeriodConsumptionResource))]

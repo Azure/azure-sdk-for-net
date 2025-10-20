@@ -42,6 +42,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(BalanceSummary))
@@ -84,11 +95,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("isEstimatedBalance"u8);
                 writer.WriteBooleanValue(IsEstimatedBalance.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETagPropertiesETag))
-            {
-                writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETagPropertiesETag);
-            }
             writer.WriteEndObject();
         }
 
@@ -113,6 +119,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             ETag? etag = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -125,7 +132,6 @@ namespace Azure.ResourceManager.Consumption.Models
             string billingCurrency = default;
             ConsumptionReseller reseller = default;
             bool? isEstimatedBalance = default;
-            string etag0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,6 +143,20 @@ namespace Azure.ResourceManager.Consumption.Models
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -236,11 +256,6 @@ namespace Azure.ResourceManager.Consumption.Models
                             isEstimatedBalance = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("eTag"u8))
-                        {
-                            etag0 = property0.Value.GetString();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -256,6 +271,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 type,
                 systemData,
                 etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 balanceSummary,
                 pendingCreditAdjustments,
                 expiredCredit,
@@ -264,7 +280,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 billingCurrency,
                 reseller,
                 isEstimatedBalance,
-                etag0,
                 serializedAdditionalRawData);
         }
 

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionReservationRecommendationDetails"/>. </summary>
-        internal ConsumptionReservationRecommendationDetails()
+        public ConsumptionReservationRecommendationDetails()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -60,34 +60,38 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource Location. </param>
         /// <param name="sku"> Resource sku. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="currency"> An ISO 4217 currency code identifier for the costs and savings. </param>
         /// <param name="properties"> Resource specific properties. </param>
         /// <param name="resourceGroup"> Resource Group. </param>
         /// <param name="savings"> Savings information for the recommendation. </param>
         /// <param name="scope"> Scope of the reservation, ex: Single or Shared. </param>
         /// <param name="usage"> Historical usage details used to calculate the estimated savings. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionReservationRecommendationDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string sku, string currency, ConsumptionResourceProperties properties, string resourceGroup, ConsumptionSavingsProperties savings, string scope, ConsumptionUsageProperties usage, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionReservationRecommendationDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string sku, ETag? etag, IReadOnlyDictionary<string, string> tags, string currency, ConsumptionResourceProperties properties, string resourceGroup, ConsumptionSavingsProperties savings, string scope, ConsumptionUsageProperties usage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Sku = sku;
+            ETag = etag;
+            Tags = tags;
             Currency = currency;
             Properties = properties;
             ResourceGroup = resourceGroup;
             Savings = savings;
             Scope = scope;
             Usage = usage;
-            ETag = etag;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource Location. </summary>
-        public AzureLocation? Location { get; }
+        public AzureLocation? Location { get; set; }
         /// <summary> Resource sku. </summary>
-        public string Sku { get; }
+        public string Sku { get; set; }
+        /// <summary> The etag for the resource. </summary>
+        public ETag? ETag { get; }
+        /// <summary> Resource tags. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> An ISO 4217 currency code identifier for the costs and savings. </summary>
         public string Currency { get; }
         /// <summary> Resource specific properties. </summary>
@@ -100,9 +104,5 @@ namespace Azure.ResourceManager.Consumption.Models
         public string Scope { get; }
         /// <summary> Historical usage details used to calculate the estimated savings. </summary>
         public ConsumptionUsageProperties Usage { get; }
-        /// <summary> The etag for the resource. </summary>
-        public ETag? ETag { get; }
-        /// <summary> Resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Consumption.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionAggregatedCostResult"/>. </summary>
-        internal ConsumptionAggregatedCostResult()
+        public ConsumptionAggregatedCostResult()
         {
-            Children = new ChangeTrackingList<ConsumptionAggregatedCostResult>();
-            IncludedSubscriptions = new ChangeTrackingList<string>();
-            ExcludedSubscriptions = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
+            LocalChildren = new ChangeTrackingList<ConsumptionAggregatedCostResult>();
+            LocalIncludedSubscriptions = new ChangeTrackingList<string>();
+            LocalExcludedSubscriptions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionAggregatedCostResult"/>. </summary>
@@ -61,6 +61,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="billingPeriodId"> The id of the billing period resource that the aggregated cost belongs to. </param>
         /// <param name="usageStartOn"> The start of the date time range covered by aggregated cost. </param>
         /// <param name="usageEndOn"> The end of the date time range covered by the aggregated cost. </param>
@@ -68,14 +70,14 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="marketplaceCharges"> Marketplace Charges. </param>
         /// <param name="chargesBilledSeparately"> Charges Billed Separately. </param>
         /// <param name="currency"> The ISO currency in which the meter is charged, for example, USD. </param>
-        /// <param name="children"> Children of a management group. </param>
-        /// <param name="includedSubscriptions"> List of subscription Guids included in the calculation of aggregated cost. </param>
-        /// <param name="excludedSubscriptions"> List of subscription Guids excluded from the calculation of aggregated cost. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="localChildren"> Children of a management group. </param>
+        /// <param name="localIncludedSubscriptions"> List of subscription Guids included in the calculation of aggregated cost. </param>
+        /// <param name="localExcludedSubscriptions"> List of subscription Guids excluded from the calculation of aggregated cost. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionAggregatedCostResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? azureCharges, decimal? marketplaceCharges, decimal? chargesBilledSeparately, string currency, IReadOnlyList<ConsumptionAggregatedCostResult> children, IReadOnlyList<string> includedSubscriptions, IReadOnlyList<string> excludedSubscriptions, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionAggregatedCostResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IReadOnlyDictionary<string, string> tags, string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? azureCharges, decimal? marketplaceCharges, decimal? chargesBilledSeparately, string currency, IList<ConsumptionAggregatedCostResult> localChildren, IList<string> localIncludedSubscriptions, IList<string> localExcludedSubscriptions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
+            Tags = tags;
             BillingPeriodId = billingPeriodId;
             UsageStartOn = usageStartOn;
             UsageEndOn = usageEndOn;
@@ -83,14 +85,16 @@ namespace Azure.ResourceManager.Consumption.Models
             MarketplaceCharges = marketplaceCharges;
             ChargesBilledSeparately = chargesBilledSeparately;
             Currency = currency;
-            Children = children;
-            IncludedSubscriptions = includedSubscriptions;
-            ExcludedSubscriptions = excludedSubscriptions;
-            ETag = etag;
-            Tags = tags;
+            LocalChildren = localChildren;
+            LocalIncludedSubscriptions = localIncludedSubscriptions;
+            LocalExcludedSubscriptions = localExcludedSubscriptions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The etag for the resource. </summary>
+        public ETag? ETag { get; }
+        /// <summary> Resource tags. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> The id of the billing period resource that the aggregated cost belongs to. </summary>
         public string BillingPeriodId { get; }
         /// <summary> The start of the date time range covered by aggregated cost. </summary>
@@ -106,14 +110,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> The ISO currency in which the meter is charged, for example, USD. </summary>
         public string Currency { get; }
         /// <summary> Children of a management group. </summary>
-        public IReadOnlyList<ConsumptionAggregatedCostResult> Children { get; }
+        public IList<ConsumptionAggregatedCostResult> LocalChildren { get; }
         /// <summary> List of subscription Guids included in the calculation of aggregated cost. </summary>
-        public IReadOnlyList<string> IncludedSubscriptions { get; }
+        public IList<string> LocalIncludedSubscriptions { get; }
         /// <summary> List of subscription Guids excluded from the calculation of aggregated cost. </summary>
-        public IReadOnlyList<string> ExcludedSubscriptions { get; }
-        /// <summary> The etag for the resource. </summary>
-        public ETag? ETag { get; }
-        /// <summary> Resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
+        public IList<string> LocalExcludedSubscriptions { get; }
     }
 }

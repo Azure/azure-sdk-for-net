@@ -390,6 +390,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 type,
                 systemData,
+                tags ?? new ChangeTrackingList<string>(),
                 amount,
                 armSkuName,
                 billingFrequency,
@@ -410,7 +411,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 reservationOrderId,
                 reservationOrderName,
                 term,
-                tags ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 

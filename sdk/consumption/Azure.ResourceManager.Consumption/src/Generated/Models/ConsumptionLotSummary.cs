@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionLotSummary"/>. </summary>
-        internal ConsumptionLotSummary()
+        public ConsumptionLotSummary()
         {
         }
 
@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="originalAmount"> The original amount of a lot, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
         /// <param name="closedBalance"> The balance as of the last invoice. </param>
         /// <param name="source"> The source of the lot. </param>
@@ -71,13 +72,12 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="closedBalanceInBillingCurrency"> The balance as of the last invoice in billing currency. </param>
         /// <param name="reseller"> The reseller of the lot. </param>
         /// <param name="isEstimatedBalance"> If true, the listed details are based on an estimation and it will be subjected to change. </param>
-        /// <param name="etagPropertiesETag"> The eTag for the resource. </param>
         /// <param name="organizationType"> The organization type of the lot. </param>
         /// <param name="usedAmount"> Amount consumed from the commitment. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionLotSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConsumptionAmount originalAmount, ConsumptionAmount closedBalance, ConsumptionLotSource? source, DateTimeOffset? startOn, DateTimeOffset? expireOn, string poNumber, DateTimeOffset? purchasedOn, ConsumptionLotStatus? status, string creditCurrency, string billingCurrency, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ConsumptionReseller reseller, bool? isEstimatedBalance, string etagPropertiesETag, ConsumptionOrganizationType? organizationType, ConsumptionAmount usedAmount, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionLotSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, ConsumptionAmount originalAmount, ConsumptionAmount closedBalance, ConsumptionLotSource? source, DateTimeOffset? startOn, DateTimeOffset? expireOn, string poNumber, DateTimeOffset? purchasedOn, ConsumptionLotStatus? status, string creditCurrency, string billingCurrency, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ConsumptionReseller reseller, bool? isEstimatedBalance, ConsumptionOrganizationType? organizationType, ConsumptionAmount usedAmount, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
             OriginalAmount = originalAmount;
             ClosedBalance = closedBalance;
             Source = source;
@@ -92,13 +92,13 @@ namespace Azure.ResourceManager.Consumption.Models
             ClosedBalanceInBillingCurrency = closedBalanceInBillingCurrency;
             Reseller = reseller;
             IsEstimatedBalance = isEstimatedBalance;
-            ETagPropertiesETag = etagPropertiesETag;
             OrganizationType = organizationType;
             UsedAmount = usedAmount;
-            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
+        public ETag? ETag { get; set; }
         /// <summary> The original amount of a lot, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </summary>
         public ConsumptionAmount OriginalAmount { get; }
         /// <summary> The balance as of the last invoice. </summary>
@@ -127,13 +127,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public ConsumptionReseller Reseller { get; }
         /// <summary> If true, the listed details are based on an estimation and it will be subjected to change. </summary>
         public bool? IsEstimatedBalance { get; }
-        /// <summary> The eTag for the resource. </summary>
-        public string ETagPropertiesETag { get; }
         /// <summary> The organization type of the lot. </summary>
         public ConsumptionOrganizationType? OrganizationType { get; }
         /// <summary> Amount consumed from the commitment. </summary>
         public ConsumptionAmount UsedAmount { get; }
-        /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public ETag? ETag { get; }
     }
 }

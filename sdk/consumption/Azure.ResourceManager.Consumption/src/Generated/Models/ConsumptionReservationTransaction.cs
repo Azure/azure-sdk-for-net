@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionReservationTransaction"/>. </summary>
-        internal ConsumptionReservationTransaction()
+        public ConsumptionReservationTransaction()
         {
             Tags = new ChangeTrackingList<string>();
         }
@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="transactOn"> The date of the transaction. </param>
         /// <param name="reservationOrderId"> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </param>
         /// <param name="description"> The description of the transaction. </param>
@@ -81,10 +82,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="billingMonth"> The billing month(yyyyMMdd), on which the event initiated. </param>
         /// <param name="monetaryCommitment"> The monetary commitment amount at the enrollment scope. </param>
         /// <param name="overage"> The overage amount at the enrollment scope. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionReservationTransaction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string reservationOrderId, string description, string eventType, decimal? quantity, decimal? amount, string currency, string reservationOrderName, string purchasingEnrollment, Guid? purchasingSubscriptionGuid, string purchasingSubscriptionName, string armSkuName, string term, string region, string accountName, string accountOwnerEmail, string departmentName, string costCenter, string currentEnrollment, string billingFrequency, int? billingMonth, decimal? monetaryCommitment, decimal? overage, IReadOnlyList<string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionReservationTransaction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> tags, DateTimeOffset? transactOn, string reservationOrderId, string description, string eventType, decimal? quantity, decimal? amount, string currency, string reservationOrderName, string purchasingEnrollment, Guid? purchasingSubscriptionGuid, string purchasingSubscriptionName, string armSkuName, string term, string region, string accountName, string accountOwnerEmail, string departmentName, string costCenter, string currentEnrollment, string billingFrequency, int? billingMonth, decimal? monetaryCommitment, decimal? overage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Tags = tags;
             TransactOn = transactOn;
             ReservationOrderId = reservationOrderId;
             Description = description;
@@ -108,10 +109,11 @@ namespace Azure.ResourceManager.Consumption.Models
             BillingMonth = billingMonth;
             MonetaryCommitment = monetaryCommitment;
             Overage = overage;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Resource tags. </summary>
+        public IReadOnlyList<string> Tags { get; }
         /// <summary> The date of the transaction. </summary>
         public DateTimeOffset? TransactOn { get; }
         /// <summary> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </summary>
@@ -158,7 +160,5 @@ namespace Azure.ResourceManager.Consumption.Models
         public decimal? MonetaryCommitment { get; }
         /// <summary> The overage amount at the enrollment scope. </summary>
         public decimal? Overage { get; }
-        /// <summary> Resource tags. </summary>
-        public IReadOnlyList<string> Tags { get; }
     }
 }

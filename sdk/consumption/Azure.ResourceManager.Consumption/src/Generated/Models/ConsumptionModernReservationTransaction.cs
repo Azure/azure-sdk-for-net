@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationTransaction"/>. </summary>
-        internal ConsumptionModernReservationTransaction()
+        public ConsumptionModernReservationTransaction()
         {
             Tags = new ChangeTrackingList<string>();
         }
@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="amount"> The charge of the transaction. </param>
         /// <param name="armSkuName"> This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records. </param>
         /// <param name="billingFrequency"> The billing frequency, which can be either one-time or recurring. </param>
@@ -78,10 +79,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="reservationOrderId"> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </param>
         /// <param name="reservationOrderName"> The name of the reservation order. </param>
         /// <param name="term"> This is the term of the transaction. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionModernReservationTransaction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, decimal? amount, string armSkuName, string billingFrequency, ResourceIdentifier billingProfileId, string billingProfileName, string currency, string description, DateTimeOffset? transactOn, string eventType, string invoice, ResourceIdentifier invoiceId, ResourceIdentifier invoiceSectionId, string invoiceSectionName, Guid? purchasingSubscriptionGuid, string purchasingSubscriptionName, decimal? quantity, string region, string reservationOrderId, string reservationOrderName, string term, IReadOnlyList<string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConsumptionModernReservationTransaction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> tags, decimal? amount, string armSkuName, string billingFrequency, ResourceIdentifier billingProfileId, string billingProfileName, string currency, string description, DateTimeOffset? transactOn, string eventType, string invoice, ResourceIdentifier invoiceId, ResourceIdentifier invoiceSectionId, string invoiceSectionName, Guid? purchasingSubscriptionGuid, string purchasingSubscriptionName, decimal? quantity, string region, string reservationOrderId, string reservationOrderName, string term, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Tags = tags;
             Amount = amount;
             ArmSkuName = armSkuName;
             BillingFrequency = billingFrequency;
@@ -102,10 +103,11 @@ namespace Azure.ResourceManager.Consumption.Models
             ReservationOrderId = reservationOrderId;
             ReservationOrderName = reservationOrderName;
             Term = term;
-            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Resource tags. </summary>
+        public IReadOnlyList<string> Tags { get; }
         /// <summary> The charge of the transaction. </summary>
         public decimal? Amount { get; }
         /// <summary> This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records. </summary>
@@ -146,7 +148,5 @@ namespace Azure.ResourceManager.Consumption.Models
         public string ReservationOrderName { get; }
         /// <summary> This is the term of the transaction. </summary>
         public string Term { get; }
-        /// <summary> Resource tags. </summary>
-        public IReadOnlyList<string> Tags { get; }
     }
 }

@@ -414,6 +414,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 type,
                 systemData,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 currency,
                 beginningBalance,
                 endingBalance,
@@ -430,8 +432,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 overageRefund,
                 newPurchasesDetails ?? new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>(),
                 adjustmentDetails ?? new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>(),
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

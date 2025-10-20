@@ -264,14 +264,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 systemData,
                 location,
                 sku,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 currency,
                 resource,
                 resourceGroup,
                 savings,
                 scope,
                 usage,
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

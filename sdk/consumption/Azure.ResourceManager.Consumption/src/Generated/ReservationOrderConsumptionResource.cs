@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
     /// A class extending from the ReservationOrderResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="ReservationOrderConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of microsoft.Capacity/reservationorders.
+    /// You can only construct a <see cref="ReservationOrderConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Capacity/reservationorders.
     /// </summary>
     public partial class ReservationOrderConsumptionResource : ArmResource
     {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationOrderId"> The reservationOrderId. </param>
         internal static ResourceIdentifier CreateResourceIdentifier(string reservationOrderId)
         {
-            var resourceId = $"/providers/microsoft.Capacity/reservationorders/{reservationOrderId}";
+            var resourceId = $"/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Consumption
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "microsoft.Capacity/reservationorders";
+        public static readonly ResourceType ResourceType = "Microsoft.Capacity/reservationorders";
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationDetails</description>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationDetails</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationDetails</description>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationDetails</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationSummaries</description>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationSummaries</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Consumption
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationSummaries</description>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationSummaries</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>

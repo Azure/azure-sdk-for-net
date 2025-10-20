@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Consumption
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/microsoft.Capacity/reservationorders/", false);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationDetails", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Consumption
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/microsoft.Capacity/reservationorders/", false);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationDetails", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Consumption
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/microsoft.Capacity/reservationorders/", false);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/reservations/", false);
             uri.AppendPath(reservationId, true);
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Consumption
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/microsoft.Capacity/reservationorders/", false);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/reservations/", false);
             uri.AppendPath(reservationId, true);

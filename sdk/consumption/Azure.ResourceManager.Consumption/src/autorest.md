@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Consumption
 namespace: Azure.ResourceManager.Consumption
-require: https://github.com/Azure/azure-rest-api-specs/blob/d7de657fac0ab30176979bf490a5f85131ff0a51/specification/consumption/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/b83a16850340fd9ed529a6ae4841b31744430bcc/specification/consumption/resource-manager/readme.md
 # tag: package-2024-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -55,14 +55,14 @@ request-path-is-non-resource:
   - /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/credits/balanceSummary
 
 partial-resources:
-  /providers/microsoft.Billing/billingAccounts/{billingAccountId}: BillingAccount
-  /providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}: BillingProfile
-  /providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}: TenantBillingPeriod
+  /providers/Microsoft.Billing/billingAccounts/{billingAccountId}: BillingAccount
+  /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}: BillingProfile
+  /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}: TenantBillingPeriod
   /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}: SubscriptionBillingPeriod
-  /providers/microsoft.Management/managementGroups/{managementGroupId}/providers/microsoft.Billing/billingPeriods/{billingPeriodName}: ManagementGroupBillingPeriod
-  /providers/microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}: BillingCustomer
-  /providers/microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}: Reservation
-  /providers/microsoft.Capacity/reservationorders/{reservationOrderId}: ReservationOrder
+  /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}: ManagementGroupBillingPeriod
+  /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}: BillingCustomer
+  /providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}: Reservation
+  /providers/Microsoft.Capacity/reservationorders/{reservationOrderId}: ReservationOrder
 
 override-operation-name:
   Balances_GetByBillingAccount: GetBalance
@@ -147,6 +147,9 @@ rename-mapping:
   ManagementGroupAggregatedCostResult: ConsumptionAggregatedCostResult
   ManagementGroupAggregatedCostResult.properties.usageStart: UsageStartOn
   ManagementGroupAggregatedCostResult.properties.usageEnd: UsageEndOn
+  ManagementGroupAggregatedCostResult.properties.children: LocalChildren
+  ManagementGroupAggregatedCostResult.properties.includedSubscriptions: LocalIncludedSubscriptions
+  ManagementGroupAggregatedCostResult.properties.excludedSubscriptions: LocalExcludedSubscriptions
   LotSummary: ConsumptionLotSummary
   LotSource: ConsumptionLotSource
   Status: ConsumptionLotStatus
@@ -228,27 +231,10 @@ rename-mapping:
   ReservationDetail: ConsumptionReservationDetail
   LegacyUsageDetail.properties.subscriptionId: -|uuid
   ModernChargeSummary.properties.subscriptionId: -|uuid
+  ReservationDetail.properties.usageDate: ConsumptionOccurredOn
+  ReservationDetail.properties.instanceId: -|arm-id
 
 directive:
-  - from: openapi.json
-    where: $.definitions
-    transform: >
-      $.ProxyResource["x-ms-client-name"] = "DummyProxyResource";
-      $.Resource["x-ms-client-name"] = "DummyResource";
-  #- from: openapi.json
-  #  where: $.definitions
-  #  transform: >
-  #    delete $.CreditSummaryProperties.properties.eTag;
-  #    delete $.EventProperties.properties.eTag;
-  #    delete $.LotProperties.properties.eTag;
-  #    delete $.Budget.properties.eTag;
-  #  reason: delete the eTag property in Properties model as the original model already has got an eTag property from allOf keyword.
-  - from: openapi.json
-    where: $.definitions
-    transform: >
-      $.ReservationDetailProperties.properties.usageDate['x-ms-client-name'] = 'ConsumptionOccurredOn';
-      $.ReservationDetailProperties.properties.instanceId['x-ms-format'] = 'arm-id';
-    reason: avoid duplicated schema issue in partial resource generation process.
   - from: openapi.json
     where: $.paths
     transform: >
@@ -257,31 +243,16 @@ directive:
       $['/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default'].get.parameters[3]['x-ms-client-name'] = 'skipToken';
       $['/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default'].get.parameters[4]['x-ms-client-name'] = 'skipToken';
     reason: change the query parameter name from skiptoken to skipToken.
-  - from: consumption.json
-    where: $.parameters.scopeParameter
-    transform: $["x-ms-client-name"] = "reservationScope";
-  #- from: openapi.json
-  #  where: $.definitions
-  #  transform: >
-  #    $.Budget.allOf[0]['$ref'] = '#/definitions/ProxyResource';
-  #    $.CreditSummary.allOf[0]['$ref'] = '#/definitions/ProxyResource';
-  #  reason: Force Budget, CreditSummary to inherit from current definition ProxyResource.
-  - from: openapi.json
-    where: $.paths['/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/download'].post.responses.default.schema
-    transform: >
-      $['$ref'] = "#/definitions/ErrorResponse";
-    reason: Fix ErrorResponse reference path for PriceSheet_DownloadByBillingAccountPeriod operation.
-  #- from: openapi.json
-  #  where: $.definitions.PriceSheetResult
-  #  transform: >
-  #    delete $.properties.etag;
-  #    delete $.properties.tags;
-  #  reason: Fix PriceSheetResult to inherit from Resource and remove duplicated etag/tags properties.
   - from: openapi.json
     where: $.definitions
     transform: >
       $.LegacyReservationRecommendation.properties.properties['x-ms-client-flatten'] = true;
       $.ModernReservationRecommendation.properties.properties['x-ms-client-flatten'] = true;
     reason: Flatten the 'properties' property in both LegacyReservationRecommendation and ModernReservationRecommendation models.
+  - from: openapi.json
+    where: $.definitions.EventSummary
+    transform: >
+      $.properties.eTag.readOnly = false;
+    reason: Make EventSummary eTag property writable.
 
 ````

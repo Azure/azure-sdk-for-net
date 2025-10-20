@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Consumption
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountId, true);
             uri.AppendPath("/billingProfiles/", false);
             uri.AppendPath(billingProfileId, true);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Consumption
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountId, true);
             uri.AppendPath("/billingProfiles/", false);
             uri.AppendPath(billingProfileId, true);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Consumption
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountId, true);
             uri.AppendPath("/customers/", false);
             uri.AppendPath(customerId, true);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Consumption
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountId, true);
             uri.AppendPath("/customers/", false);
             uri.AppendPath(customerId, true);
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Consumption
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/lots", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Consumption
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/lots", false);
             uri.AppendQuery("api-version", _apiVersion, true);
