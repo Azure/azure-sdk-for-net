@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Models;
+using System.Text.Json;
 using Azure.ResourceManager.PlanetaryComputer;
 
 namespace Azure.ResourceManager.PlanetaryComputer.Models
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identity properties to update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PlanetaryComputerGeoCatalogPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PlanetaryComputerGeoCatalogPatch(IDictionary<string, string> tags, BinaryData identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
@@ -38,7 +38,32 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
 
-        /// <summary> The managed service identity properties to update. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary>
+        /// The managed service identity properties to update.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Identity { get; set; }
     }
 }

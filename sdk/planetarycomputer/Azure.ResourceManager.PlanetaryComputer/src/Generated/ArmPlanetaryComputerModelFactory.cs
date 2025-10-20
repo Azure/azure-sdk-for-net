@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identity properties to update. </param>
         /// <returns> A new <see cref="Models.PlanetaryComputerGeoCatalogPatch"/> instance for mocking. </returns>
-        public static PlanetaryComputerGeoCatalogPatch PlanetaryComputerGeoCatalogPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static PlanetaryComputerGeoCatalogPatch PlanetaryComputerGeoCatalogPatch(IDictionary<string, string> tags = default, BinaryData identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
