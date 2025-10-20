@@ -1,10 +1,50 @@
 # Release History
 
-## 11.8.0-beta.1 (Unreleased)
+## 11.8.0-beta.1 (2025-10-20)
 
 ### Features Added
+- Added support for `2025-11-01-preview` service version.
+- Added support for multiple facet aggregation types: `avg`, `min`, `max`, `cardinality` in `FacetResult` for enhanced analytics capabilities.
+- Added support for new `KnowledgeSourceKind` types: `web`, `remoteSharePoint`, `indexedSharePoint`, `indexedOneLake`.
+- Added support for `sharepoint` data source type in `SearchIndexerDataSourceType`.
+- Added `product` scoring function aggregation type in `ScoringFunctionAggregation`.
+- Added support for new Azure OpenAI models: `gpt-5`, `gpt-5-mini`, `gpt-5-nano` in `AzureOpenAIModelName`.
+- Added enhanced runtime tracking with `runtime` property in `SearchIndexerStatus` and `indexersRuntime` property in `ServiceStatistics`.
+- Added optional `purviewEnabled` property in `SearchIndex` for data governance integration.
+- Added `maxCumulativeIndexerRuntimeSeconds` property in `ServiceLimits` for runtime constraints.
+- Added enhanced knowledge source configuration options:
+  - `sourceDataFields`, `searchFields`, `semanticConfigurationName` in `SearchIndexKnowledgeSourceParameters`
+  - `isADLSGen2`, `ingestionParameters` in `AzureBlobKnowledgeSourceParameters`
+- Added optional parameter `x-ms-enable-elevated-read` for document retrieval operations with elevated permissions.
+- Added support for partial content responses (HTTP 206) in knowledge base operations.
+- Added `error` property in `KnowledgeBaseActivityRecord` for improved error tracking.
+- Added enhanced knowledge source parameters: `includeReferences`, `includeReferenceSourceData`, `alwaysQuerySource`, `rerankerThreshold` in `SearchIndexKnowledgeSourceParams`.
 
 ### Breaking Changes
+- Renamed Knowledge Agent to Knowledge Base across all APIs and models:
+  - All `KnowledgeAgent*` classes renamed to `KnowledgeBase*` equivalents
+  - API paths changed from `/agents` to `/knowledgebases`
+  - Client parameter `AgentNameParameter` replaced with `KnowledgeBaseNameParameter`
+  - All agent-related activity record types updated with new naming convention
+- Removed deprecated Knowledge Agent configuration models:
+  - `KnowledgeAgentOutputConfiguration`
+  - `KnowledgeAgentRequestLimits`
+  - `KnowledgeAgentModel`
+  - `KnowledgeAgentModelKind`
+  - `KnowledgeAgentAzureOpenAIModel`
+- Removed properties from `KnowledgeSourceReference`:
+  - `includeReferences`
+  - `includeReferenceSourceData`
+  - `alwaysQuerySource`
+  - `maxSubQueries`
+  - `rerankerThreshold`
+- Removed `sourceDataSelect` property from `SearchIndexKnowledgeSourceParameters`.
+- Removed properties from `AzureBlobKnowledgeSourceParameters`:
+  - `identity`
+  - `embeddingModel`
+  - `chatCompletionModel`
+  - `ingestionSchedule`
+  - `disableImageVerbalization`
 
 ### Bugs Fixed
 
