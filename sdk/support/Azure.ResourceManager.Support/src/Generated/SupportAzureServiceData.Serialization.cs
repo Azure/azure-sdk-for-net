@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.Support
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LocalDisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(LocalDisplayName);
+                writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(LocalResourceTypes))
+            if (Optional.IsCollectionDefined(ArmResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in LocalResourceTypes)
+                foreach (var item in ArmResourceTypes)
                 {
                     writer.WriteStringValue(item);
                 }

@@ -5,18 +5,14 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Support
 {
-    public partial class SupportAzureServiceData : ResourceData
+    // Add missing IReadOnlyList<string> attributes
+    public partial class SupportAzureServiceData
     {
-        /// <summary> Localized name of the Azure service. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string DisplayName => LocalDisplayName;
-
         /// <summary> ARM Resource types. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<string> ResourceTypes => (IReadOnlyList<string>)LocalResourceTypes;
+        public IReadOnlyList<string> ResourceTypes => (IReadOnlyList<string>)ArmResourceTypes;
     }
 }

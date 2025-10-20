@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="localDisplayName"> Localized name of the Azure service. </param>
-        /// <param name="localResourceTypes"> ARM Resource types. </param>
+        /// <param name="displayName"> Localized name of the Azure service. </param>
+        /// <param name="armResourceTypes"> ARM Resource types. </param>
         /// <returns> A new <see cref="Support.SupportAzureServiceData"/> instance for mocking. </returns>
-        public static SupportAzureServiceData SupportAzureServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string localDisplayName = null, IEnumerable<string> localResourceTypes = null)
+        public static SupportAzureServiceData SupportAzureServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> armResourceTypes = null)
         {
-            localResourceTypes ??= new List<string>();
+            armResourceTypes ??= new List<string>();
 
             return new SupportAzureServiceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                localDisplayName,
-                localResourceTypes?.ToList(),
+                displayName,
+                armResourceTypes?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -97,20 +97,20 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="localDisplayName"> Localized name of problem classification. </param>
-        /// <param name="localSecondaryConsentEnabled"> This property indicates whether secondary consent is present for problem classification. </param>
+        /// <param name="displayName"> Localized name of problem classification. </param>
+        /// <param name="secondaryConsentEnabledInfo"> This property indicates whether secondary consent is present for problem classification. </param>
         /// <returns> A new <see cref="Support.ProblemClassificationData"/> instance for mocking. </returns>
-        public static ProblemClassificationData ProblemClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string localDisplayName = null, IEnumerable<SecondaryConsentEnabled> localSecondaryConsentEnabled = null)
+        public static ProblemClassificationData ProblemClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<SecondaryConsentEnabled> secondaryConsentEnabledInfo = null)
         {
-            localSecondaryConsentEnabled ??= new List<SecondaryConsentEnabled>();
+            secondaryConsentEnabledInfo ??= new List<SecondaryConsentEnabled>();
 
             return new ProblemClassificationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                localDisplayName,
-                localSecondaryConsentEnabled?.ToList(),
+                displayName,
+                secondaryConsentEnabledInfo?.ToList(),
                 serializedAdditionalRawData: null);
         }
 

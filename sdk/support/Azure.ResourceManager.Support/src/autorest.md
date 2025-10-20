@@ -88,8 +88,8 @@ rename-mapping:
   Consent: AdvancedDiagnosticConsent
   MessageProperties: ChatTranscriptMessageProperties
   UploadFile: UploadFileContent
-  SecondaryConsentEnabled.description: LocalDescription
-  SecondaryConsentEnabled.type: LocalSecondaryConsentEnabledType
+  ProblemClassification.properties.secondaryConsentEnabled: SecondaryConsentEnabledInfo
+  Service.properties.resourceTypes: ArmResourceTypes
 
 models-to-treat-empty-string-as-null:
   - LookUpResourceIdResult
@@ -110,12 +110,5 @@ directive:
           name: 'TranscriptContentType',
           modelAsString: true
       };
-  - from: support.json
-    where: $.definitions
-    transform: >
-      $.ProblemClassificationProperties.properties.displayName['x-ms-client-name'] = 'LocalDisplayName';
-      $.ProblemClassificationProperties.properties.secondaryConsentEnabled['x-ms-client-name'] = 'LocalSecondaryConsentEnabled';
-      $.ServiceProperties.properties.displayName['x-ms-client-name'] = 'LocalDisplayName';
-      $.ServiceProperties.properties.resourceTypes['x-ms-client-name'] = 'LocalResourceTypes';
  
 ```

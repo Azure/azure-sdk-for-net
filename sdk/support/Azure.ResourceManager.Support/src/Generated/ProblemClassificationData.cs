@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> Initializes a new instance of <see cref="ProblemClassificationData"/>. </summary>
         public ProblemClassificationData()
         {
-            LocalSecondaryConsentEnabled = new ChangeTrackingList<SecondaryConsentEnabled>();
+            SecondaryConsentEnabledInfo = new ChangeTrackingList<SecondaryConsentEnabled>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProblemClassificationData"/>. </summary>
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.Support
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="localDisplayName"> Localized name of problem classification. </param>
-        /// <param name="localSecondaryConsentEnabled"> This property indicates whether secondary consent is present for problem classification. </param>
+        /// <param name="displayName"> Localized name of problem classification. </param>
+        /// <param name="secondaryConsentEnabledInfo"> This property indicates whether secondary consent is present for problem classification. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProblemClassificationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string localDisplayName, IList<SecondaryConsentEnabled> localSecondaryConsentEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ProblemClassificationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<SecondaryConsentEnabled> secondaryConsentEnabledInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            LocalDisplayName = localDisplayName;
-            LocalSecondaryConsentEnabled = localSecondaryConsentEnabled;
+            DisplayName = displayName;
+            SecondaryConsentEnabledInfo = secondaryConsentEnabledInfo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Localized name of problem classification. </summary>
-        public string LocalDisplayName { get; set; }
+        public string DisplayName { get; set; }
         /// <summary> This property indicates whether secondary consent is present for problem classification. </summary>
-        public IList<SecondaryConsentEnabled> LocalSecondaryConsentEnabled { get; }
+        public IList<SecondaryConsentEnabled> SecondaryConsentEnabledInfo { get; }
     }
 }

@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.Support.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecondaryConsentEnabled"/>. </summary>
-        /// <param name="localDescription"> User consent description. </param>
-        /// <param name="localSecondaryConsentEnabledType"> The Azure service for which secondary consent is needed for case creation. </param>
+        /// <param name="description"> User consent description. </param>
+        /// <param name="secondaryConsentEnabledType"> The Azure service for which secondary consent is needed for case creation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecondaryConsentEnabled(string localDescription, string localSecondaryConsentEnabledType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecondaryConsentEnabled(string description, string secondaryConsentEnabledType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            LocalDescription = localDescription;
-            LocalSecondaryConsentEnabledType = localSecondaryConsentEnabledType;
+            Description = description;
+            SecondaryConsentEnabledType = secondaryConsentEnabledType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> User consent description. </summary>
-        public string LocalDescription { get; set; }
+        public string Description { get; set; }
         /// <summary> The Azure service for which secondary consent is needed for case creation. </summary>
-        public string LocalSecondaryConsentEnabledType { get; set; }
+        public string SecondaryConsentEnabledType { get; set; }
     }
 }

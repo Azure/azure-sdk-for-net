@@ -9,14 +9,11 @@ using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
 {
+    // Add missing IReadOnlyList<SecondaryConsentEnabled> attributes
     public partial class ProblemClassificationData
     {
-        /// <summary> Localized name of problem classification. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string DisplayName => LocalDisplayName;
-
         /// <summary> This property indicates whether secondary consent is present for problem classification. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<SecondaryConsentEnabled> SecondaryConsentEnabled => (IReadOnlyList<SecondaryConsentEnabled>)LocalSecondaryConsentEnabled;
+        public IReadOnlyList<SecondaryConsentEnabled> SecondaryConsentEnabled => (IReadOnlyList<SecondaryConsentEnabled>)SecondaryConsentEnabledInfo;
     }
 }
