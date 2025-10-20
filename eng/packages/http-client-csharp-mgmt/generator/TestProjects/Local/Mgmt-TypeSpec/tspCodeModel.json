@@ -496,7 +496,6 @@
           "enumType": {
             "$ref": "39"
           },
-          "doc": "Azure Cosmos DB for Mongo vCore clusters api version 2024-03-01-preview.",
           "decorators": []
         }
       ],
