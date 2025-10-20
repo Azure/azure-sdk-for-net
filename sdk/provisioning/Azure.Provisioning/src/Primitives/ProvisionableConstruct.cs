@@ -309,7 +309,7 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         bool isRequired = false)
     {
         BicepList<T> values =
-            new(new BicepValueReference(this, propertyName, bicepPath))
+            new(new BicepValueReference(this, propertyName, bicepPath), null)
             {
                 _isOutput = isOutput,
                 _isRequired = isRequired

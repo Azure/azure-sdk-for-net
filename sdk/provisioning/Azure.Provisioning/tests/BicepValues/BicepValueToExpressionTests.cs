@@ -134,11 +134,12 @@ namespace Azure.Provisioning.Tests.BicepValues
         public void ValidateModelListProperty_Empty()
         {
             var resource = new TestResource("test");
-            TestHelpers.AssertExpression("[]", resource.Models);
+            // untouched list will not appear in the final result's resource
+            TestHelpers.AssertExpression("test.models", resource.Models);
             TestHelpers.AssertExpression("test.models", resource.Models.ToBicepExpression());
 
             resource.Models = new BicepList<TestModel>();
-            TestHelpers.AssertExpression("[]", resource.Models);
+            TestHelpers.AssertExpression("test.models", resource.Models);
             TestHelpers.AssertExpression("test.models", resource.Models.ToBicepExpression());
         }
 

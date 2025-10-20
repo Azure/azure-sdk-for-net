@@ -207,4 +207,35 @@ public class BicepDictionary<T> :
     bool ICollection<KeyValuePair<string, IBicepValue>>.Remove(KeyValuePair<string, IBicepValue> item) => Remove(item.Key);
     IEnumerator<KeyValuePair<string, IBicepValue>> IEnumerable<KeyValuePair<string, IBicepValue>>.GetEnumerator() =>
         _values.Select(p => new KeyValuePair<string, IBicepValue>(p.Key, p.Value)).GetEnumerator();
+
+    private protected override BicepExpression CompileCore()
+    {
+        if (_kind == BicepValueKind.Expression)
+        {
+            return _expression!;
+        }
+        if (_source is not null)
+        {
+            return _source.GetReference();
+        }
+        if (_kind == BicepValueKind.Literal)
+        {
+            Dictionary<string , BicepExpression> compiledValues = [];
+            foreach (var kv in _values)
+            {
+                compiledValues[kv.Key] = kv.Value.Compile();
+            }
+            return BicepSyntax.Object(compiledValues);
+        }
+        if (_self is not null)
+        {
+            return _self.GetReference();
+        }
+        if (_kind is BicepValueKind.Unset)
+        {
+            return BicepSyntax.Null();
+        }
+
+        throw new InvalidOperationException($"Cannot convert {this} to a Bicep expression.");
+    }
 }

@@ -5,7 +5,6 @@ using System;
 using System.ComponentModel;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
-using Azure.Provisioning.Utilities;
 
 namespace Azure.Provisioning;
 
@@ -91,7 +90,9 @@ public abstract class BicepValue : IBicepValue
     public override string ToString() => Compile().ToString();
 
     /// <inheritdoc />
-    public BicepExpression Compile() => BicepTypeMapping.ToBicep(this, Format);
+    public BicepExpression Compile() => CompileCore();
+
+    private protected abstract BicepExpression CompileCore();
 
     /// <inheritdoc />
     void IBicepValue.Assign(IBicepValue source) => Assign(source);
