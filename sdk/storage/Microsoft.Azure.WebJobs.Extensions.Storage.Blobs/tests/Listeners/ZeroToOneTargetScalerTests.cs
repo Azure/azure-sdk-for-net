@@ -1,20 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using static Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners.BlobTargetScalerProvider;
-using System.Text;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
+using System;
 using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using static Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners.ZeroToOneTargetScalerProvider;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
 {

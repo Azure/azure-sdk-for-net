@@ -77,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             return blobs;
         }
 
-        public async Task<StorageAnalyticsLogEntry> GetFirstWriteForContainerAsync(string containerName, CancellationToken cancellationToken, int hoursWindow = DefaultScanHoursWindow)
+        public async Task<StorageAnalyticsLogEntry> GetFirstLogEntryWithWritesAsync(string containerName, CancellationToken cancellationToken, int hoursWindow = DefaultScanHoursWindow)
         {
             if (hoursWindow <= 0)
             {

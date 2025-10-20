@@ -77,7 +77,7 @@ namespace Microsoft.Extensions.Hosting
         {
             builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider =>
             {
-                return new BlobTargetScalerProvider(serviceProvider, triggerMetadata);
+                return new ZeroToOneTargetScalerProvider(serviceProvider, triggerMetadata);
             });
 
             return builder;
