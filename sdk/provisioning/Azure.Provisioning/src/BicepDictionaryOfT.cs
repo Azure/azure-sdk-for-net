@@ -26,13 +26,10 @@ public class BicepDictionary<T> :
     private IDictionary<string, BicepValue<T>> _values;
     private protected override object? GetLiteralValue() => _values;
 
-    // We're empty if unset or no literal values
-    public override bool IsEmpty => base.IsEmpty || (_kind == BicepValueKind.Literal && _values.Count == 0);
-
     /// <summary>
     /// Creates a new BicepDictionary.
     /// </summary>
-    public BicepDictionary() : this(self: null, values: null) { }
+    public BicepDictionary() : this(self: null, values: new Dictionary<string, BicepValue<T>>()) { }
 
     /// <summary>
     /// Creates a new BicepDictionary with literal values.
@@ -46,7 +43,7 @@ public class BicepDictionary<T> :
     internal BicepDictionary(BicepValueReference? self, IDictionary<string, BicepValue<T>>? values = null)
         : base(self)
     {
-        _kind = BicepValueKind.Literal;
+        _kind = values != null ? BicepValueKind.Literal : BicepValueKind.Unset;
         // Shallow clone their values
         _values = values != null ? new Dictionary<string, BicepValue<T>>(values) : [];
     }
@@ -118,6 +115,10 @@ public class BicepDictionary<T> :
             {
                 throw new InvalidOperationException($"Cannot assign to {_self?.PropertyName}, the dictionary is an expression or output only");
             }
+            if (_kind == BicepValueKind.Unset)
+            {
+                _kind = BicepValueKind.Literal;
+            }
             _values[key] = value;
             // update the _self pointing the new item
             SetSelfForItem(value, key);
@@ -129,6 +130,10 @@ public class BicepDictionary<T> :
         if (_kind == BicepValueKind.Expression || _isOutput)
         {
             throw new InvalidOperationException($"Cannot Add to {_self?.PropertyName}, the dictionary is an expression or output only");
+        }
+        if (_kind == BicepValueKind.Unset)
+        {
+            _kind = BicepValueKind.Literal;
         }
         _values.Add(key, value);
         // update the _self pointing the new item
@@ -143,6 +148,10 @@ public class BicepDictionary<T> :
         {
             throw new InvalidOperationException($"Cannot Remove from {_self?.PropertyName}, the dictionary is an expression or output only");
         }
+        if (_kind == BicepValueKind.Unset)
+        {
+            _kind = BicepValueKind.Literal;
+        }
         if (_values.TryGetValue(key, out var removedItem))
         {
             // maintain the self reference for the removed item if the item exists
@@ -156,6 +165,10 @@ public class BicepDictionary<T> :
         if (_kind == BicepValueKind.Expression || _isOutput)
         {
             throw new InvalidOperationException($"Cannot Clear {_self?.PropertyName}, the dictionary is an expression or output only");
+        }
+        if (_kind == BicepValueKind.Unset)
+        {
+            _kind = BicepValueKind.Literal;
         }
         foreach (var kv in _values)
         {
@@ -220,7 +233,7 @@ public class BicepDictionary<T> :
         }
         if (_kind == BicepValueKind.Literal)
         {
-            Dictionary<string , BicepExpression> compiledValues = [];
+            Dictionary<string, BicepExpression> compiledValues = [];
             foreach (var kv in _values)
             {
                 compiledValues[kv.Key] = kv.Value.Compile();

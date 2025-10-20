@@ -30,6 +30,7 @@ namespace Azure.Provisioning.Tests.BicepValues
             TestHelpers.AssertExpression("json('3.14')", doubleLiteral);
             TestHelpers.AssertExpression("json('3.14')", doubleLiteral.ToBicepExpression());
         }
+
         [Test]
         public void ValidateExpressionValue()
         {
@@ -75,13 +76,57 @@ namespace Azure.Provisioning.Tests.BicepValues
         }
 
         [Test]
-        public void ValidateListProperty_Empty()
+        public void ValidateOutputNestedProperty()
         {
             var resource = new TestResource("test");
-            var list = resource.List;
+            var outputNested = resource.OutputModel.Id;
 
-            TestHelpers.AssertExpression("[]", list);
-            TestHelpers.AssertExpression("test.list", list.ToBicepExpression());
+            TestHelpers.AssertExpression("test.outputModel.id", outputNested);
+            TestHelpers.AssertExpression("test.outputModel.id", outputNested.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateListProperty_Undefined()
+        {
+            var resource = new TestResource("test");
+
+            TestHelpers.AssertExpression("test.list", resource.List); // undefined list should only print the expression
+            TestHelpers.AssertExpression("test.list", resource.List.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateListProperty_Empty_ExplicitCallClear()
+        {
+            var resource = new TestResource("test");
+            resource.List.Clear(); // explicitly clear to make it empty
+
+            TestHelpers.AssertExpression("[]", resource.List);
+            TestHelpers.AssertExpression("test.list", resource.List.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateListProperty_Empty_AssignNewList()
+        {
+            var resource = new TestResource("test");
+            resource.List = new BicepList<string>(); // assign a new empty list
+
+            TestHelpers.AssertExpression("[]", resource.List);
+            TestHelpers.AssertExpression("test.list", resource.List.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateListProperty_Empty_AddAndRemoveAll()
+        {
+            var resource = new TestResource("test")
+            {
+                List =
+                {
+                    "item1"
+                }
+            };
+            resource.List.RemoveAt(0); // all the items are removed, now the list is empty
+            TestHelpers.AssertExpression("[]", resource.List);
+            TestHelpers.AssertExpression("test.list", resource.List.ToBicepExpression());
         }
 
         [Test]
@@ -131,15 +176,44 @@ namespace Azure.Provisioning.Tests.BicepValues
         }
 
         [Test]
-        public void ValidateModelListProperty_Empty()
+        public void ValidateModelListProperty_Undefined()
         {
             var resource = new TestResource("test");
             // untouched list will not appear in the final result's resource
             TestHelpers.AssertExpression("test.models", resource.Models);
             TestHelpers.AssertExpression("test.models", resource.Models.ToBicepExpression());
+        }
 
-            resource.Models = new BicepList<TestModel>();
-            TestHelpers.AssertExpression("test.models", resource.Models);
+        [Test]
+        public void ValidateModelListProperty_Empty_ExplicitCallClear()
+        {
+            var resource = new TestResource("test");
+            resource.Models.Clear(); // explicitly clear to make it empty
+            TestHelpers.AssertExpression("[]", resource.Models);
+            TestHelpers.AssertExpression("test.models", resource.Models.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateModelListProperty_Empty_AssignNewList()
+        {
+            var resource = new TestResource("test");
+            resource.Models = new BicepList<TestModel>(); // assign a new empty list
+            TestHelpers.AssertExpression("[]", resource.Models);
+            TestHelpers.AssertExpression("test.models", resource.Models.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateModelListProperty_Empty_AddAndRemoveAll()
+        {
+            var resource = new TestResource("test")
+            {
+                Models =
+                {
+                    new TestModel() { Name = "model1" }
+                }
+            };
+            resource.Models.RemoveAt(0); // all the items are removed, now the list is empty
+            TestHelpers.AssertExpression("[]", resource.Models);
             TestHelpers.AssertExpression("test.models", resource.Models.ToBicepExpression());
         }
 
@@ -228,12 +302,15 @@ namespace Azure.Provisioning.Tests.BicepValues
         }
 
         [Test]
-        public void ValidateOutputListProperty_Empty()
+        public void ValidateOutputListProperty()
         {
             var resource = new TestResource("test");
-            var outputList = resource.OutputList;
-            TestHelpers.AssertExpression("[]", outputList); // TODO -- Here it should print an expression to align the behavior that output property would compile into an expression automatically.
-            TestHelpers.AssertExpression("test.outputList", outputList.ToBicepExpression());
+            TestHelpers.AssertExpression("test.outputList", resource.OutputList);
+            TestHelpers.AssertExpression("test.outputList", resource.OutputList.ToBicepExpression());
+
+            // trying to modify this list should lead to exceptions
+            Assert.Throws<InvalidOperationException>(() => resource.OutputList.Add("item"));
+            Assert.Throws<InvalidOperationException>(() => resource.OutputList.Clear());
         }
 
         [Test]
@@ -250,15 +327,70 @@ namespace Azure.Provisioning.Tests.BicepValues
             TestHelpers.AssertExpression("test.outputList[0]", validIndexer.ToBicepExpression());
         }
         [Test]
-        public void ValidateNestedListProperty_Empty()
+        public void ValidateNestedListProperty_Undefined()
         {
             var resource = new TestResource("test")
             {
                 Properties = new TestProperties()
             };
             var nestedList = resource.Properties.List;
-            TestHelpers.AssertExpression("[]", nestedList);
+            TestHelpers.AssertExpression("test.properties.list", nestedList);
             TestHelpers.AssertExpression("test.properties.list", nestedList.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateNestedListProperty_Empty_ExplicitCallClear()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            resource.Properties.List.Clear(); // explicitly clear to make it empty
+            TestHelpers.AssertExpression("[]", resource.Properties.List);
+            TestHelpers.AssertExpression("test.properties.list", resource.Properties.List.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateNestedListProperty_Empty_AssignNewList()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            resource.Properties.List = new BicepList<string>(); // assign a new empty list
+            TestHelpers.AssertExpression("[]", resource.Properties.List);
+            TestHelpers.AssertExpression("test.properties.list", resource.Properties.List.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateNestedListProperty_Empty_AddAndRemoveAll()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+                {
+                    List =
+                    {
+                        "nestedItem1"
+                    }
+                }
+            };
+            resource.Properties.List.RemoveAt(0); // all the items are removed, now the list is empty
+            TestHelpers.AssertExpression("[]", resource.Properties.List);
+            TestHelpers.AssertExpression("test.properties.list", resource.Properties.List.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateNestedListProperty_Empty_AddAndClear()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            resource.Properties.List.Add("nestedItem1");
+            resource.Properties.List.Clear(); // all the items are removed, now the list is empty
+            TestHelpers.AssertExpression("[]", resource.Properties.List);
+            TestHelpers.AssertExpression("test.properties.list", resource.Properties.List.ToBicepExpression());
         }
 
         [Test]
@@ -297,16 +429,19 @@ namespace Azure.Provisioning.Tests.BicepValues
         }
 
         [Test]
-        public void ValidateNestedOutputListProperty_Empty()
+        public void ValidateNestedOutputListProperty()
         {
             var resource = new TestResource("test")
             {
                 Properties = new TestProperties()
             };
             var nestedOutputList = resource.Properties.OutputList;
-            var outputProperty = resource.OutputValue;
-            TestHelpers.AssertExpression("[]", nestedOutputList); // TODO -- Here it should print an expression to align the behavior that output property would compile into an expression automatically.
+            TestHelpers.AssertExpression("test.properties.outputList", nestedOutputList);
             TestHelpers.AssertExpression("test.properties.outputList", nestedOutputList.ToBicepExpression());
+
+            // trying to modify this list should lead to exceptions
+            Assert.Throws<InvalidOperationException>(() => nestedOutputList.Add("item"));
+            Assert.Throws<InvalidOperationException>(() => nestedOutputList.Clear());
         }
 
         [Test]
@@ -327,12 +462,39 @@ namespace Azure.Provisioning.Tests.BicepValues
         }
 
         [Test]
-        public void ValidateDictionaryProperty_Empty()
+        public void ValidateDictionaryProperty_Undefined()
         {
             var resource = new TestResource("test");
-            var dict = resource.Dictionary;
-            TestHelpers.AssertExpression("{ }", dict);
-            TestHelpers.AssertExpression("test.dictionary", dict.ToBicepExpression());
+            TestHelpers.AssertExpression("test.dictionary", resource.Dictionary);
+            TestHelpers.AssertExpression("test.dictionary", resource.Dictionary.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateDictionaryProperty_Empty_ExplicitCallClear()
+        {
+            var resource = new TestResource("test");
+            resource.Dictionary.Clear(); // explicitly clear to make it empty
+            TestHelpers.AssertExpression("{ }", resource.Dictionary);
+            TestHelpers.AssertExpression("test.dictionary", resource.Dictionary.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateDictionaryProperty_Empty_AssignNewDictionary()
+        {
+            var resource = new TestResource("test");
+            resource.Dictionary = new BicepDictionary<string>(); // assign a new empty dictionary
+            TestHelpers.AssertExpression("{ }", resource.Dictionary);
+            TestHelpers.AssertExpression("test.dictionary", resource.Dictionary.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateDictionaryProperty_Empty_AddAndRemoveAll()
+        {
+            var resource = new TestResource("test");
+            resource.Dictionary["key1"] = "value1";
+            resource.Dictionary.Remove("key1"); // all the items are removed, now the dictionary is empty
+            TestHelpers.AssertExpression("{ }", resource.Dictionary);
+            TestHelpers.AssertExpression("test.dictionary", resource.Dictionary.ToBicepExpression());
         }
 
         [Test]
@@ -365,12 +527,17 @@ namespace Azure.Provisioning.Tests.BicepValues
         }
 
         [Test]
-        public void ValidateOutputDictionaryProperty_Empty()
+        public void ValidateOutputDictionaryProperty()
         {
             var resource = new TestResource("test");
-            var outputDict = resource.OutputDictionary;
-            TestHelpers.AssertExpression("{ }", outputDict); // TODO -- Here it should print an expression to align the behavior that output property would compile into an expression automatically.
-            TestHelpers.AssertExpression("test.outputDictionary", outputDict.ToBicepExpression());
+            TestHelpers.AssertExpression("test.outputDictionary", resource.OutputDictionary);
+            TestHelpers.AssertExpression("test.outputDictionary", resource.OutputDictionary.ToBicepExpression());
+
+            // trying to modify this dictionary should lead to exceptions
+            Assert.Throws<InvalidOperationException>(() => resource.OutputDictionary.Add("key", "value"));
+            Assert.Throws<InvalidOperationException>(() => resource.OutputDictionary.Clear());
+            Assert.Throws<InvalidOperationException>(() => resource.OutputDictionary.Remove("key"));
+            Assert.Throws<InvalidOperationException>(() => resource.OutputDictionary["key"] = "value");
         }
 
         [Test]
@@ -388,15 +555,64 @@ namespace Azure.Provisioning.Tests.BicepValues
         }
 
         [Test]
-        public void ValidateNestedDictionaryProperty_Empty()
+        public void ValidateNestedDictionaryProperty_Undefined()
         {
             var resource = new TestResource("test")
             {
                 Properties = new TestProperties()
             };
-            var nestedDict = resource.Properties.Dictionary;
-            TestHelpers.AssertExpression("{ }", nestedDict);
-            TestHelpers.AssertExpression("test.properties.dictionary", nestedDict.ToBicepExpression());
+            TestHelpers.AssertExpression("test.properties.dictionary", resource.Properties.Dictionary);
+            TestHelpers.AssertExpression("test.properties.dictionary", resource.Properties.Dictionary.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateNestedDictionaryProperty_Empty_ExplicitCallClear()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            resource.Properties.Dictionary.Clear(); // explicitly clear to make it empty
+            TestHelpers.AssertExpression("{ }", resource.Properties.Dictionary);
+            TestHelpers.AssertExpression("test.properties.dictionary", resource.Properties.Dictionary.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateNestedDictionaryProperty_Empty_AssignNewDictionary()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            resource.Properties.Dictionary = new BicepDictionary<string>(); // assign a new empty dictionary
+            TestHelpers.AssertExpression("{ }", resource.Properties.Dictionary);
+            TestHelpers.AssertExpression("test.properties.dictionary", resource.Properties.Dictionary.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateNestedDictionaryProperty_Empty_AddAndRemoveAll()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            resource.Properties.Dictionary["nestedKey1"] = "nestedValue1";
+            resource.Properties.Dictionary.Remove("nestedKey1"); // all the items are removed, now the dictionary is empty
+            TestHelpers.AssertExpression("{ }", resource.Properties.Dictionary);
+            TestHelpers.AssertExpression("test.properties.dictionary", resource.Properties.Dictionary.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateNestedDictionaryProperty_Empty_AddAndClear()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            resource.Properties.Dictionary["nestedKey1"] = "nestedValue1";
+            resource.Properties.Dictionary.Clear(); // all the items are removed, now the dictionary is empty
+            TestHelpers.AssertExpression("{ }", resource.Properties.Dictionary);
+            TestHelpers.AssertExpression("test.properties.dictionary", resource.Properties.Dictionary.ToBicepExpression());
         }
 
         [Test]
@@ -434,15 +650,20 @@ namespace Azure.Provisioning.Tests.BicepValues
         }
 
         [Test]
-        public void ValidateNestedOutputDictionaryProperty_Empty()
+        public void ValidateNestedOutputDictionaryProperty()
         {
             var resource = new TestResource("test")
             {
                 Properties = new TestProperties()
             };
-            var nestedOutputDict = resource.Properties.OutputDictionary;
-            TestHelpers.AssertExpression("{ }", nestedOutputDict); // TODO -- Here it should print an expression to align the behavior that output property would compile into an expression automatically.
-            TestHelpers.AssertExpression("test.properties.outputDictionary", nestedOutputDict.ToBicepExpression());
+            TestHelpers.AssertExpression("test.properties.outputDictionary", resource.Properties.OutputDictionary);
+            TestHelpers.AssertExpression("test.properties.outputDictionary", resource.Properties.OutputDictionary.ToBicepExpression());
+
+            // trying to modify this dictionary should lead to exceptions
+            Assert.Throws<InvalidOperationException>(() => resource.Properties.OutputDictionary.Add("key", "value"));
+            Assert.Throws<InvalidOperationException>(() => resource.Properties.OutputDictionary.Clear());
+            Assert.Throws<InvalidOperationException>(() => resource.Properties.OutputDictionary.Remove("key"));
+            Assert.Throws<InvalidOperationException>(() => resource.Properties.OutputDictionary["key"] = "value");
         }
 
         [Test]
@@ -621,10 +842,17 @@ namespace Azure.Provisioning.Tests.BicepValues
                 get { Initialize(); return _outputValue!; }
             }
 
+            private OutputModel? _outputModel;
+            public OutputModel OutputModel
+            {
+                get { Initialize(); return _outputModel!; }
+            }
+
             private BicepList<string>? _list;
             public BicepList<string> List
             {
                 get { Initialize(); return _list!; }
+                set { Initialize(); _list!.Assign(value); }
             }
 
             private BicepList<string>? _outputList;
@@ -637,6 +865,7 @@ namespace Azure.Provisioning.Tests.BicepValues
             public BicepDictionary<string> Dictionary
             {
                 get { Initialize(); return _dictionary!; }
+                set { Initialize(); _dictionary!.Assign(value); }
             }
 
             private BicepDictionary<string>? _outputDictionary;
@@ -649,7 +878,7 @@ namespace Azure.Provisioning.Tests.BicepValues
             public BicepList<TestModel> Models
             {
                 get { Initialize(); return _models!; }
-                set { Initialize(); AssignOrReplace(ref _models, value); }
+                set { Initialize(); _models!.Assign(value); }
             }
 
             private TestProperties? _properties;
@@ -665,6 +894,7 @@ namespace Azure.Provisioning.Tests.BicepValues
                 _withValue = DefineProperty<string>("WithValue", ["withValue"]);
                 _withoutValue = DefineProperty<string>("WithoutValue", ["withoutValue"]);
                 _outputValue = DefineProperty<string>("OutputValue", ["outputValue"], isOutput: true);
+                _outputModel = DefineModelProperty<OutputModel>("OutputModel", ["outputModel"], isOutput: true);
                 _list = DefineListProperty<string>("List", ["list"]);
                 _outputList = DefineListProperty<string>("OutputList", ["outputList"], isOutput: true);
                 _models = DefineListProperty<TestModel>("Models", ["models"]);
@@ -694,6 +924,7 @@ namespace Azure.Provisioning.Tests.BicepValues
             public BicepList<string> List
             {
                 get { Initialize(); return _list!; }
+                set { Initialize(); _list!.Assign(value); }
             }
 
             private BicepList<string>? _outputList;
@@ -706,6 +937,7 @@ namespace Azure.Provisioning.Tests.BicepValues
             public BicepDictionary<string> Dictionary
             {
                 get { Initialize(); return _dictionary!; }
+                set { Initialize(); _dictionary!.Assign(value); }
             }
 
             private BicepDictionary<string>? _outputDictionary;
@@ -723,6 +955,21 @@ namespace Azure.Provisioning.Tests.BicepValues
                 _outputList = DefineListProperty<string>("OutputList", ["outputList"], isOutput: true);
                 _dictionary = DefineDictionaryProperty<string>("Dictionary", ["dictionary"]);
                 _outputDictionary = DefineDictionaryProperty<string>("OutputDictionary", ["outputDictionary"], isOutput: true);
+            }
+        }
+
+        private class OutputModel : ProvisionableConstruct
+        {
+            private BicepValue<string>? _id;
+            public BicepValue<string> Id
+            {
+                get { Initialize(); return _id!; }
+            }
+
+            protected override void DefineProvisionableProperties()
+            {
+                base.DefineProvisionableProperties();
+                _id = DefineProperty<string>("Id", ["id"], isOutput: true);
             }
         }
 
