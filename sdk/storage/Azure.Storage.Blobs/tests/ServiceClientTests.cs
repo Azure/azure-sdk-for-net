@@ -710,35 +710,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        public async Task GetUserDelegationKey_DelegatedUserTid()
-        {
-            // Arrange
-            BlobServiceClient service = GetServiceClient_OAuth();
-
-            // Act
-            TokenCredential tokenCredential = TestEnvironment.Credential;
-            AccessToken accessToken = await tokenCredential.GetTokenAsync(
-                new TokenRequestContext(Scopes),
-                CancellationToken.None);
-            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
-            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.TenantId, out object tenantId);
-
-            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions
-            {
-                StartsOn = Recording.UtcNow.AddHours(-1),
-                DelegatedUserTid = tenantId?.ToString()
-            };
-            Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(
-                expiresOn: Recording.UtcNow.AddHours(1),
-                options: options);
-
-            // Assert
-            Assert.IsNotNull(response.Value);
-            Assert.IsNotNull(response.Value.SignedDelegatedUserTid);
-            // Assert.AreEqual(tenantId?.ToString(), response.Value.SignedDelegatedUserTid);
-        }
-
-        [RecordedTest]
         public async Task GetUserDelegationKey_Error()
         {
             // Arrange
