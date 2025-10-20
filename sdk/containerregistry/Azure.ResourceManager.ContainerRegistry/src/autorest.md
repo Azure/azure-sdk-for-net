@@ -268,7 +268,7 @@ rename-mapping:
   RoleAssignmentMode: ContainerRegistryRoleAssignmentMode
   ConnectedRegistry.properties.clientTokenIds: -|arm-id
   ConnectedRegistryUpdateParameters.properties.clientTokenIds: -|arm-id
-  PrivateLinkResource.properties.requiredZoneNames: RequiredZoneNamesList
+  PrivateLinkResource.properties.requiredZoneNames: RequiredPrivateLinkZoneNames
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun

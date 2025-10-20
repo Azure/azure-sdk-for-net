@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         public ContainerRegistryPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNamesList = new ChangeTrackingList<string>();
+            RequiredPrivateLinkZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkResourceData"/>. </summary>
@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNamesList"> The private link resource private link DNS zone name. </param>
+        /// <param name="requiredPrivateLinkZoneNames"> The private link resource private link DNS zone name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNamesList, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerRegistryPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredPrivateLinkZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
-            RequiredZoneNamesList = requiredZoneNamesList;
+            RequiredPrivateLinkZoneNames = requiredPrivateLinkZoneNames;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The private link resource private link DNS zone name. </summary>
         [WirePath("properties.requiredZoneNames")]
-        public IList<string> RequiredZoneNamesList { get; }
+        public IList<string> RequiredPrivateLinkZoneNames { get; }
     }
 }

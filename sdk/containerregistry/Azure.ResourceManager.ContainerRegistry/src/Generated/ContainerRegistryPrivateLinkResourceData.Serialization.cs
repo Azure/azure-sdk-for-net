@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredZoneNamesList))
+            if (Optional.IsCollectionDefined(RequiredPrivateLinkZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
-                foreach (var item in RequiredZoneNamesList)
+                foreach (var item in RequiredPrivateLinkZoneNames)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredZoneNamesList), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredPrivateLinkZoneNames), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    requiredZoneNames: ");
@@ -318,13 +318,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
             else
             {
-                if (Optional.IsCollectionDefined(RequiredZoneNamesList))
+                if (Optional.IsCollectionDefined(RequiredPrivateLinkZoneNames))
                 {
-                    if (RequiredZoneNamesList.Any())
+                    if (RequiredPrivateLinkZoneNames.Any())
                     {
                         builder.Append("    requiredZoneNames: ");
                         builder.AppendLine("[");
-                        foreach (var item in RequiredZoneNamesList)
+                        foreach (var item in RequiredPrivateLinkZoneNames)
                         {
                             if (item == null)
                             {

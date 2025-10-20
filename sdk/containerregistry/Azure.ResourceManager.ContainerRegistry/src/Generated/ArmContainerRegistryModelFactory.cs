@@ -463,12 +463,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNamesList"> The private link resource private link DNS zone name. </param>
+        /// <param name="requiredPrivateLinkZoneNames"> The private link resource private link DNS zone name. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static ContainerRegistryPrivateLinkResourceData ContainerRegistryPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNamesList = null)
+        public static ContainerRegistryPrivateLinkResourceData ContainerRegistryPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredPrivateLinkZoneNames = null)
         {
             requiredMembers ??= new List<string>();
-            requiredZoneNamesList ??= new List<string>();
+            requiredPrivateLinkZoneNames ??= new List<string>();
 
             return new ContainerRegistryPrivateLinkResourceData(
                 id,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 systemData,
                 groupId,
                 requiredMembers?.ToList(),
-                requiredZoneNamesList?.ToList(),
+                requiredPrivateLinkZoneNames?.ToList(),
                 serializedAdditionalRawData: null);
         }
 

@@ -14,6 +14,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> The private link resource Private link DNS zone name. </summary>
         [WirePath("properties.requiredZoneNames")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<string> RequiredZoneNames { get => (IReadOnlyList<string>)RequiredZoneNamesList; }
+        public IReadOnlyList<string> RequiredZoneNames { get => (IReadOnlyList<string>)RequiredPrivateLinkZoneNames; }
     }
 }
