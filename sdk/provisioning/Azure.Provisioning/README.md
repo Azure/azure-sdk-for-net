@@ -20,7 +20,53 @@ dotnet add package Azure.Provisioning
 
 ## Key concepts
 
-This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+This library allows you to specify your infrastructure in a declarative style using `dotnet`.  You can then use `azd` to deploy your infrastructure to Azure directly without needing to write or maintain `bicep` or arm templates.
+
+### `ToBicepExpression` Method
+
+The `ToBicepExpression()` extension method allows you to create references to resource properties and values for use in Bicep expressions. This is essential when you need to reference one resource's properties in another resource or build dynamic configuration strings.
+
+#### Common use cases:
+
+**Building connection strings and URLs:**
+```csharp
+// Create a storage account
+StorageAccount storage = new("myStorage", StorageAccount.ResourceVersions.V2023_01_01)
+{
+    Name = "mystorageaccount",
+    Kind = StorageKind.StorageV2
+};
+
+// Reference the storage account name in a connection string
+BicepExpression connectionString = BicepFunction.Interpolate(
+    $"DefaultEndpointsProtocol=https;AccountName={storage.Name.ToBicepExpression()};EndpointSuffix=core.windows.net"
+);
+```
+
+**Referencing resource outputs:**
+```csharp
+// Reference a storage account's blob endpoint in an app service
+AppService app = new("myApp")
+{
+    SiteConfig = new SiteConfig
+    {
+        AppSettings = new BicepList<NameValuePair>
+        {
+            new() { Name = "StorageBlobEndpoint", Value = storage.PrimaryEndpoints.BlobUri.ToBicepExpression() }
+        }
+    }
+};
+```
+
+**Using with Bicep functions:**
+```csharp
+// Pass resource references to Bicep functions
+BicepExpression uniqueStorageName = BicepFunction.Interpolate(
+    $"st{BicepFunction.UniqueString(storage.Id.ToBicepExpression())}"
+);
+```
+
+Use `ToBicepExpression()` whenever you need to reference a resource property or value in Bicep expressions, function calls, or when building dynamic configuration values.
 
 ## Examples
 
