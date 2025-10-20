@@ -518,7 +518,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [LiveOnly]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
-        public async Task ContainerIdentitySAS_Roundtrip()
+        public async Task ContainerIdentitySAS_RequestHeadersAndQueryParameters_Roundtrip()
         {
             BlobServiceClient oauthService = GetServiceClient_OAuth();
             var containerName = GetNewContainerName();

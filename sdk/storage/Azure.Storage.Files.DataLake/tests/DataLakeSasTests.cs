@@ -621,7 +621,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         [LiveOnly] // Cannot record Entra ID token
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task FileSystemIdentitySAS_Roundtrip()
+        public async Task FileSystemIdentitySAS_RequestHeadersAndQueryParameters_Roundtrip()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             string fileSystemName = GetNewFileSystemName();
