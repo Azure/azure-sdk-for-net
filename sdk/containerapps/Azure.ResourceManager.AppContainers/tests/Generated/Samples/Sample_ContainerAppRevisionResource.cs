@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetContainerAppSRevision()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Revisions_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/Revisions_Get.json
             // this example is just showing the usage of "ContainerAppsRevisions_GetRevision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ActivateRevision_ActivateContainerAppSRevision()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Revisions_Activate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/Revisions_Activate.json
             // this example is just showing the usage of "ContainerAppsRevisions_ActivateRevision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DeactivateRevision_DeactivateContainerAppSRevision()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Revisions_Deactivate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/Revisions_Deactivate.json
             // this example is just showing the usage of "ContainerAppsRevisions_DeactivateRevision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RestartRevision_RestartContainerAppSRevision()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/Revisions_Restart.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/Revisions_Restart.json
             // this example is just showing the usage of "ContainerAppsRevisions_RestartRevision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,6 +125,34 @@ namespace Azure.ResourceManager.AppContainers.Samples
             await containerAppRevision.RestartRevisionAsync();
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task InvokeFunctionsHostFunctionsExtension_InvokeFunctionsHostUsingFunctionsExtensionAPI()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/FunctionsExtension_Post.json
+            // this example is just showing the usage of "FunctionsExtension_InvokeFunctionsHost" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerAppRevisionResource created on azure
+            // for more information of creating ContainerAppRevisionResource, please refer to the document of ContainerAppRevisionResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string containerAppName = "testcontainerApp0";
+            string revisionName = "testcontainerApp0-pjxhsye";
+            ResourceIdentifier containerAppRevisionResourceId = ContainerAppRevisionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName, revisionName);
+            ContainerAppRevisionResource containerAppRevision = client.GetContainerAppRevisionResource(containerAppRevisionResourceId);
+
+            // invoke the operation
+            string functionAppName = "testcontainerApp0";
+            string result = await containerAppRevision.InvokeFunctionsHostFunctionsExtensionAsync(functionAppName);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

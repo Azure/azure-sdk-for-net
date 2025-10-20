@@ -68,8 +68,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="clientCertificateMode"> Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate. </param>
         /// <param name="corsPolicy"> CORS policy for container app. </param>
         /// <param name="additionalPortMappings"> Settings to expose additional ports on container app. </param>
+        /// <param name="targetPortHttpScheme"> Whether an http app listens on http or https. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppIngressConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IList<ContainerAppRevisionTrafficWeight> traffic, IList<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, IngressStickySessions stickySessions, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy, IList<IngressPortMapping> additionalPortMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppIngressConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IList<ContainerAppRevisionTrafficWeight> traffic, IList<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, IngressStickySessions stickySessions, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy, IList<IngressPortMapping> additionalPortMappings, IngressTargetPortHttpScheme? targetPortHttpScheme, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fqdn = fqdn;
             External = external;
@@ -84,6 +85,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             ClientCertificateMode = clientCertificateMode;
             CorsPolicy = corsPolicy;
             AdditionalPortMappings = additionalPortMappings;
+            TargetPortHttpScheme = targetPortHttpScheme;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -138,5 +140,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Settings to expose additional ports on container app. </summary>
         [WirePath("additionalPortMappings")]
         public IList<IngressPortMapping> AdditionalPortMappings { get; }
+        /// <summary> Whether an http app listens on http or https. </summary>
+        [WirePath("targetPortHttpScheme")]
+        public IngressTargetPortHttpScheme? TargetPortHttpScheme { get; set; }
     }
 }

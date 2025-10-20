@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 throw new FormatException($"The model {nameof(ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsPeerToPeerEncryptionEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WriteBooleanValue(IsPeerToPeerEncryptionEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPeerToPeerEncryptionEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  enabled: ");
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             else
             {
-                if (Optional.IsDefined(IsEnabled))
+                if (Optional.IsDefined(IsPeerToPeerEncryptionEnabled))
                 {
                     builder.Append("  enabled: ");
-                    var boolValue = IsEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsPeerToPeerEncryptionEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

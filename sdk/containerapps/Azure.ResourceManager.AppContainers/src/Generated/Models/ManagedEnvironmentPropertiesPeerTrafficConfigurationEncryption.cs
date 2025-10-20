@@ -51,16 +51,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption"/>. </summary>
-        /// <param name="isEnabled"> Boolean indicating whether the peer traffic encryption is enabled. </param>
+        /// <param name="isPeerToPeerEncryptionEnabled"> Boolean indicating whether the peer traffic encryption is enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption(bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption(bool? isPeerToPeerEncryptionEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            IsEnabled = isEnabled;
+            IsPeerToPeerEncryptionEnabled = isPeerToPeerEncryptionEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Boolean indicating whether the peer traffic encryption is enabled. </summary>
         [WirePath("enabled")]
-        public bool? IsEnabled { get; set; }
+        public bool? IsPeerToPeerEncryptionEnabled { get; set; }
     }
 }

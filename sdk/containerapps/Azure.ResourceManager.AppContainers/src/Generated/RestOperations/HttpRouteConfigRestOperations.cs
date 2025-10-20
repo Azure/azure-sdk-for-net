@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-01";
+            _apiVersion = apiVersion ?? "2025-10-02-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppContainers
             return message;
         }
 
-        /// <summary> Get the specified Http Route Config. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get the specified Managed Http Route Config. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Get the specified Http Route Config. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get the specified Managed Http Route Config. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Create or Update a Http Route Config. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
-        /// <param name="data"> Http Route Config to be created or updated. </param>
+        /// <param name="data"> Http Route config to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="httpRouteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Create or Update a Http Route Config. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
-        /// <param name="data"> Http Route Config to be created or updated. </param>
+        /// <param name="data"> Http Route config to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/>, <paramref name="httpRouteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -292,8 +292,8 @@ namespace Azure.ResourceManager.AppContainers
             return message;
         }
 
-        /// <summary> Patches a Http Route Config resource. Only patching of tags is supported. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Patches an http route config resource. Only patching of tags is supported. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
@@ -325,8 +325,8 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Patches a Http Route Config resource. Only patching of tags is supported. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Patches an http route config resource. Only patching of tags is supported. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
@@ -396,8 +396,8 @@ namespace Azure.ResourceManager.AppContainers
             return message;
         }
 
-        /// <summary> Deletes the specified Http Route Config. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Deletes the specified Managed Http Route. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.AppContainers
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
+                case 200:
                 case 204:
                     return message.Response;
                 default:
@@ -423,8 +423,8 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Deletes the specified Http Route Config. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Deletes the specified Managed Http Route. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AppContainers
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
+                case 200:
                 case 204:
                     return message.Response;
                 default:
@@ -486,8 +486,8 @@ namespace Azure.ResourceManager.AppContainers
             return message;
         }
 
-        /// <summary> List the Http Route Configs in a given managed environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get the Managed Http Routes in a given managed environment. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -515,8 +515,8 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> List the Http Route Configs in a given managed environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get the Managed Http Routes in a given managed environment. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -566,9 +566,9 @@ namespace Azure.ResourceManager.AppContainers
             return message;
         }
 
-        /// <summary> List the Http Route Configs in a given managed environment. </summary>
+        /// <summary> Get the Managed Http Routes in a given managed environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -597,9 +597,9 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> List the Http Route Configs in a given managed environment. </summary>
+        /// <summary> Get the Managed Http Routes in a given managed environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> Name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

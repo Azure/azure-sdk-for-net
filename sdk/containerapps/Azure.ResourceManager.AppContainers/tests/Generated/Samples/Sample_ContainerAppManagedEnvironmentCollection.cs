@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateEnvironmentWithCustomInfrastructureResourceGroup()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironments_CustomInfrastructureResourceGroup_Create.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironments_CustomInfrastructureResourceGroup_Create.json
             // this example is just showing the usage of "ManagedEnvironments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
                     },
                 },
                 IsZoneRedundant = true,
+                AvailabilityZones = { "1", "2", "3" },
                 CustomDomainConfiguration = new ContainerAppCustomDomainConfiguration
                 {
                     DnsSuffix = "www.my-name.com",
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
                 },
                 WorkloadProfiles = {new ContainerAppWorkloadProfile("My-GP-01", "GeneralPurpose")
 {
+EnableFips = true,
 MinimumNodeCount = 3,
 MaximumNodeCount = 12,
 }, new ContainerAppWorkloadProfile("My-MO-01", "MemoryOptimized")
@@ -94,7 +96,7 @@ MaximumNodeCount = 6,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateEnvironments()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironments_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironments_CreateOrUpdate.json
             // this example is just showing the usage of "ManagedEnvironments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,9 +136,45 @@ MaximumNodeCount = 6,
                     {
                         CustomerId = "string",
                         SharedKey = "string",
+                        DynamicJsonColumns = true,
+                    },
+                },
+                AppInsightsConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/",
+                OpenTelemetryConfiguration = new OpenTelemetryConfiguration
+                {
+                    DestinationsConfiguration = new DestinationsConfiguration
+                    {
+                        DataDogConfiguration = new DataDogConfiguration
+                        {
+                            Site = "string",
+                            Key = "000000000000000000000000",
+                        },
+                        OtlpConfigurations = {new OtlpConfiguration
+{
+Name = "dashboard",
+Endpoint = "dashboard.k8s.region.azurecontainerapps.io:80",
+Insecure = true,
+Headers = {new Header
+{
+Key = "api-key",
+Value = "xxxxxxxxxxx",
+}},
+}},
+                    },
+                    TracesConfiguration = new TracesConfiguration
+                    {
+                        IncludeDapr = true,
+                        Destinations = { "appInsights" },
+                    },
+                    LogsDestinations = { "appInsights" },
+                    MetricsConfiguration = new MetricsConfiguration
+                    {
+                        IncludeKeda = true,
+                        Destinations = { "dataDog" },
                     },
                 },
                 IsZoneRedundant = true,
+                AvailabilityZones = { "1", "2", "3" },
                 CustomDomainConfiguration = new ContainerAppCustomDomainConfiguration
                 {
                     DnsSuffix = "www.my-name.com",
@@ -145,6 +183,7 @@ MaximumNodeCount = 6,
                 },
                 WorkloadProfiles = {new ContainerAppWorkloadProfile("My-GP-01", "GeneralPurpose")
 {
+EnableFips = true,
 MinimumNodeCount = 3,
 MaximumNodeCount = 12,
 }, new ContainerAppWorkloadProfile("My-MO-01", "MemoryOptimized")
@@ -157,13 +196,23 @@ MinimumNodeCount = 3,
 MaximumNodeCount = 6,
 }, new ContainerAppWorkloadProfile("My-consumption-01", "Consumption")},
                 IsMtlsEnabled = true,
-                IsEnabled = true,
+                IsPeerToPeerEncryptionEnabled = true,
                 IngressConfiguration = new ManagedEnvironmentIngressConfiguration
                 {
                     WorkloadProfileName = "My-CO-01",
+                    Scale = new IngressConfigurationScale
+                    {
+                        MinReplicas = 2,
+                        MaxReplicas = 4,
+                    },
                     TerminationGracePeriodSeconds = 3600,
                     HeaderCountLimit = 30,
                     RequestIdleTimeout = 5,
+                },
+                DiskEncryptionKeyVaultConfiguration = new DiskEncryptionConfigurationKeyVaultConfiguration
+                {
+                    KeyUri = new Uri("https://contoso.vault.azure.net/mykey/19ff8313ca394b89b9e824bbbdc8c521"),
+                    AuthIdentity = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/contoso-identity"),
                 },
             };
             ArmOperation<ContainerAppManagedEnvironmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, environmentName, data);
@@ -180,7 +229,7 @@ MaximumNodeCount = 6,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetEnvironmentsByName()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironments_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironments_Get.json
             // this example is just showing the usage of "ManagedEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -213,7 +262,7 @@ MaximumNodeCount = 6,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListEnvironmentsByResourceGroup()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironments_ListByResourceGroup.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironments_ListByResourceGroup.json
             // this example is just showing the usage of "ManagedEnvironments_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -248,7 +297,7 @@ MaximumNodeCount = 6,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetEnvironmentsByName()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironments_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironments_Get.json
             // this example is just showing the usage of "ManagedEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -277,7 +326,7 @@ MaximumNodeCount = 6,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetEnvironmentsByName()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ManagedEnvironments_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ManagedEnvironments_Get.json
             // this example is just showing the usage of "ManagedEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

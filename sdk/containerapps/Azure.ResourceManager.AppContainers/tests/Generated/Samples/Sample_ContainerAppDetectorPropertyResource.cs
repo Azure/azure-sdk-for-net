@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ContainerApps_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ContainerApps_Get.json
             // this example is just showing the usage of "ContainerAppsDiagnostics_GetRoot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // for more information of creating ContainerAppDetectorPropertyResource, please refer to the document of ContainerAppDetectorPropertyResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
-            string containerAppName = "testcontainerapp0";
+            string containerAppName = "testcontainerApp0";
             ResourceIdentifier containerAppDetectorPropertyResourceId = ContainerAppDetectorPropertyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
             ContainerAppDetectorPropertyResource containerAppDetectorProperty = client.GetContainerAppDetectorPropertyResource(containerAppDetectorPropertyResourceId);
 

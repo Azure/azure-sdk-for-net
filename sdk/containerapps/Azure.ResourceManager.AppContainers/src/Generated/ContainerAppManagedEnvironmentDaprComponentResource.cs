@@ -90,6 +90,75 @@ namespace Azure.ResourceManager.AppContainers
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of DaprComponentResiliencyPolicyResources in the ContainerAppManagedEnvironmentDaprComponent. </summary>
+        /// <returns> An object representing collection of DaprComponentResiliencyPolicyResources and their operations over a DaprComponentResiliencyPolicyResource. </returns>
+        public virtual DaprComponentResiliencyPolicyCollection GetDaprComponentResiliencyPolicies()
+        {
+            return GetCachedClient(client => new DaprComponentResiliencyPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Dapr component resiliency policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}/resiliencyPolicies/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DaprComponentResiliencyPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DaprComponentResiliencyPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the Dapr Component Resiliency Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DaprComponentResiliencyPolicyResource>> GetDaprComponentResiliencyPolicyAsync(string name, CancellationToken cancellationToken = default)
+        {
+            return await GetDaprComponentResiliencyPolicies().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Dapr component resiliency policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}/resiliencyPolicies/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DaprComponentResiliencyPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DaprComponentResiliencyPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the Dapr Component Resiliency Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DaprComponentResiliencyPolicyResource> GetDaprComponentResiliencyPolicy(string name, CancellationToken cancellationToken = default)
+        {
+            return GetDaprComponentResiliencyPolicies().Get(name, cancellationToken);
+        }
+
         /// <summary>
         /// Get a dapr component.
         /// <list type="bullet">
@@ -103,7 +172,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +212,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +252,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,7 +296,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -271,7 +340,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +388,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,7 +436,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -396,7 +465,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <description>2025-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateJavaComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/JavaComponents_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/JavaComponents_CreateOrUpdate.json
             // this example is just showing the usage of "JavaComponents_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,7 +75,7 @@ Value = "10000ms",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateJavaComponentWithServiceBinds()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/JavaComponents_CreateOrUpdate_ServiceBind.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/JavaComponents_CreateOrUpdate_ServiceBind.json
             // this example is just showing the usage of "JavaComponents_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,7 +135,7 @@ ServiceId = new ResourceIdentifier("/subscriptions/8efdecc5-919e-44eb-b179-915dc
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetJavaComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/JavaComponents_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/JavaComponents_Get.json
             // this example is just showing the usage of "JavaComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,7 +169,7 @@ ServiceId = new ResourceIdentifier("/subscriptions/8efdecc5-919e-44eb-b179-915dc
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetJavaComponentWithServiceBinds()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/JavaComponents_Get_ServiceBind.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/JavaComponents_Get_ServiceBind.json
             // this example is just showing the usage of "JavaComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -203,7 +203,7 @@ ServiceId = new ResourceIdentifier("/subscriptions/8efdecc5-919e-44eb-b179-915dc
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListJavaComponents()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/JavaComponents_List.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/JavaComponents_List.json
             // this example is just showing the usage of "JavaComponents_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -239,7 +239,7 @@ ServiceId = new ResourceIdentifier("/subscriptions/8efdecc5-919e-44eb-b179-915dc
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListJavaComponentsWithServiceBinds()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/JavaComponents_List_ServiceBind.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/JavaComponents_List_ServiceBind.json
             // this example is just showing the usage of "JavaComponents_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -275,7 +275,7 @@ ServiceId = new ResourceIdentifier("/subscriptions/8efdecc5-919e-44eb-b179-915dc
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetJavaComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/JavaComponents_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/JavaComponents_Get.json
             // this example is just showing the usage of "JavaComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -305,7 +305,7 @@ ServiceId = new ResourceIdentifier("/subscriptions/8efdecc5-919e-44eb-b179-915dc
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetJavaComponentWithServiceBinds()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/JavaComponents_Get_ServiceBind.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/JavaComponents_Get_ServiceBind.json
             // this example is just showing the usage of "JavaComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -335,7 +335,7 @@ ServiceId = new ResourceIdentifier("/subscriptions/8efdecc5-919e-44eb-b179-915dc
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetJavaComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/JavaComponents_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/JavaComponents_Get.json
             // this example is just showing the usage of "JavaComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -377,7 +377,7 @@ ServiceId = new ResourceIdentifier("/subscriptions/8efdecc5-919e-44eb-b179-915dc
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetJavaComponentWithServiceBinds()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/JavaComponents_Get_ServiceBind.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/JavaComponents_Get_ServiceBind.json
             // this example is just showing the usage of "JavaComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

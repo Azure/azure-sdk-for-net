@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-01";
+            _apiVersion = apiVersion ?? "2025-10-02-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the list of diagnostics for a given Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App for which detector info is needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the list of diagnostics for a given Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App for which detector info is needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get a diagnostics result of a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="detectorName"> Name of the Container App Detector. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get a diagnostics result of a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="detectorName"> Name of the Container App Detector. </param>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Revisions for a given Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App for which Revisions are needed. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Revisions for a given Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App for which Revisions are needed. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get a revision of a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get a revision of a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the properties of a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the properties of a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the list of diagnostics for a given Container App. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App for which detector info is needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the list of diagnostics for a given Container App. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App for which detector info is needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Revisions for a given Container App. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App for which Revisions are needed. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Revisions for a given Container App. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App for which Revisions are needed. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>

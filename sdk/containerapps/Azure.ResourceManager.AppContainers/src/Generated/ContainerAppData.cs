@@ -69,12 +69,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="extendedLocation"> The complex type of the extended location. </param>
         /// <param name="identity"> managed identities for the Container App to interact with other Azure services without maintaining any secrets or credentials in code. </param>
         /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
-        /// <param name="kind"> Metadata to represent the container app kind, representing if a container app is workflowapp or functionapp. </param>
+        /// <param name="kind"> Metadata used to render different experiences for resources of the same type; e.g. WorkflowApp is a kind of Microsoft.App/ContainerApps type. If supported, the resource provider must validate and persist this value. </param>
         /// <param name="provisioningState"> Provisioning state of the Container App. </param>
         /// <param name="runningStatus"> Running status of the Container App. </param>
+        /// <param name="deploymentErrors"> Any errors that occurred during deployment. </param>
         /// <param name="managedEnvironmentId"> Deprecated. Resource ID of the Container App's environment. </param>
         /// <param name="environmentId"> Resource ID of environment. </param>
         /// <param name="workloadProfileName"> Workload profile name to pin for container app execution. </param>
+        /// <param name="patchingConfiguration"> Container App auto patch configuration. </param>
         /// <param name="latestRevisionName"> Name of the latest revision of the Container App. </param>
         /// <param name="latestReadyRevisionName"> Name of the latest ready revision of the Container App. </param>
         /// <param name="latestRevisionFqdn"> Fully Qualified Domain Name of the latest revision of the Container App. </param>
@@ -84,7 +86,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="outboundIPAddressList"> Outbound IP Addresses for container app. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container app. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, string managedBy, ContainerAppKind? kind, ContainerAppProvisioningState? provisioningState, ContainerAppRunningStatus? runningStatus, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileName, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<IPAddress> outboundIPAddressList, Uri eventStreamEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, string managedBy, ContainerAppKind? kind, ContainerAppProvisioningState? provisioningState, ContainerAppRunningStatus? runningStatus, string deploymentErrors, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileName, ContainerAppPropertiesPatchingConfiguration patchingConfiguration, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<IPAddress> outboundIPAddressList, Uri eventStreamEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Identity = identity;
@@ -92,9 +94,11 @@ namespace Azure.ResourceManager.AppContainers
             Kind = kind;
             ProvisioningState = provisioningState;
             RunningStatus = runningStatus;
+            DeploymentErrors = deploymentErrors;
             ManagedEnvironmentId = managedEnvironmentId;
             EnvironmentId = environmentId;
             WorkloadProfileName = workloadProfileName;
+            PatchingConfiguration = patchingConfiguration;
             LatestRevisionName = latestRevisionName;
             LatestReadyRevisionName = latestReadyRevisionName;
             LatestRevisionFqdn = latestRevisionFqdn;
@@ -120,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </summary>
         [WirePath("managedBy")]
         public string ManagedBy { get; set; }
-        /// <summary> Metadata to represent the container app kind, representing if a container app is workflowapp or functionapp. </summary>
+        /// <summary> Metadata used to render different experiences for resources of the same type; e.g. WorkflowApp is a kind of Microsoft.App/ContainerApps type. If supported, the resource provider must validate and persist this value. </summary>
         [WirePath("kind")]
         public ContainerAppKind? Kind { get; set; }
         /// <summary> Provisioning state of the Container App. </summary>
@@ -129,6 +133,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Running status of the Container App. </summary>
         [WirePath("properties.runningStatus")]
         public ContainerAppRunningStatus? RunningStatus { get; }
+        /// <summary> Any errors that occurred during deployment. </summary>
+        [WirePath("properties.deploymentErrors")]
+        public string DeploymentErrors { get; }
         /// <summary> Deprecated. Resource ID of the Container App's environment. </summary>
         [WirePath("properties.managedEnvironmentId")]
         public ResourceIdentifier ManagedEnvironmentId { get; set; }
@@ -138,6 +145,21 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Workload profile name to pin for container app execution. </summary>
         [WirePath("properties.workloadProfileName")]
         public string WorkloadProfileName { get; set; }
+        /// <summary> Container App auto patch configuration. </summary>
+        internal ContainerAppPropertiesPatchingConfiguration PatchingConfiguration { get; set; }
+        /// <summary> Patching mode for the container app. Null or default in this field will be interpreted as Automatic by RP. Automatic mode will automatically apply available patches. Manual mode will require the user to manually apply patches. Disabled mode will stop patch detection and auto patching. </summary>
+        [WirePath("properties.patchingConfiguration.patchingMode")]
+        public PatchingMode? PatchingMode
+        {
+            get => PatchingConfiguration is null ? default : PatchingConfiguration.PatchingMode;
+            set
+            {
+                if (PatchingConfiguration is null)
+                    PatchingConfiguration = new ContainerAppPropertiesPatchingConfiguration();
+                PatchingConfiguration.PatchingMode = value;
+            }
+        }
+
         /// <summary> Name of the latest revision of the Container App. </summary>
         [WirePath("properties.latestRevisionName")]
         public string LatestRevisionName { get; }

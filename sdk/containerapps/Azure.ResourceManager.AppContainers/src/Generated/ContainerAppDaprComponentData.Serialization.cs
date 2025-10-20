@@ -96,15 +96,15 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (Optional.IsCollectionDefined(ServiceComponentBind))
             {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
-            {
-                writer.WritePropertyName("deploymentErrors"u8);
-                writer.WriteStringValue(DeploymentErrors);
+                writer.WritePropertyName("serviceComponentBind"u8);
+                writer.WriteStartArray();
+                foreach (var item in ServiceComponentBind)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -141,8 +141,7 @@ namespace Azure.ResourceManager.AppContainers
             string secretStoreComponent = default;
             IList<ContainerAppDaprMetadata> metadata = default;
             IList<string> scopes = default;
-            DaprComponentProvisioningState? provisioningState = default;
-            string deploymentErrors = default;
+            IList<DaprComponentServiceBinding> serviceComponentBind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,18 +250,18 @@ namespace Azure.ResourceManager.AppContainers
                             scopes = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"u8))
+                        if (property0.NameEquals("serviceComponentBind"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            provisioningState = new DaprComponentProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("deploymentErrors"u8))
-                        {
-                            deploymentErrors = property0.Value.GetString();
+                            List<DaprComponentServiceBinding> array = new List<DaprComponentServiceBinding>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DaprComponentServiceBinding.DeserializeDaprComponentServiceBinding(item, options));
+                            }
+                            serviceComponentBind = array;
                             continue;
                         }
                     }
@@ -287,8 +286,7 @@ namespace Azure.ResourceManager.AppContainers
                 secretStoreComponent,
                 metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>(),
                 scopes ?? new ChangeTrackingList<string>(),
-                provisioningState,
-                deploymentErrors,
+                serviceComponentBind ?? new ChangeTrackingList<DaprComponentServiceBinding>(),
                 serializedAdditionalRawData);
         }
 
@@ -548,40 +546,25 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceComponentBind), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    provisioningState: ");
+                builder.Append("    serviceComponentBind: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(ProvisioningState))
+                if (Optional.IsCollectionDefined(ServiceComponentBind))
                 {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentErrors), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    deploymentErrors: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeploymentErrors))
-                {
-                    builder.Append("    deploymentErrors: ");
-                    if (DeploymentErrors.Contains(Environment.NewLine))
+                    if (ServiceComponentBind.Any())
                     {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DeploymentErrors}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DeploymentErrors}'");
+                        builder.Append("    serviceComponentBind: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ServiceComponentBind)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    serviceComponentBind: ");
+                        }
+                        builder.AppendLine("    ]");
                     }
                 }
             }

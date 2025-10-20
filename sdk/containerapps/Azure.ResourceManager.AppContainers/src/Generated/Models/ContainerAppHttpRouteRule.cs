@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> A set of routing conditions and targets. </summary>
+    /// <summary> Http Route rule. </summary>
     public partial class ContainerAppHttpRouteRule
     {
         /// <summary>

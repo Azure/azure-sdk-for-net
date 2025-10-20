@@ -54,12 +54,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="cpu"> Required CPU in cores, e.g. 0.5. </param>
         /// <param name="memory"> Required memory, e.g. "250Mb". </param>
         /// <param name="ephemeralStorage"> Ephemeral Storage, e.g. "1Gi". </param>
+        /// <param name="gpu"> Required GPU in cores for GPU based app, e.g. 1.0. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppContainerResources(double? cpu, string memory, string ephemeralStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppContainerResources(double? cpu, string memory, string ephemeralStorage, double? gpu, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Cpu = cpu;
             Memory = memory;
             EphemeralStorage = ephemeralStorage;
+            Gpu = gpu;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,5 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Ephemeral Storage, e.g. "1Gi". </summary>
         [WirePath("ephemeralStorage")]
         public string EphemeralStorage { get; }
+        /// <summary> Required GPU in cores for GPU based app, e.g. 1.0. </summary>
+        [WirePath("gpu")]
+        public double? Gpu { get; set; }
     }
 }

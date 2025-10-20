@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-01";
+            _apiVersion = apiVersion ?? "2025-10-02-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Gets all maintenance configurations in the specified Managed Environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> The name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Gets all maintenance configurations in the specified Managed Environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> The name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Create or update the maintenance configuration for Managed Environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> The name of the Managed Environment. </param>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Create or update the maintenance configuration for Managed Environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> The name of the Managed Environment. </param>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Deletes the maintenance configuration of a ManagedEnvironment . </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> The name of the Managed Environment. </param>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Deletes the maintenance configuration of a ManagedEnvironment . </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> The name of the Managed Environment. </param>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Gets the maintenance configuration of a ManagedEnvironment . </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> The name of the Managed Environment. </param>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Gets the maintenance configuration of a ManagedEnvironment . </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> The name of the Managed Environment. </param>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Gets all maintenance configurations in the specified Managed Environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> The name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Gets all maintenance configurations in the specified Managed Environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="environmentName"> The name of the Managed Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

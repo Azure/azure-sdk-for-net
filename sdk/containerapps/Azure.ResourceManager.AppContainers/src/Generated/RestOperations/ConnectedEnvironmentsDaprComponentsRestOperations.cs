@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-01";
+            _apiVersion = apiVersion ?? "2025-10-02-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Dapr Components for a connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DaprComponentsCollection>> ListAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConnectedEnvironmentDaprComponentsCollection>> ListAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        DaprComponentsCollection value = default;
+                        ConnectedEnvironmentDaprComponentsCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DaprComponentsCollection.DeserializeDaprComponentsCollection(document.RootElement);
+                        value = ConnectedEnvironmentDaprComponentsCollection.DeserializeConnectedEnvironmentDaprComponentsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Dapr Components for a connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DaprComponentsCollection> List(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        public Response<ConnectedEnvironmentDaprComponentsCollection> List(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        DaprComponentsCollection value = default;
+                        ConnectedEnvironmentDaprComponentsCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DaprComponentsCollection.DeserializeDaprComponentsCollection(document.RootElement);
+                        value = ConnectedEnvironmentDaprComponentsCollection.DeserializeConnectedEnvironmentDaprComponentsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -169,14 +169,14 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get a dapr component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContainerAppDaprComponentData>> GetAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConnectedEnvironmentDaprComponentData>> GetAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,27 +189,27 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        ContainerAppDaprComponentData value = default;
+                        ConnectedEnvironmentDaprComponentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(document.RootElement);
+                        value = ConnectedEnvironmentDaprComponentData.DeserializeConnectedEnvironmentDaprComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ContainerAppDaprComponentData)null, message.Response);
+                    return Response.FromValue((ConnectedEnvironmentDaprComponentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get a dapr component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContainerAppDaprComponentData> Get(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, CancellationToken cancellationToken = default)
+        public Response<ConnectedEnvironmentDaprComponentData> Get(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        ContainerAppDaprComponentData value = default;
+                        ConnectedEnvironmentDaprComponentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(document.RootElement);
+                        value = ConnectedEnvironmentDaprComponentData.DeserializeConnectedEnvironmentDaprComponentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ContainerAppDaprComponentData)null, message.Response);
+                    return Response.FromValue((ConnectedEnvironmentDaprComponentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ContainerAppDaprComponentData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ConnectedEnvironmentDaprComponentData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppContainers
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ContainerAppDaprComponentData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ConnectedEnvironmentDaprComponentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Creates or updates a Dapr Component in a connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/>, <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ContainerAppDaprComponentData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ConnectedEnvironmentDaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Creates or updates a Dapr Component in a connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/>, <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ContainerAppDaprComponentData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, string componentName, ConnectedEnvironmentDaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Delete a Dapr Component from a connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Delete a Dapr Component from a connected environment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> List secrets for a dapr component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> List secrets for a dapr component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="componentName"> Name of the Dapr Component. </param>
@@ -552,13 +552,13 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Dapr Components for a connected environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DaprComponentsCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConnectedEnvironmentDaprComponentsCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -571,9 +571,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        DaprComponentsCollection value = default;
+                        ConnectedEnvironmentDaprComponentsCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DaprComponentsCollection.DeserializeDaprComponentsCollection(document.RootElement);
+                        value = ConnectedEnvironmentDaprComponentsCollection.DeserializeConnectedEnvironmentDaprComponentsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -583,13 +583,13 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Dapr Components for a connected environment. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="connectedEnvironmentName"> Name of the connected environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DaprComponentsCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        public Response<ConnectedEnvironmentDaprComponentsCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -602,9 +602,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        DaprComponentsCollection value = default;
+                        ConnectedEnvironmentDaprComponentsCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DaprComponentsCollection.DeserializeDaprComponentsCollection(document.RootElement);
+                        value = ConnectedEnvironmentDaprComponentsCollection.DeserializeConnectedEnvironmentDaprComponentsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

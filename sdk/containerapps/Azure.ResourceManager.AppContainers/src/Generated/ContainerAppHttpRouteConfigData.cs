@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A class representing the ContainerAppHttpRouteConfig data model.
-    /// A set of host names and http request routing rules for a Container App Environment
+    /// Advanced Ingress routing for path/header based routing for a Container App Environment
     /// </summary>
     public partial class ContainerAppHttpRouteConfigData : ResourceData
     {

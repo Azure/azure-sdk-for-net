@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-07-01";
+            _apiVersion = apiVersion ?? "2025-10-02-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Container App SourceControls in a given resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get the Container App SourceControls in a given resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get a SourceControl of a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Get a SourceControl of a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, ContainerAppSourceControlData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, ContainerAppSourceControlData data, string xMsGitHubAuxiliary)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppContainers
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, ContainerAppSourceControlData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, ContainerAppSourceControlData data, string xMsGitHubAuxiliary)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -267,6 +267,10 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath(sourceControlName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (xMsGitHubAuxiliary != null)
+            {
+                request.Headers.Add("x-ms-github-auxiliary", xMsGitHubAuxiliary);
+            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -277,15 +281,16 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Create or update the SourceControl for a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
         /// <param name="data"> Properties used to create a Container App SourceControl. </param>
+        /// <param name="xMsGitHubAuxiliary"> Github personal access token used for SourceControl. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="sourceControlName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, ContainerAppSourceControlData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, ContainerAppSourceControlData data, string xMsGitHubAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -293,7 +298,7 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, containerAppName, sourceControlName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, containerAppName, sourceControlName, data, xMsGitHubAuxiliary);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -306,15 +311,16 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Create or update the SourceControl for a Container App. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
         /// <param name="data"> Properties used to create a Container App SourceControl. </param>
+        /// <param name="xMsGitHubAuxiliary"> Github personal access token used for SourceControl. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="sourceControlName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, ContainerAppSourceControlData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, ContainerAppSourceControlData data, string xMsGitHubAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, containerAppName, sourceControlName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, containerAppName, sourceControlName, data, xMsGitHubAuxiliary);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -334,7 +340,7 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, string xMsGitHubAuxiliary, bool? ignoreWorkflowDeletionFailure, bool? deleteWorkflow)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -346,11 +352,19 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath(containerAppName, true);
             uri.AppendPath("/sourcecontrols/", false);
             uri.AppendPath(sourceControlName, true);
+            if (ignoreWorkflowDeletionFailure != null)
+            {
+                uri.AppendQuery("ignoreWorkflowDeletionFailure", ignoreWorkflowDeletionFailure.Value, true);
+            }
+            if (deleteWorkflow != null)
+            {
+                uri.AppendQuery("deleteWorkflow", deleteWorkflow.Value, true);
+            }
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, string xMsGitHubAuxiliary, bool? ignoreWorkflowDeletionFailure, bool? deleteWorkflow)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -365,29 +379,44 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath(containerAppName, true);
             uri.AppendPath("/sourcecontrols/", false);
             uri.AppendPath(sourceControlName, true);
+            if (ignoreWorkflowDeletionFailure != null)
+            {
+                uri.AppendQuery("ignoreWorkflowDeletionFailure", ignoreWorkflowDeletionFailure.Value, true);
+            }
+            if (deleteWorkflow != null)
+            {
+                uri.AppendQuery("deleteWorkflow", deleteWorkflow.Value, true);
+            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (xMsGitHubAuxiliary != null)
+            {
+                request.Headers.Add("x-ms-github-auxiliary", xMsGitHubAuxiliary);
+            }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Delete a Container App SourceControl. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
+        /// <param name="xMsGitHubAuxiliary"> Github personal access token used for SourceControl. </param>
+        /// <param name="ignoreWorkflowDeletionFailure"> Ignore Workflow Deletion Failure. </param>
+        /// <param name="deleteWorkflow"> Delete workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="sourceControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, string xMsGitHubAuxiliary = null, bool? ignoreWorkflowDeletionFailure = null, bool? deleteWorkflow = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
             Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, containerAppName, sourceControlName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, containerAppName, sourceControlName, xMsGitHubAuxiliary, ignoreWorkflowDeletionFailure, deleteWorkflow);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -401,21 +430,24 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Delete a Container App SourceControl. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
+        /// <param name="xMsGitHubAuxiliary"> Github personal access token used for SourceControl. </param>
+        /// <param name="ignoreWorkflowDeletionFailure"> Ignore Workflow Deletion Failure. </param>
+        /// <param name="deleteWorkflow"> Delete workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="sourceControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string containerAppName, string sourceControlName, string xMsGitHubAuxiliary = null, bool? ignoreWorkflowDeletionFailure = null, bool? deleteWorkflow = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
             Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, containerAppName, sourceControlName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, containerAppName, sourceControlName, xMsGitHubAuxiliary, ignoreWorkflowDeletionFailure, deleteWorkflow);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -452,7 +484,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Container App SourceControls in a given resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -483,7 +515,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Get the Container App SourceControls in a given resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

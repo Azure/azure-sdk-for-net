@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A class representing the LogicAppWorkflowEnvelope data model.
-    /// Schema for the workflow object.
+    /// Workflow properties definition.
     /// </summary>
     public partial class LogicAppWorkflowEnvelopeData : ResourceData
     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LogicAppWorkflowEnvelopeData"/>. </summary>
-        public LogicAppWorkflowEnvelopeData()
+        internal LogicAppWorkflowEnvelopeData()
         {
         }
 
@@ -61,21 +61,26 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Gets the logic app hybrid workflow kind. </param>
+        /// <param name="kind"> The resource kind. </param>
+        /// <param name="location"> The resource location. </param>
         /// <param name="properties"> Additional workflow properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogicAppWorkflowEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LogicAppWorkflowKind? kind, LogicAppWorkflowEnvelopeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal LogicAppWorkflowEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, LogicAppWorkflowEnvelopeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
+            Location = location;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the logic app hybrid workflow kind. </summary>
+        /// <summary> The resource kind. </summary>
         [WirePath("kind")]
-        public LogicAppWorkflowKind? Kind { get; set; }
+        public string Kind { get; }
+        /// <summary> The resource location. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
         /// <summary> Additional workflow properties. </summary>
         [WirePath("properties")]
-        public LogicAppWorkflowEnvelopeProperties Properties { get; set; }
+        public LogicAppWorkflowEnvelopeProperties Properties { get; }
     }
 }

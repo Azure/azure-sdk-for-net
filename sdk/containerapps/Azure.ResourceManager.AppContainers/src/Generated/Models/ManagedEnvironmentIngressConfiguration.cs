@@ -52,13 +52,15 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentIngressConfiguration"/>. </summary>
         /// <param name="workloadProfileName"> Name of the workload profile used by the ingress component. Required. </param>
+        /// <param name="scale"> Scaling configuration for the ingress component. Required. </param>
         /// <param name="terminationGracePeriodSeconds"> Time (in seconds) to allow active connections to complete on termination. Must be between 0 and 3600. Defaults to 480 seconds. </param>
         /// <param name="headerCountLimit"> Maximum number of headers per request allowed by the ingress. Must be at least 1. Defaults to 100. </param>
-        /// <param name="requestIdleTimeout"> Duration (in minutes) before idle requests are timed out. Must be between 4 and 30 inclusive. Defaults to 4 minutes. </param>
+        /// <param name="requestIdleTimeout"> Duration (in minutes) before idle requests are timed out. Must be at least 1 minute. Defaults to 4 minutes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedEnvironmentIngressConfiguration(string workloadProfileName, int? terminationGracePeriodSeconds, int? headerCountLimit, int? requestIdleTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedEnvironmentIngressConfiguration(string workloadProfileName, IngressConfigurationScale scale, int? terminationGracePeriodSeconds, int? headerCountLimit, int? requestIdleTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WorkloadProfileName = workloadProfileName;
+            Scale = scale;
             TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
             HeaderCountLimit = headerCountLimit;
             RequestIdleTimeout = requestIdleTimeout;
@@ -68,13 +70,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Name of the workload profile used by the ingress component. Required. </summary>
         [WirePath("workloadProfileName")]
         public string WorkloadProfileName { get; set; }
+        /// <summary> Scaling configuration for the ingress component. Required. </summary>
+        [WirePath("scale")]
+        public IngressConfigurationScale Scale { get; set; }
         /// <summary> Time (in seconds) to allow active connections to complete on termination. Must be between 0 and 3600. Defaults to 480 seconds. </summary>
         [WirePath("terminationGracePeriodSeconds")]
         public int? TerminationGracePeriodSeconds { get; set; }
         /// <summary> Maximum number of headers per request allowed by the ingress. Must be at least 1. Defaults to 100. </summary>
         [WirePath("headerCountLimit")]
         public int? HeaderCountLimit { get; set; }
-        /// <summary> Duration (in minutes) before idle requests are timed out. Must be between 4 and 30 inclusive. Defaults to 4 minutes. </summary>
+        /// <summary> Duration (in minutes) before idle requests are timed out. Must be at least 1 minute. Defaults to 4 minutes. </summary>
         [WirePath("requestIdleTimeout")]
         public int? RequestIdleTimeout { get; set; }
     }

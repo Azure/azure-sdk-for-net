@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsEnabled", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsPeerToPeerEncryptionEnabled", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  encryption: ");

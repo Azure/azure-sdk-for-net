@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDaprComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ConnectedEnvironmentsDaprComponents_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ConnectedEnvironmentsDaprComponents_Get.json
             // this example is just showing the usage of "ConnectedEnvironmentsDaprComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ContainerAppDaprComponentData resourceData = result.Data;
+            ConnectedEnvironmentDaprComponentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteDaprComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ConnectedEnvironmentsDaprComponents_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ConnectedEnvironmentsDaprComponents_Delete.json
             // this example is just showing the usage of "ConnectedEnvironmentsDaprComponents_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateDaprComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ConnectedEnvironmentsDaprComponents_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ConnectedEnvironmentsDaprComponents_CreateOrUpdate.json
             // this example is just showing the usage of "ConnectedEnvironmentsDaprComponents_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ContainerAppConnectedEnvironmentDaprComponentResource containerAppConnectedEnvironmentDaprComponent = client.GetContainerAppConnectedEnvironmentDaprComponentResource(containerAppConnectedEnvironmentDaprComponentResourceId);
 
             // invoke the operation
-            ContainerAppDaprComponentData data = new ContainerAppDaprComponentData
+            ConnectedEnvironmentDaprComponentData data = new ConnectedEnvironmentDaprComponentData
             {
                 ComponentType = "state.azure.cosmosdb",
                 Version = "v1",
@@ -125,13 +125,23 @@ Name = "masterkey",
 SecretRef = "masterkey",
 }},
                 Scopes = { "container-app-1", "container-app-2" },
+                ServiceComponentBind = {new DaprComponentServiceBinding
+{
+Name = "statestore",
+ServiceId = "/subscriptions/9f7371f1-b593-4c3c-84e2-9167806ad358/resourceGroups/ca-syn2-group/providers/Microsoft.App/containerapps/cappredis",
+Metadata = new DaprServiceBindMetadata
+{
+Name = "daprcomponentBind",
+Value = "redis-bind",
+},
+}},
             };
             ArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource> lro = await containerAppConnectedEnvironmentDaprComponent.UpdateAsync(WaitUntil.Completed, data);
             ContainerAppConnectedEnvironmentDaprComponentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ContainerAppDaprComponentData resourceData = result.Data;
+            ConnectedEnvironmentDaprComponentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -140,7 +150,7 @@ SecretRef = "masterkey",
         [Ignore("Only validating compilation of examples")]
         public async Task GetSecrets_ListContainerAppsSecrets()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/ConnectedEnvironmentsDaprComponents_ListSecrets.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/ConnectedEnvironmentsDaprComponents_ListSecrets.json
             // this example is just showing the usage of "ConnectedEnvironmentsDaprComponents_ListSecrets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

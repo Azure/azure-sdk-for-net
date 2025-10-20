@@ -76,11 +76,13 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="dynamicPoolConfiguration"> The pool configuration if the poolManagementType is dynamic. </param>
         /// <param name="customContainerTemplate"> The custom container configuration if the containerType is CustomContainer. </param>
         /// <param name="sessionNetworkConfiguration"> The network configuration of the sessions in the session pool. </param>
+        /// <param name="templateUpdateStatus"> The template status of the session pool, showing active template, or desired template during session pool update. This is only available if the containerType is CustomContainer. </param>
         /// <param name="poolManagementEndpoint"> The endpoint to manage the pool. </param>
         /// <param name="provisioningState"> Provisioning state of the session pool. </param>
         /// <param name="managedIdentitySettings"> Optional settings for a Managed Identity that is assigned to the Session pool. </param>
+        /// <param name="mcpServerSettings"> The MCP server settings of the session pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SessionPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier environmentId, ContainerType? containerType, PoolManagementType? poolManagementType, int? nodeCount, SessionPoolScaleConfiguration scaleConfiguration, IList<SessionPoolSecret> secrets, DynamicPoolConfiguration dynamicPoolConfiguration, CustomContainerTemplate customContainerTemplate, SessionNetworkConfiguration sessionNetworkConfiguration, Uri poolManagementEndpoint, SessionPoolProvisioningState? provisioningState, IList<SessionPoolManagedIdentitySetting> managedIdentitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SessionPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier environmentId, ContainerType? containerType, PoolManagementType? poolManagementType, int? nodeCount, SessionPoolScaleConfiguration scaleConfiguration, IList<SessionPoolSecret> secrets, DynamicPoolConfiguration dynamicPoolConfiguration, CustomContainerTemplate customContainerTemplate, SessionNetworkConfiguration sessionNetworkConfiguration, TemplateUpdateStatus templateUpdateStatus, Uri poolManagementEndpoint, SessionPoolProvisioningState? provisioningState, IList<SessionPoolManagedIdentitySetting> managedIdentitySettings, McpServerSettings mcpServerSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             EnvironmentId = environmentId;
@@ -92,9 +94,11 @@ namespace Azure.ResourceManager.AppContainers
             DynamicPoolConfiguration = dynamicPoolConfiguration;
             CustomContainerTemplate = customContainerTemplate;
             SessionNetworkConfiguration = sessionNetworkConfiguration;
+            TemplateUpdateStatus = templateUpdateStatus;
             PoolManagementEndpoint = poolManagementEndpoint;
             ProvisioningState = provisioningState;
             ManagedIdentitySettings = managedIdentitySettings;
+            McpServerSettings = mcpServerSettings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -157,6 +161,9 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
+        /// <summary> The template status of the session pool, showing active template, or desired template during session pool update. This is only available if the containerType is CustomContainer. </summary>
+        [WirePath("properties.templateUpdateStatus")]
+        public TemplateUpdateStatus TemplateUpdateStatus { get; }
         /// <summary> The endpoint to manage the pool. </summary>
         [WirePath("properties.poolManagementEndpoint")]
         public Uri PoolManagementEndpoint { get; }
@@ -166,5 +173,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Optional settings for a Managed Identity that is assigned to the Session pool. </summary>
         [WirePath("properties.managedIdentitySettings")]
         public IList<SessionPoolManagedIdentitySetting> ManagedIdentitySettings { get; }
+        /// <summary> The MCP server settings of the session pool. </summary>
+        [WirePath("properties.mcpServerSettings")]
+        public McpServerSettings McpServerSettings { get; set; }
     }
 }

@@ -172,14 +172,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AzureBlobStorageSasUrlSettingName", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureBlobStorage), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  azureBlobStorage: ");
-                builder.AppendLine("{");
-                builder.Append("    sasUrlSettingName: ");
                 builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
             }
             else
             {

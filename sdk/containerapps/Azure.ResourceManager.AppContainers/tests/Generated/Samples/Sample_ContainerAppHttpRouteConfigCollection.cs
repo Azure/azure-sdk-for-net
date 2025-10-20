@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateHttpRoute()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/HttpRouteConfig_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/HttpRouteConfig_CreateOrUpdate.json
             // this example is just showing the usage of "HttpRouteConfig_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,8 @@ CertificateId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b
 {
 Targets = {new ContainerAppHttpRouteTarget("capp-1")
 {
-Revision = "capp-1--0000001",
+Revision = "rev-1",
+Weight = 100,
 }},
 Routes = {new ContainerAppHttpRoute
 {
@@ -83,7 +84,7 @@ Description = "random-description",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateHttpRoutePathSeparatedPrefixRule()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/HttpRouteConfig_CreateOrUpdate_PathSepPrefix.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/HttpRouteConfig_CreateOrUpdate_PathSepPrefix.json
             // this example is just showing the usage of "HttpRouteConfig_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +111,7 @@ Description = "random-description",
                 {
                     CustomDomains = {new ContainerAppCustomDomain("example.com")
 {
-BindingType = ContainerAppCustomDomainBindingType.SniEnabled,
+BindingType = ContainerAppCustomDomainBindingType.Disabled,
 CertificateId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/examplerg/providers/Microsoft.App/managedEnvironments/testcontainerenv/certificates/certificate-1"),
 }},
                     Rules = {new ContainerAppHttpRouteRule
@@ -146,7 +147,7 @@ Description = "random-description",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateHttpRoutePrefixRule()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/HttpRouteConfig_CreateOrUpdatePrefix.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/HttpRouteConfig_CreateOrUpdatePrefix.json
             // this example is just showing the usage of "HttpRouteConfig_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,7 +174,7 @@ Description = "random-description",
                 {
                     CustomDomains = {new ContainerAppCustomDomain("example.com")
 {
-BindingType = ContainerAppCustomDomainBindingType.SniEnabled,
+BindingType = ContainerAppCustomDomainBindingType.Disabled,
 CertificateId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/examplerg/providers/Microsoft.App/managedEnvironments/testcontainerenv/certificates/certificate-1"),
 }},
                     Rules = {new ContainerAppHttpRouteRule
@@ -209,7 +210,7 @@ Description = "random-description",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetHttpRoute()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/HttpRouteConfig_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/HttpRouteConfig_Get.json
             // this example is just showing the usage of "HttpRouteConfig_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -241,9 +242,9 @@ Description = "random-description",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListHttpRouteConfigsByManagedEnvironment()
+        public async Task GetAll_ListManagedHttpRoutesByManagedEnvironment()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/HttpRouteConfig_ListByManagedEnvironment.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/HttpRouteConfig_ListByManagedEnvironment.json
             // this example is just showing the usage of "HttpRouteConfig_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -279,7 +280,7 @@ Description = "random-description",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetHttpRoute()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/HttpRouteConfig_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/HttpRouteConfig_Get.json
             // this example is just showing the usage of "HttpRouteConfig_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -309,7 +310,7 @@ Description = "random-description",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetHttpRoute()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/HttpRouteConfig_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/HttpRouteConfig_Get.json
             // this example is just showing the usage of "HttpRouteConfig_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

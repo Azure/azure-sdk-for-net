@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/33a2135c8115465b292b71a521ea50c1cc336c8c/specification/app/resource-manager/Microsoft.App/ContainerApps/readme.md
-#tag: package-2025-07-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/444c6266f5941ca6c52845b3586f54a6314bd5ba/specification/app/resource-manager/Microsoft.App/ContainerApps/readme.md
+#tag: package-2025-10-02-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -128,6 +128,7 @@ rename-mapping:
   DaprSecret: ContainerAppDaprSecret
   Dapr: ContainerAppDaprConfiguration
   Dapr.enableApiLogging: IsApiLoggingEnabled
+  DaprSubscriptionBulkSubscribeOptions: DaprSubscriptionBulkSubscribeConfig
   DefaultAuthorizationPolicy: ContainerAppDefaultAuthorizationPolicy
   Diagnostics: ContainerAppDiagnostic
   DiagnosticDataProviderMetadata: ContainerAppDiagnosticDataProviderMetadata
@@ -201,6 +202,7 @@ rename-mapping:
   ManagedEnvironment: ContainerAppManagedEnvironment
   ManagedEnvironment.properties.staticIp: -|ip-address
   ManagedEnvironment.properties.zoneRedundant: IsZoneRedundant
+  ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption.enabled: IsPeerToPeerEncryptionEnabled
   ManagedEnvironmentStorage: ContainerAppManagedEnvironmentStorage
   ManagedIdentitySetting: SessionPoolManagedIdentitySetting
   Mtls.enabled: IsMtlsEnabled

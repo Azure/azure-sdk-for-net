@@ -65,8 +65,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="isValid"> Is the certificate valid?. </param>
         /// <param name="publicKeyHash"> Public key hash. </param>
+        /// <param name="certificateType"> The type of the certificate. Allowed values are `ServerSSLCertificate` and `ImagePullTrustedCA`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string deploymentErrors, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string deploymentErrors, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash, CertificateType? certificateType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Thumbprint = thumbprint;
             IsValid = isValid;
             PublicKeyHash = publicKeyHash;
+            CertificateType = certificateType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -123,5 +125,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Public key hash. </summary>
         [WirePath("publicKeyHash")]
         public string PublicKeyHash { get; }
+        /// <summary> The type of the certificate. Allowed values are `ServerSSLCertificate` and `ImagePullTrustedCA`. </summary>
+        [WirePath("certificateType")]
+        public CertificateType? CertificateType { get; set; }
     }
 }

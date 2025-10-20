@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetHttpRoute()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/HttpRouteConfig_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/HttpRouteConfig_Get.json
             // this example is just showing the usage of "HttpRouteConfig_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteAHttpRouteConfig()
+        public async Task Delete_DeleteCertificate()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/HttpRouteConfig_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/HttpRouteConfig_Delete.json
             // this example is just showing the usage of "HttpRouteConfig_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_PatchAHttpRouteConfig()
+        public async Task Update_PatchManagedHttpRoute()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/HttpRouteConfig_Patch.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/HttpRouteConfig_Patch.json
             // this example is just showing the usage of "HttpRouteConfig_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +109,8 @@ CertificateId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b
 {
 Targets = {new ContainerAppHttpRouteTarget("capp-1")
 {
-Revision = "capp-1--0000001",
+Revision = "rev-1",
+Weight = 100,
 }},
 Routes = {new ContainerAppHttpRoute
 {

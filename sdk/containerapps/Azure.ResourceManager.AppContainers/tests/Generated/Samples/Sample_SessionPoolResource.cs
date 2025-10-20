@@ -20,7 +20,37 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSessionPool()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/SessionPools_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/SessionPools_Get.json
+            // this example is just showing the usage of "ContainerAppsSessionPools_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SessionPoolResource created on azure
+            // for more information of creating SessionPoolResource, please refer to the document of SessionPoolResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string sessionPoolName = "testsessionpool";
+            ResourceIdentifier sessionPoolResourceId = SessionPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sessionPoolName);
+            SessionPoolResource sessionPool = client.GetSessionPoolResource(sessionPoolResourceId);
+
+            // invoke the operation
+            SessionPoolResource result = await sessionPool.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SessionPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetSessionPoolDuringUpdate()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/SessionPools_Get_InProgress.json
             // this example is just showing the usage of "ContainerAppsSessionPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSessionPool()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/SessionPools_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/SessionPools_Delete.json
             // this example is just showing the usage of "ContainerAppsSessionPools_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +106,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateSessionPool()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/SessionPools_Patch.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/SessionPools_Patch.json
             // this example is just showing the usage of "ContainerAppsSessionPools_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,6 +129,11 @@ namespace Azure.ResourceManager.AppContainers.Samples
                 {
                     MaxConcurrentSessions = 500,
                     ReadySessionInstances = 100,
+                },
+                DynamicPoolLifecycleConfiguration = new SessionPoolLifecycleConfiguration
+                {
+                    LifecycleType = SessionPoolLifecycleType.Timed,
+                    CooldownPeriodInSeconds = 600,
                 },
                 CustomContainerTemplate = new CustomContainerTemplate
                 {
@@ -126,6 +161,58 @@ Memory = "0.5Gi",
             SessionPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task FetchMcpServerCredentials_FetchSessionPoolMCPServerCredentials()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/SessionPools_FetchMcpServerCredentials.json
+            // this example is just showing the usage of "ContainerAppsSessionPools_FetchMcpServerCredentials" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SessionPoolResource created on azure
+            // for more information of creating SessionPoolResource, please refer to the document of SessionPoolResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string sessionPoolName = "testsessionpool";
+            ResourceIdentifier sessionPoolResourceId = SessionPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sessionPoolName);
+            SessionPoolResource sessionPool = client.GetSessionPoolResource(sessionPoolResourceId);
+
+            // invoke the operation
+            McpServerCredential result = await sessionPool.FetchMcpServerCredentialsAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task RotateMcpServerCredentials_RotateSessionPoolMCPServerCredentials()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/SessionPools_RotateMcpServerCredentials.json
+            // this example is just showing the usage of "ContainerAppsSessionPools_RotateMcpServerCredentials" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SessionPoolResource created on azure
+            // for more information of creating SessionPoolResource, please refer to the document of SessionPoolResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string sessionPoolName = "testsessionpool";
+            ResourceIdentifier sessionPoolResourceId = SessionPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sessionPoolName);
+            SessionPoolResource sessionPool = client.GetSessionPoolResource(sessionPoolResourceId);
+
+            // invoke the operation
+            McpServerCredential result = await sessionPool.RotateMcpServerCredentialsAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

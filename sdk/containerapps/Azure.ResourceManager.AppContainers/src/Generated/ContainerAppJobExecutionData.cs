@@ -65,13 +65,19 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="startOn"> Job execution start time. </param>
         /// <param name="endOn"> Job execution end time. </param>
         /// <param name="template"> Job's execution container. </param>
+        /// <param name="detailedStatus"> Detailed status of the job execution. </param>
+        /// <param name="reason"> Reason for the current condition of job execution. </param>
+        /// <param name="message"> Human readable message indicating details about the current condition of the job execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerAppJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template, ExecutionStatus detailedStatus, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
             Template = template;
+            DetailedStatus = detailedStatus;
+            Reason = reason;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,5 +93,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Job's execution container. </summary>
         [WirePath("properties.template")]
         public ContainerAppJobExecutionTemplate Template { get; }
+        /// <summary> Detailed status of the job execution. </summary>
+        internal ExecutionStatus DetailedStatus { get; }
+        /// <summary> Replicas in the execution. </summary>
+        [WirePath("properties.detailedStatus.replicas")]
+        public IReadOnlyList<ReplicaExecutionStatus> DetailedStatusReplicas
+        {
+            get => DetailedStatus?.Replicas;
+        }
+
+        /// <summary> Reason for the current condition of job execution. </summary>
+        [WirePath("properties.reason")]
+        public string Reason { get; }
+        /// <summary> Human readable message indicating details about the current condition of the job execution. </summary>
+        [WirePath("properties.message")]
+        public string Message { get; }
     }
 }

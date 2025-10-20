@@ -58,13 +58,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRouteTarget"/>. </summary>
         /// <param name="containerApp"> Container App Name to route requests to. </param>
         /// <param name="revision"> Revision to route requests to. </param>
-        /// <param name="label"> Label to route requests to. </param>
+        /// <param name="label"> Label/Revision to route requests to. </param>
+        /// <param name="weight"> Weighted routing. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppHttpRouteTarget(string containerApp, string revision, string label, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppHttpRouteTarget(string containerApp, string revision, string label, int? weight, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerApp = containerApp;
             Revision = revision;
             Label = label;
+            Weight = weight;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -79,8 +81,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Revision to route requests to. </summary>
         [WirePath("revision")]
         public string Revision { get; set; }
-        /// <summary> Label to route requests to. </summary>
+        /// <summary> Label/Revision to route requests to. </summary>
         [WirePath("label")]
         public string Label { get; set; }
+        /// <summary> Weighted routing. </summary>
+        [WirePath("weight")]
+        public int? Weight { get; set; }
     }
 }

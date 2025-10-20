@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("workloadProfileName"u8);
                 writer.WriteStringValue(WorkloadProfileName);
             }
+            if (Optional.IsDefined(Scale))
+            {
+                writer.WritePropertyName("scale"u8);
+                writer.WriteObjectValue(Scale, options);
+            }
             if (Optional.IsDefined(TerminationGracePeriodSeconds))
             {
                 writer.WritePropertyName("terminationGracePeriodSeconds"u8);
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string workloadProfileName = default;
+            IngressConfigurationScale scale = default;
             int? terminationGracePeriodSeconds = default;
             int? headerCountLimit = default;
             int? requestIdleTimeout = default;
@@ -103,6 +109,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("workloadProfileName"u8))
                 {
                     workloadProfileName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("scale"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scale = IngressConfigurationScale.DeserializeIngressConfigurationScale(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("terminationGracePeriodSeconds"u8))
@@ -138,7 +153,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedEnvironmentIngressConfiguration(workloadProfileName, terminationGracePeriodSeconds, headerCountLimit, requestIdleTimeout, serializedAdditionalRawData);
+            return new ManagedEnvironmentIngressConfiguration(
+                workloadProfileName,
+                scale,
+                terminationGracePeriodSeconds,
+                headerCountLimit,
+                requestIdleTimeout,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -172,6 +193,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         builder.AppendLine($"'{WorkloadProfileName}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scale), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scale: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Scale))
+                {
+                    builder.Append("  scale: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Scale, options, 2, false, "  scale: ");
                 }
             }
 

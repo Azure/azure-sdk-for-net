@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetContainerAppSSourceControl()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/SourceControls_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/SourceControls_Get.json
             // this example is just showing the usage of "ContainerAppsSourceControls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteContainerAppSourceControl()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/SourceControls_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/SourceControls_Delete.json
             // this example is just showing the usage of "ContainerAppsSourceControls_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,10 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ContainerAppSourceControlResource containerAppSourceControl = client.GetContainerAppSourceControlResource(containerAppSourceControlResourceId);
 
             // invoke the operation
-            await containerAppSourceControl.DeleteAsync(WaitUntil.Completed);
+            string xMsGitHubAuxiliary = "githubaccesstoken";
+            bool? ignoreWorkflowDeletionFailure = false;
+            bool? deleteWorkflow = false;
+            await containerAppSourceControl.DeleteAsync(WaitUntil.Completed, xMsGitHubAuxiliary: xMsGitHubAuxiliary, ignoreWorkflowDeletionFailure: ignoreWorkflowDeletionFailure, deleteWorkflow: deleteWorkflow);
 
             Console.WriteLine("Succeeded");
         }
@@ -78,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateContainerAppSourceControl()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/stable/2025-07-01/examples/SourceControls_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/ContainerApps/preview/2025-10-02-preview/examples/SourceControls_CreateOrUpdate.json
             // this example is just showing the usage of "ContainerAppsSourceControls_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,11 +119,14 @@ namespace Azure.ResourceManager.AppContainers.Samples
                         Kind = "feaderated",
                     },
                     ContextPath = "./",
+                    DockerfilePath = "./Dockerfile",
                     GitHubPersonalAccessToken = "test",
                     Image = "image/tag",
+                    BuildEnvironmentVariables = { new EnvironmentVariable("foo1", "bar1"), new EnvironmentVariable("foo2", "bar2") },
                 },
             };
-            ArmOperation<ContainerAppSourceControlResource> lro = await containerAppSourceControl.UpdateAsync(WaitUntil.Completed, data);
+            string xMsGitHubAuxiliary = "githubaccesstoken";
+            ArmOperation<ContainerAppSourceControlResource> lro = await containerAppSourceControl.UpdateAsync(WaitUntil.Completed, data, xMsGitHubAuxiliary: xMsGitHubAuxiliary);
             ContainerAppSourceControlResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
