@@ -28,7 +28,6 @@ interface Operations extends Azure.ResourceManager.Operations {}
 
 /** The available API versions. */
 enum Versions {
-  /** Azure Cosmos DB for Mongo vCore clusters api version 2024-03-01-preview. */
   v2024_05_01: "2024-05-01",
 }
 
