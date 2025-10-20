@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the FileSystemResource. </param>
         /// <returns> A new <see cref="Models.DellFileSystemPatch"/> instance for mocking. </returns>
-        public static DellFileSystemPatch DellFileSystemPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, DellFileSystemPatchProperties properties = default)
+        public static DellFileSystemPatch DellFileSystemPatch(BinaryData identity = default, IDictionary<string, string> tags = default, DellFileSystemPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
