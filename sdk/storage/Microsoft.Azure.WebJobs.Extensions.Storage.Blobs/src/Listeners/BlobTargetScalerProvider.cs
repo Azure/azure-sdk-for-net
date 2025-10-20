@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 var startOfPreviousHour = new DateTime(now.Year, now.Month, now.Day, now.Hour, 0, 0).AddHours(-1);
                 if (_latestPositiveEntry?.RequestStartTime > startOfPreviousHour)
                 {
-                    _logger.LogInformation($"Recent writes were detected from cache for '{_targetScalerDescriptor.FunctionId}' (requestStartTime={_latestPositiveEntry.RequestStartTime:O}).");
+                    _logger.LogInformation($"Recent writes were detected from cache for '{_targetScalerDescriptor.FunctionId}' (requestedObjectKey='{_latestPositiveEntry.RequestedObjectKey}', requestStartTime='{_latestPositiveEntry.RequestStartTime:O}').");
                     return new TargetScalerResult() { TargetWorkerCount = 1 };
                 }
 
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 _latestPositiveEntry = await blobLogListener.GetFirstWriteForContainerAsync(_containerName, CancellationToken.None).ConfigureAwait(false);
                 if (_latestPositiveEntry !=null)
                 {
-                    _logger.LogInformation($"Recent writes were detected for '{_targetScalerDescriptor.FunctionId}' (requestStartTime={_latestPositiveEntry.RequestStartTime:O}).");
+                    _logger.LogInformation($"Recent writes were detected for '{_targetScalerDescriptor.FunctionId}' (requestedObjectKey='{_latestPositiveEntry.RequestedObjectKey}', requestStartTime='{_latestPositiveEntry.RequestStartTime:O}').");
                     return new TargetScalerResult() { TargetWorkerCount = 1 };
                 }
                 else
