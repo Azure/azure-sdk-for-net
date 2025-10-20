@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.AspNetCore.Hosting.Server;
 using NUnit.Framework;
 
 namespace Azure.AI.Agents.Persistent.Tests
@@ -43,7 +42,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         public void MCPApprovalRaisesString()
         {
             ArgumentException exc = Assert.Throws<ArgumentException>(() => new MCPApproval("test"));
-            Assert.That(exc.Message.StartsWith("The parameter \"trust\" may be only \"always\" or \"never\"."), $"Unexpected message {exc.Message}");
+            Assert.That(exc.Message.StartsWith("The parameter \"requireApproval\" may be only \"always\" or \"never\"."), $"Unexpected message {exc.Message}");
         }
 
         [Test]
