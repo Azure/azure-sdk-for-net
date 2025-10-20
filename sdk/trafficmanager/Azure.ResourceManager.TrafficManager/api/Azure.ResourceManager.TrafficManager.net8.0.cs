@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.TrafficManager
         public long? MaxReturn { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig MonitorConfig { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileStatus? ProfileStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.TrafficManager.Models.RecordType? RecordType { get { throw null; } set { } }
+        public Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType? RecordType { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficRoutingMethod? TrafficRoutingMethod { get { throw null; } set { } }
         public Azure.ResourceManager.TrafficManager.Models.TrafficViewEnrollmentStatus? TrafficViewEnrollmentStatus { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -321,25 +321,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
         Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecordType : System.IEquatable<Azure.ResourceManager.TrafficManager.Models.RecordType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecordType(string value) { throw null; }
-        public static Azure.ResourceManager.TrafficManager.Models.RecordType A { get { throw null; } }
-        public static Azure.ResourceManager.TrafficManager.Models.RecordType Aaaa { get { throw null; } }
-        public static Azure.ResourceManager.TrafficManager.Models.RecordType Cname { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.TrafficManager.Models.RecordType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.RecordType left, Azure.ResourceManager.TrafficManager.Models.RecordType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.TrafficManager.Models.RecordType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.RecordType left, Azure.ResourceManager.TrafficManager.Models.RecordType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class TrafficManagerDnsConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig>
     {
@@ -578,6 +559,25 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TrafficManagerProfileRecordType : System.IEquatable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TrafficManagerProfileRecordType(string value) { throw null; }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType A { get { throw null; } }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType Aaaa { get { throw null; } }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType Cname { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileRecordType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

@@ -382,7 +382,7 @@ EndpointLocation = "North Europe",
 Name = "My external endpoint",
 ResourceType = new ResourceType("Microsoft.network/TrafficManagerProfiles/ExternalEndpoints"),
 }},
-                RecordType = RecordType.Cname,
+                RecordType = TrafficManagerProfileRecordType.Cname,
                 Location = new AzureLocation("global"),
             };
             ArmOperation<TrafficManagerProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);

@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.TrafficManager
             TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default;
             IList<AllowedEndpointRecordType> allowedEndpointRecordTypes = default;
             long? maxReturn = default;
-            RecordType? recordType = default;
+            TrafficManagerProfileRecordType? recordType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.TrafficManager
                             {
                                 continue;
                             }
-                            recordType = new RecordType(property0.Value.GetString());
+                            recordType = new TrafficManagerProfileRecordType(property0.Value.GetString());
                             continue;
                         }
                     }
