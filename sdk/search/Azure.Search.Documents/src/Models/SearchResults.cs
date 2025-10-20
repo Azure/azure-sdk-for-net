@@ -300,7 +300,7 @@ namespace Azure.Search.Documents.Models
                                     facetValues[facetProperty.Name] = value;
                                 }
                             }
-                            facets.Add(new FacetResult(facetCount, null, null, null, facetSum, null, searchFacets, facetValues));
+                            facets.Add(new FacetResult(facetCount, avg: null, min: null, max: null, facetSum, cardinality: null, searchFacets, facetValues));
                         }
                         // Add the facet to the results
                         results.Facets[facetObject.Name] = facets;
