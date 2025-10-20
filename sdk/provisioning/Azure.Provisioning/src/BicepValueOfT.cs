@@ -164,57 +164,28 @@ public class BicepValue<T> : BicepValue
             _ => throw new InvalidOperationException($"Unknown {nameof(BicepValueKind)}!")
         };
 
-    private protected override BicepExpression CompileCore()
+    private protected override BicepExpression CompileLiteralValue() => Value switch
     {
-        if (_kind == BicepValueKind.Expression)
-        {
-            return _expression!;
-        }
-        if (_source is not null)
-        {
-            return _source.GetReference();
-        }
-        if (_kind == BicepValueKind.Literal)
-        {
-            return CompileLiteralValue(Value, Format);
-        }
-        if (_self is not null)
-        {
-            return _self.GetReference();
-        }
-        if (_kind is BicepValueKind.Unset)
-        {
-            return BicepSyntax.Null();
-        }
-
-        throw new InvalidOperationException($"Cannot convert {this} to a Bicep expression.");
-    }
-
-    private static BicepExpression CompileLiteralValue(object? value, string? format)
-    {
-        return value switch
-        {
-            null => BicepSyntax.Null(),
-            IBicepValue v => v.Compile(),
-            bool b => BicepSyntax.Value(b),
-            int i => BicepSyntax.Value(i),
-            long l => BicepSyntax.Value(l),
-            float f => BicepSyntax.Value(f),
-            double d => BicepSyntax.Value(d),
-            string s => BicepSyntax.Value(s),
-            Uri u => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(u, format)),
-            DateTimeOffset d => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(d, format)),
-            TimeSpan t => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(t, format)),
-            Guid g => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(g, format)),
-            IPAddress a => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(a, format)),
-            ETag e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, format)),
-            ResourceIdentifier i => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(i, format)),
-            AzureLocation azureLocation => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(azureLocation, format)),
-            ResourceType rt => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(rt, format)),
-            Enum e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, format)),
-            // Other extensible enums like AzureLocation (AzureLocation has been handled above)
-            ValueType ee => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(ee, format)),
-            _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
-        };
-    }
+        null => BicepSyntax.Null(),
+        IBicepValue v => v.Compile(),
+        bool b => BicepSyntax.Value(b),
+        int i => BicepSyntax.Value(i),
+        long l => BicepSyntax.Value(l),
+        float f => BicepSyntax.Value(f),
+        double d => BicepSyntax.Value(d),
+        string s => BicepSyntax.Value(s),
+        Uri u => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(u, Format)),
+        DateTimeOffset d => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(d, Format)),
+        TimeSpan t => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(t, Format)),
+        Guid g => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(g, Format)),
+        IPAddress a => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(a, Format)),
+        ETag e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, Format)),
+        ResourceIdentifier i => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(i, Format)),
+        AzureLocation azureLocation => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(azureLocation, Format)),
+        ResourceType rt => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(rt, Format)),
+        Enum e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, Format)),
+        // Other extensible enums like AzureLocation (AzureLocation has been handled above)
+        ValueType ee => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(ee, Format)),
+        _ => throw new InvalidOperationException($"Cannot convert {Value} to a Bicep expression.")
+    };
 }

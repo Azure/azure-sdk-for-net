@@ -254,29 +254,8 @@ public class BicepList<T> :
         new(expression) { _referenceFactory = referenceFactory };
     private Func<BicepExpression, T>? _referenceFactory = null;
 
-    private protected override BicepExpression CompileCore()
+    private protected override BicepExpression CompileLiteralValue()
     {
-        if (_kind == BicepValueKind.Expression)
-        {
-            return _expression!;
-        }
-        if (_source is not null)
-        {
-            return _source.GetReference();
-        }
-        if (_kind == BicepValueKind.Literal)
-        {
-            return BicepSyntax.Array(_values.Select(v => v.Compile()).ToArray());
-        }
-        if (_self is not null)
-        {
-            return _self.GetReference();
-        }
-        if (_kind is BicepValueKind.Unset)
-        {
-            return BicepSyntax.Null();
-        }
-
-        throw new InvalidOperationException($"Cannot convert {this} to a Bicep expression.");
+        return BicepSyntax.Array(_values.Select(v => v.Compile()).ToArray());
     }
 }

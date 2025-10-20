@@ -90,9 +90,33 @@ public abstract class BicepValue : IBicepValue
     public override string ToString() => Compile().ToString();
 
     /// <inheritdoc />
-    public BicepExpression Compile() => CompileCore();
+    public BicepExpression Compile()
+    {
+        if (_kind == BicepValueKind.Expression)
+        {
+            return _expression!;
+        }
+        if (_source is not null)
+        {
+            return _source.GetReference();
+        }
+        if (_kind == BicepValueKind.Literal)
+        {
+            return CompileLiteralValue();
+        }
+        if (_self is not null)
+        {
+            return _self.GetReference();
+        }
+        if (_kind is BicepValueKind.Unset)
+        {
+            return BicepSyntax.Null();
+        }
 
-    private protected abstract BicepExpression CompileCore();
+        throw new InvalidOperationException($"Cannot convert {this} to a Bicep expression.");
+    }
+
+    private protected abstract BicepExpression CompileLiteralValue();
 
     /// <inheritdoc />
     void IBicepValue.Assign(IBicepValue source) => Assign(source);
