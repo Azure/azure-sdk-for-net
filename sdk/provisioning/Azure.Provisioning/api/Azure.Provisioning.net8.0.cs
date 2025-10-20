@@ -5,7 +5,6 @@ namespace Azure.Provisioning
         public BicepDictionary() { }
         public BicepDictionary(System.Collections.Generic.IDictionary<string, Azure.Provisioning.BicepValue<T>>? values) { }
         public int Count { get { throw null; } }
-        public override bool IsEmpty { get { throw null; } }
         public bool IsReadOnly { get { throw null; } }
         public Azure.Provisioning.BicepValue<T> this[string key] { get { throw null; } set { } }
         public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
