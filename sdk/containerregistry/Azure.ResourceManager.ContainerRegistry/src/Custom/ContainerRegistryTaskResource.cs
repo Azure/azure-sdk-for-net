@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerRegistry.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    // The `Update` operation is no longer LRO, add these method back for compatibility reason.
+    // The `Update` operation is no longer LRO, add these methods back for compatibility reasons.
     public partial class ContainerRegistryTaskResource
     {
         /// <summary>

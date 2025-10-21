@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerRegistry.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    // The `Cancel` and `Update` operation is no longer LRO, add these method back for compatibility reason.
+    // The `Cancel` and `Update` operations are no longer LRO, add these methods back for compatibility reasons.
     public partial class ContainerRegistryRunResource
     {
         /// <summary>
