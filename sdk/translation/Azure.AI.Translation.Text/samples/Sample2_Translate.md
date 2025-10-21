@@ -9,11 +9,11 @@ Translate text from known source language to target language.
 ```C# Snippet:GetTextTranslationBySource
 try
 {
-    string from = "en";
+    string sourceLanguage = "en";
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<TranslatedTextItem> response = client.Translate(targetLanguage, inputText, sourceLanguage: from);
+    Response<TranslatedTextItem> response = client.Translate(targetLanguage, inputText, sourceLanguage: sourceLanguage);
     TranslatedTextItem translation = response.Value;
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
@@ -62,19 +62,18 @@ try
     string fromScript = "Latn";
     string fromLanguage = "ar";
     string toScript = "Latn";
-    IEnumerable<string> tarGetSupportedLanguages = new[] { "zh-Hans" };
-    IEnumerable<string> inputTextElements = new[]
-    {
-        "hudha akhtabar."
-    };
+    string toLanguage = "zh-Hans";
+    string inputText = "hudha akhtabar.";
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, sourceLanguage: fromLanguage, fromScript: fromScript, toScript: toScript);
-    IReadOnlyList<TranslatedTextItem> translations = response.Value;
-    TranslatedTextItem translation = translations.FirstOrDefault();
+    TranslateTarget target = new TranslateTarget(toLanguage, script: toScript);
+    TranslateInputItem inputItem = new TranslateInputItem(inputText, [target], language: fromLanguage, script: fromScript);
 
-    Console.WriteLine($"Source Text: {translation.SourceText.Text}");
+    Response<TranslatedTextItem> response = client.Translate(inputItem);
+    TranslatedTextItem translation = response.Value;
+    TranslationText translated = translation.Translations.FirstOrDefault();
+
     Console.WriteLine($"Translation: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-    Console.WriteLine($"Transliterated text ({translation?.Translations?.FirstOrDefault()?.Transliteration?.Script}): {translation?.Translations?.FirstOrDefault()?.Transliteration?.Text}");
+    Console.WriteLine($"Transliterated text ({translated.Language}): {translated.Text}");
 }
 catch (RequestFailedException exception)
 {

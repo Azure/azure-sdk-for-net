@@ -52,11 +52,11 @@ namespace Azure.AI.Translation.Text.Samples
             #region Snippet:GetTextTranslationBySourceAsync
             try
             {
-                string from = "en";
+                string sourceLanguage = "en";
                 string targetLanguage = "cs";
                 string inputText = "This is a test.";
 
-                Response<TranslatedTextItem> response = await client.TranslateAsync(targetLanguage, inputText, sourceLanguage: from).ConfigureAwait(false);
+                Response<TranslatedTextItem> response = await client.TranslateAsync(targetLanguage, inputText, sourceLanguage: sourceLanguage).ConfigureAwait(false);
                 TranslatedTextItem translation = response.Value;
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");

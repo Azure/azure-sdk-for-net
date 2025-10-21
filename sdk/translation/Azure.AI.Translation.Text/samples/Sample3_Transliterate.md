@@ -7,6 +7,7 @@ All samples are using `client` created in [Create a `TextTranslationClient`][cre
 Converts characters or letters of a source language to the corresponding characters or letters of a target language.
 
 ```C# Snippet:GetTransliteratedText
+try
 {
     string language = "zh-Hans";
     string fromScript = "Hans";
