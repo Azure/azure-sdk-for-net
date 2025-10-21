@@ -1,0 +1,4 @@
+directory: specification/loadtestservice/resource-manager/Microsoft.LoadTestService/playwright
+commit: 6fb604853ab1c56f2adbe6e4922c31e772425cba
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

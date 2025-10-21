@@ -68,7 +68,7 @@ public class Resource(Specification spec, Type armType)
                 writer.WriteLine($"/// <summary>");
                 writer.WriteWrapped(Description ?? (Name + "."));
                 writer.WriteLine($"/// </summary>");
-                writer.WriteLine($"public partial class {Name} : ProvisionableResource");
+                writer.WriteLine($"public partial class {Name} : {(BaseType is not null ? BaseType.Name : "ProvisionableResource")}");
                 using (writer.Scope("{", "}"))
                 {
                     var fence = new IndentWriter.Fenceposter();
@@ -141,7 +141,14 @@ public class Resource(Specification spec, Type armType)
                     writer.WriteLine($"/// </param>");
                     writer.WriteLine($"/// <param name=\"resourceVersion\">Version of the {Name}.</param>");
                     writer.WriteLine($"public {Name}(string bicepIdentifier, string? resourceVersion = default)");
-                    writer.Write($"    : base(bicepIdentifier, \"{ResourceType}\", resourceVersion");
+                    if (BaseType is not null)
+                    {
+                        writer.Write($"    : base(bicepIdentifier, resourceVersion");
+                    }
+                    else
+                    {
+                        writer.Write($"    : base(bicepIdentifier, \"{ResourceType}\", resourceVersion");
+                    }
                     if (DefaultResourceVersion is not null)
                     {
                         writer.Write($" ?? \"{DefaultResourceVersion}\"");
@@ -157,6 +164,11 @@ public class Resource(Specification spec, Type armType)
                     writer.WriteLine($"protected override void DefineProvisionableProperties()");
                     using (writer.Scope("{", "}"))
                     {
+                        writer.WriteLine("base.DefineProvisionableProperties();");
+                        if (DiscriminatorName is not null)
+                        {
+                            writer.WriteLine($"DefineProperty<string>(\"{DiscriminatorName}\", [\"{DiscriminatorName}\"], defaultValue: \"{DiscriminatorValue}\");");
+                        }
                         foreach (Property property in Properties)
                         {
                             writer.Write($"{property.FieldName} = ");
@@ -178,6 +190,10 @@ public class Resource(Specification spec, Type armType)
                             }
                             writer.Write($"<{property.BicepPropertyTypeReference}>(\"{property.Name}\", ");
                             writer.Write($"[{string.Join(", ", (property.Path ?? [property.Name]).Select(s => $"\"{s}\""))}]");
+                            if (property.PropertyType is Resource r)
+                            {
+                                writer.Write($", new {r.Name}(\"{r.Name.ToCamelCase()}\")");
+                            }
                             if (property.IsRequired) { writer.Write($", isRequired: true"); }
                             if (property.IsReadOnly) { writer.Write($", isOutput: true"); }
                             if (property.IsSecure) { writer.Write($", isSecure: true"); }

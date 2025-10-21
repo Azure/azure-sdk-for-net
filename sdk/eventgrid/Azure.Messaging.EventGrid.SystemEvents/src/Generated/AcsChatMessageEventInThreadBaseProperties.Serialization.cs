@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsChatMessageEventInThreadBaseProperties : IUtf8JsonSerializable, IJsonModel<AcsChatMessageEventInThreadBaseProperties>
+    /// <summary> Schema of common properties of all thread-level chat message events. </summary>
+    public partial class AcsChatMessageEventInThreadBaseProperties : AcsChatEventInThreadBaseProperties, IJsonModel<AcsChatMessageEventInThreadBaseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsChatMessageEventInThreadBaseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AcsChatMessageEventInThreadBaseProperties"/> for deserialization. </summary>
+        internal AcsChatMessageEventInThreadBaseProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsChatMessageEventInThreadBaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsChatMessageEventInThreadBaseProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
@@ -58,108 +62,114 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsChatMessageEventInThreadBaseProperties IJsonModel<AcsChatMessageEventInThreadBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsChatMessageEventInThreadBaseProperties IJsonModel<AcsChatMessageEventInThreadBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AcsChatMessageEventInThreadBaseProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AcsChatEventInThreadBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsChatMessageEventInThreadBaseProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAcsChatMessageEventInThreadBaseProperties(document.RootElement, options);
         }
 
-        internal static AcsChatMessageEventInThreadBaseProperties DeserializeAcsChatMessageEventInThreadBaseProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AcsChatMessageEventInThreadBaseProperties DeserializeAcsChatMessageEventInThreadBaseProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string transactionId = default;
+            string threadId = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string messageId = default;
             CommunicationIdentifierModel senderCommunicationIdentifier = default;
             string senderDisplayName = default;
             DateTimeOffset? composeTime = default;
-            string type = default;
+            string @type = default;
             long? version = default;
-            string transactionId = default;
-            string threadId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("messageId"u8))
+                if (prop.NameEquals("transactionId"u8))
                 {
-                    messageId = property.Value.GetString();
+                    transactionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("senderCommunicationIdentifier"u8))
+                if (prop.NameEquals("threadId"u8))
                 {
-                    senderCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value, options);
+                    threadId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("senderDisplayName"u8))
+                if (prop.NameEquals("messageId"u8))
                 {
-                    senderDisplayName = property.Value.GetString();
+                    messageId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("composeTime"u8))
+                if (prop.NameEquals("senderCommunicationIdentifier"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    senderCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("senderDisplayName"u8))
+                {
+                    senderDisplayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("composeTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    composeTime = property.Value.GetDateTimeOffset("O");
+                    composeTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    version = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("transactionId"u8))
-                {
-                    transactionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("threadId"u8))
-                {
-                    threadId = property.Value.GetString();
+                    version = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AcsChatMessageEventInThreadBaseProperties(
                 transactionId,
                 threadId,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
                 composeTime,
-                type,
+                @type,
                 version);
         }
 
-        BinaryData IPersistableModel<AcsChatMessageEventInThreadBaseProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsChatMessageEventInThreadBaseProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -169,15 +179,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsChatMessageEventInThreadBaseProperties IPersistableModel<AcsChatMessageEventInThreadBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsChatMessageEventInThreadBaseProperties IPersistableModel<AcsChatMessageEventInThreadBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsChatMessageEventInThreadBaseProperties)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AcsChatEventInThreadBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageEventInThreadBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsChatMessageEventInThreadBaseProperties(document.RootElement, options);
                     }
                 default:
@@ -185,22 +200,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsChatMessageEventInThreadBaseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new AcsChatMessageEventInThreadBaseProperties FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAcsChatMessageEventInThreadBaseProperties(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

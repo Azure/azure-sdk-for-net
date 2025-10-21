@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Properties for the command that completes sync migration for a database. </summary>
-    public partial class MigrateSyncCompleteCommandProperties : CommandProperties
+    public partial class MigrateSyncCompleteCommandProperties : DataMigrationCommandProperties
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandProperties"/>. </summary>
         public MigrateSyncCompleteCommandProperties()
         {
-            CommandType = CommandType.MigrateSyncCompleteDatabase;
+            CommandType = DataMigrationCommandType.MigrateSyncCompleteDatabase;
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandProperties"/>. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="input"> Command input. </param>
         /// <param name="output"> Command output. This is ignored if submitted. </param>
         /// <param name="commandId"> Command id. </param>
-        internal MigrateSyncCompleteCommandProperties(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrateSyncCompleteCommandInput input, MigrateSyncCompleteCommandOutput output, string commandId) : base(commandType, errors, state, serializedAdditionalRawData)
+        internal MigrateSyncCompleteCommandProperties(DataMigrationCommandType commandType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationCommandState? state, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrateSyncCompleteCommandInput input, MigrateSyncCompleteCommandOutput output, string commandId) : base(commandType, errors, state, serializedAdditionalRawData)
         {
             Input = input;
             Output = output;

@@ -73,18 +73,25 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Current Resiliency Score for the gateway. </summary>
+        [WirePath("overallScore")]
         public string OverallScore { get; }
         /// <summary> Update in the Resiliency Score for the gateway from the last computed score. </summary>
+        [WirePath("scoreChange")]
         public string ScoreChange { get; }
         /// <summary> Minimum increase expected in the score if the at least one of the recommendations is applied for the gateway. </summary>
+        [WirePath("minScoreFromRecommendations")]
         public string MinScoreFromRecommendations { get; }
         /// <summary> Maximum increase expected in the score if all of the recommendations are applied for the gateway. </summary>
+        [WirePath("maxScoreFromRecommendations")]
         public string MaxScoreFromRecommendations { get; }
         /// <summary> Timestamp denoting the last time when the resiliency score was computed for the gateway. </summary>
+        [WirePath("lastComputedTime")]
         public DateTimeOffset? LastComputedOn { get; }
         /// <summary> Timestamp denoting the next eligible time to re-compute the resiliency score for the gateway. </summary>
+        [WirePath("nextEligibleComputeTime")]
         public DateTimeOffset? NextEligibleComputeOn { get; }
         /// <summary> List of Resiliency based Recommendation Components for the gateway. </summary>
+        [WirePath("components")]
         public IReadOnlyList<ResiliencyRecommendationComponents> Components { get; }
     }
 }

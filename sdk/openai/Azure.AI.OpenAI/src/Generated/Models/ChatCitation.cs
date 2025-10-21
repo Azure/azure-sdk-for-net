@@ -13,11 +13,21 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="ChatCitation"/>. </summary>
+        /// <param name="content"> The content of the citation. </param>
         internal ChatCitation(string content)
         {
             Content = content;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ChatCitation"/>. </summary>
+        /// <param name="content"> The content of the citation. </param>
+        /// <param name="title"> The title for the citation. </param>
+        /// <param name="url"> The URL of the citation. </param>
+        /// <param name="chunkId"> The chunk ID for the citation. </param>
+        /// <param name="rerankScore"> The rerank score for the retrieval. </param>
+        /// <param name="filePath"> The file path for the citation. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ChatCitation(string content, string title, string url, string chunkId, double? rerankScore, string filePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Content = content;

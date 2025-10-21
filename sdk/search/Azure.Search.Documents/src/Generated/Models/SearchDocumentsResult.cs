@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,6 +14,38 @@ namespace Azure.Search.Documents.Models
     /// <summary> Response containing search results from an index. </summary>
     internal partial class SearchDocumentsResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SearchDocumentsResult"/>. </summary>
         /// <param name="results"> The sequence of results returned by the query. </param>
         internal SearchDocumentsResult(IEnumerable<SearchResult> results)
@@ -34,7 +67,8 @@ namespace Azure.Search.Documents.Models
         /// <param name="semanticPartialResponseReason"> Reason that a partial response was returned for a semantic ranking request. </param>
         /// <param name="semanticPartialResponseType"> Type of partial response that was returned for a semantic ranking request. </param>
         /// <param name="semanticQueryRewritesResultType"> Type of query rewrite that was used to retrieve documents. </param>
-        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, DebugInfo debugInfo, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType, SemanticQueryRewritesResultType? semanticQueryRewritesResultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, DebugInfo debugInfo, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType, SemanticQueryRewritesResultType? semanticQueryRewritesResultType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             Coverage = coverage;
@@ -47,6 +81,12 @@ namespace Azure.Search.Documents.Models
             SemanticPartialResponseReason = semanticPartialResponseReason;
             SemanticPartialResponseType = semanticPartialResponseType;
             SemanticQueryRewritesResultType = semanticQueryRewritesResultType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchDocumentsResult"/> for deserialization. </summary>
+        internal SearchDocumentsResult()
+        {
         }
 
         /// <summary> The total count of results found by the search operation, or null if the count was not requested. If present, the count may be greater than the number of results in this response. This can happen if you use the $top or $skip parameters, or if the query can't return all the requested documents in a single response. </summary>

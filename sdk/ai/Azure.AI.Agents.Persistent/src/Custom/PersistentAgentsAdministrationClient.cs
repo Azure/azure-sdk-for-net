@@ -4,10 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -20,8 +16,8 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentAgentsAdministrationClient
     {
         private static readonly bool s_is_test_run = AppContextSwitchHelper.GetConfigValue(
-            PersistantAgensConstants.UseOldConnectionString,
-            PersistantAgensConstants.UseOldConnectionStringEnvVar);
+            PersistentAgentsConstants.UseOldConnectionString,
+            PersistentAgentsConstants.UseOldConnectionStringEnvVar);
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal virtual ClientDiagnostics ClientDiagnostics { get; }
         // TODO: Replace project connections string by PROJECT_ENDPOINT when 1DP will be available.
@@ -171,14 +167,20 @@ namespace Azure.AI.Agents.Persistent
         public virtual AsyncPageable<PersistentAgent> GetAgentsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             return new ContinuationTokenPageableAsync<PersistentAgent>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentAgent.DeserializePersistentAgent(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 
@@ -191,14 +193,20 @@ namespace Azure.AI.Agents.Persistent
         public virtual Pageable<PersistentAgent> GetAgents(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             return new ContinuationTokenPageable<PersistentAgent>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentAgent.DeserializePersistentAgent(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 

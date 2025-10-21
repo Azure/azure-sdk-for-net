@@ -1,4 +1,4 @@
 directory: specification/liftrmongodb/MongoDB.Atlas.Management
-commit: fa1c574f05a6e43791c10752c321cbdf8ad2ec78
+commit: 6267b64842af3d744c5b092a3f3beef49729ad6d
 repo: Azure/azure-rest-api-specs
-additionalDirectories: 
+additionalDirectories:

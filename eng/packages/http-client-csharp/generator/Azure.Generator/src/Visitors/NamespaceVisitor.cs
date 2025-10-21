@@ -1,14 +1,19 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.IO;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
+using Azure.Generator.Visitors.Extensions;
 
 namespace Azure.Generator.Visitors
 {
+    /// <summary>
+    /// Visitor that updates the namespace and file paths for model and enum types.
+    /// </summary>
     internal class NamespaceVisitor : ScmLibraryVisitor
     {
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
@@ -52,14 +57,14 @@ namespace Azure.Generator.Visitors
 
         private static void UpdateModelsNamespace(TypeProvider type)
         {
-            if (AzureClientGenerator.Instance.Configuration.UseModelNamespace())
+            if (CodeModelGenerator.Instance.Configuration.UseModelNamespace())
             {
                 // If the type is customized, then we don't want to override the namespace.
                 if (type.CustomCodeView == null)
                 {
                     type.Update(
-                        @namespace: AzureClientGenerator.Instance.TypeFactory.GetCleanNameSpace(
-                            $"{AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace}.Models"));
+                        @namespace: CodeModelGenerator.Instance.TypeFactory.GetCleanNameSpace(
+                            $"{CodeModelGenerator.Instance.TypeFactory.PrimaryNamespace}.Models"));
                 }
             }
             else
@@ -68,7 +73,8 @@ namespace Azure.Generator.Visitors
                 // here to make diffs easier to review while migrating. Calculate the fileName as it won't always match the Name
                 // property, e.g. for serialization providers.
                 // https://github.com/Azure/azure-sdk-for-net/issues/50286
-                if (type.RelativeFilePath.Contains("Models"))
+                var separator = Path.DirectorySeparatorChar;
+                if (type.RelativeFilePath.Contains($"Generated{separator}Models{separator}"))
                 {
                     var fileName = Path.GetRelativePath(Path.Combine("src", "Generated", "Models"),
                         type.RelativeFilePath);

@@ -95,6 +95,7 @@ public partial class BlobInventoryPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _policySchema = DefineModelProperty<BlobInventoryPolicySchema>("PolicySchema", ["properties", "policy"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

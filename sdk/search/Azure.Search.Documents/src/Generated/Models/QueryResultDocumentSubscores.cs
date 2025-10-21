@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -12,6 +13,38 @@ namespace Azure.Search.Documents.Models
     /// <summary> The breakdown of subscores between the text and vector query components of the search query for this document. Each vector query is shown as a separate object in the same order they were received. </summary>
     public partial class QueryResultDocumentSubscores
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="QueryResultDocumentSubscores"/>. </summary>
         internal QueryResultDocumentSubscores()
         {
@@ -22,11 +55,13 @@ namespace Azure.Search.Documents.Models
         /// <param name="text"> The BM25 or Classic score for the text portion of the query. </param>
         /// <param name="vectors"> The vector similarity and @search.score values for each vector query. </param>
         /// <param name="documentBoost"> The BM25 or Classic score for the text portion of the query. </param>
-        internal QueryResultDocumentSubscores(TextResult text, IReadOnlyList<IDictionary<string, SingleVectorFieldResult>> vectors, double? documentBoost)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryResultDocumentSubscores(TextResult text, IReadOnlyList<IDictionary<string, SingleVectorFieldResult>> vectors, double? documentBoost, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             Vectors = vectors;
             DocumentBoost = documentBoost;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The BM25 or Classic score for the text portion of the query. </summary>

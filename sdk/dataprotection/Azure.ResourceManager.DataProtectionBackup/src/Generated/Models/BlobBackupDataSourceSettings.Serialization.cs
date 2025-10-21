@@ -64,8 +64,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
+            if (element.TryGetProperty("objectType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AdlsBlobBackupDatasourceParameters": return AdlsBlobBackupDataSourceSettings.DeserializeAdlsBlobBackupDataSourceSettings(element, options);
+                }
+            }
             IList<string> containersList = default;
-            string objectType = default;
+            string objectType = "BlobBackupDatasourceParameters";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

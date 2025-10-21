@@ -1,6 +1,6 @@
 # Azure Playwright client library for .NET
 
-Azure Playwright is a fully managed service that uses the cloud to enable you to run Playwright tests with much higher parallelization across different operating system-browser combinations simultaneously. This means faster test runs with broader scenario coverage, which helps speed up delivery of features without sacrificing quality. The service also enables you to publish test results and related artifacts to the service and view them in the service portal enabling faster and easier troubleshooting. With Azure Playwright, you can release features faster and more confidently.
+Azure Playwright is a fully managed service that uses the cloud to enable you to run Playwright tests with much higher parallelization across different operating system-browser combinations simultaneously. This means faster test runs with broader scenario coverage, which helps speed up delivery of features without sacrificing quality. With Azure Playwright, you can release features faster and more confidently.
 
 ## Getting started
 
@@ -9,7 +9,7 @@ Azure Playwright is a fully managed service that uses the cloud to enable you to
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Developer.Playwright --prerelease
+dotnet add package Azure.Developer.Playwright
 ```
 
 ### Authenticate the client
@@ -22,22 +22,21 @@ To learn more about options for Microsoft Entra Id authentication, refer to [Azu
 - Your Azure account must be assigned the [Owner](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#owner), [Contributor](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#contributor), or one of the [classic administrator roles](https://learn.microsoft.com/azure/role-based-access-control/rbac-and-directory-admin-roles#classic-subscription-administrator-roles).
 
 ## Useful links
-- [Quickstart: Run end-to-end tests at scale](https://aka.ms/mpt/quickstart)
-- [Quickstart: Set up continuous end-to-end testing across different browsers and operating systems](https://aka.ms/mpt/ci)
-- [Explore features and benefits](https://aka.ms/mpt/about)
-- [View Azure Playwright service demo](https://youtu.be/GenC1jAeTZE)
-- [Documentation](https://aka.ms/mpt/docs)
-- [Pricing](https://aka.ms/mpt/pricing)
-- [Share feedback](https://aka.ms/mpt/feedback)
+- [Quickstart: Run end-to-end tests at scale](https://aka.ms/pww/docs/quickstart)
+- [Quickstart: Set up continuous end-to-end testing across different browsers and operating systems](https://aka.ms/pww/docs/ci)
+- [Explore features and benefits](https://aka.ms/pww/docs/about)
+- [Documentation](https://aka.ms/pww/docs)
+- [Pricing](https://aka.ms/pww/docs/pricing)
+- [Share feedback](https://aka.ms/pww/docs/feedback)
 
 ## Key concepts
 
-Key concepts of the Azure Playwright NUnit SDK for .NET can be found [here](https://aka.ms/mpt/what-is-mpt)
+Key concepts of the Azure Playwright NUnit SDK for .NET can be found [here](https://aka.ms/pww/docs/overview)
 
 ## Examples
 
 Code samples for using this SDK can be found in the following locations
-- [.NET Azure Playwright NUnit Library Code Samples](https://aka.ms/mpt/sample)
+- [.NET Azure Playwright NUnit Library Code Samples](https://aka.ms/pww/samples)
 
 ## Troubleshooting
 
@@ -46,11 +45,11 @@ Code samples for using this SDK can be found in the following locations
 
 ## Next steps
 
-- Run tests in a [CI/CD pipeline.](https://aka.ms/mpt/configure-pipeline)
+- Run tests in a [CI/CD pipeline.](https://aka.ms/pww/docs/configure-pipeline)
 
-- Learn how to [manage access](https://aka.ms/mpt/manage-access) to the created workspace.
+- Learn how to [manage access](https://aka.ms/pww/docs/manage-access) to the created workspace.
 
-- Experiment with different number of workers to [determine the optimal configuration of your test suite](https://aka.ms/mpt/parallelism).
+- Experiment with different number of workers to [determine the optimal configuration of your test suite](https://aka.ms/pww/docs/parallelism).
 
 ## Contributing
 

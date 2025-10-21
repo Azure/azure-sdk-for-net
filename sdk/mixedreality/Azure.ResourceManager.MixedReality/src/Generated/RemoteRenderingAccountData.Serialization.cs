@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MixedReality.Models;
@@ -40,12 +41,12 @@ namespace Azure.ResourceManager.MixedReality
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                JsonSerializer.Serialize(writer, Plan);
+                ((IJsonModel<ManagedServiceIdentity>)Plan).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMixedRealityContext.Default);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    plan = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMixedRealityContext.Default);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMixedRealityContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of pools migrated from Nic based to IP based pool. </summary>
+        [WirePath("migratedPools")]
         public IReadOnlyList<string> MigratedPools { get; }
     }
 }

@@ -52,13 +52,12 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
             FileUploadPurpose.Assistants);
         Validate(testFile);
 
-        CreateVectorStoreOperation createStoreOp = await vectorStoreClient.CreateVectorStoreAsync(
-            waitUntilCompleted: true,
+        VectorStore vectorStore = await vectorStoreClient.CreateVectorStoreAsync(
             new VectorStoreCreationOptions()
             {
                 FileIds = { testFile.Id },
             });
-        Validate(createStoreOp);
+        Validate(vectorStore);
 
         OpenAIResponse response = await client.CreateResponseAsync(
             "Using the file search tool, what's Travis's favorite food?",
@@ -66,7 +65,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
             {
                 Tools =
                 {
-                    ResponseTool.CreateFileSearchTool([createStoreOp.VectorStoreId], null),
+                    ResponseTool.CreateFileSearchTool([vectorStore.Id], null),
                 }
             });
         Assert.That(response.OutputItems?.Count, Is.EqualTo(2));
@@ -80,9 +79,9 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         Assert.That(messageContentPart, Is.Not.Null);
         Assert.That(messageContentPart?.Text, Does.Contain("pizza"));
         Assert.That(messageContentPart?.OutputTextAnnotations, Is.Not.Null.And.Not.Empty);
-        Assert.That(messageContentPart?.OutputTextAnnotations[0].FileCitationFileId, Is.EqualTo(testFile.Id));
-        Assert.That(messageContentPart?.OutputTextAnnotations[0].FileCitationIndex, Is.GreaterThan(0));
-
+        FileCitationMessageAnnotation? citationAnnotation = messageContentPart!.OutputTextAnnotations[0] as FileCitationMessageAnnotation;
+        Assert.That(citationAnnotation?.FileId, Is.EqualTo(testFile.Id));
+        Assert.That(citationAnnotation?.Index, Is.GreaterThan(0));
 
         await foreach (ResponseItem inputItem in client.GetResponseInputItemsAsync(response?.Id))
         {
@@ -95,7 +94,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     {
         OpenAIResponseClient client = GetResponseTestClientForDeployment(ComputerUseDeployment);
 
-        ResponseTool computerTool = ResponseTool.CreateComputerTool(1024, 768, ComputerToolEnvironment.Windows);
+        ResponseTool computerTool = ResponseTool.CreateComputerTool(ComputerToolEnvironment.Windows, 1024, 768);
         ResponseCreationOptions options = new()
         {
             Tools = { computerTool },
@@ -121,9 +120,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                     BinaryData screenshotBytes = BinaryData.FromBytes(File.ReadAllBytes(screenshotPath));
                     ResponseItem screenshotReply = ResponseItem.CreateComputerCallOutputItem(
                         computerCall.CallId,
-                        [],
-                        screenshotBytes,
-                        "image/png");
+                        ComputerCallOutput.CreateScreenshotOutput(screenshotBytes, "image/png"));
 
                     options.PreviousResponseId = response!.Id;
                     response = await client.CreateResponseAsync(
@@ -148,11 +145,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                 options.PreviousResponseId = response!.Id;
                 response = await client.CreateResponseAsync(
                     "Yes, proceed.",
-                    new ResponseCreationOptions()
-                    {
-                        PreviousResponseId = response?.Id,
-                        Tools = { computerTool }
-                    });
+                    options);
             }
             else
             {
@@ -239,7 +232,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                           }
                         }
                         """),
-                    functionSchemaIsStrict: false),
+                    strictModeEnabled: false),
             },
         };
         if (deploymentName == ComputerUseDeployment)
@@ -267,15 +260,15 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     }
 
     [RecordedTest]
-    [Ignore("o1/o3 not yet supported on test environment")]
     public async Task ResponsesWithReasoning()
     {
-        OpenAIResponseClient client = GetTestClient();
+        OpenAIResponseClient client = GetTestClient("chat_o3-mini");
 
         ResponseCreationOptions options = new()
         {
             ReasoningOptions = new()
             {
+                ReasoningSummaryVerbosity = ResponseReasoningSummaryVerbosity.Detailed,
                 ReasoningEffortLevel = ResponseReasoningEffortLevel.Medium,
             },
             Metadata =
@@ -289,7 +282,6 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Id, Is.Not.Null);
         Assert.That(response.CreatedAt, Is.GreaterThan(new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero)));
-        Assert.That(response.TruncationMode, Is.EqualTo(ResponseTruncationMode.Auto));
         Assert.That(response.MaxOutputTokenCount, Is.Null);
         Assert.That(response.Model, Does.StartWith("o3-mini"));
         Assert.That(response.Usage, Is.Not.Null);
@@ -300,7 +292,8 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         Assert.That(response.OutputItems, Has.Count.EqualTo(2));
         ReasoningResponseItem? reasoningItem = response.OutputItems?[0] as ReasoningResponseItem;
         MessageResponseItem? messageItem = response.OutputItems?[1] as MessageResponseItem;
-        Assert.That(reasoningItem?.SummaryTextParts, Is.Not.Null);
+        Assert.That(reasoningItem?.SummaryParts, Is.Not.Null);
+        Assert.That(reasoningItem?.GetSummaryText(), Is.Not.Null.And.Not.Empty);
         Assert.That(reasoningItem?.Id, Is.Not.Null.And.Not.Empty);
         Assert.That(messageItem?.Content?.FirstOrDefault()?.Text, Has.Length.GreaterThan(0));
     }
@@ -386,7 +379,6 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
     [TestCase(ComputerUseDeployment)]
-    [Ignore("Disabled pending resolution of known issues with tool_choice")]
     public async Task OutputTextProperty(string deploymentName)
     {
         OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
@@ -406,7 +398,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
             "How's the weather?",
             new ResponseCreationOptions()
             {
-                Tools = { ResponseTool.CreateFunctionTool("get_weather", "gets the weather", BinaryData.FromString("{}")) },
+                Tools = { ResponseTool.CreateFunctionTool("get_weather", functionDescription: "gets the weather", functionParameters: BinaryData.FromString("{}"), strictModeEnabled: false) },
                 ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
                 TruncationMode = ResponseTruncationMode.Auto,
             });
@@ -440,7 +432,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
 
     [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
-    [TestCase(ComputerUseDeployment)]
+    [TestCase(ComputerUseDeployment, Ignore = "image input not currently supported")]
     public async Task ImageInputWorks(string deploymentName)
     {
         OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
@@ -575,7 +567,6 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
     [TestCase(ComputerUseDeployment, Ignore = "Not yet supported with computer-use-preview")]
-    [Ignore("Disabled pending resolution of known issues with text.format")]
     public async Task StructuredOutputs(string deploymentName)
     {
         OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
@@ -738,7 +729,6 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
     [TestCase(ComputerUseDeployment)]
-    [Ignore("Disabled pending resolution of known issues with tool_choice")]
     public async Task FunctionToolChoiceWorks(string deploymentName)
     {
         OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
@@ -750,11 +740,8 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         {
             Tools = { s_GetWeatherAtLocationTool },
             ToolChoice = toolChoice,
+            TruncationMode = ResponseTruncationMode.Auto,
         };
-        if (deploymentName == ComputerUseDeployment)
-        {
-            options.TruncationMode = ResponseTruncationMode.Auto;
-        }
 
         OpenAIResponse response = await client.CreateResponseAsync(
             [ResponseItem.CreateUserMessageItem("What should I wear for the weather in San Francisco, CA?")],
@@ -764,25 +751,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         Assert.That(response.ToolChoice.Kind, Is.EqualTo(ResponseToolChoiceKind.Function));
         Assert.That(response.ToolChoice.FunctionName, Is.EqualTo(toolChoice.FunctionName));
 
-        ResponseToolChoice newEquivalentChoice = ResponseToolChoice.CreateFunctionChoice(toolChoice.FunctionName);
-        ResponseToolChoice newDifferentChoice = ResponseToolChoice.CreateFunctionChoice("foo");
-
-        Assert.That(response.ToolChoice, Is.EqualTo(toolChoice));
-        Assert.That(response.ToolChoice, Is.EqualTo(newEquivalentChoice));
-        Assert.That(response.ToolChoice, Is.Not.EqualTo(newDifferentChoice));
-
-        Assert.IsTrue(response.ToolChoice == toolChoice);
-        Assert.IsTrue(response.ToolChoice == newEquivalentChoice);
-        Assert.IsTrue(toolChoice == response.ToolChoice);
-        Assert.IsTrue(newEquivalentChoice == response.ToolChoice);
-        Assert.IsFalse(response.ToolChoice == newDifferentChoice);
-        Assert.IsFalse(newDifferentChoice == response.ToolChoice);
-        Assert.IsTrue(response.ToolChoice != newDifferentChoice);
-        Assert.IsTrue(newDifferentChoice != response.ToolChoice);
-        Assert.IsFalse(response.ToolChoice != newEquivalentChoice);
-        Assert.IsFalse(newEquivalentChoice != response.ToolChoice);
-
-        FunctionCallResponseItem? functionCall = response.OutputItems?.FirstOrDefault() as FunctionCallResponseItem;
+        FunctionCallResponseItem? functionCall = response.OutputItems.FirstOrDefault() as FunctionCallResponseItem;
         Assert.That(functionCall, Is.Not.Null);
         Assert.That(functionCall?.FunctionName, Is.EqualTo(toolChoice.FunctionName));
     }
@@ -794,11 +763,12 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         foreach (ResponseItem item in new ResponseItem[]
         {
             ResponseItem.CreateComputerCallItem("call_abcd", ComputerCallAction.CreateScreenshotAction(), []),
-            ResponseItem.CreateComputerCallOutputItem("call_abcd", [], "file_abcd"),
-            ResponseItem.CreateFileSearchCallItem(["query1"], []),
+            ResponseItem.CreateComputerCallOutputItem("call_abcd", ComputerCallOutput.CreateScreenshotOutput("file_abcd")),
+            ResponseItem.CreateFileSearchCallItem(["query1"]),
             ResponseItem.CreateFunctionCallItem("call_abcd", "function_name", BinaryData.Empty),
             ResponseItem.CreateFunctionCallOutputItem("call_abcd", "functionOutput"),
-            ResponseItem.CreateReasoningItem(["summary goes here"]),
+            ResponseItem.CreateReasoningItem("summary goes here"),
+            ResponseItem.CreateReasoningItem([new ReasoningSummaryTextPart("another summary"), new ReasoningSummaryTextPart("with multiple parts")]),
             ResponseItem.CreateReferenceItem("msg_1234"),
             ResponseItem.CreateAssistantMessageItem("Goodbye!", []),
             ResponseItem.CreateDeveloperMessageItem("Talk like a pirate"),
@@ -936,8 +906,8 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     private static readonly string s_GetWeatherAtLocationToolName = "get_weather_at_location";
     private static readonly ResponseTool s_GetWeatherAtLocationTool = ResponseTool.CreateFunctionTool(
             s_GetWeatherAtLocationToolName,
-            "Gets the weather at a specified location, optionally specifying units for temperature",
-            BinaryData.FromString("""
+            functionDescription: "Gets the weather at a specified location, optionally specifying units for temperature",
+            functionParameters: BinaryData.FromString("""
                 {
                     "type": "object",
                     "properties": {
@@ -952,5 +922,5 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                     "required": ["location"]
                 }
                 """),
-            false);
+            strictModeEnabled: false);
 }

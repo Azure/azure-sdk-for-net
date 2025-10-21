@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Linq;
-using Azure.Generator.Tests.Common;
-using Azure.Generator.Tests.TestHelpers;
-using Azure.Generator.Visitors;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using Azure.Generator.Tests.Common;
+using Azure.Generator.Tests.TestHelpers;
+using Azure.Generator.Visitors;
 
 namespace Azure.Generator.Tests.Visitors
 {

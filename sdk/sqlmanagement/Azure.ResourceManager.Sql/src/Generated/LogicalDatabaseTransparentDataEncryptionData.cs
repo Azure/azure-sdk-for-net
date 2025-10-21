@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A class representing the LogicalDatabaseTransparentDataEncryption data model.
-    /// A logical database transparent data encryption state.
+    /// A logical database transparent data encryption scan state.
     /// </summary>
     public partial class LogicalDatabaseTransparentDataEncryptionData : ResourceData
     {
@@ -62,15 +62,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> Specifies the state of the transparent data encryption. </param>
+        /// <param name="scanState"> Specifies the encryption scan state of the transparent data encryption. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogicalDatabaseTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TransparentDataEncryptionState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal LogicalDatabaseTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TransparentDataEncryptionState? state, TransparentDataEncryptionScanState? scanState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             State = state;
+            ScanState = scanState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the state of the transparent data encryption. </summary>
         [WirePath("properties.state")]
         public TransparentDataEncryptionState? State { get; set; }
+        /// <summary> Specifies the encryption scan state of the transparent data encryption. </summary>
+        [WirePath("properties.scanState")]
+        public TransparentDataEncryptionScanState? ScanState { get; set; }
     }
 }

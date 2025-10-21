@@ -1,15 +1,71 @@
 # Release History
 
-## 1.0.0-beta.10 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-* Fix getting model deployed on the Azure Open AI resource, if the resource is authenticated using Entra ID. [see GitHub issue 49064](https://github.com/Azure/azure-sdk-for-net/issues/49064)
 
 ### Other Changes
+
+## 1.0.0 (2025-10-01)
+
+### Features Added
+* Added convenience `CreateOrUpdate` methods for `AIProjectIndex` objects
+
+### Breaking Changes
+* Name changes:
+  * `AssetDeployment` has been renamed to `AIProjectDeployment`
+  * `BlobReference` has been renamed to `AIProjectBlobReference`
+  * `ConnectionProperties` has been renamed to `AIProjectConnection`
+  * `FileDatasetVersion` has been renamed to `FileDataset`
+  * `FolderDatasetVersion` has been renamed to `FolderDataset`
+  * `SasCredential` has been renamed to `BlobReferenceSasCredential`
+  * `SearchIndex` has been renamed to `AIProjectIndex`
+* Removed `GetOpenAIClient` method. Look at Inference samples for how to get the client now.
+* All other `Get*Client` methods have been removed. Use the `AIProjectClient` properties `Connections`, `Datasets`, `Deployments`, and `Indexes` instead.
+
+### Bugs Fixed
+* Properly handle secret key population for `AIProjectConnectionCustomCredential`, [see GitHub issue 52355](https://github.com/Azure/azure-sdk-for-net/issues/52355).
+
+## 1.0.0-beta.11 (2025-08-20)
+
+### Features Added
+* Added a constructor for `AIProjectClient` which takes a `System.ClientModel.AuthenticationTokenProvider` object for authentication. We will be switching away from `Azure.Core.TokenCredential` with the upcoming stable release.
+
+### Breaking Changes
+* Class changes:
+  * `AIDeployment` has been renamed `AssetDeployment`
+  * `AssetCredentialResponse` has been renamed `DatasetCredential`
+  * `DatasetIndex` has been renamed `SearchIndex`
+  * `PendingUploadRequest` has been renamed `PendingUploadConfiguration`
+  * `PendingUploadResponse` has been renamed `PendingUploadResult`
+* In `Datasets`, methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `configuration`
+* `GetAzureOpenAIChatClient` and `GetAzureOpenAIEmbeddingClient` methods have been removed and replaced with a single `GetOpenAIClient` method. This method returns an OpenAI client which has properties for accessing individual operation clients. More information is available in the `Inference` samples.
+* All operations methods have been renamed to include the object the operation is for. For example, `Connections.GetDefault` has been renamed to `Connections.GetDefaultConnection`, and `Datasets.Get` has been renamed to `Datasets.GetDatasets`.
+* `Deployments.GetModelDeployment` and `Deployments.GetModelDeploymentAsync` methods have been removed. Use `Deployments.GetDeployment` and `Deployments.GetDeploymentAsync` instead.`
+
+## 1.0.0-beta.10 (2025-07-11)
+
+### Features Added
+* Support for generating embeddings through Azure OpenAI using `GetAzureOpenAIEmbeddingClient`.
+
+### Breaking Changes
+* Name changes:
+  * In `Datasets` methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `pendingUploadRequest`
+  * `Connection` has been renamed `ConnectionProperties`
+  * `Deployment` has been renamed `AIDeployment`
+  * `Index` has been renamed `DatasetIndex`
+  * `SasCredential` has been renamed `BlobReferenceSasCredential`
+  * `Sku` has been renamed `ModelDeploymentSku`
+* Removing `GetChatCompletionsClient`, `GetEmbeddingsClient`, and `GetImageEmbeddingsClient` methods from `AIProjectClient`. The Inference client should be used directly instead.
+* Replacing `GetConnectionsClient`, `GetDatasetsClient`, `GetDeploymentsClient`, and`GetIndexesClient` with `Connections`, `Datasets`, `Deployments`, and `Indexes` properties.
+
+### Bugs Fixed
+* Fix getting model deployed on the Azure Open AI resource, if the resource is authenticated using Entra ID. [see GitHub issue 49064](https://github.com/Azure/azure-sdk-for-net/issues/49064)
+* Fix dataset uploading datasets.
 
 ## 1.0.0-beta.9 (2025-05-16)
 
@@ -30,6 +86,7 @@ AI models deployed to the Project's AI Services.
 * Property `scope` on `AIProjectClient` is removed.
 * Evaluator Ids are available using the class `EvaluatorIDs` and no longer require `Azure.AI.Evaluation` package to be installed.
 * Property `Id` on Evaluation is replaced with `name`.
+* Please see the [agents migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/AGENTS_MIGRATION_GUIDE.md) on how to use the new `azure-ai-projects` with `azure-ai-agents` package.
 
 ### Sample Updates
 * All samples have been updated. New ones have been added for Deployments, Datasets, and Indexes.

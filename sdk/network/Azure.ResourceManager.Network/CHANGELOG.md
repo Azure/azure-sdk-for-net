@@ -1,5 +1,51 @@
 # Release History
 
+## 1.14.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.13.0 (2025-10-24)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-10-01' to 'package-2025-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c712a519a493d13c1cd997aa4e5adbab8df76e85/specification/network/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.48.0 to 1.49.0
+
+## 1.12.0 (2025-09-19)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-07-01' to 'package-2024-10-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/cbfe154470792d8aea255885a4a96609603982cc/specification/network/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.47.3 to 1.48.0
+
+## 1.11.3 (2025-08-21)
+
+### Features Added
+
+- Added `WirePath` attributes to all properties in all models for provisioning library to consume.
+
+## 1.11.2 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Network` AOT-compatible
+
+### Bugs Fixed
+
+- Fixed an issue in `ManagedRuleSetRuleGroup` deserialization where rule IDs could be either strings or numbers in JSON, causing `InvalidOperationException` when parsing mixed-type arrays.
+
 ## 1.11.1 (2025-07-01)
 
 ### Bugs Fixed

@@ -18,9 +18,73 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task AddVms_AddVMsToVMClusterGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/CloudVmClusters_AddVms_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudVmClusters_AddVms" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "cloudvmcluster1";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // invoke the operation
+            CloudVmClusterDBNodeContent content = new CloudVmClusterDBNodeContent(new string[] { "ocid1..aaaa", "ocid1..aaaaaa" });
+            ArmOperation<CloudVmClusterResource> lro = await cloudVmCluster.AddVmsAsync(WaitUntil.Completed, content);
+            CloudVmClusterResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudVmClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task AddVms_AddVMsToVMClusterGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/CloudVmClusters_AddVms_MinimumSet_Gen.json
+            // this example is just showing the usage of "CloudVmClusters_AddVms" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "cloudvmcluster1";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // invoke the operation
+            CloudVmClusterDBNodeContent content = new CloudVmClusterDBNodeContent(new string[] { "ocid1..aaaa", "ocid1..aaaaaa" });
+            ArmOperation<CloudVmClusterResource> lro = await cloudVmCluster.AddVmsAsync(WaitUntil.Completed, content);
+            CloudVmClusterResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudVmClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AddVms_CloudVmClustersAddVms()
         {
-            // Generated from example definition: 2025-03-01/vmClusters_addVms.json
+            // Generated from example definition: 2025-09-01/vmClusters_addVms.json
             // this example is just showing the usage of "CloudVmClusters_AddVms" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,9 +114,73 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task RemoveVms_RemoveVMsFromVMClusterGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/CloudVmClusters_RemoveVms_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudVmClusters_RemoveVms" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "cloudvmcluster1";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // invoke the operation
+            CloudVmClusterDBNodeContent content = new CloudVmClusterDBNodeContent(new string[] { "ocid1..aaaa", "ocid1..aaaaaa" });
+            ArmOperation<CloudVmClusterResource> lro = await cloudVmCluster.RemoveVmsAsync(WaitUntil.Completed, content);
+            CloudVmClusterResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudVmClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task RemoveVms_RemoveVMsFromVMClusterGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/CloudVmClusters_RemoveVms_MinimumSet_Gen.json
+            // this example is just showing the usage of "CloudVmClusters_RemoveVms" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "cloudvmcluster1";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // invoke the operation
+            CloudVmClusterDBNodeContent content = new CloudVmClusterDBNodeContent(new string[] { "ocid1..aaaa", "ocid1..aaaaaa" });
+            ArmOperation<CloudVmClusterResource> lro = await cloudVmCluster.RemoveVmsAsync(WaitUntil.Completed, content);
+            CloudVmClusterResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudVmClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RemoveVms_CloudVmClustersRemoveVms()
         {
-            // Generated from example definition: 2025-03-01/vmClusters_removeVms.json
+            // Generated from example definition: 2025-09-01/vmClusters_removeVms.json
             // this example is just showing the usage of "CloudVmClusters_RemoveVms" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,9 +210,69 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetPrivateIPAddresses_ListPrivateIPAddressesForVMClusterGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/CloudVmClusters_ListPrivateIpAddresses_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudVmClusters_ListPrivateIPAddresses" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "cloudvmcluster1";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // invoke the operation and iterate over the result
+            PrivateIPAddressesContent content = new PrivateIPAddressesContent("ocid1..aaaaaa", "ocid1..aaaaa");
+            await foreach (PrivateIPAddressResult item in cloudVmCluster.GetPrivateIPAddressesAsync(content))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetPrivateIPAddresses_ListPrivateIPAddressesForVMClusterGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/CloudVmClusters_ListPrivateIpAddresses_MinimumSet_Gen.json
+            // this example is just showing the usage of "CloudVmClusters_ListPrivateIPAddresses" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "cloudvmcluster1";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // invoke the operation and iterate over the result
+            PrivateIPAddressesContent content = new PrivateIPAddressesContent("ocid1..aaaaaa", "ocid1..aaaaa");
+            await foreach (PrivateIPAddressResult item in cloudVmCluster.GetPrivateIPAddressesAsync(content))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateIPAddresses_CloudVmClustersListPrivateIpAddresses()
         {
-            // Generated from example definition: 2025-03-01/vmClusters_listPrivateIpAddresses.json
+            // Generated from example definition: 2025-09-01/vmClusters_listPrivateIpAddresses.json
             // this example is just showing the usage of "CloudVmClusters_ListPrivateIPAddresses" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

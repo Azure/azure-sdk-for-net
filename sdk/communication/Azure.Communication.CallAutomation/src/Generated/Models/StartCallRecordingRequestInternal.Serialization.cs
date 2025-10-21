@@ -75,11 +75,6 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("externalStorage"u8);
                 writer.WriteObjectValue(ExternalStorage);
             }
-            if (Optional.IsDefined(PostProcessingOptions))
-            {
-                writer.WritePropertyName("postProcessingOptions"u8);
-                writer.WriteObjectValue(PostProcessingOptions);
-            }
             writer.WriteEndObject();
         }
 

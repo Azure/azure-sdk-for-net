@@ -80,18 +80,25 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Deployment time string. </summary>
+        [WirePath("commitTime")]
         public DateTimeOffset? CommitOn { get; }
         /// <summary> Deployment region. </summary>
+        [WirePath("region")]
         public string Region { get; }
         /// <summary> A description of the security admin configuration. </summary>
+        [WirePath("configurationDescription")]
         public string ConfigurationDescription { get; }
         /// <summary> A description of the rule collection. </summary>
+        [WirePath("ruleCollectionDescription")]
         public string RuleCollectionDescription { get; }
         /// <summary> Groups for rule collection. </summary>
+        [WirePath("ruleCollectionAppliesToGroups")]
         public IReadOnlyList<NetworkManagerSecurityGroupItem> RuleCollectionAppliesToGroups { get; }
         /// <summary> Effective configuration groups. </summary>
+        [WirePath("ruleGroups")]
         public IReadOnlyList<NetworkConfigurationGroup> RuleGroups { get; }
         /// <summary> Whether the rule is custom or default. </summary>
         internal EffectiveAdminRuleKind Kind { get; set; }

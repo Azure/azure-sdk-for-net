@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.HealthDataAIServices</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider HealthDataAIServices.</Description>
     <PackageTags>azure;management;arm;resource manager;healthdataaiservices</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

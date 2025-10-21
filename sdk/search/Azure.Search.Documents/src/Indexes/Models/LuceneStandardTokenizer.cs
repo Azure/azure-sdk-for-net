@@ -7,7 +7,6 @@ using Azure.Core;
 namespace Azure.Search.Documents.Indexes.Models
 {
     [CodeGenModel("LuceneStandardTokenizerV2")]
-    [CodeGenSuppress(nameof(LuceneStandardTokenizer), typeof(string), typeof(string), typeof(int?))]
     public partial class LuceneStandardTokenizer : IUtf8JsonSerializable
     {
         /// <summary>

@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of WorkloadNetworksRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public WorkloadNetworksRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateGetDhcpRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId)
+        internal RequestUriBuilder CreateGetDhcpRequestUri(string subscriptionId, string resourceGroupName, string dhcpId, string privateCloudName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateGetDhcpRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId)
+        internal HttpMessage CreateGetDhcpRequest(string subscriptionId, string resourceGroupName, string dhcpId, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -363,19 +363,19 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Get a WorkloadNetworkDhcp. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="dhcpId"> The ID of the DHCP configuration. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkDhcpData>> GetDhcpAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dhcpId"/> or <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dhcpId"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<WorkloadNetworkDhcpData>> GetDhcpAsync(string subscriptionId, string resourceGroupName, string dhcpId, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
 
-            using var message = CreateGetDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId);
+            using var message = CreateGetDhcpRequest(subscriptionId, resourceGroupName, dhcpId, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -396,19 +396,19 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Get a WorkloadNetworkDhcp. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="dhcpId"> The ID of the DHCP configuration. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkDhcpData> GetDhcp(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dhcpId"/> or <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dhcpId"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<WorkloadNetworkDhcpData> GetDhcp(string subscriptionId, string resourceGroupName, string dhcpId, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
 
-            using var message = CreateGetDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId);
+            using var message = CreateGetDhcpRequest(subscriptionId, resourceGroupName, dhcpId, privateCloudName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -659,7 +659,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(dhcpId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1118,7 +1117,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateDeleteDnsServiceRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId)
+        internal RequestUriBuilder CreateDeleteDnsServiceRequestUri(string subscriptionId, string resourceGroupName, string dnsServiceId, string privateCloudName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1134,7 +1133,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateDeleteDnsServiceRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId)
+        internal HttpMessage CreateDeleteDnsServiceRequest(string subscriptionId, string resourceGroupName, string dnsServiceId, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1151,7 +1150,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(dnsServiceId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1159,19 +1157,19 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Delete a WorkloadNetworkDnsService. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="dnsServiceId"> ID of the DNS service. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteDnsServiceAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsServiceId"/> or <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsServiceId"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteDnsServiceAsync(string subscriptionId, string resourceGroupName, string dnsServiceId, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
 
-            using var message = CreateDeleteDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId);
+            using var message = CreateDeleteDnsServiceRequest(subscriptionId, resourceGroupName, dnsServiceId, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1187,19 +1185,19 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Delete a WorkloadNetworkDnsService. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="dnsServiceId"> ID of the DNS service. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteDnsService(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsServiceId"/> or <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsServiceId"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteDnsService(string subscriptionId, string resourceGroupName, string dnsServiceId, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
 
-            using var message = CreateDeleteDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId);
+            using var message = CreateDeleteDnsServiceRequest(subscriptionId, resourceGroupName, dnsServiceId, privateCloudName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1610,7 +1608,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateDeleteDnsZoneRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId)
+        internal RequestUriBuilder CreateDeleteDnsZoneRequestUri(string subscriptionId, string resourceGroupName, string dnsZoneId, string privateCloudName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1626,7 +1624,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateDeleteDnsZoneRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId)
+        internal HttpMessage CreateDeleteDnsZoneRequest(string subscriptionId, string resourceGroupName, string dnsZoneId, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1643,7 +1641,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(dnsZoneId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1651,19 +1648,19 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Delete a WorkloadNetworkDnsZone. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="dnsZoneId"> ID of the DNS zone. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteDnsZoneAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsZoneId"/> or <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsZoneId"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteDnsZoneAsync(string subscriptionId, string resourceGroupName, string dnsZoneId, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
 
-            using var message = CreateDeleteDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId);
+            using var message = CreateDeleteDnsZoneRequest(subscriptionId, resourceGroupName, dnsZoneId, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1679,19 +1676,19 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Delete a WorkloadNetworkDnsZone. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="dnsZoneId"> ID of the DNS zone. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteDnsZone(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsZoneId"/> or <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsZoneId"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteDnsZone(string subscriptionId, string resourceGroupName, string dnsZoneId, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
 
-            using var message = CreateDeleteDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId);
+            using var message = CreateDeleteDnsZoneRequest(subscriptionId, resourceGroupName, dnsZoneId, privateCloudName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2300,7 +2297,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateDeletePortMirroringRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId)
+        internal RequestUriBuilder CreateDeletePortMirroringRequestUri(string subscriptionId, string resourceGroupName, string portMirroringId, string privateCloudName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2316,7 +2313,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateDeletePortMirroringRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId)
+        internal HttpMessage CreateDeletePortMirroringRequest(string subscriptionId, string resourceGroupName, string portMirroringId, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2333,7 +2330,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(portMirroringId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -2341,19 +2337,19 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Delete a WorkloadNetworkPortMirroring. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="portMirroringId"> ID of the NSX port mirroring profile. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeletePortMirroringAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="portMirroringId"/> or <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="portMirroringId"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeletePortMirroringAsync(string subscriptionId, string resourceGroupName, string portMirroringId, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
 
-            using var message = CreateDeletePortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId);
+            using var message = CreateDeletePortMirroringRequest(subscriptionId, resourceGroupName, portMirroringId, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2369,19 +2365,19 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Delete a WorkloadNetworkPortMirroring. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="portMirroringId"> ID of the NSX port mirroring profile. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeletePortMirroring(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="portMirroringId"/> or <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="portMirroringId"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeletePortMirroring(string subscriptionId, string resourceGroupName, string portMirroringId, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
 
-            using var message = CreateDeletePortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId);
+            using var message = CreateDeletePortMirroringRequest(subscriptionId, resourceGroupName, portMirroringId, privateCloudName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2692,7 +2688,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateDeletePublicIPRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId)
+        internal RequestUriBuilder CreateDeletePublicIPRequestUri(string subscriptionId, string resourceGroupName, string publicIPId, string privateCloudName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2708,7 +2704,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateDeletePublicIPRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId)
+        internal HttpMessage CreateDeletePublicIPRequest(string subscriptionId, string resourceGroupName, string publicIPId, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2725,7 +2721,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(publicIPId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -2733,19 +2728,19 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Delete a WorkloadNetworkPublicIP. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="publicIPId"> ID of the DNS zone. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="publicIPId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeletePublicIPAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publicIPId"/> or <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publicIPId"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeletePublicIPAsync(string subscriptionId, string resourceGroupName, string publicIPId, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
 
-            using var message = CreateDeletePublicIPRequest(subscriptionId, resourceGroupName, privateCloudName, publicIPId);
+            using var message = CreateDeletePublicIPRequest(subscriptionId, resourceGroupName, publicIPId, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2761,19 +2756,19 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Delete a WorkloadNetworkPublicIP. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="publicIPId"> ID of the DNS zone. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="publicIPId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeletePublicIP(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publicIPId"/> or <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publicIPId"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeletePublicIP(string subscriptionId, string resourceGroupName, string publicIPId, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
 
-            using var message = CreateDeletePublicIPRequest(subscriptionId, resourceGroupName, privateCloudName, publicIPId);
+            using var message = CreateDeletePublicIPRequest(subscriptionId, resourceGroupName, publicIPId, privateCloudName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3217,7 +3212,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(segmentId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -3874,7 +3868,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateDeleteVmGroupRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId)
+        internal RequestUriBuilder CreateDeleteVmGroupRequestUri(string subscriptionId, string resourceGroupName, string vmGroupId, string privateCloudName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -3890,7 +3884,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateDeleteVmGroupRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId)
+        internal HttpMessage CreateDeleteVmGroupRequest(string subscriptionId, string resourceGroupName, string vmGroupId, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3907,7 +3901,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(vmGroupId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -3915,19 +3908,19 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Delete a WorkloadNetworkVMGroup. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="vmGroupId"> ID of the VM group. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteVmGroupAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmGroupId"/> or <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmGroupId"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteVmGroupAsync(string subscriptionId, string resourceGroupName, string vmGroupId, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
 
-            using var message = CreateDeleteVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId);
+            using var message = CreateDeleteVmGroupRequest(subscriptionId, resourceGroupName, vmGroupId, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3943,19 +3936,19 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Delete a WorkloadNetworkVMGroup. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="vmGroupId"> ID of the VM group. </param>
+        /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteVmGroup(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmGroupId"/> or <paramref name="privateCloudName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmGroupId"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DeleteVmGroup(string subscriptionId, string resourceGroupName, string vmGroupId, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
 
-            using var message = CreateDeleteVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId);
+            using var message = CreateDeleteVmGroupRequest(subscriptionId, resourceGroupName, vmGroupId, privateCloudName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

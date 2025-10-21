@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-03-01-preview";
+            _apiVersion = apiVersion ?? "2025-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -353,7 +353,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(clusterName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -799,7 +798,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/startFaultSimulation", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(faultSimulationContentWrapper, ModelSerializationExtensions.WireOptions);
@@ -891,7 +889,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/stopFaultSimulation", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);

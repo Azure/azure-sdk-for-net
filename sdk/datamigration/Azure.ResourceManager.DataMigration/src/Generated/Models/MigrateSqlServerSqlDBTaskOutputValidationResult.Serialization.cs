@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             string migrationId = default;
             IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = default;
-            ValidationStatus? status = default;
+            MigrationValidationStatus? status = default;
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    status = new ValidationStatus(property.Value.GetString());
+                    status = new MigrationValidationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

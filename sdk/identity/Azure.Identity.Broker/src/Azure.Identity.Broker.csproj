@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>Provides authentication broker APIs for authenticating to Microsoft Entra ID</Description>
     <AssemblyTitle>Microsoft Azure.Identity.Broker Component</AssemblyTitle>
-    <Version>1.3.0-beta.4</Version>
+    <Version>1.4.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.2.0</ApiCompatVersion>
+    <ApiCompatVersion>1.3.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Identity Broker;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('Windows'))">$(RequiredTargetFrameworks);net462;net8.0</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('OSX'))">$(RequiredTargetFrameworks);net8.0</TargetFrameworks>
@@ -13,7 +13,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" VersionOverride="1.14.0-beta.3" />
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Microsoft.Identity.Client.Broker" />
   </ItemGroup>
 </Project>

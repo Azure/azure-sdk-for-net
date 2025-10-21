@@ -8,12 +8,12 @@ using System.IO;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.Extensions;
-using Azure.Generator.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
+using Azure.Generator.Visitors.Utilities;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
@@ -30,7 +30,7 @@ namespace Azure.Generator.Providers
         {
             _publicClients = publicClients;
             _resourceProviderName = TypeNameUtilities.GetResourceProviderName();
-            AzureClientGenerator.Instance.AddTypeToKeep(this);
+            AzureClientGenerator.Instance.AddTypeToKeep(this, isRoot: false);
         }
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
@@ -156,7 +156,7 @@ namespace Azure.Generator.Providers
                 [.. constructorSignature.Parameters];
 
             return new FuncExpression(
-                isTokenCredential ? [options.AsExpression().Declaration, token.Declaration] : [options.AsExpression().Declaration],
+                isTokenCredential ? [options.AsVariable().Declaration, token.Declaration] : [options.AsVariable().Declaration],
                 New.Instance(client.Type, ctorArgs));
         }
 

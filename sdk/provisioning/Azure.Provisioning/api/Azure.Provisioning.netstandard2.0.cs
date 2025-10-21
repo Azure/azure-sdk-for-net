@@ -608,6 +608,7 @@ namespace Azure.Provisioning.Expressions
         public BicepInterpolatedStringHandler(int literalLength, int formattedCount) { throw null; }
         public void AppendFormatted<T>(T t) { }
         public void AppendLiteral(string text) { }
+        public static implicit operator Azure.Provisioning.Expressions.BicepInterpolatedStringHandler (System.FormattableString formattable) { throw null; }
     }
     public partial class BicepProgram
     {
@@ -918,6 +919,7 @@ namespace Azure.Provisioning.Primitives
         protected Azure.Provisioning.BicepDictionary<T> DefineDictionaryProperty<T>(string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false) { throw null; }
         protected Azure.Provisioning.BicepList<T> DefineListProperty<T>(string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false) { throw null; }
         protected T DefineModelProperty<T>(string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false, bool isSecure = false, string? format = null) where T : Azure.Provisioning.Primitives.ProvisionableConstruct, new() { throw null; }
+        protected T DefineModelProperty<T>(string propertyName, string[]? bicepPath, T value, bool isOutput = false, bool isRequired = false, bool isSecure = false, string? format = null) where T : Azure.Provisioning.Primitives.ProvisionableConstruct { throw null; }
         protected Azure.Provisioning.BicepValue<T> DefineProperty<T>(string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false, bool isSecure = false, Azure.Provisioning.BicepValue<T>? defaultValue = null, string? format = null) { throw null; }
         protected virtual void DefineProvisionableProperties() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1309,9 +1311,41 @@ namespace Azure.Provisioning.Resources
     public partial class ArmDeploymentContent : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ArmDeploymentContent() { }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.Resources.ArmDeploymentProperties Properties { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ArmDeploymentExtensionConfigItem : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ArmDeploymentExtensionConfigItem() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ExtensionConfigPropertyType> ExtensionConfigPropertyType { get { throw null; } }
+        public Azure.Provisioning.Resources.KeyVaultParameterReference KeyVaultReference { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.BinaryData> Value { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ArmDeploymentExtensionDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ArmDeploymentExtensionDefinition() { }
+        public Azure.Provisioning.BicepValue<string> Alias { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Resources.ArmDeploymentExtensionConfigItem> Config { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ConfigId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ArmDeploymentExternalInput : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ArmDeploymentExternalInput() { }
+        public Azure.Provisioning.BicepValue<System.BinaryData> Value { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ArmDeploymentExternalInputDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ArmDeploymentExternalInputDefinition() { }
+        public Azure.Provisioning.BicepValue<System.BinaryData> Config { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ArmDeploymentMode
@@ -1332,6 +1366,9 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<string> DebugSettingDetailLevel { get { throw null; } set { } }
         public Azure.Provisioning.Resources.ErrorDeployment ErrorDeployment { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ExpressionEvaluationScope> ExpressionEvaluationScope { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.BicepDictionary<Azure.Provisioning.Resources.ArmDeploymentExtensionConfigItem>> ExtensionConfigs { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Resources.ArmDeploymentExternalInputDefinition> ExternalInputDefinitions { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Resources.ArmDeploymentExternalInput> ExternalInputs { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ArmDeploymentMode> Mode { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.BinaryData> Parameters { get { throw null; } set { } }
         public Azure.Provisioning.Resources.ArmDeploymentParametersLink ParametersLink { get { throw null; } set { } }
@@ -1349,7 +1386,9 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<System.TimeSpan> Duration { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.ResponseError> Error { get { throw null; } }
         public Azure.Provisioning.Resources.ErrorDeploymentExtended ErrorDeployment { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ArmDeploymentExtensionDefinition> Extensions { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ArmDeploymentMode> Mode { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ArmResourceReference> OutputResourceDetails { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.SubResource> OutputResources { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.BinaryData> Outputs { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.BinaryData> Parameters { get { throw null; } }
@@ -1359,6 +1398,7 @@ namespace Azure.Provisioning.Resources
         public Azure.Provisioning.BicepValue<string> TemplateHash { get { throw null; } }
         public Azure.Provisioning.Resources.ArmDeploymentTemplateLink TemplateLink { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> Timestamp { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ArmResourceReference> ValidatedResourceDetails { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.SubResource> ValidatedResources { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ValidationLevel> ValidationLevel { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -1441,6 +1481,58 @@ namespace Azure.Provisioning.Resources
     {
         public ArmPolicyParameterValue() { }
         public Azure.Provisioning.BicepValue<System.BinaryData> Value { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ArmResourceReference : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ArmResourceReference() { }
+        public Azure.Provisioning.BicepValue<string> ApiVersion { get { throw null; } }
+        public Azure.Provisioning.Resources.ArmDeploymentExtensionDefinition Extension { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.BinaryData> Identifiers { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ResourceType { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class AzureCliScript : Azure.Provisioning.Resources.ArmDeploymentScript
+    {
+        public AzureCliScript(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Arguments { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AzCliVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ScriptCleanupOptions> CleanupPreference { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ContainerGroupName { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ScriptContainerConfiguration ContainerSettings { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ScriptEnvironmentVariable> EnvironmentVariables { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ForceUpdateTag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.BinaryData> Outputs { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> PrimaryScriptUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ScriptProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.TimeSpan> RetentionInterval { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ScriptContent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ScriptStatus Status { get { throw null; } }
+        public Azure.Provisioning.Resources.ScriptStorageConfiguration StorageAccountSettings { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<System.Uri> SupportingScriptUris { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.TimeSpan> Timeout { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class AzurePowerShellScript : Azure.Provisioning.Resources.ArmDeploymentScript
+    {
+        public AzurePowerShellScript(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Arguments { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AzPowerShellVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ScriptCleanupOptions> CleanupPreference { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ContainerGroupName { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ScriptContainerConfiguration ContainerSettings { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ScriptEnvironmentVariable> EnvironmentVariables { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ForceUpdateTag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.BinaryData> Outputs { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> PrimaryScriptUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ScriptProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.TimeSpan> RetentionInterval { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ScriptContent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ScriptStatus Status { get { throw null; } }
+        public Azure.Provisioning.Resources.ScriptStorageConfiguration StorageAccountSettings { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<System.Uri> SupportingScriptUris { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.TimeSpan> Timeout { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class BasicArmDependency : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1680,6 +1772,16 @@ namespace Azure.Provisioning.Resources
     public enum ExtendedLocationType
     {
         EdgeZone = 0,
+    }
+    public enum ExtensionConfigPropertyType
+    {
+        String = 0,
+        Int = 1,
+        Bool = 2,
+        Array = 3,
+        Object = 4,
+        SecureString = 5,
+        SecureObject = 6,
     }
     public partial class GenericResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -2373,6 +2475,61 @@ namespace Azure.Provisioning.Resources
         NotSpecified = 0,
         PlainText = 1,
         Mask = 2,
+    }
+    public enum ScriptCleanupOptions
+    {
+        Always = 0,
+        OnSuccess = 1,
+        OnExpiration = 2,
+    }
+    public partial class ScriptContainerConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ScriptContainerConfiguration() { }
+        public Azure.Provisioning.BicepValue<string> ContainerGroupName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.ScriptContainerGroupSubnet> SubnetIds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ScriptContainerGroupSubnet : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ScriptContainerGroupSubnet() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ScriptEnvironmentVariable : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ScriptEnvironmentVariable() { }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SecureValue { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum ScriptProvisioningState
+    {
+        Creating = 0,
+        ProvisioningResources = 1,
+        Running = 2,
+        Succeeded = 3,
+        Failed = 4,
+        Canceled = 5,
+    }
+    public partial class ScriptStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ScriptStatus() { }
+        public Azure.Provisioning.BicepValue<string> ContainerInstanceId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ResponseError> Error { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> StorageAccountId { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ScriptStorageConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ScriptStorageConfiguration() { }
+        public Azure.Provisioning.BicepValue<string> StorageAccountKey { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> StorageAccountName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum SpendingLimit
     {

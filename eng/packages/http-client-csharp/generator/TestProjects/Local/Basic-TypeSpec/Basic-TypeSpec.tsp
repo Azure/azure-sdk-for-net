@@ -40,7 +40,6 @@ enum Versions {
 }
 
 @doc("float fixed enum")
-@fixed
 enum FloatFixedEnumWithIntValue {
   One: 1.0,
   Two: 2.0,
@@ -48,7 +47,6 @@ enum FloatFixedEnumWithIntValue {
 }
 
 @doc("float fixed enum")
-@fixed
 enum FloatFixedEnum {
   OneDotOne: 1.1,
   TwoDotTwo: 2.2,
@@ -56,7 +54,6 @@ enum FloatFixedEnum {
 }
 
 @doc("int fixed enum")
-@fixed
 enum IntFixedEnum {
   One: 1,
   Two: 2,
@@ -64,7 +61,6 @@ enum IntFixedEnum {
 }
 
 @doc("Simple enum")
-@fixed
 enum StringFixedEnum {
   One: "1",
   Two: "2",
@@ -172,6 +168,7 @@ model ModelWithClientName {
 }
 
 @doc("this is a roundtrip model")
+@useSystemTextJsonConverter()
 model RoundTripModel {
   @doc("Required string, illustrating a reference type property.")
   requiredString: string;
@@ -442,3 +439,21 @@ model Page<T> {
 @convenientAPI(true)
 @list
 op ListWithPaging(): Page<ThingModel>;
+
+@route("conditionalrequest")
+@doc("A sample operation with conditional requests")
+@convenientAPI(true)
+@get
+op ConditionalRequest(@header("If-Match") ifMatch?: string, @header("If-None-Match") ifNoneMatch?: string): void;
+
+@route("conditionalrequest/date")
+@doc("A sample operation with conditional requests")
+@convenientAPI(true)
+@get
+op ConditionalRequestDate(@header("If-Match") ifMatch?: string, @header("If-None-Match") ifNoneMatch?: string, @header("If-Modified-Since") ifModifiedSince?: string): void;
+
+@route("multipart")
+@doc("A sample operation with multipart request")
+@convenientAPI(true)
+@post
+op MultipartRequest(@header("Content-Type") contentType: "multipart/form-data", @multipartBody body: {name: HttpPart<string>}): void;

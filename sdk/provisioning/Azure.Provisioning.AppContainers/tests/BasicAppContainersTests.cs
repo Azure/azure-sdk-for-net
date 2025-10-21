@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.OperationalInsights;
 using Azure.Provisioning.Tests;
@@ -10,17 +9,14 @@ using NUnit.Framework;
 
 namespace Azure.Provisioning.AppContainers.Tests;
 
-public class BasicAppContainersTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicAppContainersTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.app/container-app-create/main.bicep")]
-    public async Task CreateContainerApp()
+    internal static Trycep CreateContainerAppTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:AppContainerBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter containerImage =
@@ -32,14 +28,14 @@ public class BasicAppContainersTests(bool async)
                 infra.Add(containerImage);
 
                 OperationalInsightsWorkspace logAnalytics =
-                    new(nameof(logAnalytics))
+                    new(nameof(logAnalytics), OperationalInsightsWorkspace.ResourceVersions.V2023_09_01)
                     {
                         Sku = new OperationalInsightsWorkspaceSku { Name = OperationalInsightsWorkspaceSkuName.PerGB2018 }
                     };
                 infra.Add(logAnalytics);
 
                 ContainerAppManagedEnvironment env =
-                    new(nameof(env))
+                    new(nameof(env), ContainerAppManagedEnvironment.ResourceVersions.V2024_03_01)
                     {
                         AppLogsConfiguration =
                             new ContainerAppLogsConfiguration
@@ -55,7 +51,7 @@ public class BasicAppContainersTests(bool async)
                 infra.Add(env);
 
                 ContainerApp app =
-                    new(nameof(app))
+                    new(nameof(app), ContainerApp.ResourceVersions.V2024_03_01)
                     {
                         ManagedEnvironmentId = env.Id,
                         Configuration =
@@ -99,10 +95,18 @@ public class BasicAppContainersTests(bool async)
                             }
                     };
                 infra.Add(app);
+                #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.app/container-app-create/main.bicep")]
+    public async Task CreateContainerApp()
+    {
+        await using Trycep test = CreateContainerAppTest();
+        test.Compare(
             """
             @description('Specifies the docker container image to deploy.')
             param containerImage string = 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
@@ -171,8 +175,6 @@ public class BasicAppContainersTests(bool async)
                 }
               }
             }
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }

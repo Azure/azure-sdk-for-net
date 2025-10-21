@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailAppEnglish/deployments/assignedDeployment?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "71260b44-a86a-4bac-be30-0f89123b6cec",
+        "Content-Length": "311",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Jun 2025 21:56:32 GMT",
+        "request-id": "71260b44-a86a-4bac-be30-0f89123b6cec",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "42",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "deploymentName": "assignedDeployment",
+        "modelId": "ModelWithDG-20250620T112120-472125610e37431297ec503c1aede9c1",
+        "lastTrainedDateTime": "2025-06-20T23:21:20.4774361Z",
+        "lastDeployedDateTime": "2025-06-24T19:40:47Z",
+        "deploymentExpirationDate": "2027-05-15",
+        "modelTrainingConfigVersion": "2025-05-15-preview-ConvLevel"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1626714914"
+  }
+}

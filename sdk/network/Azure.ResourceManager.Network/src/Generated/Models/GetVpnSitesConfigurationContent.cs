@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of resource-ids of the vpn-sites for which config is to be downloaded. </summary>
+        [WirePath("vpnSites")]
         public IList<string> VpnSites { get; }
         /// <summary> The sas-url to download the configurations for vpn-sites. </summary>
+        [WirePath("outputBlobSasUrl")]
         public Uri OutputBlobSasUri { get; }
     }
 }

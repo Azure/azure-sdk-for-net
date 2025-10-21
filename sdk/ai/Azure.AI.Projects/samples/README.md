@@ -11,6 +11,8 @@ description: Samples for the Azure.AI.Projects client library.
 
 # Azure.AI.Projects samples
 
+## Basic API interactions
+
 | Sample | Description |
 | ------ | ----------- |
 | [Sample1_Datasets](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample1_Datasets.md) | Sample for dataset functions. |
@@ -20,12 +22,15 @@ description: Samples for the Azure.AI.Projects client library.
 | [Sample5_Evaluations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample5_Evaluations.md) | Sample for evaluations functions. |
 | [Sample8_Telemetry](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample8_Telemetry.md) | Sample for telemetry functions. |
 
-# Azure.AI.Projects samples for Agents and Inference extensions
+## Samples for Agents and Inference extensions
 
 | Sample | Description |
 | ------ | ----------- |
 | [Sample6_Agents](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample6_Agents.md) | Sample for `Azure.AI.Agents.Persistent` extensions. |
-| [Sample7_AzureOpenAI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample7_AzureOpenAI.md) | Sample for `Azure.AI.OpenAI` extensions. |
+| [Sample13_DatasetsAsVectorStoreSource](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample13_DatasetsAsVectorStoreSource.md) | Using a Dataset as a source for a vector store search tool in an Agent. |
+| [Sample14_IndexCreationForAISearch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample14_IndexCreationForAISearch.md) | Azure AI Search Index creation sample, for usage as an Agent tool. |
+| [Sample7_AzureOpenAI_Chat](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample7_AzureOpenAI_Chat.md) | Sample for `Azure.AI.OpenAI` Chat extensions. |
 | [Sample9_InferenceChatClient](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample9_InferenceChatClient.md) | Sample for `Azure.AI.Inference` Chat Client extensions. |
 | [Sample10_InferenceEmbedding](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample10_InferenceEmbedding.md) | Sample for `Azure.AI.Inference` Embeddings extensions. |
 | [Sample11_InferenceImageEmbedding](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample11_InferenceImageEmbedding.md) | Sample for `Azure.AI.Inference` Image Embeddings extensions. |
+| [Sample12_AzureOpenAI_Embeddings](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample12_AzureOpenAI_Embeddings.md) | Sample for `Azure.AI.OpenAI` Embeddings extensions. |

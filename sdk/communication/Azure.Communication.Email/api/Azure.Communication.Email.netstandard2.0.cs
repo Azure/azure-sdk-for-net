@@ -1,11 +1,5 @@
 namespace Azure.Communication.Email
 {
-    public partial class AzureCommunicationEmailContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureCommunicationEmailContext() { }
-        public static Azure.Communication.Email.AzureCommunicationEmailContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EmailAddress
     {
@@ -42,13 +36,14 @@ namespace Azure.Communication.Email
     }
     public partial class EmailClientOptions : Azure.Core.ClientOptions
     {
-        public EmailClientOptions(Azure.Communication.Email.EmailClientOptions.ServiceVersion version = Azure.Communication.Email.EmailClientOptions.ServiceVersion.V2024_07_01_Preview) { }
+        public EmailClientOptions(Azure.Communication.Email.EmailClientOptions.ServiceVersion version = Azure.Communication.Email.EmailClientOptions.ServiceVersion.V2025_09_01) { }
         public enum ServiceVersion
         {
             V2021_10_01_Preview = 1,
             V2023_01_15_Preview = 2,
             V2023_03_31 = 3,
             V2024_07_01_Preview = 4,
+            V2025_09_01 = 5,
         }
     }
     public partial class EmailContent
@@ -123,6 +118,14 @@ namespace Azure.Communication.Email
         public static implicit operator Azure.Communication.Email.EmailSendStatus (string value) { throw null; }
         public static bool operator !=(Azure.Communication.Email.EmailSendStatus left, Azure.Communication.Email.EmailSendStatus right) { throw null; }
         public override string ToString() { throw null; }
+        public static partial class Values
+        {
+            public const string Canceled = "Canceled";
+            public const string Failed = "Failed";
+            public const string NotStarted = "NotStarted";
+            public const string Running = "Running";
+            public const string Succeeded = "Succeeded";
+        }
     }
 }
 namespace Microsoft.Extensions.Azure

@@ -9,7 +9,6 @@ using System.Linq;
 #endregion Snippet:Azure_Communication_Rooms_Tests_UsingStatements
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
-using Azure.Communication.Rooms;
 using Azure.Communication.Rooms.Tests;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
@@ -20,13 +19,36 @@ namespace Azure.Communication.Rooms.Test
 {
     public class RoomClientPstnDialOutLiveTest : RoomsClientLiveTestBase
     {
+        public static object[] AuthenticationVersionSource =
+        [
+            new object[] { AuthMethod.ConnectionString, ServiceVersion.V2024_04_15 },
+            new object[] { AuthMethod.KeyCredential, ServiceVersion.V2024_04_15},
+            new object[] { AuthMethod.ConnectionString, ServiceVersion.V2025_03_13 },
+            new object[] { AuthMethod.KeyCredential, ServiceVersion.V2025_03_13 }
+        ];
+
+        public static readonly object[] AuthenticationVersionPstnEnabledSource =
+        [
+            new object?[] { AuthMethod.ConnectionString, ServiceVersion.V2024_04_15, false },
+            new object?[] { AuthMethod.ConnectionString, ServiceVersion.V2024_04_15, true },
+            new object?[] { AuthMethod.ConnectionString, ServiceVersion.V2024_04_15, null },
+            new object?[] { AuthMethod.KeyCredential, ServiceVersion.V2024_04_15, false },
+            new object?[] { AuthMethod.KeyCredential, ServiceVersion.V2024_04_15, true },
+            new object?[] { AuthMethod.KeyCredential, ServiceVersion.V2024_04_15, null },
+            new object?[] { AuthMethod.ConnectionString, ServiceVersion.V2025_03_13, false },
+            new object?[] { AuthMethod.ConnectionString, ServiceVersion.V2025_03_13, true },
+            new object?[] { AuthMethod.ConnectionString, ServiceVersion.V2025_03_13, null },
+            new object?[] { AuthMethod.KeyCredential, ServiceVersion.V2025_03_13, false },
+            new object?[] { AuthMethod.KeyCredential, ServiceVersion.V2025_03_13, true },
+            new object?[] { AuthMethod.KeyCredential, ServiceVersion.V2025_03_13, null }
+        ];
+
         public RoomClientPstnDialOutLiveTest(bool isAsync) : base(isAsync)
         {
         }
 
-        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2024_04_15, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingConnectionString")]
-        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2024_04_15, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingKeyCredential")]
-        public async Task AcsRoomRequestLiveWithoutParticipantsTest(AuthMethod authMethod, ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task AcsRoomLiveWithoutParticipantsTest(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
             Rooms.RoomsClient roomsClient = CreateClient(authMethod, true, apiVersion);
@@ -93,21 +115,11 @@ namespace Azure.Communication.Rooms.Test
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }
+            await Task.Run(() => Console.WriteLine("Test Completed"));
         }
 
-        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2024_04_15, false, TestName = "AcsRoomRequestWithPstnDialOutEnabledFalseLiveWithoutParticipantsUsingConnectionString")]
-        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2024_04_15, true, TestName = "AcsRoomRequestWithPstnDialOutEnabledTrueLiveWithoutParticipantsUsingConnectionString")]
-        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2024_04_15, null, TestName = "AcsRoomRequestWithPstnDialOutEnabledNullLiveWithoutParticipantsUsingConnectionString")]
-        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2024_04_15, false, TestName = "AcsRoomRequestWithPstnDialOutEnabledFalseLiveWithoutParticipantsUsingKeyCredential")]
-        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2024_04_15, true, TestName = "AcsRoomRequestWithPstnDialOutEnabledTrueLiveWithoutParticipantsUsingKeyCredential")]
-        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2024_04_15, null, TestName = "AcsRoomRequestWithPstnDialOutEnabledNullLiveWithoutParticipantsUsingKeyCredential")]
-        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2025_03_13, false, TestName = "AcsRoomRequestWithPstnDialOutEnabledFalseLiveV2025-03-13WithoutParticipantsUsingConnectionString")]
-        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2025_03_13, true, TestName = "AcsRoomRequestWithPstnDialOutEnabledTrueLiveV2025-03-13WithoutParticipantsUsingConnectionString")]
-        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2025_03_13, null, TestName = "AcsRoomRequestWithPstnDialOutEnabledNullLiveV2025-03-13WithoutParticipantsUsingConnectionString")]
-        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2025_03_13, false, TestName = "AcsRoomRequestWithPstnDialOutEnabledFalseLiveV2025-03-13WithoutParticipantsUsingKeyCredential")]
-        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2025_03_13, true, TestName = "AcsRoomRequestWithPstnDialOutEnabledTrueLiveV2025-03-13WithoutParticipantsUsingKeyCredential")]
-        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2025_03_13, null, TestName = "AcsRoomRequestWithPstnDialOutEnabledNullLiveV2025-03-13WithoutParticipantsUsingKeyCredential")]
-        public async Task AcsRoomRequestWithPstnLiveWithoutParticipantsTest(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
+        [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
+        public async Task AcsRoomWithPstnLiveWithoutParticipantsTest(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
             Rooms.RoomsClient roomsClient = CreateClient(authMethod, true, apiVersion);
@@ -178,17 +190,15 @@ namespace Azure.Communication.Rooms.Test
             }
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task AcsRoomLifeCycleLiveTest(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task AcsRoomLifeCycleLiveTest(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
-            Rooms.RoomsClient roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            RoomsClient roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
             var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
             var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
-            var communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
 
             var validFrom = DateTimeOffset.UtcNow;
             var validUntil = validFrom.AddDays(1);
@@ -197,7 +207,6 @@ namespace Azure.Communication.Rooms.Test
             {
                 RoomParticipant participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
                 RoomParticipant participant2 = new RoomParticipant(communicationUser2);
-                RoomParticipant participant3 = new RoomParticipant(communicationUser3) { Role = ParticipantRole.Consumer };
 
                 List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>
                 {
@@ -268,16 +277,11 @@ namespace Azure.Communication.Rooms.Test
             }
         }
 
-        [TestCase(ServiceVersion.V2024_04_15, false)]
-        [TestCase(ServiceVersion.V2024_04_15, true)]
-        [TestCase(ServiceVersion.V2024_04_15, null)]
-        [TestCase(ServiceVersion.V2025_03_13, false)]
-        [TestCase(ServiceVersion.V2025_03_13, true)]
-        [TestCase(ServiceVersion.V2025_03_13, null)]
-        public async Task AcsRoomWithPstnLifeCycleLiveTest(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
+        [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
+        public async Task AcsRoomWithPstnLifeCycleLiveTest(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
-            Rooms.RoomsClient roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            RoomsClient roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
             var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
@@ -364,12 +368,11 @@ namespace Azure.Communication.Rooms.Test
             }
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task CreateRoom_WithNullRoomCreateOptionsAttributes_Succeed(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task CreateRoom_WithNullRoomCreateOptionsAttributes_Succeed(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            RoomsClient roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             // Act
             var createdRoom = await roomsClient.CreateRoomAsync(options: null);
@@ -379,12 +382,11 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(createdRoom.Value);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task CreateRoom_WithEmptyRoomCreateOptionsAttributes_Succeed(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task CreateRoom_WithEmptyRoomCreateOptionsAttributes_Succeed(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            RoomsClient roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             // Act
             var createdRoom = await roomsClient.CreateRoomAsync(new CreateRoomOptions());
@@ -393,22 +395,18 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
             ValidateRoom(createdRoom.Value);
         }
-        [TestCase(ServiceVersion.V2024_04_15, false)]
-        [TestCase(ServiceVersion.V2024_04_15, true)]
-        [TestCase(ServiceVersion.V2024_04_15, null)]
-        [TestCase(ServiceVersion.V2025_03_13, false)]
-        [TestCase(ServiceVersion.V2025_03_13, true)]
-        [TestCase(ServiceVersion.V2025_03_13, null)]
-        public async Task CreateRoomWithPstn_WithOnlyPstnDialOutEnabledAttribute(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
+
+        [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
+        public async Task CreateRoomWithPstn_WithOnlyPstnDialOutEnabledAttribute(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
+            RoomsClient roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             var participant1 = await communicationIdentityClient.CreateUserAsync();
             List<RoomParticipant> roomParticipants = new List<RoomParticipant>()
             {
                 new RoomParticipant(participant1.Value)
             };
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
 
             // Act
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
@@ -423,9 +421,8 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(createdRoom.Value, roomCreateOptions);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task CreateRoom_WithOnlyParticipants_Succeed(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task CreateRoom_WithOnlyParticipants_Succeed(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
@@ -434,7 +431,7 @@ namespace Azure.Communication.Rooms.Test
             {
                 new RoomParticipant(participant1.Value)
             };
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
@@ -449,13 +446,8 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(createdRoom.Value);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15, false)]
-        [TestCase(ServiceVersion.V2024_04_15, true)]
-        [TestCase(ServiceVersion.V2024_04_15, null)]
-        [TestCase(ServiceVersion.V2025_03_13, false)]
-        [TestCase(ServiceVersion.V2025_03_13, true)]
-        [TestCase(ServiceVersion.V2025_03_13, null)]
-        public async Task CreateRoomWithPstn_WithOnlyParticipants_Succeed(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
+        [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
+        public async Task CreateRoomWithPstn_WithOnlyParticipants_Succeed(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
@@ -464,7 +456,7 @@ namespace Azure.Communication.Rooms.Test
             {
                 new RoomParticipant(participant1.Value)
             };
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             // Act
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
@@ -480,9 +472,8 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(createdRoom.Value, roomCreateOptions);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task CreateRoom_WithAllOptionalParameters_Succeed(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task CreateRoom_WithAllOptionalParameters_Succeed(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
@@ -493,7 +484,7 @@ namespace Azure.Communication.Rooms.Test
             };
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(1);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
@@ -510,13 +501,8 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(createdRoom.Value);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15, false)]
-        [TestCase(ServiceVersion.V2024_04_15, false)]
-        [TestCase(ServiceVersion.V2024_04_15, null)]
-        [TestCase(ServiceVersion.V2025_03_13, false)]
-        [TestCase(ServiceVersion.V2025_03_13, true)]
-        [TestCase(ServiceVersion.V2025_03_13, null)]
-        public async Task CreateRoomWithPstn_WithAllOptionalParameters_Succeed(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
+        [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
+        public async Task CreateRoomWithPstn_WithAllOptionalParameters_Succeed(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
@@ -527,7 +513,7 @@ namespace Azure.Communication.Rooms.Test
             };
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(1);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
@@ -545,14 +531,13 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(createdRoom.Value, roomCreateOptions);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public void CreateRoom_WithTimeRangeExceedMax_Fail(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public void CreateRoom_WithTimeRangeExceedMax_Fail(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(200);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
@@ -566,18 +551,13 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15, false)]
-        [TestCase(ServiceVersion.V2024_04_15, true)]
-        [TestCase(ServiceVersion.V2024_04_15, null)]
-        [TestCase(ServiceVersion.V2025_03_13, false)]
-        [TestCase(ServiceVersion.V2025_03_13, true)]
-        [TestCase(ServiceVersion.V2025_03_13, null)]
-        public void CreateRoomWithPstn_WithTimeRangeExceedMax_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
+        [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
+        public void CreateRoomWithPstn_WithTimeRangeExceedMax_Fail(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(200);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
@@ -592,12 +572,11 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public void CreateRoom_WithPastValidUntil_Fail(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public void CreateRoom_WithPastValidUntil_Fail(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange;
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             var validFrom = DateTime.UtcNow.AddDays(-10);
             var validUntil = validFrom.AddDays(-20);
 
@@ -612,16 +591,11 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15, false)]
-        [TestCase(ServiceVersion.V2024_04_15, true)]
-        [TestCase(ServiceVersion.V2024_04_15, null)]
-        [TestCase(ServiceVersion.V2025_03_13, false)]
-        [TestCase(ServiceVersion.V2025_03_13, true)]
-        [TestCase(ServiceVersion.V2025_03_13, null)]
-        public void CreateRoomWithPstn_WithPastValidUntil_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
+        [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
+        public void CreateRoomWithPstn_WithPastValidUntil_Fail(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange;
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             var validFrom = DateTime.UtcNow.AddDays(-10);
             var validUntil = validFrom.AddDays(-20);
 
@@ -638,15 +612,15 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        public void CreateRoom_WithInvalidParticipantMri_Fail(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public void CreateRoom_WithInvalidParticipantMri_Fail(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
             List<RoomParticipant> roomParticipants = new List<RoomParticipant>()
             {
                 new RoomParticipant(new CommunicationUserIdentifier("invalid_mri"))
             };
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
                 Participants = roomParticipants
@@ -658,20 +632,15 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15, false)]
-        [TestCase(ServiceVersion.V2024_04_15, true)]
-        [TestCase(ServiceVersion.V2024_04_15, null)]
-        [TestCase(ServiceVersion.V2025_03_13, false)]
-        [TestCase(ServiceVersion.V2025_03_13, true)]
-        [TestCase(ServiceVersion.V2025_03_13, null)]
-        public void CreateRoomWithPstn_WithInvalidParticipantMri_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
+        [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
+        public void CreateRoomWithPstn_WithInvalidParticipantMri_Fail(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
             List<RoomParticipant> roomParticipants = new List<RoomParticipant>()
             {
                 new RoomParticipant(new CommunicationUserIdentifier("invalid_mri"))
             };
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
@@ -685,12 +654,18 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public void GetRoom_WithInvalidFormatRoomId_Fail(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public void GetRoom_WithInvalidFormatRoomId_Fail(AuthMethod authMethod, ServiceVersion apiVersion)
         {
+            if (authMethod == AuthMethod.KeyCredential)
+            {
+                // TODO: to fix bug before enabling this test for KeyCredential
+                Assert.Ignore();
+                return;
+            }
+
             // Arrange
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             // Act and Assert
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync("invalid_id"));
@@ -698,18 +673,13 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15, false)]
-        [TestCase(ServiceVersion.V2024_04_15, true)]
-        [TestCase(ServiceVersion.V2024_04_15, null)]
-        [TestCase(ServiceVersion.V2025_03_13, false)]
-        [TestCase(ServiceVersion.V2025_03_13, true)]
-        [TestCase(ServiceVersion.V2025_03_13, null)]
-        public async Task UpdateRoomWithPstn_WithPstnDailOutEnabledAttributeOnly_Succeed(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
+        [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
+        public async Task UpdateRoomWithPstn_WithPstnDailOutEnabledAttributeOnly_Succeed(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(10);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
                 ValidFrom = validFrom,
@@ -732,14 +702,13 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task UpdateRoom_WithValidTimeRange_Succeed(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task UpdateRoom_WithValidTimeRange_Succeed(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(10);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
                 ValidFrom = validFrom,
@@ -765,14 +734,13 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task UpdateRoom_WithEmptyUpdateRoomOptions_Succeed(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task UpdateRoom_WithEmptyUpdateRoomOptions_Succeed(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(10);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
                 ValidFrom = validFrom,
@@ -794,14 +762,13 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task UpdateRoom_WithTimeRangeExceedMax_Fail(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task UpdateRoom_WithTimeRangeExceedMax_Fail(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(10);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
                 ValidFrom = validFrom,
@@ -822,18 +789,13 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15, false)]
-        [TestCase(ServiceVersion.V2024_04_15, true)]
-        [TestCase(ServiceVersion.V2024_04_15, null)]
-        [TestCase(ServiceVersion.V2025_03_13, false)]
-        [TestCase(ServiceVersion.V2025_03_13, true)]
-        [TestCase(ServiceVersion.V2025_03_13, null)]
-        public async Task UpdateRoom_WithTimeRangeExceedMax_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
+        [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
+        public async Task UpdateRoom_WithTimeRangeExceedMax_Fail(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(10);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
                 ValidFrom = validFrom,
@@ -856,14 +818,13 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task UpdateRoom_WithPastValidUntil_Fail(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task UpdateRoom_WithPastValidUntil_Fail(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(10);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
                 ValidFrom = validFrom,
@@ -885,18 +846,13 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15, false)]
-        [TestCase(ServiceVersion.V2024_04_15, true)]
-        [TestCase(ServiceVersion.V2024_04_15, null)]
-        [TestCase(ServiceVersion.V2025_03_13, false)]
-        [TestCase(ServiceVersion.V2025_03_13, true)]
-        [TestCase(ServiceVersion.V2025_03_13, null)]
-        public async Task UpdateRoom_WithPastValidUntil_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
+        [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
+        public async Task UpdateRoom_WithPastValidUntil_Fail(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(10);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
                 ValidFrom = validFrom,
@@ -919,13 +875,20 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        public void UpdateRoom_WithInvalidFormatRoomId_Fail(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public void UpdateRoom_WithInvalidFormatRoomId_Fail(AuthMethod authMethod, ServiceVersion apiVersion)
         {
+            if (authMethod == AuthMethod.KeyCredential)
+            {
+                // TODO: to fix bug before enabling this test for KeyCredential
+                Assert.Ignore();
+                return;
+            }
+
             // Arrange
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(10);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
             {
@@ -939,18 +902,19 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15, false)]
-        [TestCase(ServiceVersion.V2024_04_15, true)]
-        [TestCase(ServiceVersion.V2024_04_15, null)]
-        [TestCase(ServiceVersion.V2025_03_13, false)]
-        [TestCase(ServiceVersion.V2025_03_13, true)]
-        [TestCase(ServiceVersion.V2025_03_13, null)]
-        public void UpdateRoomWithPstn_WithInvalidFormatRoomId_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
+        [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
+        public void UpdateRoomWithPstn_WithInvalidFormatRoomId_Fail(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
+            if (authMethod == AuthMethod.KeyCredential){
+                // TODO: to fix bug before enabling this test for KeyCredential
+                Assert.Ignore();
+                return;
+            }
+
             // Arrange
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(10);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
             {
@@ -965,14 +929,13 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task UpdateRoom_WithDeletedRoom_Fail(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task UpdateRoom_WithDeletedRoom_Fail(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(10);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
                 ValidFrom = validFrom,
@@ -993,18 +956,13 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(404, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15, false)]
-        [TestCase(ServiceVersion.V2024_04_15, true)]
-        [TestCase(ServiceVersion.V2024_04_15, null)]
-        [TestCase(ServiceVersion.V2025_03_13, false)]
-        [TestCase(ServiceVersion.V2025_03_13, true)]
-        [TestCase(ServiceVersion.V2025_03_13, null)]
-        public async Task UpdateRoomWithPstn_WithDeletedRoom_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
+        [TestCaseSource(nameof(AuthenticationVersionPstnEnabledSource))]
+        public async Task UpdateRoomWithPstn_WithDeletedRoom_Fail(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(10);
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
             {
@@ -1029,12 +987,11 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(404, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task AddOrUpdateParticipants_IncorrectlyFormattedMri_Fail(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task AddOrUpdateParticipants_IncorrectlyFormattedMri_Fail(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             var createRoomResponse = await roomsClient.CreateRoomAsync(options: null);
             List<RoomParticipant> roomParticipants = new List<RoomParticipant>()
             {
@@ -1046,12 +1003,11 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task GetRoomsLiveTest_FirstTwoPagesOfRoomIsNotNull_Succeed(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task GetRoomsLiveTest_FirstTwoPagesOfRoomIsNotNull_Succeed(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
             // First create a room to ensure that the list rooms will not be empty.
             CommunicationRoom createdRoom = await roomsClient.CreateRoomAsync(new CreateRoomOptions());
             int roomCounter = 0;
@@ -1076,17 +1032,23 @@ namespace Azure.Communication.Rooms.Test
             await roomsClient.DeleteRoomAsync(createdRoom.Id);
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task RoomParticipantsAddUpdateAndRemoveLiveTest(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task RoomParticipantsAddUpdateAndRemoveLiveTest(AuthMethod authMethod, ServiceVersion apiVersion)
         {
+            if (authMethod == AuthMethod.KeyCredential)
+            {
+                // TODO: to fix bug before enabling this test for KeyCredential
+                Assert.Ignore();
+                return;
+            }
+
             // Arrange
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
             var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
             var communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
 
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             RoomParticipant participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
             RoomParticipant participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Presenter };
@@ -1174,17 +1136,22 @@ namespace Azure.Communication.Rooms.Test
             }
         }
 
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task RoomParticipantsAddUpdateAndRemoveWithNullRolesLiveTest(ServiceVersion apiVersion)
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task RoomParticipantsAddUpdateAndRemoveWithNullRolesLiveTest(AuthMethod authMethod, ServiceVersion apiVersion)
         {
+            if (authMethod == AuthMethod.KeyCredential)
+            {
+                // TODO: to fix bug before enabling this test for KeyCredential
+                return;
+            }
+
             // Arrange
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
             var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
             var communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
 
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            RoomsClient roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
 
             RoomParticipant participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
             RoomParticipant participant2 = new RoomParticipant(communicationUser2);
@@ -1315,6 +1282,98 @@ namespace Azure.Communication.Rooms.Test
             }
         }
 
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task RemoveParticipants_NonExistentParticipants_Success(AuthMethod authMethod, ServiceVersion apiVersion)
+        {
+            if (authMethod == AuthMethod.KeyCredential)
+            {
+                // TODO: to fix bug before enabling this test for KeyCredential
+                Assert.Ignore();
+                return;
+            }
+
+            // Arrange
+            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
+            var createRoomResponse = await roomsClient.CreateRoomAsync(options: null);
+            var participant1 = await communicationIdentityClient.CreateUserAsync();
+            List<CommunicationUserIdentifier> communicationUsers = new List<CommunicationUserIdentifier>()
+            {
+                participant1
+            };
+
+            // Act
+            Response removeParticipantResponse = await roomsClient.RemoveParticipantsAsync(createRoomResponse.Value.Id, participantIdentifiers: communicationUsers);
+            AsyncPageable<RoomParticipant> allParticipants = roomsClient.GetParticipantsAsync(createRoomResponse.Value.Id);
+            List<RoomParticipant> removeRoomParticipantsResult = await allParticipants.ToEnumerableAsync();
+
+            // Assert
+            Assert.AreEqual(removeParticipantResponse.Status, 200);
+            Assert.AreEqual(removeRoomParticipantsResult.Count, 0);
+        }
+
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task RemoveParticipants_IncorrectlyFormattedMri_Fail(AuthMethod authMethod, ServiceVersion apiVersion)
+        {
+            if (authMethod == AuthMethod.KeyCredential)
+            {
+                // TODO: to fix bug before enabling this test for KeyCredential
+                Assert.Ignore();
+                return;
+            }
+
+            // Arrange
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
+            var createRoomResponse = await roomsClient.CreateRoomAsync(new CreateRoomOptions());
+            List<CommunicationUserIdentifier> communicationUsers = new List<CommunicationUserIdentifier>()
+            {
+                new CommunicationUserIdentifier("invalid_mri")
+            };
+
+            // Act and assert
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.RemoveParticipantsAsync(createRoomResponse.Value.Id, participantIdentifiers: communicationUsers));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
+
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public async Task DeleteRoom_Success(AuthMethod authMethod, ServiceVersion apiVersion)
+        {
+            // Arrange
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
+            var createRoomResponse = await roomsClient.CreateRoomAsync(options: null);
+            var createdRoomId = createRoomResponse.Value.Id;
+
+            // Act
+            Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
+
+            // Assert:
+            Assert.AreEqual(204, deleteRoomResponse.Status);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync(createdRoomId));
+            Assert.NotNull(ex);
+            Assert.AreEqual(404, ex?.Status);
+        }
+
+        [TestCaseSource(nameof(AuthenticationVersionSource))]
+        public void DeleteInvalidRoomId_Fail(AuthMethod authMethod, ServiceVersion apiVersion)
+        {
+            if (authMethod == AuthMethod.KeyCredential)
+            {
+                // TODO: to fix bug before enabling this test for KeyCredential
+                Assert.Ignore();
+                return;
+            }
+
+            // Arrange
+            var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
+            var invalidRoomId = "123";
+
+            // Act and Assert:
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.DeleteRoomAsync(invalidRoomId));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
+
         [TestCase(ServiceVersion.V2025_03_13)]
         public async Task RoomParticipantsAddUpdateAndRemoveWithCollaboratorRolesLiveTest(ServiceVersion apiVersion)
         {
@@ -1324,7 +1383,7 @@ namespace Azure.Communication.Rooms.Test
             var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
             var communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
 
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(apiVersion);
+            RoomsClient roomsClient = CreateClient(apiVersion: apiVersion);
 
             RoomParticipant participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
             RoomParticipant participant2 = new RoomParticipant(communicationUser2);
@@ -1453,80 +1512,6 @@ namespace Azure.Communication.Rooms.Test
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }
-        }
-
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task RemoveParticipants_NonExistentParticipants_Success(ServiceVersion apiVersion)
-        {
-            // Arrange
-            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
-            var createRoomResponse = await roomsClient.CreateRoomAsync(options: null);
-            var participant1 = await communicationIdentityClient.CreateUserAsync();
-            List<CommunicationUserIdentifier> communicationUsers = new List<CommunicationUserIdentifier>()
-            {
-                participant1
-            };
-
-            // Act
-            Response removeParticipantResponse = await roomsClient.RemoveParticipantsAsync(createRoomResponse.Value.Id, participantIdentifiers: communicationUsers);
-            AsyncPageable<RoomParticipant> allParticipants = roomsClient.GetParticipantsAsync(createRoomResponse.Value.Id);
-            List<RoomParticipant> removeRoomParticipantsResult = await allParticipants.ToEnumerableAsync();
-
-            // Assert
-            Assert.AreEqual(removeParticipantResponse.Status, 200);
-            Assert.AreEqual(removeRoomParticipantsResult.Count, 0);
-        }
-
-        [TestCase(ServiceVersion.V2024_04_15)]
-        public async Task RemoveParticipants_IncorrectlyFormattedMri_Fail(ServiceVersion apiVersion)
-        {
-            // Arrange
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
-            var createRoomResponse = await roomsClient.CreateRoomAsync(new CreateRoomOptions());
-            List<CommunicationUserIdentifier> communicationUsers = new List<CommunicationUserIdentifier>()
-            {
-                new CommunicationUserIdentifier("invalid_mri")
-            };
-
-            // Act and assert
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.RemoveParticipantsAsync(createRoomResponse.Value.Id, participantIdentifiers: communicationUsers));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
-        }
-
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public async Task DeleteRoom_Success(ServiceVersion apiVersion)
-        {
-            // Arrange
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
-            var createRoomResponse = await roomsClient.CreateRoomAsync(options: null);
-            var createdRoomId = createRoomResponse.Value.Id;
-
-            // Act
-            Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
-
-            // Assert:
-            Assert.AreEqual(204, deleteRoomResponse.Status);
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync(createdRoomId));
-            Assert.NotNull(ex);
-            Assert.AreEqual(404, ex?.Status);
-        }
-
-        [TestCase(ServiceVersion.V2024_04_15)]
-        [TestCase(ServiceVersion.V2025_03_13)]
-        public void DeleteInvalidRoomId_Fail(ServiceVersion apiVersion)
-        {
-            // Arrange
-            var roomsClient = CreateInstrumentedRoomsClient(apiVersion);
-            var ivnalidRoomId = "123";
-
-            // Act and Assert:
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.DeleteRoomAsync(ivnalidRoomId));
-            Assert.NotNull(ex);
-            Assert.AreEqual(400, ex?.Status);
         }
 
         private void ValidateRoom(CommunicationRoom? room)

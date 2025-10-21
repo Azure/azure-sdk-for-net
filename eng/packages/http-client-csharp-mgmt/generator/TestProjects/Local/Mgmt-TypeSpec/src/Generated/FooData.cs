@@ -8,11 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class FooData : TrackedResourceData
@@ -22,24 +22,21 @@ namespace MgmtTypeSpec
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public FooData(string location) : base(location)
+        public FooData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(location, nameof(location));
-
         }
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="name"> The name of the Foo. </param>
         /// <param name="extendedLocation"></param>
-        internal FooData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, FooProperties properties, string name, ExtendedLocation extendedLocation) : base(id, name, @type, systemData, tags, location)
+        internal FooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FooProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -47,9 +44,139 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public FooProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal FooProperties Properties { get; set; }
 
         /// <summary> Gets or sets the ExtendedLocation. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
+
+        /// <summary> the service url. </summary>
+        [WirePath("properties.serviceUrl")]
+        public Uri ServiceUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.ServiceUri = value;
+            }
+        }
+
+        /// <summary> something. </summary>
+        [WirePath("properties.something")]
+        public string Something
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Something;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.Something = value;
+            }
+        }
+
+        /// <summary> boolean value. </summary>
+        [WirePath("properties.boolValue")]
+        public bool? BoolValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BoolValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.BoolValue = value.Value;
+            }
+        }
+
+        /// <summary> float value. </summary>
+        [WirePath("properties.floatValue")]
+        public float? FloatValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FloatValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.FloatValue = value.Value;
+            }
+        }
+
+        /// <summary> double value. </summary>
+        [WirePath("properties.doubleValue")]
+        public double? DoubleValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DoubleValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.DoubleValue = value.Value;
+            }
+        }
+
+        /// <summary> Gets the Prop1. </summary>
+        [WirePath("properties.prop1")]
+        public IList<string> Prop1
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Prop1;
+            }
+        }
+
+        /// <summary> Gets the Prop2. </summary>
+        [WirePath("properties.prop2")]
+        public IList<int> Prop2
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Prop2;
+            }
+        }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties.nestedProperty.properties")]
+        public FooProperties NestedPropertyProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NestedPropertyProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.NestedPropertyProperties = value;
+            }
+        }
     }
 }

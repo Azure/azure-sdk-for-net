@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> DataflowEndpoint Authentication X509 properties. </summary>
-    internal partial class DataflowEndpointAuthenticationX509
+    public partial class DataflowEndpointAuthenticationX509
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

@@ -3,10 +3,6 @@
 
 import { CreateSdkContextOptions } from "@azure-tools/typespec-client-generator-core";
 
-// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-client-generator-core/README.md#usesystemtextjsonconverter
-const useSystemTextJsonConverterRegex =
-  "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter";
-
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armprovidernamespace
 const armProviderNamespaceRegex =
   "Azure\\.ResourceManager\\.@armProviderNamespace";
@@ -84,6 +80,13 @@ const resourceGroupResourceRegex =
 export const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
 const resourceMetadataRegex =
   "Azure\\.ClientGenerator\\.Core\\.@resourceSchema";
+export const nonResourceMethodMetadata =
+  "Azure.ClientGenerator.Core.@nonResourceMethodSchema";
+const nonResourceMethodMetadataRegex =
+  "Azure\\.ClientGenerator\\.Core\\.@nonResourceMethodSchema";
+
+export const flattenPropertyDecorator =
+  "Azure.ResourceManager.@flattenProperty";
 
 export const azureSDKContextOptions: CreateSdkContextOptions = {
   versioning: {
@@ -91,6 +94,7 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
   },
   additionalDecorators: [
     resourceMetadataRegex,
+    nonResourceMethodMetadataRegex,
     armProviderNamespaceRegex,
     armResourceActionRegex,
     armResourceCreateOrUpdateRegex,
@@ -104,7 +108,6 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     resourceGroupResourceRegex,
     singletonRegex,
     subscriptionResourceRegex,
-    tenantResourceRegex,
-    useSystemTextJsonConverterRegex
+    tenantResourceRegex
   ]
 };

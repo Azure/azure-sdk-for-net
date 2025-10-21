@@ -12,6 +12,7 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 
 Synchronous sample:
 ```C# Snippet:AgentsStreaming_CreateAgent
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "My Friendly Test Agent",
@@ -22,6 +23,7 @@ PersistentAgent agent = client.Administration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsStreamingAsync_CreateAgent
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "My Friendly Test Agent",
@@ -96,12 +98,14 @@ await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming
 
 Synchronous sample:
 ```C# Snippet:AgentsStreaming_Cleanup
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 client.Threads.DeleteThread(thread.Id);
 client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsStreamingAsync_Cleanup
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 await client.Threads.DeleteThreadAsync(thread.Id);
 await client.Administration.DeleteAgentAsync(agent.Id);
 ```

@@ -106,6 +106,18 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("tools");
                 }
             }
+            if (Optional.IsDefined(ToolResources))
+            {
+                if (ToolResources != null)
+                {
+                    writer.WritePropertyName("tool_resources"u8);
+                    writer.WriteObjectValue(ToolResources, options);
+                }
+                else
+                {
+                    writer.WriteNull("tool_resources");
+                }
+            }
             if (Optional.IsDefined(Stream))
             {
                 writer.WritePropertyName("stream"u8);
@@ -275,6 +287,7 @@ namespace Azure.AI.Agents.Persistent
             string additionalInstructions = default;
             IReadOnlyList<ThreadMessageOptions> additionalMessages = default;
             IReadOnlyList<ToolDefinition> tools = default;
+            ToolResources toolResources = default;
             bool? stream = default;
             float? temperature = default;
             float? topP = default;
@@ -350,6 +363,16 @@ namespace Azure.AI.Agents.Persistent
                         array.Add(ToolDefinition.DeserializeToolDefinition(item, options));
                     }
                     tools = array;
+                    continue;
+                }
+                if (property.NameEquals("tool_resources"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        toolResources = null;
+                        continue;
+                    }
+                    toolResources = ToolResources.DeserializeToolResources(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stream"u8))
@@ -467,6 +490,7 @@ namespace Azure.AI.Agents.Persistent
                 additionalInstructions,
                 additionalMessages ?? new ChangeTrackingList<ThreadMessageOptions>(),
                 tools ?? new ChangeTrackingList<ToolDefinition>(),
+                toolResources,
                 stream,
                 temperature,
                 topP,

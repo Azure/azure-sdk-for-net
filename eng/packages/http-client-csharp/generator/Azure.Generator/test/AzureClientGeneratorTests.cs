@@ -1,9 +1,9 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Tests.TestHelpers;
-using Azure.Generator.Visitors;
 using NUnit.Framework;
+using Azure.Generator.Visitors;
 
 namespace Azure.Generator.Tests
 {

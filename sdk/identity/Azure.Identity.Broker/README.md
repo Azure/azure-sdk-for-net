@@ -1,4 +1,4 @@
-# Azure Identity Brokered Authentication client library for .NET
+# Azure Identity brokered authentication client library for .NET
 
 The library extends the `Azure.Identity` library to provide authentication broker support. It includes the necessary dependencies and provides the `InteractiveBrowserCredentialBrokerOptions` class. This options class can be used to create an `InteractiveBrowserCredential` capable of using the system authentication broker in lieu of an embedded web view or the system browser.
 
@@ -8,7 +8,7 @@ The library extends the `Azure.Identity` library to provide authentication broke
 
 ### Install the package
 
-Install the Azure Identity client library for .NET with [NuGet][nuget]:
+Install the Azure Identity brokered authentication extension for .NET with [NuGet][nuget]:
 
 ```dotnetcli
 dotnet add package Azure.Identity.Broker
@@ -16,56 +16,20 @@ dotnet add package Azure.Identity.Broker
 
 ### Prerequisites
 
-The [Azure.Identity][azure_identity] library is a dependency of `Azure.Identity.Broker`.
+* An [Azure subscription][azure_sub].
+* The [Azure.Identity][azure_identity] package.
 
 ### Authenticate the client
+
+See the end-to-end instructions at [Use a broker](https://aka.ms/azsdk/net/identity/broker).
 
 ## Key concepts
 
 This package enables authentication broker support via [InteractiveBrowserCredentialBrokerOptions](https://learn.microsoft.com/dotnet/api/azure.identity.broker.interactivebrowsercredentialbrokeroptions), in combination with `InteractiveBrowserCredential` in the `Azure.Identity` package.
 
-### Parent window handles
-
-When authenticating interactively via `InteractiveBrowserCredential` constructed with the `InteractiveBrowserCredentialBrokerOptions`, a parent window handle is required to ensure that the authentication dialog is shown correctly over the requesting window. In the context of graphical user interfaces on devices, a window handle is a unique identifier that the operating system assigns to each window. For the Windows operating system, this handle is an integer value that serves as a reference to a specific window.
-
 ### Microsoft account (MSA) passthrough
 
 Microsoft accounts (MSA) are personal accounts created by users to access Microsoft services. MSA passthrough is a legacy configuration which enables users to get tokens to resources which normally don't accept MSA logins. This feature is only available to first-party applications. Users authenticating with an application that is configured to use MSA passthrough can set the `InteractiveBrowserCredentialBrokerOptions.IsLegacyMsaPassthroughEnabled` property to `true` to allow these personal accounts to be listed by WAM.
-
-## Redirect URIs
-
-Microsoft Entra applications rely on redirect URIs to determine where to send the authentication response after a user has logged in. To enable brokered authentication through WAM, a redirect URI matching the following pattern should be registered to the application:
-
-```
-ms-appx-web://Microsoft.AAD.BrokerPlugin/{client_id}
-```
-
-## Examples
-
-### Configure the `InteractiveBrowserCredential` to use the system authentication broker
-
-This example demonstrates configuring the `InteractiveBrowserCredential` with the specialized options type `InteractiveBrowserCredentialBrokerOptions` to enable brokered authentication.
-
-```C# Snippet:ConfigureInteractiveBrowserToUseBroker
-IntPtr parentWindowHandle = GetForegroundWindow();
-
-// Create an interactive browser credential which will use the system authentication broker
-var credential = new InteractiveBrowserCredential(
-    new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle));
-
-// Use the credential to authenticate a secret client
-var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
-```
-
-To bypass the account selection dialog and use the default broker account, set the [InteractiveBrowserCredentialBrokerOptions.UseDefaultBrokerAccount](https://learn.microsoft.com/dotnet/api/azure.identity.broker.interactivebrowsercredentialbrokeroptions) property:
-
-```C# Snippet:ConfigureInteractiveBrowserToUseDefaultOsAccount
-var credential = new InteractiveBrowserCredential(
-    new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle)
-    {
-        UseDefaultBrokerAccount = true,
-    });
-```
 
 ## Troubleshooting
 
@@ -148,6 +112,7 @@ This library does not currently support scenarios relating to the [AAD B2C](http
 Currently open issues for the Azure.Identity library can be found [here](https://github.com/Azure/azure-sdk-for-net/issues?q=is%3Aissue+is%3Aopen+label%3AAzure.Identity).
 
 ## Contributing
+
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
@@ -164,4 +129,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [nuget]: https://www.nuget.org/
-[identity_api_docs]: https://learn.microsoft.com/dotnet/api/azure.identity?view=azure-dotnet
+[identity_api_docs]: https://learn.microsoft.com/dotnet/api/azure.identity.broker?view=azure-dotnet

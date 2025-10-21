@@ -40,11 +40,6 @@ namespace Azure.ResourceManager.KeyVault
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -61,12 +56,17 @@ namespace Azure.ResourceManager.KeyVault
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionState))
             {
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.KeyVault
             {
                 return null;
             }
-            ETag? etag = default;
             AzureLocation? location = default;
             IReadOnlyDictionary<string, string> tags = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -115,15 +115,6 @@ namespace Azure.ResourceManager.KeyVault
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -147,6 +138,15 @@ namespace Azure.ResourceManager.KeyVault
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKeyVaultContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.KeyVault
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            privateEndpoint = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerKeyVaultContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -221,12 +221,12 @@ namespace Azure.ResourceManager.KeyVault
                 name,
                 type,
                 systemData,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 etag,
                 privateEndpoint,
                 privateLinkServiceConnectionState,
                 provisioningState,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

@@ -214,6 +214,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Messaging.EventGrid.Namespaces.ReleaseDelay left, Azure.Messaging.EventGrid.Namespaces.ReleaseDelay right) { throw null; }
         public static implicit operator Azure.Messaging.EventGrid.Namespaces.ReleaseDelay (string value) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.Namespaces.ReleaseDelay? (string value) { throw null; }
         public static bool operator !=(Azure.Messaging.EventGrid.Namespaces.ReleaseDelay left, Azure.Messaging.EventGrid.Namespaces.ReleaseDelay right) { throw null; }
         public override string ToString() { throw null; }
     }

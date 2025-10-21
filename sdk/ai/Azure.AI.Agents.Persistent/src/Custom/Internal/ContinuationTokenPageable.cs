@@ -41,7 +41,8 @@ namespace Azure.AI.Agents.Persistent
             ContinuationItemType itemType = ContinuationItemType.Undefined,
             string threadId = null,
             string runId = null,
-            Uri endpoint = null
+            Uri endpoint = null,
+            string after = null
         )
         {
             _itemType = itemType;
@@ -58,7 +59,8 @@ namespace Azure.AI.Agents.Persistent
                 itemType: itemType,
                 threadId: threadId,
                 runId: runId,
-                endpoint: endpoint
+                endpoint: endpoint,
+                continuationTokenInitial: after
             );
         }
 
@@ -83,7 +85,8 @@ namespace Azure.AI.Agents.Persistent
             ContinuationItemType itemType = ContinuationItemType.Undefined,
             string threadId = null,
             string runId = null,
-            Uri endpoint = null
+            Uri endpoint = null,
+            string after = null
         )
         {
             _itemType = itemType;
@@ -100,7 +103,8 @@ namespace Azure.AI.Agents.Persistent
                 itemType: itemType,
                 threadId: threadId,
                 runId: runId,
-                endpoint: endpoint
+                endpoint: endpoint,
+                continuationTokenInitial: after
             );
         }
 
@@ -126,6 +130,7 @@ namespace Azure.AI.Agents.Persistent
         private readonly string _threadId;
         private readonly string _runId;
         private readonly Uri _endpoint;
+        private readonly string _continuationTokenInitial;
 
         public ContinuationTokenPageableImpl(
             Func<int?, string, HttpMessage> createPageRequest,
@@ -140,7 +145,8 @@ namespace Azure.AI.Agents.Persistent
             ContinuationItemType itemType = ContinuationItemType.Undefined,
             string threadId = null,
             string runId = null,
-            Uri endpoint = null
+            Uri endpoint = null,
+            string continuationTokenInitial = null
         )
         {
             _createPageRequest = createPageRequest;
@@ -157,11 +163,12 @@ namespace Azure.AI.Agents.Persistent
             _threadId = threadId;
             _runId = runId;
             _endpoint = endpoint;
+            _continuationTokenInitial = continuationTokenInitial;
         }
 
         public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
-            string continuationToken = default;
+            string continuationToken = _continuationTokenInitial;
             do
             {
                 var response = await GetNextResponseAsync(null, continuationToken, cancellationToken).ConfigureAwait(false);
@@ -179,7 +186,7 @@ namespace Azure.AI.Agents.Persistent
 
         public IEnumerator<T> GetEnumerator()
         {
-            string continuationToken = default;
+            string continuationToken = _continuationTokenInitial;
             do
             {
                 Response response = GetNextResponse(pageSizeHint: null, continuationToken: continuationToken);
@@ -197,6 +204,8 @@ namespace Azure.AI.Agents.Persistent
 
         public IEnumerable<Page<T>> AsPages(string continuationToken, int? pageSizeHint)
         {
+            if (string.IsNullOrEmpty(continuationToken))
+                continuationToken = _continuationTokenInitial;
             do
             {
                 Response response = GetNextResponse(pageSizeHint, continuationToken);
@@ -210,6 +219,8 @@ namespace Azure.AI.Agents.Persistent
 
         public async IAsyncEnumerable<Page<T>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
+            if (string.IsNullOrEmpty(continuationToken))
+                continuationToken = _continuationTokenInitial;
             do
             {
                 Response response = await GetNextResponseAsync(pageSizeHint, continuationToken, cancellationToken).ConfigureAwait(false);

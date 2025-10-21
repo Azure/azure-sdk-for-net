@@ -10,6 +10,7 @@ var agentClient = new PersistentAgentsClient(
     projectEndpoint,
     new DefaultAzureCredential());
 
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
 PersistentAgent agent = agentClient.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "Math Tutor",
@@ -25,6 +26,7 @@ var agentClient = new PersistentAgentsClient(
     projectEndpoint,
     new DefaultAzureCredential());
 
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
 PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "Math Tutor",
@@ -148,12 +150,14 @@ await foreach (PersistentThreadMessage threadMessage in messages)
 
 Synchronous sample:
 ```C# Snippet:Sample_PersistentAgent_Multiple_Messages_Cleanup
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 agentClient.Threads.DeleteThread(thread.Id);
 agentClient.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_PersistentAgent_Multiple_Messages_CleanupAsync
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 await agentClient.Threads.DeleteThreadAsync(thread.Id);
 await agentClient.Administration.DeleteAgentAsync(agent.Id);
 ```

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The FooSettingsProperties. </summary>
     public partial class FooSettingsProperties
@@ -17,27 +18,43 @@ namespace MgmtTypeSpec.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FooSettingsProperties"/>. </summary>
-        /// <param name="accessControlEnabled"></param>
-        public FooSettingsProperties(bool accessControlEnabled)
+        public FooSettingsProperties()
         {
-            AccessControlEnabled = accessControlEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="FooSettingsProperties"/>. </summary>
         /// <param name="accessControlEnabled"></param>
         /// <param name="provisioningState"></param>
+        /// <param name="metaData"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooSettingsProperties(bool accessControlEnabled, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooSettingsProperties(bool? accessControlEnabled, ResourceProvisioningState? provisioningState, FooSettingsPropertiesMetaData metaData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccessControlEnabled = accessControlEnabled;
             ProvisioningState = provisioningState;
+            MetaData = metaData;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the AccessControlEnabled. </summary>
-        public bool AccessControlEnabled { get; set; }
+        [WirePath("accessControlEnabled")]
+        public bool? AccessControlEnabled { get; set; }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [WirePath("provisioningState")]
         public ResourceProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Gets the MetaData. </summary>
+        [WirePath("metaData")]
+        internal FooSettingsPropertiesMetaData MetaData { get; }
+
+        /// <summary> Gets the MetaDatas. </summary>
+        [WirePath("metaData.metaDatas")]
+        public IList<string> MetaDatas
+        {
+            get
+            {
+                return MetaData.MetaDatas;
+            }
+        }
     }
 }

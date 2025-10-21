@@ -86,20 +86,27 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the connection monitor test configuration. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The frequency of test evaluation, in seconds. </summary>
+        [WirePath("testFrequencySec")]
         public int? TestFrequencySec { get; set; }
         /// <summary> The protocol to use in test evaluation. </summary>
+        [WirePath("protocol")]
         public ConnectionMonitorTestConfigurationProtocol Protocol { get; set; }
         /// <summary> The preferred IP version to use in test evaluation. The connection monitor may choose to use a different version depending on other parameters. </summary>
+        [WirePath("preferredIPVersion")]
         public TestEvalPreferredIPVersion? PreferredIPVersion { get; set; }
         /// <summary> The parameters used to perform test evaluation over HTTP. </summary>
+        [WirePath("httpConfiguration")]
         public ConnectionMonitorHttpConfiguration HttpConfiguration { get; set; }
         /// <summary> The parameters used to perform test evaluation over TCP. </summary>
+        [WirePath("tcpConfiguration")]
         public ConnectionMonitorTcpConfiguration TcpConfiguration { get; set; }
         /// <summary> The parameters used to perform test evaluation over ICMP. </summary>
         internal ConnectionMonitorIcmpConfiguration IcmpConfiguration { get; set; }
         /// <summary> Value indicating whether path evaluation with trace route should be disabled. </summary>
+        [WirePath("icmpConfiguration.disableTraceRoute")]
         public bool? DisableTraceRoute
         {
             get => IcmpConfiguration is null ? default : IcmpConfiguration.DisableTraceRoute;
@@ -112,6 +119,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The threshold for declaring a test successful. </summary>
+        [WirePath("successThreshold")]
         public ConnectionMonitorSuccessThreshold SuccessThreshold { get; set; }
     }
 }

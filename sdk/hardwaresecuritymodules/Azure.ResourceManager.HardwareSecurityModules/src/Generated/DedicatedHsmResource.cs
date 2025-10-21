@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         private readonly ClientDiagnostics _dedicatedHsmClientDiagnostics;
-        private readonly DedicatedHsmRestOperations _dedicatedHsmRestClient;
+        private readonly DedicatedHsmsRestOperations _dedicatedHsmRestClient;
         private readonly DedicatedHsmData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             _dedicatedHsmClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string dedicatedHsmApiVersion);
-            _dedicatedHsmRestClient = new DedicatedHsmRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedHsmApiVersion);
+            _dedicatedHsmRestClient = new DedicatedHsmsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedHsmApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,11 +356,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_ListOutboundNetworkDependenciesEndpoints</description>
+        /// <description>DedicatedHsms_ListOutboundNetworkDependenciesEndpoints</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -386,11 +386,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_ListOutboundNetworkDependenciesEndpoints</description>
+        /// <description>DedicatedHsms_ListOutboundNetworkDependenciesEndpoints</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

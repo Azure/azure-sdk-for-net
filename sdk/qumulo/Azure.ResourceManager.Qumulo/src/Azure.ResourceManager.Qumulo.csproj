@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.Qumulo</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Qumulo.</Description>
     <PackageTags>azure;management;arm;resource manager;qumulo</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

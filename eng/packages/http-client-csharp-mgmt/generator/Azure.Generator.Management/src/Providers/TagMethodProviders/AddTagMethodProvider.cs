@@ -1,22 +1,30 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Providers.OperationMethodProviders;
+using Azure.Generator.Management.Snippets;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
-using Microsoft.TypeSpec.Generator.Expressions;
-using Azure.Generator.Management.Snippets;
 using System.Collections.Generic;
-using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
 {
     internal class AddTagMethodProvider : BaseTagMethodProvider
     {
         public AddTagMethodProvider(
-            ResourceClientProvider resourceClientProvider,
+            ResourceClientProvider resource,
+            RequestPathPattern contextualPath,
+            ResourceOperationMethodProvider updateMethodProvider,
+            InputServiceMethod getMethod,
+            RestClientInfo updateRestClientInfo,
+            RestClientInfo getRestClientInfo,
+            bool isPatch,
             bool isAsync)
-            : base(resourceClientProvider, isAsync,
+            : base(resource, contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, isAsync,
                    isAsync ? "AddTagAsync" : "AddTag",
                    "Add a tag to the current resource.")
         {
@@ -35,7 +43,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var valueParam = _valueParameter;
             var cancellationTokenParam = KnownParameters.CancellationTokenParameter;
 
-            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resourceClientProvider, "AddTag", out var scopeVariable);
+            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resource, _updateClientDiagnosticsField, "AddTag", out var scopeVariable);
 
             // Build try block
             var tryStatements = new List<MethodBodyStatement>();
@@ -46,8 +54,17 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             // Create if-else statement with primary path in if block and secondary path in else block
             var ifElseStatement = new IfElseStatement(
                 canUseTagResourceCondition,
-                BuildIfStatement(keyParam, valueParam, cancellationTokenParam),
-                BuildElseStatement(keyParam, valueParam, cancellationTokenParam)
+                BuildIfStatements(cancellationTokenParam, (tagValues) =>
+                {
+                    // originalTags.Value.Data.TagValues[key] = value;
+                    return new IndexerExpression(tagValues, keyParam).Assign(valueParam).Terminate();
+                }, false),
+                BuildElseStatements(cancellationTokenParam, (currentTags) =>
+                {
+                    // current.Tags[key] = value;
+                    return new IndexerExpression(currentTags, keyParam)
+                        .Assign(valueParam).Terminate();
+                }, true)
             );
 
             tryStatements.Add(ifElseStatement);
@@ -61,72 +78,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 catchBlock));
 
             return [.. statements];
-        }
-
-        private List<MethodBodyStatement> BuildIfStatement(ParameterProvider keyParam, ParameterProvider valueParam, ParameterProvider cancellationTokenParam)
-        {
-            var createMethod = _isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate";
-
-            var statements = new List<MethodBodyStatement>
-            {
-                GetOriginalTagsStatement(_isAsync, cancellationTokenParam, out var originalTagsVar),
-
-                // originalTags.Value.Data.TagValues[key] = value;
-                new IndexerExpression(originalTagsVar.Property("Value").Property("Data").Property("TagValues"), keyParam)
-                    .Assign(valueParam).Terminate(),
-
-                // GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                This.Invoke("GetTagResource").Invoke(createMethod, [
-                    Static(typeof(WaitUntil)).Property("Completed"),
-                    originalTagsVar.Property("Value").Property("Data"),
-                    cancellationTokenParam
-                ], null, _isAsync).Terminate()
-            };
-
-            // Add RequestContext/HttpMessage/Pipeline processing statements
-            statements.AddRange(CreateRequestContextAndProcessMessage(
-                _resourceClientProvider,
-                _isAsync,
-                cancellationTokenParam,
-                out var responseVar));
-
-            // Add primary path response creation statements
-            statements.AddRange(CreatePrimaryPathResponseStatements(_resourceClientProvider, responseVar));
-
-            return statements;
-        }
-
-        private List<MethodBodyStatement> BuildElseStatement(ParameterProvider keyParam, ParameterProvider valueParam, ParameterProvider cancellationTokenParam)
-        {
-            var updateMethod = _isAsync ? "UpdateAsync" : "Update";
-
-            var statements = new List<MethodBodyStatement>();
-
-            // Get current resource data
-            statements.AddRange(GetResourceDataStatements("current", _resourceClientProvider, _isAsync, cancellationTokenParam, out var currentVar));
-
-            statements.AddRange(
-            [
-                // current.Tags[key] = value;
-                new IndexerExpression(currentVar.Property("Tags"), keyParam)
-                    .Assign(valueParam).Terminate(),
-
-                // var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
-                Declare(
-                    "result",
-                    new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), _resourceClientProvider.ResourceClientCSharpType),
-                    This.Invoke(updateMethod, [
-                        Static(typeof(WaitUntil)).Property("Completed"),
-                        currentVar,
-                        cancellationTokenParam
-                    ], null, _isAsync),
-                    out var resultVar),
-
-                // return Response.FromValue(result.Value, result.GetRawResponse());
-                CreateSecondaryPathResponseStatement(resultVar)
-            ]);
-
-            return statements;
         }
     }
 }

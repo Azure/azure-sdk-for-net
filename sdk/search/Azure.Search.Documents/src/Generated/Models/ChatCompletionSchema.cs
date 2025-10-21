@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -12,6 +13,38 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Object defining the custom schema the model will use to structure its output. </summary>
     public partial class ChatCompletionSchema
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ChatCompletionSchema"/>. </summary>
         public ChatCompletionSchema()
         {
@@ -23,12 +56,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="properties"> A JSON-formatted string that defines the output schema's properties and constraints for the model. </param>
         /// <param name="required"> An array of the property names that are required to be part of the model's response. All properties must be included for structured outputs. </param>
         /// <param name="additionalProperties"> Controls whether it is allowable for an object to contain additional keys / values that were not defined in the JSON Schema. Default is false. </param>
-        internal ChatCompletionSchema(string type, string properties, IList<string> required, bool? additionalProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatCompletionSchema(string type, string properties, IList<string> required, bool? additionalProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Properties = properties;
             Required = required;
             AdditionalProperties = additionalProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of schema representation. Usually 'object'. Default is 'object'. </summary>

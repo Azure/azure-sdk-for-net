@@ -567,8 +567,8 @@ namespace Azure.ResourceManager.AppService.Samples
             // invoke the operation
             StaticSiteZipDeployment staticSiteZipDeploymentEnvelope = new StaticSiteZipDeployment
             {
-                AppZipUri = new Uri("https://teststorageaccount.net/happy-sea-15afae3e-master-81828877/app-zipdeploy.zip"),
-                ApiZipUri = new Uri("https://teststorageaccount.net/happy-sea-15afae3e-master-81828877/api-zipdeploy.zip"),
+                AppZipUri = new Uri("https://[examplestorageaccount].com/happy-sea-15afae3e-master-81828877/app-zipdeploy.zip"),
+                ApiZipUri = new Uri("https://[examplestorageaccount].com/happy-sea-15afae3e-master-81828877/api-zipdeploy.zip"),
                 DeploymentTitle = "Update index.html",
                 Provider = "testProvider",
                 FunctionLanguage = "testFunctionLanguage",

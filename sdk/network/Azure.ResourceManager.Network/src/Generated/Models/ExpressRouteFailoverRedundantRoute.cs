@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of all the peering locations for the redundant routes. </summary>
+        [WirePath("peeringLocations")]
         public IReadOnlyList<string> PeeringLocations { get; }
         /// <summary> A list of all the redundant routes in the peering locations. </summary>
+        [WirePath("routes")]
         public IReadOnlyList<string> Routes { get; }
     }
 }

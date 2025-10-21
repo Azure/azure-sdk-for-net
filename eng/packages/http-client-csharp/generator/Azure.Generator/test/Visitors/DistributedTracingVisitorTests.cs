@@ -31,12 +31,11 @@ namespace Azure.Generator.Tests.Visitors
         {
             // Arrange
             var visitor = new TestDistributedTracingVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
+                InputFactory.MethodParameter(
                 "p1",
-                InputPrimitiveType.String,
-                kind: InputParameterKind.Method)
+                InputPrimitiveType.String)
             ];
             var basicOperation = InputFactory.Operation(
                 "foo",
@@ -94,12 +93,11 @@ namespace Azure.Generator.Tests.Visitors
         public void TestUpdatesSubClientFactoryMethods()
         {
             var visitor = new TestDistributedTracingVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
+                InputFactory.MethodParameter(
                 "p1",
-                InputPrimitiveType.String,
-                kind: InputParameterKind.Method)
+                InputPrimitiveType.String)
             ];
             var basicOperation = InputFactory.Operation(
                 "foo",
@@ -131,12 +129,11 @@ namespace Azure.Generator.Tests.Visitors
             var visitor = new TestDistributedTracingVisitor();
 
             // load the input
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
+                InputFactory.MethodParameter(
                 "p1",
-                InputFactory.Model("foo"),
-                kind: InputParameterKind.Method)
+                InputPrimitiveType.String)
             ];
             var basicOperation = InputFactory.Operation(
                 "foo",
@@ -177,8 +174,8 @@ namespace Azure.Generator.Tests.Visitors
                     [
                         InputFactory.BasicServiceMethod(
                             "foo",
-                            InputFactory.Operation("foo", parameters: [InputFactory.Parameter("p1", InputPrimitiveType.String, kind: InputParameterKind.Method)]),
-                            parameters: [InputFactory.Parameter("p1", InputPrimitiveType.String, kind: InputParameterKind.Method)])
+                            InputFactory.Operation("foo", parameters: [InputFactory.BodyParameter("p1", InputPrimitiveType.String)]),
+                            parameters: [InputFactory.MethodParameter("p1", InputPrimitiveType.String)])
                     ]));
                 // sub client
                 yield return new TestCaseData(InputFactory.Client(
@@ -187,8 +184,8 @@ namespace Azure.Generator.Tests.Visitors
                     [
                         InputFactory.BasicServiceMethod(
                             "foo",
-                            InputFactory.Operation("foo", parameters: [InputFactory.Parameter("p1", InputPrimitiveType.String, kind: InputParameterKind.Method)]),
-                            parameters: [InputFactory.Parameter("p1", InputPrimitiveType.String, kind: InputParameterKind.Method)])
+                            InputFactory.Operation("foo", parameters: [InputFactory.BodyParameter("p1", InputPrimitiveType.String)]),
+                            parameters: [InputFactory.MethodParameter("p1", InputPrimitiveType.String)])
                     ],
                     parent: InputFactory.Client("parent")));
             }

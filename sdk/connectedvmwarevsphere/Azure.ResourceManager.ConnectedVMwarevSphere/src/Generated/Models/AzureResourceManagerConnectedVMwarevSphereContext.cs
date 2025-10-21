@@ -6,6 +6,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -13,6 +16,67 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(HttpProxyConfiguration))]
+    [ModelReaderWriterBuildable(typeof(NicIPAddressSettings))]
+    [ModelReaderWriterBuildable(typeof(NicIPSettings))]
+    [ModelReaderWriterBuildable(typeof(OSProfileForVmInstance))]
+    [ModelReaderWriterBuildable(typeof(PlacementProfile))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SecurityProfile))]
+    [ModelReaderWriterBuildable(typeof(StopVirtualMachineContent))]
+    [ModelReaderWriterBuildable(typeof(StorageProfileUpdate))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UefiSettings))]
+    [ModelReaderWriterBuildable(typeof(VCenterInfrastructureProfile))]
+    [ModelReaderWriterBuildable(typeof(VCenterInventoryItemData))]
+    [ModelReaderWriterBuildable(typeof(VCenterInventoryItemListResult))]
+    [ModelReaderWriterBuildable(typeof(VCenterInventoryItemResource))]
+    [ModelReaderWriterBuildable(typeof(VICredential))]
+    [ModelReaderWriterBuildable(typeof(VirtualScsiController))]
+    [ModelReaderWriterBuildable(typeof(VmInstanceGuestAgentData))]
+    [ModelReaderWriterBuildable(typeof(VmInstanceGuestAgentListResult))]
+    [ModelReaderWriterBuildable(typeof(VmInstanceGuestAgentResource))]
+    [ModelReaderWriterBuildable(typeof(VmInstanceGuestCredential))]
+    [ModelReaderWriterBuildable(typeof(VmInstanceHardwareProfile))]
+    [ModelReaderWriterBuildable(typeof(VmInstanceHybridIdentityMetadataData))]
+    [ModelReaderWriterBuildable(typeof(VmInstanceHybridIdentityMetadataList))]
+    [ModelReaderWriterBuildable(typeof(VmInstanceHybridIdentityMetadataResource))]
+    [ModelReaderWriterBuildable(typeof(VMwareClusterData))]
+    [ModelReaderWriterBuildable(typeof(VMwareClusterListResult))]
+    [ModelReaderWriterBuildable(typeof(VMwareClusterResource))]
+    [ModelReaderWriterBuildable(typeof(VMwareDatastoreData))]
+    [ModelReaderWriterBuildable(typeof(VMwareDatastoreListResult))]
+    [ModelReaderWriterBuildable(typeof(VMwareDatastoreResource))]
+    [ModelReaderWriterBuildable(typeof(VMwareHostData))]
+    [ModelReaderWriterBuildable(typeof(VMwareHostListResult))]
+    [ModelReaderWriterBuildable(typeof(VMwareHostResource))]
+    [ModelReaderWriterBuildable(typeof(VMwareNetworkInterface))]
+    [ModelReaderWriterBuildable(typeof(VMwareNetworkInterfaceUpdate))]
+    [ModelReaderWriterBuildable(typeof(VMwareNetworkProfile))]
+    [ModelReaderWriterBuildable(typeof(VMwareNetworkProfileUpdate))]
+    [ModelReaderWriterBuildable(typeof(VMwareResourcePatchContent))]
+    [ModelReaderWriterBuildable(typeof(VMwareResourcePoolData))]
+    [ModelReaderWriterBuildable(typeof(VMwareResourcePoolListResult))]
+    [ModelReaderWriterBuildable(typeof(VMwareResourcePoolResource))]
+    [ModelReaderWriterBuildable(typeof(VMwareResourceStatus))]
+    [ModelReaderWriterBuildable(typeof(VMwareStorageProfile))]
+    [ModelReaderWriterBuildable(typeof(VMwareVCenterData))]
+    [ModelReaderWriterBuildable(typeof(VMwareVCenterListResult))]
+    [ModelReaderWriterBuildable(typeof(VMwareVCenterResource))]
+    [ModelReaderWriterBuildable(typeof(VMwareVirtualDisk))]
+    [ModelReaderWriterBuildable(typeof(VMwareVirtualDiskUpdate))]
+    [ModelReaderWriterBuildable(typeof(VMwareVirtualNetworkData))]
+    [ModelReaderWriterBuildable(typeof(VMwareVirtualNetworkListResult))]
+    [ModelReaderWriterBuildable(typeof(VMwareVirtualNetworkResource))]
+    [ModelReaderWriterBuildable(typeof(VMwareVmInstanceData))]
+    [ModelReaderWriterBuildable(typeof(VMwareVmInstanceListResult))]
+    [ModelReaderWriterBuildable(typeof(VMwareVmInstancePatch))]
+    [ModelReaderWriterBuildable(typeof(VMwareVmInstanceResource))]
+    [ModelReaderWriterBuildable(typeof(VMwareVmTemplateData))]
+    [ModelReaderWriterBuildable(typeof(VMwareVmTemplateListResult))]
+    [ModelReaderWriterBuildable(typeof(VMwareVmTemplateResource))]
+    [ModelReaderWriterBuildable(typeof(VMwareVmWindowsConfiguration))]
     public partial class AzureResourceManagerConnectedVMwarevSphereContext : ModelReaderWriterContext
     {
     }

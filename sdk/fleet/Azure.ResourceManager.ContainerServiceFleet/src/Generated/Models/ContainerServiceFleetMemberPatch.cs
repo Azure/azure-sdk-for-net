@@ -48,18 +48,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberPatch"/>. </summary>
         public ContainerServiceFleetMemberPatch()
         {
+            Labels = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberPatch"/>. </summary>
         /// <param name="group"> The group this member belongs to for multi-cluster update management. </param>
+        /// <param name="labels"> The labels for the fleet member. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetMemberPatch(string group, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetMemberPatch(string group, IDictionary<string, string> labels, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Group = group;
+            Labels = labels;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The group this member belongs to for multi-cluster update management. </summary>
         public string Group { get; set; }
+        /// <summary> The labels for the fleet member. </summary>
+        public IDictionary<string, string> Labels { get; }
     }
 }

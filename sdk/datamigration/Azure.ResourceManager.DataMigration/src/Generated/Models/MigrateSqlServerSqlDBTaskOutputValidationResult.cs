@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationId"> Migration Identifier. </param>
         /// <param name="summaryResults"> Validation summary results for each database. </param>
         /// <param name="status"> Current status of validation at the migration level. Status from the database validation result status will be aggregated here. </param>
-        internal MigrateSqlServerSqlDBTaskOutputValidationResult(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string migrationId, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults, ValidationStatus? status) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlDBTaskOutputValidationResult(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string migrationId, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults, MigrationValidationStatus? status) : base(id, resultType, serializedAdditionalRawData)
         {
             MigrationId = migrationId;
             SummaryResults = summaryResults;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Validation summary results for each database. </summary>
         public IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> SummaryResults { get; }
         /// <summary> Current status of validation at the migration level. Status from the database validation result status will be aggregated here. </summary>
-        public ValidationStatus? Status { get; }
+        public MigrationValidationStatus? Status { get; }
     }
 }
