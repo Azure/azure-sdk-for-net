@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (2025-10-30)
+## 1.0.0 (2025-10-30)
 
 ### Features Added
 - Upgraded api-version tag to 'package-2025-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/mongocluster/resource-manager/Microsoft.DocumentDB/MongoCluster/readme.md#tag-package-2025-09-01.
