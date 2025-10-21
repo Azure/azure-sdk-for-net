@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal FooSettingsUpdateProperties Properties { get; set; }
 
         /// <summary> Gets or sets the AccessControlEnabled. </summary>
+        [WirePath("properties.accessControlEnabled")]
         public bool? AccessControlEnabled
         {
             get

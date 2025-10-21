@@ -44,12 +44,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal FooProperties Properties { get; set; }
 
         /// <summary> Gets or sets the ExtendedLocation. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> the service url. </summary>
+        [WirePath("properties.serviceUrl")]
         public Uri ServiceUri
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> something. </summary>
+        [WirePath("properties.something")]
         public string Something
         {
             get
@@ -84,6 +88,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> boolean value. </summary>
+        [WirePath("properties.boolValue")]
         public bool? BoolValue
         {
             get
@@ -101,6 +106,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> float value. </summary>
+        [WirePath("properties.floatValue")]
         public float? FloatValue
         {
             get
@@ -118,6 +124,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> double value. </summary>
+        [WirePath("properties.doubleValue")]
         public double? DoubleValue
         {
             get
@@ -135,6 +142,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Gets the Prop1. </summary>
+        [WirePath("properties.prop1")]
         public IList<string> Prop1
         {
             get
@@ -144,6 +152,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Gets the Prop2. </summary>
+        [WirePath("properties.prop2")]
         public IList<int> Prop2
         {
             get
@@ -153,6 +162,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties.nestedProperty.properties")]
         public FooProperties NestedPropertyProperties
         {
             get

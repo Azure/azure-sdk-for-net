@@ -6,16 +6,13 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.DeviceRegistry.Models;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
-    internal partial class NamespaceDiscoveredDevicesRestOperations
+    internal partial class NamespaceDiscoveredDevices
     {
     }
 }

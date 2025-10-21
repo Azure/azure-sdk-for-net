@@ -51,12 +51,12 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>
         /// Create an instance of an MCPApproval with trust level, equal for all tools.
         /// </summary>
-        /// <param name="trust">The trust level, can be "always" or "never"</param>
-        public MCPApproval(string trust)
+        /// <param name="requireApproval">The approval requirement, can be "always" or "never"</param>
+        public MCPApproval(string requireApproval)
         {
-            if (!string.Equals(trust, ALWAYS) && !string.Equals(trust, NEVER))
-                throw new ArgumentException($"The parameter \"trust\" may be only \"{ALWAYS}\" or \"{NEVER}\".");
-            _forAllToolsApproval = trust;
+            if (!string.Equals(requireApproval, ALWAYS) && !string.Equals(requireApproval, NEVER))
+                throw new ArgumentException($"The parameter \"requireApproval\" may be only \"{ALWAYS}\" or \"{NEVER}\".");
+            _forAllToolsApproval = requireApproval;
         }
         /// <summary>
         /// Return true if we do not trust all tools and always need to ask for approval before sending data to server.

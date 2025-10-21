@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.EventGrid</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.EventGrid.</Description>
     <PackageTags>azure;management;arm;resource manager;eventgrid</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

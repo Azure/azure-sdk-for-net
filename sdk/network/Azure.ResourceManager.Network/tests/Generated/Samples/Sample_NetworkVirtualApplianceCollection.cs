@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNVAInVNetWithPrivateNicPublicNic()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkVirtualApplianceVnetBasicPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkVirtualApplianceVnetBasicPut.json
             // this example is just showing the usage of "NetworkVirtualAppliances_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ Name = "managementInterface",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNVAInVNetWithPrivateNicPublicNicIncludingInternetIngress()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkVirtualApplianceVnetIngressPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkVirtualApplianceVnetIngressPut.json
             // this example is just showing the usage of "NetworkVirtualAppliances_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ Name = "managementInterface",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNVAInVNetWithPrivateNicPublicNicIncludingNetworkProfile()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkVirtualApplianceVnetNetworkProfilePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkVirtualApplianceVnetNetworkProfilePut.json
             // this example is just showing the usage of "NetworkVirtualAppliances_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -259,7 +259,7 @@ Name = "managementInterface",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNVAInVNetWithPrivateNicPublicNicAdditionalPrivateNic()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkVirtualApplianceVnetAdditionalPrivatePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkVirtualApplianceVnetAdditionalPrivatePut.json
             // this example is just showing the usage of "NetworkVirtualAppliances_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -333,7 +333,7 @@ Name = "myAdditionalInterface",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNVAInVNetWithPrivateNicPublicNicAdditionalPublicNic()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkVirtualApplianceVnetAdditionalPublicPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkVirtualApplianceVnetAdditionalPublicPut.json
             // this example is just showing the usage of "NetworkVirtualAppliances_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -407,7 +407,7 @@ Name = "myAdditionalPublicInterface",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNetworkVirtualAppliance()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkVirtualAppliancePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkVirtualAppliancePut.json
             // this example is just showing the usage of "NetworkVirtualAppliances_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -500,7 +500,7 @@ Id = new ResourceIdentifier("/subscriptions/{{subscriptionId}}/resourceGroups/{{
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSaaSNetworkVirtualAppliance()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkVirtualApplianceSaaSPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkVirtualApplianceSaaSPut.json
             // this example is just showing the usage of "NetworkVirtualAppliances_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -547,7 +547,7 @@ Id = new ResourceIdentifier("/subscriptions/{{subscriptionId}}/resourceGroups/{{
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkVirtualAppliance()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkVirtualApplianceGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkVirtualApplianceGet.json
             // this example is just showing the usage of "NetworkVirtualAppliances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -580,7 +580,7 @@ Id = new ResourceIdentifier("/subscriptions/{{subscriptionId}}/resourceGroups/{{
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllNetworkVirtualApplianceForAGivenResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkVirtualApplianceListByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkVirtualApplianceListByResourceGroup.json
             // this example is just showing the usage of "NetworkVirtualAppliances_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -615,7 +615,7 @@ Id = new ResourceIdentifier("/subscriptions/{{subscriptionId}}/resourceGroups/{{
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetNetworkVirtualAppliance()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkVirtualApplianceGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkVirtualApplianceGet.json
             // this example is just showing the usage of "NetworkVirtualAppliances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -644,7 +644,7 @@ Id = new ResourceIdentifier("/subscriptions/{{subscriptionId}}/resourceGroups/{{
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetNetworkVirtualAppliance()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/NetworkVirtualApplianceGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkVirtualApplianceGet.json
             // this example is just showing the usage of "NetworkVirtualAppliances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

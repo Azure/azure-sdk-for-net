@@ -51,19 +51,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceTreeInfo"/>. </summary>
-        /// <param name="serviceId"></param>
-        /// <param name="componentId"></param>
+        /// <param name="serviceId"> The service id. </param>
+        /// <param name="componentId"> The component id. </param>
+        /// <param name="readiness"> The readiness. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceTreeInfo(string serviceId, string componentId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceTreeInfo(string serviceId, string componentId, ServiceTreeReadiness? readiness, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceId = serviceId;
             ComponentId = componentId;
+            Readiness = readiness;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the service id. </summary>
+        /// <summary> The service id. </summary>
         public string ServiceId { get; set; }
-        /// <summary> Gets or sets the component id. </summary>
+        /// <summary> The component id. </summary>
         public string ComponentId { get; set; }
+        /// <summary> The readiness. </summary>
+        public ServiceTreeReadiness? Readiness { get; set; }
     }
 }
