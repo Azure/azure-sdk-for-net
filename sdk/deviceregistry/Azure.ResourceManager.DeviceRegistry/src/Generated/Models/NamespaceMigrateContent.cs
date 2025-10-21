@@ -12,22 +12,22 @@ using Azure.ResourceManager.DeviceRegistry;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Request body for the migrate resources operation in to Namespace resource. </summary>
-    public partial class DeviceRegistryNamespaceMigrateRequestContent
+    public partial class NamespaceMigrateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryNamespaceMigrateRequestContent"/>. </summary>
-        public DeviceRegistryNamespaceMigrateRequestContent()
+        /// <summary> Initializes a new instance of <see cref="NamespaceMigrateContent"/>. </summary>
+        public NamespaceMigrateContent()
         {
             ResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryNamespaceMigrateRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceMigrateContent"/>. </summary>
         /// <param name="scope"> Scope of the migrate resources operation. </param>
         /// <param name="resourceIds"> List of asset resources to be migrated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryNamespaceMigrateRequestContent(Scope? scope, IList<string> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NamespaceMigrateContent(Scope? scope, IList<string> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             ResourceIds = resourceIds;

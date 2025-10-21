@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
             string topic = default;
             DeviceRegistryTopicRetainType? retain = default;
-            MqttDestinationQos? qos = default;
+            MqttDestinationQo? qos = default;
             long? ttl = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    qos = new MqttDestinationQos(prop.Value.GetString());
+                    qos = new MqttDestinationQo(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ttl"u8))

@@ -12,7 +12,7 @@ using Azure.ResourceManager.DeviceRegistry;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The set of supported QoS types for a MQTT destination. </summary>
-    public readonly partial struct MqttDestinationQos : IEquatable<MqttDestinationQos>
+    public readonly partial struct MqttDestinationQo : IEquatable<MqttDestinationQo>
     {
         private readonly string _value;
         /// <summary> QoS 0. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> QoS 1. </summary>
         private const string Qos1Value = "Qos1";
 
-        /// <summary> Initializes a new instance of <see cref="MqttDestinationQos"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MqttDestinationQo"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MqttDestinationQos(string value)
+        public MqttDestinationQo(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         }
 
         /// <summary> QoS 0. </summary>
-        public static MqttDestinationQos Qos0 { get; } = new MqttDestinationQos(Qos0Value);
+        public static MqttDestinationQo Qos0 { get; } = new MqttDestinationQo(Qos0Value);
 
         /// <summary> QoS 1. </summary>
-        public static MqttDestinationQos Qos1 { get; } = new MqttDestinationQos(Qos1Value);
+        public static MqttDestinationQo Qos1 { get; } = new MqttDestinationQo(Qos1Value);
 
-        /// <summary> Determines if two <see cref="MqttDestinationQos"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="MqttDestinationQo"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(MqttDestinationQos left, MqttDestinationQos right) => left.Equals(right);
+        public static bool operator ==(MqttDestinationQo left, MqttDestinationQo right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MqttDestinationQos"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="MqttDestinationQo"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(MqttDestinationQos left, MqttDestinationQos right) => !left.Equals(right);
+        public static bool operator !=(MqttDestinationQo left, MqttDestinationQo right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MqttDestinationQos"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MqttDestinationQo"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MqttDestinationQos(string value) => new MqttDestinationQos(value);
+        public static implicit operator MqttDestinationQo(string value) => new MqttDestinationQo(value);
 
-        /// <summary> Converts a string to a <see cref="MqttDestinationQos"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MqttDestinationQo"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MqttDestinationQos?(string value) => value == null ? null : new MqttDestinationQos(value);
+        public static implicit operator MqttDestinationQo?(string value) => value == null ? null : new MqttDestinationQo(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MqttDestinationQos other && Equals(other);
+        public override bool Equals(object obj) => obj is MqttDestinationQo other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(MqttDestinationQos other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MqttDestinationQo other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

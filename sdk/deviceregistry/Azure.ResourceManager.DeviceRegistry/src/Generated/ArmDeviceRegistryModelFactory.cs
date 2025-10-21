@@ -383,12 +383,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Request body for the migrate resources operation in to Namespace resource. </summary>
         /// <param name="scope"> Scope of the migrate resources operation. </param>
         /// <param name="resourceIds"> List of asset resources to be migrated. </param>
-        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceMigrateRequestContent"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceMigrateRequestContent DeviceRegistryNamespaceMigrateRequestContent(Scope? scope = default, IEnumerable<string> resourceIds = default)
+        /// <returns> A new <see cref="Models.NamespaceMigrateContent"/> instance for mocking. </returns>
+        public static NamespaceMigrateContent NamespaceMigrateContent(Scope? scope = default, IEnumerable<string> resourceIds = default)
         {
             resourceIds ??= new ChangeTrackingList<string>();
 
-            return new DeviceRegistryNamespaceMigrateRequestContent(scope, resourceIds.ToList(), additionalBinaryDataProperties: null);
+            return new NamespaceMigrateContent(scope, resourceIds.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines the error details properties. </summary>

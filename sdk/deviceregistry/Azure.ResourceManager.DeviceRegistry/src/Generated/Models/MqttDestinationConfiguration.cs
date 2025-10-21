@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="qos"> The MQTT QoS setting. Defaults to QoS 1. </param>
         /// <param name="ttl"> The MQTT TTL setting. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MqttDestinationConfiguration(string topic, DeviceRegistryTopicRetainType? retain, MqttDestinationQos? qos, long? ttl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MqttDestinationConfiguration(string topic, DeviceRegistryTopicRetainType? retain, MqttDestinationQo? qos, long? ttl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Topic = topic;
             Retain = retain;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public DeviceRegistryTopicRetainType? Retain { get; set; }
 
         /// <summary> The MQTT QoS setting. Defaults to QoS 1. </summary>
-        public MqttDestinationQos? Qos { get; set; }
+        public MqttDestinationQo? Qos { get; set; }
 
         /// <summary> The MQTT TTL setting. </summary>
         public long? Ttl { get; set; }

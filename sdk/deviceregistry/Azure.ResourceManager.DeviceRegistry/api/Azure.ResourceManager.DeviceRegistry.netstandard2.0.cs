@@ -488,8 +488,8 @@ namespace Azure.ResourceManager.DeviceRegistry
         public virtual Azure.Response<Azure.ResourceManager.DeviceRegistry.DeviceRegistryNamespaceDiscoveredDeviceResource> GetDeviceRegistryNamespaceDiscoveredDevice(string discoveredDeviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceRegistry.DeviceRegistryNamespaceDiscoveredDeviceResource>> GetDeviceRegistryNamespaceDiscoveredDeviceAsync(string discoveredDeviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DeviceRegistry.DeviceRegistryNamespaceDiscoveredDeviceCollection GetDeviceRegistryNamespaceDiscoveredDevices() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Migrate(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> MigrateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Migrate(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> MigrateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DeviceRegistry.DeviceRegistryNamespaceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceRegistry.DeviceRegistryNamespaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DeviceRegistry.DeviceRegistryNamespaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -753,7 +753,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceDiscoveredDevicePatch DeviceRegistryNamespaceDiscoveredDevicePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.DeviceRegistry.Models.NamespaceDiscoveredDeviceUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceDiscoveredDeviceProperties DeviceRegistryNamespaceDiscoveredDeviceProperties(string externalDeviceId = null, Azure.ResourceManager.DeviceRegistry.Models.DiscoveredMessagingEndpoints endpoints = null, string manufacturer = null, string model = null, string operatingSystem = null, string operatingSystemVersion = null, System.Collections.Generic.IDictionary<string, System.BinaryData> attributes = null, string discoveryId = null, long version = (long)0, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMessageSchemaReference DeviceRegistryNamespaceMessageSchemaReference(string schemaRegistryNamespace = null, string schemaName = null, string schemaVersion = null) { throw null; }
-        public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent DeviceRegistryNamespaceMigrateRequestContent(Azure.ResourceManager.DeviceRegistry.Models.Scope? scope = default(Azure.ResourceManager.DeviceRegistry.Models.Scope?), System.Collections.Generic.IEnumerable<string> resourceIds = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespacePatch DeviceRegistryNamespacePatch(Azure.ResourceManager.DeviceRegistry.Models.SystemAssignedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.DeviceRegistry.Models.NamespaceUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceProperties DeviceRegistryNamespaceProperties(string uuid = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DeviceRegistry.Models.MessagingEndpoint> messagingEndpoints = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.DeviceRegistrySchemaData DeviceRegistrySchemaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistrySchemaProperties properties = null) { throw null; }
@@ -784,6 +783,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static Azure.ResourceManager.DeviceRegistry.Models.NamespaceDiscoveredStream NamespaceDiscoveredStream(string name = null, string streamConfiguration = null, string typeRef = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.StreamDestination> destinations = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.NamespaceEvent NamespaceEvent(string name = null, string dataSource = null, string eventConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.EventDestination> destinations = null, string typeRef = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.NamespaceEventGroup NamespaceEventGroup(string name = null, string dataSource = null, string eventGroupConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.EventDestination> defaultDestinations = null, string typeRef = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.NamespaceEvent> events = null) { throw null; }
+        public static Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent NamespaceMigrateContent(Azure.ResourceManager.DeviceRegistry.Models.Scope? scope = default(Azure.ResourceManager.DeviceRegistry.Models.Scope?), System.Collections.Generic.IEnumerable<string> resourceIds = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.NamespaceStream NamespaceStream(string name = null, string streamConfiguration = null, string typeRef = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.StreamDestination> destinations = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.NamespaceUpdateProperties NamespaceUpdateProperties(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DeviceRegistry.Models.MessagingEndpoint> messagingEndpoints = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.OutboundEndpoints OutboundEndpoints(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DeviceRegistry.Models.DeviceMessagingEndpoint> assigned = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DeviceRegistry.Models.DeviceMessagingEndpoint> unassigned = null) { throw null; }
@@ -1593,21 +1593,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMessageSchemaReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMessageSchemaReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DeviceRegistryNamespaceMigrateRequestContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent>
-    {
-        public DeviceRegistryNamespaceMigrateRequestContent() { }
-        public System.Collections.Generic.IList<string> ResourceIds { get { throw null; } }
-        public Azure.ResourceManager.DeviceRegistry.Models.Scope? Scope { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespaceMigrateRequestContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class DeviceRegistryNamespacePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespacePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryNamespacePatch>
     {
         public DeviceRegistryNamespacePatch() { }
@@ -2121,7 +2106,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     public partial class MqttDestinationConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationConfiguration>
     {
         public MqttDestinationConfiguration(string topic) { }
-        public Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQos? Qos { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQo? Qos { get { throw null; } set { } }
         public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopicRetainType? Retain { get { throw null; } set { } }
         public string Topic { get { throw null; } set { } }
         public long? Ttl { get { throw null; } set { } }
@@ -2136,22 +2121,22 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MqttDestinationQos : System.IEquatable<Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQos>
+    public readonly partial struct MqttDestinationQo : System.IEquatable<Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQo>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public MqttDestinationQos(string value) { throw null; }
-        public static Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQos Qos0 { get { throw null; } }
-        public static Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQos Qos1 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQos other) { throw null; }
+        public MqttDestinationQo(string value) { throw null; }
+        public static Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQo Qos0 { get { throw null; } }
+        public static Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQo Qos1 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQo other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQos left, Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQos right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQos (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQos? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQos left, Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQos right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQo left, Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQo right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQo (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQo? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQo left, Azure.ResourceManager.DeviceRegistry.Models.MqttDestinationQo right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class NamespaceAssetUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceAssetUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceAssetUpdateProperties>
@@ -2494,6 +2479,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         Azure.ResourceManager.DeviceRegistry.Models.NamespaceEventGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceEventGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceEventGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceEventGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NamespaceMigrateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent>
+    {
+        public NamespaceMigrateContent() { }
+        public System.Collections.Generic.IList<string> ResourceIds { get { throw null; } }
+        public Azure.ResourceManager.DeviceRegistry.Models.Scope? Scope { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceMigrateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NamespaceStream : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceStream>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.NamespaceStream>
     {
