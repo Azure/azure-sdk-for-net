@@ -1,10 +1,11 @@
 namespace Azure.DigitalTwins.Core
 {
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class AzureDigitalTwinsCoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureDigitalTwinsCoreContext() { }
-        public static Azure.DigitalTwins.Core.AzureDigitalTwinsCoreContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureDigitalTwinsCoreContext() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.DigitalTwins.Core.AzureDigitalTwinsCoreContext Default { get { throw null; } }
     }
     public partial class BasicDigitalTwin
     {

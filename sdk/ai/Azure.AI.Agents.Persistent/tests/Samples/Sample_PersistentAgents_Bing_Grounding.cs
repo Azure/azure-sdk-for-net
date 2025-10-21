@@ -21,11 +21,11 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var connectionId = System.Environment.GetEnvironmentVariable("AZURE_BING_CONECTION_ID");
+        var connectionId = System.Environment.GetEnvironmentVariable("AZURE_BING_CONNECTION_ID");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        var connectionId = TestEnvironment.BING_CONECTION_ID;
+        var connectionId = TestEnvironment.BING_CONNECTION_ID;
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
@@ -118,11 +118,11 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var connectionId = System.Environment.GetEnvironmentVariable("AZURE_BING_CONECTION_ID");
+        var connectionId = System.Environment.GetEnvironmentVariable("AZURE_BING_CONNECTION_ID");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        var connectionId = TestEnvironment.BING_CONECTION_ID;
+        var connectionId = TestEnvironment.BING_CONNECTION_ID;
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         BingGroundingToolDefinition bingGroundingTool = new(

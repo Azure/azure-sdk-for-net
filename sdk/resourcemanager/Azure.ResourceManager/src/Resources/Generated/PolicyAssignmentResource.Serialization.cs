@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
 
         PolicyAssignmentData IJsonModel<PolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PolicyAssignmentData>(Data, options, AzureResourceManagerContext.Default);
+        BinaryData IPersistableModel<PolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerContext.Default);
 
         PolicyAssignmentData IPersistableModel<PolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyAssignmentData>(data, options, AzureResourceManagerContext.Default);
 

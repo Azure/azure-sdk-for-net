@@ -24,6 +24,10 @@ namespace _Type.Model.Inheritance.EnumDiscriminator
         /// <param name="value"> The value. </param>
         public static implicit operator DogKind(string value) => throw null;
 
+        /// <summary> Converts a string to a <see cref="DogKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DogKind?(string value) => throw null;
+
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 

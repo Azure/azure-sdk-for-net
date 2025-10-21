@@ -13,7 +13,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Azure.AI.Agents.Persistent" VersionOverride="1.0.0"/>
+    <PackageReference Include="Azure.AI.Agents.Persistent" VersionOverride="1.0.0" />
     <PackageReference Include="Azure.AI.OpenAI" VersionOverride="2.2.0-beta.4" />
     <PackageReference Include="Azure.AI.Inference" />
     <PackageReference Include="NUnit" />
@@ -22,6 +22,9 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
+    <PackageReference Include="OpenTelemetry" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" />
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
     <PackageReference Include="System.Linq.Async" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>

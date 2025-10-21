@@ -209,6 +209,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="value"> The value. </param>
         public static implicit operator KeyVaultDataAction(string value) => new KeyVaultDataAction(value);
 
+        /// <summary> Converts a string to a <see cref="KeyVaultDataAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KeyVaultDataAction?(string value) => value == null ? null : new KeyVaultDataAction(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KeyVaultDataAction other && Equals(other);

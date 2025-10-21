@@ -100,8 +100,11 @@ Note that regional endpoints do not support AAD authentication. Instead, create 
 The client library targets the latest service API version by default. A client instance accepts an optional service API version parameter from its options to specify which API version service to communicate.
 
 |SDK version  |Supported API version of service
-|-------------|-----------------------------------------------------------------------------------
-|2.0.0-beta.1 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview, 2024-11-01, 2025-05-15-preview (default)
+|-------------|---------------------------------------------------------------------------------------------------------------------------
+|2.0.0-beta.4 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview, 2024-11-01, 2024-11-15-preview, 2025-05-15-preview (default)
+|2.0.0-beta.3 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview, 2024-11-01, 2024-11-15-preview, 2025-05-15-preview (default)
+|2.0.0-beta.2 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview, 2024-11-01, 2024-11-15-preview (default)
+|2.0.0-beta.1 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview (default)
 |1.1.0 | 2022-05-01, 2023-04-01 (default)
 |1.0.0 | 2022-05-01 (default)
 

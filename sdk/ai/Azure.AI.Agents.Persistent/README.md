@@ -374,7 +374,7 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
-   instructions: "You are a helpful agent.",
+   instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
    tools: [ new AzureAISearchToolDefinition() ],
    toolResources: toolResource);
 ```
@@ -691,7 +691,11 @@ AutoFunctionCallOptions autoFunctionCallOptions = new(toolDelegates, 10);
 
 With autoFunctionCallOptions as parameter for `CreateRunStreamingAsync`, the agent will then call the function automatically when it is needed:
 ```C# Snippet:StreamingWithAutoFunctionCallAsync
-await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions))
+CreateRunStreamingOptions runOptions = new()
+{
+    AutoFunctionCallOptions = autoFunctionCallOptions
+};
+await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: runOptions))
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
     {

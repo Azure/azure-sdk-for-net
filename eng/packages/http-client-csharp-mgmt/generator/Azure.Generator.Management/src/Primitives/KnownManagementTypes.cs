@@ -22,22 +22,30 @@ namespace Azure.Generator.Management.Primitives
 {
     internal class KnownManagementTypes
     {
-        public const string ArmResource = "Azure.ResourceManager.CommonTypes.Resource";
+        public const string ArmResourceId = "Azure.ResourceManager.CommonTypes.Resource";
+        public const string ResourceUpdateModelId = "Azure.ResourceManager.Foundations.ResourceUpdateModel";
+
         public delegate MethodBodyStatement SerializationExpression(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
         public delegate ValueExpression DeserializationExpression(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format);
 
-        private static readonly IReadOnlyDictionary<string, CSharpType> _idToTypeMap = new Dictionary<string, CSharpType>()
+        private static readonly IReadOnlyDictionary<string, CSharpType> _idToInheritableSystemTypeMap = new Dictionary<string, CSharpType>()
+        {
+            ["Azure.ResourceManager.CommonTypes.ProxyResource"] = typeof(ResourceData),
+            ["Azure.ResourceManager.CommonTypes.ExtensionResource"] = typeof(ResourceData),
+            ["Azure.ResourceManager.CommonTypes.Resource"] = typeof(ResourceData),
+            ["Azure.ResourceManager.CommonTypes.TrackedResource"] = typeof(TrackedResourceData),
+        };
+
+        private static readonly IReadOnlyDictionary<string, CSharpType> _idToSystemTypeMap = new Dictionary<string, CSharpType>()
         {
             ["Azure.ResourceManager.CommonTypes.ExtendedLocation"] = typeof(ExtendedLocation),
             ["Azure.ResourceManager.CommonTypes.ExtendedLocationType"] = typeof(ExtendedLocationType),
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentity"] = typeof(ManagedServiceIdentity),
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentityType"] = typeof(ManagedServiceIdentityType),
             ["Azure.ResourceManager.CommonTypes.OperationStatusResult"] = typeof(OperationStatusResult),
-            ["Azure.ResourceManager.CommonTypes.ProxyResource"] = typeof(ResourceData),
-            ["Azure.ResourceManager.CommonTypes.Resource"] = typeof(ResourceData),
             ["Azure.ResourceManager.CommonTypes.SystemData"] = typeof(SystemData),
-            ["Azure.ResourceManager.CommonTypes.TrackedResource"] = typeof(TrackedResourceData),
             ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentity),
+            ["Azure.ResourceManager.Models.SubResource"] = typeof(SubResource),
         };
 
         private static readonly Dictionary<string, CSharpType> _idToPrimitiveTypeMap = new Dictionary<string, CSharpType>()
@@ -64,11 +72,13 @@ namespace Azure.Generator.Management.Primitives
             [typeof(ResourceType)] = DeserializeNewInstanceStringLikeType,
         };
 
-        private static readonly HashSet<CSharpType> _knownTypes = _idToTypeMap.Values.ToHashSet(new CSharpFullNameComparer());
+        private static readonly HashSet<CSharpType> _knownTypes = _idToInheritableSystemTypeMap.Values.Concat(_idToSystemTypeMap.Values).ToHashSet(new CSharpFullNameComparer());
 
         public static bool IsKnownManagementType(CSharpType type) => _knownTypes.Contains(type);
 
-        public static bool TryGetManagementType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToTypeMap.TryGetValue(id, out type);
+        public static bool TryGetInheritableSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToInheritableSystemTypeMap.TryGetValue(id, out type);
+
+        public static bool TryGetSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToSystemTypeMap.TryGetValue(id, out type);
 
         // The comparison could be CSharpType from Azure.ResourceManager, which is a framework type
         // and CSharpType from InheritableSystemObjectModelProvider, which is not a framework type, they should still be equal if namespace and name match

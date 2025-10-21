@@ -1,4 +1,4 @@
-# Sample file search with agent in Azure.AI.Agents.Persistent.
+# Sample file search with agent and streaming in Azure.AI.Agents.Persistent.
 
 In this example we will create the local file, upload it to the newly created `VectorStore`, which will be used in the file search. In this example we will stream the result.
 
@@ -183,7 +183,11 @@ PersistentThreadMessage messageResponse = await client.Messages.CreateMessageAsy
 Synchronous sample:
 ```C# Snippet:AgentsFilesSearchExampleStreaming_StreamResults_Sync
 // Create the stream and parse output
-CollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreaming(thread.Id, agent.Id, include: [RunAdditionalFieldList.FileSearchContents]);
+CreateRunStreamingOptions runOptions = new()
+{
+    Include = [RunAdditionalFieldList.FileSearchContents]
+};
+CollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreaming(thread.Id, agent.Id, options: runOptions);
 foreach (StreamingUpdate streamingUpdate in stream)
 {
     ParseStreamingUdate(streamingUpdate, fileIds);
@@ -193,7 +197,11 @@ foreach (StreamingUpdate streamingUpdate in stream)
 Asynchronous sample:
 ```C# Snippet:AgentsFilesSearchExampleStreaming_StreamResults
 // Create the stream and parse output.
-AsyncCollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, include: [RunAdditionalFieldList.FileSearchContents]);
+CreateRunStreamingOptions runOptions = new()
+{
+    Include = [RunAdditionalFieldList.FileSearchContents]
+};
+AsyncCollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: runOptions);
 await foreach (StreamingUpdate streamingUpdate in stream)
 {
     ParseStreamingUdate(streamingUpdate, fileIds);

@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.Elastic.Models
             if (options.Format != "W" && Optional.IsDefined(ElasticsearchServiceUri))
             {
                 writer.WritePropertyName("elasticsearchServiceUrl"u8);
-                writer.WriteStringValue(ElasticsearchServiceUri.AbsoluteUri);
+                WriteElasticsearchServiceUri(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(KibanaServiceUri))
             {
                 writer.WritePropertyName("kibanaServiceUrl"u8);
-                writer.WriteStringValue(KibanaServiceUri.AbsoluteUri);
+                WriteKibanaServiceUri(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(KibanaSsoUri))
             {
                 writer.WritePropertyName("kibanaSsoUrl"u8);
-                writer.WriteStringValue(KibanaSsoUri.AbsoluteUri);
+                WriteKibanaSsoUri(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -139,29 +139,17 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
                 if (property.NameEquals("elasticsearchServiceUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    elasticsearchServiceUrl = new Uri(property.Value.GetString());
+                    DeserializeElasticsearchServiceUri(property, ref elasticsearchServiceUrl);
                     continue;
                 }
                 if (property.NameEquals("kibanaServiceUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    kibanaServiceUrl = new Uri(property.Value.GetString());
+                    DeserializeKibanaServiceUri(property, ref kibanaServiceUrl);
                     continue;
                 }
                 if (property.NameEquals("kibanaSsoUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    kibanaSsoUrl = new Uri(property.Value.GetString());
+                    DeserializeKibanaSsoUri(property, ref kibanaSsoUrl);
                     continue;
                 }
                 if (options.Format != "W")

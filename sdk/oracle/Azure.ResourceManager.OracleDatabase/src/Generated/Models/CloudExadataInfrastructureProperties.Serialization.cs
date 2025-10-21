@@ -213,6 +213,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("computeModel"u8);
                 writer.WriteStringValue(ComputeModel.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ExascaleConfig))
+            {
+                writer.WritePropertyName("exascaleConfig"u8);
+                writer.WriteObjectValue(ExascaleConfig, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -285,6 +290,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string databaseServerType = default;
             string storageServerType = default;
             OracleDatabaseComputeModel? computeModel = default;
+            ExascaleConfigDetails exascaleConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -566,6 +572,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("exascaleConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    exascaleConfig = ExascaleConfigDetails.DeserializeExascaleConfigDetails(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -608,6 +623,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 databaseServerType,
                 storageServerType,
                 computeModel,
+                exascaleConfig,
                 serializedAdditionalRawData);
         }
 

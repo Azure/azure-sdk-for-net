@@ -77,16 +77,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The identifier of the web application firewall rule. </summary>
+        [WirePath("ruleId")]
         public int RuleId { get; set; }
         /// <summary> The string representation of the web application firewall rule identifier. </summary>
+        [WirePath("ruleIdString")]
         public string RuleIdString { get; set; }
         /// <summary> The string representation of the web application firewall rule state. </summary>
+        [WirePath("state")]
         public ApplicationGatewayWafRuleStateType? State { get; set; }
         /// <summary> The string representation of the web application firewall rule action. </summary>
+        [WirePath("action")]
         public ApplicationGatewayWafRuleActionType? Action { get; set; }
         /// <summary> The string representation of the web application firewall rule sensitivity. </summary>
+        [WirePath("sensitivity")]
         public ApplicationGatewayWafRuleSensitivityType? Sensitivity { get; set; }
         /// <summary> The description of the web application firewall rule. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
     }
 }

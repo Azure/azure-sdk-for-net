@@ -20,12 +20,6 @@ namespace Azure.Maps.TimeZones
         public static bool operator !=(Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation left, Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AzureMapsTimeZonesContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureMapsTimeZonesContext() { }
-        public static Azure.Maps.TimeZones.AzureMapsTimeZonesContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class CountryRecord
     {
         internal CountryRecord() { }

@@ -66,10 +66,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Request Header Actions in the Action Set. </summary>
+        [WirePath("requestHeaderConfigurations")]
         public IList<ApplicationGatewayHeaderConfiguration> RequestHeaderConfigurations { get; }
         /// <summary> Response Header Actions in the Action Set. </summary>
+        [WirePath("responseHeaderConfigurations")]
         public IList<ApplicationGatewayHeaderConfiguration> ResponseHeaderConfigurations { get; }
         /// <summary> Url Configuration Action in the Action Set. </summary>
+        [WirePath("urlConfiguration")]
         public ApplicationGatewayUrlConfiguration UrlConfiguration { get; set; }
     }
 }

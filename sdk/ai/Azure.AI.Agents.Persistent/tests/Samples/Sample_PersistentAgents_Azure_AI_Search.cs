@@ -48,7 +48,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
            model: modelDeploymentName,
            name: "my-agent",
-           instructions: "You are a helpful agent.",
+           instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
            tools: [ new AzureAISearchToolDefinition() ],
            toolResources: toolResource);
         #endregion
@@ -158,7 +158,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         PersistentAgent agent = client.Administration.CreateAgent(
            model: modelDeploymentName,
            name: "my-agent",
-           instructions: "You are a helpful agent.",
+           instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
            tools: [new AzureAISearchToolDefinition()],
            toolResources: toolResource);
         #endregion

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -168,6 +169,11 @@ namespace Azure.ResourceManager.NetApp
             {
                 writer.WritePropertyName("dataProtection"u8);
                 writer.WriteObjectValue(DataProtection, options);
+            }
+            if (Optional.IsDefined(AcceptGrowCapacityPoolForShortTermCloneSplit))
+            {
+                writer.WritePropertyName("acceptGrowCapacityPoolForShortTermCloneSplit"u8);
+                writer.WriteStringValue(AcceptGrowCapacityPoolForShortTermCloneSplit.Value.ToString());
             }
             if (Optional.IsDefined(IsSnapshotDirectoryVisible))
             {
@@ -406,6 +412,18 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("originatingResourceId");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(InheritedSizeInBytes))
+            {
+                if (InheritedSizeInBytes != null)
+                {
+                    writer.WritePropertyName("inheritedSizeInBytes"u8);
+                    writer.WriteNumberValue(InheritedSizeInBytes.Value);
+                }
+                else
+                {
+                    writer.WriteNull("inheritedSizeInBytes");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -457,6 +475,7 @@ namespace Azure.ResourceManager.NetApp
             IReadOnlyList<NetAppVolumeMountTarget> mountTargets = default;
             string volumeType = default;
             NetAppVolumeDataProtection dataProtection = default;
+            AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default;
             bool? snapshotDirectoryVisible = default;
             bool? kerberosEnabled = default;
             NetAppVolumeSecurityStyle? securityStyle = default;
@@ -493,6 +512,7 @@ namespace Azure.ResourceManager.NetApp
             string provisionedAvailabilityZone = default;
             bool? isLargeVolume = default;
             ResourceIdentifier originatingResourceId = default;
+            long? inheritedSizeInBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -569,7 +589,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -738,6 +758,15 @@ namespace Azure.ResourceManager.NetApp
                                 continue;
                             }
                             dataProtection = NetAppVolumeDataProtection.DeserializeNetAppVolumeDataProtection(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("acceptGrowCapacityPoolForShortTermCloneSplit"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            acceptGrowCapacityPoolForShortTermCloneSplit = new AcceptGrowCapacityPoolForShortTermCloneSplit(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("snapshotDirectoryVisible"u8))
@@ -1075,6 +1104,16 @@ namespace Azure.ResourceManager.NetApp
                             originatingResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("inheritedSizeInBytes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                inheritedSizeInBytes = null;
+                                continue;
+                            }
+                            inheritedSizeInBytes = property0.Value.GetInt64();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -1112,6 +1151,7 @@ namespace Azure.ResourceManager.NetApp
                 mountTargets ?? new ChangeTrackingList<NetAppVolumeMountTarget>(),
                 volumeType,
                 dataProtection,
+                acceptGrowCapacityPoolForShortTermCloneSplit,
                 isRestoring,
                 snapshotDirectoryVisible,
                 kerberosEnabled,
@@ -1149,6 +1189,7 @@ namespace Azure.ResourceManager.NetApp
                 provisionedAvailabilityZone,
                 isLargeVolume,
                 originatingResourceId,
+                inheritedSizeInBytes,
                 serializedAdditionalRawData);
         }
 

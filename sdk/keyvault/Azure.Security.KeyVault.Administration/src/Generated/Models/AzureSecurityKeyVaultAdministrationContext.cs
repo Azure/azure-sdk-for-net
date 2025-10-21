@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -13,6 +14,28 @@ namespace Azure.Security.KeyVault.Administration
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(FullBackupDetailsInternal))]
+    [ModelReaderWriterBuildable(typeof(GetSettingsResult))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultPermission))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultRoleAssignment))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultRoleAssignmentProperties))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultRoleDefinition))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultServiceError))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultSetting))]
+    [ModelReaderWriterBuildable(typeof(PreBackupOperationParameters))]
+    [ModelReaderWriterBuildable(typeof(PreRestoreOperationParameters))]
+    [ModelReaderWriterBuildable(typeof(RestoreDetailsInternal))]
+    [ModelReaderWriterBuildable(typeof(RestoreOperationParameters))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentCreateParameters))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentListResult))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentProperties))]
+    [ModelReaderWriterBuildable(typeof(RoleDefinitionCreateParameters))]
+    [ModelReaderWriterBuildable(typeof(RoleDefinitionListResult))]
+    [ModelReaderWriterBuildable(typeof(RoleDefinitionProperties))]
+    [ModelReaderWriterBuildable(typeof(SASTokenParameter))]
+    [ModelReaderWriterBuildable(typeof(SelectiveKeyRestoreDetailsInternal))]
+    [ModelReaderWriterBuildable(typeof(SelectiveKeyRestoreOperationParameters))]
+    [ModelReaderWriterBuildable(typeof(UpdateSettingRequest))]
     public partial class AzureSecurityKeyVaultAdministrationContext : ModelReaderWriterContext
     {
     }

@@ -37,25 +37,26 @@ public class ResourcesSpecification : Specification
         CustomizePropertyIsoDuration<JitSchedulingPolicy>("Duration");
         CustomizePropertyIsoDuration<ArmApplicationJitAccessPolicy>("MaximumJitAccessDuration");
         CustomizePropertyIsoDuration<ArmDeploymentPropertiesExtended>("Duration");
+        CustomizePropertyIsoDuration<DeploymentStackResource>("Duration");
         // Not generated today:
-        // CustomizePropertyIsoDuration<AzureCliScript>("RetentionInterval");
-        // CustomizePropertyIsoDuration<AzureCliScript>("Timeout");
-        // CustomizePropertyIsoDuration<AzurePowerShellScript>("RetentionInterval");
-        // CustomizePropertyIsoDuration<AzurePowerShellScript>("Timeout");
         // CustomizePropertyIsoDuration<ArmDeploymentOperationProperties>("Duration");
 
         CustomizeResource<AzureCliScript>(r =>
         {
             r.BaseType = GetModel<ArmDeploymentScriptResource>() as TypeModel;
-            r.DiscriminatorName = "Kind";
+            r.DiscriminatorName = "kind";
             r.DiscriminatorValue = "AzureCLI";
         });
         CustomizeResource<AzurePowerShellScript>(r =>
         {
             r.BaseType = GetModel<ArmDeploymentScriptResource>() as TypeModel;
-            r.DiscriminatorName = "Kind";
+            r.DiscriminatorName = "kind";
             r.DiscriminatorValue = "AzurePowerShell";
         });
+        CustomizePropertyIsoDuration<AzureCliScript>("RetentionInterval");
+        CustomizePropertyIsoDuration<AzureCliScript>("Timeout");
+        CustomizePropertyIsoDuration<AzurePowerShellScript>("RetentionInterval");
+        CustomizePropertyIsoDuration<AzurePowerShellScript>("Timeout");
         // remove the properties that inherited from the base type ArmDeploymentScript
         RemoveProperties<AzureCliScript>("Id", "Name", "Location", "Identity", "SystemData", "Tags");
         RemoveProperties<AzurePowerShellScript>("Id", "Name", "Location", "Identity", "SystemData", "Tags");
@@ -73,14 +74,6 @@ public class ResourcesSpecification : Specification
         // Naming requirements
         AddNameRequirements<ArmDeploymentResource>(min: 1, max: 64, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
         AddNameRequirements<TemplateSpecResource>(min: 1, max: 90, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
-    }
-
-    private void RemoveProperties<T>(params string[] propertyNames)
-    {
-        foreach (string propertyName in propertyNames)
-        {
-            RemoveProperty<T>(propertyName);
-        }
     }
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()

@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
     public class SearchIndexerClientTests : SearchTestBase
     {
         public SearchIndexerClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -629,7 +629,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_05_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
         public async Task RoundtripAllSkills()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -641,7 +641,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndexerSkill CreateSkill(Type t, string[] inputNames, string[] outputNames)
             {
                 var inputs = inputNames.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
-                var outputs = outputNames.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+                var outputs = outputNames.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
 
                 return t switch
                 {
@@ -663,7 +663,7 @@ namespace Azure.Search.Documents.Tests
             EntityRecognitionSkill CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion skillVersion)
             {
                 var inputs = new[] { "languageCode", "text" }.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
-                var outputs = new[] { "persons" }.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+                var outputs = new[] { "persons" }.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
 
                 if (skillVersion == EntityRecognitionSkill.SkillVersion.V1)
                 {
@@ -684,13 +684,13 @@ namespace Azure.Search.Documents.Tests
                 if (skillVersion == SentimentSkill.SkillVersion.V1)
                 {
                     var outputs = new[] { "score" }.
-                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
                     return new SentimentSkill(inputs, outputs);
                 }
                 if (skillVersion == SentimentSkill.SkillVersion.V3)
                 {
                     var outputs = new[] { "sentiment", "confidenceScores", "sentences" }.
-                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName())).ToList();
+                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
                     return new SentimentSkill(inputs, outputs, skillVersion);
                 }
 

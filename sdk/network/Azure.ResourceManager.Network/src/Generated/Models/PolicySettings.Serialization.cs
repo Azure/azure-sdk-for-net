@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -273,6 +274,212 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Mode))
+                {
+                    builder.Append("  mode: ");
+                    builder.AppendLine($"'{Mode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestBodyCheck), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestBodyCheck: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestBodyCheck))
+                {
+                    builder.Append("  requestBodyCheck: ");
+                    var boolValue = RequestBodyCheck.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestBodyInspectLimitInKB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestBodyInspectLimitInKB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestBodyInspectLimitInKB))
+                {
+                    builder.Append("  requestBodyInspectLimitInKB: ");
+                    builder.AppendLine($"{RequestBodyInspectLimitInKB.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestBodyEnforcement), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestBodyEnforcement: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestBodyEnforcement))
+                {
+                    builder.Append("  requestBodyEnforcement: ");
+                    var boolValue = RequestBodyEnforcement.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxRequestBodySizeInKb), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxRequestBodySizeInKb: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxRequestBodySizeInKb))
+                {
+                    builder.Append("  maxRequestBodySizeInKb: ");
+                    builder.AppendLine($"{MaxRequestBodySizeInKb.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileUploadEnforcement), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fileUploadEnforcement: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FileUploadEnforcement))
+                {
+                    builder.Append("  fileUploadEnforcement: ");
+                    var boolValue = FileUploadEnforcement.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileUploadLimitInMb), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fileUploadLimitInMb: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FileUploadLimitInMb))
+                {
+                    builder.Append("  fileUploadLimitInMb: ");
+                    builder.AppendLine($"{FileUploadLimitInMb.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomBlockResponseStatusCode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customBlockResponseStatusCode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomBlockResponseStatusCode))
+                {
+                    builder.Append("  customBlockResponseStatusCode: ");
+                    builder.AppendLine($"{CustomBlockResponseStatusCode.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomBlockResponseBody), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customBlockResponseBody: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomBlockResponseBody))
+                {
+                    builder.Append("  customBlockResponseBody: ");
+                    if (CustomBlockResponseBody.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomBlockResponseBody}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomBlockResponseBody}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogScrubbing), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logScrubbing: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogScrubbing))
+                {
+                    builder.Append("  logScrubbing: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LogScrubbing, options, 2, false, "  logScrubbing: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JsChallengeCookieExpirationInMins), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jsChallengeCookieExpirationInMins: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JsChallengeCookieExpirationInMins))
+                {
+                    builder.Append("  jsChallengeCookieExpirationInMins: ");
+                    builder.AppendLine($"{JsChallengeCookieExpirationInMins.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PolicySettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -281,6 +488,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PolicySettings)} does not support writing '{options.Format}' format.");
             }

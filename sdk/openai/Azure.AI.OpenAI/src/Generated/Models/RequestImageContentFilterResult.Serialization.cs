@@ -3,20 +3,22 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary></summary>
+    /// <summary> A content filter result for an image generation operation's input request content. </summary>
     public partial class RequestImageContentFilterResult : IJsonModel<RequestImageContentFilterResult>
     {
+        /// <summary> Initializes a new instance of <see cref="RequestImageContentFilterResult"/> for deserialization. </summary>
         internal RequestImageContentFilterResult()
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RequestImageContentFilterResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -44,6 +46,11 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("custom_blocklists"u8);
                 writer.WriteObjectValue(CustomBlocklists, options);
             }
+            if (Optional.IsDefined(CustomTopics) && _additionalBinaryDataProperties?.ContainsKey("custom_topics") != true)
+            {
+                writer.WritePropertyName("custom_topics"u8);
+                writer.WriteObjectValue(CustomTopics, options);
+            }
             if (_additionalBinaryDataProperties?.ContainsKey("jailbreak") != true)
             {
                 writer.WritePropertyName("jailbreak"u8);
@@ -51,6 +58,8 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RequestImageContentFilterResult IJsonModel<RequestImageContentFilterResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RequestImageContentFilterResult)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -66,6 +75,8 @@ namespace Azure.AI.OpenAI
             return DeserializeRequestImageContentFilterResult(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static RequestImageContentFilterResult DeserializeRequestImageContentFilterResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -79,6 +90,7 @@ namespace Azure.AI.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ContentFilterDetectionResult profanity = default;
             ContentFilterBlocklistResult customBlocklists = default;
+            AzureContentFilterCustomTopicResult customTopics = default;
             ContentFilterDetectionResult jailbreak = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,6 +148,15 @@ namespace Azure.AI.OpenAI
                     customBlocklists = ContentFilterBlocklistResult.DeserializeContentFilterBlocklistResult(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("custom_topics"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customTopics = AzureContentFilterCustomTopicResult.DeserializeAzureContentFilterCustomTopicResult(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("jailbreak"u8))
                 {
                     jailbreak = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(prop.Value, options);
@@ -154,9 +175,11 @@ namespace Azure.AI.OpenAI
                 additionalBinaryDataProperties,
                 profanity,
                 customBlocklists,
+                customTopics,
                 jailbreak);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RequestImageContentFilterResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -166,12 +189,14 @@ namespace Azure.AI.OpenAI
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RequestImageContentFilterResult)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RequestImageContentFilterResult IPersistableModel<RequestImageContentFilterResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (RequestImageContentFilterResult)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -191,24 +216,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RequestImageContentFilterResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="requestImageContentFilterResult"> The <see cref="RequestImageContentFilterResult"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(RequestImageContentFilterResult requestImageContentFilterResult)
-        {
-            if (requestImageContentFilterResult == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(requestImageContentFilterResult, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="RequestImageContentFilterResult"/> from. </param>
-        public static explicit operator RequestImageContentFilterResult(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeRequestImageContentFilterResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateTheEncryptionProtectorToKeyVault()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/EncryptionProtectorCreateOrUpdateKeyVault.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorCreateOrUpdateKeyVault.json
             // this example is just showing the usage of "EncryptionProtectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,9 +59,50 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_UpdateTheEncryptionProtectorToKeyVaultWithVersionlessKey()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorCreateOrUpdateKeyVaultWithVersionlessKey.json
+            // this example is just showing the usage of "EncryptionProtectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlServerResource created on azure
+            // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "sqlcrudtest-7398";
+            string serverName = "sqlcrudtest-4645";
+            ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            SqlServerResource sqlServer = client.GetSqlServerResource(sqlServerResourceId);
+
+            // get the collection of this EncryptionProtectorResource
+            EncryptionProtectorCollection collection = sqlServer.GetEncryptionProtectors();
+
+            // invoke the operation
+            EncryptionProtectorName encryptionProtectorName = EncryptionProtectorName.Current;
+            EncryptionProtectorData data = new EncryptionProtectorData
+            {
+                ServerKeyName = "someVault_someKey",
+                ServerKeyType = SqlServerKeyType.AzureKeyVault,
+                IsAutoRotationEnabled = false,
+            };
+            ArmOperation<EncryptionProtectorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, encryptionProtectorName, data);
+            EncryptionProtectorResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            EncryptionProtectorData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateTheEncryptionProtectorToServiceManaged()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/EncryptionProtectorCreateOrUpdateServiceManaged.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorCreateOrUpdateServiceManaged.json
             // this example is just showing the usage of "EncryptionProtectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +142,41 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheEncryptionProtector()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/EncryptionProtectorGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorGet.json
+            // this example is just showing the usage of "EncryptionProtectors_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlServerResource created on azure
+            // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "sqlcrudtest-7398";
+            string serverName = "sqlcrudtest-4645";
+            ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            SqlServerResource sqlServer = client.GetSqlServerResource(sqlServerResourceId);
+
+            // get the collection of this EncryptionProtectorResource
+            EncryptionProtectorCollection collection = sqlServer.GetEncryptionProtectors();
+
+            // invoke the operation
+            EncryptionProtectorName encryptionProtectorName = EncryptionProtectorName.Current;
+            EncryptionProtectorResource result = await collection.GetAsync(encryptionProtectorName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            EncryptionProtectorData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetTheEncryptionProtectorWithVersionlessKey()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorGetWithVersionlessKey.json
             // this example is just showing the usage of "EncryptionProtectors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,7 +210,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListEncryptionProtectorsByServer()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/EncryptionProtectorList.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorList.json
             // this example is just showing the usage of "EncryptionProtectors_ListByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -171,7 +246,37 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetTheEncryptionProtector()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/EncryptionProtectorGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorGet.json
+            // this example is just showing the usage of "EncryptionProtectors_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlServerResource created on azure
+            // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "sqlcrudtest-7398";
+            string serverName = "sqlcrudtest-4645";
+            ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            SqlServerResource sqlServer = client.GetSqlServerResource(sqlServerResourceId);
+
+            // get the collection of this EncryptionProtectorResource
+            EncryptionProtectorCollection collection = sqlServer.GetEncryptionProtectors();
+
+            // invoke the operation
+            EncryptionProtectorName encryptionProtectorName = EncryptionProtectorName.Current;
+            bool result = await collection.ExistsAsync(encryptionProtectorName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetTheEncryptionProtectorWithVersionlessKey()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorGetWithVersionlessKey.json
             // this example is just showing the usage of "EncryptionProtectors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -201,7 +306,49 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetTheEncryptionProtector()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/EncryptionProtectorGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorGet.json
+            // this example is just showing the usage of "EncryptionProtectors_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlServerResource created on azure
+            // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "sqlcrudtest-7398";
+            string serverName = "sqlcrudtest-4645";
+            ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            SqlServerResource sqlServer = client.GetSqlServerResource(sqlServerResourceId);
+
+            // get the collection of this EncryptionProtectorResource
+            EncryptionProtectorCollection collection = sqlServer.GetEncryptionProtectors();
+
+            // invoke the operation
+            EncryptionProtectorName encryptionProtectorName = EncryptionProtectorName.Current;
+            NullableResponse<EncryptionProtectorResource> response = await collection.GetIfExistsAsync(encryptionProtectorName);
+            EncryptionProtectorResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EncryptionProtectorData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetTheEncryptionProtectorWithVersionlessKey()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorGetWithVersionlessKey.json
             // this example is just showing the usage of "EncryptionProtectors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

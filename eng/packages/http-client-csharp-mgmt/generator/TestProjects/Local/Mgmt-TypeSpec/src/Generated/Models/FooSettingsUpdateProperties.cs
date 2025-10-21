@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The updatable properties of the FooSettings. </summary>
-    public partial class FooSettingsUpdateProperties
+    internal partial class FooSettingsUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -31,6 +32,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets or sets the AccessControlEnabled. </summary>
+        [WirePath("accessControlEnabled")]
         public bool? AccessControlEnabled { get; set; }
     }
 }

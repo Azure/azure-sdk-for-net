@@ -6,13 +6,28 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.ArizeAIObservabilityEval.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalMarketplaceDetails))]
+    [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalOfferDetails))]
+    [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalOfferPartnerProperties))]
+    [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalOrganizationData))]
+    [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalOrganizationPatch))]
+    [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalOrganizationProperties))]
+    [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalOrganizationResource))]
+    [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalSingleSignOnPropertiesV2))]
+    [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalUserDetails))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerArizeAIObservabilityEvalContext : ModelReaderWriterContext
     {
     }

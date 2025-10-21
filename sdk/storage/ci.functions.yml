@@ -10,7 +10,7 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/storage/ci.webjobs.yml
+    - sdk/storage/ci.functions.yml
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/
@@ -31,8 +31,12 @@ extends:
     - name: Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
       safeName: MicrosoftAzureWebJobsExtensionsStorageBlobs
       skipSmokeTests: true
+      triggeringPaths:
+      - /sdk/storage/Azure.Storage.Blobs/
     - name: Microsoft.Azure.WebJobs.Extensions.Storage.Queues
       safeName: MicrosoftAzureWebJobsExtensionsStorageQueues
       skipSmokeTests: true
+      triggeringPaths:
+      - /sdk/storage/Azure.Storage.Queues/
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

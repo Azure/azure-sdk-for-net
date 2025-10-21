@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -49,6 +50,11 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("administratorCredentials"u8);
             writer.WriteObjectValue(AdministratorCredentials, options);
+            if (options.Format != "W" && Optional.IsDefined(CaCertificate))
+            {
+                writer.WritePropertyName("caCertificate"u8);
+                writer.WriteObjectValue(CaCertificate, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
@@ -159,6 +165,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceType type = default;
             SystemData systemData = default;
             AdministrativeCredentials administratorCredentials = default;
+            CertificateInfo caCertificate = default;
             long? capacity = default;
             long? capacityUsed = default;
             ResourceIdentifier clusterId = default;
@@ -234,7 +241,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -249,6 +256,15 @@ namespace Azure.ResourceManager.NetworkCloud
                         if (property0.NameEquals("administratorCredentials"u8))
                         {
                             administratorCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("caCertificate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            caCertificate = CertificateInfo.DeserializeCertificateInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("capacity"u8))
@@ -396,6 +412,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 etag,
                 extendedLocation,
                 administratorCredentials,
+                caCertificate,
                 capacity,
                 capacityUsed,
                 clusterId,

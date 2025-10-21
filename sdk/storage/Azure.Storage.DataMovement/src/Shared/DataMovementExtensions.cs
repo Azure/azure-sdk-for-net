@@ -28,16 +28,8 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource)
         {
-            // If saved path equals the cotnainer Uri, its a single item trasfer.
-            // Set the resource name to the full Uri.
-            string childSourcePath = header.SourcePath;
-            string childSourceName = header.SourcePath == sourceResource.Uri.AbsoluteUri.ToString() ?
-                childSourcePath :
-                childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
-            string childDestinationPath = header.DestinationPath;
-            string childDestinationName = header.DestinationPath == destinationResource.Uri.AbsoluteUri.ToString() ?
-                childDestinationPath :
-                childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
+            (string childSourceName, string childDestinationName) = GetChildResourceNames(header, sourceResource, destinationResource);
+
             // Override header values if options were specified by user.
             long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
             long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
@@ -67,16 +59,8 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource)
         {
-            // If saved path equals the cotnainer Uri, its a single item trasfer, so the resource name
-            // does not matter. Just set it to the path.
-            string childSourcePath = header.SourcePath;
-            string childSourceName = header.SourcePath == sourceResource.Uri.AbsoluteUri.ToString() ?
-                childSourcePath :
-                childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
-            string childDestinationPath = header.DestinationPath;
-            string childDestinationName = header.DestinationPath == destinationResource.Uri.AbsoluteUri.ToString() ?
-                childDestinationPath :
-                childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
+            (string childSourceName, string childDestinationName) = GetChildResourceNames(header, sourceResource, destinationResource);
+
             // Override header values if options were specified by user.
             long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
             long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
@@ -106,16 +90,8 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource)
         {
-            // If saved path equals the cotnainer Uri, its a single item trasfer, so the resource name
-            // does not matter. Just set it to the path.
-            string childSourcePath = header.SourcePath;
-            string childSourceName = header.SourcePath == sourceResource.Uri.AbsoluteUri.ToString() ?
-                childSourcePath :
-                childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
-            string childDestinationPath = header.DestinationPath;
-            string childDestinationName = header.DestinationPath == destinationResource.Uri.AbsoluteUri.ToString() ?
-                childDestinationPath :
-                childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
+            (string childSourceName, string childDestinationName) = GetChildResourceNames(header, sourceResource, destinationResource);
+
             // Override header values if options were specified by user.
             long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
             long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
@@ -196,6 +172,26 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.MismatchResumeTransferArguments(nameof(header.DestinationPath), header.DestinationPath, passedDestinationPath);
             }
+        }
+
+        private static (string SourceName, string DestinationName) GetChildResourceNames(
+            JobPartPlanHeader header,
+            StorageResourceContainer sourceResource,
+            StorageResourceContainer destinationResource)
+        {
+            // If saved path equals the container Uri, it's a single item transfer, so the resource name
+            // does not matter. Just set it to the path.
+            string childSourceName = header.SourcePath == sourceResource.Uri.AbsoluteUri.ToString() ?
+                header.SourcePath :
+                header.SourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
+            // Decode the resource name as it was pulled from encoded Uri and will be re-encoded.
+            childSourceName = Uri.UnescapeDataString(childSourceName);
+
+            string childDestinationName = header.DestinationPath == destinationResource.Uri.AbsoluteUri.ToString() ?
+                header.DestinationPath :
+                header.DestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
+            childDestinationName = Uri.UnescapeDataString(childDestinationName);
+            return (childSourceName, childDestinationName);
         }
     }
 }

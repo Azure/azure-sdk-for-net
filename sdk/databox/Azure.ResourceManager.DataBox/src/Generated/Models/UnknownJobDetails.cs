@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Unknown version of JobDetails. </summary>
+    /// <summary> Unknown version of DataBoxBasicJobDetails. </summary>
     internal partial class UnknownJobDetails : DataBoxBasicJobDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownJobDetails"/>. </summary>

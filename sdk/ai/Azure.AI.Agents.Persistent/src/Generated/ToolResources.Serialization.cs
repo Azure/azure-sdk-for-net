@@ -49,6 +49,16 @@ namespace Azure.AI.Agents.Persistent
                 writer.WritePropertyName("azure_ai_search"u8);
                 writer.WriteObjectValue(AzureAISearch, options);
             }
+            if (Optional.IsCollectionDefined(Mcp))
+            {
+                writer.WritePropertyName("mcp"u8);
+                writer.WriteStartArray();
+                foreach (var item in Mcp)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,6 +99,7 @@ namespace Azure.AI.Agents.Persistent
             CodeInterpreterToolResource codeInterpreter = default;
             FileSearchToolResource fileSearch = default;
             AzureAISearchToolResource azureAiSearch = default;
+            IList<MCPToolResource> mcp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,13 +131,27 @@ namespace Azure.AI.Agents.Persistent
                     azureAiSearch = AzureAISearchToolResource.DeserializeAzureAISearchToolResource(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("mcp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MCPToolResource> array = new List<MCPToolResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MCPToolResource.DeserializeMCPToolResource(item, options));
+                    }
+                    mcp = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ToolResources(codeInterpreter, fileSearch, azureAiSearch, serializedAdditionalRawData);
+            return new ToolResources(codeInterpreter, fileSearch, azureAiSearch, mcp ?? new ChangeTrackingList<MCPToolResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ToolResources>.Write(ModelReaderWriterOptions options)

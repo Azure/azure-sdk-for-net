@@ -6,13 +6,28 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.LambdaTestHyperExecute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(LambdaTestHyperExecuteMarketplaceDetails))]
+    [ModelReaderWriterBuildable(typeof(LambdaTestHyperExecuteOfferDetails))]
+    [ModelReaderWriterBuildable(typeof(LambdaTestHyperExecuteOfferPartnerProperties))]
+    [ModelReaderWriterBuildable(typeof(LambdaTestHyperExecuteOrganizationData))]
+    [ModelReaderWriterBuildable(typeof(LambdaTestHyperExecuteOrganizationPatch))]
+    [ModelReaderWriterBuildable(typeof(LambdaTestHyperExecuteOrganizationProperties))]
+    [ModelReaderWriterBuildable(typeof(LambdaTestHyperExecuteOrganizationResource))]
+    [ModelReaderWriterBuildable(typeof(LambdaTestHyperExecuteSingleSignOnPropertiesV2))]
+    [ModelReaderWriterBuildable(typeof(LambdaTestHyperExecuteUserDetails))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerLambdaTestHyperExecuteContext : ModelReaderWriterContext
     {
     }

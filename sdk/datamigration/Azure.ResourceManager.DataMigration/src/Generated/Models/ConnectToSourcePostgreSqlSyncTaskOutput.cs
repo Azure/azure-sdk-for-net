@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         internal ConnectToSourcePostgreSqlSyncTaskOutput()
         {
             Databases = new ChangeTrackingList<string>();
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectToSourcePostgreSqlSyncTaskOutput"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceServerBrandVersion"> Source server brand version. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToSourcePostgreSqlSyncTaskOutput(string id, string sourceServerVersion, IReadOnlyList<string> databases, string sourceServerBrandVersion, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToSourcePostgreSqlSyncTaskOutput(string id, string sourceServerVersion, IReadOnlyList<string> databases, string sourceServerBrandVersion, IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SourceServerVersion = sourceServerVersion;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Source server brand version. </summary>
         public string SourceServerBrandVersion { get; }
         /// <summary> Validation errors associated with the task. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

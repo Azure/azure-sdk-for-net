@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Virtual Appliance Vendor. </summary>
+        [WirePath("vendor")]
         public string Vendor { get; set; }
         /// <summary> Virtual Appliance Scale Unit. </summary>
+        [WirePath("bundledScaleUnit")]
         public string BundledScaleUnit { get; set; }
         /// <summary> Virtual Appliance Version. </summary>
+        [WirePath("marketPlaceVersion")]
         public string MarketPlaceVersion { get; set; }
     }
 }

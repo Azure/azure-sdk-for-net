@@ -195,9 +195,7 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags,
                 location,
-                instanceId,
-                sku,
-                properties: VirtualMachineScaleSetVmProperties(
+                VirtualMachineScaleSetVmProperties(
                     latestModelApplied,
                     vmId,
                     instanceView,
@@ -217,9 +215,31 @@ namespace Azure.ResourceManager.Compute.Models
                     protectionPolicy,
                     userData,
                     timeCreated),
+                instanceId,
+                sku,
                 plan,
                 resources?.ToList(),
                 zones?.ToList(),
+                identity,
+                etag);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, VirtualMachineScaleSetVmProperties properties, ComputePlan plan = null, IEnumerable<VirtualMachineExtensionData> resources = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, string etag = null)
+        {
+            return VirtualMachineScaleSetVmData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                instanceId,
+                sku,
+                plan,
+                resources,
+                zones,
                 identity,
                 etag);
         }

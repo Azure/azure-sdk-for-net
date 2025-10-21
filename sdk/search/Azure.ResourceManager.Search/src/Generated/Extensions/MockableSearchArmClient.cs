@@ -71,15 +71,15 @@ namespace Azure.ResourceManager.Search.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
-        public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual SearchServiceNetworkSecurityPerimeterConfigurationResource GetSearchServiceNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
-            return new NetworkSecurityPerimeterConfigurationResource(Client, id);
+            SearchServiceNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new SearchServiceNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
     }
 }

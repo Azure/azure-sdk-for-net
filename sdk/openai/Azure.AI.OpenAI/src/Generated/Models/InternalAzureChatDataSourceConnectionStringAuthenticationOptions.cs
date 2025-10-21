@@ -10,19 +10,26 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceConnectionStringAuthenticationOptions : DataSourceAuthentication
     {
-        public InternalAzureChatDataSourceConnectionStringAuthenticationOptions(string connectionString) : base("connection_string")
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceConnectionStringAuthenticationOptions"/>. </summary>
+        /// <param name="connectionString"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
+        public InternalAzureChatDataSourceConnectionStringAuthenticationOptions(string connectionString) : base(InternalAzureChatDataSourceAuthenticationOptionsType.ConnectionString)
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
 
             ConnectionString = connectionString;
         }
 
-        internal InternalAzureChatDataSourceConnectionStringAuthenticationOptions(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionString) : base(@type, additionalBinaryDataProperties)
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceConnectionStringAuthenticationOptions"/>. </summary>
+        /// <param name="kind"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="connectionString"></param>
+        internal InternalAzureChatDataSourceConnectionStringAuthenticationOptions(InternalAzureChatDataSourceAuthenticationOptionsType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionString) : base(kind, additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
         }
 
-        /// <summary> Gets the ConnectionString. </summary>
+        /// <summary> Gets or sets the ConnectionString. </summary>
         public string ConnectionString { get; set; }
     }
 }

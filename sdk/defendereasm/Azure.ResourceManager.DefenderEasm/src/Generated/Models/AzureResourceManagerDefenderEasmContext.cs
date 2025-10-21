@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.DefenderEasm.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DefenderEasm
 {
@@ -13,6 +15,17 @@ namespace Azure.ResourceManager.DefenderEasm
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(EasmLabelData))]
+    [ModelReaderWriterBuildable(typeof(EasmLabelListResult))]
+    [ModelReaderWriterBuildable(typeof(EasmLabelPatch))]
+    [ModelReaderWriterBuildable(typeof(EasmLabelResource))]
+    [ModelReaderWriterBuildable(typeof(EasmTask))]
+    [ModelReaderWriterBuildable(typeof(EasmWorkspaceData))]
+    [ModelReaderWriterBuildable(typeof(EasmWorkspaceListResult))]
+    [ModelReaderWriterBuildable(typeof(EasmWorkspacePatch))]
+    [ModelReaderWriterBuildable(typeof(EasmWorkspaceResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDefenderEasmContext : ModelReaderWriterContext
     {
     }

@@ -46,24 +46,28 @@ namespace Azure.Security.KeyVault.Administration
         public override async IAsyncEnumerable<Page<KeyVaultRoleDefinition>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            do
+            while (true)
             {
-                Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                RoleDefinitionListResult responseWithType = (RoleDefinitionListResult)response;
-                nextPage = responseWithType.NextLink != null ? new Uri(responseWithType.NextLink) : null;
-                yield return Page<KeyVaultRoleDefinition>.FromValues((IReadOnlyList<KeyVaultRoleDefinition>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                RoleDefinitionListResult result = (RoleDefinitionListResult)response;
+                yield return Page<KeyVaultRoleDefinition>.FromValues((IReadOnlyList<KeyVaultRoleDefinition>)result.Value, nextPage?.AbsoluteUri, response);
+                string nextPageString = result.NextLink;
+                if (nextPageString == null)
+                {
+                    yield break;
+                }
+                nextPage = new Uri(nextPageString);
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetRoleDefinitionsRequest(nextLink, _scope, _filter, _context) : _client.CreateGetRoleDefinitionsRequest(_scope, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KeyVaultAccessControlClient.GetRoleDefinitions");

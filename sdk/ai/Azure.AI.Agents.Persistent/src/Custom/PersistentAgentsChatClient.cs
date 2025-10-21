@@ -35,8 +35,8 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>The thread ID to use if none is supplied in <see cref="ChatOptions.ConversationId"/>.</summary>
         private readonly string? _defaultThreadId;
 
-        /// <summary>List of tools associated with the agent.</summary>
-        private IReadOnlyList<ToolDefinition>? _agentTools;
+        /// <summary>Lazily-retrieved agent instance. Used for its properties.</summary>
+        private PersistentAgent? _agent;
 
         /// <summary>Initializes a new instance of the <see cref="PersistentAgentsChatClient"/> class for the specified <see cref="PersistentAgentsClient"/>.</summary>
         public PersistentAgentsChatClient(PersistentAgentsClient client, string agentId, string? defaultThreadId = null)
@@ -100,7 +100,8 @@ namespace Azure.AI.Agents.Persistent
 
             // Submit the request.
             IAsyncEnumerable<StreamingUpdate> updates;
-            if (threadRun is not null &&
+            if (toolResults is not null &&
+                threadRun is not null &&
                 ConvertFunctionResultsToToolOutput(toolResults, out List<ToolOutput>? toolOutputs) is { } toolRunId &&
                 toolRunId == threadRun.Id)
             {
@@ -126,24 +127,32 @@ namespace Azure.AI.Agents.Persistent
                 }
 
                 // Now create a new run and stream the results.
+                CreateRunStreamingOptions opts = new()
+                {
+                    OverrideModelName = runOptions.OverrideModelName,
+                    OverrideInstructions = runOptions.OverrideInstructions,
+                    AdditionalInstructions = null,
+                    AdditionalMessages = runOptions.ThreadOptions.Messages,
+                    OverrideTools = runOptions.OverrideTools,
+                    ToolResources = runOptions.ToolResources,
+                    Temperature = runOptions.Temperature,
+                    TopP = runOptions.TopP,
+                    MaxPromptTokens = runOptions.MaxPromptTokens,
+                    MaxCompletionTokens = runOptions.MaxCompletionTokens,
+                    TruncationStrategy = runOptions.TruncationStrategy,
+                    ToolChoice = runOptions.ToolChoice,
+                    ResponseFormat = runOptions.ResponseFormat,
+                    ParallelToolCalls = runOptions.ParallelToolCalls,
+                    Metadata = runOptions.Metadata
+                };
+
+                // This method added for compatibility, before the include parameter support was enabled.
                 updates = _client!.Runs.CreateRunStreamingAsync(
                     threadId: threadId,
                     agentId: _agentId,
-                    overrideModelName: runOptions.OverrideModelName,
-                    overrideInstructions: runOptions.OverrideInstructions,
-                    additionalInstructions: null,
-                    additionalMessages: runOptions.ThreadOptions.Messages,
-                    overrideTools: runOptions.OverrideTools,
-                    temperature: runOptions.Temperature,
-                    topP: runOptions.TopP,
-                    maxPromptTokens: runOptions.MaxPromptTokens,
-                    maxCompletionTokens: runOptions.MaxCompletionTokens,
-                    truncationStrategy: runOptions.TruncationStrategy,
-                    toolChoice: runOptions.ToolChoice,
-                    responseFormat: runOptions.ResponseFormat,
-                    parallelToolCalls: runOptions.ParallelToolCalls,
-                    metadata: runOptions.Metadata,
-                    cancellationToken);
+                    options: opts,
+                    cancellationToken: cancellationToken
+                );
             }
 
             // Process each update.
@@ -195,18 +204,58 @@ namespace Azure.AI.Agents.Persistent
                         break;
 
                     case MessageContentUpdate mcu:
-                        yield return new(mcu.Role == MessageRole.User ? ChatRole.User : ChatRole.Assistant, mcu.Text)
+                        ChatResponseUpdate textUpdate = new(mcu.Role == MessageRole.User ? ChatRole.User : ChatRole.Assistant, mcu.Text)
                         {
+                            AuthorName = _agentId,
                             ConversationId = threadId,
                             MessageId = responseId,
                             RawRepresentation = mcu,
                             ResponseId = responseId,
                         };
+
+                        // Add any annotations from the text update. The OpenAI Assistants API does not support passing these back
+                        // into the model (MessageContent.FromXx does not support providing annotations), so they end up being one way and are dropped
+                        // on subsequent requests.
+                        if (mcu.TextAnnotation is { } tau)
+                        {
+                            string? fileId = null;
+                            string? toolName = null;
+                            if (!string.IsNullOrWhiteSpace(tau.InputFileId))
+                            {
+                                fileId = tau.InputFileId;
+                                toolName = "file_search";
+                            }
+                            else if (!string.IsNullOrWhiteSpace(tau.OutputFileId))
+                            {
+                                fileId = tau.OutputFileId;
+                                toolName = "code_interpreter";
+                            }
+
+                            if (fileId is not null)
+                            {
+                                if (textUpdate.Contents.Count == 0)
+                                {
+                                    // In case a chunk doesn't have text content, create one with empty text to hold the annotation.
+                                    textUpdate.Contents.Add(new TextContent(string.Empty));
+                                }
+
+                                (((TextContent)textUpdate.Contents[0]).Annotations ??= []).Add(new CitationAnnotation
+                                {
+                                    RawRepresentation = tau,
+                                    AnnotatedRegions = [new TextSpanAnnotatedRegion { StartIndex = tau.StartIndex, EndIndex = tau.EndIndex }],
+                                    FileId = fileId,
+                                    ToolName = toolName,
+                                });
+                            }
+                        }
+
+                        yield return textUpdate;
                         break;
 
                     default:
                         yield return new ChatResponseUpdate
                         {
+                            AuthorName = _agentId,
                             ConversationId = threadId,
                             MessageId = responseId,
                             RawRepresentation = update,
@@ -233,6 +282,13 @@ namespace Azure.AI.Agents.Persistent
                 options?.RawRepresentationFactory?.Invoke(this) as ThreadAndRunOptions ??
                 new();
 
+            // Load details about the agent if not already loaded.
+            if (_agent is null)
+            {
+                PersistentAgent agent = await _client!.Administration.GetAgentAsync(_agentId, cancellationToken).ConfigureAwait(false);
+                Interlocked.CompareExchange(ref _agent, agent, null);
+            }
+
             // Populate the run options from the ChatOptions, if provided.
             if (options is not null)
             {
@@ -246,6 +302,7 @@ namespace Azure.AI.Agents.Persistent
                 if (options.Tools is { Count: > 0 } tools)
                 {
                     List<ToolDefinition> toolDefinitions = [];
+                    ToolResources? toolResources = null;
 
                     // If the caller has provided any tool overrides, we'll assume they don't want to use the agent's tools.
                     // But if they haven't, the only way we can provide our tools is via an override, whereas we'd really like to
@@ -253,13 +310,7 @@ namespace Azure.AI.Agents.Persistent
                     // along with our tools.
                     if (runOptions.OverrideTools is null || !runOptions.OverrideTools.Any())
                     {
-                        if (_agentTools is null)
-                        {
-                            PersistentAgent agent = await _client!.Administration.GetAgentAsync(_agentId, cancellationToken).ConfigureAwait(false);
-                            _agentTools = agent.Tools;
-                        }
-
-                        toolDefinitions.AddRange(_agentTools);
+                        toolDefinitions.AddRange(_agent.Tools);
                     }
 
                     // The caller can provide tools in the supplied ThreadAndRunOptions.
@@ -280,8 +331,42 @@ namespace Azure.AI.Agents.Persistent
                                     BinaryData.FromBytes(JsonSerializer.SerializeToUtf8Bytes(aiFunction.JsonSchema, AgentsChatClientJsonContext.Default.JsonElement))));
                                 break;
 
-                            case HostedCodeInterpreterTool:
+                            case HostedCodeInterpreterTool codeTool:
                                 toolDefinitions.Add(new CodeInterpreterToolDefinition());
+
+                                if (codeTool.Inputs is { Count: > 0 })
+                                {
+                                    foreach (var input in codeTool.Inputs)
+                                    {
+                                        switch (input)
+                                        {
+                                            case HostedFileContent hostedFile:
+                                                // If the input is a HostedFileContent, we can use its ID directly.
+                                                (toolResources ??= new() { CodeInterpreter = new() }).CodeInterpreter.FileIds.Add(hostedFile.FileId);
+                                                break;
+                                        }
+                                    }
+                                }
+                                break;
+
+                            case HostedFileSearchTool fileSearchTool:
+                                toolDefinitions.Add(new FileSearchToolDefinition(
+                                    type: "file_search",
+                                    serializedAdditionalRawData: null,
+                                    fileSearch: new() { MaxNumResults = fileSearchTool.MaximumResultCount }));
+
+                                if (fileSearchTool.Inputs is { Count: > 0 })
+                                {
+                                    foreach (var input in fileSearchTool.Inputs)
+                                    {
+                                        switch (input)
+                                        {
+                                            case HostedVectorStoreContent hostedVectorStore:
+                                                (toolResources ??= new() { FileSearch = new() }).FileSearch.VectorStoreIds.Add(hostedVectorStore.VectorStoreId);
+                                                break;
+                                        }
+                                    }
+                                }
                                 break;
 
                             case HostedWebSearchTool webSearch when webSearch.AdditionalProperties?.TryGetValue("connectionId", out object? connectionId) is true:
@@ -294,6 +379,11 @@ namespace Azure.AI.Agents.Persistent
                     {
                         runOptions.OverrideTools = toolDefinitions;
                     }
+
+                    if (toolResources is not null)
+                    {
+                        runOptions.ToolResources = toolResources;
+                    }
                 }
 
                 // Store the tool mode, if relevant.
@@ -302,13 +392,16 @@ namespace Azure.AI.Agents.Persistent
                     switch (options.ToolMode)
                     {
                         case NoneChatToolMode:
-                            runOptions.ToolChoice = BinaryData.FromString("none");
+                            runOptions.ToolChoice = BinaryData.FromString("\"none\"");
                             break;
 
                         case RequiredChatToolMode required:
                             runOptions.ToolChoice = required.RequiredFunctionName is string functionName ?
                                 BinaryData.FromString($$"""{"type": "function", "function": {"name": "{{functionName}}"} }""") :
                                 BinaryData.FromString("required");
+                            break;
+                        case AutoChatToolMode:
+                            runOptions.ToolChoice = BinaryData.FromString("\"auto\"");
                             break;
                     }
                 }
@@ -318,13 +411,39 @@ namespace Azure.AI.Agents.Persistent
                 {
                     if (options.ResponseFormat is ChatResponseFormatJson jsonFormat)
                     {
-                        runOptions.ResponseFormat = jsonFormat.Schema is { } schema ?
-                            BinaryData.FromBytes(JsonSerializer.SerializeToUtf8Bytes(new()
+                        if (jsonFormat.Schema is JsonElement schema)
+                        {
+                            var schemaNode = JsonSerializer.SerializeToNode(schema, AgentsChatClientJsonContext.Default.JsonElement)!;
+
+                            var jsonSchemaObject = new JsonObject
                             {
-                                ["type"] = "json_schema",
-                                ["json_schema"] = JsonSerializer.SerializeToNode(schema, AgentsChatClientJsonContext.Default.JsonNode),
-                            }, AgentsChatClientJsonContext.Default.JsonObject)) :
-                            BinaryData.FromString("""{ "type": "json_object" }""");
+                                ["schema"] = schemaNode
+                            };
+
+                            if (jsonFormat.SchemaName is not null)
+                            {
+                                jsonSchemaObject["name"] = jsonFormat.SchemaName;
+                            }
+                            if (jsonFormat.SchemaDescription is not null)
+                            {
+                                jsonSchemaObject["description"] = jsonFormat.SchemaDescription;
+                            }
+
+                            runOptions.ResponseFormat =
+                                BinaryData.FromBytes(JsonSerializer.SerializeToUtf8Bytes(new()
+                                {
+                                    ["type"] = "json_schema",
+                                    ["json_schema"] = jsonSchemaObject,
+                                }, AgentsChatClientJsonContext.Default.JsonObject));
+                        }
+                        else
+                        {
+                            runOptions.ResponseFormat = BinaryData.FromString("""{ "type": "json_object" }""");
+                        }
+                    }
+                    else if (options.ResponseFormat is ChatResponseFormatText textFormat)
+                    {
+                        runOptions.ResponseFormat = BinaryData.FromString("""{ "type": "text" }""");
                     }
                 }
             }
@@ -336,6 +455,18 @@ namespace Azure.AI.Agents.Persistent
             List<FunctionResultContent>? functionResults = null;
 
             runOptions.ThreadOptions ??= new();
+
+            bool treatInstructionsAsOverride = false;
+            if (runOptions.OverrideInstructions is not null)
+            {
+                treatInstructionsAsOverride = true;
+                (instructions ??= new()).Append(runOptions.OverrideInstructions);
+            }
+
+            if (options?.Instructions is not null)
+            {
+                (instructions ??= new()).Append(options.Instructions);
+            }
 
             foreach (ChatMessage chatMessage in messages)
             {
@@ -392,6 +523,14 @@ namespace Azure.AI.Agents.Persistent
 
             if (instructions is not null)
             {
+                // If runOptions.OverrideInstructions was set by the caller, then all instructions are treated
+                // as an override. Otherwise, we want all of the instructions to augment the agent's instructions,
+                // so insert the agent's at the beginning.
+                if (!treatInstructionsAsOverride && !string.IsNullOrEmpty(_agent.Instructions))
+                {
+                    instructions.Insert(0, _agent.Instructions);
+                }
+
                 runOptions.OverrideInstructions = instructions.ToString();
             }
 

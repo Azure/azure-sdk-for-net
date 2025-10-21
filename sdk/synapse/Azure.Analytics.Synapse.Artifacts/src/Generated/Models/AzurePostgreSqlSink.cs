@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> A copy activity Azure PostgreSQL sink. </summary>
+    /// <summary> A copy activity Azure Database for PostgreSQL sink. </summary>
     public partial class AzurePostgreSqlSink : CopySink
     {
         /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlSink"/>. </summary>
@@ -27,13 +27,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="preCopyScript"> A query to execute before starting the copy. Type: string (or Expression with resultType string). </param>
-        internal AzurePostgreSqlSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object preCopyScript) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
+        /// <param name="writeMethod"> The write behavior for the operation. Default is Bulk Insert. </param>
+        /// <param name="upsertSettings"> Azure Database for PostgreSQL upsert option settings. </param>
+        internal AzurePostgreSqlSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object preCopyScript, AzurePostgreSqlWriteMethodEnum? writeMethod, AzurePostgreSqlSinkUpsertSettings upsertSettings) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
         {
             PreCopyScript = preCopyScript;
+            WriteMethod = writeMethod;
+            UpsertSettings = upsertSettings;
             Type = type ?? "AzurePostgreSqlSink";
         }
 
         /// <summary> A query to execute before starting the copy. Type: string (or Expression with resultType string). </summary>
         public object PreCopyScript { get; set; }
+        /// <summary> The write behavior for the operation. Default is Bulk Insert. </summary>
+        public AzurePostgreSqlWriteMethodEnum? WriteMethod { get; set; }
+        /// <summary> Azure Database for PostgreSQL upsert option settings. </summary>
+        public AzurePostgreSqlSinkUpsertSettings UpsertSettings { get; set; }
     }
 }

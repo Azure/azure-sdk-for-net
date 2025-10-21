@@ -1,6 +1,6 @@
 # Release History
 
-## 2.1.0-beta.1 (Unreleased)
+## 2.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
+
+## 2.1.0 (2025-07-25)
+
+### Features Added
+* Enable retry policy for HTTP requests with transient errors by default.
+
+### Other Changes
+* Upgrade `Microsoft.Extensions.Azure` to 1.12.0.
 
 ## 2.0.1 (2025-03-12)
 

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Model.Inheritance.Recursive
 {
-    public partial class Extension : IJsonModel<Extension>
+    public partial class Extension : Element, IJsonModel<Extension>
     {
         internal Extension() => throw null;
 

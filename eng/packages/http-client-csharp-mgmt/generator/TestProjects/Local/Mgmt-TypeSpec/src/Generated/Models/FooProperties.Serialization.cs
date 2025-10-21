@@ -9,13 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using MgmtTypeSpec;
+using System.Text.Json.Serialization;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The FooProperties. </summary>
+    [JsonConverter(typeof(FooPropertiesConverter))]
     public partial class FooProperties : IJsonModel<FooProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="FooProperties"/> for deserialization. </summary>
+        internal FooProperties()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FooProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -39,11 +46,8 @@ namespace MgmtTypeSpec.Models
                 writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Something))
-            {
-                writer.WritePropertyName("something"u8);
-                writer.WriteStringValue(Something);
-            }
+            writer.WritePropertyName("something"u8);
+            writer.WriteStringValue(Something);
             if (Optional.IsDefined(BoolValue))
             {
                 writer.WritePropertyName("boolValue"u8);
@@ -59,6 +63,30 @@ namespace MgmtTypeSpec.Models
                 writer.WritePropertyName("doubleValue"u8);
                 writer.WriteNumberValue(DoubleValue.Value);
             }
+            writer.WritePropertyName("prop1"u8);
+            writer.WriteStartArray();
+            foreach (string item in Prop1)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Prop2))
+            {
+                writer.WritePropertyName("prop2"u8);
+                writer.WriteStartArray();
+                foreach (int item in Prop2)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("nestedProperty"u8);
+            writer.WriteObjectValue(NestedProperty, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -106,6 +134,9 @@ namespace MgmtTypeSpec.Models
             bool? boolValue = default;
             float? floatValue = default;
             double? doubleValue = default;
+            IList<string> prop1 = default;
+            IList<int> prop2 = default;
+            NestedFooModel nestedProperty = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,6 +181,42 @@ namespace MgmtTypeSpec.Models
                     doubleValue = prop.Value.GetDouble();
                     continue;
                 }
+                if (prop.NameEquals("prop1"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    prop1 = array;
+                    continue;
+                }
+                if (prop.NameEquals("prop2"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<int> array = new List<int>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    prop2 = array;
+                    continue;
+                }
+                if (prop.NameEquals("nestedProperty"u8))
+                {
+                    nestedProperty = NestedFooModel.DeserializeNestedFooModel(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -161,6 +228,9 @@ namespace MgmtTypeSpec.Models
                 boolValue,
                 floatValue,
                 doubleValue,
+                prop1,
+                prop2 ?? new ChangeTrackingList<int>(),
+                nestedProperty,
                 additionalBinaryDataProperties);
         }
 
@@ -174,7 +244,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FooProperties)} does not support writing '{options.Format}' format.");
             }
@@ -203,5 +273,27 @@ namespace MgmtTypeSpec.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FooProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        internal partial class FooPropertiesConverter : JsonConverter<FooProperties>
+        {
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override void Write(Utf8JsonWriter writer, FooProperties model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue<IJsonModel<FooProperties>>(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override FooProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeFooProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
+            }
+        }
     }
 }

@@ -77,7 +77,11 @@ public partial class Sample_PersistentAgents_FileSearch_Streaming : SamplesBase<
         #endregion
         #region Snippet:AgentsFilesSearchExampleStreaming_StreamResults
         // Create the stream and parse output.
-        AsyncCollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, include: [RunAdditionalFieldList.FileSearchContents]);
+        CreateRunStreamingOptions runOptions = new()
+        {
+            Include = [RunAdditionalFieldList.FileSearchContents]
+        };
+        AsyncCollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: runOptions);
         await foreach (StreamingUpdate streamingUpdate in stream)
         {
             ParseStreamingUdate(streamingUpdate, fileIds);
@@ -153,7 +157,11 @@ public partial class Sample_PersistentAgents_FileSearch_Streaming : SamplesBase<
         #endregion
         #region Snippet:AgentsFilesSearchExampleStreaming_StreamResults_Sync
         // Create the stream and parse output
-        CollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreaming(thread.Id, agent.Id, include: [RunAdditionalFieldList.FileSearchContents]);
+        CreateRunStreamingOptions runOptions = new()
+        {
+            Include = [RunAdditionalFieldList.FileSearchContents]
+        };
+        CollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreaming(thread.Id, agent.Id, options: runOptions);
         foreach (StreamingUpdate streamingUpdate in stream)
         {
             ParseStreamingUdate(streamingUpdate, fileIds);

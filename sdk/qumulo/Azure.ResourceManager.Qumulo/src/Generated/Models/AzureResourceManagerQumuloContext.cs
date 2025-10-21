@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Qumulo.Models;
 
 namespace Azure.ResourceManager.Qumulo
 {
@@ -13,6 +15,17 @@ namespace Azure.ResourceManager.Qumulo
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(FileSystemResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(FileSystemResourceUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceDetails))]
+    [ModelReaderWriterBuildable(typeof(QumuloFileSystemResource))]
+    [ModelReaderWriterBuildable(typeof(QumuloFileSystemResourceData))]
+    [ModelReaderWriterBuildable(typeof(QumuloFileSystemResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(QumuloUserDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerQumuloContext : ModelReaderWriterContext
     {
     }

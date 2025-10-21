@@ -54,12 +54,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="immutabilitySettings"> Immutability Settings of a vault. </param>
         /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
         /// <param name="multiUserAuthorization"> MUA Settings of a vault. </param>
+        /// <param name="sourceScanConfiguration"> Source scan configuration of vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesSecuritySettings(ImmutabilitySettings immutabilitySettings, RecoveryServicesSoftDeleteSettings softDeleteSettings, MultiUserAuthorization? multiUserAuthorization, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecoveryServicesSecuritySettings(ImmutabilitySettings immutabilitySettings, RecoveryServicesSoftDeleteSettings softDeleteSettings, MultiUserAuthorization? multiUserAuthorization, SourceScanConfiguration sourceScanConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImmutabilitySettings = immutabilitySettings;
             SoftDeleteSettings = softDeleteSettings;
             MultiUserAuthorization = multiUserAuthorization;
+            SourceScanConfiguration = sourceScanConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,5 +83,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public RecoveryServicesSoftDeleteSettings SoftDeleteSettings { get; set; }
         /// <summary> MUA Settings of a vault. </summary>
         public MultiUserAuthorization? MultiUserAuthorization { get; }
+        /// <summary> Source scan configuration of vault. </summary>
+        public SourceScanConfiguration SourceScanConfiguration { get; set; }
     }
 }

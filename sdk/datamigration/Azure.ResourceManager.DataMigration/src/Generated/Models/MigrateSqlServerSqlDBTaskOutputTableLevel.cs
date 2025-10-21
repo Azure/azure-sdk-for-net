@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="itemsCompletedCount"> Number of successfully completed items. </param>
         /// <param name="errorPrefix"> Wildcard string prefix to use for querying all errors of the item. </param>
         /// <param name="resultPrefix"> Wildcard string prefix to use for querying all sub-tem results of the item. </param>
-        internal MigrateSqlServerSqlDBTaskOutputTableLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string objectName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, MigrationState? state, string statusMessage, long? itemsCount, long? itemsCompletedCount, string errorPrefix, string resultPrefix) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlDBTaskOutputTableLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string objectName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataMigrationState? state, string statusMessage, long? itemsCount, long? itemsCompletedCount, string errorPrefix, string resultPrefix) : base(id, resultType, serializedAdditionalRawData)
         {
             ObjectName = objectName;
             StartedOn = startedOn;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Migration end time. </summary>
         public DateTimeOffset? EndedOn { get; }
         /// <summary> Current state of migration. </summary>
-        public MigrationState? State { get; }
+        public DataMigrationState? State { get; }
         /// <summary> Status message. </summary>
         public string StatusMessage { get; }
         /// <summary> Number of items. </summary>

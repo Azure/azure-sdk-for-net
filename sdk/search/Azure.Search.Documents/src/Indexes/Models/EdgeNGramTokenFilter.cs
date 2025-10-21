@@ -7,7 +7,6 @@ using Azure.Core;
 namespace Azure.Search.Documents.Indexes.Models
 {
     [CodeGenModel("EdgeNGramTokenFilterV2")]
-    [CodeGenSuppress(nameof(EdgeNGramTokenFilter), typeof(string), typeof(string), typeof(int?), typeof(int?), typeof(EdgeNGramTokenFilterSide?))]
     public partial class EdgeNGramTokenFilter : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of EdgeNGramTokenFilter. </summary>

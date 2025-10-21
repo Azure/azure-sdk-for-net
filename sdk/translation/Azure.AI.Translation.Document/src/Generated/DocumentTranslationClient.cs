@@ -974,7 +974,6 @@ namespace Azure.AI.Translation.Document
             uri.AppendPath("/document/batches", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;

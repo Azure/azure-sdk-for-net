@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -56,37 +57,37 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                JsonSerializer.Serialize(writer, BackendAddressPool);
+                ((IJsonModel<WritableSubResource>)BackendAddressPool).Write(writer, options);
             }
             if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
-                JsonSerializer.Serialize(writer, BackendHttpSettings);
+                ((IJsonModel<WritableSubResource>)BackendHttpSettings).Write(writer, options);
             }
             if (Optional.IsDefined(HttpListener))
             {
                 writer.WritePropertyName("httpListener"u8);
-                JsonSerializer.Serialize(writer, HttpListener);
+                ((IJsonModel<WritableSubResource>)HttpListener).Write(writer, options);
             }
             if (Optional.IsDefined(UrlPathMap))
             {
                 writer.WritePropertyName("urlPathMap"u8);
-                JsonSerializer.Serialize(writer, UrlPathMap);
+                ((IJsonModel<WritableSubResource>)UrlPathMap).Write(writer, options);
             }
             if (Optional.IsDefined(RewriteRuleSet))
             {
                 writer.WritePropertyName("rewriteRuleSet"u8);
-                JsonSerializer.Serialize(writer, RewriteRuleSet);
+                ((IJsonModel<WritableSubResource>)RewriteRuleSet).Write(writer, options);
             }
             if (Optional.IsDefined(RedirectConfiguration))
             {
                 writer.WritePropertyName("redirectConfiguration"u8);
-                JsonSerializer.Serialize(writer, RedirectConfiguration);
+                ((IJsonModel<WritableSubResource>)RedirectConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(LoadDistributionPolicy))
             {
                 writer.WritePropertyName("loadDistributionPolicy"u8);
-                JsonSerializer.Serialize(writer, LoadDistributionPolicy);
+                ((IJsonModel<WritableSubResource>)LoadDistributionPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            backendAddressPool = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("backendHttpSettings"u8))
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            backendHttpSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            backendHttpSettings = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("httpListener"u8))
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            httpListener = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            httpListener = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("urlPathMap"u8))
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            urlPathMap = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            urlPathMap = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("rewriteRuleSet"u8))
@@ -235,7 +236,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            rewriteRuleSet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            rewriteRuleSet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("redirectConfiguration"u8))
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            redirectConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            redirectConfiguration = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("loadDistributionPolicy"u8))
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            loadDistributionPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            loadDistributionPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -292,6 +293,262 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("  etag: ");
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ruleType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuleType))
+                {
+                    builder.Append("    ruleType: ");
+                    builder.AppendLine($"'{RuleType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Priority), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    priority: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Priority))
+                {
+                    builder.Append("    priority: ");
+                    builder.AppendLine($"{Priority.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("BackendAddressPoolId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    backendAddressPool: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      backendAddressPool: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(BackendAddressPool))
+                {
+                    builder.Append("    backendAddressPool: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BackendAddressPool, options, 4, false, "    backendAddressPool: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("BackendHttpSettingsId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    backendHttpSettings: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      backendHttpSettings: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(BackendHttpSettings))
+                {
+                    builder.Append("    backendHttpSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BackendHttpSettings, options, 4, false, "    backendHttpSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("HttpListenerId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    httpListener: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      httpListener: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(HttpListener))
+                {
+                    builder.Append("    httpListener: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HttpListener, options, 4, false, "    httpListener: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("UrlPathMapId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    urlPathMap: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      urlPathMap: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(UrlPathMap))
+                {
+                    builder.Append("    urlPathMap: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, UrlPathMap, options, 4, false, "    urlPathMap: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RewriteRuleSetId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rewriteRuleSet: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      rewriteRuleSet: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(RewriteRuleSet))
+                {
+                    builder.Append("    rewriteRuleSet: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RewriteRuleSet, options, 4, false, "    rewriteRuleSet: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RedirectConfigurationId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    redirectConfiguration: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      redirectConfiguration: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(RedirectConfiguration))
+                {
+                    builder.Append("    redirectConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RedirectConfiguration, options, 4, false, "    redirectConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("LoadDistributionPolicyId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    loadDistributionPolicy: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      loadDistributionPolicy: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(LoadDistributionPolicy))
+                {
+                    builder.Append("    loadDistributionPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LoadDistributionPolicy, options, 4, false, "    loadDistributionPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ApplicationGatewayRequestRoutingRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRequestRoutingRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -300,6 +557,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayRequestRoutingRule)} does not support writing '{options.Format}' format.");
             }

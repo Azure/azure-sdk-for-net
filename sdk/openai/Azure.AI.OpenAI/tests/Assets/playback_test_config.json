@@ -64,6 +64,11 @@
     "key": "Sanitized",
     "deployment": "gpt-35-turbo-low-quota"
   },
+  "response": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4o-mini"
+  },
   "responses": {
     "endpoint": "https://Sanitized.openai.azure.com/",
     "key": "Sanitized"

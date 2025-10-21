@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Azure.Storage.DataMovement
 {
@@ -86,6 +86,39 @@ namespace Azure.Storage.DataMovement
                     yield return new FileInfo(file);
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets a file Uri that is fully encoded even if the path contains already
+        /// encoded characters (double encoded in this case). <see cref="Uri.LocalPath"/>
+        /// can be used to get decoded version for use with File IO.
+        /// </summary>
+        public static Uri GetEncodedUriFromPath(string path)
+        {
+            // The Uri class will normalize slashes but for Windows, do it
+            // ahead of time to make the remainning logic common. Only do
+            // this for Windows as \ can be a valid character for Linux/Mac.
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                path = path.Replace("\\", "/");
+            }
+
+            // Encode each part of the path (except the first one) separately
+            // and then reassemble into a Uri. This is done as Uri can be inconsistent
+            // whether it encodes or not and we want to be sure to preserve any encoding
+            // on disk.
+            string[] pathParts = path.Split('/');
+            List<string> encodedParts = [pathParts.First()];
+            encodedParts.AddRange(pathParts.Skip(1).Select(Uri.EscapeDataString));
+            string encodedPath = string.Join("/", encodedParts);
+
+            UriBuilder uriBuilder = new()
+            {
+                Scheme = Uri.UriSchemeFile,
+                Host = "",
+                Path = encodedPath,
+            };
+            return uriBuilder.Uri;
         }
 
         private static IEnumerable<string> EnumerateDirectories(string path)

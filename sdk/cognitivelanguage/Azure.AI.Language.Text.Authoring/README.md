@@ -3,14 +3,24 @@
 Azure Text Authoring is part of the Azure Cognitive Service for Language, a cloud-based service that provides tools for creating, managing, and deploying text processing and AI solutions. This client library offers the following features:
 
 * Creating and managing text analysis projects
-* Importing and exporting text analysis projects
-* Training models for text processing and analysis
-* Evaluating trained models
-* Deploying text processing models
-* Swapping deployments for active models
-* Canceling active training jobs
+* Importing data into text analysis projects
+* Exporting text analysis projects
+* Retrieving project details
+* Deleting projects
+* Training models
+* Canceling training jobs
+* Retrieving model evaluation summaries
+* Retrieving model evaluation results
 * Managing project snapshots
-* Deleting trained models and deployments
+* Deleting trained models
+* Swapping deployments
+* Deleting deployments
+* Deploying trained models
+* Retrieving deployment details
+* Assigning deployment resources
+* Checking the status of assigned resource operations
+* Unassigning deployment resources
+* Checking the status of unassigned resource operations
 
 [Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][text_refdocs] | [Product documentation][text_docs] | [Samples][source_samples]
 
@@ -27,8 +37,9 @@ dotnet add package Azure.AI.Language.Text.Authoring --prerelease
 ```
 
 |SDK version  |Supported API version of service
-|-------------|------------------------------------------------------------------
-|1.0.0-beta.1 | 2022-05-01, 2023-04-01, 2023-11-15-preview, 2024-11-15-preview (default)
+|-------------|------------------------------------------------------------------------------
+|1.0.0-beta.1 | 2023-04-01, 2023-04-15-preview, 2024-11-15-preview (default)
+|1.0.0-beta.2 | 2023-04-01, 2023-04-15-preview, 2024-11-15-preview, 2025-05-15-preview (default)
 
 ### Prerequisites
 
@@ -60,9 +71,9 @@ using Azure.AI.Language.Text.Authoring;
 With your endpoint and API key, you can instantiate a TextAnalysisAuthoringClient using specific service options:
 
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your apikey");
-TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview);
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
@@ -86,7 +97,7 @@ using Microsoft.Extensions.Options;
 Then you can create an instance of DefaultAzureCredential and pass it to a new instance of your client:
 
 ```C# Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("{endpoint}");;
 DefaultAzureCredential credential = new DefaultAzureCredential();
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 ```
@@ -104,9 +115,9 @@ You have the flexibility to explicitly select a supported service API version wh
 For example:
 
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your apikey");
-TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview);
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
@@ -141,30 +152,25 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples).
 
-* [Get Project Details (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample1_TextAuthoring_GetProject.md)
-* [Get Project Details (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample1_TextAuthoring_GetProjectAsync.md)
-* [Import a Project (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample2_TextAuthoring_Import.md)
-* [Import a Project (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample2_TextAuthoring_ImportAsync.md)
-* [Create a New Project (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample3_TextAuthoring_CreateProject.md)
-* [Create a New Project (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample3_TextAuthoring_CreateProjectAsync.md)
-* [Delete a Project (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample4_TextAuthoring_DeleteProject.md)
-* [Delete a Project (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample4_TextAuthoring_DeleteProjectAsync.md)
-* [Train a Model (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample5_TextAuthoring_Train.md)
-* [Train a Model (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample5_TextAuthoring_TrainAsync.md)
-* [Cancel Training Job (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample6_TextAuthoring_CancelTrainingJob.md)
-* [Cancel Training Job (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample6_TextAuthoring_CancelTrainingJobAsync.md)
-* [Get Model Evaluation Summary (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample7_TextAuthoring_GetModelEvaluationSummary.md)
-* [Get Model Evaluation Summary (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample7_TextAuthoring_GetModelEvaluationSummaryAsync.md)
-* [Load Snapshot (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample8_TextAuthoring_LoadSnapshot.md)
-* [Load Snapshot (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample8_TextAuthoring_LoadSnapshotAsync.md)
-* [Delete a Trained Model (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample9_TextAuthoring_DeleteTrainedModel.md)
-* [Delete a Trained Model (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample9_TextAuthoring_DeleteTrainedModelAsync.md)
-* [Deploy a project (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample10_TextAuthoring_DeployProject.md)
-* [Deploy a project (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample10_TextAuthoring_DeployProjectAsync.md)
-* [Swap Deployments (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample11_TextAuthoring_SwapDeployments.md)
-* [Swap Deployments (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample11_TextAuthoring_SwapDeploymentsAsync.md)
-* [Delete a Deployment (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample12_TextAuthoring_DeleteDeployment.md)
-* [Delete a Deployment (Async)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample12_TextAuthoring_DeleteDeploymentAsync.md)
+* [Create a New Project](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample1_TextAuthoring_CreateProject.md)
+* [Import a Project](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample2_TextAuthoring_Import.md)
+* [Export a Project](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample3_TextAuthoring_Export.md)
+* [Get Project Details](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample4_TextAuthoring_GetProject.md)
+* [Delete a Project](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample5_TextAuthoring_DeleteProject.md)
+* [Train a Model](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample6_TextAuthoring_Train.md)
+* [Cancel Training Job](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample7_TextAuthoring_CancelTrainingJob.md)
+* [Get Model Evaluation Summary](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample8_TextAuthoring_GetModelEvaluationSummary.md)
+* [Get Model Evaluation Results](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample9_TextAuthoring_GetModelEvaluationResults.md)
+* [Load Snapshot](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample10_TextAuthoring_LoadSnapshot.md)
+* [Delete a Trained Model](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample11_TextAuthoring_DeleteTrainedModel.md)
+* [Swap Deployments](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample12_TextAuthoring_SwapDeployments.md)
+* [Delete a Deployment](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample13_TextAuthoring_DeleteDeployment.md)
+* [Deploy a Project](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample14_TextAuthoring_DeployProject.md)
+* [Get Deployment Details](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample15_TextAuthoring_GetDeployment.md)
+* [Assign Deployment Resources](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample16_TextAuthoring_AssignDeploymentResources.md)
+* [Get Deployment Resources Assignment Status](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample17_TextAuthoring_GetAssignDeploymentResourcesStatus.md)
+* [Unassign Deployment Resources](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample18_TextAuthoring_UnassignDeploymentResources.md)
+* [Get Deployment Resources Unassignment Status](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/Sample19_TextAuthoring_GetUnassignDeploymentResourcesStatus.md)
 
 ## Troubleshooting
 

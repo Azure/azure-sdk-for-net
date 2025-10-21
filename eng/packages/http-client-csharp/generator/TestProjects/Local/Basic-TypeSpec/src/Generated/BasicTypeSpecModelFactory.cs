@@ -17,10 +17,6 @@ namespace BasicTypeSpec
         /// <summary> A model with a few properties of literal types. </summary>
         /// <param name="name"> name of the ThingModel. </param>
         /// <param name="requiredUnion"> required Union. </param>
-        /// <param name="requiredLiteralString"> required literal string. </param>
-        /// <param name="requiredLiteralInt"> required literal int. </param>
-        /// <param name="requiredLiteralFloat"> required literal float. </param>
-        /// <param name="requiredLiteralBool"> required literal bool. </param>
         /// <param name="optionalLiteralString"> optional literal string. </param>
         /// <param name="optionalLiteralInt"> optional literal int. </param>
         /// <param name="optionalLiteralFloat"> optional literal float. </param>
@@ -29,7 +25,7 @@ namespace BasicTypeSpec
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="requiredNullableList"> required nullable collection. </param>
         /// <returns> A new <see cref="BasicTypeSpec.ThingModel"/> instance for mocking. </returns>
-        public static ThingModel ThingModel(string name = default, BinaryData requiredUnion = default, string requiredLiteralString = default, int requiredLiteralInt = default, float requiredLiteralFloat = default, bool requiredLiteralBool = default, string optionalLiteralString = default, int? optionalLiteralInt = default, float? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
+        public static ThingModel ThingModel(string name = default, BinaryData requiredUnion = default, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
         {
             optionalNullableList ??= new ChangeTrackingList<int>();
             requiredNullableList ??= new ChangeTrackingList<int>();
@@ -37,17 +33,17 @@ namespace BasicTypeSpec
             return new ThingModel(
                 name,
                 requiredUnion,
-                requiredLiteralString,
-                requiredLiteralInt,
-                requiredLiteralFloat,
-                requiredLiteralBool,
+                "accept",
+                123,
+                1.23F,
+                false,
                 optionalLiteralString,
                 optionalLiteralInt,
                 optionalLiteralFloat,
                 optionalLiteralBool,
                 requiredBadDescription,
-                optionalNullableList?.ToList(),
-                requiredNullableList?.ToList(),
+                optionalNullableList.ToList(),
+                requiredNullableList.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
@@ -93,19 +89,19 @@ namespace BasicTypeSpec
             return new RoundTripModel(
                 requiredString,
                 requiredInt,
-                requiredCollection?.ToList(),
+                requiredCollection.ToList(),
                 requiredDictionary,
                 requiredModel,
                 intExtensibleEnum,
-                intExtensibleEnumCollection?.ToList(),
+                intExtensibleEnumCollection.ToList(),
                 floatExtensibleEnum,
                 floatExtensibleEnumWithIntValue,
-                floatExtensibleEnumCollection?.ToList(),
+                floatExtensibleEnumCollection.ToList(),
                 floatFixedEnum,
                 floatFixedEnumWithIntValue,
-                floatFixedEnumCollection?.ToList(),
+                floatFixedEnumCollection.ToList(),
                 intFixedEnum,
-                intFixedEnumCollection?.ToList(),
+                intFixedEnumCollection.ToList(),
                 stringFixedEnum,
                 requiredUnknown,
                 optionalUnknown,

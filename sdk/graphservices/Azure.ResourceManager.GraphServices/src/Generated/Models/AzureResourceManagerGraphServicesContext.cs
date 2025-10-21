@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.GraphServices.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GraphServices
 {
@@ -13,6 +15,14 @@ namespace Azure.ResourceManager.GraphServices
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(GraphServicesAccountResource))]
+    [ModelReaderWriterBuildable(typeof(GraphServicesAccountResourceData))]
+    [ModelReaderWriterBuildable(typeof(GraphServicesAccountResourceList))]
+    [ModelReaderWriterBuildable(typeof(GraphServicesAccountResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(GraphServicesAccountResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(GraphServicesTagUpdate))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerGraphServicesContext : ModelReaderWriterContext
     {
     }

@@ -19,6 +19,7 @@ pr:
 stages:
 - stage: Run
   variables:
+    Codeql.SkipTaskAutoInjection: true
     skipComponentGovernanceDetection: true
     nugetMultiFeedWarnLevel: 'none'
     baseBranchBaseline: ''

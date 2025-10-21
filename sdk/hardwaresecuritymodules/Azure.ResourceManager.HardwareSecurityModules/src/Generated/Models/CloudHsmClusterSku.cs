@@ -73,13 +73,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Sku family of the Cloud HSM Cluster. </summary>
-        [WirePath("family")]
         public CloudHsmClusterSkuFamily Family { get; set; }
         /// <summary> Sku name of the Cloud HSM Cluster. </summary>
-        [WirePath("name")]
         public CloudHsmClusterSkuName Name { get; set; }
         /// <summary> Sku capacity. </summary>
-        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

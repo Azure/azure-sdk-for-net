@@ -80,6 +80,13 @@ const resourceGroupResourceRegex =
 export const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
 const resourceMetadataRegex =
   "Azure\\.ClientGenerator\\.Core\\.@resourceSchema";
+export const nonResourceMethodMetadata =
+  "Azure.ClientGenerator.Core.@nonResourceMethodSchema";
+const nonResourceMethodMetadataRegex =
+  "Azure\\.ClientGenerator\\.Core\\.@nonResourceMethodSchema";
+
+export const flattenPropertyDecorator =
+  "Azure.ResourceManager.@flattenProperty";
 
 export const azureSDKContextOptions: CreateSdkContextOptions = {
   versioning: {
@@ -87,6 +94,7 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
   },
   additionalDecorators: [
     resourceMetadataRegex,
+    nonResourceMethodMetadataRegex,
     armProviderNamespaceRegex,
     armResourceActionRegex,
     armResourceCreateOrUpdateRegex,

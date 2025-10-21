@@ -17,6 +17,7 @@ namespace Azure.AI.OpenAI
         {
         }
 
+        /// <param name="innerList"> The inner list. </param>
         public ChangeTrackingList(IList<T> innerList)
         {
             if (innerList != null)
@@ -25,6 +26,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="innerList"> The inner list. </param>
         public ChangeTrackingList(IReadOnlyList<T> innerList)
         {
             if (innerList != null)
@@ -86,6 +88,7 @@ namespace Azure.AI.OpenAI
             return GetEnumerator();
         }
 
+        /// <param name="item"> The item to add. </param>
         public void Add(T item)
         {
             EnsureList().Add(item);
@@ -96,6 +99,7 @@ namespace Azure.AI.OpenAI
             EnsureList().Clear();
         }
 
+        /// <param name="item"> The item. </param>
         public bool Contains(T item)
         {
             if (IsUndefined)
@@ -105,6 +109,8 @@ namespace Azure.AI.OpenAI
             return EnsureList().Contains(item);
         }
 
+        /// <param name="array"> The array to copy to. </param>
+        /// <param name="arrayIndex"> The array index. </param>
         public void CopyTo(T[] array, int arrayIndex)
         {
             if (IsUndefined)
@@ -114,6 +120,7 @@ namespace Azure.AI.OpenAI
             EnsureList().CopyTo(array, arrayIndex);
         }
 
+        /// <param name="item"> The item. </param>
         public bool Remove(T item)
         {
             if (IsUndefined)
@@ -123,6 +130,7 @@ namespace Azure.AI.OpenAI
             return EnsureList().Remove(item);
         }
 
+        /// <param name="item"> The item. </param>
         public int IndexOf(T item)
         {
             if (IsUndefined)
@@ -132,11 +140,14 @@ namespace Azure.AI.OpenAI
             return EnsureList().IndexOf(item);
         }
 
+        /// <param name="index"> The inner list. </param>
+        /// <param name="item"> The item. </param>
         public void Insert(int index, T item)
         {
             EnsureList().Insert(index, item);
         }
 
+        /// <param name="index"> The inner list. </param>
         public void RemoveAt(int index)
         {
             if (IsUndefined)

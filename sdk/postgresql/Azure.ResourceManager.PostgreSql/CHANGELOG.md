@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.3.1 (2025-08-06)
+
+### Features Added
+
+- Make `Azure.ResourceManager.PostgreSql` AOT-compatible
+
 ## 1.3.0 (2025-06-25)
 
 ### Features Added
