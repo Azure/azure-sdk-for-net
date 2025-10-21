@@ -16,6 +16,8 @@
   ([#53050](https://github.com/Azure/azure-sdk-for-net/pull/53050))
 * Added collection of some performance metrics
   ([#52705](https://github.com/Azure/azure-sdk-for-net/pull/52705))
+* Emission of customer facing SDK stats
+  ([#53010](https://github.com/Azure/azure-sdk-for-net/pull/53010))
 
 ## 1.3.0 (2025-05-09)
 
