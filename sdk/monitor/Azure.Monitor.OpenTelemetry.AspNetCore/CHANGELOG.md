@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (2025-10-21)
 
 ### Features Added
 
@@ -12,12 +12,23 @@
   `microsoft.rate_limited`, sampling ratio 0.0 - 1.0 for
   `microsoft.fixed_percentage`).
   ([#52720](https://github.com/Azure/azure-sdk-for-net/pull/52720))
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+* Added handling of stable database client span semantic conventions
+  ([#53050](https://github.com/Azure/azure-sdk-for-net/pull/53050))
+* Added new performance monitoring capabilities to help track application health and resource usage. Newly added metrics:
+  - `\.NET CLR Exceptions(??APP_CLR_PROC??)\# of Exceps Thrown / sec`
+  - `\ASP.NET Applications(??APP_W3SVC_PROC??)\Requests/Sec`;
+  - `\Process(??APP_WIN32_PROC??)\% Processor Time"`
+  - `\Process(??APP_WIN32_PROC??)\% Processor Time Normalized`
+  - `\Process(??APP_WIN32_PROC??)\Private Bytes`
+  ([#52705](https://github.com/Azure/azure-sdk-for-net/pull/52705))
+* Added built-in monitoring to track SDK performance and health. Emitted metrics:
+  - `preview.item.success.count`
+  - `preview.item.dropped.count`
+  - `preview.item.retry.count`
+  ([#53010](https://github.com/Azure/azure-sdk-for-net/pull/53010))
+* Add `enduser.pseudo.id` as ai.user.id 
+([#52722](https://github.com/Azure/azure-sdk-for-net/pull/52722))
+* Add `ai.location.ip` mapping for all telemetry types ([#52211](https://github.com/Azure/azure-sdk-for-net/pull/52211))
 
 ## 1.3.0 (2025-05-09)
 
