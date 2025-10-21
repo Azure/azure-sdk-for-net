@@ -24,10 +24,10 @@
     <!-- Depending on monthly deliverables, we may switch between PackageReference or ProjectReference. Keeping both here to make the switch easier. -->
 
     <!-- FOR PUBLIC RELEASES, MUST USE PackageReference. THIS REQUIRES A STAGGERED RELEASE IF SHIPPING A NEW EXPORTER. -->
-    <!--<PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />-->
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
 
     <!-- FOR LOCAL DEV, ProjectReference IS PREFERRED. -->
-    <ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
+    <!--<ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />-->
   </ItemGroup>
 
   <!-- Shared sources from Azure.Core -->
