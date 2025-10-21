@@ -133,7 +133,7 @@ namespace Azure.Provisioning.Tests.Primitives
                 {
                     Infrastructure infra = new();
 
-                    // Create our comprehensive test resource with various property types
+                    // Create a test resource with three basic property types: string, location, and enum
                     var storageAccount = new StorageAccount("storageAccount")
                     {
                         // Test basic string property

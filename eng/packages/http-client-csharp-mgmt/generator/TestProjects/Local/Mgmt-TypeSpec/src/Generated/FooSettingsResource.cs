@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a FooSettings along with the instance operations that can be performed on it.
@@ -51,7 +51,7 @@ namespace MgmtTypeSpec
         internal FooSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string fooSettingsApiVersion);
-            _fooSettingsOperationsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _fooSettingsOperationsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _fooSettingsOperationsRestClient = new FooSettingsOperations(_fooSettingsOperationsClientDiagnostics, Pipeline, Endpoint, fooSettingsApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -169,7 +169,7 @@ namespace MgmtTypeSpec
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MgmtTypeSpecArmOperation<FooSettingsResource> operation = new MgmtTypeSpecArmOperation<FooSettingsResource>(Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TestsArmOperation<FooSettingsResource> operation = new TestsArmOperation<FooSettingsResource>(Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -205,7 +205,7 @@ namespace MgmtTypeSpec
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MgmtTypeSpecArmOperation<FooSettingsResource> operation = new MgmtTypeSpecArmOperation<FooSettingsResource>(Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TestsArmOperation<FooSettingsResource> operation = new TestsArmOperation<FooSettingsResource>(Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -300,7 +300,7 @@ namespace MgmtTypeSpec
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(response, rehydrationToken);
+                TestsArmOperation operation = new TestsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -331,7 +331,7 @@ namespace MgmtTypeSpec
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(response, rehydrationToken);
+                TestsArmOperation operation = new TestsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

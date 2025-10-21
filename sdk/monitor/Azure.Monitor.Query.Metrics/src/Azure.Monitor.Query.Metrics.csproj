@@ -2,7 +2,9 @@
   <PropertyGroup>
     <Description>A library for querying Azure Monitor's Metrics data source.</Description>
     <AssemblyTitle>Azure Monitor Query Metrics client library</AssemblyTitle>
-    <Version>1.0.0</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure Monitor Query Metrics</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

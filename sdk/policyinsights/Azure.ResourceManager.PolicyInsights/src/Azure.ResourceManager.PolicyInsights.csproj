@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.PolicyInsights</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.PolicyInsights.</Description>
     <PackageTags>azure;management;arm;resource manager;policyinsights</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

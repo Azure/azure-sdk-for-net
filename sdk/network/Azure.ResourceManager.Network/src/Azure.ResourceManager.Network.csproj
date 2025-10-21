@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.13.0-beta.1</Version>
+    <Version>1.13.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.12.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Network</PackageId>
@@ -9,5 +9,6 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <!-- CA1708 cannot be suppress through #pragma. So we suppress it here. -->
     <NoWarn>$(NoWarn);CA1708</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>
