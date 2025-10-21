@@ -134,7 +134,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return new ServiceMethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
-                resourceOperationMethodProvider._enclosingType);
+                resourceOperationMethodProvider._enclosingType,
+                null);
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()
