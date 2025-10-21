@@ -10,6 +10,6 @@ namespace Azure.Generator.Management.Primitives
     internal class NewManagementProjectScaffolding : NewAzureProjectScaffolding
     {
         protected override IReadOnlyList<CSharpProjectCompileInclude> BuildCompileIncludes()
-            => new List<CSharpProjectCompileInclude>();
+            => Array.Empty<CSharpProjectCompileInclude>();
     }
 }
