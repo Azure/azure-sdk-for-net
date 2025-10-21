@@ -25,8 +25,11 @@ use-model-reader-writer: true
 prepend-rp-prefix:
   - Asset
   - AssetEndpointProfile
-  - DiscoveredAsset
-  - DiscoveredAssetEndpointProfile
+  - Namespace
+  - NamespaceAsset
+  - NamespaceDevice
+  - NamespaceDiscoveredAsset
+  - NamespaceDiscoveredDevice
   - SchemaRegistry
   - Schema
   - SchemaVersion
