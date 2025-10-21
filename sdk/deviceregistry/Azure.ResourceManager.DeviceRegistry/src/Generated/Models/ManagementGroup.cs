@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Defines the management group properties. </summary>
     public partial class ManagementGroup
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroup"/>. </summary>
         /// <param name="name"> Name of the management group. </param>
@@ -64,8 +36,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="defaultTopic"> Default MQTT topic path on which a client will receive the request for all actions that are part of the management group. </param>
         /// <param name="defaultTimeoutInSeconds"> Default response timeout for all actions that are part of the management group. </param>
         /// <param name="actions"> Array of actions that are part of the management group. Each action can have an individual configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagementGroup(string name, string dataSource, string managementGroupConfiguration, string typeRef, string defaultTopic, int? defaultTimeoutInSeconds, IList<ManagementAction> actions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementGroup(string name, string dataSource, string managementGroupConfiguration, string typeRef, string defaultTopic, int? defaultTimeoutInSeconds, IList<ManagementAction> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DataSource = dataSource;
@@ -74,26 +46,27 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             DefaultTopic = defaultTopic;
             DefaultTimeoutInSeconds = defaultTimeoutInSeconds;
             Actions = actions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagementGroup"/> for deserialization. </summary>
-        internal ManagementGroup()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the management group. </summary>
         public string Name { get; set; }
+
         /// <summary> Reference to a data source for a given management group. </summary>
         public string DataSource { get; set; }
+
         /// <summary> Stringified JSON that contains connector-specific configuration for the management group. </summary>
         public string ManagementGroupConfiguration { get; set; }
+
         /// <summary> URI or type definition ID. </summary>
         public string TypeRef { get; set; }
+
         /// <summary> Default MQTT topic path on which a client will receive the request for all actions that are part of the management group. </summary>
         public string DefaultTopic { get; set; }
+
         /// <summary> Default response timeout for all actions that are part of the management group. </summary>
         public int? DefaultTimeoutInSeconds { get; set; }
+
         /// <summary> Array of actions that are part of the management group. Each action can have an individual configuration. </summary>
         public IList<ManagementAction> Actions { get; }
     }
