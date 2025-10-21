@@ -292,7 +292,7 @@ string query = tableName + " | Count;";
 string countQueryId = batch.AddWorkspaceQuery(
     workspaceId,
     query,
-    new QueryTimeRange(TimeSpan.FromDays(1)));
+    new LogsQueryTimeRange(TimeSpan.FromDays(1)));
 
 Response<LogsBatchQueryResultCollection> queryResponse =
     await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);

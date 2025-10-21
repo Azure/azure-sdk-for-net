@@ -125,7 +125,7 @@
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.6.0" />
     <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0" />
-    <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
+    <PackageReference Update="Azure.Monitor.Query.Logs" Version="1.0.0" />
     <PackageReference Update="Azure.Identity" Version="1.16.0" />
     <PackageReference Update="Azure.Search.Documents" Version="11.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.7.0" />
