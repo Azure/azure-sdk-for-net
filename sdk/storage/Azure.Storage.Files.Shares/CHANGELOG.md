@@ -10,7 +10,6 @@
 - Added support for service version 2026-02-06.
 - Added support for User Delegation SAS.
 - Added support for Principal-Bound Identity User Delegation SAS.
-- Added support for the EnableDirectoryLease parameter on ShareClient.Create(), .CreateAsync(), ShareClient.SetProperties(), and .SetPropertiesAsync().
 - Added support for the ShareServiceProperties.Protocol.SMB.EncryptionInTransit parameter on ShareServiceClient.SetProperties() and .SetPropertiesAsync().
 - Added support for uploading data with the new Content parameter on ShareFileClient.Create() and .CreateAsync().
 - Added support for the PropertySemantics parameter on ShareFileClient.Create(), .CreateAsync(), ShareDirectoryClient.Create(), and .CreateAsync().

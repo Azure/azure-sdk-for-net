@@ -7,7 +7,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal static partial class ProviderConstants
     {

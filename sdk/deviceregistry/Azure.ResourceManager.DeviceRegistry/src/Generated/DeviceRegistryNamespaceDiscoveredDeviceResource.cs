@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceRegistry.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
-    /// A Class representing a DeviceRegistryNamespaceDiscoveredDevice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDeviceRegistryNamespaceDiscoveredDeviceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DeviceRegistryNamespaceResource"/> using the GetDeviceRegistryNamespaceDiscoveredDevice method.
+    /// A class representing a DeviceRegistryNamespaceDiscoveredDevice along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DeviceRegistryNamespaceResource"/> using the GetDeviceRegistryNamespaceDiscoveredDevices method.
     /// </summary>
     public partial class DeviceRegistryNamespaceDiscoveredDeviceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="namespaceName"> The namespaceName. </param>
-        /// <param name="discoveredDeviceName"> The discoveredDeviceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string discoveredDeviceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics;
-        private readonly NamespaceDiscoveredDevicesRestOperations _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient;
+        private readonly ClientDiagnostics _namespaceDiscoveredDevicesClientDiagnostics;
+        private readonly NamespaceDiscoveredDevices _namespaceDiscoveredDevicesRestClient;
         private readonly DeviceRegistryNamespaceDiscoveredDeviceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DeviceRegistry/namespaces/discoveredDevices";
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DeviceRegistryNamespaceDiscoveredDeviceResource for mocking. </summary>
         protected DeviceRegistryNamespaceDiscoveredDeviceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceRegistryNamespaceDiscoveredDeviceResource(ArmClient client, DeviceRegistryNamespaceDiscoveredDeviceData data) : this(client, data.Id)
@@ -56,71 +46,73 @@ namespace Azure.ResourceManager.DeviceRegistry
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceRegistryNamespaceDiscoveredDeviceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesApiVersion);
-            _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient = new NamespaceDiscoveredDevicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string deviceRegistryNamespaceDiscoveredDeviceApiVersion);
+            _namespaceDiscoveredDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
+            _namespaceDiscoveredDevicesRestClient = new NamespaceDiscoveredDevices(_namespaceDiscoveredDevicesClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceDiscoveredDeviceApiVersion ?? "2025-10-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DeviceRegistryNamespaceDiscoveredDeviceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="discoveredDeviceName"> The discoveredDeviceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string discoveredDeviceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Get a NamespaceDiscoveredDevice
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NamespaceDiscoveredDevice_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a NamespaceDiscoveredDevice. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeviceRegistryNamespaceDiscoveredDeviceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.Get");
+            using DiagnosticScope scope = _namespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.Get");
             scope.Start();
             try
             {
-                var response = await _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _namespaceDiscoveredDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceRegistryNamespaceDiscoveredDeviceData> response = Response.FromValue(DeviceRegistryNamespaceDiscoveredDeviceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,37 +122,25 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Get a NamespaceDiscoveredDevice
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NamespaceDiscoveredDevice_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a NamespaceDiscoveredDevice. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeviceRegistryNamespaceDiscoveredDeviceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.Get");
+            using DiagnosticScope scope = _namespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.Get");
             scope.Start();
             try
             {
-                var response = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _namespaceDiscoveredDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceRegistryNamespaceDiscoveredDeviceData> response = Response.FromValue(DeviceRegistryNamespaceDiscoveredDeviceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,111 +150,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Delete a NamespaceDiscoveredDevice
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NamespaceDiscoveredDevice_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceRegistryArmOperation(_deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics, Pipeline, _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a NamespaceDiscoveredDevice
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NamespaceDiscoveredDevice_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DeviceRegistryArmOperation(_deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics, Pipeline, _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a NamespaceDiscoveredDevice
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NamespaceDiscoveredDevice_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update a NamespaceDiscoveredDevice. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -283,14 +159,27 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.Update");
+            using DiagnosticScope scope = _namespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.Update");
             scope.Start();
             try
             {
-                var response = await _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredDeviceResource>(new DeviceRegistryNamespaceDiscoveredDeviceOperationSource(Client), _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics, Pipeline, _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _namespaceDiscoveredDevicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DeviceRegistryNamespaceDiscoveredDevicePatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredDeviceResource> operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredDeviceResource>(
+                    new DeviceRegistryNamespaceDiscoveredDeviceOperationSource(Client),
+                    _namespaceDiscoveredDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -300,27 +189,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Update a NamespaceDiscoveredDevice
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NamespaceDiscoveredDevice_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update a NamespaceDiscoveredDevice. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -329,14 +198,27 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.Update");
+            using DiagnosticScope scope = _namespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.Update");
             scope.Start();
             try
             {
-                var response = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredDeviceResource>(new DeviceRegistryNamespaceDiscoveredDeviceOperationSource(Client), _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics, Pipeline, _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _namespaceDiscoveredDevicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DeviceRegistryNamespaceDiscoveredDevicePatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredDeviceResource> operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredDeviceResource>(
+                    new DeviceRegistryNamespaceDiscoveredDeviceOperationSource(Client),
+                    _namespaceDiscoveredDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -346,27 +228,65 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NamespaceDiscoveredDevice_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Delete a NamespaceDiscoveredDevice. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _namespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _namespaceDiscoveredDevicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_namespaceDiscoveredDevicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a NamespaceDiscoveredDevice. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _namespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _namespaceDiscoveredDevicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_namespaceDiscoveredDevicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -376,28 +296,34 @@ namespace Azure.ResourceManager.DeviceRegistry
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.AddTag");
+            using DiagnosticScope scope = _namespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _namespaceDiscoveredDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DeviceRegistryNamespaceDiscoveredDeviceData> response = Response.FromValue(DeviceRegistryNamespaceDiscoveredDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DeviceRegistryNamespaceDiscoveredDevicePatch();
-                    foreach (var tag in current.Tags)
+                    DeviceRegistryNamespaceDiscoveredDeviceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DeviceRegistryNamespaceDiscoveredDevicePatch patch = new DeviceRegistryNamespaceDiscoveredDevicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryNamespaceDiscoveredDeviceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -408,27 +334,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NamespaceDiscoveredDevice_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -438,28 +344,34 @@ namespace Azure.ResourceManager.DeviceRegistry
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.AddTag");
+            using DiagnosticScope scope = _namespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _namespaceDiscoveredDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DeviceRegistryNamespaceDiscoveredDeviceData> response = Response.FromValue(DeviceRegistryNamespaceDiscoveredDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DeviceRegistryNamespaceDiscoveredDevicePatch();
-                    foreach (var tag in current.Tags)
+                    DeviceRegistryNamespaceDiscoveredDeviceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DeviceRegistryNamespaceDiscoveredDevicePatch patch = new DeviceRegistryNamespaceDiscoveredDevicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DeviceRegistryNamespaceDiscoveredDeviceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -470,53 +382,39 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NamespaceDiscoveredDevice_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DeviceRegistryNamespaceDiscoveredDeviceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.SetTags");
+            using DiagnosticScope scope = _namespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _namespaceDiscoveredDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DeviceRegistryNamespaceDiscoveredDeviceData> response = Response.FromValue(DeviceRegistryNamespaceDiscoveredDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DeviceRegistryNamespaceDiscoveredDevicePatch();
+                    DeviceRegistryNamespaceDiscoveredDeviceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DeviceRegistryNamespaceDiscoveredDevicePatch patch = new DeviceRegistryNamespaceDiscoveredDevicePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryNamespaceDiscoveredDeviceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -527,53 +425,39 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NamespaceDiscoveredDevice_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DeviceRegistryNamespaceDiscoveredDeviceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.SetTags");
+            using DiagnosticScope scope = _namespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _namespaceDiscoveredDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DeviceRegistryNamespaceDiscoveredDeviceData> response = Response.FromValue(DeviceRegistryNamespaceDiscoveredDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DeviceRegistryNamespaceDiscoveredDevicePatch();
+                    DeviceRegistryNamespaceDiscoveredDeviceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DeviceRegistryNamespaceDiscoveredDevicePatch patch = new DeviceRegistryNamespaceDiscoveredDevicePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DeviceRegistryNamespaceDiscoveredDeviceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -584,27 +468,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NamespaceDiscoveredDevice_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -612,28 +476,34 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.RemoveTag");
+            using DiagnosticScope scope = _namespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _namespaceDiscoveredDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DeviceRegistryNamespaceDiscoveredDeviceData> response = Response.FromValue(DeviceRegistryNamespaceDiscoveredDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DeviceRegistryNamespaceDiscoveredDevicePatch();
-                    foreach (var tag in current.Tags)
+                    DeviceRegistryNamespaceDiscoveredDeviceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DeviceRegistryNamespaceDiscoveredDevicePatch patch = new DeviceRegistryNamespaceDiscoveredDevicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryNamespaceDiscoveredDeviceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -644,27 +514,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NamespaceDiscoveredDevice_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -672,28 +522,34 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.RemoveTag");
+            using DiagnosticScope scope = _namespaceDiscoveredDevicesClientDiagnostics.CreateScope("DeviceRegistryNamespaceDiscoveredDeviceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _deviceRegistryNamespaceDiscoveredDeviceNamespaceDiscoveredDevicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _namespaceDiscoveredDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DeviceRegistryNamespaceDiscoveredDeviceData> response = Response.FromValue(DeviceRegistryNamespaceDiscoveredDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DeviceRegistryNamespaceDiscoveredDevicePatch();
-                    foreach (var tag in current.Tags)
+                    DeviceRegistryNamespaceDiscoveredDeviceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DeviceRegistryNamespaceDiscoveredDevicePatch patch = new DeviceRegistryNamespaceDiscoveredDevicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DeviceRegistryNamespaceDiscoveredDeviceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

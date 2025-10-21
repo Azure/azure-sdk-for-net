@@ -7,5 +7,6 @@
     <PackageId>Azure.ResourceManager.IotFirmwareDefense</PackageId>
     <Description>Azure Resource Manager client SDK for Azure firmware analysis</Description>
     <PackageTags>azure;management;arm;resource manager;iotfirmwaredefense;firmware analysis</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

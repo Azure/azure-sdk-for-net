@@ -9,7 +9,10 @@ import {
   $onEmit as $onAzureEmit,
   AzureEmitterOptions
 } from "@azure-typespec/http-client-csharp";
-import { azureSDKContextOptions, flattenPropertyDecorator } from "./sdk-context-options.js";
+import {
+  azureSDKContextOptions,
+  flattenPropertyDecorator
+} from "./sdk-context-options.js";
 import { updateClients } from "./resource-detection.js";
 import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
 
@@ -31,15 +34,17 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   }
 }
 
-function setFlattenProperty(codeModel: CodeModel, sdkContext: CSharpEmitterContext): void {
+function setFlattenProperty(
+  codeModel: CodeModel,
+  sdkContext: CSharpEmitterContext
+): void {
   for (const model of sdkContext.sdkPackage.models) {
     for (const property of model.properties) {
-      if (property.flatten ) {
-
-          const flattenPropertyMetadataDecorator: DecoratorInfo = {
-            name: flattenPropertyDecorator,
-            arguments: {}
-          };
+      if (property.flatten) {
+        const flattenPropertyMetadataDecorator: DecoratorInfo = {
+          name: flattenPropertyDecorator,
+          arguments: {}
+        };
         property.decorators.push(flattenPropertyMetadataDecorator);
       }
     }

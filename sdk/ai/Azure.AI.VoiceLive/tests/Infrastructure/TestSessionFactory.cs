@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         internal static TestableVoiceLiveSession CreateSessionWithFakeSocket(out FakeWebSocket fakeSocket)
         {
             var client = new VoiceLiveClient(new Uri("https://example.org"), new AzureKeyCredential("test-key"));
-            var session = new TestableVoiceLiveSession(client, new Uri("wss://example.org/voice-agent/realtime"), new AzureKeyCredential("test-key"));
+            var session = new TestableVoiceLiveSession(client, new AzureKeyCredential("test-key"));
             fakeSocket = new FakeWebSocket();
             session.SetWebSocket(fakeSocket);
             return session;

@@ -10,6 +10,7 @@
     <PackageTags>Microsoft Azure Communication CallingServer Service;Microsoft;Azure;Azure Communication Service;Azure Communication CallingServer Service;Calling;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
