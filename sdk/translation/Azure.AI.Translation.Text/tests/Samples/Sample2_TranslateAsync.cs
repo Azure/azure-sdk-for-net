@@ -333,5 +333,35 @@ namespace Azure.AI.Translation.Text.Samples
             }
             #endregion
         }
+
+        [Test]
+        public async Task GetTextTranslationFallback()
+        {
+            TextTranslationClient client = CreateClient();
+
+            #region Snippet:GetTextTranslationFallback
+            try
+            {
+                string category = "<<Category ID>>";
+                string targetLanguage = "cs";
+                string inputText = "This is a test.";
+
+                TranslateTarget target = new TranslateTarget(targetLanguage, deploymentName: category, allowFallback: true);
+                TranslateInputItem input = new TranslateInputItem(inputText, [target]);
+
+                Response<TranslatedTextItem> response = await client.TranslateAsync(input).ConfigureAwait(false);
+                TranslatedTextItem translation = response.Value;
+                TranslationText translated = translation.Translations.FirstOrDefault();
+
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Text was translated to: '{translated?.Language}' and the result is: '{translated?.Text}'.");
+            }
+            catch (RequestFailedException exception)
+            {
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
+            }
+            #endregion
+        }
     }
 }
