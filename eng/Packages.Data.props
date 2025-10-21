@@ -122,7 +122,7 @@
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.21.0" />
     <PackageReference Update="Azure.Messaging.EventGrid.SystemEvents" Version="1.0.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.20.1" />
-    <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.4.0" />
+    <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.6.0" />
     <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
@@ -131,11 +131,11 @@
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.7.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.7.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.7.0" />
-    <PackageReference Update="Azure.Storage.Common" Version="12.24.0" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.25.0" />
-    <PackageReference Update="Azure.Storage.Queues" Version="12.23.0" />
-    <PackageReference Update="Azure.Storage.Files.Shares" Version="12.23.0" />
-    <PackageReference Update="Azure.Storage.DataMovement" Version="12.0.0" />
+    <PackageReference Update="Azure.Storage.Common" Version="12.25.0" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.26.0" />
+    <PackageReference Update="Azure.Storage.Queues" Version="12.24.0" />
+    <PackageReference Update="Azure.Storage.Files.Shares" Version="12.24.0" />
+    <PackageReference Update="Azure.Storage.DataMovement" Version="12.2.2" />
     <PackageReference Update="Azure.ResourceManager" Version="1.13.2" />
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.AppContainers" Version="1.4.0" />
@@ -183,7 +183,7 @@
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.7.0" />
-    <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.4.0" />
+    <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.5.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.76.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.76.0" />
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.76.0" />
@@ -348,8 +348,8 @@
     <PackageReference Update="Azure.Search.Documents" Version="11.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.24.1" />
-    <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.21.0" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.26.0" />
+    <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.24.0" />
     <PackageReference Update="BenchmarkDotNet" Version="0.13.4" />
     <PackageReference Update="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.4" />
     <PackageReference Update="Castle.Core" Version="5.1.0" />
@@ -469,7 +469,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250930.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20251017.1</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20251020.2</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20251017.2</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

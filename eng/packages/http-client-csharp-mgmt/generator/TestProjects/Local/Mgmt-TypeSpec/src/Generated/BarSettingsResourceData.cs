@@ -20,16 +20,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
+        /// <param name="propertyLeft"> enabled. </param>
+        /// <param name="anotherPropertyLeft"> enabled. </param>
         /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
         /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
         /// <param name="prop2"> Gets or sets the Prop2. </param>
         /// <param name="discriminatorProperty"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/> or <paramref name="discriminatorProperty"/> is null. </exception>
-        public BarSettingsResourceData(string innerProp2, int middleProp1, int prop2, LimitJsonObject discriminatorProperty)
+        public BarSettingsResourceData(int? propertyLeft, int? anotherPropertyLeft, string innerProp2, int middleProp1, int prop2, LimitJsonObject discriminatorProperty)
         {
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
 
             StringArray = new ChangeTrackingList<string>();
+            PropertyLeft = propertyLeft;
+            AnotherPropertyLeft = anotherPropertyLeft;
             InnerProp2 = innerProp2;
             MiddleProp1 = middleProp1;
             Prop2 = prop2;
@@ -62,27 +66,35 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal BarSettingsProperties Properties { get; set; }
 
         /// <summary> Gets the StringArray. </summary>
+        [WirePath("stringArray")]
         public IList<string> StringArray { get; }
 
         /// <summary> Gets or sets the Property. </summary>
+        [WirePath("property")]
         internal BarQuotaProperties Property { get; set; }
 
         /// <summary> Gets or sets the AnotherProperty. </summary>
+        [WirePath("anotherProperty")]
         internal BarQuotaProperties AnotherProperty { get; set; }
 
         /// <summary> Gets or sets the FlattenedNestedProperty. </summary>
+        [WirePath("flattenedNestedProperty")]
         internal BarNestedQuotaProperties FlattenedNestedProperty { get; set; }
 
         /// <summary> Gets or sets the OptionalFlattenProperty. </summary>
+        [WirePath("optionalFlattenProperty")]
         internal OptionalFlattenPropertyType OptionalFlattenProperty { get; set; }
 
         /// <summary> Gets or sets the DiscriminatorProperty. </summary>
+        [WirePath("discriminatorProperty")]
         public LimitJsonObject DiscriminatorProperty { get; set; }
 
         /// <summary> enabled. </summary>
+        [WirePath("properties.isEnabled")]
         public bool? IsEnabled
         {
             get
@@ -92,6 +104,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> enabled. </summary>
+        [WirePath("property.left")]
         public int? PropertyLeft
         {
             get
@@ -105,6 +118,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> enabled. </summary>
+        [WirePath("anotherProperty.left")]
         public int? AnotherPropertyLeft
         {
             get
@@ -118,6 +132,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Gets or sets the InnerProp1. </summary>
+        [WirePath("flattenedNestedProperty.innerProp1")]
         public int? InnerProp1
         {
             get
@@ -135,6 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Gets or sets the InnerProp2. </summary>
+        [WirePath("flattenedNestedProperty.innerProp2")]
         public string InnerProp2
         {
             get
@@ -152,6 +168,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Gets or sets the MiddleProp1. </summary>
+        [WirePath("flattenedNestedProperty.middleProp1")]
         public int MiddleProp1
         {
             get
@@ -169,6 +186,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Gets the MiddleProp2. </summary>
+        [WirePath("flattenedNestedProperty.middleProp2")]
         public IDictionary<string, string> MiddleProp2
         {
             get
@@ -182,6 +200,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Gets the Prop1. </summary>
+        [WirePath("flattenedNestedProperty.prop1")]
         public IList<string> Prop1
         {
             get
@@ -195,6 +214,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Gets or sets the Prop2. </summary>
+        [WirePath("flattenedNestedProperty.prop2")]
         public int Prop2
         {
             get
@@ -212,6 +232,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Gets the RandomCollectionProp. </summary>
+        [WirePath("optionalFlattenProperty.randomCollectionProp")]
         public IList<string> OptionalFlattenPropertyRandomCollectionProp
         {
             get
