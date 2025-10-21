@@ -421,12 +421,9 @@ namespace Microsoft.Extensions.Azure
                 throw new ArgumentException($"Only one of [{validIdentifiers}] can be specified for managed identity.");
             }
 
-            if (idCount < 1)
+            if (isFederated && idCount < 1)
             {
-                var clientIdPart = isFederated ? "A clientId and exactly one" : "Exactly one";
-                var federatedPart = isFederated ? "federated " : " ";
-
-                throw new ArgumentException($"{clientIdPart} of [{validIdentifiers}] must be specified for {federatedPart}managed identity.");
+                throw new ArgumentException($" clientId and exactly one of [{validIdentifiers}] must be specified for federated managed identity.");
             }
         }
 
