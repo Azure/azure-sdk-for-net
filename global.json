@@ -3,7 +3,7 @@
     "Microsoft.Build.Traversal": "3.2.0"
   },
   "sdk": {
-    "version": "9.0.306",
+    "version": "9.0.102",
     "rollForward": "feature"
   }
 }
