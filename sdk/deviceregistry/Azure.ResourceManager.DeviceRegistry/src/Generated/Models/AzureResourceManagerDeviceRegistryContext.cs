@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AssetEndpointProfileListResult))]
     [ModelReaderWriterBuildable(typeof(AssetEndpointProfileStatus))]
@@ -106,7 +106,6 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(EventStorageDestination))]
     [ModelReaderWriterBuildable(typeof(HostAuthentication))]
     [ModelReaderWriterBuildable(typeof(InboundEndpoints))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagementAction))]
     [ModelReaderWriterBuildable(typeof(ManagementGroup))]
     [ModelReaderWriterBuildable(typeof(MessageSchemaReference))]
@@ -138,7 +137,6 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(NamespaceStream))]
     [ModelReaderWriterBuildable(typeof(NamespaceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(OutboundEndpoints))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SchemaListResult))]
     [ModelReaderWriterBuildable(typeof(SchemaRegistryListResult))]
     [ModelReaderWriterBuildable(typeof(SchemaRegistryUpdateProperties))]
@@ -147,6 +145,7 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(StreamDestination))]
     [ModelReaderWriterBuildable(typeof(StreamMqttDestination))]
     [ModelReaderWriterBuildable(typeof(StreamStorageDestination))]
+    [ModelReaderWriterBuildable(typeof(Models.SystemAssignedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrustSettings))]
     [ModelReaderWriterBuildable(typeof(UnknownDatasetDestination))]

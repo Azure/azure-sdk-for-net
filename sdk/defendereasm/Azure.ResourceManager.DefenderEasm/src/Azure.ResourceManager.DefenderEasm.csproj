@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.DefenderEasm</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider DefenderEasm.</Description>
     <PackageTags>azure;management;arm;resource manager;defendereasm</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

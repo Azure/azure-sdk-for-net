@@ -5,6 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
+- The `trust` parameter for `MCPApproval` constructor was renamed to `requireApproval`.
 
 ### Bugs Fixed
 

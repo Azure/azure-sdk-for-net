@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Azure.Generator.MgmtTypeSpec.Tests client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Azure.Generator.MgmtTypeSpec.Tests</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.Generator.MgmtTypeSpec.Tests</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/resourcemanager/Azure.ResourceManager/src/Shared/SharedExtensions.cs" LinkBase="Shared/Arm" />
+  </ItemGroup>
+</Project>
