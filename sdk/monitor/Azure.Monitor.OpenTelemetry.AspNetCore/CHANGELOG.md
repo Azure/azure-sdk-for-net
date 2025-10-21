@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (2025-10-21)
 
 ### Features Added
 
@@ -12,12 +12,10 @@
   `microsoft.rate_limited`, sampling ratio 0.0 - 1.0 for
   `microsoft.fixed_percentage`).
   ([#52720](https://github.com/Azure/azure-sdk-for-net/pull/52720))
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+* Added handling of stable database client span semantic conventions
+  ([#53050](https://github.com/Azure/azure-sdk-for-net/pull/53050))
+* Added collection of some performance metrics
+  ([#52705](https://github.com/Azure/azure-sdk-for-net/pull/52705))
 
 ## 1.3.0 (2025-05-09)
 
