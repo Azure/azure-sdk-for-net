@@ -23,6 +23,7 @@ function Invoke-LoggedCommand
         [string] $ExecutePath,
         [switch] $GroupOutput,
         [int[]] $AllowedExitCodes = @(0),
+        [switch] $DoNotExitOnFailedExitCode,
         [scriptblock] $OutputProcessor
     )
 
@@ -51,10 +52,12 @@ function Invoke-LoggedCommand
         LogGroupEnd
       }
 
-      if($LastExitCode -notin $AllowedExitCodes)
+      if($LASTEXITCODE -notin $AllowedExitCodes)
       {
           LogError "Command failed to execute ($duration): $Command`n"
-          exit $LastExitCode
+          if (!$DoNotExitOnFailedExitCode) {
+              exit $LASTEXITCODE
+          }
       }
       else {
           Write-Host "Command succeeded ($duration)`n"
