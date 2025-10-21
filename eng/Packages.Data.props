@@ -32,7 +32,7 @@
 
     <PackageReference Update="System.Collections.Concurrent" Version="4.3.0" />
     <PackageReference Update="System.Collections" Version="4.3.0" />
-    <PackageReference Update="System.Data.SqlClient" Version="4.3.1" />
+    <PackageReference Update="System.Data.SqlClient" Version="4.9.0" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
     <PackageReference Update="System.Diagnostics.Tools" Version="4.3.0" />
     <PackageReference Update="System.Globalization" Version="4.3.0" />
