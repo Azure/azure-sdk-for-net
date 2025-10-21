@@ -10,6 +10,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.DeviceRegistry.Models;
 using Azure.ResourceManager.Models;
 using NUnit.Framework;
+using SystemAssignedManagedIdentityType = Azure.ResourceManager.DeviceRegistry.Models.SystemAssignedServiceIdentityType;
 
 namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 {
@@ -54,13 +55,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                     DisplayName = "Schema Registry SDK test",
                     StorageAccountContainerUri = new Uri("https://schemaregistrysdktest.blob.core.windows.net/schemaregistrysdkcontainertest")
                 },
-                Identity = new(ManagedServiceIdentityType.SystemAssigned)
+                Identity = new(SystemAssignedManagedIdentityType.SystemAssigned)
             };
             var schemaRegistryCreateOrUpdateResponse = await schemaRegistriesCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaRegistryName, schemaRegistryData, CancellationToken.None);
             Assert.IsNotNull(schemaRegistryCreateOrUpdateResponse.Value);
             Assert.IsNotNull(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.TenantId);
             Assert.IsNotNull(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.PrincipalId);
-            Assert.AreEqual(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.ManagedServiceIdentityType, ManagedServiceIdentityType.SystemAssigned);
+            Assert.AreEqual(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.Type, SystemAssignedManagedIdentityType.SystemAssigned);
             Assert.IsTrue(Guid.TryParse(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _));
             Assert.AreEqual(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.Namespace, schemaRegistryData.Properties.Namespace);
             Assert.AreEqual(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.Description, schemaRegistryData.Properties.Description);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.IsNotNull(schemaRegistryReadResponse.Value);
             Assert.IsNotNull(schemaRegistryReadResponse.Value.Data.Identity.TenantId);
             Assert.IsNotNull(schemaRegistryReadResponse.Value.Data.Identity.PrincipalId);
-            Assert.AreEqual(schemaRegistryReadResponse.Value.Data.Identity.ManagedServiceIdentityType, ManagedServiceIdentityType.SystemAssigned);
+            Assert.AreEqual(schemaRegistryReadResponse.Value.Data.Identity.Type, SystemAssignedManagedIdentityType.SystemAssigned);
             Assert.IsTrue(Guid.TryParse(schemaRegistryReadResponse.Value.Data.Properties.Uuid, out _));
             Assert.AreEqual(schemaRegistryReadResponse.Value.Data.Properties.Namespace, schemaRegistryData.Properties.Namespace);
             Assert.AreEqual(schemaRegistryReadResponse.Value.Data.Properties.Description, schemaRegistryData.Properties.Description);
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.IsNotNull(schemaRegistryUpdateResponse.Value);
             Assert.IsNotNull(schemaRegistryUpdateResponse.Value.Data.Identity.TenantId);
             Assert.IsNotNull(schemaRegistryUpdateResponse.Value.Data.Identity.PrincipalId);
-            Assert.AreEqual(schemaRegistryUpdateResponse.Value.Data.Identity.ManagedServiceIdentityType, ManagedServiceIdentityType.SystemAssigned);
+            Assert.AreEqual(schemaRegistryUpdateResponse.Value.Data.Identity.Type, SystemAssignedManagedIdentityType.SystemAssigned);
             Assert.IsTrue(Guid.TryParse(schemaRegistryUpdateResponse.Value.Data.Properties.Uuid, out _));
             Assert.AreEqual(schemaRegistryUpdateResponse.Value.Data.Properties.Namespace, schemaRegistryData.Properties.Namespace);
             Assert.AreEqual(schemaRegistryUpdateResponse.Value.Data.Properties.Description, schemaRegistryPatchData.Properties.Description);

@@ -112,7 +112,18 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(deviceUpdateResponse.Value.Data.Properties.Version, 2);
 
             // Delete DeviceRegistry Device
-            await device.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            try
+            {
+                await device.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            }
+            catch (RequestFailedException ex)
+            {
+                // Delete temporary returns 200 since async operation is defined for the resource but not implemented in RP
+                if (ex.Status != 200)
+                {
+                    throw;
+                }
+            }
         }
     }
 }
