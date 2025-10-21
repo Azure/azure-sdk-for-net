@@ -30,6 +30,7 @@ namespace Azure.Generator.Management.Providers
     {
         private readonly ResourceMetadata _resourceMetadata;
         private readonly Dictionary<ParameterProvider, FieldProvider> _pathParameterMap;
+        //private readonly Dictionary<ParameterProvider, FieldProvider> _extraConstructorParameterMap;
         private readonly ResourceClientProvider _resource;
         private readonly ResourceMethod? _getAll;
         private readonly ResourceMethod? _create;
@@ -53,14 +54,16 @@ namespace Azure.Generator.Management.Providers
             _contextualPath = GetContextualRequestPattern(resourceMetadata);
             _resource = resource;
 
-            _pathParameterMap = BuildPathParameterMap();
-
             // Initialize client info dictionary using extension method
             _clientInfos = resourceMetadata.CreateClientInfosMap(this);
 
             _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
             InitializeMethods(resourceMethods, ref _get, ref _create, ref _getAll);
+
+            // this depends on _getAll being initialized
+            _pathParameterMap = BuildExtraConstuctorParameterMap();
+            //_extraConstructorParameterMap = BuildExtraConstuctorParameterMap();
         }
 
         /// <summary>
@@ -179,6 +182,33 @@ namespace Azure.Generator.Management.Providers
             {
                 variableSegments.RemoveAt(variableSegments.Count - 1);
             }
+            foreach (var seg in variableSegments)
+            {
+                var parameter = new ParameterProvider(
+                    seg.VariableName,
+                    $"The {seg.VariableName} for the resource.",
+                    Resource.GetPathParameterType(seg.VariableName));
+                var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, Resource.GetPathParameterType(seg.VariableName), $"_{seg.VariableName}", this, description: $"The {seg.VariableName}.");
+                map.Add(parameter, field);
+            }
+            return map;
+        }
+
+        private Dictionary<ParameterProvider, FieldProvider> BuildExtraConstuctorParameterMap()
+        {
+            var map = new Dictionary<ParameterProvider, FieldProvider>();
+            if (_getAll is null)
+            {
+                return map;
+            }
+
+            var diff = new RequestPathPattern(_getAll.OperationPath).TrimAncestorFrom(Resource.ContextualPath);
+            var variableSegments = diff.Where(seg => !seg.IsConstant).ToList();
+            if (variableSegments.Count > 0)
+            {
+                variableSegments.RemoveAt(variableSegments.Count - 1);
+            }
+
             foreach (var seg in variableSegments)
             {
                 var parameter = new ParameterProvider(

@@ -29,8 +29,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     {
         private readonly ClientDiagnostics _playwrightQuotasClientDiagnostics;
         private readonly PlaywrightQuotas _playwrightQuotasRestClient;
-        /// <summary> The location. </summary>
-        private readonly AzureLocation _location;
 
         /// <summary> Initializes a new instance of PlaywrightQuotaCollection for mocking. </summary>
         protected PlaywrightQuotaCollection()
@@ -40,11 +38,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Initializes a new instance of <see cref="PlaywrightQuotaCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="location"> The location for the resource. </param>
-        internal PlaywrightQuotaCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
+        internal PlaywrightQuotaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(PlaywrightQuotaResource.ResourceType, out string playwrightQuotaApiVersion);
-            _location = location;
             _playwrightQuotasClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PlaywrightQuotaResource.ResourceType.Namespace, Diagnostics);
             _playwrightQuotasRestClient = new PlaywrightQuotas(_playwrightQuotasClientDiagnostics, Pipeline, Endpoint, playwrightQuotaApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
@@ -61,9 +57,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PlaywrightQuotaResource>> GetAsync(PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightQuotaResource>> GetAsync(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _playwrightQuotasClientDiagnostics.CreateScope("PlaywrightQuotaCollection.Get");
             scope.Start();
@@ -73,7 +70,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, playwrightQuotaName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PlaywrightQuotaData> response = Response.FromValue(PlaywrightQuotaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -90,9 +87,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Get subscription-level location-based Playwright quota resource by name. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PlaywrightQuotaResource> Get(PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightQuotaResource> Get(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _playwrightQuotasClientDiagnostics.CreateScope("PlaywrightQuotaCollection.Get");
             scope.Start();
@@ -102,7 +100,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, playwrightQuotaName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PlaywrightQuotaData> response = Response.FromValue(PlaywrightQuotaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -119,33 +117,36 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> List Playwright quota resources for a given subscription Id. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightQuotaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PlaywrightQuotaResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PlaywrightQuotaResource> GetAllAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionAsyncCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new PlaywrightQuotaResource(Client, data));
+            return new AsyncPageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionAsyncCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), location, context), data => new PlaywrightQuotaResource(Client, data));
         }
 
         /// <summary> List Playwright quota resources for a given subscription Id. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightQuotaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PlaywrightQuotaResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<PlaywrightQuotaResource> GetAll(AzureLocation location, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new PlaywrightQuotaResource(Client, data));
+            return new PageableWrapper<PlaywrightQuotaData, PlaywrightQuotaResource>(new PlaywrightQuotasGetBySubscriptionCollectionResultOfT(_playwrightQuotasRestClient, Guid.Parse(Id.SubscriptionId), location, context), data => new PlaywrightQuotaResource(Client, data));
         }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _playwrightQuotasClientDiagnostics.CreateScope("PlaywrightQuotaCollection.Exists");
             scope.Start();
@@ -155,7 +156,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, playwrightQuotaName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PlaywrightQuotaData> response = default;
@@ -180,9 +181,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _playwrightQuotasClientDiagnostics.CreateScope("PlaywrightQuotaCollection.Exists");
             scope.Start();
@@ -192,7 +194,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, playwrightQuotaName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PlaywrightQuotaData> response = default;
@@ -217,9 +219,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<PlaywrightQuotaResource>> GetIfExistsAsync(PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<PlaywrightQuotaResource>> GetIfExistsAsync(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _playwrightQuotasClientDiagnostics.CreateScope("PlaywrightQuotaCollection.GetIfExists");
             scope.Start();
@@ -229,7 +232,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, playwrightQuotaName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PlaywrightQuotaData> response = default;
@@ -258,9 +261,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<PlaywrightQuotaResource> GetIfExists(PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<PlaywrightQuotaResource> GetIfExists(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _playwrightQuotasClientDiagnostics.CreateScope("PlaywrightQuotaCollection.GetIfExists");
             scope.Start();
@@ -270,7 +274,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, playwrightQuotaName.ToString(), context);
+                HttpMessage message = _playwrightQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, playwrightQuotaName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PlaywrightQuotaData> response = default;
@@ -300,18 +304,18 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         IEnumerator<PlaywrightQuotaResource> IEnumerable<PlaywrightQuotaResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return this.GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return this.GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PlaywrightQuotaResource> IAsyncEnumerable<PlaywrightQuotaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
