@@ -65,7 +65,7 @@ namespace Azure.AI.ContentUnderstanding
             }
             if (Optional.IsCollectionDefined(KeyFrameTimesMs))
             {
-                writer.WritePropertyName("keyFrameTimesMs"u8);
+                writer.WritePropertyName("KeyFrameTimesMs"u8);
                 writer.WriteStartArray();
                 foreach (long item in KeyFrameTimesMs)
                 {
@@ -233,7 +233,7 @@ namespace Azure.AI.ContentUnderstanding
                     cameraShotTimesMs = array;
                     continue;
                 }
-                if (prop.NameEquals("keyFrameTimesMs"u8))
+                if (prop.NameEquals("KeyFrameTimesMs"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -73,6 +73,7 @@ namespace Azure.AI.ContentUnderstanding
         public IList<long> CameraShotTimesMs { get; }
 
         /// <summary> List of key frames in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("KeyFrameTimesMs")]
         public IList<long> KeyFrameTimesMs { get; }
 
         /// <summary> List of transcript phrases.  Only if returnDetails is true. </summary>
