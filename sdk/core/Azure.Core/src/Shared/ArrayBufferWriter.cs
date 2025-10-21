@@ -109,7 +109,7 @@ namespace Azure.Core
 
         /// <summary>
         /// Returns a <see cref="Memory{T}"/> to write to that is at least the requested length (specified by <paramref name="sizeHint"/>).
-        /// If no <paramref name="sizeHint"/> is provided (or it's equal to <code>0</code>), some non-empty buffer is returned.
+        /// If no <paramref name="sizeHint"/> is provided (or it's equal to. <code>0</code>), some non-empty buffer is returned.
         /// </summary>
         /// <exception cref="ArgumentException">
         /// Thrown when <paramref name="sizeHint"/> is negative.
@@ -132,7 +132,7 @@ namespace Azure.Core
 
         /// <summary>
         /// Returns a <see cref="Span{T}"/> to write to that is at least the requested length (specified by <paramref name="sizeHint"/>).
-        /// If no <paramref name="sizeHint"/> is provided (or it's equal to <code>0</code>), some non-empty buffer is returned.
+        /// If no <paramref name="sizeHint"/> is provided (or it's equal to. <code>0</code>), some non-empty buffer is returned.
         /// </summary>
         /// <exception cref="ArgumentException">
         /// Thrown when <paramref name="sizeHint"/> is negative.

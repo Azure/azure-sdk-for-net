@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="Castle.Core" />
     <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit.Analyzers" />
     <PackageReference Include="System.ClientModel" /> 
   </ItemGroup>
 

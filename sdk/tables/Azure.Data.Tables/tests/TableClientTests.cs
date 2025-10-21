@@ -38,6 +38,7 @@ namespace Azure.Data.Tables.Tests
         private TableEntity entityWithoutRK = new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" } };
         private TableEntity validEntity =
             new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" }, { TableConstants.PropertyNames.RowKey, "row" } };
+        private static readonly string[] expected = new[] { "PartitionKey", "RowKey", "MyFoo" };
 
         [SetUp]
         public void TestSetup()
@@ -318,7 +319,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(dictEntity["PartitionKey"], Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
             Assert.That(dictEntity["RowKey"], Is.EqualTo(entity.RowKey), "The entities should be equivalent");
             Assert.That(dictEntity["MyFoo"], Is.EqualTo(entity["MyFoo"].ToString()), "The entities should be equivalent");
-            Assert.That(dictEntity.Keys, Is.EquivalentTo(new[] { "PartitionKey", "RowKey", "MyFoo" }), "Only PK, RK, and user properties should be sent");
+            Assert.That(dictEntity.Keys, Is.EquivalentTo(expected), "Only PK, RK, and user properties should be sent");
         }
 
         [Test]

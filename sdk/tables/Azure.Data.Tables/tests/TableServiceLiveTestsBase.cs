@@ -178,7 +178,7 @@ namespace Azure.Data.Tables.Tests
         /// Creates a list of table entities.
         /// </summary>
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
-        /// <param name="count">The number of entities to create</param>
+        /// <param name="count">The number of entities to create.</param>
         /// <returns></returns>
         internal static List<TableEntity> CreateTableEntities(string partitionKeyValue, int count)
         {
@@ -209,7 +209,7 @@ namespace Azure.Data.Tables.Tests
         /// Creates a list of Dictionary table entities.
         /// </summary>
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
-        /// <param name="count">The number of entities to create</param>
+        /// <param name="count">The number of entities to create.</param>
         /// <returns></returns>
         internal static List<TableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
         {
@@ -241,7 +241,7 @@ namespace Azure.Data.Tables.Tests
         /// Creates a list of strongly typed table entities.
         /// </summary>
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
-        /// <param name="count">The number of entities to create</param>
+        /// <param name="count">The number of entities to create.</param>
         /// <returns></returns>
         internal static List<TestEntity> CreateCustomTableEntities(string partitionKeyValue, int count)
         {
@@ -273,7 +273,7 @@ namespace Azure.Data.Tables.Tests
         /// Creates a list of strongly typed table entities.
         /// </summary>
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
-        /// <param name="count">The number of entities to create</param>
+        /// <param name="count">The number of entities to create.</param>
         /// <returns></returns>
         internal static List<ComplexEntity> CreateComplexTableEntities(string partitionKeyValue, int count)
         {
