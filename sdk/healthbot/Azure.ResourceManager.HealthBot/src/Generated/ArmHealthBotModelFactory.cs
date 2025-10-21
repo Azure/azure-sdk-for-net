@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -22,11 +24,11 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="properties"> The set of properties specific to Azure Health Bot resource. </param>
         /// <param name="skuName"> SKU of the Azure Health Bot. </param>
         /// <param name="identity"> The identity of the Azure Health Bot. </param>
-        /// <param name="properties"> The set of properties specific to Azure Health Bot resource. </param>
         /// <returns> A new <see cref="HealthBot.HealthBotData"/> instance for mocking. </returns>
-        public static HealthBotData HealthBotData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HealthBotSkuName? skuName = null, ManagedServiceIdentity identity = null, HealthBotProperties properties = null)
+        public static HealthBotData HealthBotData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HealthBotProperties properties = null, HealthBotSkuName? skuName = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -37,9 +39,9 @@ namespace Azure.ResourceManager.HealthBot.Models
                 systemData,
                 tags,
                 location,
+                properties,
                 skuName.HasValue ? new HealthBotSku(skuName.Value, serializedAdditionalRawData: null) : null,
                 identity,
-                properties,
                 serializedAdditionalRawData: null);
         }
 
@@ -47,10 +49,41 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// <param name="provisioningState"> The provisioning state of the Azure Health Bot resource. </param>
         /// <param name="botManagementPortalLink"> The link. </param>
         /// <param name="keyVaultProperties"> KeyVault properties for the resource encryption. </param>
+        /// <param name="accessControlMethod"> The access control method for the Azure Health Bot resource. </param>
         /// <returns> A new <see cref="Models.HealthBotProperties"/> instance for mocking. </returns>
-        public static HealthBotProperties HealthBotProperties(string provisioningState = null, Uri botManagementPortalLink = null, HealthBotKeyVaultProperties keyVaultProperties = null)
+        public static HealthBotProperties HealthBotProperties(string provisioningState = null, Uri botManagementPortalLink = null, HealthBotKeyVaultProperties keyVaultProperties = null, string accessControlMethod = null)
         {
-            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, serializedAdditionalRawData: null);
+            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, accessControlMethod, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HealthBotKeysResult"/>. </summary>
+        /// <param name="secrets"> Array of Azure Health Bot Secrets. </param>
+        /// <returns> A new <see cref="Models.HealthBotKeysResult"/> instance for mocking. </returns>
+        public static HealthBotKeysResult HealthBotKeysResult(IEnumerable<HealthBotKey> secrets = null)
+        {
+            secrets ??= new List<HealthBotKey>();
+
+            return new HealthBotKeysResult(secrets?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HealthBotKey"/>. </summary>
+        /// <param name="keyName"> The name of the key. </param>
+        /// <param name="value"> The value of the key. </param>
+        /// <returns> A new <see cref="Models.HealthBotKey"/> instance for mocking. </returns>
+        public static HealthBotKey HealthBotKey(string keyName = null, string value = null)
+        {
+            return new HealthBotKey(keyName, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.HealthBot.Models.HealthBotProperties" />. </summary>
+        /// <param name="provisioningState"> The provisioning state of the Azure Health Bot resource. </param>
+        /// <param name="botManagementPortalLink"> The link. </param>
+        /// <param name="keyVaultProperties"> KeyVault properties for the resource encryption. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.HealthBot.Models.HealthBotProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HealthBotProperties HealthBotProperties(string provisioningState, Uri botManagementPortalLink, HealthBotKeyVaultProperties keyVaultProperties)
+        {
+            return HealthBotProperties(provisioningState: provisioningState, botManagementPortalLink: botManagementPortalLink, keyVaultProperties: keyVaultProperties, accessControlMethod: default);
         }
     }
 }
