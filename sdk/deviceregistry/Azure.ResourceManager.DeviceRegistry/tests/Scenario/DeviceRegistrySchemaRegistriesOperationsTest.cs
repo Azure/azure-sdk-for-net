@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             // ** Uncomment during recording **
             // Manually add the Role Assignment to the target storage container
             //int delayMs = 120000;
-            //Console.Error.WriteLine($"Waiting {delayMs/1000}s. Please add MI \"{schemaRegistryName}\" as \"Storage Blob Data Contributor\" Role to storage account container \"{schemaRegistryData.Properties.StorageAccountContainerUri}\".");
+            //Console.Error.WriteLine($"Waiting {delayMs / 1000}s. Please add MI for SR \"{schemaRegistryName}\", principal ID: \"{schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.PrincipalId}\" as \"Storage Blob Data Contributor\" Role to storage account container \"{schemaRegistryData.Properties.StorageAccountContainerUri}\".");
             //await Task.Delay(delayMs);
 
             // Create DeviceRegistry SchemaRegistry Schema Version

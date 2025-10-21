@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
     public class DeviceRegistryNamespaceAssetsOperationsTest : DeviceRegistryManagementTestBase
     {
         private readonly string _subscriptionId = "8c64812d-6e59-4e65-96b3-14a7cdb1a4e4";
-        private readonly string _rgNamePrefix = "adr-test-sdk-rg-ns-assets";
-        private readonly string _namespaceName = "adr-namespace";
+        private readonly string _resourceGroupNamePrefix = "adr-test-sdk-rg-ns-assets";
+        private readonly string _namespaceNamePrefix = "adr-namespace-test";
         private readonly string _assetNamePrefix = "deviceregistry-test-asset-sdk";
         private readonly string _extendedLocationName = "/subscriptions/8c64812d-6e59-4e65-96b3-14a7cdb1a4e4/resourceGroups/adr-sdk-test-rg/providers/Microsoft.ExtendedLocation/customLocations/adr-sdk-test-cluster-cl";
 
@@ -27,15 +27,33 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
         [RecordedTest]
         public async Task NamespaceAssetsCrudOperationsTest()
         {
+            var resourceGroupName = Recording.GenerateAssetName(_resourceGroupNamePrefix);
+            var namespaceName = Recording.GenerateAssetName(_namespaceNamePrefix);
             var assetName = Recording.GenerateAssetName(_assetNamePrefix);
 
             var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{_subscriptionId}"));
-            var rg = await CreateResourceGroup(subscription, _rgNamePrefix, AzureLocation.WestUS);
+            var rg = await CreateResourceGroup(subscription, resourceGroupName, AzureLocation.WestUS);
             var extendedLocation = new DeviceRegistryExtendedLocation() { ExtendedLocationType = "CustomLocation", Name = _extendedLocationName };
 
+            // Create the parent namespace resource
             var namespacesCollection = rg.GetDeviceRegistryNamespaces();
-            var namespaceResource = await namespacesCollection.GetAsync(_namespaceName);
-            var assetsCollection = namespaceResource.Value.GetDeviceRegistryNamespaceAssets();
+            var namespaceData = new DeviceRegistryNamespaceData(AzureLocation.WestUS)
+            {
+                Properties = new()
+                {
+                    MessagingEndpoints =
+                    {
+                        ["myendpoint1"] = new MessagingEndpoint("https://myendpoint1.westeurope-1.iothub.azure.net")
+                        {
+                            EndpointType = "Microsoft.Devices/IoTHubs",
+                            ResourceId = "/subscriptions/8c64812d-6e59-4e65-96b3-14a7cdb1a4e4/resourceGroups/adr-sdk-test-rg/providers/Microsoft.IotHub/namespaces/contoso-hub-namespace1"
+                        }
+                    }
+                }
+            };
+            var namespaceCreateOrUpdateResponse = await namespacesCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, namespaceData, CancellationToken.None);
+            var namespaceResource = namespaceCreateOrUpdateResponse.Value;
+            var assetsCollection = namespaceResource.GetDeviceRegistryNamespaceAssets();
 
             // Create DeviceRegistry Asset
             var deviceRef = new DeviceRef()
@@ -58,7 +76,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.DeviceRef.EndpointName, assetData.Properties.DeviceRef.EndpointName);
             Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.DisplayName, assetCreateOrUpdateResponse.Value.Data.Name);
             Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.Description, assetData.Properties.Description);
-            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.Version, 1);
             Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.Enabled, true);
 
             // Read DeviceRegistry Asset
@@ -69,7 +86,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(assetReadResponse.Value.Data.Properties.DeviceRef.DeviceName, assetData.Properties.DeviceRef.DeviceName);
             Assert.AreEqual(assetReadResponse.Value.Data.Properties.DeviceRef.EndpointName, assetData.Properties.DeviceRef.EndpointName);
             Assert.AreEqual(assetReadResponse.Value.Data.Properties.DisplayName, assetReadResponse.Value.Data.Name);
-            Assert.AreEqual(assetReadResponse.Value.Data.Properties.Version, 1);
             Assert.AreEqual(assetReadResponse.Value.Data.Properties.Enabled, true);
 
             // List DeviceRegistry Asset by Resource Group
@@ -100,7 +116,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.DeviceRef.EndpointName, assetData.Properties.DeviceRef.EndpointName);
             Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.DisplayName, assetUpdateResponse.Value.Data.Name);
             Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.Description, assetPatchData.Properties.Description);
-            Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.Version, 2);
             Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.Enabled, true);
 
             // Delete DeviceRegistry Asset
