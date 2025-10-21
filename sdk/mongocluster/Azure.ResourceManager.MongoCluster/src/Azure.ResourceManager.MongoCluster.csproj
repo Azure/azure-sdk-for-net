@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0</Version>
     <PackageId>Azure.ResourceManager.MongoCluster</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.MongoCluster.</Description>
     <PackageTags>azure;management;arm;resource manager;mongocluster</PackageTags>
