@@ -129,6 +129,7 @@ namespace Azure.AI.Translation.Text.Samples
         {
             TextTranslationClient client = CreateClient();
 
+            #region Snippet:GetMultipleTextTranslations
             try
             {
                 string targetLanguage = "cs";
@@ -153,6 +154,7 @@ namespace Azure.AI.Translation.Text.Samples
                 Console.WriteLine($"Error Code: {exception.ErrorCode}");
                 Console.WriteLine($"Message: {exception.Message}");
             }
+            #endregion
         }
 
         [Test]
@@ -292,6 +294,38 @@ namespace Azure.AI.Translation.Text.Samples
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
                 Console.WriteLine($"Text was translated to: '{translated?.Language}' and the result is: '{translated?.Text}'.");
+            }
+            catch (RequestFailedException exception)
+            {
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
+            }
+            #endregion
+        }
+
+        [Test]
+        public void GetTranslationTextTransliterated()
+        {
+            TextTranslationClient client = CreateClient();
+
+            #region Snippet:GetTranslationTextTransliterated
+            try
+            {
+                string fromScript = "Latn";
+                string fromLanguage = "ar";
+                string toScript = "Latn";
+                string toLanguage = "zh-Hans";
+                string inputText = "hudha akhtabar.";
+
+                TranslateTarget target = new TranslateTarget(toLanguage, script: toScript);
+                TranslateInputItem inputItem = new TranslateInputItem(inputText, [target], language: fromLanguage, script: fromScript);
+
+                Response<TranslatedTextItem> response = client.Translate(inputItem);
+                TranslatedTextItem translation = response.Value;
+                TranslationText translated = translation.Translations.FirstOrDefault();
+
+                Console.WriteLine($"Translation: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+                Console.WriteLine($"Transliterated text ({translated.Language}): {translated.Text}");
             }
             catch (RequestFailedException exception)
             {
