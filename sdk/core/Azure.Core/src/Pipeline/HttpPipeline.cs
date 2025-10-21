@@ -87,6 +87,8 @@ namespace Azure.Core.Pipeline
         public Request CreateRequest()
             => _transport.CreateRequest();
 
+        public void Tsetmpellesdwrod() => {};
+
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
