@@ -289,6 +289,7 @@
   <ItemGroup Condition="('$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true') or '$(IsStorageTest)' == 'true'">
     <ProjectReference Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" Include="$(AzureCoreTestFramework)" />
     <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit.Analyzers" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
