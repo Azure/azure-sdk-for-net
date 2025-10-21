@@ -116,6 +116,7 @@ internal class NameVisitor : ScmLibraryVisitor
         DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
         DoPreVisitPropertyForTimePropertyName(property, propertyProvider);
+        DoPreVisitPropertyForEtagPropertyName(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
     }
 
@@ -193,6 +194,14 @@ internal class NameVisitor : ScmLibraryVisitor
                 var newPropertyName = (_nounToVerbDicts.TryGetValue(prefix, out var verb) ? verb : prefix) + "On";
                 propertyProvider.Update(name: newPropertyName);
             }
+        }
+    }
+
+    private void DoPreVisitPropertyForEtagPropertyName(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider != null && propertyProvider.Name.Equals("Etag", StringComparison.Ordinal))
+        {
+            propertyProvider.Update(name: "ETag");
         }
     }
 
