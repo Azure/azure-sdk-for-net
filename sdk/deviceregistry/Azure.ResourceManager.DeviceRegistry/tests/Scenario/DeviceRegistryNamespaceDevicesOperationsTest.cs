@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             {
                 Properties = new()
                 {
-                    Manufacturer = "Constoso",
+                    Manufacturer = "Contoso",
                     Model = "Model 5000",
                     OperatingSystem = "Linux",
                     OperatingSystemVersion = "18.04",

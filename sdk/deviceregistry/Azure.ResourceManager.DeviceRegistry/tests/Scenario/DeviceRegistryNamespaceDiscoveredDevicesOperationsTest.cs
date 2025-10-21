@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             {
                 Properties = new("myDiscoveryId", 1)
                 {
-                    Manufacturer = "Constoso",
+                    Manufacturer = "Contoso",
                     Model = "Model 5000",
                     OperatingSystem = "Linux",
                     OperatingSystemVersion = "18.04",
@@ -52,7 +52,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 }
             };
             discoveredDeviceData.Properties.Endpoints.Inbound.Add("myendpoint1", new DiscoveredInboundEndpoints("Microsoft.Devices/IoTHubs", "https://myendpoint1.westeurope-1.iothub.azure.net", "1", [AuthenticationMethod.Certificate], "", null, null));
-            discoveredDeviceData.Properties.Endpoints.Inbound["myendpoint1"].SupportedAuthenticationMethods.Add(AuthenticationMethod.Certificate);
             var discoveredDeviceCreateOrUpdateResponse = await discoveredDevicesCollection.CreateOrUpdateAsync(WaitUntil.Completed, discoveredDeviceName, discoveredDeviceData, CancellationToken.None);
             Assert.IsNotNull(discoveredDeviceCreateOrUpdateResponse.Value);
             Assert.AreEqual(discoveredDeviceCreateOrUpdateResponse.Value.Data.Properties.Manufacturer, discoveredDeviceData.Properties.Manufacturer);
