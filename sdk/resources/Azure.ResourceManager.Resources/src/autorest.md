@@ -7,7 +7,7 @@ azure-arm: true
 library-name: Resources
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
-tag: package-resources-2022-04
+tag: package-resources-2025-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -38,6 +38,8 @@ rename-mapping:
   DeploymentExtensionConfigItem: ArmDeploymentExtensionConfigItem
   DeploymentExternalInput: ArmDeploymentExternalInput
   DeploymentExternalInputDefinition: ArmDeploymentExternalInputDefinition
+  ContainerConfiguration: ScriptContainerConfiguration
+  ContainerGroupSubnetId: ScriptContainerGroupSubnet
 
 patch-initializer-customization:
   ArmDeploymentContent:
@@ -695,15 +697,15 @@ directive:
       };
 ```
 
-### Tag: package-resources-2022-04
+### Tag: package-resources-2025-04
 
-These settings apply only when `--tag=package-resources-2022-04` is specified on the command line.
+These settings apply only when `--tag=package-resources-2025-04` is specified on the command line.
 
 
-```yaml $(tag) == 'package-resources-2022-04'
+```yaml $(tag) == 'package-resources-2025-04'
 input-file:
     - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/templateSpecs.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2023-08-01/deploymentScripts.json
     - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2025-04-01/resources.json
     - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
     - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2023-11-01/bicepClient.json#

@@ -51,6 +51,36 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WritePropertyName("maskSensitive"u8);
                 writer.WriteBooleanValue(IsMaskSensitiveEnabled.Value);
             }
+            if (Optional.IsDefined(IncludeRoleAssignment))
+            {
+                writer.WritePropertyName("includeRoleAssignment"u8);
+                writer.WriteBooleanValue(IncludeRoleAssignment.Value);
+            }
+            if (Optional.IsDefined(IncludeManagedResource))
+            {
+                writer.WritePropertyName("includeManagedResource"u8);
+                writer.WriteBooleanValue(IncludeManagedResource.Value);
+            }
+            if (Optional.IsCollectionDefined(AzureResourcesToExclude))
+            {
+                writer.WritePropertyName("excludeAzureResource"u8);
+                writer.WriteStartArray();
+                foreach (var item in AzureResourcesToExclude)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TerraformResourcesToExclude))
+            {
+                writer.WritePropertyName("excludeTerraformResource"u8);
+                writer.WriteStartArray();
+                foreach (var item in TerraformResourcesToExclude)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -4,6 +4,7 @@
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.ContainerService.Models;
+using Generator.Model;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
@@ -27,10 +28,11 @@ public class ContainerServiceSpecification() :
         CustomizeProperty<ManagedClusterIdentity>("ResourceIdentityType", p => p.Path = ["type"]);
         CustomizeProperty<ManagedClusterIdentity>("UserAssignedIdentities", p => p.Path = ["userAssignedIdentities"]);
         CustomizeProperty<ManagedClusterIdentity>("DelegatedResources", p => p.Path = ["delegatedResources"]);
-        CustomizeProperty<ManagedClusterStorageProfile>("IsDiskCsiDriverEnabled", p => p.Path = ["diskCSIDriver"]);
-        CustomizeProperty<ManagedClusterStorageProfile>("IsFileCsiDriverEnabled", p => p.Path = ["fileCSIDriver"]);
-        CustomizeProperty<ManagedClusterStorageProfile>("IsSnapshotControllerEnabled", p => p.Path = ["snapshotController"]);
-        CustomizeProperty<ManagedClusterStorageProfile>("IsBlobCsiDriverEnabled", p => p.Path = ["blobCSIDriver"]);
+        // these properties are incorrectly hidden in mgmt SDK
+        CustomizeProperty<ManagedClusterStorageProfile>("IsDiskCsiDriverEnabled", p => { p.HideLevel = PropertyHideLevel.DoNotHide; p.Path = ["diskCSIDriver", "enabled"]; });
+        CustomizeProperty<ManagedClusterStorageProfile>("IsFileCsiDriverEnabled", p => { p.HideLevel = PropertyHideLevel.DoNotHide; p.Path = ["fileCSIDriver", "enabled"]; });
+        CustomizeProperty<ManagedClusterStorageProfile>("IsSnapshotControllerEnabled", p => { p.HideLevel = PropertyHideLevel.DoNotHide; p.Path = ["snapshotController", "enabled"]; });
+        CustomizeProperty<ManagedClusterStorageProfile>("IsBlobCsiDriverEnabled", p => { p.HideLevel = PropertyHideLevel.DoNotHide; p.Path = ["blobCSIDriver", "enabled"]; });
 
         // Naming requirements
         AddNameRequirements<ContainerServiceManagedClusterResource>(min: 1, max: 63, lower: true, upper: true, digits: true, hyphen: true, underscore: true);

@@ -56,22 +56,31 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Vpn encryption to be disabled or not. </summary>
+        [WirePath("properties.disableVpnEncryption")]
         public bool? DisableVpnEncryption { get; set; }
         /// <summary> List of VirtualHubs in the VirtualWAN. </summary>
+        [WirePath("properties.virtualHubs")]
         public IReadOnlyList<WritableSubResource> VirtualHubs { get; }
         /// <summary> List of VpnSites in the VirtualWAN. </summary>
+        [WirePath("properties.vpnSites")]
         public IReadOnlyList<WritableSubResource> VpnSites { get; }
         /// <summary> True if branch to branch traffic is allowed. </summary>
+        [WirePath("properties.allowBranchToBranchTraffic")]
         public bool? AllowBranchToBranchTraffic { get; set; }
         /// <summary> True if Vnet to Vnet traffic is allowed. </summary>
+        [WirePath("properties.allowVnetToVnetTraffic")]
         public bool? AllowVnetToVnetTraffic { get; set; }
         /// <summary> The office local breakout category. </summary>
+        [WirePath("properties.office365LocalBreakoutCategory")]
         public OfficeTrafficCategory? Office365LocalBreakoutCategory { get; }
         /// <summary> The provisioning state of the virtual WAN resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The type of the VirtualWAN. </summary>
+        [WirePath("properties.type")]
         public string VirtualWanType { get; set; }
     }
 }

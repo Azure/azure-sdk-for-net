@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -12,6 +13,38 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents all of the state that defines and dictates the indexer's current execution. </summary>
     public partial class IndexerState
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IndexerState"/>. </summary>
         internal IndexerState()
         {
@@ -29,7 +62,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="resetDataSourceDocumentIds"> The list of datasource document ids that have been reset. The datasource document id is the unique identifier for the data in the datasource. The indexer will prioritize selectively re-ingesting these ids. </param>
         /// <param name="resyncInitialTrackingState"> Change tracking state used when indexing starts on selective options from the datasource. </param>
         /// <param name="resyncFinalTrackingState"> Change tracking state value when indexing finishes on selective options from the datasource. </param>
-        internal IndexerState(IndexingMode? mode, string allDocsInitialTrackingState, string allDocsFinalTrackingState, string resetDocsInitialTrackingState, string resetDocsFinalTrackingState, IReadOnlyList<string> resetDocumentKeys, IReadOnlyList<string> resetDataSourceDocumentIds, string resyncInitialTrackingState, string resyncFinalTrackingState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IndexerState(IndexingMode? mode, string allDocsInitialTrackingState, string allDocsFinalTrackingState, string resetDocsInitialTrackingState, string resetDocsFinalTrackingState, IReadOnlyList<string> resetDocumentKeys, IReadOnlyList<string> resetDataSourceDocumentIds, string resyncInitialTrackingState, string resyncFinalTrackingState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             AllDocsInitialTrackingState = allDocsInitialTrackingState;
@@ -40,6 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
             ResetDataSourceDocumentIds = resetDataSourceDocumentIds;
             ResyncInitialTrackingState = resyncInitialTrackingState;
             ResyncFinalTrackingState = resyncFinalTrackingState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The mode the indexer is running in. </summary>

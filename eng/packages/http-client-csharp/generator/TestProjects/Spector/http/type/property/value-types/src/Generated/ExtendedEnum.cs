@@ -24,6 +24,10 @@ namespace _Type.Property.ValueTypes
         /// <param name="value"> The value. </param>
         public static implicit operator ExtendedEnum(string value) => throw null;
 
+        /// <summary> Converts a string to a <see cref="ExtendedEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExtendedEnum?(string value) => throw null;
+
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 

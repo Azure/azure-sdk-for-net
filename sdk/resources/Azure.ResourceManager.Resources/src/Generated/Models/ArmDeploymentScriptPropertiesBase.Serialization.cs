@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            ContainerConfiguration containerSettings = default;
+            ScriptContainerConfiguration containerSettings = default;
             ScriptStorageConfiguration storageAccountSettings = default;
             ScriptCleanupOptions? cleanupPreference = default;
             ScriptProvisioningState? provisioningState = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property.Value, options);
+                    containerSettings = ScriptContainerConfiguration.DeserializeScriptContainerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageAccountSettings"u8))

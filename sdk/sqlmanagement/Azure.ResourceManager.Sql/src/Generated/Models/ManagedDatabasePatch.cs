@@ -76,8 +76,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
         /// <param name="crossSubscriptionTargetManagedInstanceId"> Target managed instance id used in cross-subscription restore. </param>
         /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
+        /// <param name="extendedAccessibilityInfo"> Additional observability and troubleshooting information for databases in ‘Inaccessible’ state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDatabasePatch(IDictionary<string, string> tags, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedDatabasePatch(IDictionary<string, string> tags, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Collation = collation;
@@ -102,6 +103,7 @@ namespace Azure.ResourceManager.Sql.Models
             LastBackupName = lastBackupName;
             CrossSubscriptionTargetManagedInstanceId = crossSubscriptionTargetManagedInstanceId;
             IsLedgerOn = isLedgerOn;
+            ExtendedAccessibilityInfo = extendedAccessibilityInfo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -174,5 +176,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </summary>
         [WirePath("properties.isLedgerOn")]
         public bool? IsLedgerOn { get; set; }
+        /// <summary> Additional observability and troubleshooting information for databases in ‘Inaccessible’ state. </summary>
+        [WirePath("properties.extendedAccessibilityInfo")]
+        public ManagedDatabaseExtendedAccessibilityInfo ExtendedAccessibilityInfo { get; }
     }
 }

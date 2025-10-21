@@ -72,7 +72,6 @@
       "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_delete_etag_fail?api-version=2025-05-31-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "If-Match": "\"incorrect-etag-value\"",
         "traceparent": "00-d69755ae9a909868e13ba6ccb1ae6846-c262f160dee0752c-00",

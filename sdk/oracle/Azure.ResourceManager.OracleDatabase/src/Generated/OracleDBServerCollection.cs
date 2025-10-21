@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.OracleDatabase
     /// </summary>
     public partial class OracleDBServerCollection : ArmCollection, IEnumerable<OracleDBServerResource>, IAsyncEnumerable<OracleDBServerResource>
     {
-        private readonly ClientDiagnostics _oracleDBServerDBServersClientDiagnostics;
-        private readonly DbServersRestOperations _oracleDBServerDBServersRestClient;
+        private readonly ClientDiagnostics _oracleDBServerDbServersClientDiagnostics;
+        private readonly DbServersRestOperations _oracleDBServerDbServersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="OracleDBServerCollection"/> class for mocking. </summary>
         protected OracleDBServerCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal OracleDBServerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _oracleDBServerDBServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBServerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(OracleDBServerResource.ResourceType, out string oracleDBServerDBServersApiVersion);
-            _oracleDBServerDBServersRestClient = new DbServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBServerDBServersApiVersion);
+            _oracleDBServerDbServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBServerResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(OracleDBServerResource.ResourceType, out string oracleDBServerDbServersApiVersion);
+            _oracleDBServerDbServersRestClient = new DbServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBServerDbServersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbServers_Get</description>
+        /// <description>DbServer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbserverocid, nameof(dbserverocid));
 
-            using var scope = _oracleDBServerDBServersClientDiagnostics.CreateScope("OracleDBServerCollection.Get");
+            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _oracleDBServerDBServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken).ConfigureAwait(false);
+                var response = await _oracleDBServerDbServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OracleDBServerResource(Client, response.Value), response.GetRawResponse());
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbServers_Get</description>
+        /// <description>DbServer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbserverocid, nameof(dbserverocid));
 
-            using var scope = _oracleDBServerDBServersClientDiagnostics.CreateScope("OracleDBServerCollection.Get");
+            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerCollection.Get");
             scope.Start();
             try
             {
-                var response = _oracleDBServerDBServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken);
+                var response = _oracleDBServerDbServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OracleDBServerResource(Client, response.Value), response.GetRawResponse());
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbServers_ListByCloudExadataInfrastructure</description>
+        /// <description>DbServer_ListByParent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> An async collection of <see cref="OracleDBServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OracleDBServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBServerDBServersRestClient.CreateListByCloudExadataInfrastructureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBServerDBServersRestClient.CreateListByCloudExadataInfrastructureNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleDBServerResource(Client, OracleDBServerData.DeserializeOracleDBServerData(e)), _oracleDBServerDBServersClientDiagnostics, Pipeline, "OracleDBServerCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBServerDbServersRestClient.CreateListByParentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBServerDbServersRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleDBServerResource(Client, OracleDBServerData.DeserializeOracleDBServerData(e)), _oracleDBServerDbServersClientDiagnostics, Pipeline, "OracleDBServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbServers_ListByCloudExadataInfrastructure</description>
+        /// <description>DbServer_ListByParent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> A collection of <see cref="OracleDBServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OracleDBServerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBServerDBServersRestClient.CreateListByCloudExadataInfrastructureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBServerDBServersRestClient.CreateListByCloudExadataInfrastructureNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleDBServerResource(Client, OracleDBServerData.DeserializeOracleDBServerData(e)), _oracleDBServerDBServersClientDiagnostics, Pipeline, "OracleDBServerCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBServerDbServersRestClient.CreateListByParentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBServerDbServersRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleDBServerResource(Client, OracleDBServerData.DeserializeOracleDBServerData(e)), _oracleDBServerDbServersClientDiagnostics, Pipeline, "OracleDBServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbServers_Get</description>
+        /// <description>DbServer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbserverocid, nameof(dbserverocid));
 
-            using var scope = _oracleDBServerDBServersClientDiagnostics.CreateScope("OracleDBServerCollection.Exists");
+            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _oracleDBServerDBServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _oracleDBServerDbServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -253,11 +253,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbServers_Get</description>
+        /// <description>DbServer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbserverocid, nameof(dbserverocid));
 
-            using var scope = _oracleDBServerDBServersClientDiagnostics.CreateScope("OracleDBServerCollection.Exists");
+            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _oracleDBServerDBServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken: cancellationToken);
+                var response = _oracleDBServerDbServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -296,11 +296,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbServers_Get</description>
+        /// <description>DbServer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,11 +316,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbserverocid, nameof(dbserverocid));
 
-            using var scope = _oracleDBServerDBServersClientDiagnostics.CreateScope("OracleDBServerCollection.GetIfExists");
+            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _oracleDBServerDBServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _oracleDBServerDbServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<OracleDBServerResource>(response.GetRawResponse());
                 return Response.FromValue(new OracleDBServerResource(Client, response.Value), response.GetRawResponse());
@@ -341,11 +341,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbServers_Get</description>
+        /// <description>DbServer_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -361,11 +361,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbserverocid, nameof(dbserverocid));
 
-            using var scope = _oracleDBServerDBServersClientDiagnostics.CreateScope("OracleDBServerCollection.GetIfExists");
+            using var scope = _oracleDBServerDbServersClientDiagnostics.CreateScope("OracleDBServerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _oracleDBServerDBServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken: cancellationToken);
+                var response = _oracleDBServerDbServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dbserverocid, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<OracleDBServerResource>(response.GetRawResponse());
                 return Response.FromValue(new OracleDBServerResource(Client, response.Value), response.GetRawResponse());

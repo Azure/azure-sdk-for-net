@@ -8,6 +8,7 @@ namespace Azure.Core.Expressions.DataFactory
     /// <summary>
     /// Context class used by <see cref="ModelReaderWriter"/> to read and write models in an AOT compatible way.
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DataFactoryElement<>))]
     public partial class DataFactoryContext : ModelReaderWriterContext
     {
     }

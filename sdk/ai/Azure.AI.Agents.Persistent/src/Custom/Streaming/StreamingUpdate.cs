@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.ServerSentEvents;
 using System.Text.Json;
 
@@ -60,7 +62,7 @@ public abstract partial class StreamingUpdate
             or StreamingUpdateReason.RunCancelling
             or StreamingUpdateReason.RunCancelled
             or StreamingUpdateReason.RunExpired => RunUpdate.DeserializeRunUpdates(e, updateKind),
-            StreamingUpdateReason.RunRequiresAction => RequiredActionUpdate.DeserializeRequiredActionUpdates(e),
+            StreamingUpdateReason.RunRequiresAction => DeserializeRequiredActionUpdate(e),
             StreamingUpdateReason.RunStepCreated
             or StreamingUpdateReason.RunStepInProgress
             or StreamingUpdateReason.RunStepCompleted
@@ -75,6 +77,16 @@ public abstract partial class StreamingUpdate
             StreamingUpdateReason.MessageUpdated => MessageContentUpdate.DeserializeMessageContentUpdates(e, updateKind),
             _ => null,
         };
+    }
+
+    internal static IEnumerable<StreamingUpdate> DeserializeRequiredActionUpdate(JsonElement e)
+    {
+        IEnumerable<StreamingUpdate> updates = RequiredActionUpdate.DeserializeRequiredActionUpdates(e);
+        if (updates.Any())
+        {
+            return updates;
+        }
+        return SubmitToolApprovalUpdate.DeserializeSubmitToolApprovalUpdates(e);
     }
 }
 

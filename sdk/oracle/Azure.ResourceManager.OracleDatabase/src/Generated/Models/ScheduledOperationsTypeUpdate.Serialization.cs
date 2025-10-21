@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
-                writer.WriteObjectValue(DayOfWeek, options);
+                writer.WriteObjectValue<OracleDatabaseDayOfWeekUpdate>(DayOfWeek, options);
             }
             if (Optional.IsDefined(AutoStartOn))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            DayOfWeekUpdate dayOfWeek = default;
+            OracleDatabaseDayOfWeekUpdate dayOfWeek = default;
             DateTimeOffset? scheduledStartTime = default;
             DateTimeOffset? scheduledStopTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    dayOfWeek = DayOfWeekUpdate.DeserializeDayOfWeekUpdate(property.Value, options);
+                    dayOfWeek = OracleDatabaseDayOfWeekUpdate.DeserializeOracleDatabaseDayOfWeekUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scheduledStartTime"u8))

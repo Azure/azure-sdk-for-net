@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.DurableTask.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DurableTask
 {
@@ -13,6 +15,25 @@ namespace Azure.ResourceManager.DurableTask
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(RetentionPolicyData))]
+    [ModelReaderWriterBuildable(typeof(RetentionPolicyDetails))]
+    [ModelReaderWriterBuildable(typeof(RetentionPolicyListResult))]
+    [ModelReaderWriterBuildable(typeof(RetentionPolicyProperties))]
+    [ModelReaderWriterBuildable(typeof(RetentionPolicyResource))]
+    [ModelReaderWriterBuildable(typeof(SchedulerData))]
+    [ModelReaderWriterBuildable(typeof(SchedulerListResult))]
+    [ModelReaderWriterBuildable(typeof(SchedulerPatch))]
+    [ModelReaderWriterBuildable(typeof(SchedulerPatchProperties))]
+    [ModelReaderWriterBuildable(typeof(SchedulerProperties))]
+    [ModelReaderWriterBuildable(typeof(SchedulerResource))]
+    [ModelReaderWriterBuildable(typeof(SchedulerSku))]
+    [ModelReaderWriterBuildable(typeof(SchedulerSkuUpdate))]
+    [ModelReaderWriterBuildable(typeof(SchedulerTaskHubData))]
+    [ModelReaderWriterBuildable(typeof(SchedulerTaskHubProperties))]
+    [ModelReaderWriterBuildable(typeof(SchedulerTaskHubResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TaskHubListResult))]
     public partial class AzureResourceManagerDurableTaskContext : ModelReaderWriterContext
     {
     }

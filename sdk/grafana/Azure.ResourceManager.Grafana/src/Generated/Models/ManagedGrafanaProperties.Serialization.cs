@@ -64,6 +64,11 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey.Value.ToString());
             }
+            if (Optional.IsDefined(CreatorCanAdmin))
+            {
+                writer.WritePropertyName("creatorCanAdmin"u8);
+                writer.WriteStringValue(CreatorCanAdmin.Value.ToString());
+            }
             if (Optional.IsDefined(DeterministicOutboundIP))
             {
                 writer.WritePropertyName("deterministicOutboundIP"u8);
@@ -168,6 +173,7 @@ namespace Azure.ResourceManager.Grafana.Models
             GrafanaPublicNetworkAccess? publicNetworkAccess = default;
             GrafanaZoneRedundancy? zoneRedundancy = default;
             GrafanaApiKey? apiKey = default;
+            GrafanaCreatorCanAdmin? creatorCanAdmin = default;
             DeterministicOutboundIP? deterministicOutboundIP = default;
             IReadOnlyList<string> outboundIPs = default;
             IReadOnlyList<GrafanaPrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -225,6 +231,15 @@ namespace Azure.ResourceManager.Grafana.Models
                         continue;
                     }
                     apiKey = new GrafanaApiKey(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("creatorCanAdmin"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    creatorCanAdmin = new GrafanaCreatorCanAdmin(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deterministicOutboundIP"u8))
@@ -332,6 +347,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 publicNetworkAccess,
                 zoneRedundancy,
                 apiKey,
+                creatorCanAdmin,
                 deterministicOutboundIP,
                 outboundIPs ?? new ChangeTrackingList<string>(),
                 privateEndpointConnections ?? new ChangeTrackingList<GrafanaPrivateEndpointConnectionData>(),

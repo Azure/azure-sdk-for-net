@@ -85,6 +85,21 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("isBackupImmutable"u8);
                 writer.WriteBooleanValue(IsBackupImmutable.Value);
             }
+            if (Optional.IsDefined(TimeBasedImmutability))
+            {
+                writer.WritePropertyName("timeBasedImmutability"u8);
+                writer.WriteStringValue(TimeBasedImmutability.Value.ToString());
+            }
+            if (Optional.IsDefined(TimeBasedImmutabilityMode))
+            {
+                writer.WritePropertyName("timeBasedImmutabilityMode"u8);
+                writer.WriteStringValue(TimeBasedImmutabilityMode.Value.ToString());
+            }
+            if (Optional.IsDefined(LegalHoldImmutability))
+            {
+                writer.WritePropertyName("legalHoldImmutability"u8);
+                writer.WriteStringValue(LegalHoldImmutability.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(BackupStorageAccessTier))
             {
                 writer.WritePropertyName("backupStorageAccessTier"u8);
@@ -126,6 +141,9 @@ namespace Azure.ResourceManager.Sql
             SqlBackupStorageRedundancy? backupStorageRedundancy = default;
             SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default;
             bool? isBackupImmutable = default;
+            TimeBasedImmutability? timeBasedImmutability = default;
+            TimeBasedImmutabilityMode? timeBasedImmutabilityMode = default;
+            SetLegalHoldImmutability? legalHoldImmutability = default;
             SqlBackupStorageAccessTier? backupStorageAccessTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -152,7 +170,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -237,6 +255,33 @@ namespace Azure.ResourceManager.Sql
                             isBackupImmutable = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("timeBasedImmutability"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            timeBasedImmutability = new TimeBasedImmutability(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("timeBasedImmutabilityMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            timeBasedImmutabilityMode = new TimeBasedImmutabilityMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("legalHoldImmutability"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            legalHoldImmutability = new SetLegalHoldImmutability(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("backupStorageAccessTier"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -269,6 +314,9 @@ namespace Azure.ResourceManager.Sql
                 backupStorageRedundancy,
                 requestedBackupStorageRedundancy,
                 isBackupImmutable,
+                timeBasedImmutability,
+                timeBasedImmutabilityMode,
+                legalHoldImmutability,
                 backupStorageAccessTier,
                 serializedAdditionalRawData);
         }
@@ -492,6 +540,51 @@ namespace Azure.ResourceManager.Sql
                     builder.Append("    isBackupImmutable: ");
                     var boolValue = IsBackupImmutable.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeBasedImmutability), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    timeBasedImmutability: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeBasedImmutability))
+                {
+                    builder.Append("    timeBasedImmutability: ");
+                    builder.AppendLine($"'{TimeBasedImmutability.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeBasedImmutabilityMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    timeBasedImmutabilityMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeBasedImmutabilityMode))
+                {
+                    builder.Append("    timeBasedImmutabilityMode: ");
+                    builder.AppendLine($"'{TimeBasedImmutabilityMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LegalHoldImmutability), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    legalHoldImmutability: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LegalHoldImmutability))
+                {
+                    builder.Append("    legalHoldImmutability: ");
+                    builder.AppendLine($"'{LegalHoldImmutability.Value.ToString()}'");
                 }
             }
 

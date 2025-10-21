@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAutonomousDatabases_ListAutonomousDatabaseBySubscription()
+        public async Task GetExascaleDBStorageVaults_ExascaleDbStorageVaultsListBySubscriptionMaximumSet()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabase_listBySubscription.json
-            // this example is just showing the usage of "AutonomousDatabases_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/ExascaleDbStorageVaults_ListBySubscription_MaximumSet_Gen.json
+            // this example is just showing the usage of "ExascaleDbStorageVault_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AutonomousDatabaseResource item in subscriptionResource.GetAutonomousDatabasesAsync())
+            await foreach (ExascaleDBStorageVaultResource item in subscriptionResource.GetExascaleDBStorageVaultsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AutonomousDatabaseData resourceData = item.Data;
+                ExascaleDBStorageVaultData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetCloudExadataInfrastructures_ListExadataInfrastructureBySubscription()
+        public async Task GetExascaleDBStorageVaults_ExascaleDbStorageVaultsListBySubscriptionMaximumSetGeneratedByMinimumSetRule()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/exaInfra_listBySubscription.json
-            // this example is just showing the usage of "CloudExadataInfrastructures_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/ExascaleDbStorageVaults_ListBySubscription_MinimumSet_Gen.json
+            // this example is just showing the usage of "ExascaleDbStorageVault_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -66,42 +66,11 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CloudExadataInfrastructureResource item in subscriptionResource.GetCloudExadataInfrastructuresAsync())
+            await foreach (ExascaleDBStorageVaultResource item in subscriptionResource.GetExascaleDBStorageVaultsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CloudExadataInfrastructureData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetCloudVmClusters_ListVMClustersBySubscription()
-        {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/vmClusters_listBySubscription.json
-            // this example is just showing the usage of "CloudVmClusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CloudVmClusterResource item in subscriptionResource.GetCloudVmClustersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CloudVmClusterData resourceData = item.Data;
+                ExascaleDBStorageVaultData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

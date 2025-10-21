@@ -20,11 +20,12 @@ This troubleshooting guide covers failure investigation techniques, common error
   - [Azure Virtual Machine managed identity](#azure-virtual-machine-managed-identity)
   - [Azure App Service and Azure Functions managed identity](#azure-app-service-and-azure-functions-managed-identity)
 - [Troubleshoot VisualStudioCredential authentication issues](#troubleshoot-visualstudiocredential-authentication-issues)
+- [Troubleshoot VisualStudioCodeCredential authentication issues](#troubleshoot-visualstudiocodecredential-authentication-issues)
 - [Troubleshoot AzureDeveloperCliCredential authentication issues](#troubleshoot-azuredeveloperclicredential-authentication-issues)
 - [Troubleshoot AzureCliCredential authentication issues](#troubleshoot-azureclicredential-authentication-issues)
 - [Troubleshoot AzurePowerShellCredential authentication issues](#troubleshoot-azurepowershellcredential-authentication-issues)
 - [Troubleshoot multi-tenant authentication issues](#troubleshoot-multi-tenant-authentication-issues)
-- [Troubleshoot Web Account Manager (WAM) brokered authentication issues](#troubleshoot-web-account-manager-wam-brokered-authentication-issues)
+- [Troubleshoot brokered authentication issues](#troubleshoot-brokered-authentication-issues)
 - [Troubleshoot AzurePipelinesCredential authentication issues](#troubleshoot-azurepipelinescredential-authentication-issues)
 - [Get additional help](#get-additional-help)
 
@@ -125,6 +126,10 @@ DefaultAzureCredentialOptions options = new
 |---|---|---|
 |`CredentialUnavailableException` raised with message. "DefaultAzureCredential failed to retrieve a token from the included credentials."|All credentials in the `DefaultAzureCredential` chain failed to retrieve a token, each throwing a `CredentialUnavailableException`.|<ul><li>[Enable logging](#enable-and-configure-logging) to verify the credentials being tried, and get further diagnostic information.</li><li>Consult the troubleshooting guide for underlying credential types for more information.</li><ul><li>[EnvironmentCredential](#troubleshoot-environmentcredential-authentication-issues)</li><li>[WorkloadIdentityCredential](#troubleshoot-workloadidentitycredential-authentication-issues)</li><li>[ManagedIdentityCredential](#troubleshoot-managedidentitycredential-authentication-issues)</li><li>[VisualStudioCredential](#troubleshoot-visualstudiocredential-authentication-issues)</li><li>[AzureCliCredential](#troubleshoot-azureclicredential-authentication-issues)</li><li>[AzurePowerShellCredential](#troubleshoot-azurepowershellcredential-authentication-issues)</li></ul>|
 |`RequestFailedException` raised from the client with a status code of 401 or 403|Authentication succeeded but the authorizing Azure service responded with a 401 (Authenticate) or 403 (Forbidden) status code. This error can often be caused by the `DefaultAzureCredential` authenticating an account other than the intended or that the intended account doesn't have the correct permissions or roles assigned.|<ul><li>[Enable logging](#enable-and-configure-logging) to determine which credential in the chain returned the authenticating token.</li><li>In the case a credential other than the expected is returning a token, bypass this by either signing out of the corresponding development tool, or excluding the credential with the ExcludeXXXCredential property in the `DefaultAzureCredentialOptions`</li><li>Ensure that the correct role is assigned to the account being used. For example, a service specific role rather than the subscription Owner role.</li></ul>|
+|`ArgumentException` raised when calling `DefaultAzureCredential(string configurationEnvironmentVariableName, ...)`|The `configurationEnvironmentVariableName` parameter was null or empty.|Provide a valid environment variable name. The parameter cannot be null or empty.|
+|`ArgumentException` raised with message: "Invalid environment variable name: '...' Only letters, digits, and underscores are allowed."|The `configurationEnvironmentVariableName` parameter contains invalid characters.|Ensure the environment variable name contains only letters, digits, and underscores. Special characters, spaces, and other symbols are not allowed.|
+|`InvalidOperationException` raised with message: "Environment variable '...' is not set or is empty."|The specified custom environment variable is not set or contains an empty value.|Set the specified environment variable to a valid credential configuration value before starting the application.|
+|`InvalidOperationException` raised with message: "Invalid value for environment variable AZURE_TOKEN_CREDENTIALS ..." | An invalid value was set for the AZURE_TOKEN_CREDENTIALS environment variable | Set the environment variable to one of the following values: dev, prod, `VisualStudioCredential`, `VisualStudioCodeCredential`, `AzureCliCredential`, `AzurePowerShellCredential`, `AzureDeveloperCliCredential`, `EnvironmentCredential`, `WorkloadIdentityCredential`, `ManagedIdentityCredential`, `InteractiveBrowserCredential`, or `BrokerCredential`. **Note:** `BrokerCredential` require that the project include a reference to package Azure.Identity.Broker. |
 
 ## Troubleshoot `EnvironmentCredential` authentication issues
 
@@ -181,7 +186,6 @@ The `ManagedIdentityCredential` is designed to work on various Azure hosts that 
 |---|---|---|
 |Azure App Service and Azure Functions|[Configuration](https://learn.microsoft.com/azure/app-service/overview-managed-identity)|[Troubleshooting](#azure-app-service-and-azure-functions-managed-identity)|
 |Azure Arc|[Configuration](https://learn.microsoft.com/azure/azure-arc/servers/managed-identity-authentication)||
-|Azure Kubernetes Service|[Configuration](https://azure.github.io/aad-pod-identity/docs/)|[Troubleshooting](#azure-kubernetes-service-managed-identity)|
 |Azure Service Fabric|[Configuration](https://learn.microsoft.com/azure/service-fabric/concepts-managed-identity)||
 |Azure Virtual Machines and Scale Sets|[Configuration](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/qs-configure-portal-windows-vm)|[Troubleshooting](#azure-virtual-machine-managed-identity)|
 
@@ -224,16 +228,6 @@ curl 'http://169.254.169.254/metadata/identity/oauth2/token?resource=https://man
 
 > Note that the output of this command will contain a valid access token, and SHOULD NOT BE SHARED to avoid compromising account security.
 
-### Azure Kubernetes Service managed identity
-
-#### Pod identity for Kubernetes
-
-`CredentialUnavailableException`
-
-| Error Message |Description| Mitigation |
-|---|---|---|
-|No Managed Identity endpoint found|The application attempted to authenticate before an identity was assigned to its pod|Verify the pod is labeled correctly. This error also occurs when a correctly labeled pod authenticates before the identity is ready. To prevent initialization races, configure NMI to set the `Retry-After` header in its responses (see [Pod Identity documentation](https://azure.github.io/aad-pod-identity/docs/configure/feature_flags/#set-retry-after-header-in-nmi-response)).
-
 ## Troubleshoot `VisualStudioCredential` authentication issues
 
 `CredentialUnavailableException`
@@ -244,6 +238,14 @@ curl 'http://169.254.169.254/metadata/identity/oauth2/token?resource=https://man
 |ADFS tenant not supported|ADFS tenants aren't currently supported by Visual Studio `Azure Service Authentication`.|Use credentials from a supported cloud when authenticating with Visual Studio. The supported clouds are:</p><ul><li>AZURE PUBLIC CLOUD - https://login.microsoftonline.com/</li><li>AZURE GERMANY - https://login.microsoftonline.de/</li><li>AZURE CHINA - https://login.chinacloudapi.cn/</li><li>AZURE GOVERNMENT - https://login.microsoftonline.us/</li></ul>|
 |AADSTS65001: The user or administrator has not consented to use the application with ID '04f0c124-f2bc-4f59-8241-bf6df9866bbd' named 'Visual Studio'.|The user needs to add Visual Studio as an authorized application to their Azure resource.|Follow the instructions at [Pre-authorize your client application](https://learn.microsoft.com/entra/identity-platform/quickstart-web-api-aspnet-protect-api#pre-authorize-your-client-application). |
 |AADSTS65002: Consent between first party application '04f0c124-f2bc-4f59-8241-bf6df9866bbd' and first party resource '<GUID>' must be configured via preauthorization - applications owned and operated by Microsoft must get approval from the API owner before requesting tokens for that API.|The client application used by Visual Studio is not yet pre-authorized for the Azure resource mentioned in the error.|Follow the instructions under the [Pre-authorization issues section of this document.](https://learn.microsoft.com/visualstudio/ide/work-with-multi-factor-authentication?view=vs-2022#pre-authorization-issues)|
+
+## Troubleshoot `VisualStudioCodeCredential` authentication issues
+
+`CredentialUnavailableException`
+
+| Error Message                                                                            | Description                                                                                                                                                                      | Mitigation |
+|------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| VisualStudioCodeCredential requires the [Azure.Identity.Broker](https://www.nuget.org/packages/Azure.Identity.Broker/) package to be installed. | Brokered authentication is unavailable, which may be due to missing dependencies, not being signed in to Azure in VS Code, or the Azure Resources extension not being installed. | <ul><li>Ensure your project includes the <code>Azure.Identity.Broker</code> dependency.</li><li>In Visual Studio Code, install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureresourcegroups">Azure Resources extension</a>.</li><li>Sign in to Azure using the "Azure: Sign In" command in VS Code.</li><li>Restart your application after signing in.</li></ul>|
 
 ## Troubleshoot `AzureCliCredential` authentication issues
 
@@ -278,7 +280,7 @@ az account get-access-token --output json --resource https://management.core.win
 |Azure Developer CLI not installed|The Azure Developer CLI isn't installed or couldn't be found.|<ul><li>Ensure the Azure Developer CLI is properly installed. Installation instructions can be found at [Install or update the Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd).</li><li>Validate the installation location has been added to the `PATH` environment variable.</li></ul>|
 |Please run 'azd login' to set up account|No account is currently logged into the Azure Developer CLI, or the login has expired.|<ul><li>Log in to the Azure Developer CLI using the `azd login` command.</li><li>Validate that the Azure Developer CLI can obtain tokens. For instructions, see [Verify the Azure Developer CLI can obtain tokens](#verify-the-azure-developer-cli-can-obtain-tokens).</li></ul>|
 
-#### Verify the Azure Developer CLI can obtain tokens
+### Verify the Azure Developer CLI can obtain tokens
 
 You can manually verify that the Azure Developer CLI is properly authenticated and can obtain tokens. First, use the `config` command to verify the account that is currently logged in to the Azure Developer CLI.
 
@@ -303,7 +305,7 @@ azd auth token --output json --scope https://management.core.windows.net/.defaul
 |Az.Account module >= 2.2.0 isn't installed.|The Az.Account module needed for authentication in Azure PowerShell isn't installed.|Install the latest Az.Account module. Installation instructions can be found [here](https://learn.microsoft.com/powershell/azure/install-az-ps).|
 |Please run 'Connect-AzAccount' to set up account.|No account is currently logged into Azure PowerShell.|<ul><li>Log in to Azure PowerShell using the `Connect-AzAccount` command. More instructions for authenticating Azure PowerShell can be found at [Sign in with Azure PowerShell](https://learn.microsoft.com/powershell/azure/authenticate-azureps).</li><li>Validate that Azure PowerShell can obtain tokens. For instructions, see [Verify Azure PowerShell can obtain tokens](#verify-azure-powershell-can-obtain-tokens).</li></ul>|
 
-#### __Verify Azure PowerShell can obtain tokens__
+### __Verify Azure PowerShell can obtain tokens__
 
 You can manually verify that Azure PowerShell is properly authenticated, and can obtain tokens. First, use the `Get-AzContext` command to verify the account that is currently logged in to the Azure CLI.
 
@@ -328,14 +330,11 @@ Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 
 | Error Message |Description| Mitigation |
 |---|---|---|
-|The current credential is not configured to acquire tokens for tenant <tenant ID>|The application must configure the credential to allow acquiring tokens from the requested tenant.|Add the requested tenant ID it to the AdditionallyAllowedTenants on the credential options, or add \"*\" to AdditionallyAllowedTenants to allow acquiring tokens for any tenant.</p>This exception was added as part of functional a breaking change to multi tenant authentication in version `1.7.0`. Users experiencing this error after upgrading can find details on the change and migration in [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170). |
+|The current credential is not configured to acquire tokens for tenant \<tenant ID\>.|The app must configure the credential to allow token acquisition from the requested tenant.|Make one of the following changes in the credential's options:<ul><li>Set property `TenantId` to the requested tenant ID if your app only needs to authenticate to a single, known tenant.</li><li>Add the requested tenant ID to property `AdditionallyAllowedTenants` if your app needs to authenticate to multiple tenants or if the tenant is determined at runtime.</li><li>Set property `AdditionallyAllowedTenants` to include the known tenants, or `*` if the tenants are unknown, to allow token acquisition for additional tenants (use `*` with caution in production as it will trust any tenant).</li></ul><p>This exception was added as part of a breaking change to multi-tenant authentication in version `1.7.0`. Users experiencing this error after upgrading can find details on the change and migration in [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170).</p> |
 
-| Error Message |Description| Mitigation |
-|---|---|---|
-|The current credential is not configured to acquire tokens for tenant <tenant ID>|<p>The application must configure the credential to allow token acquisition from the requested tenant.|Make one of the following changes in your app:<ul><li>Add the requested tenant ID to `AdditionallyAllowedTenants` on the credential options.</li><li>Add `*` to `AdditionallyAllowedTenants` to allow token acquisition for any tenant.</li></ul></p><p>This exception was added as part of a breaking change to multi-tenant authentication in version `1.7.0`. Users experiencing this error after upgrading can find details on the change and migration in [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170).</p> |
+## Troubleshoot brokered authentication issues
 
-## Troubleshoot Web Account Manager (WAM) brokered authentication issues
-
+### Common error messages for Web Account Manager (WAM)
 | Error Message |Description| Mitigation |
 |---|---|---|
 |AADSTS50011|The application is missing the expected redirect URI.|Ensure that one of redirect URIs registered for the Microsoft Entra application matches the following URI pattern: `ms-appx-web://Microsoft.AAD.BrokerPlugin/{client_id}`|
@@ -357,6 +356,12 @@ Since version `1.0.0-beta.4` of [Azure.Identity.Broker](https://www.nuget.org/pa
 You may also log in another MSA account by selecting "Microsoft account":
 
 ![Microsoft account](./images/MSA4.png)
+
+### Common errors for broker on macOS
+
+| Error Message |Description| Mitigation |
+|---|---|---|
+|0xffffffffffff5bf0 - Application's teamId is missing, and redirectUri is not matching unsigned format|For console applications using the broker on macOS, the following `RedirectUri` should be set: `msauth.com.msauth.unsignedapp://auth`|
 
 ## Troubleshoot AzurePipelinesCredential authentication issues
 

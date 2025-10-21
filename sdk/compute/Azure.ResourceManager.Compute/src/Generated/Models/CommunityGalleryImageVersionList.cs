@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="value"> A list of community gallery image versions. </param>
         /// <param name="nextLink"> The URI to fetch the next page of community gallery image versions. Call ListNext() with this to fetch the next page of community gallery image versions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommunityGalleryImageVersionList(IReadOnlyList<CommunityGalleryImageVersionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommunityGalleryImageVersionList(IReadOnlyList<CommunityGalleryImageVersionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A list of community gallery image versions. </summary>
         public IReadOnlyList<CommunityGalleryImageVersionData> Value { get; }
         /// <summary> The URI to fetch the next page of community gallery image versions. Call ListNext() with this to fetch the next page of community gallery image versions. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

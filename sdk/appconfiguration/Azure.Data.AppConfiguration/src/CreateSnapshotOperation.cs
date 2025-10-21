@@ -28,7 +28,7 @@ namespace Azure.Data.AppConfiguration
         /// Gets the <see cref="ConfigurationSnapshot"/>. This snapshot will have a status of
         /// <see cref="ConfigurationSnapshotStatus.Provisioning"/> until the operation has completed.
         /// </summary>
-        public override ConfigurationSnapshot Value => ConfigurationSnapshot.FromResponse(_operation.GetRawResponse());
+        public override ConfigurationSnapshot Value => (ConfigurationSnapshot)_operation.GetRawResponse();
 
         /// <inheritdoc/>
         public override bool HasValue => _operation.HasValue;

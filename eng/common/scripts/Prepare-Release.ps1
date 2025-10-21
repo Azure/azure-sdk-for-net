@@ -1,3 +1,5 @@
+#!/usr/bin/env pwsh
+
 #Requires -Version 6.0
 
 <#
@@ -53,6 +55,7 @@ Set-StrictMode -Version 3
 
 . ${PSScriptRoot}\common.ps1
 . ${PSScriptRoot}\Helpers\ApiView-Helpers.ps1
+. ${PSScriptRoot}\Helpers\DevOps-WorkItem-Helpers.ps1
 
 function Get-ReleaseDay($baseDate)
 {
@@ -139,18 +142,18 @@ if ($null -eq $newVersionParsed)
   exit 1
 }
 
-&$EngCommonScriptsDir/Update-DevOps-Release-WorkItem.ps1 `
-  -language $LanguageDisplayName `
-  -packageName $packageProperties.Name `
-  -version $newVersion `
-  -plannedDate $releaseDateString `
-  -packageRepoPath $packageProperties.serviceDirectory `
-  -packageType $packageProperties.SDKType `
-  -packageNewLibrary $packageProperties.IsNewSDK
+$result = Update-DevOpsReleaseWorkItem -language $LanguageDisplayName `
+    -packageName $packageProperties.Name `
+    -version $newVersion `
+    -plannedDate $releaseDateString `
+    -packageRepoPath $packageProperties.serviceDirectory `
+    -packageType $packageProperties.SDKType `
+    -packageNewLibrary $packageProperties.IsNewSDK
 
-if ($LASTEXITCODE -ne 0) {
-  Write-Error "Updating of the Devops Release WorkItem failed."
-  exit 1
+if (-not $result)
+{
+    Write-Error "Update of the Devops Release WorkItem failed."
+    exit 1
 }
 
 # Check API status

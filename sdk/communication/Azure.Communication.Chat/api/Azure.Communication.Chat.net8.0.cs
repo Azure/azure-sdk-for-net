@@ -5,11 +5,12 @@ namespace Azure.Communication.Chat
         internal AddChatParticipantsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class AzureCommunicationChatContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureCommunicationChatContext() { }
-        public static Azure.Communication.Chat.AzureCommunicationChatContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureCommunicationChatContext() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Communication.Chat.AzureCommunicationChatContext Default { get { throw null; } }
     }
     public partial class ChatAttachment
     {
@@ -130,17 +131,13 @@ namespace Azure.Communication.Chat
         public static Azure.Communication.Chat.AddChatParticipantsResult AddChatParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> invalidParticipants = null) { throw null; }
         public static Azure.Communication.Chat.ChatAttachment ChatAttachment(string id, Azure.Communication.Chat.ChatAttachmentType attachmentType, string name, System.Uri uri, System.Uri previewUri) { throw null; }
         public static Azure.Communication.Chat.ChatError ChatError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> details = null, Azure.Communication.Chat.ChatError innerError = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatMessage ChatMessage(string id, Azure.Communication.Chat.ChatMessageType type, string sequenceId, string version, Azure.Communication.Chat.ChatMessageContent content, string senderDisplayName, System.DateTimeOffset createdOn, string senderId, System.DateTimeOffset? deletedOn, System.DateTimeOffset? editedOn) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatMessage ChatMessage(string id, Azure.Communication.Chat.ChatMessageType type, string sequenceId, string version, Azure.Communication.Chat.ChatMessageContent content, string senderDisplayName, System.DateTimeOffset createdOn, string senderId, System.DateTimeOffset? deletedOn, System.DateTimeOffset? editedOn, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata) { throw null; }
         public static Azure.Communication.Chat.ChatMessageContent ChatMessageContent(string message, string topic, Azure.Communication.CommunicationUserIdentifier communicationUserIdentifier, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatParticipant> participants) { throw null; }
         public static Azure.Communication.Chat.ChatMessageContent ChatMessageContent(string message, string topic, Azure.Communication.CommunicationUserIdentifier communicationUserIdentifier, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatParticipant> participants, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatAttachment> attachments = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatMessageReadReceipt ChatMessageReadReceipt(Azure.Communication.CommunicationIdentifier sender, string chatMessageId, System.DateTimeOffset readOn) { throw null; }
         public static Azure.Communication.Chat.ChatParticipant ChatParticipant(Azure.Communication.CommunicationIdentifier user, string displayName, System.DateTimeOffset? shareHistoryTime) { throw null; }
         public static Azure.Communication.Chat.ChatParticipant ChatParticipant(Azure.Communication.CommunicationIdentifier user, string displayName, System.DateTimeOffset? shareHistoryTime, System.Collections.Generic.IDictionary<string, string> metadata) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatThreadItem ChatThreadItem(string id, string topic, System.DateTimeOffset? deletedOn, System.DateTimeOffset? lastMessageReceivedOn) { throw null; }
         public static Azure.Communication.Chat.ChatThreadProperties ChatThreadProperties(string id, string topic, System.DateTimeOffset createdOn, Azure.Communication.CommunicationIdentifier createdBy, System.DateTimeOffset deletedOn) { throw null; }
         public static Azure.Communication.Chat.CreateChatThreadResult CreateChatThreadResult(Azure.Communication.Chat.ChatThreadProperties chatThread, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> invalidParticipants) { throw null; }
@@ -156,7 +153,10 @@ namespace Azure.Communication.Chat
     }
     public abstract partial class ChatRetentionPolicy
     {
-        protected ChatRetentionPolicy() { }
+        protected ChatRetentionPolicy(Azure.Communication.Chat.RetentionPolicyKind kind) { }
+        public Azure.Communication.Chat.RetentionPolicyKind Kind { get { throw null; } }
+        public static Azure.Communication.Chat.ChatRetentionPolicy None() { throw null; }
+        public static Azure.Communication.Chat.ChatRetentionPolicy ThreadCreationDate(int deleteThreadAfterDays) { throw null; }
     }
     public partial class ChatThreadClient
     {
@@ -234,10 +234,6 @@ namespace Azure.Communication.Chat
         public Azure.Communication.Chat.ChatThreadProperties ChatThread { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
     }
-    public partial class NoneRetentionPolicy : Azure.Communication.Chat.ChatRetentionPolicy
-    {
-        public NoneRetentionPolicy() { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RetentionPolicyKind : System.IEquatable<Azure.Communication.Chat.RetentionPolicyKind>
     {
@@ -269,10 +265,10 @@ namespace Azure.Communication.Chat
         internal SendChatMessageResult() { }
         public string Id { get { throw null; } }
     }
-    public partial class ThreadCreationDateRetentionPolicy : Azure.Communication.Chat.ChatRetentionPolicy
+    public sealed partial class ThreadCreationDateRetentionPolicy : Azure.Communication.Chat.ChatRetentionPolicy
     {
-        public ThreadCreationDateRetentionPolicy(int deleteThreadAfterDays) { }
-        public int DeleteThreadAfterDays { get { throw null; } set { } }
+        public ThreadCreationDateRetentionPolicy(int deleteThreadAfterDays) : base (default(Azure.Communication.Chat.RetentionPolicyKind)) { }
+        public int DeleteThreadAfterDays { get { throw null; } }
     }
     public partial class TypingNotificationOptions
     {

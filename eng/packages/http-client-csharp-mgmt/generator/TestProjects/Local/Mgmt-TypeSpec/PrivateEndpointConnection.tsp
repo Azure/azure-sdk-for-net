@@ -8,22 +8,22 @@ using Azure.ClientGenerator.Core;
 namespace MgmtTypeSpec;
 
 #suppress "@azure-tools/typespec-providerhub-controller/no-resource-operations" "Expected for private links"
-model PrivateLinkResource is ProxyResource<PrivateLinkResourceProperties> {
+model PrivateLink is ProxyResource<PrivateLinkResourceProperties> {
   ...PrivateLinkResourceParameter;
   ...ManagedServiceIdentityProperty;
 }
 
-@armResourceOperations(PrivateLinkResource)
+@armResourceOperations(PrivateLink)
 interface PrivateLinks {
   /** list private links on the given resource */
   @clientName("GetAllPrivateLinkResources")
-  listByMongoCluster is ArmResourceListByParent<PrivateLinkResource>;
+  listByMongoCluster is ArmResourceListByParent<PrivateLink>;
   
   /**
    * Starts the SAP Application Server Instance.
    */
   start is ArmResourceActionAsync<
-    PrivateLinkResource,
+    PrivateLink,
     {
       @doc("SAP Application server instance start request body.")
       @body
@@ -31,6 +31,11 @@ interface PrivateLinks {
     },
     Foundations.OperationStatusResult
   >;
+  
+  @doc("Starts a failed runtime resource")
+  @post
+  startFailedServerlessRuntime(
+  ): ArmNoContentResponse | ErrorResponse;
 }
 
 /**

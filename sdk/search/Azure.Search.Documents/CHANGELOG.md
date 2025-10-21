@@ -1,6 +1,6 @@
 # Release History
 
-## 11.7.0-beta.5 (Unreleased)
+## 11.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,50 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.7.0 (2025-10-09)
+
+### Features Added
+- Added support for `2025-09-01` service version.
+- Support for reranker boosted scores in search results and the ability to sort results on either reranker or reranker boosted scores in `SemanticConfiguration.RankingOrder`.
+- Support for `VectorSearchCompression.RescoringOptions` to configure how vector compression handles the original vector when indexing and how vectors are used during rescoring.
+- Added `SearchIndex.Description` to provide a textual description of the index.
+- Support for `LexicalNormalizer` when defining `SearchIndex`, `SimpleField`, and `SearchableField` and the ability to use it when analyzing text with `SearchIndexClient.AnalyzeText`.
+- Support `DocumentIntelligenceLayoutSkill` skillset skill and `OneLake` `SearchIndexerDataSourceConnection` data source.
+- Support for `QueryDebugMode` in searching to retrieve detailed information about search processing. Only vector is supported for `QueryDebugMode`.
+
+### Breaking Changes
+- `VectorSearchCompression.RerankWithOriginalVectors` and `VectorSearchCompression.DefaultOversampling` don't work with
+  `2025-09-01` and were replaced by `VectorSearchCompression.RescoringOptions.EnabledRescoring` and 
+  `VectorSearchCompression.RescoringOptions.DefaultOversampling`. If using `2024-07-01` continue using the old properties,
+  otherwise if using `2025-09-01` use the new properties in `RescoringOptions`.
+
+## 11.7.0-beta.7 (2025-09-05)
+
+### Features Added
+- Added support for Knowledge Agent knowledge sources.
+- Added support for Knowledge Agent answer synthesis.
+- Added `VectorFilterMode.StrictPostFilter`.
+
+### Breaking Changes
+- Dropped support for Knowledge Agent target index. Use knowledge sources instead.
+- Moved `QueryDebugMode` from `SemanticSearchOptions` to `SearchOptions` as it is no longer tied only to semantic queries.
+
+## 11.7.0-beta.6 (2025-08-11)
+
+### Features Added
+- Enable the new model serialization using System.ClientModel, refer to this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added new AOT-compatible overloads for `Search<T>` and `SearchAsync<T>` that take `JsonTypeInfo<T>`.
+
+## 11.7.0-beta.5 (2025-06-17)
+
+### Bugs Fixed
+- Fixed a failure in the search response when the service returned a 206(Partial Content) status code.
+
+## 11.6.1 (2025-06-17)
+
+### Bugs Fixed
+- Added support for HTTP status code 206 (Partial Content) in the `Search` method to handle partial results returned by the service.
 
 ## 11.7.0-beta.4 (2025-05-14)
 

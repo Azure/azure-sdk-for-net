@@ -1,16 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using Generator.Model;
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
 
 namespace Azure.Provisioning.Generator.Model;
 
@@ -43,13 +45,13 @@ public abstract partial class Specification
                         () =>
                         {
                             // Pull properties off the method
-                            resource.Properties = FindProperties(resource, creator);
+                            resource.Properties = FindProperties(resource, creator, IgnorePropertiesWithoutPath);
 
                             // Add anything else off the return type
                             Type? data = creator.ReturnType.GetGenericArguments()?[0]?.GetProperty("Data")?.PropertyType;
                             if (data is not null)
                             {
-                                FlattenType(resource, resource.Properties, data, parameters: false);
+                                FlattenType(resource, resource.Properties, data, IgnorePropertiesWithoutPath, parameters: false);
                             }
 
                             // Sort all the properties with Name/required values first and output values last
@@ -59,14 +61,14 @@ public abstract partial class Specification
                     // Hack in a few special types
                     if (resource.Name == "Generic")
                     {
-                        GetOrCreateModelType(typeof(WritableSubResource), resource);
+                        GetOrCreateModelType(typeof(WritableSubResource), resource, IgnorePropertiesWithoutPath);
                     }
 
                     MethodInfo? getKeys = resource.ArmType.GetMethod("GetKeys") ?? resource.ArmType.GetMethod("GetSharedKeys");
                     Type? keyType = getKeys?.ReturnType.GetGenericArguments()?[0];
                     if (keyType is not null)
                     {
-                        resource.GetKeysType = GetOrCreateModelType(keyType, resource) as SimpleModel;
+                        resource.GetKeysType = GetOrCreateModelType(keyType, resource, IgnorePropertiesWithoutPath) as SimpleModel;
                         resource.GetKeysIsList = getKeys!.ReturnType.GetGenericTypeDefinition() == typeof(Pageable<>);
                         resource.GetKeysType!.FromExpression = true;
                     }
@@ -141,11 +143,10 @@ public abstract partial class Specification
                         parent = parent.ParentResource;
                     }
                 }
-                /**/
             });
     }
 
-    private Dictionary<Type, MethodInfo> FindConstructibleResources()
+    private protected virtual Dictionary<Type, MethodInfo> FindConstructibleResources()
     {
         // Find constructible resources
         Dictionary<Type, MethodInfo> resources = [];
@@ -218,7 +219,7 @@ public abstract partial class Specification
         return resources;
     }
 
-    private static List<Property> FindProperties(Resource resource, MethodInfo creator)
+    private static List<Property> FindProperties(Resource resource, MethodInfo creator, bool ignorePropertiesWithoutPath)
     {
         List<Property> properties = [];
 
@@ -236,7 +237,7 @@ public abstract partial class Specification
                         Property simple =
                             new(
                                 resource,
-                                GetOrCreateModelType(parameter.ParameterType, resource),
+                                GetOrCreateModelType(parameter.ParameterType, resource, ignorePropertiesWithoutPath),
                                 armMember: null,
                                 parameter)
                             {
@@ -259,21 +260,21 @@ public abstract partial class Specification
                     }
                     else if (parameter.ParameterType.IsResourceData())
                     {
-                        FlattenType(resource, properties, parameter.ParameterType);
+                        FlattenType(resource, properties, parameter.ParameterType, ignorePropertiesWithoutPath);
                     }
                     else if (parameter.ParameterType.IsModelType())
                     {
                         if (parameter.ParameterType.Name.Contains("Create") &&
                             parameter.ParameterType.Name.EndsWith("Content"))
                         {
-                            FlattenType(resource, properties, parameter.ParameterType);
+                            FlattenType(resource, properties, parameter.ParameterType, ignorePropertiesWithoutPath);
                         }
                         else
                         {
                             // Which model types should be left as objects?
                             properties.Add(new(
                                 resource,
-                                GetOrCreateModelType(parameter.ParameterType, resource),
+                                GetOrCreateModelType(parameter.ParameterType, resource, ignorePropertiesWithoutPath),
                                 armMember: null,
                                 parameter));
                         }
@@ -288,7 +289,7 @@ public abstract partial class Specification
         return properties;
     }
 
-    static void FlattenType(Resource resource, IList<Property> properties, Type type, bool parameters = true)
+    static void FlattenType(Resource resource, IList<Property> properties, Type type, bool ignorePropertiesWithoutPath, bool parameters = true)
     {
         HashSet<string> required = [];
         if (parameters)
@@ -298,7 +299,11 @@ public abstract partial class Specification
         foreach (PropertyInfo property in type.GetProperties())
         {
             if (property.Name == "ResourceType") { continue; }
-            Property prop = GetProperty(resource, resource, required.Contains(property.Name), property);
+            Property? prop = GetProperty(resource, resource, required.Contains(property.Name), property, ignorePropertyWithoutPath: ignorePropertiesWithoutPath);
+            if (prop is null)
+            {
+                continue;
+            }
             Property? existing = properties.FirstOrDefault(e => prop.Name == e.Name);
             if (existing is null)
             {
@@ -325,38 +330,52 @@ public abstract partial class Specification
         }
     }
 
-    private static Property GetProperty(Resource resource, TypeModel parent, bool required, PropertyInfo property)
+    private static Property? GetProperty(Resource resource, TypeModel parent, bool required, PropertyInfo property, bool ignorePropertyWithoutPath)
     {
         Property prop = new(
             parent,
-            GetOrCreateModelType(property.PropertyType, resource),
+            GetOrCreateModelType(property.PropertyType, resource, ignorePropertyWithoutPath),
             property,
             armParameter: null)
-            {
-                IsReadOnly = !required && !property.CanWrite,
-                IsRequired = required,
-                Description = resource.Spec!.DocComments.GetSummary(property)
-            };
+        {
+            IsReadOnly = !required && !property.CanWrite,
+            IsRequired = required,
+            Description = resource.Spec!.DocComments.GetSummary(property)
+        };
 
         // Fish out any path attributes
-        string? path = property.GetCustomAttributes().Where(a => a.GetType().Name == "WirePathAttribute").FirstOrDefault()?.ToString();
-        if (path is not null)
-        {
-            prop.Path = path.Split('.');
-        }
+        var attributes = property.GetCustomAttributes();
+        string? path = attributes.Where(a => a.GetType().Name == "WirePathAttribute").FirstOrDefault()?.ToString();
 
         // Patch up the well known id/systemData property paths
         if (path is null)
         {
-            prop.Path = (prop.Name, prop.PropertyType?.Name) switch
+            path = (prop.Name, prop.PropertyType?.Name) switch
             {
-                ("Name", "String") => ["name"],
-                ("Location", "AzureLocation") => ["location"],
-                ("Id", "ResourceIdentifier") => ["id"],
-                ("SystemData", "SystemData") => ["systemData"],
-                ("Tags", "IDictionary<String,String>") => ["tags"],
+                ("Name", "String") => "name",
+                ("Location", "AzureLocation") => "location",
+                ("Id", "ResourceIdentifier") => "id",
+                ("SystemData", "SystemData") => "systemData",
+                ("Tags", "IDictionary<String,String>") => "tags",
                 _ => null
             };
+        }
+
+        if (path is not null)
+        {
+            prop.Path = path.Split('.');
+        }
+        else if (ignorePropertyWithoutPath)
+        {
+            // ignore those properties without path
+            return null;
+        }
+
+        // if the property has `EditorBrowsable` attribute, we should add the same attribute to it as well
+        var editorBrowsableAttribute = attributes.FirstOrDefault(a => a.GetType() == typeof(EditorBrowsableAttribute));
+        if (editorBrowsableAttribute is not null)
+        {
+            prop.HideLevel = PropertyHideLevel.HideProperty | PropertyHideLevel.HideField;
         }
 
         // Collections always appear readonly so we should look at whether the
@@ -373,15 +392,15 @@ public abstract partial class Specification
         return prop;
     }
 
-    private static ModelBase GetOrCreateModelType(Type armType, Resource resource)
+    private static ModelBase GetOrCreateModelType(Type armType, Resource resource, bool ignorePropertiesWithoutPath)
     {
         ModelBase? type = TypeRegistry.Get(armType);
         return
             type is not null ? type :
-            armType.IsNullableOf(_ => true) ? GetOrCreateModelType(armType.GetGenericArguments()[0], resource) :
+            armType.IsNullableOf(_ => true) ? GetOrCreateModelType(armType.GetGenericArguments()[0], resource, ignorePropertiesWithoutPath) :
             armType == typeof(byte[]) ? TypeRegistry.Get<BinaryData>()! : // do byte[] before IList<T>
-            armType.IsListOf(_ => true) ? new ListModel(GetOrCreateModelType(armType.GetGenericArguments()[0], resource)) :
-            armType.IsDictionary() ? new DictionaryModel(GetOrCreateModelType(armType.GetGenericArguments()[1], resource)) :
+            armType.IsListOf(_ => true) ? new ListModel(GetOrCreateModelType(armType.GetGenericArguments()[0], resource, ignorePropertiesWithoutPath)) :
+            armType.IsDictionary() ? new DictionaryModel(GetOrCreateModelType(armType.GetGenericArguments()[1], resource, ignorePropertiesWithoutPath)) :
             armType.IsEnumLike() ? CreateEnum(armType) :
             CreateSimpleModel(armType);
 
@@ -460,7 +479,11 @@ public abstract partial class Specification
                 {
                     foreach (PropertyInfo property in armType.GetProperties())
                     {
-                        model.Properties.Add(GetProperty(resource, model, required: false, property));
+                        var prop = GetProperty(resource, model, required: false, property, ignorePropertyWithoutPath: ignorePropertiesWithoutPath);
+                        if (prop is not null)
+                        {
+                            model.Properties.Add(prop);
+                        }
                     }
                 });
 
@@ -468,7 +491,7 @@ public abstract partial class Specification
             foreach (Type derived in armType.Assembly.GetExportedTypes())
             {
                 if (derived.BaseType != armType) { continue; }
-                if (GetOrCreateModelType(derived, resource) is TypeModel typedModel)
+                if (GetOrCreateModelType(derived, resource, ignorePropertiesWithoutPath) is TypeModel typedModel)
                 {
                     // Associate the models
                     typedModel.BaseType = model;
@@ -515,7 +538,7 @@ public abstract partial class Specification
                     }
                 }
             }
-            
+
             return model;
         }
     }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Search.Documents.Agents.Models;
 
 namespace Azure.Search.Documents.Models
@@ -15,9 +17,16 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeAgentActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
-        internal UnknownKnowledgeAgentActivityRecord(int id, string type) : base(id, type)
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownKnowledgeAgentActivityRecord(int id, string type, int? elapsedMs, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, type, elapsedMs, serializedAdditionalRawData)
         {
             Type = type ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeAgentActivityRecord"/> for deserialization. </summary>
+        internal UnknownKnowledgeAgentActivityRecord()
+        {
         }
     }
 }

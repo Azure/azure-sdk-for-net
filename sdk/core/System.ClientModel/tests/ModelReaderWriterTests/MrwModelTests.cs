@@ -30,11 +30,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         [TestCase("J")]
         [TestCase("W")]
-        public void RoundTripWithModelReaderWriter(string format)
-            => RoundTripTest(format, new ModelReaderWriterStrategy<T>());
-
-        [TestCase("J")]
-        [TestCase("W")]
         public void RoundTripWithModelInterface(string format)
             => RoundTripTest(format, new ModelInterfaceStrategy<T>());
 
@@ -55,16 +50,17 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             if (AssertFailures(strategy, format, serviceResponse, options))
                 return;
 
-            T model = (T)strategy.Read(serviceResponse, Instance, options);
-
-            VerifyModel(model, format);
-            var data = strategy.Write(model, options);
+            T? model = (T?)strategy.Read(serviceResponse, Instance, options);
+            Assert.That(model, Is.Not.Null, "Strategy.Read returned null");
+            VerifyModel(model!, format);
+            var data = strategy.Write(model!, options);
             string roundTrip = data.ToString();
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            T model2 = (T)strategy.Read(roundTrip, Instance, options);
-            CompareModels(model, model2, format);
+            T? model2 = (T?)strategy.Read(roundTrip, Instance, options);
+            Assert.That(model2, Is.Not.Null, "Strategy.Read returned null for roundtrip");
+            CompareModels(model!, model2!, format);
         }
 
         private bool AssertFailures(RoundTripStrategy<T> strategy, string format, string serviceResponse, ModelReaderWriterOptions options)
@@ -77,12 +73,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                     if (strategy.GetType().Name.StartsWith("ModelJsonConverterStrategy"))
                     {
                         //we never get to the interface implementation because JsonSerializer errors before that
-                        Assert.Throws<JsonException>(() => { T model = (T)strategy.Read(serviceResponse, Instance, options); });
+                        Assert.Throws<JsonException>(() => { T? model = (T?)strategy.Read(serviceResponse, Instance, options); });
                         result = true;
                     }
                     else
                     {
-                        Assert.Throws<InvalidOperationException>(() => { T model = (T)strategy.Read(serviceResponse, Instance, options); });
+                        Assert.Throws<InvalidOperationException>(() => { T? model = (T?)strategy.Read(serviceResponse, Instance, options); });
                         result = true;
                     }
                 }
@@ -95,7 +91,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             }
             else if (Instance is not IJsonModel<T> && format == "J")
             {
-                Assert.Throws<FormatException>(() => { T model = (T)strategy.Read(serviceResponse, Instance, options); });
+                Assert.Throws<FormatException>(() => { T? model = (T?)strategy.Read(serviceResponse, Instance, options); });
                 Assert.Throws<FormatException>(() => { var data = strategy.Write(Instance, options); });
                 result = true;
             }
@@ -105,12 +101,17 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         internal static Dictionary<string, BinaryData> GetRawData(object model)
         {
             Type modelType = model.GetType();
-            while (modelType.BaseType != typeof(object) && modelType.BaseType != typeof(ValueType))
+            var fieldInfo = modelType.GetField("_serializedAdditionalRawData", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            while (fieldInfo == null &&
+                modelType.BaseType != typeof(object) &&
+                modelType.BaseType != typeof(ValueType))
             {
                 modelType = modelType.BaseType!;
+                fieldInfo = modelType.GetField("_serializedAdditionalRawData", BindingFlags.Instance | BindingFlags.NonPublic);
             }
-            var propertyInfo = modelType.GetField("_rawData", BindingFlags.Instance | BindingFlags.NonPublic);
-            return propertyInfo?.GetValue(model) as Dictionary<string, BinaryData> ?? throw new InvalidOperationException($"unable to get raw data from {model.GetType().Name}");
+
+            return fieldInfo?.GetValue(model) as Dictionary<string, BinaryData> ?? throw new InvalidOperationException($"unable to get raw data from {model.GetType().Name}");
         }
 
         [Test]

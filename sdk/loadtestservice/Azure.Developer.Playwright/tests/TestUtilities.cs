@@ -45,3 +45,42 @@ internal class TestUtilities
         return token!;
     }
 }
+
+internal class PlaywrightVersion : IPlaywrightVersion
+{
+    public void ValidatePlaywrightVersion()
+    {
+        var minimumSupportedVersion = "1.50.0";
+        var installedVersion = GetPlaywrightVersion();
+
+        var minimumSupportedVersionInfo = GetVersionInfo(minimumSupportedVersion);
+        var installedVersionInfo = GetVersionInfo(installedVersion);
+
+        var isInstalledVersionGreater =
+            installedVersionInfo.Major > minimumSupportedVersionInfo.Major ||
+            (installedVersionInfo.Major == minimumSupportedVersionInfo.Major &&
+             installedVersionInfo.Minor >= minimumSupportedVersionInfo.Minor);
+
+        if (!isInstalledVersionGreater)
+        {
+            throw new Exception("The Playwright version you are using does not support playwright workspaces. Please update to Playwright version 1.50.0 or higher.");
+        }
+    }
+
+    public string GetPlaywrightVersion()
+    {
+        return "1.52.0";
+    }
+
+    internal (int Major, int Minor) GetVersionInfo(string version)
+    {
+        var parts = version.Split('.');
+        if (parts.Length < 2 ||
+            !int.TryParse(parts[0], out var major) ||
+            !int.TryParse(parts[1], out var minor))
+        {
+            throw new ArgumentException("Invalid version format.");
+        }
+        return (major, minor);
+    }
+}

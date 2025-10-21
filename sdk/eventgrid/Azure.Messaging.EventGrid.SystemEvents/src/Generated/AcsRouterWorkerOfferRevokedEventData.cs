@@ -22,11 +22,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workerId"> Router Worker events Worker Id. </param>
         /// <param name="queueId"> Router Worker Offer Revoked Queue Id. </param>
         /// <param name="offerId"> Router Worker Offer Revoked Offer Id. </param>
-        internal AcsRouterWorkerOfferRevokedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string workerId, string queueId, string offerId) : base(jobId, channelReference, channelId, serializedAdditionalRawData, workerId)
+        internal AcsRouterWorkerOfferRevokedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workerId, string queueId, string offerId) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, workerId)
         {
             QueueId = queueId;
             OfferId = offerId;
@@ -34,6 +34,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Router Worker Offer Revoked Queue Id. </summary>
         public string QueueId { get; }
+
         /// <summary> Router Worker Offer Revoked Offer Id. </summary>
         public string OfferId { get; }
     }

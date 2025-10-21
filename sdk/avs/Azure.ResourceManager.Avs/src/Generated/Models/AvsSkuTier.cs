@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </summary>
     public enum AvsSkuTier
     {
-        /// <summary> Free. </summary>
+        /// <summary> The Free service tier. </summary>
         Free,
-        /// <summary> Basic. </summary>
+        /// <summary> The Basic service tier. </summary>
         Basic,
-        /// <summary> Standard. </summary>
+        /// <summary> The Standard service tier. </summary>
         Standard,
-        /// <summary> Premium. </summary>
+        /// <summary> The Premium service tier. </summary>
         Premium
     }
 }

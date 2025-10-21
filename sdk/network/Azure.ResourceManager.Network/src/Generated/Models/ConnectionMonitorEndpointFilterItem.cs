@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The type of item included in the filter. Currently only 'AgentAddress' is supported. </summary>
+        [WirePath("type")]
         public ConnectionMonitorEndpointFilterItemType? ItemType { get; set; }
         /// <summary> The address of the filter item. </summary>
+        [WirePath("address")]
         public string Address { get; set; }
     }
 }

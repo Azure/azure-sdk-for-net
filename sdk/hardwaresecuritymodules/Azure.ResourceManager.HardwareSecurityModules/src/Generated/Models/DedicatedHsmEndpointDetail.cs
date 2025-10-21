@@ -66,16 +66,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> An IP Address that Domain Name currently resolves to. </summary>
-        [WirePath("ipAddress")]
         public string IPAddress { get; }
         /// <summary> The port an endpoint is connected to. </summary>
-        [WirePath("port")]
         public int? Port { get; }
         /// <summary> The protocol used for connection. </summary>
-        [WirePath("protocol")]
         public string Protocol { get; }
         /// <summary> Description of the detail. </summary>
-        [WirePath("description")]
         public string Description { get; }
     }
 }

@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="port"> TCP port of the database endpoint. Specified at create time. Defaults to an available port. </param>
         /// <param name="provisioningState"> Current provisioning status of the database. </param>
         /// <param name="resourceState"> Current resource status of the database. </param>
-        /// <param name="clusteringPolicy"> Clustering policy - default is OSSCluster. This property can be updated only if the current value is NoCluster. If the value is OSSCluster or EnterpriseCluster, it cannot be updated without deleting the database. </param>
+        /// <param name="clusteringPolicy"> Clustering policy - default is OSSCluster. This property must be chosen at create time, and cannot be changed without deleting the database. </param>
         /// <param name="evictionPolicy"> Redis eviction policy - default is VolatileLRU. </param>
         /// <param name="persistence"> Persistence settings. </param>
         /// <param name="modules"> Optional set of redis modules to enable in this database - modules can only be added at creation time. </param>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="port"> TCP port of the database endpoint. Specified at create time. Defaults to an available port. </param>
         /// <param name="provisioningState"> Current provisioning status of the database. </param>
         /// <param name="resourceState"> Current resource status of the database. </param>
-        /// <param name="clusteringPolicy"> Clustering policy - default is OSSCluster. This property can be updated only if the current value is NoCluster. If the value is OSSCluster or EnterpriseCluster, it cannot be updated without deleting the database. </param>
+        /// <param name="clusteringPolicy"> Clustering policy - default is OSSCluster. This property must be chosen at create time, and cannot be changed without deleting the database. </param>
         /// <param name="evictionPolicy"> Redis eviction policy - default is VolatileLRU. </param>
         /// <param name="persistence"> Persistence settings. </param>
         /// <param name="modules"> Optional set of redis modules to enable in this database - modules can only be added at creation time. </param>
@@ -268,25 +268,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 accessPolicyName,
                 userObjectId != null ? new AccessPolicyAssignmentPropertiesUser(userObjectId, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseSkuDetailsList"/>. </summary>
-        /// <param name="skus"> List of SKUS available to scale up or scale down. </param>
-        /// <returns> A new <see cref="Models.RedisEnterpriseSkuDetailsList"/> instance for mocking. </returns>
-        public static RedisEnterpriseSkuDetailsList RedisEnterpriseSkuDetailsList(IEnumerable<RedisEnterpriseSkuDetails> skus = null)
-        {
-            skus ??= new List<RedisEnterpriseSkuDetails>();
-
-            return new RedisEnterpriseSkuDetailsList(skus?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseSkuDetails"/>. </summary>
-        /// <param name="name"> The name of the SKU. </param>
-        /// <param name="sizeInGB"> The cache size in GB. </param>
-        /// <returns> A new <see cref="Models.RedisEnterpriseSkuDetails"/> instance for mocking. </returns>
-        public static RedisEnterpriseSkuDetails RedisEnterpriseSkuDetails(string name = null, float? sizeInGB = null)
-        {
-            return new RedisEnterpriseSkuDetails(name, sizeInGB, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisEnterprisePrivateLinkResource"/>. </summary>

@@ -63,6 +63,7 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="additionalMessages"> Adds additional messages to the thread before creating the run. </param>
         /// <param name="overrideTools"> The overridden list of enabled tools that the agent should use to run the thread. </param>
+        /// <param name="toolResources"> The overridden enabled tool resources that the agent should use to run the thread. </param>
         /// <param name="stream">
         /// If `true`, returns a stream of events that happen during the Run as server-sent events,
         /// terminating when the Run enters a terminal state with a `data: [DONE]` message.
@@ -101,7 +102,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadRun>> CreateRunAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ThreadRun>> InternalCreateRunAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, ToolResources toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(assistantId, nameof(assistantId));
@@ -113,6 +114,7 @@ namespace Azure.AI.Agents.Persistent
                 additionalInstructions,
                 additionalMessages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
                 overrideTools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                toolResources,
                 stream,
                 temperature,
                 topP,
@@ -125,7 +127,7 @@ namespace Azure.AI.Agents.Persistent
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateRunAsync(threadId, createRunRequest.ToRequestContent(), include, context).ConfigureAwait(false);
+            Response response = await InternalCreateRunAsync(threadId, createRunRequest.ToRequestContent(), include, context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
@@ -140,6 +142,7 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="additionalMessages"> Adds additional messages to the thread before creating the run. </param>
         /// <param name="overrideTools"> The overridden list of enabled tools that the agent should use to run the thread. </param>
+        /// <param name="toolResources"> The overridden enabled tool resources that the agent should use to run the thread. </param>
         /// <param name="stream">
         /// If `true`, returns a stream of events that happen during the Run as server-sent events,
         /// terminating when the Run enters a terminal state with a `data: [DONE]` message.
@@ -178,7 +181,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadRun> CreateRun(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
+        internal virtual Response<ThreadRun> InternalCreateRun(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, ToolResources toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(assistantId, nameof(assistantId));
@@ -190,6 +193,7 @@ namespace Azure.AI.Agents.Persistent
                 additionalInstructions,
                 additionalMessages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
                 overrideTools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                toolResources,
                 stream,
                 temperature,
                 topP,
@@ -202,100 +206,8 @@ namespace Azure.AI.Agents.Persistent
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateRun(threadId, createRunRequest.ToRequestContent(), include, context);
+            Response response = InternalCreateRun(threadId, createRunRequest.ToRequestContent(), include, context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a new run for an agent thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateRunAsync(string,string,string,string,string,IEnumerable{ThreadMessageOptions},IEnumerable{ToolDefinition},bool?,float?,float?,int?,int?,Truncation,BinaryData,BinaryData,bool?,IReadOnlyDictionary{string,string},IEnumerable{RunAdditionalFieldList},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="include">
-        /// A list of additional fields to include in the response.
-        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content`
-        /// to fetch the file search result content.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateRunAsync(string threadId, RequestContent content, IEnumerable<RunAdditionalFieldList> include = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.CreateRun");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateRunRequest(threadId, content, include, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a new run for an agent thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateRun(string,string,string,string,string,IEnumerable{ThreadMessageOptions},IEnumerable{ToolDefinition},bool?,float?,float?,int?,int?,Truncation,BinaryData,BinaryData,bool?,IReadOnlyDictionary{string,string},IEnumerable{RunAdditionalFieldList},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="include">
-        /// A list of additional fields to include in the response.
-        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content`
-        /// to fetch the file search result content.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateRun(string threadId, RequestContent content, IEnumerable<RunAdditionalFieldList> include = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.CreateRun");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateRunRequest(threadId, content, include, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Gets an existing run from an existing thread. </summary>
@@ -328,88 +240,6 @@ namespace Azure.AI.Agents.Persistent
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRun(threadId, runId, context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets an existing run from an existing thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRunAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetRunAsync(string threadId, string runId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.GetRun");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetRunRequest(threadId, runId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets an existing run from an existing thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRun(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetRun(string threadId, string runId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.GetRun");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetRunRequest(threadId, runId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Modifies an existing thread run. </summary>
@@ -534,6 +364,46 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
+        /// <summary> Submits outputs from tools as requested by tool calls in a run. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+        /// <param name="toolApprovals"> A list of tool approvals allowing data to be sent to tools. </param>
+        /// <param name="stream"> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(string threadId, string runId, IEnumerable<StructuredToolOutput> toolOutputs = null, IEnumerable<ToolApproval> toolApprovals = null, bool? stream = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs?.ToList() as IReadOnlyList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(), toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await SubmitToolOutputsToRunAsync(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary> Submits outputs from tools as requested by tool calls in a run. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+        /// <param name="toolApprovals"> A list of tool approvals allowing data to be sent to tools. </param>
+        /// <param name="stream"> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ThreadRun> SubmitToolOutputsToRun(string threadId, string runId, IEnumerable<StructuredToolOutput> toolOutputs = null, IEnumerable<ToolApproval> toolApprovals = null, bool? stream = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs?.ToList() as IReadOnlyList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(), toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = SubmitToolOutputsToRun(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
         /// <summary> Cancels a run of an in‐progress thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="runId"> Identifier of the run. </param>
@@ -648,7 +518,7 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        internal HttpMessage CreateCreateRunRequest(string threadId, RequestContent content, IEnumerable<RunAdditionalFieldList> include, RequestContext context)
+        internal HttpMessage CreateInternalCreateRunRequest(string threadId, RequestContent content, IEnumerable<RunAdditionalFieldList> include, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
       This client library enables working with the Microsoft Azure Communication Call Automation service.
@@ -6,11 +6,15 @@
       Microsoft Azure Communication Call Automation quickstart - https://learn.microsoft.com/azure/communication-services/quickstarts/voice-video-calling/callflows-for-customer-interactions?pivots=programming-language-csharp
     </Description>
     <AssemblyTitle>Azure Communication CallAutomation Service</AssemblyTitle>
-    <Version>1.5.0-beta.1</Version>
+    <Version>1.6.0-beta.1</Version>
+    <ApiCompatVersion>1.5.0</ApiCompatVersion>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <PackageTags>Microsoft Azure Communication CallAutomation Service;Microsoft;Azure;Azure Communication Service;Azure Communication CallAutomation Service;Calling;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0035</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +25,7 @@
     <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />
     <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" LinkBase="Shared\Communication" />
     <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializer.cs" LinkBase="Shared\Communication" />
+    <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializer_2025_06_30.cs" LinkBase="Shared\Communication" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />

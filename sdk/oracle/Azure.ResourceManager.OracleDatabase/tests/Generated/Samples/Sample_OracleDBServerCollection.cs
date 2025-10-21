@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetDbServerByParent()
+        public async Task GetAll_ListDbServersByExadataInfrastructureGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dbServers_get.json
-            // this example is just showing the usage of "DbServers_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/DbServers_ListByParent_MaximumSet_Gen.json
+            // this example is just showing the usage of "DbServer_ListByParent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -30,42 +30,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // this example assumes you already have this CloudExadataInfrastructureResource created on azure
             // for more information of creating CloudExadataInfrastructureResource, please refer to the document of CloudExadataInfrastructureResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg000";
-            string cloudexadatainfrastructurename = "infra1";
-            ResourceIdentifier cloudExadataInfrastructureResourceId = CloudExadataInfrastructureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
-            CloudExadataInfrastructureResource cloudExadataInfrastructure = client.GetCloudExadataInfrastructureResource(cloudExadataInfrastructureResourceId);
-
-            // get the collection of this OracleDBServerResource
-            OracleDBServerCollection collection = cloudExadataInfrastructure.GetOracleDBServers();
-
-            // invoke the operation
-            string dbserverocid = "ocid1....aaaaaa";
-            OracleDBServerResource result = await collection.GetAsync(dbserverocid);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            OracleDBServerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListDbServersByExadataInfrastructure()
-        {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dbServers_listByParent.json
-            // this example is just showing the usage of "DbServers_ListByCloudExadataInfrastructure" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudExadataInfrastructureResource created on azure
-            // for more information of creating CloudExadataInfrastructureResource, please refer to the document of CloudExadataInfrastructureResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg000";
-            string cloudexadatainfrastructurename = "infra1";
+            string resourceGroupName = "rgopenapi";
+            string cloudexadatainfrastructurename = "Replace this value with a string matching RegExp .*";
             ResourceIdentifier cloudExadataInfrastructureResourceId = CloudExadataInfrastructureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
             CloudExadataInfrastructureResource cloudExadataInfrastructure = client.GetCloudExadataInfrastructureResource(cloudExadataInfrastructureResourceId);
 
@@ -87,10 +53,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetDbServerByParent()
+        public async Task GetAll_ListDbServersByExadataInfrastructureGeneratedByMinimumSetRule()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dbServers_get.json
-            // this example is just showing the usage of "DbServers_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-09-01/DbServers_ListByParent_MinimumSet_Gen.json
+            // this example is just showing the usage of "DbServer_ListByParent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -100,61 +66,25 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // this example assumes you already have this CloudExadataInfrastructureResource created on azure
             // for more information of creating CloudExadataInfrastructureResource, please refer to the document of CloudExadataInfrastructureResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg000";
-            string cloudexadatainfrastructurename = "infra1";
+            string resourceGroupName = "rgopenapi";
+            string cloudexadatainfrastructurename = "Replace this value with a string matching RegExp .*";
             ResourceIdentifier cloudExadataInfrastructureResourceId = CloudExadataInfrastructureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
             CloudExadataInfrastructureResource cloudExadataInfrastructure = client.GetCloudExadataInfrastructureResource(cloudExadataInfrastructureResourceId);
 
             // get the collection of this OracleDBServerResource
             OracleDBServerCollection collection = cloudExadataInfrastructure.GetOracleDBServers();
 
-            // invoke the operation
-            string dbserverocid = "ocid1....aaaaaa";
-            bool result = await collection.ExistsAsync(dbserverocid);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetDbServerByParent()
-        {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dbServers_get.json
-            // this example is just showing the usage of "DbServers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudExadataInfrastructureResource created on azure
-            // for more information of creating CloudExadataInfrastructureResource, please refer to the document of CloudExadataInfrastructureResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg000";
-            string cloudexadatainfrastructurename = "infra1";
-            ResourceIdentifier cloudExadataInfrastructureResourceId = CloudExadataInfrastructureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
-            CloudExadataInfrastructureResource cloudExadataInfrastructure = client.GetCloudExadataInfrastructureResource(cloudExadataInfrastructureResourceId);
-
-            // get the collection of this OracleDBServerResource
-            OracleDBServerCollection collection = cloudExadataInfrastructure.GetOracleDBServers();
-
-            // invoke the operation
-            string dbserverocid = "ocid1....aaaaaa";
-            NullableResponse<OracleDBServerResource> response = await collection.GetIfExistsAsync(dbserverocid);
-            OracleDBServerResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
+            // invoke the operation and iterate over the result
+            await foreach (OracleDBServerResource item in collection.GetAllAsync())
             {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
+                // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OracleDBServerData resourceData = result.Data;
+                OracleDBServerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

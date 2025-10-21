@@ -69,10 +69,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The type of the endpoint service. </summary>
+        [WirePath("service")]
         public string Service { get; set; }
         /// <summary> SubResource as network identifier. </summary>
         internal WritableSubResource NetworkIdentifier { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("networkIdentifier.id")]
         public ResourceIdentifier NetworkIdentifierId
         {
             get => NetworkIdentifier is null ? default : NetworkIdentifier.Id;
@@ -85,8 +87,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of locations. </summary>
+        [WirePath("locations")]
         public IList<AzureLocation> Locations { get; }
         /// <summary> The provisioning state of the service endpoint resource. </summary>
+        [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

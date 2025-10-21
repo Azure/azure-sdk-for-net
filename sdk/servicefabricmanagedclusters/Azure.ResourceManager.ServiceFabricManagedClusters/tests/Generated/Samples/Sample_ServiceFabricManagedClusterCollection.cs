@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
@@ -22,8 +21,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAClusterWithMaximumParameters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ManagedClusterPutOperation_example_max.json
-            // this example is just showing the usage of "ManagedClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01-preview/ManagedClusterPutOperation_example_max.json
+            // this example is just showing the usage of "ManagedCluster_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -44,80 +43,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             string clusterName = "mycluster";
             ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(new AzureLocation("eastus"), new ServiceFabricManagedClustersSku(ServiceFabricManagedClustersSkuName.Basic))
             {
-                DnsName = "mycluster",
-                ClientConnectionPort = 19000,
-                HttpGatewayConnectionPort = 19080,
-                AdminUserName = "vmadmin",
-                AdminPassword = "{vm-password}",
-                LoadBalancingRules = {new ManagedClusterLoadBalancingRule(80, 80, new ManagedClusterLoadBalancingRuleTransportProtocol("http"), ManagedClusterLoadBalanceProbeProtocol.Http)
-{
-ProbePort = 80,
-}, new ManagedClusterLoadBalancingRule(443, 443, new ManagedClusterLoadBalancingRuleTransportProtocol("http"), ManagedClusterLoadBalanceProbeProtocol.Http)
-{
-ProbePort = 443,
-}, new ManagedClusterLoadBalancingRule(10000, 10000, ManagedClusterLoadBalancingRuleTransportProtocol.Tcp, ManagedClusterLoadBalanceProbeProtocol.Http)
-{
-ProbePort = 10000,
-LoadDistribution = "Default",
-}},
-                IsRdpAccessAllowed = true,
-                NetworkSecurityRules = {new ServiceFabricManagedNetworkSecurityRule("TestName", ServiceFabricManagedNsgProtocol.Tcp, ServiceFabricManagedNetworkTrafficAccess.Allow, 1010, ServiceFabricManagedNetworkSecurityRuleDirection.Inbound)
-{
-Description = "Test description",
-SourceAddressPrefixes = {"*"},
-DestinationAddressPrefixes = {"*"},
-SourcePortRanges = {"*"},
-DestinationPortRanges = {"*"},
-}, new ServiceFabricManagedNetworkSecurityRule("AllowARM", new ServiceFabricManagedNsgProtocol("*"), ServiceFabricManagedNetworkTrafficAccess.Allow, 2002, ServiceFabricManagedNetworkSecurityRuleDirection.Inbound)
-{
-SourceAddressPrefix = "AzureResourceManager",
-DestinationAddressPrefix = "*",
-SourcePortRange = "*",
-DestinationPortRange = "33500-33699",
-}},
-                FabricSettings = {new ClusterFabricSettingsSection("ManagedIdentityTokenService", new ClusterFabricSettingsParameterDescription[]
-{
-new ClusterFabricSettingsParameterDescription("IsEnabled", "true")
-})},
-                ClusterCodeVersion = "7.1.168.9494",
-                ClusterUpgradeMode = ManagedClusterUpgradeMode.Manual,
-                AddOnFeatures = { ManagedClusterAddOnFeature.DnsService, ManagedClusterAddOnFeature.BackupRestoreService, ManagedClusterAddOnFeature.ResourceMonitorService },
-                IsAutoOSUpgradeEnabled = true,
-                HasZoneResiliency = true,
-                MaxUnusedVersionsToKeep = 3,
-                IsIPv6Enabled = true,
-                IPTags = { new ManagedClusterIPTag("FirstPartyUsage", "SQL") },
-                AuxiliarySubnets = {new ManagedClusterSubnet("testSubnet1")
-{
-IsIPv6Enabled = true,
-PrivateEndpointNetworkPolicies = ManagedClusterSubnetPrivateEndpointNetworkPoliciesState.Enabled,
-PrivateLinkServiceNetworkPolicies = ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState.Enabled,
-NetworkSecurityGroupId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/networkSecurityGroups/sn1"),
-}},
-                ServiceEndpoints = {new ManagedClusterServiceEndpoint("Microsoft.Storage")
-{
-Locations = {new AzureLocation("eastus2"), new AzureLocation("usnorth")},
-}},
-                ZonalUpdateMode = ZonalUpdateMode.Fast,
-                UseCustomVnet = true,
-                PublicIPPrefixId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/resRg/providers/Microsoft.Network/publicIPPrefixes/myPublicIPPrefix"),
-                PublicIPv6PrefixId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/resRg/providers/Microsoft.Network/publicIPPrefixes/myPublicIPv6Prefix"),
-                DdosProtectionPlanId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/ddosProtectionPlans/myDDoSProtectionPlan"),
-                UpgradeDescription = new ManagedClusterUpgradePolicy
-                {
-                    ForceRestart = false,
-                    HealthPolicy = new ManagedClusterHealthPolicy(10, 30),
-                    DeltaHealthPolicy = new ManagedClusterUpgradeDeltaHealthPolicy(20)
-                    {
-                        MaxPercentUpgradeDomainDeltaUnhealthyNodes = 40,
-                        MaxPercentDeltaUnhealthyApplications = 40,
-                    },
-                    MonitoringPolicy = new ManagedClusterMonitoringPolicy(XmlConvert.ToTimeSpan("00:05:00"), XmlConvert.ToTimeSpan("00:45:00"), "00:55:00", "12:00:00", "03:00:00"),
-                },
-                HttpGatewayTokenAuthConnectionPort = 19081,
-                IsHttpGatewayExclusiveAuthModeEnabled = true,
-                AutoGeneratedDomainNameLabelScope = AutoGeneratedDomainNameLabelScope.SubscriptionReuse,
-                AllocatedOutboundPorts = 0,
                 Tags = { },
             };
             ArmOperation<ServiceFabricManagedClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -134,8 +59,8 @@ Locations = {new AzureLocation("eastus2"), new AzureLocation("usnorth")},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAClusterWithMinimumParameters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ManagedClusterPutOperation_example_min.json
-            // this example is just showing the usage of "ManagedClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01-preview/ManagedClusterPutOperation_example_min.json
+            // this example is just showing the usage of "ManagedCluster_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -154,18 +79,7 @@ Locations = {new AzureLocation("eastus2"), new AzureLocation("usnorth")},
 
             // invoke the operation
             string clusterName = "myCluster";
-            ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(new AzureLocation("eastus"), new ServiceFabricManagedClustersSku(ServiceFabricManagedClustersSkuName.Basic))
-            {
-                DnsName = "myCluster",
-                AdminUserName = "vmadmin",
-                AdminPassword = "{vm-password}",
-                FabricSettings = {new ClusterFabricSettingsSection("ManagedIdentityTokenService", new ClusterFabricSettingsParameterDescription[]
-{
-new ClusterFabricSettingsParameterDescription("IsEnabled", "true")
-})},
-                ClusterUpgradeMode = ManagedClusterUpgradeMode.Automatic,
-                ClusterUpgradeCadence = ManagedClusterUpgradeCadence.Wave1,
-            };
+            ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(new AzureLocation("eastus"), new ServiceFabricManagedClustersSku(ServiceFabricManagedClustersSkuName.Basic));
             ArmOperation<ServiceFabricManagedClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             ServiceFabricManagedClusterResource result = lro.Value;
 
@@ -180,8 +94,8 @@ new ClusterFabricSettingsParameterDescription("IsEnabled", "true")
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACluster()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ManagedClusterGetOperation_example.json
-            // this example is just showing the usage of "ManagedClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01-preview/ManagedClusterGetOperation_example.json
+            // this example is just showing the usage of "ManagedCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -213,8 +127,8 @@ new ClusterFabricSettingsParameterDescription("IsEnabled", "true")
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListClusterByResourceGroup()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ManagedClusterListByResourceGroupOperation_example.json
-            // this example is just showing the usage of "ManagedClusters_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01-preview/ManagedClusterListByResourceGroupOperation_example.json
+            // this example is just showing the usage of "ManagedCluster_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -248,8 +162,8 @@ new ClusterFabricSettingsParameterDescription("IsEnabled", "true")
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetACluster()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ManagedClusterGetOperation_example.json
-            // this example is just showing the usage of "ManagedClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01-preview/ManagedClusterGetOperation_example.json
+            // this example is just showing the usage of "ManagedCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -277,8 +191,8 @@ new ClusterFabricSettingsParameterDescription("IsEnabled", "true")
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetACluster()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ManagedClusterGetOperation_example.json
-            // this example is just showing the usage of "ManagedClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01-preview/ManagedClusterGetOperation_example.json
+            // this example is just showing the usage of "ManagedCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

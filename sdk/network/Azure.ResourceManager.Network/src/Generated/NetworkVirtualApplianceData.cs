@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Network
             VirtualApplianceSites = new ChangeTrackingList<WritableSubResource>();
             VirtualApplianceConnections = new ChangeTrackingList<WritableSubResource>();
             InboundSecurityRules = new ChangeTrackingList<WritableSubResource>();
+            NvaInterfaceConfigurations = new ChangeTrackingList<NvaInterfaceConfigurationsProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceData"/>. </summary>
@@ -52,16 +54,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="sshPublicKey"> Public key for SSH login. </param>
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
         /// <param name="networkProfile"> Network Profile containing configurations for Public and Private NIC. </param>
-        /// <param name="additionalNics"> Details required for Additional Network Interface. </param>
+        /// <param name="additionalNics"> Details required for Additional Network Interface. This property is not compatible with the NVA deployed in VNets. </param>
         /// <param name="internetIngressPublicIPs"> List of Resource Uri of Public IPs for Internet Ingress Scenario. </param>
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
         /// <param name="virtualApplianceConnections"> List of references to VirtualApplianceConnections. </param>
         /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="deploymentType"> The deployment type. PartnerManaged for the SaaS NVA. </param>
-        /// <param name="delegation"> The delegation for the Virtual Appliance. </param>
+        /// <param name="delegation"> The delegation for the Virtual Appliance. Only appliable for SaaS NVA. </param>
         /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
-        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<WritableSubResource> internetIngressPublicIPs, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="nvaInterfaceConfigurations"> The NVA in VNet interface configurations. </param>
+        /// <param name="privateIPAddress"> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </param>
+        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<WritableSubResource> internetIngressPublicIPs, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, IPAddress privateIPAddress) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Identity = identity;
             ETag = etag;
@@ -84,21 +88,29 @@ namespace Azure.ResourceManager.Network
             DeploymentType = deploymentType;
             Delegation = delegation;
             PartnerManagedResource = partnerManagedResource;
+            NvaInterfaceConfigurations = nvaInterfaceConfigurations;
+            PrivateIPAddress = privateIPAddress;
         }
 
         /// <summary> The service principal that has read access to cloud-init and config blob. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Network Virtual Appliance SKU. </summary>
+        [WirePath("properties.nvaSku")]
         public VirtualApplianceSkuProperties NvaSku { get; set; }
         /// <summary> Address Prefix. </summary>
+        [WirePath("properties.addressPrefix")]
         public string AddressPrefix { get; }
         /// <summary> BootStrapConfigurationBlobs storage URLs. </summary>
+        [WirePath("properties.bootStrapConfigurationBlobs")]
         public IList<string> BootStrapConfigurationBlobs { get; }
         /// <summary> The Virtual Hub where Network Virtual Appliance is being deployed. </summary>
         internal WritableSubResource VirtualHub { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.virtualHub.id")]
         public ResourceIdentifier VirtualHubId
         {
             get => VirtualHub is null ? default : VirtualHub.Id;
@@ -111,18 +123,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> CloudInitConfigurationBlob storage URLs. </summary>
+        [WirePath("properties.cloudInitConfigurationBlobs")]
         public IList<string> CloudInitConfigurationBlobs { get; }
         /// <summary> CloudInitConfiguration string in plain text. </summary>
+        [WirePath("properties.cloudInitConfiguration")]
         public string CloudInitConfiguration { get; set; }
         /// <summary> VirtualAppliance ASN. Microsoft private, public and IANA reserved ASN are not supported. </summary>
+        [WirePath("properties.virtualApplianceAsn")]
         public long? VirtualApplianceAsn { get; set; }
         /// <summary> Public key for SSH login. </summary>
+        [WirePath("properties.sshPublicKey")]
         public string SshPublicKey { get; set; }
         /// <summary> List of Virtual Appliance Network Interfaces. </summary>
+        [WirePath("properties.virtualApplianceNics")]
         public IReadOnlyList<VirtualApplianceNicProperties> VirtualApplianceNics { get; }
         /// <summary> Network Profile containing configurations for Public and Private NIC. </summary>
         internal NetworkVirtualAppliancePropertiesFormatNetworkProfile NetworkProfile { get; set; }
         /// <summary> Gets the network interface configurations. </summary>
+        [WirePath("properties.networkProfile.networkInterfaceConfigurations")]
         public IList<VirtualApplianceNetworkInterfaceConfiguration> NetworkInterfaceConfigurations
         {
             get
@@ -133,23 +151,38 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Details required for Additional Network Interface. </summary>
+        /// <summary> Details required for Additional Network Interface. This property is not compatible with the NVA deployed in VNets. </summary>
+        [WirePath("properties.additionalNics")]
         public IList<VirtualApplianceAdditionalNicProperties> AdditionalNics { get; }
         /// <summary> List of Resource Uri of Public IPs for Internet Ingress Scenario. </summary>
+        [WirePath("properties.internetIngressPublicIps")]
         public IList<WritableSubResource> InternetIngressPublicIPs { get; }
         /// <summary> List of references to VirtualApplianceSite. </summary>
+        [WirePath("properties.virtualApplianceSites")]
         public IReadOnlyList<WritableSubResource> VirtualApplianceSites { get; }
         /// <summary> List of references to VirtualApplianceConnections. </summary>
+        [WirePath("properties.virtualApplianceConnections")]
         public IReadOnlyList<WritableSubResource> VirtualApplianceConnections { get; }
         /// <summary> List of references to InboundSecurityRules. </summary>
+        [WirePath("properties.inboundSecurityRules")]
         public IReadOnlyList<WritableSubResource> InboundSecurityRules { get; }
         /// <summary> The provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The deployment type. PartnerManaged for the SaaS NVA. </summary>
+        [WirePath("properties.deploymentType")]
         public string DeploymentType { get; }
-        /// <summary> The delegation for the Virtual Appliance. </summary>
+        /// <summary> The delegation for the Virtual Appliance. Only appliable for SaaS NVA. </summary>
+        [WirePath("properties.delegation")]
         public VirtualApplianceDelegationProperties Delegation { get; set; }
         /// <summary> The delegation for the Virtual Appliance. </summary>
+        [WirePath("properties.partnerManagedResource")]
         public PartnerManagedResourceProperties PartnerManagedResource { get; set; }
+        /// <summary> The NVA in VNet interface configurations. </summary>
+        [WirePath("properties.nvaInterfaceConfigurations")]
+        public IList<NvaInterfaceConfigurationsProperties> NvaInterfaceConfigurations { get; }
+        /// <summary> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </summary>
+        [WirePath("properties.privateIpAddress")]
+        public IPAddress PrivateIPAddress { get; }
     }
 }

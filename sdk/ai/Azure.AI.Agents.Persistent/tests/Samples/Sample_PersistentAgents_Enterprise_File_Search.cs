@@ -46,6 +46,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
         List<ToolDefinition> tools = [new FileSearchToolDefinition()];
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "my-agent",
@@ -64,8 +65,8 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
             );
 
         ThreadRun run = await client.Runs.CreateRunAsync(
-            thread.Id,
-            agent.Id
+            thread,
+            agent
         );
 
         do
@@ -108,6 +109,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         {
             Console.WriteLine($"Unable to delete vector store {vectorStore.Id}");
         }
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         await client.Threads.DeleteThreadAsync(thread.Id);
         await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
@@ -144,6 +146,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
         List<ToolDefinition> tools = [new FileSearchToolDefinition()];
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "my-agent",
@@ -162,8 +165,8 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         );
 
         ThreadRun run = client.Runs.CreateRun(
-            thread.Id,
-            agent.Id
+            thread,
+            agent
         );
 
         do
@@ -206,6 +209,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         {
             Console.WriteLine($"Unable to delete vector store {vectorStore.Id}");
         }
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         client.Threads.DeleteThread(thread.Id);
         client.Administration.DeleteAgent(agent.Id);
         #endregion

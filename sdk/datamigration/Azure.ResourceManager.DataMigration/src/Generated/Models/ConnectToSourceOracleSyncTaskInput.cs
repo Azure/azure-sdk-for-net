@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceOracleSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to Oracle source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
-        public ConnectToSourceOracleSyncTaskInput(OracleConnectionInfo sourceConnectionInfo)
+        public ConnectToSourceOracleSyncTaskInput(DataMigrationOracleConnectionInfo sourceConnectionInfo)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceOracleSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to Oracle source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToSourceOracleSyncTaskInput(OracleConnectionInfo sourceConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToSourceOracleSyncTaskInput(DataMigrationOracleConnectionInfo sourceConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Information for connecting to Oracle source. </summary>
-        public OracleConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationOracleConnectionInfo SourceConnectionInfo { get; set; }
     }
 }

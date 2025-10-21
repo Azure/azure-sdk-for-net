@@ -26,141 +26,146 @@ namespace Azure.Health.Deidentification
 
         internal HttpMessage CreateGetJobRequest(string jobName, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateDeidentifyDocumentsRequest(string jobName, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
-            Request request = message.Request;
-            request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateListJobsInternalRequest(Uri nextPage, int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetJobsInternalRequest(int? maxpagesize, string continuationToken, RequestContext context)
         {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
+            }
+            if (continuationToken != null)
+            {
+                uri.AppendQuery("continuationToken", continuationToken, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage != null)
-            {
-                uri.Reset(nextPage);
-                request.Uri = uri;
-                request.Headers.SetValue("Accept", "application/json");
-            }
-            else
-            {
-                uri.Reset(_endpoint);
-                uri.AppendPath("/jobs", false);
-                uri.AppendQuery("api-version", _apiVersion, true);
-                if (maxpagesize != null)
-                {
-                    uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
-                }
-                if (continuationToken != null)
-                {
-                    uri.AppendQuery("continuationToken", continuationToken, true);
-                }
-                request.Uri = uri;
-                request.Headers.SetValue("Accept", "application/json");
-            }
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateListJobDocumentsInternalRequest(Uri nextPage, string jobName, int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateNextGetJobsInternalRequest(Uri nextPage, int? maxpagesize, string continuationToken, RequestContext context)
         {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetJobDocumentsInternalRequest(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
+        {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage != null)
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/documents", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
             {
-                uri.Reset(nextPage);
-                request.Uri = uri;
-                request.Headers.SetValue("Accept", "application/json");
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
             }
-            else
+            if (continuationToken != null)
             {
-                uri.Reset(_endpoint);
-                uri.AppendPath("/jobs/", false);
-                uri.AppendPath(jobName, true);
-                uri.AppendPath("/documents", false);
-                uri.AppendQuery("api-version", _apiVersion, true);
-                if (maxpagesize != null)
-                {
-                    uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
-                }
-                if (continuationToken != null)
-                {
-                    uri.AppendQuery("continuationToken", continuationToken, true);
-                }
-                request.Uri = uri;
-                request.Headers.SetValue("Accept", "application/json");
+                uri.AppendQuery("continuationToken", continuationToken, true);
             }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetJobDocumentsInternalRequest(Uri nextPage, string jobName, int? maxpagesize, string continuationToken, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateCancelJobRequest(string jobName, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath(":cancel", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
         internal HttpMessage CreateDeleteJobRequest(string jobName, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
-            Request request = message.Request;
-            request.Method = RequestMethod.Delete;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
+            request.Method = RequestMethod.Delete;
             return message;
         }
 
         internal HttpMessage CreateDeidentifyTextRequest(RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/deid", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

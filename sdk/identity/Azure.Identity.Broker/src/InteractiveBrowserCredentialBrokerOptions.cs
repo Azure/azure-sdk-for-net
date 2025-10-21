@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.InteropServices;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Broker;
 
@@ -9,7 +10,7 @@ namespace Azure.Identity.Broker
 {
     /// <summary>
     /// Options to configure the <see cref="InteractiveBrowserCredential"/> to use the system authentication broker in lieu of an embedded web view or the system browser.
-    /// For more information, see <see href="https://aka.ms/azsdk/net/identity/interactive-brokered-auth">Interactive brokered authentication</see>.
+    /// For more information, see <see href="https://aka.ms/azsdk/net/identity/broker">Use a broker</see>.
     /// </summary>
     public class InteractiveBrowserCredentialBrokerOptions : InteractiveBrowserCredentialOptions, IMsalPublicClientInitializerOptions
     {
@@ -32,6 +33,12 @@ namespace Azure.Identity.Broker
         public InteractiveBrowserCredentialBrokerOptions(IntPtr parentWindowHandle) : base()
         {
             _parentWindowHandle = parentWindowHandle;
+
+            // Set default value for UseDefaultBrokerAccount on macOS
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                RedirectUri = new(Constants.MacBrokerRedirectUri);
+            }
         }
 
         Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient => AddBroker;
@@ -39,7 +46,7 @@ namespace Azure.Identity.Broker
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
             builder.WithParentActivityOrWindow(() => _parentWindowHandle);
-            var options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows | BrokerOptions.OperatingSystems.Linux);
+            var options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows | BrokerOptions.OperatingSystems.Linux | BrokerOptions.OperatingSystems.OSX);
             if (IsLegacyMsaPassthroughEnabled.HasValue)
             {
                 options.MsaPassthrough = IsLegacyMsaPassthroughEnabled.Value;

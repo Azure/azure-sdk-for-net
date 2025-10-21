@@ -14,38 +14,57 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AcsRouterWorkerSelectorState : IEquatable<AcsRouterWorkerSelectorState>
     {
         private readonly string _value;
+        /// <summary> Router Worker Selector State Active. </summary>
+        private const string ActiveValue = "active";
+        /// <summary> Router Worker Selector State Expired. </summary>
+        private const string ExpiredValue = "expired";
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerSelectorState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsRouterWorkerSelectorState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "active";
-        private const string ExpiredValue = "expired";
+            _value = value;
+        }
 
         /// <summary> Router Worker Selector State Active. </summary>
         public static AcsRouterWorkerSelectorState Active { get; } = new AcsRouterWorkerSelectorState(ActiveValue);
+
         /// <summary> Router Worker Selector State Expired. </summary>
         public static AcsRouterWorkerSelectorState Expired { get; } = new AcsRouterWorkerSelectorState(ExpiredValue);
+
         /// <summary> Determines if two <see cref="AcsRouterWorkerSelectorState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsRouterWorkerSelectorState left, AcsRouterWorkerSelectorState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AcsRouterWorkerSelectorState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsRouterWorkerSelectorState left, AcsRouterWorkerSelectorState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsRouterWorkerSelectorState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AcsRouterWorkerSelectorState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AcsRouterWorkerSelectorState(string value) => new AcsRouterWorkerSelectorState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AcsRouterWorkerSelectorState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AcsRouterWorkerSelectorState?(string value) => value == null ? null : new AcsRouterWorkerSelectorState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcsRouterWorkerSelectorState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AcsRouterWorkerSelectorState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -30,7 +30,7 @@ dotnet add package Azure.AI.Language.Conversations
 - An [Azure subscription][azure_subscription]
 - An existing Azure Language Service Resource
 
-Though you can use this SDK to create and import conversation projects, [Language Studio][language_studio] is the preferred method for creating projects.
+Though you can use this SDK to create and import conversation projects, [Azure AI Foundry][azure_AI_foundry] is the preferred method for creating projects.
 
 ### Authenticate the client
 
@@ -54,6 +54,7 @@ Start by importing the namespace for the [`ConversationAnalysisClient`][conversa
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 ```
 
 #### Create a ConversationAnalysisClient
@@ -61,7 +62,7 @@ using Azure.AI.Language.Conversations;
 Once you've determined your **endpoint** and **API key** you can instantiate a `ConversationAnalysisClient`:
 
 ```C# Snippet:ConversationAnalysisClient_Create
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
@@ -86,7 +87,7 @@ using Azure.Identity;
 Then you can create an instance of `DefaultAzureCredential` and pass it to a new instance of your client:
 
 ```C# Snippet:ConversationAnalysisClient_CreateWithDefaultAzureCredential
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("{endpoint}");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
@@ -99,7 +100,10 @@ Note that regional endpoints do not support AAD authentication. Instead, create 
 The client library targets the latest service API version by default. A client instance accepts an optional service API version parameter from its options to specify which API version service to communicate.
 
 |SDK version  |Supported API version of service
-|-------------|-----------------------------------------------------
+|-------------|---------------------------------------------------------------------------------------------------------------------------
+|2.0.0-beta.4 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview, 2024-11-01, 2024-11-15-preview, 2025-05-15-preview (default)
+|2.0.0-beta.3 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview, 2024-11-01, 2024-11-15-preview, 2025-05-15-preview (default)
+|2.0.0-beta.2 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview, 2024-11-01, 2024-11-15-preview (default)
 |2.0.0-beta.1 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview (default)
 |1.1.0 | 2022-05-01, 2023-04-01 (default)
 |1.0.0 | 2022-05-01 (default)
@@ -111,9 +115,9 @@ You have the flexibility to explicitly select a supported service API version wh
 For example,
 
 ```C# Snippet:CreateConversationAnalysisClientForSpecificApiVersion
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2024_05_01);
+ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview);
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential, options);
 ```
 
@@ -147,563 +151,18 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-The Azure.AI.Language.Conversations client library provides both synchronous and asynchronous APIs.
-
-The following examples show common scenarios using the `client` [created above](#create-a-conversationanalysisclient).
-
-### Extract intents and entities from a conversation (Conversation Language Understanding)
-
-To analyze a conversation, you can call the `AnalyzeConversation()` method:
-
-```C# Snippet:ConversationAnalysis_AnalyzeConversation
-string projectName = "Menu";
-string deploymentName = "production";
-
-AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
-    new ConversationAnalysisInput(
-        new TextConversationItem(
-            id: "1",
-            participantId: "participant1",
-            text: "Send an email to Carol about tomorrow's demo")),
-    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
-    {
-        // Use Utf16CodeUnit for strings in .NET.
-        StringIndexType = StringIndexType.Utf16CodeUnit,
-    });
-
-Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
-ConversationActionResult conversationActionResult = response.Value as ConversationActionResult;
-ConversationPrediction conversationPrediction = conversationActionResult.Result.Prediction as ConversationPrediction;
-
-Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
-
-Console.WriteLine("Intents:");
-foreach (ConversationIntent intent in conversationPrediction.Intents)
-{
-    Console.WriteLine($"Category: {intent.Category}");
-    Console.WriteLine($"Confidence: {intent.Confidence}");
-    Console.WriteLine();
-}
-
-Console.WriteLine("Entities:");
-foreach (ConversationEntity entity in conversationPrediction.Entities)
-{
-    Console.WriteLine($"Category: {entity.Category}");
-    Console.WriteLine($"Text: {entity.Text}");
-    Console.WriteLine($"Offset: {entity.Offset}");
-    Console.WriteLine($"Length: {entity.Length}");
-    Console.WriteLine($"Confidence: {entity.Confidence}");
-    Console.WriteLine();
-
-    if (entity.Resolutions != null && entity.Resolutions.Any())
-    {
-        foreach (ResolutionBase resolution in entity.Resolutions)
-        {
-            if (resolution is DateTimeResolution dateTimeResolution)
-            {
-                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-                Console.WriteLine($"Value: {dateTimeResolution.Value}");
-                Console.WriteLine();
-            }
-        }
-    }
-}
-```
-
-Additional options can be passed to `AnalyzeConversation` like enabling more verbose output:
-
-```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
-string projectName = "Menu";
-string deploymentName = "production";
-
-AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
-    new ConversationAnalysisInput(
-        new TextConversationItem(
-            id: "1",
-            participantId: "participant1",
-            text: "Send an email to Carol about tomorrow's demo")),
-    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
-{
-    // Use Utf16CodeUnit for strings in .NET.
-    StringIndexType = StringIndexType.Utf16CodeUnit,
-    Verbose = true,
-});
-
-Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
-```
-
-#### Extract intents and entities from a conversation in a different language (Conversation Language Understanding)
-
-The `language` property can be set to specify the language of the conversation:
-
-```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-string projectName = "Menu";
-string deploymentName = "production";
-
-AnalyzeConversationInput data =
-    new ConversationLanguageUnderstandingInput(
-        new ConversationAnalysisInput(
-            new TextConversationItem(
-                id: "1",
-                participantId: "participant1",
-                text: "Enviar un email a Carol acerca de la presentación de mañana")
-            {
-                Language = "es"
-            }),
-    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
-    {
-        // Use Utf16CodeUnit for strings in .NET.
-        StringIndexType = StringIndexType.Utf16CodeUnit,
-        Verbose = true
-    });
-
-Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
-```
-
-### Orchestrate a conversation between various conversation apps like Question Answering app, CLU app
-
-To analyze a conversation using an orchestration project, you can call the `AnalyzeConversations()` method just like the conversation project.
-
-
-```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
-string projectName = "DomainOrchestrator";
-string deploymentName = "production";
-AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
-    new ConversationAnalysisInput(
-        new TextConversationItem(
-            id: "1",
-            participantId: "participant1",
-            text: "How are you?")),
-    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
-    {
-        StringIndexType = StringIndexType.Utf16CodeUnit,
-    });
-
-Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
-ConversationActionResult conversationResult = response.Value as ConversationActionResult;
-OrchestrationPrediction orchestrationPrediction = conversationResult.Result.Prediction as OrchestrationPrediction;
-```
-
-#### Question Answering prediction
-
-If your conversation was analyzed by Question Answering, it will include an intent - perhaps even the top intent - from which you can retrieve answers:
-
-```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
-string respondingProjectName = orchestrationPrediction.TopIntent;
-Console.WriteLine($"Top intent: {respondingProjectName}");
-
-TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
-
-if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringTargetIntentResult)
-{
-    AnswersResult questionAnsweringResponse = questionAnsweringTargetIntentResult.Result;
-    Console.WriteLine($"Question Answering Response:");
-    foreach (KnowledgeBaseAnswer answer in questionAnsweringResponse.Answers)
-    {
-        Console.WriteLine(answer.Answer?.ToString());
-    }
-}
-```
-
-#### CLU prediction
-
-If your conversation was analyzed by a CLU application, it will include an intent and entities:
-
-```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
-string respondingProjectName = orchestrationPrediction.TopIntent;
-TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
-
-if (targetIntentResult is ConversationTargetIntentResult conversationTargetIntent)
-{
-    ConversationResult conversationResult = conversationTargetIntent.Result;
-    ConversationPrediction conversationPrediction = conversationResult.Prediction;
-
-    Console.WriteLine($"Top Intent: {conversationPrediction.TopIntent}");
-    Console.WriteLine($"Intents:");
-    foreach (ConversationIntent intent in conversationPrediction.Intents)
-    {
-        Console.WriteLine($"Intent Category: {intent.Category}");
-        Console.WriteLine($"Confidence: {intent.Confidence}");
-        Console.WriteLine();
-    }
-}
-```
-
-### Summarize a conversation
-
-To summarize a conversation, you can use the `AnalyzeConversationsAsync` method overload that returns an `Response<AnalyzeConversationOperationState>`:
-
-```C# Snippet:AnalyzeConversation_ConversationSummarization
-MultiLanguageConversationInput input = new MultiLanguageConversationInput(
-    new List<ConversationInput>
-    {
-        new TextConversation("1", "en", new List<TextConversationItem>()
-        {
-            new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
-            new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
-            new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.")
-        })
-    });
-List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
-    {
-        new SummarizationOperationAction()
-        {
-            ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
-            {
-                SummaryAspect.Issue,
-            }),
-            Name = "Issue task",
-        },
-        new SummarizationOperationAction()
-        {
-            ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
-            {
-                SummaryAspect.Resolution,
-            }),
-            Name = "Resolution task",
-        }
-    };
-AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
-Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
-
-AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
-
-foreach (var operationResult in operationState.Actions.Items)
-{
-    Console.WriteLine($"Operation action name: {operationResult.Name}");
-    if (operationResult is SummarizationOperationResult summarizationOperationResult)
-    {
-        SummaryResult results = summarizationOperationResult.Results;
-        foreach (ConversationsSummaryResult conversation in results.Conversations)
-        {
-            Console.WriteLine($"Conversation: #{conversation.Id}");
-            Console.WriteLine("Summaries:");
-            foreach (SummaryResultItem summary in conversation.Summaries)
-            {
-                Console.WriteLine($"Text: {summary.Text}");
-                Console.WriteLine($"Aspect: {summary.Aspect}");
-            }
-            if (conversation.Warnings != null && conversation.Warnings.Any())
-            {
-                Console.WriteLine("Warnings:");
-                foreach (InputWarning warning in conversation.Warnings)
-                {
-                    Console.WriteLine($"Code: {warning.Code}");
-                    Console.WriteLine($"Message: {warning.Message}");
-                }
-            }
-            Console.WriteLine();
-        }
-    }
-    if (operationState.Errors != null && operationState.Errors.Any())
-    {
-        Console.WriteLine("Errors:");
-        foreach (ConversationError error in operationState.Errors)
-        {
-            Console.WriteLine($"Error: {error.Code} - {error}");
-        }
-    }
-}
-```
-
-### Extract PII from a conversation
-
-To detect and redact PII in a conversation, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction` that  returns an `Response<AnalyzeConversationOperationState>`::
-
-```C# Snippet:AnalyzeConversation_ConversationPii
-MultiLanguageConversationInput input = new MultiLanguageConversationInput(
-    new List<ConversationInput>
-    {
-        new TextConversation("1", "en", new List<TextConversationItem>()
-        {
-            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide you name?"),
-            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
-            new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
-        })
-    });
-List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
-    {
-        new PiiOperationAction()
-        {
-            ActionContent = new ConversationPiiActionContent(),
-            Name = "Conversation PII",
-        }
-    };
-AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
-
-Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
-
-AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
-
-foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
-{
-    Console.WriteLine($"Operation action name: {operationResult.Name}");
-
-    if (operationResult is ConversationPiiOperationResult piiOperationResult)
-    {
-        foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
-        {
-            Console.WriteLine($"Conversation: #{conversation.Id}");
-            Console.WriteLine("Detected Entities:");
-            foreach (ConversationPiiItemResult item in conversation.ConversationItems)
-            {
-                foreach (NamedEntity entity in item.Entities)
-                {
-                    Console.WriteLine($"  Category: {entity.Category}");
-                    Console.WriteLine($"  Subcategory: {entity.Subcategory}");
-                    Console.WriteLine($"  Text: {entity.Text}");
-                    Console.WriteLine($"  Offset: {entity.Offset}");
-                    Console.WriteLine($"  Length: {entity.Length}");
-                    Console.WriteLine($"  Confidence score: {entity.ConfidenceScore}");
-                    Console.WriteLine();
-                }
-            }
-            if (conversation.Warnings != null && conversation.Warnings.Any())
-            {
-                Console.WriteLine("Warnings:");
-                foreach (InputWarning warning in conversation.Warnings)
-                {
-                    Console.WriteLine($"Code: {warning.Code}");
-                    Console.WriteLine($"Message: {warning.Message}");
-                }
-            }
-            Console.WriteLine();
-        }
-    }
-    if (operationState.Errors != null && operationState.Errors.Any())
-    {
-        Console.WriteLine("Errors:");
-        foreach (ConversationError error in operationState.Errors)
-        {
-            Console.WriteLine($"Error: {error.Code} - {error}");
-        }
-    }
-}
-```
-
-### Extract PII from a conversation With Character Mask Policy
-
-To detect and redact PII in a conversation using Character Mask Policy, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction` and utilize `CharacterMaskPolicyType` to define the RedactionCharacter (e.g., an asterisk *) to replace sensitive information. The method returns a `Response<AnalyzeConversationOperationState>`::
-
-```C# Snippet:AnalyzeConversation_ConversationPiiWithCharacterMaskPolicy
-var redactionPolicy = new CharacterMaskPolicyType
-{
-    RedactionCharacter = RedactionCharacter.Asterisk
-};
-
-// Simulate input conversation
-MultiLanguageConversationInput input = new MultiLanguageConversationInput(
-    new List<ConversationInput>
-    {
-        new TextConversation("1", "en", new List<TextConversationItem>
-        {
-            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide your name?"),
-            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
-            new TextConversationItem(id: "3", participantId: "Agent_1", text: "Thank you John, that has been updated in our system.")
-        })
-    });
-
-// Add action with CharacterMaskPolicyType
-List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
-{
-    new PiiOperationAction
-    {
-        ActionContent = new ConversationPiiActionContent
-        {
-            RedactionPolicy = redactionPolicy
-        },
-        Name = "Conversation PII with Character Mask Policy"
-    }
-};
-
-// Create input for analysis
-AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
-
-// Act: Perform the PII analysis
-Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
-AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
-// Assert: Validate the results
-foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
-{
-    Console.WriteLine($"Operation action name: {operationResult.Name}");
-
-    if (operationResult is ConversationPiiOperationResult piiOperationResult)
-    {
-        foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
-        {
-            Console.WriteLine($"Conversation: #{conversation.Id}");
-            foreach (ConversationPiiItemResult item in conversation.ConversationItems)
-            {
-                string redactedText = item.RedactedContent?.Text ?? string.Empty;
-                Console.WriteLine($"Redacted Text: {redactedText}");
-
-                // Only verify redaction if the original sentence had PII
-                if (item.Entities.Any())
-                {
-                    foreach (var entity in item.Entities)
-                    {
-                        Assert.That(redactedText, Does.Not.Contain(entity.Text),
-                            $"Expected entity '{entity.Text}' to be redacted but found in: {redactedText}");
-
-                        Assert.That(redactedText, Does.Contain("*"),
-                            $"Expected redacted text to contain '*' but got: {redactedText}");
-                    }
-                }
-            }
-        }
-    }
-}
-```
-
-### Extract PII from a conversation With Entity Mask Policy
-
-To detect and redact PII in a conversation using Character Mask Policy, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction` and utilize `EntityMaskTypePolicyType` as Mask Policy to replace sensitive information. The method returns a `Response<AnalyzeConversationOperationState>`::
-
-```C# Snippet:AnalyzeConversation_ConversationPiiWithEntityMaskPolicy
-var redactionPolicy = new EntityMaskTypePolicyType();
-
-MultiLanguageConversationInput input = new MultiLanguageConversationInput(
-    new List<ConversationInput>
-    {
-        new TextConversation("1", "en", new List<TextConversationItem>
-        {
-            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide your name?"),
-            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
-            new TextConversationItem(id: "3", participantId: "Agent_1", text: "Thank you John, that has been updated in our system.")
-        })
-    });
-
-// Add action with EntityMaskTypePolicyType
-List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
-{
-    new PiiOperationAction
-    {
-        ActionContent = new ConversationPiiActionContent
-        {
-            RedactionPolicy = redactionPolicy
-        },
-        Name = "Conversation PII with Entity Mask Policy"
-    }
-};
-
-// Create input for analysis
-AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
-
-// Act: Perform the PII analysis
-Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
-AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
-
-// Assert: Validate the results
-foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
-{
-    Console.WriteLine($"Operation action name: {operationResult.Name}");
-
-    if (operationResult is ConversationPiiOperationResult piiOperationResult)
-    {
-        foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
-        {
-            Console.WriteLine($"Conversation: #{conversation.Id}");
-            foreach (ConversationPiiItemResult item in conversation.ConversationItems)
-            {
-                string redactedText = item.RedactedContent?.Text ?? string.Empty;
-                Console.WriteLine($"Redacted Text: {redactedText}");
-
-                // Only verify redaction if the original sentence had PII
-                if (item.Entities.Any())
-                {
-                    foreach (var entity in item.Entities)
-                    {
-                        Assert.That(redactedText, Does.Not.Contain(entity.Text),
-                        $"Expected entity '{entity.Text}' to be redacted but found in: {redactedText}");
-
-                        // Case-insensitive pattern to match entity mask variations
-                        string expectedMaskPattern = $@"\[{entity.Category}-?\d*\]";
-
-                        // Perform case-insensitive regex match
-                        StringAssert.IsMatch("(?i)" + expectedMaskPattern, redactedText,
-                        $"Expected redacted text to contain an entity mask similar to '[{entity.Category}]' but got: {redactedText}");
-                    }
-                }
-            }
-        }
-    }
-}
-```
-
-### Extract PII from a conversation With Character Mask Policy
-
-To detect and redact PII in a conversation using No Mask Policy, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction` and utilize `NoMaskPolicyType` as Mask Policy. The method returns a `Response<AnalyzeConversationOperationState>`::
-
-```C# Snippet:AnalyzeConversation_ConversationPiiWithNoMaskPolicy
-var redactionPolicy = new NoMaskPolicyType();
-
-// Simulate input conversation
-MultiLanguageConversationInput input = new MultiLanguageConversationInput(
-    new List<ConversationInput>
-    {
-        new TextConversation("1", "en", new List<TextConversationItem>
-        {
-            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide your name?"),
-            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
-            new TextConversationItem(id: "3", participantId: "Agent_1", text: "Thank you John, that has been updated in our system.")
-        })
-    });
-
-// Add action with NoMaskPolicyType
-List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
-{
-    new PiiOperationAction
-    {
-        ActionContent = new ConversationPiiActionContent
-        {
-            RedactionPolicy = redactionPolicy
-        },
-        Name = "Conversation PII with No Mask Policy"
-    }
-};
-
-// Create input for analysis
-AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
-
-// Act: Perform the PII analysis
-Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
-AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
-
-// Assert: Validate the results
-foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
-{
-    Console.WriteLine($"Operation action name: {operationResult.Name}");
-
-    if (operationResult is ConversationPiiOperationResult piiOperationResult)
-    {
-        foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
-        {
-            Console.WriteLine($"Conversation: #{conversation.Id}");
-            foreach (ConversationPiiItemResult item in conversation.ConversationItems)
-            {
-                string originalText = item.RedactedContent?.Text ?? string.Empty;
-                Console.WriteLine($"Original Text: {originalText}");
-
-                // Ensure PII is detected
-                if (item.Entities.Any())
-                {
-                    foreach (var entity in item.Entities)
-                    {
-                        detectedEntities.Add(entity.Text);
-                        Assert.That(originalText, Does.Contain(entity.Text),
-                            $"Expected entity '{entity.Text}' to be present but was not found in: {originalText}");
-                    }
-                }
-            }
-        }
-    }
-}
-```
-
-### Additional samples
-
-Browse our [samples][conversationanalysis_samples] for more examples of how to analyze conversations.
+You can familiarize yourself with different APIs using [Samples](https://github.com/amber-ccc/azure-sdk-for-net/tree/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples).
+
+* [Analyze a conversation - Conversation project](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample1_AnalyzeConversation_ConversationPrediction.md)
+* [Analyze a conversation - Orchestration project](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample2_AnalyzeConversation_OrchestrationPrediction.md)
+* [Analyze a conversation in a different language](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample3_AnalyzeConversationWithLanguage.md)
+* [Analyze a conversation using extra options](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample4_AnalyzeConversationWithOptions.md)
+* [Analyze a conversation - Conversational AI project](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample10_AnalyzeConversation_ConversationalAIPrediction.md)
+* [Analyze a conversation with Conversation Summarization](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample5_AnalyzeConversation_ConversationSummarization.md)
+* [Analyze a conversation with Conversation PII](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample6_AnalyzeConversation_ConversationPii.md)
+* [Analyze a Conversation for PII Using Character Masking](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample7_AnalyzeConversation_ConversationPiiWithCharacterMaskPolicy.md)
+* [Analyze a Conversation for PII Using Entity Masking](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample8_AnalyzeConversation_ConversationPiiWithEntityMaskPolicy.md)
+* [Analyze a Conversation for PII With No Masking](https://github.com/amber-ccc/azure-sdk-for-net/blob/amber/create_conversation_runtime_sdk_preview_20250515/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample9_AnalyzeConversation_ConversationPiiWithNoMaskPolicy.md)
 
 ## Troubleshooting
 
@@ -819,7 +278,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [core_logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [custom_domain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
-[language_studio]: https://language.cognitive.azure.com/
+[azure_AI_foundry]: https://ai.azure.com/
 [nuget]: https://www.nuget.org/
 
 [conversationanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/ConversationAnalysisClient.cs
@@ -831,4 +290,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [conversationanalysis_docs_features]: https://learn.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
 [conversationanalysis_refdocs]: https://learn.microsoft.com/dotnet/api/azure.ai.language.conversations
 [conversationanalysis_restdocs]: https://learn.microsoft.com/rest/api/language/
-[conversationalauthoring_samples]: https://github.com/Azure/azure-sdk-for-net/tree/Azure.AI.Language.Conversations_1.1.0/sdk/cognitivelanguage/Azure.AI.Language.Conversations#create-a-conversationauthoringclient
+[conversationalauthoring_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/README.md

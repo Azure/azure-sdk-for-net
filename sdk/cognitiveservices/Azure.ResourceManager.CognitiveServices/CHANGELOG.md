@@ -1,14 +1,20 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
-
-### Features Added
+## 1.5.2 (2025-11-11)
 
 ### Breaking Changes
 
+- `CognitiveServicesAccountProperties.NetworkInjections` is now a list of `AINetworkInjection` instead of a single `AINetworkInjection` instance.
+
 ### Bugs Fixed
 
-### Other Changes
+- Fixed mismatched property type for `CognitiveServicesAccountProperties.NetworkInjections`.  
+
+## 1.5.1 (2025-07-28)
+
+### Features Added
+
+- Make `Azure.ResourceManager.CognitiveServices` AOT-compatible.
 
 ## 1.5.0 (2025-06-15)
 

@@ -82,7 +82,12 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _chatThreadRestClient.UpdateChatThreadProperties(Id, options.Topic, options.Metadata.ToDictionary(pair => pair.Key, pair => pair.Value), options.RetentionPolicy, cancellationToken);
+                return _chatThreadRestClient.UpdateChatThreadProperties(
+                    Id,
+                    options.Topic,
+                    options.Metadata?.ToDictionary(pair => pair.Key, pair => pair.Value),
+                    ChatRetentionPolicyConverter.ConvertBack(options.RetentionPolicy),
+                    cancellationToken);
             }
             catch (Exception ex)
             {
@@ -101,7 +106,12 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, options.Topic, options.Metadata, options.RetentionPolicy, cancellationToken).ConfigureAwait(false);
+                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(
+                    Id,
+                    options.Topic,
+                    options.Metadata,
+                    ChatRetentionPolicyConverter.ConvertBack(options.RetentionPolicy),
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

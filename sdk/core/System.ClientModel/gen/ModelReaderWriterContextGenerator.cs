@@ -17,202 +17,87 @@ namespace System.ClientModel.SourceGeneration;
 [Generator]
 internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGenerator
 {
-    private static readonly SymbolDisplayFormat s_fullyQualifiedNoGlobal = new SymbolDisplayFormat(
-        typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces);
+    private const string BuildableAttributeName = "System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute";
 
     /// <inheritdoc/>
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        // Find all class declarations that inherit from ModelReaderWriterContext
-        var mrwContextCandidates = context.SyntaxProvider
-            .CreateSyntaxProvider(
-                predicate: (node, _) => node is ClassDeclarationSyntax classDeclaration && IsModelReaderWriterContext(classDeclaration),
-                transform: (ctx, _) => (Node: (ClassDeclarationSyntax)ctx.Node, ctx.SemanticModel))
-            .Collect();
-
-        // Used to skip processing if no ModelReaderWriterContext is found or too many are found
-        var hasModelReaderWriterContext = mrwContextCandidates
-            .Select((classes, _) => classes.Count() == 1);
-
-        // Convert the candidates into INamedTypeSymbol
-        var classDeclarations = mrwContextCandidates
-            .SelectMany(static (classes, _) => classes.Select(tuple => tuple.SemanticModel.GetDeclaredSymbol(tuple.Node)))
-            .Where(static result => result is not null)
-            .Select(static (result, _) => result!)
-            .Collect();
-
-        // Find all class declarations that implement IPersistableModel<T>
-        var persistableModelDeclarations = context.SyntaxProvider
-            .CreateSyntaxProvider(
-                predicate: (node, _) => node is ClassDeclarationSyntax,
-                transform: (ctx, _) => (Node: (ClassDeclarationSyntax)ctx.Node, ctx.SemanticModel))
-            .SelectWhen(hasModelReaderWriterContext, tuple =>
-            {
-                var (node, semanticModel) = tuple;
-                return GetPersistableNamedSymbol(node, semanticModel);
-            })
-            .Collect();
-
-        // Find all types that inherit from ModelReaderWriterContext from dependencies
-        var references = context.CompilationProvider
-            .Combine(hasModelReaderWriterContext)
-            .SelectMany((tuple, _) =>
-            {
-                var (compilation, shouldRun) = tuple;
-                return shouldRun
-                    ? compilation.References.Select(r => compilation.GetAssemblyOrModuleSymbol(r)).OfType<IAssemblySymbol>()
-                    : [];
-            })
-            .Collect();
-
-        // Collect all types used in invocations to ModelReaderWriter.Read in the syntax tree
-        var methodInvocations = context.SyntaxProvider
-            .CreateSyntaxProvider(
-                predicate: (node, _) => node is InvocationExpressionSyntax invocationSyntax && IsReadOrWriteCandidate(invocationSyntax),
-                transform: (ctx, _) => (Node: (InvocationExpressionSyntax)ctx.Node, ctx.SemanticModel))
-            .SelectWhen(hasModelReaderWriterContext, tuple =>
-            {
-                var (node, semanticModel) = tuple;
-                return IsTargetMethod(node, semanticModel)
-                    ? GetGenericType(node, semanticModel)
-                    : null;
-            })
+        var typesFromAttribute = context.SyntaxProvider.ForAttributeWithMetadataName(BuildableAttributeName,
+                predicate: (node, _) => true,
+                transform: (ctx, _) => (ctx.TargetSymbol as INamedTypeSymbol, ctx.Attributes))
             .Collect();
 
         var symbolToKindCacheProvider = context.CompilationProvider.Select((compilation, _) => new TypeSymbolKindCache());
 
         var symbolToTypeRefCacheProvider = context.CompilationProvider.Select((compilation, _) => new TypeSymbolTypeRefCache());
 
-        var assemblyNameProvider = context.CompilationProvider.Select((compilation, _) => compilation.Assembly);
-
-        var modelInfoTypes = persistableModelDeclarations
-            .Combine(methodInvocations)
-            .Select((tuple, _) => tuple.Left.AddRange(tuple.Right));
-
-        var combined = classDeclarations
-            .Combine(modelInfoTypes)
-            .Combine(assemblyNameProvider)
-            .Combine(references)
+        var combined = typesFromAttribute
             .Combine(symbolToKindCacheProvider)
             .Combine(symbolToTypeRefCacheProvider)
             .Select((data, _) => (
-                data.Left.Left.Left.Left.Left,
-                data.Left.Left.Left.Left.Right,
-                data.Left.Left.Left.Right,
-                data.Left.Left.Right,
+                data.Left.Left,
                 data.Left.Right,
                 data.Right));
 
         context.RegisterSourceOutput(combined, ReportDiagnosticAndEmitSource);
     }
 
-    private bool IsReadOrWriteCandidate(InvocationExpressionSyntax invocationSyntax)
-    {
-        var expression = invocationSyntax.Expression;
-
-        var methodName = expression switch
-        {
-            IdentifierNameSyntax identifier => identifier.Identifier.Text,
-
-            MemberAccessExpressionSyntax memberAccess => memberAccess.Name.Identifier.Text,
-
-            _ => null
-        };
-
-        return methodName is null ? false : methodName == "Read" || methodName == "Write";
-    }
-
     private void ReportDiagnosticAndEmitSource(
         SourceProductionContext context,
-        (ImmutableArray<INamedTypeSymbol> Contexts,
-            ImmutableArray<ITypeSymbol> TypeBuilders,
-            IAssemblySymbol Assembly,
-            ImmutableArray<IAssemblySymbol> References,
+        (ImmutableArray<(INamedTypeSymbol? Context,
+            ImmutableArray<AttributeData> Attributes)> TypesWithAttribute,
             TypeSymbolKindCache SymbolToKindCache,
             TypeSymbolTypeRefCache SymbolToTypeRefCache) data)
     {
-        if (data.Contexts.Length > 1)
+        if (data.TypesWithAttribute.Length == 0 || data.TypesWithAttribute[0].Context is null || data.TypesWithAttribute[0].Context!.ContainingType is not null)
         {
-            context.ReportDiagnostic(Diagnostic.Create(
-                DiagnosticDescriptors.MultipleContextsNotSupported,
-                data.Contexts[0]?.Locations.First(),
-                data.Contexts.Skip(1).Where(s => s is not null).Select(s => s!.Locations.First())));
             return;
         }
 
-        if (data.Contexts.Length == 0)
+        if (data.TypesWithAttribute.Length == 1)
         {
-            // nothing to generate
+            ProcessContext(context, data, data.TypesWithAttribute[0].Attributes);
             return;
         }
 
-        var contextSymbol = data.Contexts[0];
+        var first = data.TypesWithAttribute[0].Context;
+
+        for (int i = 1; i < data.TypesWithAttribute.Length; i++)
+        {
+            if (!SymbolEqualityComparer.Default.Equals(first, data.TypesWithAttribute[i].Context))
+            {
+                // Verify all contexts are partials of each other SCM0001.
+                context.ReportDiagnostic(Diagnostic.Create(
+                    DiagnosticDescriptors.MultipleContextsNotSupported,
+                    data.TypesWithAttribute[0].Context?.Locations.First(),
+                    data.TypesWithAttribute.Skip(1).Where(s => s.Context is not null).Select(s => s.Context!.Locations.First())));
+                return;
+            }
+        }
+
+        ProcessContext(context, data, data.TypesWithAttribute.SelectMany(c => c.Attributes));
+    }
+
+    private void ProcessContext(
+        SourceProductionContext context,
+        (ImmutableArray<(INamedTypeSymbol? Context,
+            ImmutableArray<AttributeData> Attributes)> TypesWithAttribute,
+            TypeSymbolKindCache SymbolToKindCache,
+            TypeSymbolTypeRefCache SymbolToTypeRefCache) data,
+        IEnumerable<AttributeData> allAttributes)
+    {
+        var contextSymbol = data.TypesWithAttribute[0].Context!;
 
         var mrwContextSymbol = GetMrwContextSymbol(contextSymbol);
 
-        string assemblyName = data.Assembly.Name;
         var contextType = data.SymbolToTypeRefCache.Get(contextSymbol, data.SymbolToKindCache);
 
-        var builders = data.TypeBuilders
-            .Concat(GetTypesFromAttributes(contextSymbol))
+        var builders = GetTypesFromAttributes(allAttributes)
             .SelectMany(typeSymbol => GetRecursiveGenericTypes(typeSymbol, data.SymbolToKindCache))
             .Distinct(SymbolEqualityComparer.Default);
 
-        ImmutableDictionary<string, TypeRef> referencedContexts = ImmutableDictionary<string, TypeRef>.Empty;
-        if (mrwContextSymbol is not null)
-        {
-            referencedContexts = GetContextsFromDependencies(data.References, mrwContextSymbol).ToImmutableDictionary(
-                refContext => refContext.ContainingAssembly.ToDisplayString(),
-                refContext => data.SymbolToTypeRefCache.Get(refContext, data.SymbolToKindCache));
-        }
-
         var typeGenerationSpecs = builders
-            .Select(symbol =>
-            {
-                if (symbol is not ITypeSymbol typeSymbol || typeSymbol.DeclaredAccessibility == Accessibility.Private)
-                    return null;
-
-                if (data.SymbolToKindCache.Get(typeSymbol) == TypeBuilderKind.Unknown)
-                    return null;
-
-                var type = data.SymbolToTypeRefCache.Get(typeSymbol, data.SymbolToKindCache);
-                if (type.ObsoleteLevel == ObsoleteLevel.Error)
-                {
-                    // if its marked as error obsolete we can't create a builder for it
-                    // you cannot suppress the reference to an obsolete type marked as error
-                    return null;
-                }
-
-                var itemType = type.GetInnerItemType();
-
-                if (!HasAccessibleParameterlessConstructor(typeSymbol, data.SymbolToKindCache) && itemType.IsSameAssembly(contextType))
-                {
-                    context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.TypeMustHaveParameterlessConstructor, typeSymbol.Locations.FirstOrDefault(), type.Name));
-                    return null;
-                }
-
-                if (!itemType.IsSameAssembly(contextType) && !referencedContexts.ContainsKey(itemType.Assembly))
-                {
-                    return null;
-                }
-
-                var proxy = GetProxyType(typeSymbol);
-
-                if (typeSymbol.IsAbstract && proxy is null)
-                {
-                    context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.AbstractTypeWithoutProxy, typeSymbol.Locations.FirstOrDefault(), type.Name));
-                    return null;
-                }
-
-                return new TypeBuilderSpec()
-                {
-                    Modifier = "internal",
-                    Type = type,
-                    Kind = data.SymbolToKindCache.Get(typeSymbol),
-                    PersistableModelProxy = proxy is null ? null : data.SymbolToTypeRefCache.Get(proxy, data.SymbolToKindCache),
-                    ContextType = referencedContexts.ContainsKey(type.Assembly) ? referencedContexts[type.Assembly] : contextType,
-                };
-            })
+            .Select(symbol => ConvertToTypeBuilderSpec(symbol, context, contextType, data.SymbolToKindCache, data.SymbolToTypeRefCache))
             .Where(spec => spec is not null)
             .Select(spec => spec!);
 
@@ -222,12 +107,14 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             return;
         }
 
+        var builderArray = new ImmutableEquatableArray<TypeBuilderSpec>(typeGenerationSpecs);
+
         ModelReaderWriterContextGenerationSpec contextGenerationSpec = new()
         {
             Type = contextType,
             Modifier = contextSymbol.DeclaredAccessibility.ToString().ToLowerInvariant(),
-            TypeBuilders = new ImmutableEquatableArray<TypeBuilderSpec>(typeGenerationSpecs),
-            ReferencedContexts = new ImmutableEquatableArray<TypeRef>(referencedContexts.Values),
+            TypeBuilders = builderArray,
+            ReferencedContexts = new ImmutableEquatableArray<TypeRef>(builderArray.Select(tb => tb.ContextType).Distinct().Where(tb => !tb.Equals(contextType))),
         };
 
         OnSourceEmitting?.Invoke(contextGenerationSpec);
@@ -235,11 +122,60 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         emitter.Emit(contextGenerationSpec);
     }
 
-    private IEnumerable<ITypeSymbol> GetTypesFromAttributes(INamedTypeSymbol contextSymbol)
+    private TypeBuilderSpec? ConvertToTypeBuilderSpec(
+        ISymbol? symbol,
+        SourceProductionContext context,
+        TypeRef contextType,
+        TypeSymbolKindCache symbolKindCache,
+        TypeSymbolTypeRefCache symbolTypeRefCache)
     {
-        var attributes = contextSymbol.GetAttributes()
-            .Where(attr => attr.AttributeClass?.ToDisplayString() == "System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute");
+        if (symbol is not ITypeSymbol typeSymbol || typeSymbol.DeclaredAccessibility == Accessibility.Private)
+            return null;
 
+        if (symbolKindCache.Get(typeSymbol) == TypeBuilderKind.Unknown)
+            return null;
+
+        var type = symbolTypeRefCache.Get(typeSymbol, symbolKindCache);
+        if (type.ObsoleteLevel == ObsoleteLevel.Error)
+        {
+            // if its marked as error obsolete we can't create a builder for it
+            // you cannot suppress the reference to an obsolete type marked as error
+            return null;
+        }
+
+        var itemType = type.GetInnerItemType();
+
+        if (!HasAccessibleParameterlessConstructor(typeSymbol, symbolKindCache) && itemType.IsSameAssembly(contextType))
+        {
+            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.TypeMustHaveParameterlessConstructor, typeSymbol.Locations.FirstOrDefault(), type.Name));
+            return null;
+        }
+
+        if (!itemType.IsSameAssembly(contextType) && itemType.ContainingContext is null)
+        {
+            return null;
+        }
+
+        var proxy = GetProxyType(typeSymbol);
+
+        if (typeSymbol.IsAbstract && proxy is null)
+        {
+            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.AbstractTypeWithoutProxy, typeSymbol.Locations.FirstOrDefault(), type.Name));
+            return null;
+        }
+
+        return new TypeBuilderSpec()
+        {
+            Modifier = "internal",
+            Type = type,
+            Kind = symbolKindCache.Get(typeSymbol),
+            PersistableModelProxy = proxy is null ? null : symbolTypeRefCache.Get(proxy, symbolKindCache),
+            ContextType = (typeSymbol is IArrayTypeSymbol ? itemType.ContainingContext : type.ContainingContext) ?? contextType,
+        };
+    }
+
+    private IEnumerable<ITypeSymbol> GetTypesFromAttributes(IEnumerable<AttributeData> attributes)
+    {
         foreach (var attr in attributes)
         {
             if (attr.ConstructorArguments.Length > 0)
@@ -262,25 +198,6 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         }
 
         return current;
-    }
-
-    private static IEnumerable<INamedTypeSymbol> GetContextsFromDependencies(ImmutableArray<IAssemblySymbol> assemblies, INamedTypeSymbol mrwContextSymbol)
-    {
-        List<INamedTypeSymbol> matchingTypes = [];
-
-        foreach (var assembly in assemblies)
-        {
-            foreach (var type in GetAllTypes(assembly.GlobalNamespace))
-            {
-                if (type.TypeKind == TypeKind.Class && type.DeclaredAccessibility == Accessibility.Public && type.InheritsFrom(mrwContextSymbol))
-                {
-                    matchingTypes.Add(type);
-                    break;
-                }
-            }
-        }
-
-        return matchingTypes;
     }
 
     /// <summary>
@@ -325,95 +242,6 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         return proxyTypeArg.Value as INamedTypeSymbol;
     }
 
-    private static ITypeSymbol? GetGenericType(InvocationExpressionSyntax? invocation, SemanticModel semanticModel)
-    {
-        if (invocation is null)
-            return null;
-
-        if (invocation.Expression is not MemberAccessExpressionSyntax memberAccess)
-            return null;
-
-        ITypeSymbol? symbol;
-
-        if (memberAccess.Name is GenericNameSyntax genericName)
-        {
-            if (genericName.TypeArgumentList.Arguments.Count != 1)
-                return null;
-
-            symbol = semanticModel.GetTypeInfo(genericName.TypeArgumentList.Arguments[0]).Type;
-        }
-        else
-        {
-            var argIndex = memberAccess.Name.Identifier.Text.Equals("Read", StringComparison.Ordinal) ? 1 : 0;
-            if (invocation.ArgumentList.Arguments.Count < argIndex + 1)
-                return null;
-
-            symbol = GetUnderlyingType(semanticModel, invocation.ArgumentList.Arguments[argIndex].Expression);
-        }
-
-        return (symbol is INamedTypeSymbol || symbol is IArrayTypeSymbol) ? symbol : null;
-    }
-
-    private static ITypeSymbol? GetUnderlyingType(SemanticModel semanticModel, ExpressionSyntax argExpression)
-    {
-        while (true)
-        {
-            switch (argExpression)
-            {
-                case CastExpressionSyntax castExpr:
-                    argExpression = castExpr.Expression;
-                    continue;
-
-                case ParenthesizedExpressionSyntax parenExpr:
-                    argExpression = parenExpr.Expression;
-                    continue;
-
-                case ObjectCreationExpressionSyntax creationExpr:
-                    return semanticModel.GetTypeInfo(creationExpr).Type;
-
-                case TypeOfExpressionSyntax typeOfExpr:
-                    return semanticModel.GetTypeInfo(typeOfExpr.Type).Type;
-
-                case IdentifierNameSyntax identifierName:
-                    var symbol = semanticModel.GetSymbolInfo(identifierName).Symbol;
-                    if (symbol is ILocalSymbol localSymbol)
-                    {
-                        if (localSymbol.DeclaringSyntaxReferences.Length > 0)
-                        {
-                            var declSyntax = localSymbol.DeclaringSyntaxReferences[0].GetSyntax();
-                            if (declSyntax is VariableDeclaratorSyntax variableDecl && variableDecl.Initializer != null)
-                            {
-                                argExpression = variableDecl.Initializer.Value;
-                                continue;
-                            }
-                        }
-                        return localSymbol.Type;
-                    }
-                    return null;
-
-                default:
-                    var typeInfo = semanticModel.GetTypeInfo(argExpression);
-                    return typeInfo.Type ?? typeInfo.ConvertedType;
-            }
-        }
-    }
-
-    private static bool IsTargetMethod(InvocationExpressionSyntax invocation, SemanticModel semanticModel)
-    {
-        if (invocation.Expression is not MemberAccessExpressionSyntax memberAccess)
-            return false;
-
-        var symbol = semanticModel.GetSymbolInfo(memberAccess.Expression).Symbol;
-
-        if (symbol is not INamedTypeSymbol namedSymbol)
-            return false;
-
-        if (!memberAccess.Name.Identifier.Text.Equals("Read", StringComparison.Ordinal) && !memberAccess.Name.Identifier.Text.Equals("Write", StringComparison.Ordinal))
-            return false;
-
-        return namedSymbol.ToDisplayString(s_fullyQualifiedNoGlobal).Equals("System.ClientModel.Primitives.ModelReaderWriter", StringComparison.Ordinal) == true;
-    }
-
     private static IEnumerable<INamedTypeSymbol> GetAllTypes(INamespaceSymbol ns)
     {
         foreach (var type in ns.GetTypeMembers())
@@ -443,48 +271,6 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             }
         }
         return false;
-    }
-
-    private static bool IsModelReaderWriterContext(ClassDeclarationSyntax classDeclaration)
-    {
-        if (classDeclaration.BaseList == null)
-            return false;
-
-        foreach (var baseType in classDeclaration.BaseList.Types)
-        {
-            switch (baseType.Type)
-            {
-                case IdentifierNameSyntax identifier:
-                    return identifier.Identifier.Text == "ModelReaderWriterContext";
-                case QualifiedNameSyntax qualified:
-                    return qualified.Right.Identifier.Text == "ModelReaderWriterContext";
-            }
-        }
-
-        return false;
-    }
-
-    private ITypeSymbol? GetPersistableNamedSymbol(ClassDeclarationSyntax classDeclaration, SemanticModel semanticModel)
-    {
-        if (classDeclaration.BaseList is null)
-        {
-            return null;
-        }
-
-        var persistableSymbol = semanticModel.GetDeclaredSymbol(classDeclaration);
-        if (persistableSymbol is null)
-        {
-            return null;
-        }
-
-        return persistableSymbol.AllInterfaces.Any(IsIPersistableInterface) ? persistableSymbol : null;
-    }
-
-    private static bool IsIPersistableInterface(INamedTypeSymbol typeSymbol)
-    {
-        return typeSymbol.ContainingNamespace.ToDisplayString() == "System.ClientModel.Primitives" &&
-               typeSymbol.Name == "IPersistableModel" &&
-               typeSymbol.IsGenericType;
     }
 
     private static HashSet<ITypeSymbol> GetRecursiveGenericTypes(ITypeSymbol typeSymbol, TypeSymbolKindCache symbolToKindCache)

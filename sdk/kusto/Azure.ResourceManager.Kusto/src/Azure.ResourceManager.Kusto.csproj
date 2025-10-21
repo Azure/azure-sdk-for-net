@@ -2,10 +2,11 @@
   <PropertyGroup>
     <Version>1.7.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.6.0</ApiCompatVersion>
+    <ApiCompatVersion>1.6.2</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Kusto</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Kusto.</Description>
     <PackageTags>azure;management;arm;resource manager;kusto</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

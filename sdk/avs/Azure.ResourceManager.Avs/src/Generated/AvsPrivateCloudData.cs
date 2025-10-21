@@ -59,10 +59,11 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
-            Sku = sku;
             IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
             ExtendedNetworkBlocks = new ChangeTrackingList<string>();
             ExternalCloudLinks = new ChangeTrackingList<ResourceIdentifier>();
+            Sku = sku;
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/>. </summary>
@@ -72,8 +73,6 @@ namespace Azure.ResourceManager.Avs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="managementCluster"> The default cluster used for management. </param>
         /// <param name="internet"> Connectivity to internet is enabled or disabled. </param>
         /// <param name="identitySources"> vCenter Single Sign On Identity Sources. </param>
@@ -111,11 +110,12 @@ namespace Azure.ResourceManager.Avs
         /// </param>
         /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
         /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="zones"> The availability zones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvsSku sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, AvsDnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, AvsDnsZoneType? dnsZoneType, AvsSku sku, ManagedServiceIdentity identity, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Sku = sku;
-            Identity = identity;
             ManagementCluster = managementCluster;
             Internet = internet;
             IdentitySources = identitySources;
@@ -138,6 +138,9 @@ namespace Azure.ResourceManager.Avs
             NsxPublicIPQuotaRaised = nsxPublicIPQuotaRaised;
             VirtualNetworkId = virtualNetworkId;
             DnsZoneType = dnsZoneType;
+            Sku = sku;
+            Identity = identity;
+            Zones = zones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -146,10 +149,6 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
-        public AvsSku Sku { get; set; }
-        /// <summary> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The default cluster used for management. </summary>
         public AvsManagementCluster ManagementCluster { get; set; }
         /// <summary> Connectivity to internet is enabled or disabled. </summary>
@@ -209,5 +208,11 @@ namespace Azure.ResourceManager.Avs
         public ResourceIdentifier VirtualNetworkId { get; set; }
         /// <summary> The type of DNS zone to use. </summary>
         public AvsDnsZoneType? DnsZoneType { get; set; }
+        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
+        public AvsSku Sku { get; set; }
+        /// <summary> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The availability zones. </summary>
+        public IList<string> Zones { get; }
     }
 }

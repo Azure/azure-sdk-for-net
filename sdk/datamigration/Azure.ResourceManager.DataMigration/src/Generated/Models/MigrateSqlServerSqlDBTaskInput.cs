@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
-        public MigrateSqlServerSqlDBTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlDBDatabaseInput> selectedDatabases) : base(sourceConnectionInfo, targetConnectionInfo)
+        public MigrateSqlServerSqlDBTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlDBDatabaseInput> selectedDatabases) : base(sourceConnectionInfo, targetConnectionInfo)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// </param>
         /// <param name="startedOn"> Date and time relative to UTC when the migration was started on. </param>
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        internal MigrateSqlServerSqlDBTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<MigrateSqlServerSqlDBDatabaseInput> selectedDatabases, MigrationValidationOptions validationOptions, string startedOn, string encryptedKeyForSecureFields) : base(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlDBTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<MigrateSqlServerSqlDBDatabaseInput> selectedDatabases, MigrationValidationOptions validationOptions, DateTimeOffset? startedOn, string encryptedKeyForSecureFields) : base(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData)
         {
             SelectedDatabases = selectedDatabases;
             ValidationOptions = validationOptions;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// </summary>
         public MigrationValidationOptions ValidationOptions { get; set; }
         /// <summary> Date and time relative to UTC when the migration was started on. </summary>
-        public string StartedOn { get; set; }
+        public DateTimeOffset? StartedOn { get; set; }
         /// <summary> encrypted key for secure fields. </summary>
         public string EncryptedKeyForSecureFields { get; set; }
     }

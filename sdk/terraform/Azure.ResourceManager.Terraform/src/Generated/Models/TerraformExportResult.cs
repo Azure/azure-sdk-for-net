@@ -54,23 +54,27 @@ namespace Azure.ResourceManager.Terraform.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TerraformExportResult"/>. </summary>
-        /// <param name="configuration"> The Terraform configuration content. </param>
-        /// <param name="skippedResourceIds"> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </param>
-        /// <param name="errors"> A list of errors derived during exporting each resource. </param>
+        /// <param name="configuration"> The exported Terraform HCL configuration. </param>
+        /// <param name="import"> The Terraform import blocks for the configuration, necessary for managing existing Azure resources in Terraform. </param>
+        /// <param name="skippedResourceIds"> A list of Azure resources which could not be exported to Terraform. The most common cause is lack of Terraform provider support. Change the provider type to `azapi` for bigger set of supported resources. </param>
+        /// <param name="errors"> A list of errors encountered during export operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TerraformExportResult(string configuration, IReadOnlyList<ResourceIdentifier> skippedResourceIds, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TerraformExportResult(string configuration, string import, IReadOnlyList<ResourceIdentifier> skippedResourceIds, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Configuration = configuration;
+            Import = import;
             SkippedResourceIds = skippedResourceIds;
             Errors = errors;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Terraform configuration content. </summary>
+        /// <summary> The exported Terraform HCL configuration. </summary>
         public string Configuration { get; }
-        /// <summary> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </summary>
+        /// <summary> The Terraform import blocks for the configuration, necessary for managing existing Azure resources in Terraform. </summary>
+        public string Import { get; }
+        /// <summary> A list of Azure resources which could not be exported to Terraform. The most common cause is lack of Terraform provider support. Change the provider type to `azapi` for bigger set of supported resources. </summary>
         public IReadOnlyList<ResourceIdentifier> SkippedResourceIds { get; }
-        /// <summary> A list of errors derived during exporting each resource. </summary>
+        /// <summary> A list of errors encountered during export operation. </summary>
         public IReadOnlyList<ResponseError> Errors { get; }
     }
 }

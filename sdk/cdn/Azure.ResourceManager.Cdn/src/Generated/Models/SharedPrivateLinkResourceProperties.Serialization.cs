@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(PrivateLink))
             {
                 writer.WritePropertyName("privateLink"u8);
-                JsonSerializer.Serialize(writer, PrivateLink);
+                ((IJsonModel<WritableSubResource>)PrivateLink).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateLinkLocation))
             {
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    privateLink = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    privateLink = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (property.NameEquals("privateLinkLocation"u8))

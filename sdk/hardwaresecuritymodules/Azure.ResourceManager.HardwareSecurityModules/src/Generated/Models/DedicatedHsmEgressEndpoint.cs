@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> The category of endpoints accessed by the dedicated hsm service, e.g. azure-resource-management, apiserver, etc. </summary>
-        [WirePath("category")]
         public string Category { get; }
         /// <summary> The endpoints that dedicated hsm service connects to. </summary>
-        [WirePath("endpoints")]
         public IReadOnlyList<DedicatedHsmEndpointDependency> Endpoints { get; }
     }
 }

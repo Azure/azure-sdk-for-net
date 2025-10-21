@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Quota
         /// <summary> Initializes a new instance of QuotaOperationRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public QuotaOperationRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-03-01";
+            _apiVersion = apiVersion ?? "2025-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Quota
             return message;
         }
 
-        /// <summary> List all the operations supported by the Microsoft.Quota resource provider. </summary>
+        /// <summary> List the operations for the provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<QuotaOperationListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> List all the operations supported by the Microsoft.Quota resource provider. </summary>
+        /// <summary> List the operations for the provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<QuotaOperationListResult> List(CancellationToken cancellationToken = default)
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Quota
             return message;
         }
 
-        /// <summary> List all the operations supported by the Microsoft.Quota resource provider. </summary>
+        /// <summary> List the operations for the provider. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        /// <summary> List all the operations supported by the Microsoft.Quota resource provider. </summary>
+        /// <summary> List the operations for the provider. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>

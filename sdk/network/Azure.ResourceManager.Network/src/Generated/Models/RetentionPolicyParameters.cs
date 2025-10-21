@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Number of days to retain flow log records. </summary>
+        [WirePath("days")]
         public int? Days { get; set; }
         /// <summary> Flag to enable/disable retention. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
     }
 }

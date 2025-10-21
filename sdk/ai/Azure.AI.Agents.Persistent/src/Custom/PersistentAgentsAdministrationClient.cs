@@ -4,13 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
+using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -19,8 +16,8 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentAgentsAdministrationClient
     {
         private static readonly bool s_is_test_run = AppContextSwitchHelper.GetConfigValue(
-            PersistantAgensConstants.UseOldConnectionString,
-            PersistantAgensConstants.UseOldConnectionStringEnvVar);
+            PersistentAgentsConstants.UseOldConnectionString,
+            PersistentAgentsConstants.UseOldConnectionStringEnvVar);
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal virtual ClientDiagnostics ClientDiagnostics { get; }
         // TODO: Replace project connections string by PROJECT_ENDPOINT when 1DP will be available.
@@ -170,14 +167,20 @@ namespace Azure.AI.Agents.Persistent
         public virtual AsyncPageable<PersistentAgent> GetAgentsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             return new ContinuationTokenPageableAsync<PersistentAgent>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentAgent.DeserializePersistentAgent(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 
@@ -190,14 +193,20 @@ namespace Azure.AI.Agents.Persistent
         public virtual Pageable<PersistentAgent> GetAgents(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             return new ContinuationTokenPageable<PersistentAgent>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentAgent.DeserializePersistentAgent(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 
@@ -362,18 +371,19 @@ namespace Azure.AI.Agents.Persistent
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> CreateAgentAsync(RequestContent content, RequestContext context = null)
         {
+            using var otelScope = OpenTelemetryScope.StartCreateAgent(content, _endpoint);
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.CreateAgent");
-            scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateAgentRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                otelScope?.RecordCreateAgentResponse(response);
+                return response;
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                otelScope?.RecordError(e);
                 throw;
             }
         }
@@ -401,18 +411,19 @@ namespace Azure.AI.Agents.Persistent
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response CreateAgent(RequestContent content, RequestContext context = null)
         {
+            using var otelScope = OpenTelemetryScope.StartCreateAgent(content, _endpoint);
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.CreateAgent");
-            scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateAgentRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
+                var response = _pipeline.ProcessMessage(message, context);
+                otelScope?.RecordCreateAgentResponse(response);
+                return response;
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                otelScope?.RecordError(e);
                 throw;
             }
         }
@@ -497,6 +508,84 @@ namespace Azure.AI.Agents.Persistent
             catch (Exception e)
             {
                 scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new agent thread and immediately starts a run using that new thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateThreadAndRunAsync(string,PersistentAgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},ToolResources,bool?,float?,float?,int?,int?,Truncation,BinaryData,BinaryData,bool?,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> CreateThreadAndRunAsync(RequestContent content, RequestContext context = null)
+        {
+            using var otelScope = OpenTelemetryScope.StartCreateRun(content, _endpoint);
+            Argument.AssertNotNull(content, nameof(content));
+
+            try
+            {
+                using HttpMessage message = CreateCreateThreadAndRunRequest(content, context);
+                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                otelScope?.RecordCreateRunResponse(response);
+                return response;
+            }
+            catch (Exception e)
+            {
+                otelScope?.RecordError(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new agent thread and immediately starts a run using that new thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateThreadAndRun(string,PersistentAgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},ToolResources,bool?,float?,float?,int?,int?,Truncation,BinaryData,BinaryData,bool?,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response CreateThreadAndRun(RequestContent content, RequestContext context = null)
+        {
+            using var otelScope = OpenTelemetryScope.StartCreateRun(content, _endpoint);
+            Argument.AssertNotNull(content, nameof(content));
+
+            try
+            {
+                using HttpMessage message = CreateCreateThreadAndRunRequest(content, context);
+                var response = _pipeline.ProcessMessage(message, context);
+                otelScope?.RecordCreateRunResponse(response);
+                return response;
+            }
+            catch (Exception e)
+            {
+                otelScope?.RecordError(e);
                 throw;
             }
         }

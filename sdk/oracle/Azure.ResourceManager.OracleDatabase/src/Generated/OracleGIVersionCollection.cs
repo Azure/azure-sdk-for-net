@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.OracleDatabase.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
@@ -64,11 +65,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiVersions_Get</description>
+        /// <description>GiVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -109,11 +110,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiVersions_Get</description>
+        /// <description>GiVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// List GiVersion resources by Location
+        /// List GiVersion resources by SubscriptionLocationResource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -154,11 +155,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiVersions_ListByLocation</description>
+        /// <description>GiVersion_ListByLocation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,17 +167,20 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="shape"> If provided, filters the results for the given shape. </param>
+        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="shapeAttribute"> Filters the result for the given Shape Attribute, such as BLOCK_STORAGE or SMART_STORAGE. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OracleGIVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OracleGIVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OracleGIVersionResource> GetAllAsync(OracleDatabaseSystemShape? shape = null, string zone = null, string shapeAttribute = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location), shape, zone, shapeAttribute);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), shape, zone, shapeAttribute);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleGIVersionResource(Client, OracleGIVersionData.DeserializeOracleGIVersionData(e)), _oracleGIVersionGiVersionsClientDiagnostics, Pipeline, "OracleGIVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// List GiVersion resources by Location
+        /// List GiVersion resources by SubscriptionLocationResource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -184,11 +188,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiVersions_ListByLocation</description>
+        /// <description>GiVersion_ListByLocation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -196,12 +200,15 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="shape"> If provided, filters the results for the given shape. </param>
+        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="shapeAttribute"> Filters the result for the given Shape Attribute, such as BLOCK_STORAGE or SMART_STORAGE. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleGIVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OracleGIVersionResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<OracleGIVersionResource> GetAll(OracleDatabaseSystemShape? shape = null, string zone = null, string shapeAttribute = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location), shape, zone, shapeAttribute);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleGIVersionGiVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), shape, zone, shapeAttribute);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleGIVersionResource(Client, OracleGIVersionData.DeserializeOracleGIVersionData(e)), _oracleGIVersionGiVersionsClientDiagnostics, Pipeline, "OracleGIVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -214,11 +221,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiVersions_Get</description>
+        /// <description>GiVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -257,11 +264,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiVersions_Get</description>
+        /// <description>GiVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -300,11 +307,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiVersions_Get</description>
+        /// <description>GiVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -345,11 +352,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GiVersions_Get</description>
+        /// <description>GiVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

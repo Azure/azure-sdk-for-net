@@ -2,11 +2,12 @@
   <PropertyGroup>
     <Version>1.5.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.4.0</ApiCompatVersion>
+    <ApiCompatVersion>1.4.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.AppService</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.Web.</Description>
     <PackageTags>azure;management;AppService</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <NoWarn>$(NoWarn);CS1591;</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

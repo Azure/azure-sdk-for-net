@@ -1,0 +1,26 @@
+
+parameters:
+  - name: TokenTimeoutInHours
+    type: number
+    default: 1
+
+steps:
+  - pwsh: |
+      Write-Host "Setting vcpkg cache variables for read only access to vcpkg binary and asset caches"
+      Write-Host '##vso[task.setvariable variable=VCPKG_BINARY_SOURCES_SECRET;issecret=true;]clear;x-azcopy,https://azuresdkartifacts.blob.core.windows.net/public-vcpkg-container,read'
+      Write-Host '##vso[task.setvariable variable=X_VCPKG_ASSET_SOURCES_SECRET;issecret=true;]clear;x-azurl,https://azuresdkartifacts.blob.core.windows.net/public-vcpkg-container,,read'
+    displayName: Set vcpkg variables
+
+  - ${{if eq(variables['System.TeamProject'], 'internal') }}:
+    - task: AzurePowerShell@5
+      displayName: Set Vcpkg Write-mode Cache
+      inputs:
+        azureSubscription: 'Azure SDK Artifacts'
+        ScriptType: FilePath
+        ScriptPath: eng/common/scripts/Set-VcpkgWriteModeCache.ps1
+        ScriptArguments: -TokenTimeoutInHours ${{ parameters.TokenTimeoutInHours }}
+        azurePowerShellVersion: LatestVersion
+        pwsh: true
+      # This step is idempotent and can be run multiple times in cases of
+      # failure and partial execution.
+      retryCountOnTaskFailure: 3

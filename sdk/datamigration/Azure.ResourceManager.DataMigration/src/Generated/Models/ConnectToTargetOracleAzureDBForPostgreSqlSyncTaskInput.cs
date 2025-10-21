@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetConnectionInfo"/> is null. </exception>
-        public ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(PostgreSqlConnectionInfo targetConnectionInfo)
+        public ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(DataMigrationPostgreSqlConnectionInfo targetConnectionInfo)
         {
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(PostgreSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(DataMigrationPostgreSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetConnectionInfo = targetConnectionInfo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for target Azure Database for PostgreSQL server. </summary>
-        public PostgreSqlConnectionInfo TargetConnectionInfo { get; set; }
+        public DataMigrationPostgreSqlConnectionInfo TargetConnectionInfo { get; set; }
     }
 }

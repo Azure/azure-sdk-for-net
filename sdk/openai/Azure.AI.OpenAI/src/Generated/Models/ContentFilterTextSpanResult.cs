@@ -14,6 +14,10 @@ namespace Azure.AI.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="ContentFilterTextSpanResult"/>. </summary>
+        /// <param name="filtered"> Whether the content detection resulted in a content filtering action. </param>
+        /// <param name="detected"> Whether the labeled content category was detected in the content. </param>
+        /// <param name="details"> Detailed information about the detected completion text spans. </param>
         internal ContentFilterTextSpanResult(bool filtered, bool detected, IEnumerable<ContentFilterTextSpan> details)
         {
             Filtered = filtered;
@@ -21,11 +25,17 @@ namespace Azure.AI.OpenAI
             Details = details.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContentFilterTextSpanResult"/>. </summary>
+        /// <param name="filtered"> Whether the content detection resulted in a content filtering action. </param>
+        /// <param name="detected"> Whether the labeled content category was detected in the content. </param>
+        /// <param name="details"> Detailed information about the detected completion text spans. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContentFilterTextSpanResult(bool filtered, bool detected, IList<ContentFilterTextSpan> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            // Plugin customization: ensure initialization of collections
             Filtered = filtered;
             Detected = detected;
-            Details = details;
+            Details = details ?? new ChangeTrackingList<ContentFilterTextSpan>();
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

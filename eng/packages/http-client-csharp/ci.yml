@@ -49,7 +49,7 @@ extends:
   parameters:
     InitializationSteps:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
-    EmitterPackageJsonOutputPath: eng/http-client-csharp-emitter-package.json
+    EmitterPackageJsonOutputPath: eng/azure-typespec-http-client-csharp-emitter-package.json
     EmitterPackagePath: eng/packages/http-client-csharp
     SparseCheckoutPaths:
       - /sdk/core/Azure.Core/src/Shared

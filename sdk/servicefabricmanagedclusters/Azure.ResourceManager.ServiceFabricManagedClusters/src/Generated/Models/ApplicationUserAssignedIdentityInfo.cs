@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> The ApplicationUserAssignedIdentityInfo. </summary>
+    /// <summary> User assigned identity for the application. </summary>
     public partial class ApplicationUserAssignedIdentityInfo
     {
         /// <summary>

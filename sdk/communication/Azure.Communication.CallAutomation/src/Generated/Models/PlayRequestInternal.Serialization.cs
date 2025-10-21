@@ -32,6 +32,11 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(InterruptCallMediaOperation))
+            {
+                writer.WritePropertyName("interruptCallMediaOperation"u8);
+                writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
+            }
             if (Optional.IsDefined(PlayOptions))
             {
                 writer.WritePropertyName("playOptions"u8);

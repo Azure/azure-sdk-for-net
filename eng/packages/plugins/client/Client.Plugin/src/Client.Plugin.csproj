@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+		<TargetFrameworks>net9.0</TargetFrameworks>
+		<RequiredTargetFrameworks>net9.0</RequiredTargetFrameworks>
+    <!--Ensure all dependencies are copied to the output directory so that they can be packaged up for npm.-->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
+  </ItemGroup>
+
+  <!-- Shared visitor source files -->
+  <PropertyGroup>
+    <VisitorsSharedSource>$(MSBuildThisFileDirectory)..\..\..\..\http-client-csharp\generator\Azure.Generator\src\Visitors</VisitorsSharedSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(VisitorsSharedSource)\NamespaceVisitor.cs" LinkBase="Shared/Visitors" />
+    <Compile Include="$(VisitorsSharedSource)\SpecialHeadersVisitor.cs" LinkBase="Shared/Visitors" />
+    <Compile Include="$(VisitorsSharedSource)\ModelFactoryRenamerVisitor.cs" LinkBase="Shared/Visitors" />
+    <Compile Include="$(VisitorsSharedSource)\Extensions\ConfigurationExtensions.cs" LinkBase="Shared/Visitors/Extensions" />
+    <Compile Include="$(VisitorsSharedSource)\Utilities\TypeNameUtilities.cs" LinkBase="Shared/Visitors/Utilities" />
+  </ItemGroup>
+
+  <!-- Copy output to package dist path  -->
+  <Target Name="CopyForNpmPackage" AfterTargets="Build">
+    <Message Text="Copying output to dist path" Importance="high" />
+    <ItemGroup>
+      <SourceDir Include="$(OutputPath)**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\dist\%(RecursiveDir)" />
+  </Target>
+</Project>

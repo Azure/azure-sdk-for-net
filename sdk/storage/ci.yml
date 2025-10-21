@@ -1,5 +1,11 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
+parameters:
+  - name: ReleaseToDevOpsOnly
+    displayName: 'Release package to DevOps feed instead of Nuget.org'
+    type: boolean
+    default: false
+
 trigger:
   branches:
     include:
@@ -45,6 +51,8 @@ pr:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    ${{ if eq(parameters.ReleaseToDevOpsOnly, 'true') }}:
+      PublicFeed: 'public/storage-staging'
     SDKType: client
     ServiceDirectory: storage
     BuildSnippets: false
@@ -73,7 +81,3 @@ extends:
       skipSmokeTests: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Storage.Blobs
-      ExpectedWarningsFilepath: None

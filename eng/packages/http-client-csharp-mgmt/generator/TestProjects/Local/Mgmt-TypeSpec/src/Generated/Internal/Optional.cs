@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal static partial class Optional
     {
@@ -28,7 +28,7 @@ namespace MgmtTypeSpec
         }
 
         public static bool IsDefined<T>(T? value)
-            where T : struct 
+            where T : struct
         {
             return value.HasValue;
         }

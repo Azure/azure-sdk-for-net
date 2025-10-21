@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             string name = default;
             double? sizeMB = default;
-            IReadOnlyList<DatabaseFileInfo> databaseFiles = default;
-            DatabaseCompatLevel? compatibilityLevel = default;
-            DatabaseState? databaseState = default;
+            IReadOnlyList<DataMigrationDatabaseFileInfo> databaseFiles = default;
+            DataMigrationDatabaseCompatLevel? compatibilityLevel = default;
+            DataMigrationSqlDatabaseState? databaseState = default;
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<DatabaseFileInfo> array = new List<DatabaseFileInfo>();
+                    List<DataMigrationDatabaseFileInfo> array = new List<DataMigrationDatabaseFileInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseFileInfo.DeserializeDatabaseFileInfo(item, options));
+                        array.Add(DataMigrationDatabaseFileInfo.DeserializeDataMigrationDatabaseFileInfo(item, options));
                     }
                     databaseFiles = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    compatibilityLevel = new DatabaseCompatLevel(property.Value.GetString());
+                    compatibilityLevel = new DataMigrationDatabaseCompatLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("databaseState"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    databaseState = new DatabaseState(property.Value.GetString());
+                    databaseState = new DataMigrationSqlDatabaseState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData,
                 name,
                 sizeMB,
-                databaseFiles ?? new ChangeTrackingList<DatabaseFileInfo>(),
+                databaseFiles ?? new ChangeTrackingList<DataMigrationDatabaseFileInfo>(),
                 compatibilityLevel,
                 databaseState);
         }

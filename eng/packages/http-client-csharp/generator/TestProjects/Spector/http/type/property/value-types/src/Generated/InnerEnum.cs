@@ -26,6 +26,10 @@ namespace _Type.Property.ValueTypes
         /// <param name="value"> The value. </param>
         public static implicit operator InnerEnum(string value) => throw null;
 
+        /// <summary> Converts a string to a <see cref="InnerEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InnerEnum?(string value) => throw null;
+
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 

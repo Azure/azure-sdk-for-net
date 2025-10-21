@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary></summary>
+    /// <summary> The DeidentificationClient. </summary>
     public partial class DeidentificationClient
     {
         private readonly Uri _endpoint;
@@ -258,7 +258,7 @@ namespace Azure.Health.Deidentification
             scope.Start();
             try
             {
-                return new DeidentificationClientGetJobsInternalCollectionResult(this, null, maxpagesize, continuationToken, context);
+                return new DeidentificationClientGetJobsInternalCollectionResult(this, maxpagesize, continuationToken, context);
             }
             catch (Exception e)
             {
@@ -286,7 +286,7 @@ namespace Azure.Health.Deidentification
             scope.Start();
             try
             {
-                return new DeidentificationClientGetJobsInternalAsyncCollectionResult(this, null, maxpagesize, continuationToken, context);
+                return new DeidentificationClientGetJobsInternalAsyncCollectionResult(this, maxpagesize, continuationToken, context);
             }
             catch (Exception e)
             {
@@ -302,7 +302,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<DeidentificationJob> GetJobsInternal(int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobsInternalCollectionResultOfT(this, null, maxpagesize, continuationToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DeidentificationClientGetJobsInternalCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -312,7 +312,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<DeidentificationJob> GetJobsInternalAsync(int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobsInternalAsyncCollectionResultOfT(this, null, maxpagesize, continuationToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DeidentificationClientGetJobsInternalAsyncCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>
@@ -335,13 +335,7 @@ namespace Azure.Health.Deidentification
             scope.Start();
             try
             {
-                return new DeidentificationClientGetJobDocumentsInternalCollectionResult(
-                    this,
-                    null,
-                    jobName,
-                    maxpagesize,
-                    continuationToken,
-                    context);
+                return new DeidentificationClientGetJobDocumentsInternalCollectionResult(this, jobName, maxpagesize, continuationToken, context);
             }
             catch (Exception e)
             {
@@ -370,13 +364,7 @@ namespace Azure.Health.Deidentification
             scope.Start();
             try
             {
-                return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResult(
-                    this,
-                    null,
-                    jobName,
-                    maxpagesize,
-                    continuationToken,
-                    context);
+                return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResult(this, jobName, maxpagesize, continuationToken, context);
             }
             catch (Exception e)
             {
@@ -393,13 +381,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<DeidentificationDocumentDetails> GetJobDocumentsInternal(string jobName, int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobDocumentsInternalCollectionResultOfT(
-                this,
-                null,
-                jobName,
-                maxpagesize,
-                continuationToken,
-                cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DeidentificationClientGetJobDocumentsInternalCollectionResultOfT(this, jobName, maxpagesize, continuationToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -410,13 +392,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<DeidentificationDocumentDetails> GetJobDocumentsInternalAsync(string jobName, int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResultOfT(
-                this,
-                null,
-                jobName,
-                maxpagesize,
-                continuationToken,
-                cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResultOfT(this, jobName, maxpagesize, continuationToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>

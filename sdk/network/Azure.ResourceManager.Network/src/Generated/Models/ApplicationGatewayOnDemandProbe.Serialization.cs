@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -60,6 +61,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("pickHostNameFromBackendHttpSettings"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendHttpSettings.Value);
             }
+            if (Optional.IsDefined(IsProbeProxyProtocolHeaderEnabled))
+            {
+                writer.WritePropertyName("enableProbeProxyProtocolHeader"u8);
+                writer.WriteBooleanValue(IsProbeProxyProtocolHeaderEnabled.Value);
+            }
             if (Optional.IsDefined(Match))
             {
                 writer.WritePropertyName("match"u8);
@@ -68,12 +74,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                JsonSerializer.Serialize(writer, BackendAddressPool);
+                ((IJsonModel<WritableSubResource>)BackendAddressPool).Write(writer, options);
             }
             if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
-                JsonSerializer.Serialize(writer, BackendHttpSettings);
+                ((IJsonModel<WritableSubResource>)BackendHttpSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -117,6 +123,7 @@ namespace Azure.ResourceManager.Network.Models
             string path = default;
             int? timeout = default;
             bool? pickHostNameFromBackendHttpSettings = default;
+            bool? enableProbeProxyProtocolHeader = default;
             ApplicationGatewayProbeHealthResponseMatch match = default;
             WritableSubResource backendAddressPool = default;
             WritableSubResource backendHttpSettings = default;
@@ -161,6 +168,15 @@ namespace Azure.ResourceManager.Network.Models
                     pickHostNameFromBackendHttpSettings = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("enableProbeProxyProtocolHeader"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableProbeProxyProtocolHeader = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("match"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -176,7 +192,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    backendAddressPool = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("backendHttpSettings"u8))
@@ -185,7 +201,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendHttpSettings = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    backendHttpSettings = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,6 +216,7 @@ namespace Azure.ResourceManager.Network.Models
                 path,
                 timeout,
                 pickHostNameFromBackendHttpSettings,
+                enableProbeProxyProtocolHeader,
                 match,
                 backendAddressPool,
                 backendHttpSettings,

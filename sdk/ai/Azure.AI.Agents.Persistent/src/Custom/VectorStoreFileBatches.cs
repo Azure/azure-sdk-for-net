@@ -27,14 +27,23 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetVectorStoreFileBatchFilesRequest(vectorStoreId, batchId, filter?.ToString(), limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetVectorStoreFileBatchFilesRequest(
+                vectorStoreId: vectorStoreId,
+                batchId: batchId,
+                filter: filter?.ToString(),
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             return new ContinuationTokenPageableAsync<VectorStoreFile>(
                 createPageRequest: PageRequest,
                 valueFactory: e => VectorStoreFile.DeserializeVectorStoreFile(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 
@@ -55,14 +64,23 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetVectorStoreFileBatchFilesRequest(vectorStoreId, batchId, filter?.ToString(), limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetVectorStoreFileBatchFilesRequest(
+                vectorStoreId: vectorStoreId,
+                batchId: batchId,
+                filter: filter?.ToString(),
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             return new ContinuationTokenPageable<VectorStoreFile>(
                 createPageRequest: PageRequest,
                 valueFactory: e => VectorStoreFile.DeserializeVectorStoreFile(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 

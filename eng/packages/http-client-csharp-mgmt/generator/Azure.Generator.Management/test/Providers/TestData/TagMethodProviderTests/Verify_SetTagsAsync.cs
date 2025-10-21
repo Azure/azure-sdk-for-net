@@ -1,6 +1,6 @@
 global::Samples.Argument.AssertNotNull(tags, nameof(tags));
 
-using global::Azure.Core.Pipeline.DiagnosticScope scope = _responsetypeClientDiagnostics.CreateScope("ResponseTypeResource.SetTags");
+using global::Azure.Core.Pipeline.DiagnosticScope scope = _testClientClientDiagnostics.CreateScope("ResponseTypeResource.SetTags");
 scope.Start();
 try
 {
@@ -13,18 +13,18 @@ try
         global::Azure.RequestContext context = new global::Azure.RequestContext
         {
             CancellationToken = cancellationToken
-        }
-        ;
-        global::Azure.Core.HttpMessage message = _responsetypeRestClient.CreateGetRequest(this.Id.Name, context);
+        };
+        global::Azure.Core.HttpMessage message = _testClientRestClient.CreateGetRequest(global::System.Guid.Parse(this.Id.SubscriptionId), this.Id.ResourceGroupName, this.Id.Name, context);
         global::Azure.Response result = await this.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-        global::Azure.Response<global::Samples.Models.ResponseTypeData> response = global::Azure.Response.FromValue(((global::Samples.Models.ResponseTypeData)result), result);
+        global::Azure.Response<global::Samples.ResponseTypeData> response = global::Azure.Response.FromValue(global::Samples.ResponseTypeData.FromResponse(result), result);
         return global::Azure.Response.FromValue(new global::Samples.ResponseTypeResource(this.Client, response.Value), response.GetRawResponse());
     }
     else
     {
-        global::Samples.Models.ResponseTypeData current = (await this.GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-        current.Tags.ReplaceWith(tags);
-        global::Azure.ResourceManager.ArmOperation<global::Samples.ResponseTypeResource> result = await this.UpdateAsync(global::Azure.WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+        global::Samples.ResponseTypeData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+        global::Samples.ResponseTypeData patch = new global::Samples.ResponseTypeData();
+        patch.Tags.ReplaceWith(tags);
+        global::Azure.Response<global::Samples.ResponseTypeResource> result = await this.UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
         return global::Azure.Response.FromValue(result.Value, result.GetRawResponse());
     }
 }

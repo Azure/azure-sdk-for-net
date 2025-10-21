@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WritePropertyName("ueAmbr"u8);
             writer.WriteObjectValue(UEAmbr, options);
             writer.WritePropertyName("defaultSlice"u8);
-            JsonSerializer.Serialize(writer, DefaultSlice);
+            ((IJsonModel<WritableSubResource>)DefaultSlice).Write(writer, options);
             if (Optional.IsDefined(RfspIndex))
             {
                 writer.WritePropertyName("rfspIndex"u8);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMobileNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("defaultSlice"u8))
                         {
-                            defaultSlice = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            defaultSlice = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("rfspIndex"u8))

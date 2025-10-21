@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Search
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-02-01-preview";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.Search
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
-        /// <param name="nspConfigName"> The network security configuration name. </param>
+        /// <param name="nspConfigName"> The network security perimeter configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="searchServiceName"/> or <paramref name="nspConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="searchServiceName"/> or <paramref name="nspConfigName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkSecurityPerimeterConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string searchServiceName, string nspConfigName, CancellationToken cancellationToken = default)
+        public async Task<Response<SearchServiceNetworkSecurityPerimeterConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string searchServiceName, string nspConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.Search
             {
                 case 200:
                     {
-                        NetworkSecurityPerimeterConfigurationData value = default;
+                        SearchServiceNetworkSecurityPerimeterConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement);
+                        value = SearchServiceNetworkSecurityPerimeterConfigurationData.DeserializeSearchServiceNetworkSecurityPerimeterConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NetworkSecurityPerimeterConfigurationData)null, message.Response);
+                    return Response.FromValue((SearchServiceNetworkSecurityPerimeterConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.Search
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
-        /// <param name="nspConfigName"> The network security configuration name. </param>
+        /// <param name="nspConfigName"> The network security perimeter configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="searchServiceName"/> or <paramref name="nspConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="searchServiceName"/> or <paramref name="nspConfigName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkSecurityPerimeterConfigurationData> Get(string subscriptionId, string resourceGroupName, string searchServiceName, string nspConfigName, CancellationToken cancellationToken = default)
+        public Response<SearchServiceNetworkSecurityPerimeterConfigurationData> Get(string subscriptionId, string resourceGroupName, string searchServiceName, string nspConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.Search
             {
                 case 200:
                     {
-                        NetworkSecurityPerimeterConfigurationData value = default;
+                        SearchServiceNetworkSecurityPerimeterConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement);
+                        value = SearchServiceNetworkSecurityPerimeterConfigurationData.DeserializeSearchServiceNetworkSecurityPerimeterConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NetworkSecurityPerimeterConfigurationData)null, message.Response);
+                    return Response.FromValue((SearchServiceNetworkSecurityPerimeterConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
-        /// <param name="nspConfigName"> The network security configuration name. </param>
+        /// <param name="nspConfigName"> The network security perimeter configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="searchServiceName"/> or <paramref name="nspConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="searchServiceName"/> or <paramref name="nspConfigName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
-        /// <param name="nspConfigName"> The network security configuration name. </param>
+        /// <param name="nspConfigName"> The network security perimeter configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="searchServiceName"/> or <paramref name="nspConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="searchServiceName"/> or <paramref name="nspConfigName"/> is an empty string, and was expected to be non-empty. </exception>

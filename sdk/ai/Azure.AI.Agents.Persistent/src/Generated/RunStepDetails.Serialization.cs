@@ -77,6 +77,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
+                    case "activities": return RunStepActivityDetails.DeserializeRunStepActivityDetails(element, options);
                     case "message_creation": return RunStepMessageCreationDetails.DeserializeRunStepMessageCreationDetails(element, options);
                     case "tool_calls": return RunStepToolCallDetails.DeserializeRunStepToolCallDetails(element, options);
                 }

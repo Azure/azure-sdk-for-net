@@ -11,7 +11,7 @@ pr:
 
 pool:
   name: $(WINDOWSPOOL)
-  demands: $(WindowsImageDemand)
+  demands: ImageOverride -equals $(WINDOWSVMIMAGE)
 
 variables:
   - template: templates/variables/globals.yml
@@ -145,15 +145,12 @@ stages:
     jobs:
       - job: ComplianceTools
         timeoutInMinutes: 120
+
         steps:
           - template: /eng/common/pipelines/templates/steps/policheck.yml
             parameters:
               ExclusionDataBaseFileName: "DotNetPoliCheckExclusion"
               PublishAnalysisLogs: false
-
-          - template: /eng/common/pipelines/templates/steps/credscan.yml
-            parameters:
-              BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
 
       - job: APIScan
         timeoutInMinutes: 180

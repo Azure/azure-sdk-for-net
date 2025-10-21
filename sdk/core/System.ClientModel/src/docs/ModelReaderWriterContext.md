@@ -3,7 +3,7 @@
 ## Overview
 
 The [ModelReaderWriterContext](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/ModelReaderWriter/ModelReaderWriterContext.cs) class
- provides type information necessary for [ModelReaderWriter]((https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/ModelReaderWriter/ModelReaderWriter.cs)
+ provides type information necessary for [ModelReaderWriter](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/ModelReaderWriter/ModelReaderWriter.cs)
  to work with [AOT (Ahead of Time)](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) compilation.
 It also provides a performance boost vs using ModelReaderWriter without the context class.  It is considered
 an advanced scenario and is not necessary to work with ModelReaderWriter. However, if you are using AOT compilation or need to optimize
@@ -26,8 +26,8 @@ ModelReaderWriter.Write<MyPersistableModel>(myObject, ModelReaderWriterOptions.J
 
 System.ClientModel provides a source generator that will automatically fill in your ModelReaderWriterContext for your assembly.
 It will create all necessary [ModelReaderWriterTypeBuilder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/ModelReaderWriter/ModelReaderWriterTypeBuilder.cs)
-classes for any types in your assembly that implement [`IPersistableModel<T>`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/ModelReaderWriter/IPersistableModel.cs)
-as well as any type used in direct calls to `ModelReaderWriter.Read` and `ModelReaderWriter.Write`.
+classes for any types used in a [ModelReaderWriterBuildableAttribute](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/ModelReaderWriter/ModelReaderWriterBuildableAttribute.cs)
+on your context class.
 
 ### Context class
 
@@ -58,13 +58,12 @@ It will also support any nested combinations of the above types, such as `List<T
 
 ### ModelReaderWriterBuildableAttribute
 
-The source generator will find all invocations to `ModelReaderWriter.Read` and `ModelReaderWriter.Write` in your assembly.
-For each of those it will attempt to determine what type was passed in.  For simple invocations this will work but in some cases
-it is unable to determine the concrete type.  In these cases you can add an attribute to your partial context
-class to instruct the generator to include a type builder for that specific type.
+The source generator will only build type builders for types that are used in a [ModelReaderWriterBuildableAttribute](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/ModelReaderWriter/ModelReaderWriterBuildableAttribute.cs).
+The type used in the attribute must be a collection type that is supported by the source generator or a type that implements `IPersistableModel<T>`.
 
 ```C# Snippet:ModelReaderWriterContext_AttributeUsage
 [ModelReaderWriterBuildable(typeof(List<MyPersistableModel>))]
+[ModelReaderWriterBuildable(typeof(MyOtherPersistableModel))]
 public partial class MyContext : ModelReaderWriterContext { }
 ```
 

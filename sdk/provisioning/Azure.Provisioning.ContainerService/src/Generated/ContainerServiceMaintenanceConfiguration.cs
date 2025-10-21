@@ -99,7 +99,7 @@ public partial class ContainerServiceMaintenanceConfiguration : ProvisionableRes
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceMaintenanceConfiguration.</param>
     public ContainerServiceMaintenanceConfiguration(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion ?? "2025-03-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion ?? "2025-04-01")
     {
     }
 
@@ -123,6 +123,11 @@ public partial class ContainerServiceMaintenanceConfiguration : ProvisionableRes
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-04-01.
+        /// </summary>
+        public static readonly string V2025_04_01 = "2025-04-01";
+
         /// <summary>
         /// 2025-03-01.
         /// </summary>

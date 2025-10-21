@@ -25,7 +25,7 @@ namespace Azure.Communication.Chat
             CommunicationIdentifierModel createdByCommunicationIdentifier = default;
             DateTimeOffset? deletedOn = default;
             IReadOnlyDictionary<string, string> metadata = default;
-            ChatRetentionPolicy retentionPolicy = default;
+            ChatRetentionPolicyInternal retentionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -77,7 +77,7 @@ namespace Azure.Communication.Chat
                     {
                         continue;
                     }
-                    retentionPolicy = ChatRetentionPolicy.DeserializeChatRetentionPolicy(property.Value);
+                    retentionPolicy = ChatRetentionPolicyInternal.DeserializeChatRetentionPolicyInternal(property.Value);
                     continue;
                 }
             }

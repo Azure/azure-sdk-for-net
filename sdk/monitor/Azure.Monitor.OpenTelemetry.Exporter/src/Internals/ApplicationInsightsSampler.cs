@@ -54,7 +54,7 @@ internal sealed class ApplicationInsightsSampler : Sampler
             return RecordOnlySamplingResult;
         }
 
-        double sampleScore = DJB2SampleScore(samplingParameters.TraceId.ToHexString().ToUpperInvariant());
+        double sampleScore = SamplerUtils.DJB2SampleScore(samplingParameters.TraceId.ToHexString().ToUpperInvariant());
 
         if (sampleScore < samplingRatio)
         {
@@ -64,33 +64,5 @@ internal sealed class ApplicationInsightsSampler : Sampler
         {
             return RecordOnlySamplingResult;
         }
-    }
-
-    private static double DJB2SampleScore(string traceIdHex)
-    {
-        // Calculate DJB2 hash code from hex-converted TraceId
-        int hash = 5381;
-
-        for (int i = 0; i < traceIdHex.Length; i++)
-        {
-            unchecked
-            {
-                hash = (hash << 5) + hash + (int)traceIdHex[i];
-            }
-        }
-
-        // Take the absolute value of the hash
-        if (hash == int.MinValue)
-        {
-            hash = int.MaxValue;
-        }
-        else
-        {
-            hash = Math.Abs(hash);
-        }
-
-        // Divide by MaxValue for value between 0 and 1 for sampling score
-        double samplingScore = (double)hash / int.MaxValue;
-        return samplingScore;
     }
 }

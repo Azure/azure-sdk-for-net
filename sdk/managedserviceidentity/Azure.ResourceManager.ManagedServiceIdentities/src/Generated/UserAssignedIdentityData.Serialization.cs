@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedServiceIdentities.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
@@ -55,6 +56,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId.Value);
             }
+            if (Optional.IsDefined(IsolationScope))
+            {
+                writer.WritePropertyName("isolationScope"u8);
+                writer.WriteStringValue(IsolationScope.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -87,6 +93,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             Guid? tenantId = default;
             Guid? principalId = default;
             Guid? clientId = default;
+            IsolationScope? isolationScope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +138,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerManagedServiceIdentitiesContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -170,6 +177,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                             clientId = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("isolationScope"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isolationScope = new IsolationScope(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -189,6 +205,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 tenantId,
                 principalId,
                 clientId,
+                isolationScope,
                 serializedAdditionalRawData);
         }
 
@@ -349,6 +366,21 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     builder.Append("    clientId: ");
                     builder.AppendLine($"'{ClientId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsolationScope), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isolationScope: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsolationScope))
+                {
+                    builder.Append("    isolationScope: ");
+                    builder.AppendLine($"'{IsolationScope.Value.ToString()}'");
                 }
             }
 

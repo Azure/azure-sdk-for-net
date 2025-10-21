@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <Description>Contains the core functionality for defining Azure infrastructure with dotnet code.</Description>
-    <Version>1.1.0-beta.1</Version>
+    <Version>1.4.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.1</ApiCompatVersion>
+    <ApiCompatVersion>1.3.0</ApiCompatVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
@@ -13,5 +13,6 @@
     <!-- Disable warning AZC0012: Single word class names -->
     <!-- Disable warning IDE0130: Namespace does not match folder structure-->
     <NoWarn>CS1591;AZC0012;IDE0130;$(NoWarn)</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

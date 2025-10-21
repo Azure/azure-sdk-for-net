@@ -7,28 +7,50 @@ using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.ServerSentEvents;
+using System.Text.Json;
 using System.Threading;
+using Azure.AI.Agents.Persistent.Telemetry;
 
 #nullable enable
 
 namespace Azure.AI.Agents.Persistent;
 
 /// <summary>
-/// Implementation of collection abstraction over streaming agent updates.
+/// Implementation of collection abstraction over streaming assistant updates.
 /// </summary>
 internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
 {
     private readonly Func<Response> _sendRequest;
     private readonly CancellationToken _cancellationToken;
+    private readonly OpenTelemetryScope? _scope;
+    private readonly ToolCallsResolver? _toolCallsResolver;
+    private readonly Func<ThreadRun, IEnumerable<ToolOutput>, IEnumerable<ToolApproval>, int, CollectionResult<StreamingUpdate>> _submitToolOutputsToStream;
+    private readonly int _maxRetry;
+    private int _currRetry;
+    private readonly Func<string, Response<ThreadRun>> _cancelRun;
 
     public StreamingUpdateCollection(
+        CancellationToken cancellationToken,
+        AutoFunctionCallOptions autoFunctionCallOptions,
+        int currentRetry,
         Func<Response> sendRequest,
-        CancellationToken cancellationToken)
+        Func<string, Response<ThreadRun>> cancelRun,
+        Func<ThreadRun, IEnumerable<ToolOutput>, IEnumerable<ToolApproval>, int, CollectionResult<StreamingUpdate>> submitToolOutputsToStream,
+        OpenTelemetryScope? scope = null)
     {
         Argument.AssertNotNull(sendRequest, nameof(sendRequest));
 
-        _sendRequest = sendRequest;
         _cancellationToken = cancellationToken;
+        _scope = scope;
+        _sendRequest = sendRequest;
+        _submitToolOutputsToStream = submitToolOutputsToStream;
+        if (autoFunctionCallOptions != null)
+        {
+            _toolCallsResolver = new(autoFunctionCallOptions.AutoFunctionCallDelegates);
+            _maxRetry = autoFunctionCallOptions.MaxRetry;
+        }
+        _currRetry = currentRetry;
+        _cancelRun = cancelRun;
     }
 
     public override ContinuationToken? GetContinuationToken(ClientResult page)
@@ -46,11 +68,60 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
     }
     protected override IEnumerable<StreamingUpdate> GetValuesFromPage(ClientResult page)
     {
-        using IEnumerator<StreamingUpdate> enumerator = new StreamingUpdateEnumerator(page, _cancellationToken);
-        while (enumerator.MoveNext())
+        ThreadRun? streamRun = null;
+        List<ToolOutput> toolOutputs = new();
+        do
         {
-            yield return enumerator.Current;
+            using IEnumerator<StreamingUpdate> enumerator = (toolOutputs.Count > 0 && streamRun != null) ?
+                _submitToolOutputsToStream(streamRun, toolOutputs, [], _currRetry).GetEnumerator() :
+                new StreamingUpdateEnumerator(page, _cancellationToken, _scope);
+            toolOutputs.Clear();
+            bool hasError = false;
+            while (enumerator.MoveNext())
+            {
+                var streamingUpdate = enumerator.Current;
+                if (streamingUpdate is RequiredActionUpdate newActionUpdate && _toolCallsResolver != null)
+                {
+                    ToolOutput toolOutput;
+                    try
+                    {
+                        toolOutput = _toolCallsResolver.GetResolvedToolOutput(
+                            newActionUpdate.FunctionName,
+                            newActionUpdate.ToolCallId,
+                            newActionUpdate.FunctionArguments
+                        );
+                    }
+                    catch (Exception ex)
+                    {
+                        string errorJson = JsonSerializer.Serialize(
+                            new SerializableError(ex.GetBaseException().Message),
+                            SourceGenerationContext.Default.SerializableError
+                        );
+                        toolOutput = new ToolOutput(newActionUpdate.ToolCallId, errorJson);
+                        hasError = true;
+                    }
+                    toolOutputs.Add(toolOutput);
+
+                    streamRun = newActionUpdate.Value;
+                }
+                else
+                {
+                    // Send to telemetry (if needed)
+                    _scope?.RecordStreamingUpdate(streamingUpdate);
+                    yield return streamingUpdate;
+                }
+            }
+            _currRetry = hasError ? _currRetry + 1 : _currRetry;
+
+            if (streamRun != null && _currRetry > _maxRetry)
+            {
+                // Cancel the run if the max retry is reached
+                var cancelRunResponse = _cancelRun(streamRun.Id);
+                yield return new StreamingUpdate<ThreadRun>(cancelRunResponse.Value, StreamingUpdateReason.RunCancelled);
+                yield break;
+            }
         }
+        while (toolOutputs.Count > 0);
     }
 
     private sealed class StreamingUpdateEnumerator : IEnumerator<StreamingUpdate>
@@ -71,14 +142,18 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
         private IEnumerator<StreamingUpdate>? _updates;
 
         private StreamingUpdate? _current;
+        private OpenTelemetryScope? _scope;
         private bool _started;
+        private bool _hasYieldedUpdate; // Track if any updates have been yielded
 
-        public StreamingUpdateEnumerator(ClientResult page, CancellationToken cancellationToken)
+        public StreamingUpdateEnumerator(ClientResult page, CancellationToken cancellationToken, OpenTelemetryScope? scope = null)
         {
             Argument.AssertNotNull(page, nameof(page));
 
+            _scope = scope;
             _response = page.GetRawResponse();
             _cancellationToken = cancellationToken;
+            _hasYieldedUpdate = false;
         }
 
         StreamingUpdate IEnumerator<StreamingUpdate>.Current
@@ -93,36 +168,75 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
                 throw new ObjectDisposedException(nameof(StreamingUpdateEnumerator));
             }
 
-            _cancellationToken.ThrowIfCancellationRequested();
-            _events ??= CreateEventEnumerator();
-            _started = true;
-
-            if (_updates is not null && _updates.MoveNext())
+            if (_cancellationToken.IsCancellationRequested)
             {
-                _current = _updates.Current;
-                return true;
+                _scope?.RecordCancellation();
+                _scope?.Dispose();
+                _scope = null;
             }
 
-            if (_events.MoveNext())
+            _cancellationToken.ThrowIfCancellationRequested();
+
+            try
             {
-                if (_events.Current.Data.AsSpan().SequenceEqual(TerminalData))
-                {
-                    _current = default;
-                    return false;
-                }
+                _events ??= CreateEventEnumerator();
+                _started = true;
 
-                var updates = StreamingUpdate.FromEvent(_events.Current);
-                _updates = updates.GetEnumerator();
-
-                if (_updates.MoveNext())
+                if (_updates is not null && _updates.MoveNext())
                 {
                     _current = _updates.Current;
+                    _hasYieldedUpdate = true;
                     return true;
                 }
-            }
 
-            _current = default;
-            return false;
+                if (_events.MoveNext())
+                {
+                    if (_events.Current.Data.AsSpan().SequenceEqual(TerminalData))
+                    {
+                        _current = default;
+                        // No more events, check if we ever yielded anything
+                        if (_scope != null && _started && !_hasYieldedUpdate)
+                        {
+                            _scope.RecordError(new InvalidOperationException("No events were received from the stream."));
+                            _scope.Dispose();
+                            _scope = null;
+                        }
+                        return false;
+                    }
+
+                    IEnumerable<StreamingUpdate> updates = StreamingUpdate.FromEvent(_events.Current);
+                    if (updates is null)
+                    {
+                        StreamingUpdateReason updateKind = StreamingUpdateReasonExtensions.FromSseEventLabel(_events.Current.EventType);
+                        throw new InvalidOperationException($"Unknown streaming update reason {updateKind}");
+                    }
+                    _updates = updates.GetEnumerator();
+
+                    if (_updates.MoveNext())
+                    {
+                        _current = _updates.Current;
+                        _hasYieldedUpdate = true;
+                        return true;
+                    }
+                }
+
+                _current = default;
+                // No events were received at all
+                if (_scope != null && _started && !_hasYieldedUpdate)
+                {
+                    _scope.RecordError(new InvalidOperationException("No events were received from the stream."));
+                    _scope.Dispose();
+                    _scope = null;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _scope?.RecordError(ex);
+                _scope?.Dispose();
+                _scope = null;
+                throw;
+            }
         }
 
         private IEnumerator<SseItem<byte[]>> CreateEventEnumerator()
@@ -151,6 +265,7 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
         {
             if (disposing && _events is not null)
             {
+                _scope?.Dispose();
                 _events.Dispose();
                 _events = null;
 

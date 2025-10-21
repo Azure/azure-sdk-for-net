@@ -1,238 +1,174 @@
 {
- "$id": "1",
- "name": "Authentication.ApiKey",
- "apiVersions": [],
- "enums": [],
- "constants": [
-  {
-   "$id": "2",
-   "kind": "constant",
-   "name": "invalidContentType",
-   "namespace": "",
-   "usage": "None",
-   "valueType": {
-    "$id": "3",
-    "kind": "string",
-    "name": "string",
-    "crossLanguageDefinitionId": "TypeSpec.string",
-    "decorators": []
-   },
-   "value": "application/json",
-   "decorators": []
-  }
- ],
- "models": [
-  {
-   "$id": "4",
-   "kind": "model",
-   "name": "InvalidAuth",
-   "namespace": "Authentication.ApiKey",
-   "crossLanguageDefinitionId": "Authentication.ApiKey.InvalidAuth",
-   "usage": "Json,Exception",
-   "decorators": [],
-   "properties": [
+  "name": "Authentication.ApiKey",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [],
+  "models": [
     {
-     "$id": "5",
-     "kind": "property",
-     "name": "error",
-     "serializedName": "error",
-     "type": {
-      "$id": "6",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Authentication.ApiKey.InvalidAuth.error",
-     "serializationOptions": {
-      "$id": "7",
-      "json": {
-       "$id": "8",
-       "name": "error"
-      }
-     }
+      "$id": "1",
+      "kind": "model",
+      "name": "InvalidAuth",
+      "namespace": "Authentication.ApiKey",
+      "crossLanguageDefinitionId": "Authentication.ApiKey.InvalidAuth",
+      "usage": "Json,Exception",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "2",
+          "kind": "property",
+          "name": "error",
+          "serializedName": "error",
+          "type": {
+            "$id": "3",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Authentication.ApiKey.InvalidAuth.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
     }
-   ]
-  }
- ],
- "clients": [
-  {
-   "$id": "9",
-   "kind": "client",
-   "name": "ApiKeyClient",
-   "namespace": "Authentication.ApiKey",
-   "doc": "Illustrates clients generated with ApiKey authentication.",
-   "methods": [
+  ],
+  "clients": [
     {
-     "$id": "10",
-     "kind": "basic",
-     "name": "valid",
-     "accessibility": "public",
-     "apiVersions": [],
-     "doc": "Check whether client is authenticated",
-     "operation": {
-      "$id": "11",
-      "name": "valid",
-      "resourceName": "ApiKey",
-      "doc": "Check whether client is authenticated",
-      "accessibility": "public",
-      "parameters": [],
-      "responses": [
-       {
-        "$id": "12",
-        "statusCodes": [
-         204
-        ],
-        "headers": [],
-        "isErrorResponse": false
-       }
-      ],
-      "httpMethod": "GET",
-      "uri": "{endpoint}",
-      "path": "/authentication/api-key/valid",
-      "bufferResponse": true,
-      "generateProtocolMethod": true,
-      "generateConvenienceMethod": true,
-      "crossLanguageDefinitionId": "Authentication.ApiKey.valid",
-      "decorators": []
-     },
-     "parameters": [],
-     "response": {
-      "$id": "13"
-     },
-     "isOverride": false,
-     "generateConvenient": true,
-     "generateProtocol": true,
-     "crossLanguageDefinitionId": "Authentication.ApiKey.valid"
-    },
-    {
-     "$id": "14",
-     "kind": "basic",
-     "name": "invalid",
-     "accessibility": "public",
-     "apiVersions": [],
-     "doc": "Check whether client is authenticated.",
-     "operation": {
-      "$id": "15",
-      "name": "invalid",
-      "resourceName": "ApiKey",
-      "doc": "Check whether client is authenticated.",
-      "accessibility": "public",
-      "parameters": [
-       {
-        "$id": "16",
-        "name": "accept",
-        "nameInRequest": "Accept",
-        "type": {
-         "$ref": "2"
+      "$id": "4",
+      "kind": "client",
+      "name": "ApiKeyClient",
+      "namespace": "Authentication.ApiKey",
+      "doc": "Illustrates clients generated with ApiKey authentication.",
+      "methods": [
+        {
+          "$id": "5",
+          "kind": "basic",
+          "name": "valid",
+          "accessibility": "public",
+          "apiVersions": [],
+          "doc": "Check whether client is authenticated",
+          "operation": {
+            "$id": "6",
+            "name": "valid",
+            "resourceName": "ApiKey",
+            "doc": "Check whether client is authenticated",
+            "accessibility": "public",
+            "parameters": [],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/authentication/api-key/valid",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Authentication.ApiKey.valid",
+            "decorators": []
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Authentication.ApiKey.valid"
         },
-        "location": "Header",
-        "isApiVersion": false,
-        "isContentType": false,
-        "isEndpoint": false,
-        "explode": false,
-        "isRequired": true,
-        "kind": "Constant",
-        "decorators": [],
-        "skipUrlEncoding": false
-       }
+        {
+          "$id": "7",
+          "kind": "basic",
+          "name": "invalid",
+          "accessibility": "public",
+          "apiVersions": [],
+          "doc": "Check whether client is authenticated.",
+          "operation": {
+            "$id": "8",
+            "name": "invalid",
+            "resourceName": "ApiKey",
+            "doc": "Check whether client is authenticated.",
+            "accessibility": "public",
+            "parameters": [],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/authentication/api-key/invalid",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Authentication.ApiKey.invalid",
+            "decorators": []
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Authentication.ApiKey.invalid"
+        }
       ],
-      "responses": [
-       {
-        "$id": "17",
-        "statusCodes": [
-         204
-        ],
-        "headers": [],
-        "isErrorResponse": false
-       }
+      "parameters": [
+        {
+          "$id": "9",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "10",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "11",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Authentication.ApiKey.endpoint"
+        }
       ],
-      "httpMethod": "GET",
-      "uri": "{endpoint}",
-      "path": "/authentication/api-key/invalid",
-      "bufferResponse": true,
-      "generateProtocolMethod": true,
-      "generateConvenienceMethod": true,
-      "crossLanguageDefinitionId": "Authentication.ApiKey.invalid",
-      "decorators": []
-     },
-     "parameters": [
-      {
-       "$id": "18",
-       "name": "accept",
-       "nameInRequest": "accept",
-       "type": {
-        "$ref": "2"
-       },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      }
-     ],
-     "response": {
-      "$id": "19"
-     },
-     "isOverride": false,
-     "generateConvenient": true,
-     "generateProtocol": true,
-     "crossLanguageDefinitionId": "Authentication.ApiKey.invalid"
+      "decorators": [],
+      "crossLanguageDefinitionId": "Authentication.ApiKey",
+      "apiVersions": []
     }
-   ],
-   "parameters": [
-    {
-     "$id": "20",
-     "name": "endpoint",
-     "nameInRequest": "endpoint",
-     "doc": "Service host",
-     "type": {
-      "$id": "21",
-      "kind": "url",
-      "name": "endpoint",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "location": "Uri",
-     "isApiVersion": false,
-     "isContentType": false,
-     "isRequired": true,
-     "isEndpoint": true,
-     "skipUrlEncoding": false,
-     "explode": false,
-     "kind": "Client",
-     "defaultValue": {
-      "$id": "22",
-      "type": {
-       "$id": "23",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
-      },
-      "value": "http://localhost:3000"
-     },
-     "serverUrlTemplate": "{endpoint}"
+  ],
+  "auth": {
+    "apiKey": {
+      "name": "x-ms-api-key",
+      "in": "header"
     }
-   ],
-   "decorators": [],
-   "crossLanguageDefinitionId": "Authentication.ApiKey",
-   "apiVersions": []
   }
- ],
- "auth": {
-  "$id": "24",
-  "apiKey": {
-   "$id": "25",
-   "name": "x-ms-api-key",
-   "in": "header"
-  }
- }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace Azure.Storage
 {
@@ -16,8 +17,9 @@ namespace Azure.Storage
                 $"Either the source or destination resource, or both resources needs to be a web resource.");
 
         public static ArgumentException InvalidTransferId(string command, string transferId)
-            => new ArgumentException($"Cannot process {command} for transfer id: \"{transferId}\". Because " +
-                $"the respective transfer job does not exist or is no longer stored in the transfer manager.");
+            => new ArgumentException($"Cannot process {command} for transfer id: \"{transferId}\". " +
+        $"The respective transfer does not exist, is no longer stored in the transfer manager. " +
+        $"The respective transfer may already be in a paused or completed state.");
 
         public static ArgumentException UnableToGetLength()
             => new ArgumentException("Unable to get the length of the source storage resource");
@@ -118,5 +120,9 @@ namespace Azure.Storage
 
         public static InvalidOperationException SingleItemContainerNoGetProperties()
             => new InvalidOperationException("SingleItemStorageResourceContainer does not support GetPropertiesAsync");
+
+        public static InvalidOperationException RequiredVersionClientAssembly(Assembly assembly, AssemblyInformationalVersionAttribute attribute)
+            => new InvalidOperationException(
+                    $"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{assembly.FullName}'.");
     }
 }

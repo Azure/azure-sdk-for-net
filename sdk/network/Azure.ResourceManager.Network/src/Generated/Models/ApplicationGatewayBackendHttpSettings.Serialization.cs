@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -66,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Probe))
             {
                 writer.WritePropertyName("probe"u8);
-                JsonSerializer.Serialize(writer, Probe);
+                ((IJsonModel<WritableSubResource>)Probe).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AuthenticationCertificates))
             {
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in AuthenticationCertificates)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in TrustedRootCertificates)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,6 +119,26 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
+            }
+            if (Optional.IsDefined(IsDedicatedBackendConnectionEnabled))
+            {
+                writer.WritePropertyName("dedicatedBackendConnection"u8);
+                writer.WriteBooleanValue(IsDedicatedBackendConnectionEnabled.Value);
+            }
+            if (Optional.IsDefined(IsValidateCertChainAndExpiryEnabled))
+            {
+                writer.WritePropertyName("validateCertChainAndExpiry"u8);
+                writer.WriteBooleanValue(IsValidateCertChainAndExpiryEnabled.Value);
+            }
+            if (Optional.IsDefined(IsValidateSniEnabled))
+            {
+                writer.WritePropertyName("validateSNI"u8);
+                writer.WriteBooleanValue(IsValidateSniEnabled.Value);
+            }
+            if (Optional.IsDefined(SniName))
+            {
+                writer.WritePropertyName("sniName"u8);
+                writer.WriteStringValue(SniName);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -163,6 +185,10 @@ namespace Azure.ResourceManager.Network.Models
             string affinityCookieName = default;
             bool? probeEnabled = default;
             string path = default;
+            bool? dedicatedBackendConnection = default;
+            bool? validateCertChainAndExpiry = default;
+            bool? validateSNI = default;
+            string sniName = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -251,7 +277,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            probe = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            probe = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("authenticationCertificates"u8))
@@ -263,7 +289,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
                             }
                             authenticationCertificates = array;
                             continue;
@@ -277,7 +303,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
                             }
                             trustedRootCertificates = array;
                             continue;
@@ -324,6 +350,38 @@ namespace Azure.ResourceManager.Network.Models
                             path = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("dedicatedBackendConnection"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dedicatedBackendConnection = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("validateCertChainAndExpiry"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            validateCertChainAndExpiry = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("validateSNI"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            validateSNI = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("sniName"u8))
+                        {
+                            sniName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -361,7 +419,410 @@ namespace Azure.ResourceManager.Network.Models
                 affinityCookieName,
                 probeEnabled,
                 path,
+                dedicatedBackendConnection,
+                validateCertChainAndExpiry,
+                validateSNI,
+                sniName,
                 provisioningState);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("  etag: ");
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    port: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Port))
+                {
+                    builder.Append("    port: ");
+                    builder.AppendLine($"{Port.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    protocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Protocol))
+                {
+                    builder.Append("    protocol: ");
+                    builder.AppendLine($"'{Protocol.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CookieBasedAffinity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    cookieBasedAffinity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CookieBasedAffinity))
+                {
+                    builder.Append("    cookieBasedAffinity: ");
+                    builder.AppendLine($"'{CookieBasedAffinity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestTimeoutInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestTimeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestTimeoutInSeconds))
+                {
+                    builder.Append("    requestTimeout: ");
+                    builder.AppendLine($"{RequestTimeoutInSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ProbeId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    probe: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      probe: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Probe))
+                {
+                    builder.Append("    probe: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Probe, options, 4, false, "    probe: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationCertificates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    authenticationCertificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AuthenticationCertificates))
+                {
+                    if (AuthenticationCertificates.Any())
+                    {
+                        builder.Append("    authenticationCertificates: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AuthenticationCertificates)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    authenticationCertificates: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrustedRootCertificates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    trustedRootCertificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TrustedRootCertificates))
+                {
+                    if (TrustedRootCertificates.Any())
+                    {
+                        builder.Append("    trustedRootCertificates: ");
+                        builder.AppendLine("[");
+                        foreach (var item in TrustedRootCertificates)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    trustedRootCertificates: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionDraining), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    connectionDraining: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectionDraining))
+                {
+                    builder.Append("    connectionDraining: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ConnectionDraining, options, 4, false, "    connectionDraining: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    hostName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HostName))
+                {
+                    builder.Append("    hostName: ");
+                    if (HostName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HostName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HostName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PickHostNameFromBackendAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    pickHostNameFromBackendAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PickHostNameFromBackendAddress))
+                {
+                    builder.Append("    pickHostNameFromBackendAddress: ");
+                    var boolValue = PickHostNameFromBackendAddress.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AffinityCookieName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    affinityCookieName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AffinityCookieName))
+                {
+                    builder.Append("    affinityCookieName: ");
+                    if (AffinityCookieName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AffinityCookieName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AffinityCookieName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProbeEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    probeEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProbeEnabled))
+                {
+                    builder.Append("    probeEnabled: ");
+                    var boolValue = ProbeEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    path: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Path))
+                {
+                    builder.Append("    path: ");
+                    if (Path.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Path}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Path}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDedicatedBackendConnectionEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    dedicatedBackendConnection: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDedicatedBackendConnectionEnabled))
+                {
+                    builder.Append("    dedicatedBackendConnection: ");
+                    var boolValue = IsDedicatedBackendConnectionEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsValidateCertChainAndExpiryEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    validateCertChainAndExpiry: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsValidateCertChainAndExpiryEnabled))
+                {
+                    builder.Append("    validateCertChainAndExpiry: ");
+                    var boolValue = IsValidateCertChainAndExpiryEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsValidateSniEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    validateSNI: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsValidateSniEnabled))
+                {
+                    builder.Append("    validateSNI: ");
+                    var boolValue = IsValidateSniEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SniName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sniName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SniName))
+                {
+                    builder.Append("    sniName: ");
+                    if (SniName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SniName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SniName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHttpSettings>.Write(ModelReaderWriterOptions options)
@@ -372,6 +833,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support writing '{options.Format}' format.");
             }

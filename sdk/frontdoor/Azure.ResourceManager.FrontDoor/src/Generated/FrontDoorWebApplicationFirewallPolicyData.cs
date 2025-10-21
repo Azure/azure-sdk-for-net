@@ -100,10 +100,12 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
         /// <summary> The pricing tier of web application firewall policy. Defaults to Classic_AzureFrontDoor if not specified. </summary>
         internal FrontDoorSku Sku { get; set; }
         /// <summary> Name of the pricing tier. </summary>
+        [WirePath("sku.name")]
         public FrontDoorSkuName? SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -116,10 +118,12 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Describes settings for the policy. </summary>
+        [WirePath("properties.policySettings")]
         public FrontDoorWebApplicationFirewallPolicySettings PolicySettings { get; set; }
         /// <summary> Describes custom rules inside the policy. </summary>
         internal CustomRuleList CustomRuleList { get; set; }
         /// <summary> List of rules. </summary>
+        [WirePath("properties.customRules.rules")]
         public IList<WebApplicationCustomRule> Rules
         {
             get
@@ -133,6 +137,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <summary> Describes managed rules inside the policy. </summary>
         internal ManagedRuleSetList ManagedRules { get; set; }
         /// <summary> List of rule sets. </summary>
+        [WirePath("properties.managedRules.managedRuleSets")]
         public IList<ManagedRuleSet> ManagedRuleSets
         {
             get
@@ -144,14 +149,19 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Describes Frontend Endpoints associated with this Web Application Firewall policy. </summary>
+        [WirePath("properties.frontendEndpointLinks")]
         public IReadOnlyList<SubResource> FrontendEndpointLinks { get; }
         /// <summary> Describes Routing Rules associated with this Web Application Firewall policy. </summary>
+        [WirePath("properties.routingRuleLinks")]
         public IReadOnlyList<SubResource> RoutingRuleLinks { get; }
         /// <summary> Describes Security Policy associated with this Web Application Firewall policy. </summary>
+        [WirePath("properties.securityPolicyLinks")]
         public IReadOnlyList<SubResource> SecurityPolicyLinks { get; }
         /// <summary> Provisioning state of the policy. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> Resource status of the policy. </summary>
+        [WirePath("properties.resourceState")]
         public FrontDoorWebApplicationFirewallPolicyResourceState? ResourceState { get; }
     }
 }

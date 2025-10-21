@@ -23,10 +23,10 @@ namespace Azure.Communication.Chat
         /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
         /// <param name="retentionPolicy">
         /// Data retention policy for auto deletion.
-        /// Please note <see cref="ChatRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="NoneRetentionPolicy"/> and <see cref="ThreadCreationDateRetentionPolicy"/>.
+        /// Please note <see cref="ChatRetentionPolicyInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NoneRetentionPolicyInternal"/> and <see cref="ThreadCreationDateRetentionPolicyInternal"/>.
         /// </param>
-        internal UpdateChatThreadRequest(string topic, IDictionary<string, string> metadata, ChatRetentionPolicy retentionPolicy)
+        internal UpdateChatThreadRequest(string topic, IDictionary<string, string> metadata, ChatRetentionPolicyInternal retentionPolicy)
         {
             Topic = topic;
             Metadata = metadata;
@@ -39,9 +39,9 @@ namespace Azure.Communication.Chat
         public IDictionary<string, string> Metadata { get; }
         /// <summary>
         /// Data retention policy for auto deletion.
-        /// Please note <see cref="ChatRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="NoneRetentionPolicy"/> and <see cref="ThreadCreationDateRetentionPolicy"/>.
+        /// Please note <see cref="ChatRetentionPolicyInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NoneRetentionPolicyInternal"/> and <see cref="ThreadCreationDateRetentionPolicyInternal"/>.
         /// </summary>
-        public ChatRetentionPolicy RetentionPolicy { get; set; }
+        public ChatRetentionPolicyInternal RetentionPolicy { get; set; }
     }
 }

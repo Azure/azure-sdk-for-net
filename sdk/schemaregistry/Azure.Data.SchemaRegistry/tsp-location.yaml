@@ -1,3 +1,4 @@
 repo: Azure/azure-rest-api-specs
-directory: specification/schemaregistry/SchemaRegistry
-commit: b9bf4a18d355f3857f43bb6f4ad4fe06f467da37
+directory: specification/schemaregistry/data-plane/SchemaRegistry
+commit: c90b62daed903080ed53766cefd53b6df2621cc6
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

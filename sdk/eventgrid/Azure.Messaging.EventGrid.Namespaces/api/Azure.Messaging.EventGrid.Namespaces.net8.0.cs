@@ -214,6 +214,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Messaging.EventGrid.Namespaces.ReleaseDelay left, Azure.Messaging.EventGrid.Namespaces.ReleaseDelay right) { throw null; }
         public static implicit operator Azure.Messaging.EventGrid.Namespaces.ReleaseDelay (string value) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.Namespaces.ReleaseDelay? (string value) { throw null; }
         public static bool operator !=(Azure.Messaging.EventGrid.Namespaces.ReleaseDelay left, Azure.Messaging.EventGrid.Namespaces.ReleaseDelay right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -258,9 +259,11 @@ namespace Microsoft.Extensions.Azure
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClient, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions> AddEventGridReceiverClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string topicName, string subscriptionName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClient, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions> AddEventGridReceiverClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string topicName, string subscriptionName, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClient, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions> AddEventGridReceiverClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridSenderClient, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions> AddEventGridSenderClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string topicName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridSenderClient, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions> AddEventGridSenderClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string topicName, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Messaging.EventGrid.Namespaces.EventGridSenderClient, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions> AddEventGridSenderClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

@@ -17,21 +17,18 @@ namespace Azure.Health.Deidentification
     internal partial class DeidentificationClientGetJobsInternalAsyncCollectionResult : AsyncPageable<BinaryData>
     {
         private readonly DeidentificationClient _client;
-        private readonly Uri _nextPage;
         private readonly int? _maxpagesize;
         private readonly string _continuationToken;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of DeidentificationClientGetJobsInternalAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DeidentificationClient client used to send requests. </param>
-        /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DeidentificationClientGetJobsInternalAsyncCollectionResult(DeidentificationClient client, Uri nextPage, int? maxpagesize, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        public DeidentificationClientGetJobsInternalAsyncCollectionResult(DeidentificationClient client, int? maxpagesize, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _nextPage = nextPage;
             _maxpagesize = maxpagesize;
             _continuationToken = continuationToken;
             _context = context;
@@ -43,42 +40,40 @@ namespace Azure.Health.Deidentification
         /// <returns> The pages of DeidentificationClientGetJobsInternalAsyncCollectionResult as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
-            do
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            while (true)
             {
-                Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                PagedDeidentificationJob responseWithType = (PagedDeidentificationJob)response;
+                PagedDeidentificationJob result = (PagedDeidentificationJob)response;
                 List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in responseWithType.Value)
+                foreach (var item in result.Value)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
-                nextPage = responseWithType.NextLink;
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                nextPage = result.NextLink;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateListJobsInternalRequest(nextLink, _maxpagesize, _continuationToken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetJobsInternalRequest(nextLink, _maxpagesize, _continuationToken, _context) : _client.CreateGetJobsInternalRequest(_maxpagesize, _continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeidentificationClient.GetJobsInternal");
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSoftDeleteSettings"/>. </summary>
         /// <param name="softDeleteState"></param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="enhancedSecurityState"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesSoftDeleteSettings(RecoveryServicesSoftDeleteState? softDeleteState, int? softDeleteRetentionPeriodInDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecoveryServicesSoftDeleteSettings(RecoveryServicesSoftDeleteState? softDeleteState, int? softDeleteRetentionPeriodInDays, RecoveryServicesEnhancedSecurityState? enhancedSecurityState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SoftDeleteState = softDeleteState;
             SoftDeleteRetentionPeriodInDays = softDeleteRetentionPeriodInDays;
+            EnhancedSecurityState = enhancedSecurityState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +67,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public RecoveryServicesSoftDeleteState? SoftDeleteState { get; set; }
         /// <summary> Soft delete retention period in days. </summary>
         public int? SoftDeleteRetentionPeriodInDays { get; set; }
+        /// <summary> Gets or sets the enhanced security state. </summary>
+        public RecoveryServicesEnhancedSecurityState? EnhancedSecurityState { get; set; }
     }
 }

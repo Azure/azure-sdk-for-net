@@ -13,12 +13,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
     {
         protected ModelReaderWriterContext? _context;
 
+        public virtual bool UsesContext => false;
+
         public RoundTripStrategy(ModelReaderWriterContext? context)
         {
             _context = context;
         }
 
-        public abstract object Read(string payload, object model, ModelReaderWriterOptions options);
+        public abstract object? Read(string payload, object model, ModelReaderWriterOptions options);
         public abstract BinaryData Write(T model, ModelReaderWriterOptions options);
         public abstract bool IsExplicitJsonWrite { get; }
         public abstract bool IsExplicitJsonRead { get; }
@@ -46,6 +48,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
         }
 
+        public override bool UsesContext => true;
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
 
@@ -53,13 +56,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             return ModelReaderWriter.Write<T>(model, options, _context!);
         }
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options, _context!) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
         }
     }
 
-    public class ModelReaderWriterStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
+    public class ModelReaderWriterStrategy<T> : RoundTripStrategy<T>
     {
         public ModelReaderWriterStrategy() : base(null)
         {
@@ -72,7 +75,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             return ModelReaderWriter.Write<T>(model, options);
         }
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
         }
@@ -84,6 +87,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
         }
 
+        public override bool UsesContext => true;
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
 
@@ -92,7 +96,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             return ModelReaderWriter.Write((object)model!, options, _context!);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             return ModelReaderWriter.Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), typeof(T), options, _context!) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
         }
@@ -112,7 +116,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             return ModelReaderWriter.Write((object)model!, options);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             return ModelReaderWriter.Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), typeof(T), options) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
         }
@@ -132,7 +136,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             return model.Write(options);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             return ((IPersistableModel<T>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
@@ -152,7 +156,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             return ((IPersistableModel<object>)model).Write(options);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             return ((IPersistableModel<object>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
@@ -172,7 +176,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             return WriteWithJsonInterface(model, options);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             return ((IJsonModel<T>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
@@ -192,7 +196,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             return WriteWithJsonInterface((IJsonModel<object>)model, options);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             return ((IJsonModel<object>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
@@ -212,7 +216,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             return WriteWithJsonInterface(model, options);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             var reader = new Utf8JsonReader(new BinaryData(Encoding.UTF8.GetBytes(payload)));
             return ((IJsonModel<T>)model).Create(ref reader, options);
@@ -233,7 +237,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             return WriteWithJsonInterface((IJsonModel<object>)model, options);
         }
 
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        public override object? Read(string payload, object model, ModelReaderWriterOptions options)
         {
             var reader = new Utf8JsonReader(new BinaryData(Encoding.UTF8.GetBytes(payload)));
             return ((IJsonModel<object>)model).Create(ref reader, options);

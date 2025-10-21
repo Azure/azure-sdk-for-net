@@ -115,6 +115,7 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
         }
         #endregion
         #region Snippet:AgentsFunctionsWithStreaming_CreateAgent
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "SDK Test Agent - Functions",
@@ -178,6 +179,7 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
         while (toolOutputs.Count > 0);
         #endregion
         #region Snippet:AgentsFunctionsWithStreaming_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         await client.Threads.DeleteThreadAsync(thread.Id);
         await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
@@ -277,6 +279,7 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
             return null;
         }
         #region Snippet:AgentsFunctionsWithStreamingSync_CreateAgent
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "SDK Test Agent - Functions",
@@ -340,6 +343,7 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
         while (toolOutputs.Count > 0);
         #endregion
         #region Snippet:AgentsFunctionsWithStreamingSync_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         client.Threads.DeleteThread(thread.Id);
         client.Administration.DeleteAgent(agent.Id);
         #endregion

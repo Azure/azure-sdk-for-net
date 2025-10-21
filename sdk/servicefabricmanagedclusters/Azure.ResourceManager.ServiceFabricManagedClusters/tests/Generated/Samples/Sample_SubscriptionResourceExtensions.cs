@@ -19,40 +19,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetServiceFabricManagedClusters_ListManagedClusters()
-        {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ManagedClusterListBySubscriptionOperation_example.json
-            // this example is just showing the usage of "ManagedClusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ServiceFabricManagedClusterResource item in subscriptionResource.GetServiceFabricManagedClustersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ServiceFabricManagedClusterData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetManagedClusterVersion_GetClusterVersion()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ManagedClusterVersionGet_example.json
+            // Generated from example definition: 2025-06-01-preview/ManagedClusterVersionGet_example.json
             // this example is just showing the usage of "ManagedClusterVersion_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,36 +45,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetManagedClusterVersionByEnvironment_GetClusterVersionByEnvironment()
-        {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ManagedClusterVersionGetByEnvironment_example.json
-            // this example is just showing the usage of "ManagedClusterVersion_GetByEnvironment" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            AzureLocation location = new AzureLocation("eastus");
-            ManagedClusterVersionEnvironment environment = ManagedClusterVersionEnvironment.Windows;
-            string clusterVersion = "7.2.477.9590";
-            ServiceFabricManagedClusterVersion result = await subscriptionResource.GetManagedClusterVersionByEnvironmentAsync(location, environment, clusterVersion);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetManagedClusterVersions_ListClusterVersions()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ManagedClusterVersionList_example.json
+            // Generated from example definition: 2025-06-01-preview/ManagedClusterVersionList_example.json
             // this example is just showing the usage of "ManagedClusterVersion_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,9 +73,36 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetManagedClusterVersionByEnvironment_GetClusterVersionByEnvironment()
+        {
+            // Generated from example definition: 2025-06-01-preview/ManagedClusterVersionGetByEnvironment_example.json
+            // this example is just showing the usage of "ManagedClusterVersion_GetManagedClusterVersionByEnvironment" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation location = new AzureLocation("eastus");
+            ManagedClusterVersionEnvironment environment = ManagedClusterVersionEnvironment.Windows;
+            string clusterVersion = "7.2.477.9590";
+            ServiceFabricManagedClusterVersion result = await subscriptionResource.GetManagedClusterVersionByEnvironmentAsync(location, environment, clusterVersion);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetManagedClusterVersionsByEnvironment_ListClusterVersionsByEnvironment()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ManagedClusterVersionListByEnvironment.json
+            // Generated from example definition: 2025-06-01-preview/ManagedClusterVersionListByEnvironment.json
             // this example is just showing the usage of "ManagedClusterVersion_ListByEnvironment" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,10 +129,36 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetManagedUnsupportedVmSize_GetUnsupportedVmSizes()
+        {
+            // Generated from example definition: 2025-06-01-preview/managedUnsupportedVMSizesGet_example.json
+            // this example is just showing the usage of "ManagedUnsupportedVMSizes_GetManagedUnsupportedVmSize" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation location = new AzureLocation("eastus");
+            string vmSize = "Standard_B1ls1";
+            ServiceFabricManagedUnsupportedVmSize result = await subscriptionResource.GetManagedUnsupportedVmSizeAsync(location, vmSize);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetManagedUnsupportedVmSizes_ListUnsupportedVmSizes()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/managedUnsupportedVMSizesList_example.json
-            // this example is just showing the usage of "managedUnsupportedVMSizes_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01-preview/managedUnsupportedVMSizesList_example.json
+            // this example is just showing the usage of "ManagedUnsupportedVMSizes_GetManagedUnsupportedVmSizes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -188,10 +183,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetManagedUnsupportedVmSize_GetUnsupportedVmSizes()
+        public async Task GetServiceFabricManagedClusters_ListManagedClusters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/managedUnsupportedVMSizesGet_example.json
-            // this example is just showing the usage of "managedUnsupportedVMSizes_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-06-01-preview/ManagedClusterListBySubscriptionOperation_example.json
+            // this example is just showing the usage of "ManagedCluster_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -204,12 +199,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // invoke the operation
-            AzureLocation location = new AzureLocation("eastus");
-            string vmSize = "Standard_B1ls1";
-            ServiceFabricManagedUnsupportedVmSize result = await subscriptionResource.GetManagedUnsupportedVmSizeAsync(location, vmSize);
+            // invoke the operation and iterate over the result
+            await foreach (ServiceFabricManagedClusterResource item in subscriptionResource.GetServiceFabricManagedClustersAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ServiceFabricManagedClusterData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
     }
 }

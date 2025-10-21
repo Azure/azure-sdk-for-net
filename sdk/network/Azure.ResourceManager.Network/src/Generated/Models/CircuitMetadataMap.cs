@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Express Route Circuit Name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Link to the Express Route circuit. </summary>
+        [WirePath("link")]
         public string Link { get; }
         /// <summary> Peering location of the Express Route Circuit. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

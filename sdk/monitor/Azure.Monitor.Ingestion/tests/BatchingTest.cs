@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using System.Linq;
 using System.Collections.Generic;
-using System.Collections;
-using Castle.Core.Resource;
+using System.Linq;
+using NUnit.Framework;
 
 namespace Azure.Monitor.Ingestion.Tests
 {
@@ -16,16 +13,16 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public void ValidateBatchingOneChunkNoGzip()
         {
-            var entries = new List<IEnumerable>();
+            var entries = new List<BinaryData>();
             for (int i = 0; i < 10; i++)
             {
-                entries.Add(new Object[] {
-                    new {
+                entries.Add(BinaryData.FromObjectAsJson(new object[] {
+                   new {
                         Time = i + "2021",
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
-                });
+                }));
             }
 
             LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(entries).ToArray();
@@ -36,16 +33,16 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public void ValidateBatchingMultiChunkNoGzip()
         {
-            var entries = new List<IEnumerable>();
+            var entries = new List<BinaryData>();
             for (int i = 0; i < 20000; i++)
             {
-                entries.Add(new Object[] {
+                entries.Add(BinaryData.FromObjectAsJson(new object[] {
                     new {
                         Time = i + "2021",
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
-                });
+                }));
             }
 
             LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(entries).ToArray();
@@ -59,36 +56,35 @@ namespace Azure.Monitor.Ingestion.Tests
         [TestCase(false)]
         public void ValidateBatchingWithLargeItemNoGzip(bool hasItemAfterLargeItem)
         {
-            var entries = new List<IEnumerable>()
+            var entries = new List<BinaryData>()
             {
-                new Object[] {
+                BinaryData.FromObjectAsJson(new object[] {
                     new {
                         Time = "02021",
                         Computer = "Computer0",
                         AdditionalContext = 0
                     }
-                },
-                    new Object[] {
+                }),
+                BinaryData.FromObjectAsJson(new object[] {
                     new {
                         Time = "12021",
                         Computer = "Computer1",
                         AdditionalContext = 1
                     }
-                },
-                new Object[]
-                {
+                }),
+                BinaryData.FromObjectAsJson(new object[] {
                     new
                     {
                         Time = "22021",
                         Computer = "Computer2",
                         AdditionalContext = new string('2', LogsIngestionClient.SingleUploadThreshold + 1)
                     }
-                }
+                })
             };
 
             if (hasItemAfterLargeItem)
             {
-                entries.Add(new Object[]
+                entries.Add(BinaryData.FromObjectAsJson(new object[]
                 {
                     new
                     {
@@ -96,7 +92,7 @@ namespace Azure.Monitor.Ingestion.Tests
                         Computer = "Computer3",
                         AdditionalContext = 3
                     }
-                });
+                }));
             };
 
             LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(entries).ToArray();
@@ -114,7 +110,9 @@ namespace Azure.Monitor.Ingestion.Tests
             {
                 CollectionAssert.AreEqual(
                     expectedBatch,
-                    batch.Logs.Cast<Dictionary<string, string>>().Select(x => x.Single().Key));
+                    batch.Logs
+                        .Select(log => ((BinaryData)log).ToObjectFromJson<Dictionary<string, string>>())
+                        .Select(dict => dict.Single().Key));
             }
 
             Assert.AreEqual(testCase.ExpectedMaxSerializedItemSize, x.Max(b => b.LogsData.ToMemory().Length));
@@ -161,7 +159,7 @@ namespace Azure.Monitor.Ingestion.Tests
             //write a string that reflects the builder parameters for easier debugging
             private string _testCaseStringRepresentation;
 
-            public Dictionary<string, string>[] ItemsToExport { get; private set; }
+            public BinaryData[] ItemsToExport { get; private set; }
 
             public List<string>[] ExpectedBatchIds { get; private set; }
 
@@ -176,9 +174,9 @@ namespace Azure.Monitor.Ingestion.Tests
                 int middleItemSize = LogsIngestionClient.SingleUploadThreshold + middleItemSizeOffset;
                 var itemsToExport = new[]
                 {
-                    new Dictionary<string, string>{ { "A", new string('a', ItemASize - 8)} },
-                    new Dictionary<string, string>{ { "B", new string('b', middleItemSize - 8)} },
-                    new Dictionary<string, string>{ { "C", new string('c', ItemCSize - 8)} },
+                    BinaryData.FromObjectAsJson(new Dictionary<string, string>{ { "A", new string('a', ItemASize - 8)} }),
+                    BinaryData.FromObjectAsJson(new Dictionary<string, string>{ { "B", new string('b', middleItemSize - 8)} }),
+                    BinaryData.FromObjectAsJson(new Dictionary<string, string>{ { "C", new string('c', ItemCSize - 8)} }),
                 };
 
                 // break apart the shorthand batch definitions into the dictionary keys expected in each batch

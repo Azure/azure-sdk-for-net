@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The response of a Foo list operation. </summary>
     internal partial class FooListResult
@@ -36,9 +37,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The Foo items on this page. </summary>
+        [WirePath("value")]
         public IList<FooData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

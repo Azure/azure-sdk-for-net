@@ -84,6 +84,7 @@ public partial class QueueService : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], defaultValue: GetNameDefaultValue());
         _corsRules = DefineListProperty<StorageCorsRule>("CorsRules", ["properties", "cors", "corsRules"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

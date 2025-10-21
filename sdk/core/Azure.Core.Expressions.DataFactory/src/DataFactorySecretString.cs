@@ -10,6 +10,10 @@ namespace Azure.Core.Expressions.DataFactory
     public partial class DataFactorySecretString : DataFactorySecret
     {
         /// <summary> Initializes a new instance of DataFactorySecretString. </summary>
+        internal DataFactorySecretString()
+        {
+        }
+        /// <summary> Initializes a new instance of DataFactorySecretString. </summary>
         /// <param name="value"> Value of secure string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         [InitializationConstructor]

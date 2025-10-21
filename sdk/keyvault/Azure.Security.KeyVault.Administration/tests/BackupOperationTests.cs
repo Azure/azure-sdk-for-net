@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using Azure.Core.Serialization;
@@ -31,14 +32,14 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 "failure details",
                 new KeyVaultServiceError("500", "failed backup", null),
                 DateTimeOffset.Now.AddMinutes(-5),
-                now, JobId, BackupLocation);
+                now, JobId, BackupLocation, new Dictionary<string, BinaryData>());
 
             incompleteBackup = new FullBackupDetailsInternal(
                 "in progress",
                 "",
                 null,
                 DateTimeOffset.Now.AddMinutes(-5),
-                null, JobId, BackupLocation);
+                null, JobId, BackupLocation,new Dictionary<string, BinaryData>());
 
             failedResponse = new Mock<Response<FullBackupDetailsInternal>>();
             failedResponse.SetupGet(m => m.Value).Returns(failedBackup);
@@ -144,7 +145,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                     """);
 
             using var doc = JsonDocument.Parse(response.Content.ToStream());
-            var detail = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(doc.RootElement);
+            var detail = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(doc.RootElement, ModelSerializationExtensions.WireOptions);
 
             var mockClient = new Mock<KeyVaultBackupClient>();
             mockClient
@@ -181,7 +182,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                     """);
 
             using var doc = JsonDocument.Parse(response.Content.ToStream());
-            var detail = RestoreDetailsInternal.DeserializeRestoreDetailsInternal(doc.RootElement);
+            var detail = RestoreDetailsInternal.DeserializeRestoreDetailsInternal(doc.RootElement, ModelSerializationExtensions.WireOptions);
 
             var mockClient = new Mock<KeyVaultBackupClient>();
             mockClient

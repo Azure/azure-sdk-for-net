@@ -1,26 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.CosmosDB.Tests;
 
-public class BasicCosmosDBTests(bool async)
-    : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true /**/)
+public class BasicCosmosDBTests
 {
-    [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.documentdb/cosmosdb-free/main.bicep")]
-    public async Task CreateCosmosSqlDB()
+    internal static Trycep CreateCosmosSqlDBTest()
     {
-        await using Trycep test = CreateBicepTest();
-        await test.Define(
+        return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:CosmosDBBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter dbName = new(nameof(dbName), typeof(string)) { Value = "orders" };
@@ -30,7 +25,7 @@ public class BasicCosmosDBTests(bool async)
                 infra.Add(containerName);
 
                 CosmosDBAccount cosmos =
-                    new(nameof(cosmos))
+                    new(nameof(cosmos), CosmosDBAccount.ResourceVersions.V2024_08_15)
                     {
                         DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                         ConsistencyPolicy = new ConsistencyPolicy
@@ -78,10 +73,17 @@ public class BasicCosmosDBTests(bool async)
 
                 infra.Add(new ProvisioningOutput("containerName", typeof(string)) { Value = container.Name });
                 infra.Add(new ProvisioningOutput("containerId", typeof(string)) { Value = container.Id });
+                #endregion
 
                 return infra;
-            })
-        .Compare(
+            });
+    }
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.documentdb/cosmosdb-free/main.bicep")]
+    public async Task CreateCosmosSqlDB()
+    {
+        await using Trycep test = CreateCosmosSqlDBTest();
+        test.Compare(
             """
             param dbName string = 'orders'
 
@@ -139,8 +141,6 @@ public class BasicCosmosDBTests(bool async)
             output containerName string = containerName
 
             output containerId string = container.id
-            """)
-        .Lint()
-        .ValidateAndDeployAsync();
+            """);
     }
 }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.MachineLearningCompute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningCompute
 {
@@ -13,6 +15,35 @@ namespace Azure.ResourceManager.MachineLearningCompute
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AcsClusterProperties))]
+    [ModelReaderWriterBuildable(typeof(AppInsightsCredentials))]
+    [ModelReaderWriterBuildable(typeof(AppInsightsProperties))]
+    [ModelReaderWriterBuildable(typeof(AutoScaleConfiguration))]
+    [ModelReaderWriterBuildable(typeof(AvailableOperations))]
+    [ModelReaderWriterBuildable(typeof(CheckSystemServicesUpdatesAvailableResponse))]
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryCredentials))]
+    [ModelReaderWriterBuildable(typeof(ContainerRegistryProperties))]
+    [ModelReaderWriterBuildable(typeof(ContainerServiceCredentials))]
+    [ModelReaderWriterBuildable(typeof(ErrorDetail))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponseWrapper))]
+    [ModelReaderWriterBuildable(typeof(GlobalServiceConfiguration))]
+    [ModelReaderWriterBuildable(typeof(KubernetesClusterProperties))]
+    [ModelReaderWriterBuildable(typeof(OperationalizationClusterCredentials))]
+    [ModelReaderWriterBuildable(typeof(OperationalizationClusterData))]
+    [ModelReaderWriterBuildable(typeof(OperationalizationClusterPatch))]
+    [ModelReaderWriterBuildable(typeof(OperationalizationClusterResource))]
+    [ModelReaderWriterBuildable(typeof(PaginatedOperationalizationClustersList))]
+    [ModelReaderWriterBuildable(typeof(ResourceOperation))]
+    [ModelReaderWriterBuildable(typeof(ResourceOperationDisplay))]
+    [ModelReaderWriterBuildable(typeof(ServiceAuthConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ServicePrincipalProperties))]
+    [ModelReaderWriterBuildable(typeof(SslConfiguration))]
+    [ModelReaderWriterBuildable(typeof(StorageAccountCredentials))]
+    [ModelReaderWriterBuildable(typeof(StorageAccountProperties))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(SystemService))]
+    [ModelReaderWriterBuildable(typeof(UpdateSystemServicesResponse))]
     public partial class AzureResourceManagerMachineLearningComputeContext : ModelReaderWriterContext
     {
     }

@@ -50,10 +50,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the express route connection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The ExpressRoute circuit peering. </summary>
         internal WritableSubResource ExpressRouteCircuitPeering { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.expressRouteCircuitPeering.id")]
         public ResourceIdentifier ExpressRouteCircuitPeeringId
         {
             get => ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
@@ -66,16 +68,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Authorization key to establish the connection. </summary>
+        [WirePath("properties.authorizationKey")]
         public string AuthorizationKey { get; set; }
         /// <summary> The routing weight associated to the connection. </summary>
+        [WirePath("properties.routingWeight")]
         public int? RoutingWeight { get; set; }
         /// <summary> Enable internet security. </summary>
+        [WirePath("properties.enableInternetSecurity")]
         public bool? EnableInternetSecurity { get; set; }
         /// <summary> Enable FastPath to vWan Firewall hub. </summary>
+        [WirePath("properties.expressRouteGatewayBypass")]
         public bool? ExpressRouteGatewayBypass { get; set; }
         /// <summary> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </summary>
+        [WirePath("properties.enablePrivateLinkFastPath")]
         public bool? EnablePrivateLinkFastPath { get; set; }
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
+        [WirePath("properties.routingConfiguration")]
         public RoutingConfiguration RoutingConfiguration { get; set; }
     }
 }

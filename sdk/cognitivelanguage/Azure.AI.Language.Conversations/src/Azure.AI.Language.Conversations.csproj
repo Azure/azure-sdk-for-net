@@ -2,12 +2,14 @@
   <PropertyGroup>
     <Description>This is the client library for the Conversations service, a cloud-based conversational AI service that applies custom machine-learning intelligence to a user's conversational, natural language text to predict overall meaning, and pull out relevant, detailed information.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Language.Conversations client library</AssemblyTitle>
-    <Version>2.0.0-beta.3</Version>
+    <Version>2.0.0-beta.5</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Azure AI Language Conversations</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0034;AZC0035</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

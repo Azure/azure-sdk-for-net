@@ -3,11 +3,17 @@
     <Description>Azure Event Grid is a publish-subscribe service that allows cloud events to be passed from producers to consumers.
       This library contains the system event models used by Azure Event Grid. For more information about Event Grid, see https://azure.microsoft.com/services/event-grid.</Description>
     <AssemblyTitle>Azure EventGrid System Events client library</AssemblyTitle>
-    <Version>1.0.0-beta.6</Version>
+    <Version>1.1.0-beta.1</Version>
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure;Event Grid;CloudEvent;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <NoWarn>
+      $(NoWarn);
+      AZC0034; <!-- Cannot reuse type names; expected due to system event type forwarding. -->
+    </NoWarn>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>

@@ -35,10 +35,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> The Azure blob storage container Uri which contains the backup. </summary>
-        [WirePath("azureStorageBlobContainerUri")]
         public Uri AzureStorageBlobContainerUri { get; }
         /// <summary> The ID of the backup. </summary>
-        [WirePath("backupId")]
         public string BackupId { get; }
     }
 }

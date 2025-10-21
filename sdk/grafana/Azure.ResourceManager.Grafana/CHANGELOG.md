@@ -1,14 +1,22 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.0-beta.3 (2025-08-07)
 
 ### Bugs Fixed
 
-### Other Changes
+- Added missing long running operation header for Grafana Update operation.
+
+## 1.2.0-beta.2 (2025-08-04)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Grafana` AOT-compatible
+
+## 1.2.0-beta.1 (2025-06-24)
+
+### Features Added
+
+- Upgraded API version to 2024-11-01-preview.
 
 ## 1.1.1 (2025-03-11)
 
@@ -16,6 +24,7 @@
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
+- Customization for TSP Generation to keep `public IList<string> RequiredZoneNames { get; }`.
 
 ## 1.1.0 (2023-11-29)
 
@@ -30,15 +39,17 @@
 ## 1.1.0-beta.2 (2023-11-15)
 
 ### Features Added
-- Configure grafana enterprise
-- Configure SMTP
-- Configure grafana plugins
-- Configure grafana major version
-- Specify SKU (pricing plan)
-- Support for private endpoint and managed private endpoint
+
+- Configure grafana enterprise.
+- Configure SMTP.
+- Configure grafana plugins.
+- Configure grafana major version.
+- Specify SKU (pricing plan).
+- Support for private endpoint and managed private endpoint.
 
 ### Other Changes
-- Upgraded API version to 2023-09-01
+
+- Upgraded API version to 2023-09-01.
 
 ## 1.1.0-beta.1 (2023-05-30)
 
@@ -78,7 +89,7 @@ Polishing since last public beta release:
 
 ### Other Changes
 
-- Upgraded dependent `Azure.ResourceManager` to 1.3.0
+- Upgraded dependent `Azure.ResourceManager` to 1.3.0.
 
 ## 1.0.0-beta.2 (2022-07-12)
 
@@ -88,8 +99,8 @@ Polishing since last public beta release:
 
 ### Other Changes
 
-- Upgraded dependent `Azure.ResourceManager` to 1.2.0
-- Upgraded dependent `Azure.Core` to 1.25.0
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0.
+- Upgraded dependent `Azure.Core` to 1.25.0.
 
 ## 1.0.0-beta.1 (2022-04-14)
 

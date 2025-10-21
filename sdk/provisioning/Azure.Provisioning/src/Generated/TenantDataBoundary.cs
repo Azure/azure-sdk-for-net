@@ -75,6 +75,7 @@ public partial class TenantDataBoundary : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<DataBoundaryName>("Name", ["name"], isRequired: true);
         _properties = DefineModelProperty<DataBoundaryProperties>("Properties", ["properties"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

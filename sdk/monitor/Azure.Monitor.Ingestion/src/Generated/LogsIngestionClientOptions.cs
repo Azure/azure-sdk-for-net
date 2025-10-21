@@ -10,21 +10,13 @@ using Azure.Core;
 
 namespace Azure.Monitor.Ingestion
 {
-    /// <summary> Client options for LogsIngestionClient. </summary>
+    /// <summary> Client options for <see cref="LogsIngestionClient"/>. </summary>
     public partial class LogsIngestionClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_01_01;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2023-01-01". </summary>
-            V2023_01_01 = 1,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of LogsIngestionClientOptions. </summary>
+        /// <summary> Initializes a new instance of LogsIngestionClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public LogsIngestionClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -32,6 +24,16 @@ namespace Azure.Monitor.Ingestion
                 ServiceVersion.V2023_01_01 => "2023-01-01",
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> The 2023-01-01 API version. </summary>
+            V2023_01_01 = 1
         }
     }
 }

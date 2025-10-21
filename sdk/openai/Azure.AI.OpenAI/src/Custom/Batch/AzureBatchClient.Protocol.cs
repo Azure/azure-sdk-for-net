@@ -29,7 +29,7 @@ internal partial class AzureBatchClient : BatchClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateRetrieveBatchRequest(string batchId, RequestOptions options)
+    internal override PipelineMessage CreateGetBatchRequest(string batchId, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion, null)
             .WithMethod("GET")
             .WithPath("batches", batchId)

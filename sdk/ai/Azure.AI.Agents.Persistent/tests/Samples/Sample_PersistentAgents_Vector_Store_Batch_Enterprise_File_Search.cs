@@ -50,6 +50,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
         #endregion
         #region  Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_CreateAgentAndThread_Async
         List<ToolDefinition> tools = [new FileSearchToolDefinition()];
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelName,
             name: "my-agent",
@@ -68,8 +69,8 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
         #endregion
         #region Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_ThreadRun_Async
         ThreadRun run = await client.Runs.CreateRunAsync(
-            thread.Id,
-            agent.Id
+            thread,
+            agent
         );
 
         do
@@ -101,6 +102,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
         WriteMessages(messages, dtFiles);
         #endregion
         #region Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_Cleanup_Async
+        // NOTE: Comment out this code block if you plan to reuse the agent later.
         bool delStatus = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
         if (delStatus)
         {
@@ -150,6 +152,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
         #endregion
         #region  Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_CreateAgentAndThread
         List<ToolDefinition> tools = [new FileSearchToolDefinition()];
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = client.Administration.CreateAgent(
             model: modelName,
             name: "my-agent",
@@ -168,8 +171,8 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
         #endregion
         #region Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_ThreadRun
         ThreadRun run = client.Runs.CreateRun(
-            thread.Id,
-            agent.Id
+            thread,
+            agent
         );
 
         do
@@ -201,6 +204,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
         WriteMessages(messages, dtFiles);
         #endregion
         #region Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_Cleanup
+        // NOTE: Comment out this code block if you plan to reuse the agent later.
         bool delStatus = client.VectorStores.DeleteVectorStore(vectorStore.Id);
         if (delStatus)
         {

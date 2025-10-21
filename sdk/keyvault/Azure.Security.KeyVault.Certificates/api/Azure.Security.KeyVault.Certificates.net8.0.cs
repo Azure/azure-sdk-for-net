@@ -23,9 +23,13 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual Azure.Response<Azure.Security.KeyVault.Certificates.CertificateIssuer> DeleteIssuer(string issuerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.CertificateIssuer>> DeleteIssuerAsync(string issuerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Security.Cryptography.X509Certificates.X509Certificate2> DownloadCertificate(Azure.Security.KeyVault.Certificates.DownloadCertificateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Security.Cryptography.X509Certificates.X509Certificate2> DownloadCertificate(string certificateName, string version = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Security.Cryptography.X509Certificates.X509Certificate2> DownloadCertificate(string certificateName, string version = null, Azure.Security.KeyVault.Certificates.CertificateContentType? outContentType = default(Azure.Security.KeyVault.Certificates.CertificateContentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<System.Security.Cryptography.X509Certificates.X509Certificate2> DownloadCertificate(string certificateName, string version, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Security.Cryptography.X509Certificates.X509Certificate2>> DownloadCertificateAsync(Azure.Security.KeyVault.Certificates.DownloadCertificateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Security.Cryptography.X509Certificates.X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Security.Cryptography.X509Certificates.X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, Azure.Security.KeyVault.Certificates.CertificateContentType? outContentType = default(Azure.Security.KeyVault.Certificates.CertificateContentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Security.Cryptography.X509Certificates.X509Certificate2>> DownloadCertificateAsync(string certificateName, string version, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy> GetCertificate(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>> GetCertificateAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Certificates.CertificateOperation GetCertificateOperation(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -77,7 +81,7 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificateClientOptions : Azure.Core.ClientOptions
     {
-        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_6) { }
+        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V2025_07_01) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -89,6 +93,7 @@ namespace Azure.Security.KeyVault.Certificates
             V7_4 = 4,
             V7_5 = 5,
             V7_6 = 6,
+            V2025_07_01 = 7,
         }
     }
     public partial class CertificateContact
@@ -343,6 +348,7 @@ namespace Azure.Security.KeyVault.Certificates
         public DownloadCertificateOptions(string certificateName) { }
         public string CertificateName { get { throw null; } }
         public System.Security.Cryptography.X509Certificates.X509KeyStorageFlags KeyStorageFlags { get { throw null; } set { } }
+        public Azure.Security.KeyVault.Certificates.CertificateContentType? OutContentType { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }
     public partial class ImportCertificateOptions
@@ -431,6 +437,8 @@ namespace Azure.Security.KeyVault.Certificates
         public SubjectAlternativeNames() { }
         public System.Collections.Generic.IList<string> DnsNames { get { throw null; } }
         public System.Collections.Generic.IList<string> Emails { get { throw null; } }
+        public System.Collections.Generic.IList<string> IpAddresses { get { throw null; } }
+        public System.Collections.Generic.IList<string> UniformResourceIdentifiers { get { throw null; } }
         public System.Collections.Generic.IList<string> UserPrincipalNames { get { throw null; } }
     }
     public static partial class WellKnownIssuerNames
@@ -444,6 +452,7 @@ namespace Microsoft.Extensions.Azure
     public static partial class CertificateClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Security.KeyVault.Certificates.CertificateClient, Azure.Security.KeyVault.Certificates.CertificateClientOptions> AddCertificateClient<TBuilder>(this TBuilder builder, System.Uri vaultUri) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Security.KeyVault.Certificates.CertificateClient, Azure.Security.KeyVault.Certificates.CertificateClientOptions> AddCertificateClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

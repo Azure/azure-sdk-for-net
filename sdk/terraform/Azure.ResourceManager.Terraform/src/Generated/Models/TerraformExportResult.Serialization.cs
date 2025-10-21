@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -39,6 +40,11 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteStringValue(Configuration);
             }
+            if (Optional.IsDefined(Import))
+            {
+                writer.WritePropertyName("import"u8);
+                writer.WriteStringValue(Import);
+            }
             if (Optional.IsCollectionDefined(SkippedResourceIds))
             {
                 writer.WritePropertyName("skippedResources"u8);
@@ -60,7 +66,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<ResponseError>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,6 +108,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 return null;
             }
             string configuration = default;
+            string import = default;
             IReadOnlyList<ResourceIdentifier> skippedResources = default;
             IReadOnlyList<ResponseError> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -111,6 +118,11 @@ namespace Azure.ResourceManager.Terraform.Models
                 if (property.NameEquals("configuration"u8))
                 {
                     configuration = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("import"u8))
+                {
+                    import = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("skippedResources"u8))
@@ -143,7 +155,7 @@ namespace Azure.ResourceManager.Terraform.Models
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerTerraformContext.Default));
                     }
                     errors = array;
                     continue;
@@ -154,7 +166,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TerraformExportResult(configuration, skippedResources ?? new ChangeTrackingList<ResourceIdentifier>(), errors ?? new ChangeTrackingList<ResponseError>(), serializedAdditionalRawData);
+            return new TerraformExportResult(configuration, import, skippedResources ?? new ChangeTrackingList<ResourceIdentifier>(), errors ?? new ChangeTrackingList<ResponseError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TerraformExportResult>.Write(ModelReaderWriterOptions options)

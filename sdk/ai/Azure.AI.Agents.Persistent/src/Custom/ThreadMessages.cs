@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
+using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -25,6 +27,89 @@ namespace Azure.AI.Agents.Persistent
         *  - Allow direct file-path-based file upload (with inferred filename parameter placement) in lieu of requiring
         *     manual I/O prior to getting a byte array
         */
+        /// <summary>
+        /// [Protocol Method] Creates a new message on a specified thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateMessageAsync(string,MessageRole,BinaryData,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateMessageAsync(string threadId, RequestContent content, RequestContext context = null)
+        {
+            using var otelScope = OpenTelemetryScope.StartCreateMessage(threadId, content, _endpoint);
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            try
+            {
+                using HttpMessage message = CreateCreateMessageRequest(threadId, content, context);
+                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                otelScope?.RecordCreateMessageResponse(response);
+                return response;
+            }
+            catch (Exception e)
+            {
+                otelScope?.RecordError(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new message on a specified thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateMessage(string,MessageRole,BinaryData,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateMessage(string threadId, RequestContent content, RequestContext context = null)
+        {
+            using var otelScope = OpenTelemetryScope.StartCreateMessage(threadId, content, _endpoint);
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            try
+            {
+                using HttpMessage message = CreateCreateMessageRequest(threadId, content, context);
+                var response = _pipeline.ProcessMessage(message, context);
+                otelScope?.RecordCreateMessageResponse(response);
+                return response;
+            }
+            catch (Exception e)
+            {
+                otelScope?.RecordError(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Creates a new message on a specified thread, accepting a simple textual content string.
@@ -56,7 +141,8 @@ namespace Azure.AI.Agents.Persistent
 
             // Serialize the plain text into JSON so that the underlying generated code
             // sees a properly quoted/escaped string instead of raw text.
-            BinaryData contentJson = BinaryData.FromObjectAsJson(content);
+            var jsonString = JsonSerializer.Serialize(content, StringSerializerContext.Default.String);
+            BinaryData contentJson = BinaryData.FromString(jsonString);
 
             return await CreateMessageAsync(
                 threadId,
@@ -97,7 +183,8 @@ namespace Azure.AI.Agents.Persistent
 
             // Serialize the plain text into JSON so that the underlying generated code
             // sees a properly quoted/escaped string instead of raw text.
-            BinaryData contentJson = BinaryData.FromObjectAsJson(content);
+            var jsonString = JsonSerializer.Serialize(content, StringSerializerContext.Default.String);
+            BinaryData contentJson = BinaryData.FromString(jsonString);
 
             // Reuse the existing generated method internally by converting the string to BinaryData.
             return CreateMessage(
@@ -144,25 +231,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(contentBlocks, nameof(contentBlocks));
 
             // Convert blocks to a JSON array stored as BinaryData
-            var jsonElements = new List<JsonElement>();
-            foreach (MessageInputContentBlock block in contentBlocks)
-            {
-                // Write the content into a MemoryStream.
-                using var memStream = new MemoryStream();
-
-                // Write the RequestContent into the MemoryStream
-                block.ToRequestContent().WriteTo(memStream, default);
-
-                // Reset stream position to the beginning
-                memStream.Position = 0;
-
-                // Parse to a JsonDocument, then clone the root element so we can reuse it
-                using var tempDoc = JsonDocument.Parse(memStream);
-                jsonElements.Add(tempDoc.RootElement.Clone());
-            }
-
-            // Now serialize the array of JsonElements into a single BinaryData for the request:
-            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(jsonElements);
+            BinaryData serializedBlocks = ConvertMessageInputContentBlocksToJson(contentBlocks);
 
             return await CreateMessageAsync(
                 threadId,
@@ -208,6 +277,21 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(contentBlocks, nameof(contentBlocks));
 
             // Convert blocks to a JSON array stored as BinaryData
+            BinaryData serializedBlocks = ConvertMessageInputContentBlocksToJson(contentBlocks);
+
+            return CreateMessage(
+                threadId,
+                role,
+                serializedBlocks,
+                attachments,
+                metadata,
+                cancellationToken
+            );
+        }
+
+        private static BinaryData ConvertMessageInputContentBlocksToJson(IEnumerable<MessageInputContentBlock> contentBlocks)
+        {
+            // Convert blocks to a JSON array stored as BinaryData
             var jsonElements = new List<JsonElement>();
             foreach (MessageInputContentBlock block in contentBlocks)
             {
@@ -226,16 +310,8 @@ namespace Azure.AI.Agents.Persistent
             }
 
             // Now serialize the array of JsonElements into a single BinaryData for the request:
-            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(jsonElements);
-
-            return CreateMessage(
-                threadId,
-                role,
-                serializedBlocks,
-                attachments,
-                metadata,
-                cancellationToken
-            );
+            var jsonString = JsonSerializer.Serialize(jsonElements, JsonElementSerializer.Default.ListJsonElement);
+            return BinaryData.FromString(jsonString);
         }
 
         /// <summary> Gets a list of messages that exist on a thread. </summary>
@@ -253,15 +329,29 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(threadId, runId, limit, order?.ToString(), continuationToken, before, context);
-            return new ContinuationTokenPageableAsync<PersistentThreadMessage>(
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(
+                threadId: threadId,
+                runId: runId,
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
+            var asyncPageable = new ContinuationTokenPageableAsync<PersistentThreadMessage>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentThreadMessage.DeserializePersistentThreadMessage(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                itemType: ContinuationItemType.ThreadMessage,
+                threadId: threadId,
+                runId: runId,
+                endpoint: _endpoint,
+                after: after
             );
+
+            return asyncPageable;
         }
 
         /// <summary> Gets a list of messages that exist on a thread. </summary>
@@ -279,15 +369,29 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(threadId, runId, limit, order?.ToString(), continuationToken, before, context);
-            return new ContinuationTokenPageable<PersistentThreadMessage>(
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(
+                threadId: threadId,
+                runId: runId,
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
+            var pageable = new ContinuationTokenPageable<PersistentThreadMessage>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentThreadMessage.DeserializePersistentThreadMessage(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                itemType: ContinuationItemType.ThreadMessage,
+                threadId: threadId,
+                runId: runId,
+                endpoint: _endpoint,
+                after: after
             );
+
+            return pageable;
         }
 
         /// <summary>
@@ -322,7 +426,14 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(threadId, runId, limit, order, after, before, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(
+                threadId: threadId,
+                runId: runId,
+                limit: limit,
+                order: order,
+                after: after,
+                before: before,
+                context:context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
         }
 
@@ -358,8 +469,67 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(threadId, runId, limit, order, after, before, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(
+                threadId: threadId,
+                runId: runId,
+                limit: limit,
+                order: order,
+                after: after,
+                before: before,
+                context: context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
+        }
+
+        /// <summary> Deletes a thread message. </summary>
+        /// <param name="threadId"> The ID of the thread to delete. </param>
+        /// <param name="messageId">The ID of the message to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> DeleteMessage(
+            string threadId,
+            string messageId,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.DeleteThread");
+            scope.Start();
+            Response<MessageDeletionStatus> baseResponse
+                = InternalDeleteMessage(
+                    threadId:threadId,
+                    messageId: messageId,
+                    cancellationToken: cancellationToken);
+            bool simplifiedValue =
+                baseResponse.GetRawResponse() != null
+                && !baseResponse.GetRawResponse().IsError
+                && baseResponse.Value != null
+                && baseResponse.Value.Deleted;
+            return Response.FromValue(simplifiedValue, baseResponse.GetRawResponse());
+        }
+
+        /// <summary> Deletes a thread message. </summary>
+        /// <param name="threadId"> The ID of the thread to delete. </param>
+        /// <param name="messageId">The ID of the message to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> DeleteMessageAsync(
+            string threadId,
+            string messageId,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.DeleteThread");
+            scope.Start();
+            Response<MessageDeletionStatus> baseResponse
+                = await InternalDeleteMessageAsync(
+                    threadId: threadId,
+                    messageId: messageId,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            bool simplifiedValue =
+                baseResponse.GetRawResponse() != null
+                && !baseResponse.GetRawResponse().IsError
+                && baseResponse.Value != null
+                && baseResponse.Value.Deleted;
+            return Response.FromValue(simplifiedValue, baseResponse.GetRawResponse());
         }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
@@ -10,7 +11,7 @@ namespace Azure.Identity
     /// Options to configure the <see cref="InteractiveBrowserCredential"/> to use the system authentication broker in lieu of an embedded web view or the system browser.
     /// For more information, see <see href="https://aka.ms/azsdk/net/identity/interactive-brokered-auth">Interactive brokered authentication</see>.
     /// </summary>
-    internal class DevelopmentBrokerOptions : InteractiveBrowserCredentialOptions, IMsalSettablePublicClientInitializerOptions, IMsalPublicClientInitializerOptions
+    internal class DevelopmentBrokerOptions : InteractiveBrowserCredentialOptions, IMsalSettablePublicClientInitializerOptions, IMsalPublicClientInitializerOptions, ISupportsTenantId
     {
         private Action<PublicClientApplicationBuilder> _beforeBuildClient;
         /// <summary>
@@ -37,5 +38,17 @@ namespace Azure.Identity
         }
 
         Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient => _beforeBuildClient;
+
+        internal override T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
+        {
+            var clone = base.Clone<T>();
+
+            if (clone is DevelopmentBrokerOptions dboClone)
+            {
+                dboClone.IsLegacyMsaPassthroughEnabled = IsLegacyMsaPassthroughEnabled;
+                dboClone.UseDefaultBrokerAccount = UseDefaultBrokerAccount;
+            }
+            return clone;
+        }
     }
 }
