@@ -46,10 +46,6 @@
   - `ingestionSchedule`
   - `disableImageVerbalization`
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 11.7.0 (2025-10-09)
 
 ### Features Added
