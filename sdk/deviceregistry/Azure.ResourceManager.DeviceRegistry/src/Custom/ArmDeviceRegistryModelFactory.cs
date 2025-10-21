@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 authentication,
                 additionalConfiguration,
                 discoveredAssetEndpointProfileRef,
-                statusErrors != null ? new AssetEndpointProfileStatus(statusErrors?.ToList(), additionalBinaryDataProperties: null) : null,
+                statusErrors != null ? new AssetEndpointProfileStatus(statusErrors.ToList(), additionalBinaryDataProperties: null) : null,
                 provisioningState,
                 additionalBinaryDataProperties: null);
         }
